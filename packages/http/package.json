@@ -37,10 +37,6 @@
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.6",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/register": "^7.9.0",
     "@openfn/simple-ast": "^0.4.1",
     "chai": "^4.2.0",
     "deep-eql": "^4.0.0",
