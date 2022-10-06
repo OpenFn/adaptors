@@ -20,7 +20,6 @@ import parse from 'csv-parse';
 import tough from 'tough-cookie';
 
 const { axios } = http;
-exports.axios = axios;
 
 /**
  * Execute a sequence of operations.
@@ -399,6 +398,8 @@ export function request(params) {
     });
   };
 }
+
+export { axios };
 
 export {
   alterState,
