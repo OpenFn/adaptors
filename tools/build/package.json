@@ -8,7 +8,7 @@
     "build-adaptor": "src/cli.ts"
   },
   "scripts": {
-    "build": "tsm src/cli.ts run"
+    "build": "tsm src/cli.ts"
   },
   "author": "",
   "license": "ISC",

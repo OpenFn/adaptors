@@ -12,16 +12,17 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "rimraf dist types docs",
-    "build:src": "build-adaptor http src",
-    "build:ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
-    "build:docs": "pnpm exec jsdoc --readme ./README.md ./src -d docs",
-    "build:dts": "tsc -p tsconfig.json",
-    "build": "pnpm clean && pnpm build:src && pnpm build:ast && pnpm build:docs && pnpm build:dts",
+    "build": "build-adaptor http",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
-    "postversion": "git push && git push --tags",
-    "version": "npm run build && git add -A lib ast.json"
+
+    "_postversion": "git push && git push --tags",
+    "_version": "npm run build && git add -A lib ast.json",
+    "_build:src": "build-adaptor http src",
+    "_build:ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
+    "_build:docs": "pnpm exec jsdoc --readme ./README.md ./src -d docs",
+    "_build:dts": "tsc -p tsconfig.json"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
