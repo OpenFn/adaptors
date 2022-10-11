@@ -1,11 +1,14 @@
 {
-  "name": "build",
+  "name": "@openfn/buildtools",
   "version": "1.0.0",
   "description": "builder tool for openfn adaptors",
   "private": true,
   "type": "module",
+  "bin": {
+    "build-adaptor": "src/cli.ts"
+  },
   "scripts": {
-    "build": "tsm src/cli.ts run",
+    "build": "tsm src/cli.ts run"
   },
   "author": "",
   "license": "ISC",
