@@ -12,6 +12,7 @@
   "scripts": {
     "build:src": "tsup --config ../../tsup.config.js src/index.js",
     "build:ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
+    "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
     "postversion": "git push && git push --tags",
