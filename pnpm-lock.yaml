@@ -24,6 +24,7 @@ importers:
       mocha: ^9.2.2
       nock: ^13.0.5
       request: ^2.88.2
+      rimraf: ^3.0.2
       sinon: ^9.2.3
       tough-cookie: ^4.0.0
       ts-node: ^10.9.1
@@ -49,6 +50,7 @@ importers:
       jsdoc: 3.6.11
       mocha: 9.2.2
       nock: 13.2.9
+      rimraf: 3.0.2
       sinon: 9.2.4
       ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
       tsup: 6.2.3_mwhvu7sfp6vq5ryuwb6hlbjfka
@@ -2030,6 +2032,13 @@ packages:
   /reusify/1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+    dev: true
+
+  /rimraf/3.0.2:
+    resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    hasBin: true
+    dependencies:
+      glob: 7.2.0
     dev: true
 
   /rollup/2.79.1:
