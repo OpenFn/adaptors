@@ -1,0 +1,20 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "description": "builder tool for openfn adaptors",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsm src/cli.ts run",
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.8.4",
+    "ts-node": "^10.9.1",
+    "tsm": "^2.2.2",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.4",
+    "yargs": "^17.6.0"
+  }
+}
