@@ -10,7 +10,6 @@
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
-    "build:babel": "node_modules/.bin/babel src -d lib && npm run ast",
     "build:src": "tsup --config ../../tsup.config.js src/index.js",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
