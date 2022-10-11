@@ -34,3 +34,6 @@ node_modules
 
 # local tmp directory for state.json and expression.js files
 tmp
+
+# Don't check-in generated documentation
+docs
