@@ -7,8 +7,7 @@
   "type": "module",
   "packageManager": "pnpm@7.13.2",
   "scripts": {
-    "build:src": "pnpm -r build:src",
-    "build:ast": "pnpm -r build:ast"
+    
   },
   "keywords": [],
   "author": "",
