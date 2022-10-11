@@ -15,7 +15,7 @@
     "target": "ES2020",
     "module": "es2020",
     "declaration": true,
-    "declarationDir": "dist/types",
+    "declarationDir": "types",
     "emitDeclarationOnly": true
   }
 }

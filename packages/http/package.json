@@ -9,7 +9,7 @@
   },
   "main": "lib/index.js",
   "type": "module",
-  "types": "dist/types/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build:src": "tsup --config ../../tsup.config.js src/index.js",
     "build:ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
@@ -25,6 +25,7 @@
   "license": "LGPLv3",
   "files": [
     "dist/",
+    "types/",
     "ast.json"
   ],
   "dependencies": {
