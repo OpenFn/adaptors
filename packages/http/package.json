@@ -10,7 +10,8 @@
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
-    "build": "node_modules/.bin/babel src -d lib && npm run ast",
+    "build:babel": "node_modules/.bin/babel src -d lib && npm run ast",
+    "build:src": "tsup --config ../../tsup.config.js src/index.js",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
     "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
@@ -34,7 +35,8 @@
     "import": "0.0.6",
     "lodash": "^4.17.19",
     "request": "^2.88.2",
-    "tough-cookie": "^4.0.0"
+    "tough-cookie": "^4.0.0",
+    "tsup": "^6.2.3"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
