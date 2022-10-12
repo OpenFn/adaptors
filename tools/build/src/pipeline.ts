@@ -1,4 +1,4 @@
-import src from './commands/src';
+import commands from './commands';
 
 // common build config
 type Config = {
@@ -10,14 +10,14 @@ type Config = {
   out: string;
 };
 
-const run = async (lang: string, tasks: string[]) => {
+const run = async (lang: string, tasks: string[] = ['src', 'dts']) => {
   console.log('Running pipeline for ', lang);
   // produce a pipeline of build functions
   // run them
   // and we're done!
-  const pipeline = [src];
+  const pipeline = tasks.map(t => commands[t]);
 
-  const promises = pipeline.map(src(lang));
+  const promises = pipeline.map(fn => fn(lang));
   // Maybe this needs to be serial? Not actually sure it matters...
   return Promise.all(promises);
 };

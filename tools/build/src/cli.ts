@@ -20,7 +20,7 @@ export const cmd = yargs(hideBin(process.argv))
 
 if (!cmd.tasks) {
   // TODO add all tasks here
-  cmd.tasks = ['src'];
+  cmd.tasks = ['src', 'dts'];
 }
 
 run(cmd.lang, cmd.tasks);

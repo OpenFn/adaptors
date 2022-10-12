@@ -1,10 +1,6 @@
 // build with tsup
-import path from 'node:path';
 import { build, Options } from 'tsup';
-
-const resolvePath = (lang: string) =>
-  // need to resolve from repo base..
-  path.resolve(`../../packages/${lang}`);
+import resolvePath from '../util/resolve-path';
 
 const config: Options = {
   format: 'esm',

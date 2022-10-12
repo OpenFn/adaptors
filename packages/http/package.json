@@ -12,7 +12,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "rimraf dist types docs",
-    "build": "build-adaptor http",
+    "build": "pnpm clean && build-adaptor http",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --require @babel/register",
     "test:watch": "mocha -w --require @babel/register",
