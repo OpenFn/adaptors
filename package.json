@@ -7,7 +7,7 @@
   "type": "module",
   "packageManager": "pnpm@7.13.2",
   "scripts": {
-    
+    "migrate": "cd tools/migrate && pnpm migrate"
   },
   "keywords": [],
   "author": "",

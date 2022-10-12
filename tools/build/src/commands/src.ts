@@ -1,4 +1,3 @@
-// build with tsup
 import { build, Options } from 'tsup';
 import resolvePath from '../util/resolve-path';
 
