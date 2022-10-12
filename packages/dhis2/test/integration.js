@@ -1,7 +1,6 @@
 const { expect } = require('chai');
-const { create, execute, get, update } = require('../src/Adaptor');
+const { create, execute, get, update, upsert } = require('../dist/Adaptor');
 const crypto = require('crypto');
-const { upsert } = require('../lib/Adaptor');
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
