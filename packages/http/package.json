@@ -7,15 +7,15 @@
     "type": "git",
     "url": "https://github.com/openfn/language-http.git"
   },
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "type": "module",
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist types docs",
     "build": "pnpm clean && build-adaptor http",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "test": "mocha --require @babel/register",
-    "test:watch": "mocha -w --require @babel/register"
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",

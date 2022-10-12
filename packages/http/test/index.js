@@ -1,4 +1,4 @@
-import Adaptor from '../lib';
+import * as Adaptor from '../src/Adaptor';
 import { each } from '@openfn/language-common';
 import { expect } from 'chai';
 import nock from 'nock';
