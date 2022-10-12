@@ -59,6 +59,8 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   // For now we need to ensure esno is a dev dependency
   // so that we can hook into the build tool
   updated.devDependencies.esno = '^0.16.3';
+  updated.devDependencies.rimraf = '^3.0.2';
+  updated.devDependencies['@openfn/buildtools'] = 'workspace:^1.0.0';
 
   updated.scripts.clean = 'rm -rf dist types docs';
   updated.scripts.build = `pnpm clean && build-adaptor ${lang}`;
