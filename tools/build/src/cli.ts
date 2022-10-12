@@ -4,6 +4,7 @@
 // tsm installed as a dev dependency
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import process from 'node:process';
 
 import run from './pipeline';
 
@@ -22,8 +23,7 @@ export const cmd = yargs(hideBin(process.argv))
   .parse();
 
 if (!cmd.tasks) {
-  // TODO add all tasks here
-  cmd.tasks = ['src', 'dts'];
+  cmd.tasks = ['src', 'dts', 'docs', 'ast'];
 }
 
 run(cmd.lang, cmd.tasks);

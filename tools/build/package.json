@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@openfn/simple-ast": "^0.4.1",
     "@types/node": "^18.8.4",
     "esno": "^0.16.3",
     "jsdoc-api": "^7.1.1",
