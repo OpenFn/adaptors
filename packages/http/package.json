@@ -38,6 +38,7 @@
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
+    "@openfn/simple-ast": "^0.4.1",
     "@openfn/buildtools": "workspace:^1.0.0",
     "@types/node": "^18.8.4",
     "chai": "^4.2.0",

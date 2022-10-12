@@ -36,9 +36,14 @@ export const updatePackage = (pkg: Record<string, any>) => {
   // TODO is babel needed for mocha? ... yes hmm.
   ['dependencies', 'devDependencies'].forEach(depsKey => {
     const { esbuild, esdoc, babel, jsdoc, ...otherDeps } = pkg[depsKey];
-    delete otherDeps['@openfn/simple-ast'];
+    // TODO simple ast is needed for now but I'll port it soon
+    // delete otherDeps['@openfn/simple-ast'];
     updated[depsKey] = otherDeps;
   });
+
+  // For now we need to ensure esno is a dev dependency
+  // so that we can hook into the build tool
+  updated.devDependencies.esno = '^0.16.3';
 
   updated.scripts.clean = 'rm -rf dist types docs';
   updated.scripts.build = 'pnpm clean && build-adaptor http';
