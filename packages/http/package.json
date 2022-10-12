@@ -22,7 +22,8 @@
   "files": [
     "dist/",
     "types/",
-    "ast.json"
+    "ast.json",
+    "configuration-schema.json"
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.1",
