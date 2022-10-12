@@ -24,9 +24,10 @@ export default (lang: string) => {
   const root = resolvePath(lang);
   console.log();
   console.log(`Building DTS for: ${root}`);
+  console.log();
 
   // const { compilerOptions } = getBaseConfig(root);
-  build({
+  return build({
     entry: [`${root}/src/index.js`],
     outDir: `${root}/types`,
     clean: true,

@@ -8,7 +8,10 @@ import { hideBin } from 'yargs/helpers';
 import run from './pipeline';
 
 export const cmd = yargs(hideBin(process.argv))
-  .command('$0 <lang> [tasks]', 'build an adaptor')
+  .command(
+    '$0 <lang> [tasks]',
+    'Build an adaptor. You must pass in the adaptor name, and you may pass a list of build steps.'
+  )
   .example('$0 http', 'build everything for http')
   .example('$0 http src ast', 'run src and ast builds for http')
   .demand('lang')

@@ -11,15 +11,12 @@ type Config = {
 };
 
 const run = async (lang: string, tasks: string[] = ['src', 'dts']) => {
-  console.log('Running pipeline for ', lang);
-  // produce a pipeline of build functions
-  // run them
-  // and we're done!
-  const pipeline = tasks.map(t => commands[t]);
+  console.log('Running pipeline for', lang);
 
-  const promises = pipeline.map(fn => fn(lang));
-  // Maybe this needs to be serial? Not actually sure it matters...
-  return Promise.all(promises);
+  tasks
+    .map(t => commands[t])
+    .filter(fn => fn)
+    .reduce((p, task) => p.then(() => task(lang)), Promise.resolve());
 };
 
 export default run;

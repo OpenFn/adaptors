@@ -12,13 +12,12 @@ const config: Options = {
 export default (lang: string) => {
   const p = resolvePath(lang);
   console.log();
-  console.log(`Building source from: ${p}`);
+  console.log(`Building JS from: ${p}`);
   console.log();
 
-  return async () =>
-    build({
-      entry: [`${p}/src/index.js`], // TODO what if it's typescript?
-      outDir: `${p}/dist`,
-      ...config,
-    });
+  return build({
+    entry: [`${p}/src/index.js`], // TODO what if it's typescript?
+    outDir: `${p}/dist`,
+    ...config,
+  });
 };
