@@ -1,3 +1,5 @@
+// TODO duplicated from the buildtool
+// Would like a good way to share code between tools as pure ts, without a build...
 import path from 'node:path';
 
 /**
