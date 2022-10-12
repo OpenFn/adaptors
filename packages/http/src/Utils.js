@@ -1,6 +1,8 @@
 import FormData from 'form-data';
-import { isEmpty } from 'lodash/fp';
+import _ from 'lodash/fp';
 import safeStringify from 'fast-safe-stringify';
+
+const { isEmpty } = _;
 
 export function setUrl(configuration, path) {
   const baseUrl = configuration?.baseUrl;
