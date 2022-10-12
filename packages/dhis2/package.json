@@ -1,0 +1,62 @@
+{
+  "name": "@openfn/language-dhis2",
+  "version": "3.0.5",
+  "description": "DHIS2 Language Pack for OpenFn",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/language-dhis2.git"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "test:watch": "mocha -w --require @babel/register test/index.js",
+    "build": "node_modules/.bin/babel src -d lib && npm run ast",
+    "test": "mocha --require @babel/register test/index.js",
+    "integration-test": "mocha --require @babel/register test/integration.js",
+    "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
+    "postversion": "git push && git push --tags",
+    "version": "npm run build && git add -A lib ast.json"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/",
+    "ast.json"
+  ],
+  "dependencies": {
+    "@openfn/language-common": "1.6.2",
+    "axios": "^0.24.0",
+    "lodash": "^4.17.19",
+    "qs": "^6.10.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "7.12.1",
+    "@babel/plugin-proposal-class-static-block": "7.12.1",
+    "@babel/plugin-proposal-function-bind": "^7.8.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "7.10.4",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/register": "^7.9.0",
+    "@openfn/simple-ast": "^0.4.0",
+    "assertion-error": "^1.0.1",
+    "chai": "^3.4.0",
+    "chai-http": "^4.3.0",
+    "deep-eql": "^0.1.3",
+    "jsdoc": "^3.6.10",
+    "mocha": "^7.1.1",
+    "nock": "^13.0.5",
+    "sinon": "^1.17.2"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "bundledDependencies": [
+    "@openfn/language-common",
+    "axios",
+    "lodash",
+    "qs"
+  ]
+}
