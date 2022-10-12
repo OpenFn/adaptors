@@ -11,6 +11,42 @@ pnpm -r build
 pnpm -r test
 ```
 
+## Changesets
+
+Any submitted PRs should have an accompanying [`changeset`](https://github.com/changesets/changesets).
+
+A changeset is a text file with a list of what you've changed and a short summary. Changesets are stored in a temporary folder until a release, at which point they are merged into the changelogs of the affected packges.
+
+Adding a changeset is really easy thanks to a very friendly CLI.
+
+To create a changeset, run this from the repo root:
+
+```
+pnpm changeset
+```
+
+Look in the `.changesets` folder to see your change.
+
+Commit the changeset to the repo when you're ready.
+
+## Releases
+
+To release, run this from the root:
+
+```
+pnpm changeset version
+```
+
+This will bump all changed packages and update their release notes.
+
+Then run `pnpm install` and commit any changes.
+
+To publish the release, run:
+
+```
+pnpm publish -r
+```
+
 ## Build tooling
 
 The `build` command accepts a list of build steps as arguments: `ast`, `src`, `docs` and `dts`. Calling build on an adaptor with no arguments will build everything.
@@ -50,9 +86,3 @@ const { isEmpty } = _;
 ```
 
 TODO: travis?
-
-## Future Work
-
-- Support TypeScript adaptors
-- Unify documentation
-- Migrate tests to ava (?)
