@@ -17,8 +17,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -148,8 +149,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -287,8 +289,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -378,8 +381,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -498,8 +502,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -555,8 +560,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -645,8 +651,9 @@
             "type": null
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -764,8 +771,9 @@
             "description": "findAttributeValue(state.data.trackedEntityInstances[0], 'first name')"
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -817,8 +825,9 @@
             "description": "attr('w75KJ2mc4zz', 'Elias')"
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
@@ -870,8 +879,9 @@
             "description": "dv('f7n9E0hX8qk', 12)"
           },
           {
-            "title": "function",
+            "title": "constructor",
             "description": null,
+            "type": null,
             "name": null
           },
           {
