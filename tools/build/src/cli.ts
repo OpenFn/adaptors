@@ -1,7 +1,4 @@
 #!./node_modules/.bin/esno
-
-// The shebang above does work, but it requires every package to have
-// tsm installed as a dev dependency
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';

@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openfn/adaptor-utils": "workspace:^1.0.0",
     "@types/node": "^18.8.4",
     "esno": "^0.16.3",
     "ts-node": "^10.9.1",
