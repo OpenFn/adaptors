@@ -1,6 +1,6 @@
 /** @module Adaptor */
 import axios from 'axios';
-import { indexOf } from 'lodash';
+import _ from 'lodash';
 import {
   execute as commonExecute,
   expandReferences,
@@ -15,6 +15,8 @@ import {
   selectId,
 } from './Utils';
 import { request } from './Client';
+
+const { indexOf } = _;
 
 /**
  * Execute a sequence of operations.

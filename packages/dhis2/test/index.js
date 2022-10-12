@@ -1,8 +1,10 @@
-import { expect } from 'chai';
-import { execute, create, update, get, upsert } from '../lib/Adaptor';
+import chai from 'chai';
+import { execute, create, update, get, upsert } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
-import { buildUrl, generateUrl, nestArray } from '../lib/Utils';
+import { buildUrl, generateUrl, nestArray } from '../src/Utils';
 import nock from 'nock';
+
+const { expect } = chai;
 
 const testServer = nock('https://play.dhis2.org/2.36.4');
 
