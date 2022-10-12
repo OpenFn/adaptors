@@ -1,4 +1,5 @@
 import commands from './commands';
+import resolvePath from './util/resolve-path';
 
 // common build config
 type Config = {
@@ -10,8 +11,9 @@ type Config = {
   out: string;
 };
 
-const run = async (lang: string, tasks: string[] = ['src', 'dts']) => {
+const run = async (lang: string, tasks: string[] = ['src', 'dts', 'docs']) => {
   console.log('Running pipeline for', lang);
+  console.log(`Root dir: ${resolvePath(lang)}`);
 
   tasks
     .map(t => commands[t])

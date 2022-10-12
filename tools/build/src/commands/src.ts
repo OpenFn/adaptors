@@ -12,7 +12,7 @@ const config: Options = {
 export default (lang: string) => {
   const p = resolvePath(lang);
   console.log();
-  console.log(`Building JS from: ${p}`);
+  console.log('Building JS');
   console.log();
 
   return build({

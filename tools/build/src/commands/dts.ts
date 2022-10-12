@@ -23,7 +23,7 @@ const compilerOptions = {
 export default (lang: string) => {
   const root = resolvePath(lang);
   console.log();
-  console.log(`Building DTS for: ${root}`);
+  console.log('Building DTS');
   console.log();
 
   // const { compilerOptions } = getBaseConfig(root);
