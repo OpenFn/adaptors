@@ -1,16 +1,14 @@
 {
   "name": "adaptors",
   "version": "1.0.0",
-  "description": "",
+  "description": "Monoerepo for openfn language adaptors",
   "private": true,
-  "main": "index.js",
   "type": "module",
   "packageManager": "pnpm@7.13.2",
   "scripts": {
     "migrate": "cd tools/migrate && pnpm migrate"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.25.0"

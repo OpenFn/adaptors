@@ -12,6 +12,9 @@ docs/
 # Working folders
 tmp/
 
+# Generated typings
+types/
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

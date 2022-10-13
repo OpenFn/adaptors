@@ -13,7 +13,7 @@ export default async (lang: string, { dry }: Options = {}) => {
   // load the package json for a language
   const pkg = await fs.readFile(`${root}/package.json`, 'utf8');
 
-  const updated = updatePackage(JSON.parse(pkg));
+  const updated = updatePackage(JSON.parse(pkg), lang);
 
   const result = JSON.stringify(updated, null, 2);
 
@@ -26,10 +26,16 @@ export default async (lang: string, { dry }: Options = {}) => {
   return result;
 };
 
-export const updatePackage = (pkg: Record<string, any>) => {
+export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   const { bundledDependencies, directories, ...updated } = pkg;
 
+  updated.repository = {
+    type: 'git',
+    url: 'https://github.com/openfn/adaptors.git',
+  };
+
   updated.type = 'module';
+  updated.main = 'dist/index.js';
 
   updated.files = ['dist/', 'types/', 'ast.json', 'configuration-schema.json'];
 
@@ -53,18 +59,23 @@ export const updatePackage = (pkg: Record<string, any>) => {
   // For now we need to ensure esno is a dev dependency
   // so that we can hook into the build tool
   updated.devDependencies.esno = '^0.16.3';
+  updated.devDependencies.rimraf = '^3.0.2';
+  updated.devDependencies['@openfn/buildtools'] = 'workspace:^1.0.0';
 
   updated.scripts.clean = 'rm -rf dist types docs';
-  updated.scripts.build = 'pnpm clean && build-adaptor http';
+  updated.scripts.build = `pnpm clean && build-adaptor ${lang}`;
   updated.scripts.pack = 'pnpm pack --pack-destination ../../dist';
   delete updated.scripts.ast;
   delete updated.scripts.postversion;
   delete updated.scripts.version;
 
   // remove babel from mocha tests
-  updated.scripts.test.replace('--require @babel/register', '');
+  updated.scripts.test = updated.scripts.test.replace(
+    '--require @babel/register',
+    '--experimental-specifier-resolution=node --no-warnings'
+  );
   if (updated.scripts['test:watch']) {
-    updated.scripts['test:watch'].replace(
+    updated.scripts['test:watch'] = updated.scripts['test:watch'].replace(
       '--require @babel/register',
       '--experimental-specifier-resolution=node --no-warnings'
     );
