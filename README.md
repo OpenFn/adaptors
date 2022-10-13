@@ -2,8 +2,8 @@
 
 New home for all @openfn language adaptors.
 
-This repeo requires [pnpm](https://pnpm.io/installation) to be installed
-globally on your machine.
+This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
+on your machine.
 
 ## Getting Started
 
