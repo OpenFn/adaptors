@@ -2,20 +2,43 @@
 
 New home for all @openfn language adaptors.
 
-This reeo requires [pnpm](https://pnpm.io/installation) to be installed globally
+This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
 on your machine.
+
+## Getting Started
+
+A few first time repo steps:
+
+Install tool versions with [asdf](https://github.com/asdf-vm/asdf)
+
+```
+asdf install
+```
+
+Install pnpm:
+
+```
+npm install -g pnpm
+```
+
+And run the setup command:
+
+```
+pnpm run setup
+```
 
 ## Running scripts
 
 Every repo provides a common set of npm scripts:
 
-To run them for all scripts in `packages`, call `pnpm -r <script>`.
+To run them for all scripts in `packages`, call
+`pnpm --filter "./packages/** <script>`.
 
 For example:
 
 ```
-pnpm -r build
-pnpm -r test
+pnpm --filter "./packages/**" build
+pnpm --filter "./packages/**" test
 ```
 
 ## Changesets
@@ -79,50 +102,80 @@ You can run `build --help` for more information.
 Adaptors should be copied/cloned into this repo, with all build, lint and git
 artefacts removed and the package.json updated.
 
-This checklist walks you through the process:
+This checklist walks you through the process.
 
-First, copy the adaptor into `packages/name` (ignoring the `language-` prefix,
+First, copy the adaptor into `packages/<name>` (ignoring the `language-` prefix,
 ie, `language-http` -> `http`). You can `cd` into `package` and `git clone`
 straight from github if you like.
+
+Next, from the `adaptors` root folder, run the migration script:
+
+```
+pnpm migrate <name>
+```
+
+For example, `pnpm migrate http`.
 
 Then, from inside your new `packages/<name>`:
 
 - Remove the `.git` directory
-- Run the migration script from root `pnpm migrate <name>` to update
-  package.json
-- cd back into `packages/<name>`
+- Commit your changes `git commit -am "cloned <name> into monorepo"`
 - Delete `package-lock.json`
 - Run `pnpm install`
 - Remove the `docs` and `lib` dirs
-- Remove `.prettierrc` - although you may want to check the rules against the
-  root `.prettierrc` file.
-- - If the files are very different, keep the child file
-- - We can add rules to the root `.prettierrc`, but we should do so cautiously.
+- Remove `.prettierrc`
 - Remove any references to `babel` (ie, `.babelrc`) and `esdoc` (ie,
   `esdoc.json`)
-- Remove the `.gitignore` file, update the top level ignore if neccessary
+- Remove the `.gitignore` file (update the top level ignore if neccessary)
 - Remove the `Makefile`
-- Update the readme as required
-- - `npm` references should change to `pnpm`
-- - docs are now generated with `pnpm build docs`
-- - replace `make` with `pnpm build`
-- - replace `clean` with `rimraf dist types docs`
-- run `pnpm build`
-- Update tests and get them passing
+- Update the readme (see the `Readme` below)
+- Fix unit tests (see `Tests` below)
+- run `pnpm changeset` from the repo root to register a changeset (add a minor
+  version bump for the package).
 
-  - Instead of importing test files from `lib`, import directly from `src`
-  - Fix commonjs issues (see the note below)
+### Readme
 
-- Finally, run `pnpm changeset` from the repo root to register a changeset (add
-  a minor version bump for the package).
+The readme probably has a section called "Development".
 
-## Common JS issues
+Replace this section with:
+
+```
+## Development
+
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
+
+Run tests using `pnpm run test` or `pnpm run test:watch`
+
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
+```
+
+In addition, you may need to replace any references to `npm` with `pnpm`
+
+### Tests
+
+You'll need to update tests and get them passing. There are a few things to be
+aware of here.
+
+**Import paths**
+
+Instead of importing test files from `lib`, import directly from `src`.
+
+Ie, replace `import Adaptor from '../lib/Adaptor'` becomes
+`import Adaptor from '../src/Adaptor'`
+
+**Importing CJS modules**
 
 Packages in this repo should assume native support for esm modules (ie, `import`
 instead of `require`).
 
-If you have trouble importing commonjs modules (like lodash), you may need to
-change the import from:
+Although adaptors use EJS syntax, many used to transpile through babel into CJS
+format.
+
+You will probably find that `chai` and `lodash` throw exceptions when you try
+and run the tests. To fix this, read closely the error message that is returnd.
+You probably need to change the import from:
 
 ```
 import { isEmpty } from 'lodash/fp';

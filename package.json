@@ -6,7 +6,8 @@
   "type": "module",
   "packageManager": "pnpm@7.13.2",
   "scripts": {
-    "migrate": "cd tools/migrate && pnpm migrate"
+    "migrate": "cd tools/migrate && pnpm migrate",
+    "setup": "pnpm --filter \"./tools/**\" install"
   },
   "author": "Open Function Group",
   "license": "ISC",
