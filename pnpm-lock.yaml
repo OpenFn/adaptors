@@ -10,7 +10,7 @@ importers:
 
   packages/dhis2:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.6.2
       '@openfn/simple-ast': ^0.4.0
       assertion-error: ^1.0.1
@@ -45,7 +45,7 @@ importers:
 
   packages/http:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.7.1
       '@openfn/simple-ast': ^0.4.1
       '@types/node': ^18.8.4
