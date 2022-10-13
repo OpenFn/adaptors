@@ -1,4 +1,4 @@
-# Language SFTP [![Build Status](https://travis-ci.org/OpenFn/language-sftp.svg?branch=master)](https://travis-ci.org/OpenFn/language-sftp)
+# Language SFTP
 
 Language Pack for building expressions and operations to work with SFTP servers.
 
