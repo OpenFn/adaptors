@@ -1,0 +1,60 @@
+{
+  "name": "@openfn/language-sftp",
+  "version": "0.4.0",
+  "description": "An SFTP language package for use with Open Function",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "pnpm clean && build-adaptor sftp",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "clean": "rm -rf dist types docs",
+    "pack": "pnpm pack --pack-destination ../../dist"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ],
+  "dependencies": {
+    "@openfn/language-common": "1.7.3",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
+    "json2csv": "^4.1.6",
+    "JSONStream": "^1.3.5",
+    "lodash": "^4.17.19",
+    "ssh2-sftp-client": "9.0.4"
+  },
+  "devDependencies": {
+    "@openfn/simple-ast": "^0.4.1",
+    "assertion-error": "^1.0.1",
+    "chai": "^3.4.0",
+    "deep-eql": "^0.1.3",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^7.1.1",
+    "nock": "^12.0.3",
+    "sinon": "^1.17.2",
+    "esno": "^0.16.3",
+    "rimraf": "^3.0.2",
+    "@openfn/buildtools": "workspace:^1.0.0"
+  },
+  "bundleDependencies": [
+    "@openfn/language-common",
+    "csv-parser",
+    "csvtojson",
+    "json2csv",
+    "JSONStream",
+    "lodash",
+    "ssh2-sftp-client"
+  ],
+  "type": "module"
+}
