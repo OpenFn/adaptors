@@ -2,7 +2,7 @@ import { build, Options } from 'tsup';
 import resolvePath from '../util/resolve-path';
 
 const config: Options = {
-  format: 'esm',
+  format: ['esm', 'cjs'],
   target: 'node14',
   platform: 'node',
   clean: true,

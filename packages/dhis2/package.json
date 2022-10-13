@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dhis2",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "DHIS2 Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "main": "dist/index.cjs",
-  "types": "dist/types.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "pnpm clean && build-adaptor dhis2",
     "clean": "rimraf dist types docs",
@@ -26,7 +26,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/buildtools": "workspace:^1.0.0",
+    "@openfn/buildtools": "workspace:^1.0.1",
     "@openfn/language-common": "1.6.2",
     "axios": "^0.24.0",
     "lodash": "^4.17.19",

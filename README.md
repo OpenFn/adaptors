@@ -51,6 +51,12 @@ This will bump all changed packages and update their release notes.
 
 Then run `pnpm install` and commit any changes.
 
+To build the adaptors
+
+```
+pnpm -r run build
+```
+
 To publish the release, run:
 
 ```
