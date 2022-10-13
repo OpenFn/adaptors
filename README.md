@@ -1,11 +1,17 @@
 # Adaptors Monorepo
 
+New home for all @openfn language adaptors.
+
+This reeo requires [pnpm](https://pnpm.io/installation) to be installed globally
+on your machine.
+
 ## Running scripts
 
 Every repo provides a common set of npm scripts:
 
-To run them for all scripts, call `pnpm <script>` from the root abd add `-r`.
-Ie:
+To run them for all scripts in `packages`, call `pnpm -r <script>`.
+
+For example:
 
 ```
 pnpm -r build
@@ -62,30 +68,48 @@ name.
 
 You can run `build --help` for more information.
 
-## Migration checklist
+## Migration Guide
 
-If moving an adaptor into this repo, run through the following steps:
+Adaptors should be copied/cloned into this repo, with all build, lint and git
+artefacts removed and the package.json updated.
 
-- Copy the adaptor (minus `.git`) into `packages/name` (ignoring the `language-`
-  prefix, ie, `language-http` -> `http`)
+This checklist walks you through the process:
+
+First, copy the adaptor into `packages/name` (ignoring the `language-` prefix,
+ie, `language-http` -> `http`). You can `cd` into `package` and `git clone`
+straight from github if you like.
+
+Then, from inside your new `packages/<name>`:
+
+- Remove the `.git` directory
 - Run the migration script from root `pnpm migrate <name>` to update
   package.json
-- Remove the `docs` and `lib` dirs. They should not be tracked in git.
-- Ensure `prettierrc` matches the root rc file. You should be able to remove the
-  adaptor's file completely. If the adaptor has any rules the parent does not,
-  and you absolutely want to keep them, then preserve the child file.
-- Remove any references to `babel` and `esdoc` (maybe including @babel in
-  dependencies)
-- Remove the `.gitignore` file, update the top level ignore if neccessary
-- Remove the makefile
-- Update the readme as required
+- Delete `package-lock.json`
 - Run `pmpm install`
+- Remove the `docs` and `lib` dirs
+- Remove `.prettierrc` - although you may want to check the rules against the
+  root `.prettierrc` file.
+- - If the files are very different, keep the child file
+- - We can add rules to the root `.prettierrc`, but we should do so cautiously.
+- Remove any references to `babel` (ie, `.babelrc`) and `esdoc` (ie,
+  `esdoc.json`)
+- Remove the `.gitignore` file, update the top level ignore if neccessary
+- Remove the `Makefile`
+- Update the readme as required
+- - `npm` references should change to `pnpm`
+- - docs are now generated with `pnpm build docs`
 - Update tests and get them passing
   - Ensure `--experimental-specifier-resolution=node` is passed through to mocha
     (the migration utility should handle this)
   - Instead of importing test files from `lib`, import directly from `src`
+  - Fix commonjs issues (see the note below)
 - Finally, run `pnpm changeset` from the repo root to register a changeset (add
   a minor version bump for the package).
+
+## Common JS issues
+
+Packages in this repo should assume native support for esm modules (ie, `import`
+instead of `require`).
 
 If you have trouble importing commonjs modules (like lodash), you may need to
 change the import from:
@@ -100,5 +124,3 @@ to:
 import _ from 'lodash/fp';
 const { isEmpty } = _;
 ```
-
-TODO: travis?
