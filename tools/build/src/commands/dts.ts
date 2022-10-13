@@ -1,8 +1,6 @@
 import { build } from 'tsup';
 import resolvePath from '../util/resolve-path';
 
-// TODO shoudl't the src config use this too?
-// Maybe only if it's compiling from ts?
 const compilerOptions = {
   allowJs: true,
   declaration: true,
@@ -26,7 +24,6 @@ export default (lang: string) => {
   console.log('Building DTS');
   console.log();
 
-  // const { compilerOptions } = getBaseConfig(root);
   return build({
     entry: [`${root}/src/index.js`],
     outDir: `${root}/types`,
