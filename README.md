@@ -100,6 +100,7 @@ Then, from inside your new `packages/<name>`:
 - - `npm` references should change to `pnpm`
 - - docs are now generated with `pnpm build docs`
 - - replace `make` with `pnpm build`
+- - replace `clean` with `rimraf dist types docs`
 - run `pnpm build`
 - Update tests and get them passing
 

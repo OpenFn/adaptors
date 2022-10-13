@@ -12,11 +12,7 @@
     "build": "pnpm clean && build-adaptor sftp",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-<<<<<<< HEAD
     "clean": "rimraf dist types docs",
-=======
-    "clean": "rm -rf dist types docs",
->>>>>>> 4b159841c446749e0b99e3e3959dee6c1dd8cc0d
     "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
