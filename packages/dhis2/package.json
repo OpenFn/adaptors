@@ -8,6 +8,7 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "pnpm clean && build-adaptor dhis2",
     "clean": "rimraf dist types docs",
