@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
-    "@openfn/buildtools": "workspace:^1.0.0",
+    "@openfn/buildtools": "workspace:^1.0.1",
     "@types/node": "^18.8.4",
     "chai": "^4.2.0",
     "deep-eql": "^4.0.0",
