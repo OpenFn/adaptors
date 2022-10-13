@@ -111,3 +111,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ubuntu fuse files
+.fuse_*
