@@ -2,20 +2,37 @@
 
 New home for all @openfn language adaptors.
 
-This reeo requires [pnpm](https://pnpm.io/installation) to be installed globally
-on your machine.
+This repeo requires [pnpm](https://pnpm.io/installation) to be installed
+globally on your machine.
+
+## Getting Started
+
+A few first time repo steps:
+
+Install tool versions with [asdf](https://github.com/asdf-vm/asdf)
+
+```
+asdf install
+```
+
+First time repo setup
+
+```
+pnpm run setup
+```
 
 ## Running scripts
 
 Every repo provides a common set of npm scripts:
 
-To run them for all scripts in `packages`, call `pnpm -r <script>`.
+To run them for all scripts in `packages`, call
+`pnpm --filter "./packages/** <script>`.
 
 For example:
 
 ```
-pnpm -r build
-pnpm -r test
+pnpm --filter "./packages/**" build
+pnpm --filter "./packages/**" test
 ```
 
 ## Changesets
