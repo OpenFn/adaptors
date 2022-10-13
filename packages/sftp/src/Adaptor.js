@@ -10,7 +10,6 @@ import { stat } from 'fs';
 
 // import JSONStream from 'JSONStream';
 // import csv from 'csv-parser';
-const { Readable } = require('stream');
 
 /**
  * Execute a sequence of operations.
@@ -265,7 +264,9 @@ export function normalizeCSVarray(options, callback) {
   };
 }
 
-export { _ } from 'lodash';
+import _ from 'lodash/fp';
+
+export { _ };
 
 export {
   alterState,
