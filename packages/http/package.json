@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/openfn/adaptors.git"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "type": "module",
   "types": "types/index.d.ts",
   "scripts": {
