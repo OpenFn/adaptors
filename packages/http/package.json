@@ -5,30 +5,31 @@
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openfn/language-http.git"
+    "url": "https://github.com/openfn/adaptors.git"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "type": "module",
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": "node_modules/.bin/babel src -d lib && npm run ast",
-    "test": "mocha --require @babel/register",
-    "test:watch": "mocha -w --require @babel/register",
-    "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
-    "postversion": "git push && git push --tags",
-    "version": "npm run build && git add -A lib ast.json"
+    "clean": "rm -rf dist types docs",
+    "build": "pnpm clean && build-adaptor http",
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
   "files": [
     "dist/",
-    "ast.json"
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.1",
     "cheerio": "^1.0.0-rc.10",
     "cheerio-tableparser": "^1.0.1",
     "csv-parse": "^4.10.1",
-    "esbuild": "^0.15.10",
     "fast-safe-stringify": "^2.0.7",
     "form-data": "^3.0.0",
     "import": "0.0.6",
@@ -38,9 +39,11 @@
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
+    "@openfn/buildtools": "workspace:^1.0.0",
+    "@types/node": "^18.8.4",
     "chai": "^4.2.0",
     "deep-eql": "^4.0.0",
-    "jsdoc": "^3.6.10",
+    "esno": "^0.16.3",
     "mocha": "^9.2.2",
     "nock": "^13.0.5",
     "sinon": "^9.2.3"

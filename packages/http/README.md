@@ -8,13 +8,14 @@ Language Pack for building expressions and operations to make HTTP calls.
 
 ```js
 {
-  "username": "taylor@openfn.org",
-  "password": "supersecret",
+  "username": "<name@email>",
+  "password": "<supersecret>",
   "baseUrl": "https://instance_name.surveycto.com",
 }
 ```
 
 ### Get data
+
 This helper function allows the use of a get method to fetch data. You can specify a query string for filter.
 
 ```js
@@ -32,6 +33,7 @@ get(
 ```
 
 ### Post existing data
+
 Send some data to an existing endpoint.
 
 ```js
@@ -109,15 +111,16 @@ parseXML(body, function ($) {
 ### Parse CSV
 
 ```js
-parseCSV('/home/user/someData.csv', {
+parseCSV('someData.csv', {
   quoteChar: '"',
   header: false,
 });
 ```
+
 ### Sample parse local CSV file
 
 ```js
-parseCSV('/home/taylor/PatientsJan2009.csv', {
+parseCSV('PatientsJan2009.csv', {
   quoteChar: '"',
   header: false,
   columns: true,
@@ -131,10 +134,10 @@ parseCSV('/home/taylor/PatientsJan2009.csv', {
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the repo, run `pnpm install`.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`.
 
 Build the project using `make`.
 
-To build the docs for this repo, run `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
+To build the docs for this repo, run `pnpm build:docs`.

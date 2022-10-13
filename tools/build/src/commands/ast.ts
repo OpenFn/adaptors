@@ -1,0 +1,28 @@
+import { exec } from 'node:child_process';
+import resolvePath from '../util/resolve-path';
+
+export default (lang: string) => {
+  const root = resolvePath(lang);
+  console.log();
+  console.log(`Building AST`);
+  console.log();
+
+  return new Promise<void>(resolve => {
+    const dest = `${root}/ast.json`;
+
+    // TODO adaptor.js is a problem
+    // I think I'll move simple-ast in here, give it nice exports,
+    // and enable it to parse from index
+    const cmd = `pnpm exec simple-ast  --adaptor ${root}/src/Adaptor.js --output ${dest}`;
+    exec(cmd, (err, stdout, stderr) => {
+      if (stdout) {
+        console.log(stdout);
+      }
+      if (stderr) {
+        console.error(stderr);
+      }
+      console.log('... done!', dest);
+      resolve();
+    });
+  });
+};
