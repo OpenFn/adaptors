@@ -102,10 +102,10 @@ Then, from inside your new `packages/<name>`:
 - - replace `make` with `pnpm build`
 - run `pnpm build`
 - Update tests and get them passing
-  - Ensure `--experimental-specifier-resolution=node` is passed through to mocha
-    (the migration utility should handle this)
+
   - Instead of importing test files from `lib`, import directly from `src`
   - Fix commonjs issues (see the note below)
+
 - Finally, run `pnpm changeset` from the repo root to register a changeset (add
   a minor version bump for the package).
 
