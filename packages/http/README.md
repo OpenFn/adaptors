@@ -1,4 +1,4 @@
-# Language HTTP [![Build Status](https://travis-ci.org/OpenFn/language-http.svg?branch=master)](https://travis-ci.org/OpenFn/language-http)
+# Language HTTP
 
 Language Pack for building expressions and operations to make HTTP calls.
 
@@ -16,7 +16,8 @@ Language Pack for building expressions and operations to make HTTP calls.
 
 ### Get data
 
-This helper function allows the use of a get method to fetch data. You can specify a query string for filter.
+This helper function allows the use of a get method to fetch data. You can
+specify a query string for filter.
 
 ```js
 get(
@@ -100,7 +101,8 @@ del(
 
 ### Parse XML
 
-This function allows you to parse some xml data. A callback function can be use to store in a table.
+This function allows you to parse some xml data. A callback function can be use
+to store in a table.
 
 ```js
 parseXML(body, function ($) {
