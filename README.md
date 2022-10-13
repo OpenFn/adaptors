@@ -84,8 +84,9 @@ Then, from inside your new `packages/<name>`:
 - Remove the `.git` directory
 - Run the migration script from root `pnpm migrate <name>` to update
   package.json
+- cd back into `packages/<name>`
 - Delete `package-lock.json`
-- Run `pmpm install`
+- Run `pnpm install`
 - Remove the `docs` and `lib` dirs
 - Remove `.prettierrc` - although you may want to check the rules against the
   root `.prettierrc` file.
@@ -98,6 +99,8 @@ Then, from inside your new `packages/<name>`:
 - Update the readme as required
 - - `npm` references should change to `pnpm`
 - - docs are now generated with `pnpm build docs`
+- - replace `make` with `pnpm build`
+- run `pnpm build`
 - Update tests and get them passing
   - Ensure `--experimental-specifier-resolution=node` is passed through to mocha
     (the migration utility should handle this)
