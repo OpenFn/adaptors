@@ -16,21 +16,20 @@ jobs:
     name: 'Build and Test'
     runs-on: ubuntu-latest
 
-    # TODO idk if we need this - this monorepo needs to support node 14 right now
-    # strategy:
-    #   matrix:
-    #     node-version: [14.x, 16.x, 18.x]
+    strategy:
+      matrix:
+        node-version: [18]
 
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 7.13.2
       - name: Setup node ${{ matrix.node-version }}
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
