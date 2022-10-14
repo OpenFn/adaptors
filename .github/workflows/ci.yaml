@@ -1,4 +1,4 @@
-name: CI build & test
+name: CI
 
 # on: push
 # TMP: only run on this branch
@@ -32,11 +32,13 @@ jobs:
           node-version: '14'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-  
+
   build:
     needs: setup
-    - run: pnpm run test
+    steps:
+      - run: pnpm run test
 
-  test: 
+  test:
     needs: setup
-    - run: pnpm run build
+    steps:
+      - run: pnpm run build
