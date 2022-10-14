@@ -37,10 +37,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'pnpm'
       - run: pnpm run test
 
   test:
     runs-on: ubuntu-latest
     needs: setup
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'pnpm'
       - run: pnpm run build
