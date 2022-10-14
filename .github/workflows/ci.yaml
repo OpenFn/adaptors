@@ -1,0 +1,32 @@
+name: CI
+
+# Runs when a pull request is created or its head is updead
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+on: pull_request
+
+jobs:
+  build:
+    name: 'Build and Test'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.13.2
+      - name: Setup node ${{ matrix.node-version }}
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Setup pnpm
+        run: pnpm install --frozen-lockfile
+      - name: Unit Tests
+        run: pnpm run test
+      - name: Build
+        run: pnpm run build
