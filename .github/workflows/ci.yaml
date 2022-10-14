@@ -37,18 +37,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-          cache: 'pnpm'
+      # This should restore the pnpm cache I think?
+      - uses: pnpm/action-setup@v2
       - run: pnpm run test
 
   test:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-          cache: 'pnpm'
+      # This should restore the pnpm cache I think?
       - run: pnpm run build
