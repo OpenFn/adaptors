@@ -28,7 +28,5 @@ jobs:
         with:
           node-version: '14'
           cache: 'pnpm'
-      - name: test
       - run: pnpm test
-      - name: build
       - run: pnpm run build
