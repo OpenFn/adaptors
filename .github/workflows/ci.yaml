@@ -12,7 +12,8 @@ name: CI
 on: pull_request
 
 jobs:
-  setup:
+  build:
+    name: 'Build and Test'
     runs-on: ubuntu-latest
 
     # TODO idk if we need this - this monorepo needs to support node 14 right now
@@ -31,7 +32,8 @@ jobs:
         with:
           node-version: '14'
           cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+      - name: Setup pnpm
+        run: pnpm install --frozen-lockfile
       - name: Unit Tests
         run: pnpm run test
       - name: Build
