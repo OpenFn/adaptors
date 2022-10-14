@@ -1,12 +1,5 @@
 name: CI
 
-# on: push
-# TMP: only run on this branch
-# I suppose that doesn't matter as other branches won't have the config!
-# on:
-#   push:
-#     branches: ['actions']
-
 # Runs when a pull request is created or its head is updead
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on: pull_request
