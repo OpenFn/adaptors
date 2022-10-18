@@ -2,7 +2,6 @@
   "name": "@openfn/buildtools",
   "version": "1.0.1",
   "description": "builder tool for openfn adaptors",
-  "private": true,
   "type": "module",
   "bin": {
     "build-adaptor": "src/cli.ts"
