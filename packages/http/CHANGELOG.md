@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 4.1.0
+
+### Minor Changes
+
+- 8e1b86d: update http to new format
+
 ## 4.0.1
 
 ### Patch Changes
