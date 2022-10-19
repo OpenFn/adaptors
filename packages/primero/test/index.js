@@ -65,7 +65,7 @@ describe('The execute() function', () => {
   });
 });
 
-describe('The getCases() function', () => {
+describe.skip('The getCases() function', () => {
   before(() => {
     nock('https://www.example.com').persist().get('/api/cases').reply(200, {
       httpStatus: 'OK',
