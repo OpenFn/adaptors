@@ -1,6 +1,8 @@
 # Adaptors Monorepo
 
-New home for all @openfn language adaptors.
+The new home for all @openfn language adaptors.
+
+**N.B.: We hope to migrate our 60+ adaptors here over the coming weeks.** 
 
 This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
 on your machine.
