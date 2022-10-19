@@ -128,6 +128,9 @@ Then, from inside your new `packages/<name>`:
   `esdoc.json`)
 - Remove the `.gitignore` file (update the top level ignore if neccessary)
 - Remove the `Makefile`
+- Remove the `.devcontainer`
+- Remove the `.tool-versions`
+- Remove the `travis.yml`
 - Update the readme (see the `Readme` below)
 - Fix unit tests (see `Tests` below)
 - run `pnpm changeset` from the repo root to register a changeset (add a minor
