@@ -37,6 +37,37 @@ importers:
       rimraf: 3.0.2
       sinon: 1.17.7
 
+  packages/beyonic:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.0
+      JSONPath: ^0.10.0
+      assertion-error: ^1.0.1
+      chai: ^3.4.0
+      deep-eql: ^0.1.3
+      esno: ^0.16.3
+      language-common: github:openfn/language-common
+      lodash-fp: ^0.10.2
+      mocha: ^7.1.1
+      rimraf: ^3.0.2
+      sinon: ^1.17.2
+      superagent: ^1.7.2
+      superagent-mock: ^1.10.0
+    dependencies:
+      JSONPath: 0.10.0
+      language-common: github.com/openfn/language-common/d9ef5e47ee156906cabd79d874bc44096ca139fd
+      lodash-fp: 0.10.4
+      superagent: 1.8.5
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 7.2.0
+      rimraf: 3.0.2
+      sinon: 1.17.7
+      superagent-mock: 1.12.0
+
   packages/dhis2:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
@@ -966,6 +997,8 @@ packages:
       date-fns: 2.29.3
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
     dev: false
     bundledDependencies:
       - axios
@@ -1128,6 +1161,12 @@ packages:
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
     dev: true
+
+  /JSONPath/0.10.0:
+    resolution: {integrity: sha512-lHY1b16vUBuvjuz6m82KQTBp4+ckFmfM0VQB3pe+MPwBx99ARVOTrISXt5yxs3DqADzE79s8xZlBjRfOIIwsaQ==}
+    dependencies:
+      underscore: 1.13.6
+    dev: false
 
   /JSONStream/1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -1340,6 +1379,9 @@ packages:
     resolution: {integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==}
     engines: {node: '>=4'}
     dev: true
+
+  /async/1.5.2:
+    resolution: {integrity: sha512-nSVgobk4rv61R9PUSDtYt7mPVB2olxNR5RWJcAsH676/ef11bUZwvu7+RGYrYauVdDPcO519v68wRhXQtxsV9w==}
 
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
@@ -1758,6 +1800,9 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
+  /component-emitter/1.2.1:
+    resolution: {integrity: sha512-jPatnhd33viNplKjqXKRkGU345p263OIWzDL2wH3LGIGp5Kojo+uXizHmOADRvhGFFTnJqX3jBAKP6vvmSDKcA==}
+
   /component-emitter/1.3.0:
     resolution: {integrity: sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==}
     dev: true
@@ -1783,6 +1828,9 @@ packages:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
     dependencies:
       safe-buffer: 5.1.2
+
+  /cookiejar/2.0.6:
+    resolution: {integrity: sha512-X9IsySmsr1heROBZCpyEYhqJyU7CXNJoVxIlQ5bBb7DskYUx0mQ+g2f7yPYajceZeGJWHQbIfGB6j0hywV/ARQ==}
 
   /cookiejar/2.1.3:
     resolution: {integrity: sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==}
@@ -1907,7 +1955,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.0.0
-    dev: true
 
   /debug/3.2.6_supports-color@6.0.0:
     resolution: {integrity: sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==}
@@ -2743,6 +2790,9 @@ packages:
       strip-final-newline: 2.0.0
     dev: false
 
+  /extend/3.0.0:
+    resolution: {integrity: sha512-5mYyg57hpD+sFaJmgNL9BidQ5C7dmJE3U5vzlRWbuqG+8dytvYEoxvKs6Tj5cm3LpMsFvRt20qz1ckezmsOUgQ==}
+
   /extend/3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
@@ -2919,6 +2969,14 @@ packages:
     resolution: {integrity: sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==}
     dev: false
 
+  /form-data/1.0.0-rc3:
+    resolution: {integrity: sha512-Z5JWXWsFDI8x73Rt/Dc7SK/EvKBzudhqIVBtEhcAhtoevCTqO3YJmctGBLzT0Ggg39xFcefkXt00t1TYLz6D0w==}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      async: 1.5.2
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
   /form-data/2.3.3:
     resolution: {integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==}
     engines: {node: '>= 0.12'}
@@ -2951,6 +3009,11 @@ packages:
     dependencies:
       samsam: 1.1.2
     dev: true
+
+  /formidable/1.0.17:
+    resolution: {integrity: sha512-95MFT5qipMvUiesmuvGP1BI4hh5XWCzyTapiNJ/k8JBQda7rPy7UCWYItz2uZEdTgGNy1eInjzlL9Wx1O9fedg==}
+    engines: {node: '>=0.8.0'}
+    deprecated: 'Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau'
 
   /formidable/1.2.6:
     resolution: {integrity: sha512-KcpbcpuLNOwrEjnbpMC0gS+X8ciDoZE1kkqzat4a8vrprf+s9pKNQ/QIwWfbfs4ltgmFl3MD177SNTkve3BwGQ==}
@@ -3559,7 +3622,6 @@ packages:
 
   /isarray/0.0.1:
     resolution: {integrity: sha512-D2S+3GLxWH+uhrNEcoh/fnmYeP8E8/zHl644d/jdA0g2uyXvy3sb0qxotE+ne0LtccHknQzWwZEzhak7oJ0COQ==}
-    dev: true
 
   /isarray/1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
@@ -3865,6 +3927,17 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-compat/3.10.2:
+    resolution: {integrity: sha512-k8SE/OwvWfYZqx3MA/Ry1SHBDWre8Z8tCs0Ba0bF5OqVNvymxgFZ/4VDtbTxzTvcoG11JpTMFsaeZp/yGYvFnA==}
+    dev: false
+
+  /lodash-fp/0.10.4:
+    resolution: {integrity: sha512-KJUJA9HNSHpRlFEnpmcNpO8Ig2UG0aHvWeYIZoXTZ6aXHVeREsdHcU/uHkYX6VtXGUnPoh47gLgeFzsUY8PJtQ==}
+    deprecated: This package is discontinued. See https://github.com/lodash/lodash/wiki/FP-Guide.
+    dependencies:
+      lodash-compat: 3.10.2
+    dev: false
+
   /lodash.get/4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
 
@@ -4019,7 +4092,6 @@ packages:
   /methods/1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
     engines: {node: '>= 0.6'}
-    dev: true
 
   /micromatch/4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
@@ -4037,6 +4109,10 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
+
+  /mime/1.3.4:
+    resolution: {integrity: sha512-sAaYXszED5ALBt665F0wMQCUXpGuZsGdopoqcHPdL39ZYdi7uHoZlhrfZfhv8WzivhBzr/oXwaj+yiK5wY8MXQ==}
+    hasBin: true
 
   /mime/1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -4204,7 +4280,6 @@ packages:
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
-    dev: true
 
   /ms/2.1.1:
     resolution: {integrity: sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==}
@@ -4697,6 +4772,13 @@ packages:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
 
+  /qs/2.3.3:
+    resolution: {integrity: sha512-f5M0HQqZWkzU8GELTY8LyMrGkr3bPjKoFtTkwUEqJQbcljbeK8M7mliP9Ia2xoOI6oMerp+QPS7oYJtpGmWe/A==}
+
+  /qs/2.4.2:
+    resolution: {integrity: sha512-Ur2glV49dt6jknphzkWeLUNCy7pmwGxGaEJuuxVVBioSwQzT00cZPLEtRqr4cg/iO/6N+RbfB0lFD2EovyeEng==}
+    dev: true
+
   /qs/6.11.0:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
@@ -4755,6 +4837,14 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
+  /readable-stream/1.0.27-1:
+    resolution: {integrity: sha512-uQE31HGhpMrqZwtDjRliOs2aC3XBi+DdkhLs+Xa0dvVD5eDiZr3+k8rKVZcyTzxosgtMw7B/twQsK3P1KTZeVg==}
+    dependencies:
+      core-util-is: 1.0.2
+      inherits: 2.0.4
+      isarray: 0.0.1
+      string_decoder: 0.10.31
+
   /readable-stream/2.3.7:
     resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
     dependencies:
@@ -4796,6 +4886,9 @@ packages:
       indent-string: 4.0.0
       strip-indent: 3.0.0
     dev: true
+
+  /reduce-component/1.0.1:
+    resolution: {integrity: sha512-y0wyCcdQul3hI3xHfIs0vg/jSbboQc/YTOAqaxjFG7At+XSexduuOqBVL9SmOLSwa/ldkbzVzdwuk9s2EKTAZg==}
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
@@ -5236,6 +5329,9 @@ packages:
       define-properties: 1.1.4
       es-abstract: 1.20.4
 
+  /string_decoder/0.10.31:
+    resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==}
+
   /string_decoder/1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
@@ -5307,12 +5403,40 @@ packages:
       ts-interface-checker: 0.1.13
     dev: false
 
+  /superagent-mock/1.12.0:
+    resolution: {integrity: sha512-jrQDaHRhRtoE3GD2BiT14HfRdwveR8plbChhdHXw+7/Ln5kV26iPrga5hjhe0dAehOTPUgwtH4ct2TzvPyAr1Q==}
+    dependencies:
+      qs: 2.4.2
+      superagent: 1.8.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /superagent-mock/4.0.0:
     resolution: {integrity: sha512-+xj+q+sL5sJIcFxwmj5Wuq59Kns0ocOd8OrMkbEXEwseWImAVvM7cP8G7raQRZ+vloUN32t/yKosD+YAXa9rcg==}
     engines: {node: '>=10'}
     peerDependencies:
       superagent: '>=3.6.0'
     dev: true
+
+  /superagent/1.8.5:
+    resolution: {integrity: sha512-4h4R6fISQXvgjIqZ8DjONYy3y2XPxgZO0LgHsBI6tDAEhzJLpWuK+thM60SmUiERJOEJzmxlIGx/GP6+azky/A==}
+    engines: {node: '>= 0.8'}
+    deprecated: Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>.
+    dependencies:
+      component-emitter: 1.2.1
+      cookiejar: 2.0.6
+      debug: 2.6.9
+      extend: 3.0.0
+      form-data: 1.0.0-rc3
+      formidable: 1.0.17
+      methods: 1.1.2
+      mime: 1.3.4
+      qs: 2.3.3
+      readable-stream: 1.0.27-1
+      reduce-component: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
 
   /superagent/3.8.3:
     resolution: {integrity: sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==}
@@ -6033,3 +6157,21 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/openfn/language-common/d9ef5e47ee156906cabd79d874bc44096ca139fd:
+    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/d9ef5e47ee156906cabd79d874bc44096ca139fd}
+    name: '@openfn/language-common'
+    version: 1.7.3
+    dependencies:
+      axios: 0.21.4
+      date-fns: 2.29.3
+      jsonpath-plus: 4.0.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
+    dev: false
+    bundledDependencies:
+      - axios
+      - date-fns
+      - jsonpath-plus
+      - lodash
