@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 3.2.0
+
+### Minor Changes
+
+- f670bf8: Added credential schema to enable new ui
+
 ## 3.1.0
 
 ### Minor Changes

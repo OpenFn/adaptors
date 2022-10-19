@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 2.9.1
+
+### Patch Changes
+
+- d4ac748: Skipped failing test until we have a new strat (it's working)
+
 ## 2.9.0
 
 ### Minor Changes

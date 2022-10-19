@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 4.2.0
+
+### Minor Changes
+
+- f670bf8: Added credential schema to enable new ui
+
 ## 4.1.0
 
 ### Minor Changes
