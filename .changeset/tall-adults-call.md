@@ -1,5 +1,5 @@
 ---
-'@openfn/language-primero': major
+'@openfn/language-primero': minor
 ---
 
 add language primero into monorepo
