@@ -52,6 +52,7 @@ export function list(dirPath) {
         return sftp.list(dirPath);
       })
       .then(files => {
+        // TODO: should we remove this?
         // process.stdout.write(`File list: ${JSON.stringify(files, null, 2)}\n`);
         const nextState = composeNextState(state, files);
         sftp.end();
