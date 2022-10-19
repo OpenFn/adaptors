@@ -1,0 +1,969 @@
+{
+  "operations": [
+    {
+      "name": "getCases",
+      "params": [
+        "query",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get cases from Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getCases({\n  remote: true,\n  case_id: '6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz'\n  query: 'sex=male' // optional\n}, { withReferrals: true }, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with a query param at minimum, option to getReferrals",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) an object with a getReferrals key to fetch referrals",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createCase",
+      "params": [
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Create case in Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createCase({\n  data: state => data {\n    \"enabled\": true,\n    \"age\": 15,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n    \"owned_by\": \"primero_cp\"\n  }}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with some case data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateCase",
+      "params": [
+        "id",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Update case in Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "updateCase(\"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\", {\n  data: state => data {\n    \"age\": 20,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n  }}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an ID to use for the update.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "an object with some case data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertCase",
+      "params": [
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert case to Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertCase({\n  externalIds: ['case_id'],\n  data: state => ({\n    \"age\": 20,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n  })\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with an externalId and some case data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getReferrals",
+      "params": [
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get referrals for a specific case in Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getReferrals({\n  externalId: \"record_id\",\n  id: \"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\",\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createReferrals",
+      "params": [
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Create referrals in Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createReferrals({\n  data: {\n    \"ids\": ['case_id'],\n     \"transitioned_to\": \"primero_cp\",\n     \"notes\": \"Creating a referral\"\n  }\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with referral data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateReferral",
+      "params": [
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Update a single referral for a specific case in Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "updateReferral({\n  caseExternalId: \"record_id\",\n  caseId: \"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\"\n  id: \"37612f65-3bda-48eb-b526-d31383f94166\",\n  data: state => state.data\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with an externalId value to use, the id and the referral id to update.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getForms",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get forms from Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getForms({\n  record_type: '' // Optional. Filters by the record type of the form,\n  module_id: 'id' //Optional. Filter forms by module,\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with a query param at minimum",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getLookups",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get lookups from Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getLookups({\n  page: 1 // Optional. Pagination. Defaults to 1,\n  per: 20 // Optional. Records per page. Defaults to 20,\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with a query param at minimum",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getLocations",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get locations from Primero",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getLocations({\n  page: 1 // Optional.\n  per: 20 // Optional. Records per page,\n  hierarchy: // Defaults to false,\n}, callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with a query param at minimum",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [
+        "fields"
+      ],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ]
+}

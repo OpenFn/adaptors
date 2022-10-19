@@ -1,0 +1,6 @@
+language: node_js
+node_js:
+- node   # Current stable, i.e. 13 in October, 2019
+- lts/*  # Most recent LTS version, i.e. 12 in October, 2019
+- 10     # Explicitly include an active LTS version
+- 8      # Explicitly include the maintenance LTS version
