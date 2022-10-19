@@ -370,7 +370,7 @@ export function upsertCase(params, callback) {
     const { url } = state.configuration;
     const { data, externalIds } = expandReferences(params)(state);
 
-    var qs = {
+    const qs = {
       remote: true,
       scope: {},
     };
@@ -412,9 +412,7 @@ export function upsertCase(params, callback) {
             resolve(createCase({ data }, callback)(state));
           } else if (resp.data.length > 0) {
             console.log('Case found. Performing update.');
-            resolve(
-              updateCase(resp.data[0].id, { data: state.data }, callback)(state)
-            );
+            resolve(updateCase(resp.data[0].id, { data }, callback)(state));
           }
         }
       });
