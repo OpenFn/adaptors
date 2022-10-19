@@ -1,12 +1,13 @@
-import Adaptor from '../src/Adaptor';
-import { expect } from 'chai';
+import Adaptor from '../src';
+import pkg from 'chai';
+const { expect } = pkg;
 import nock from 'nock';
 
 const { execute, getCases, alterState } = Adaptor;
 
 function stdGet(state) {
   return execute(get('https://www.example.com/api/fake', {}))(state).then(
-    (nextState) => {
+    nextState => {
       const { data, references } = nextState;
       expect(data).to.eql({ httpStatus: 'OK', message: 'the response' });
       expect(references).to.eql([{ triggering: 'event' }]);
@@ -16,7 +17,7 @@ function stdGet(state) {
 
 function clientReq(method, state) {
   return execute(method('https://www.example.com/api/fake', {}))(state).then(
-    (nextState) => {
+    nextState => {
       const { data, references } = nextState;
       expect(data).to.eql({ httpStatus: 'OK', message: 'the response' });
       expect(references).to.eql([{ a: 1 }]);
@@ -25,35 +26,35 @@ function clientReq(method, state) {
 }
 
 describe('The execute() function', () => {
-  it('executes each operation in sequence', (done) => {
+  it('executes each operation in sequence', done => {
     let state = {};
     let operations = [
-      (state) => {
+      state => {
         return { counter: 1 };
       },
-      (state) => {
+      state => {
         return { counter: 2 };
       },
-      (state) => {
+      state => {
         return { counter: 3 };
       },
     ];
 
     execute(...operations)(state)
-      .then((finalState) => {
+      .then(finalState => {
         expect(finalState).to.eql({ counter: 3 });
       })
       .then(done)
       .catch(done);
   });
 
-  it('assigns references, data to the initialState', (done) => {
+  it('assigns references, data to the initialState', done => {
     let state = {};
 
     let finalState = execute()(state);
 
     execute()(state)
-      .then((finalState) => {
+      .then(finalState => {
         expect(finalState).to.eql({
           references: [],
           data: null,
@@ -89,16 +90,16 @@ describe('The getCases() function', () => {
     };
 
     return execute(
-      alterState((state) => {
+      alterState(state => {
         state.counter = 1;
         return state;
       }),
       getCases({}),
-      alterState((state) => {
+      alterState(state => {
         state.counter = 2;
         return state;
       })
-    )(state).then((nextState) => {
+    )(state).then(nextState => {
       const { data, references, counter } = nextState;
       expect(data).to.eql({ httpStatus: 'OK', message: 'the response' });
       expect(references).to.eql([{ triggering: 'event' }]);
