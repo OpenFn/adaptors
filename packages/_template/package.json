@@ -3,7 +3,6 @@
   "version": "1.7.0",
   "description": "An adaptor template for OpenFn",
   "type": "module",
-  "private": "false",
   "main": "lib/index.js",
   "scripts": {
     "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
