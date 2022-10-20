@@ -2,6 +2,7 @@
   "name": "@openfn/language-template",
   "version": "1.6.0",
   "description": "An adaptor template for OpenFn",
+  "type": "module",
   "main": "lib/index.js",
   "scripts": {
     "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
@@ -33,7 +34,7 @@
     "@babel/register": "^7.9.0",
     "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.0.1",
-    "chai": "^3.4.0",
+    "chai": "^4.3.0",
     "deep-eql": "^0.1.3",
     "jsdoc": "^3.6.10",
     "mocha": "^9.2.2",
@@ -43,9 +44,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OpenFn/adaptor.git"
-  },
-  "bundledDependencies": [
-    "@openfn/language-common",
-    "axios"
-  ]
+  }
 }

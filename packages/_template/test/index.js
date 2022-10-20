@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-import nock, { back } from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import nock from 'nock';
+import * as Adaptor from '../src/Adaptor.js';
 
-import Adaptor from '../lib';
 const { execute, create, dataValue } = Adaptor;
 
 describe('execute', () => {
@@ -155,5 +154,4 @@ describe('createPatient', () => {
       gender: 'M',
     });
   });
-
 });
