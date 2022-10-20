@@ -150,7 +150,7 @@ Then, from inside your new `packages/<name>`:
 - Remove the `Makefile`
 - Remove the `.devcontainer`
 - Remove the `.tool-versions`
-- Remove the `travis.yml` (or `.travis.yml`)
+- Remove the all files related to Travis CI (`travis.yml`, `.travis.yml`, ...)
 - Update the readme (see the `Readme` below)
 - Fix unit tests (see `Tests` below)
 - run `git add packages/<name>` from the root folder to allow pnpm to detect
