@@ -39,7 +39,9 @@ sql({
 
 ## Find a single value for a table
 
-This helper function allows to build a specific query where `sql` would not be best suited. It returns a single value and not a promise. An example of usage would be in building a mapping object with a value from a lookup table.
+This helper function allows to build a specific query where `sql` would not be
+best suited. It returns a single value and not a promise. An example of usage
+would be in building a mapping object with a value from a lookup table.
 
 ```js
 fn(async state => {
@@ -81,7 +83,8 @@ insert(
 
 ## Insert or Update using a unique column as a key
 
-This function insert or update depending on the existence of a record in the database.
+This function insert or update depending on the existence of a record in the
+database.
 
 ```js
 upsert(
@@ -99,7 +102,8 @@ upsert(
 
 ## Insert or Update if a value exist in the record
 
-This function will upsert a record only if the logical given is true. In this case we check if `dataValue('name')` exists.
+This function will upsert a record only if the logical given is true. In this
+case we check if `dataValue('name')` exists.
 
 ```js
 upsertIf(
@@ -144,7 +148,8 @@ insertMany(
 
 ## Insert or Update Many records
 
-This function inserts or updates many records all at once depending on their existence in the database.
+This function inserts or updates many records all at once depending on their
+existence in the database.
 
 ```js
 // Note that insertMany takes a function which returns an array—this helps
@@ -164,7 +169,8 @@ upsertMany(
 );
 ```
 
-In case we need to check on multiple columns before upserting, we can have an array of `uuids`.
+In case we need to check on multiple columns before upserting, we can have an
+array of `uuids`.
 
 ```js
 upsertMany(
@@ -185,7 +191,8 @@ upsertMany(
 
 ## Describe a table from mssql
 
-This function is used to fetch the list of columns of a given table in the database.
+This function is used to fetch the list of columns of a given table in the
+database.
 
 ```js
 describeTable('users', { writeSql: false, execute: true });
@@ -193,7 +200,8 @@ describeTable('users', { writeSql: false, execute: true });
 
 ## Create a table in the database
 
-This function allows to create a table in a database from a given array of columns. The key `identity` can be use for a column to auto-generate a value.
+This function allows to create a table in a database from a given array of
+columns. The key `identity` can be use for a column to auto-generate a value.
 
 ```js
 insertTable('users', state =>
@@ -208,7 +216,8 @@ insertTable('users', state =>
 
 ## Alter a table in the database
 
-This function allows to add new columns to a table. Beware of the fact that you cannot add new columns with names that already exist in the table.
+This function allows to add new columns to a table. Beware of the fact that you
+cannot add new columns with names that already exist in the table.
 
 ```js
 modifyTable(
@@ -226,10 +235,11 @@ modifyTable(
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
 
-To build the docs for this repo, run `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
+To just build the docs run `pnpm build docs`
