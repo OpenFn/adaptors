@@ -117,7 +117,13 @@ artefacts removed and the package.json updated.
 
 This checklist walks you through the process.
 
-First, copy the adaptor into `packages/<name>` (ignoring the `language-` prefix,
+First, create a new branch for your work:
+
+```
+git checkout -b migrate_<name>
+```
+
+Then, copy the adaptor into `packages/<name>` (ignoring the `language-` prefix,
 ie, `language-http` -> `http`). You can `cd` into `package` and `git clone`
 straight from github if you like.
 
@@ -149,6 +155,8 @@ Then, from inside your new `packages/<name>`:
 - Fix unit tests (see `Tests` below)
 - run `pnpm changeset` from the repo root to register a changeset (add a minor
   version bump for the package).
+- Commit your changes, including the changeset, and open a pull request against
+  `main`.
 
 ### Readme
 
