@@ -1,0 +1,48 @@
+{
+  "name": "@openfn/language-template",
+  "version": "1.6.0",
+  "description": "An adaptor template for OpenFn",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "ast": "simple-ast --adaptor ./src/Adaptor.js --output ast.json",
+    "build": "node_modules/.bin/babel src -d lib && npm run ast",
+    "postversion": "git push && git push --tags",
+    "test": "mocha --require @babel/register",
+    "test:watch": "mocha -w --require @babel/register",
+    "version": "npm run build && git add -A lib ast.json"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/",
+    "ast.json"
+  ],
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+    "@openfn/language-common": "^1.7.1",
+    "axios": "0.26.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/plugin-proposal-function-bind": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/register": "^7.9.0",
+    "@openfn/simple-ast": "^0.4.1",
+    "assertion-error": "^1.0.1",
+    "chai": "^4.3.0",
+    "deep-eql": "^0.1.3",
+    "jsdoc": "^3.6.10",
+    "mocha": "^9.2.2",
+    "nock": "^12.0.3",
+    "sinon": "^1.17.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenFn/adaptor.git"
+  }
+}
