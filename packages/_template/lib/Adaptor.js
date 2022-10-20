@@ -103,7 +103,7 @@ export function createPatient(params, callback) {
       return nextState;
     });
   };
-} // What functions do you want from the common adaptor?
+}
+export { axios }; // What functions do you want from the common adaptor?
 
 export { alterState, dataPath, dataValue, dateFns, each, field, fields, fn, http, lastReferenceValue, merge, sourceValue } from '@openfn/language-common';
-exports.axios = axios;
