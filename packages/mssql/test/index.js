@@ -1,4 +1,5 @@
-import { expect } from 'chai';
+import pkg from 'chai';
+const { expect } = pkg;
 
 import Adaptor from '../src';
 const { execute, event } = Adaptor;
@@ -32,7 +33,11 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    let state = {};
+    let state = {
+      configuration: {
+        server: 'testurl',
+      },
+    };
 
     let finalState = execute()(state);
 
