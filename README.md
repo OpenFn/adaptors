@@ -2,7 +2,7 @@
 
 The new home for all @openfn language adaptors.
 
-**N.B.: We hope to migrate our 60+ adaptors here over the coming weeks.** 
+**N.B.: We hope to migrate our 60+ adaptors here over the coming weeks.**
 
 This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
 on your machine.
@@ -74,9 +74,13 @@ pnpm changeset version
 
 This will bump all changed packages and update their release notes.
 
-Then run `pnpm install` and commit any changes.
+Then install packages and commit changes with:
 
-To build the adaptors
+```
+pnpm install
+```
+
+Build the adaptors with:
 
 ```
 pnpm -r run build
@@ -85,7 +89,14 @@ pnpm -r run build
 To publish the release, run:
 
 ```
-pnpm publish -r
+changeset publish
+```
+
+And finally, push the tags to Github so that the source code can be browsed for
+each new release with:
+
+```
+git push --follow-tags
 ```
 
 ## Build tooling
@@ -123,6 +134,7 @@ Then, from inside your new `packages/<name>`:
 - Remove the `.git` directory
 - Commit your changes `git commit -am "cloned <name> into monorepo"`
 - Delete `package-lock.json`
+- Remove `bundledDependencies` from package.json
 - Run `pnpm install`
 - Remove the `docs` and `lib` dirs
 - Remove `.prettierrc`
@@ -179,7 +191,7 @@ Although adaptors use EJS syntax, many used to transpile through babel into CJS
 format.
 
 You will probably find that `chai` and `lodash` throw exceptions when you try
-and run the tests. To fix this, read closely the error message that is returnd.
+and run the tests. To fix this, read closely the error message that is returned.
 You probably need to change the import from:
 
 ```
