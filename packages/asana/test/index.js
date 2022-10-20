@@ -37,3 +37,13 @@ describe('execute', () => {
     });
   });
 });
+
+describe.skip('getTask', () => {});
+
+describe.skip('getTasks', () => {});
+
+describe.skip('updateTask', () => {});
+
+describe.skip('createTask', () => {});
+
+describe.skip('upsertTask', () => {});
