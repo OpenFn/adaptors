@@ -5,8 +5,6 @@
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor beyonic",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rm -rf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
