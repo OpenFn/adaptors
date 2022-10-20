@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-template",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "An adaptor template for OpenFn",
   "type": "module",
   "main": "dist/index.cjs",
