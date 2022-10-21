@@ -12,13 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openfn/simple-ast": "^0.4.1",
-    "@types/node": "^18.8.4",
-    "esno": "^0.16.3",
-    "jsdoc-api": "^7.1.1",
-    "ts-node": "^10.9.1",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.4",
-    "yargs": "^17.6.0"
+    "@openfn/simple-ast": "0.4.1",
+    "@types/node": "18.11.3",
+    "esno": "0.16.3",
+    "jsdoc-api": "7.1.1",
+    "ts-node": "10.9.1",
+    "tsup": "6.3.0",
+    "typescript": "4.8.4",
+    "yargs": "17.6.0"
   }
 }
