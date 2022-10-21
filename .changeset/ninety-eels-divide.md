@@ -1,5 +1,5 @@
 ---
-'language-beyonic': minor
+'@openfn/language-beyonic': minor
 ---
 
 Moving language-beyonic to adaptors/packages/beyonic
