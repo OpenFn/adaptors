@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "loginUrl": {
+            "title": "Login URL",
+            "type": "string",
+            "description": "The Salesforce instance login URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "The username to log in the Salesforce instance",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "The password to log in the Salesforce instance",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "securityToken": {
+            "title": "Security Token",
+            "type": "string",
+            "description": "The security token to access the Salesforce instance",
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "host",
+        "database"
+    ]
+}
