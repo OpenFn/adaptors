@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.6.2
+
+### Patch Changes
+
+- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+
 ## 0.6.1
 
 ### Patch Changes

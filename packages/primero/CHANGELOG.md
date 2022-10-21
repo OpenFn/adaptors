@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 2.9.2
+
+### Patch Changes
+
+- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+
 ## 2.9.1
 
 ### Patch Changes

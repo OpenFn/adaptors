@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mssql",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "A Microsoft SQL language pack for OpenFn",
   "main": "dist/index.cjs",
   "homepage": "https://docs.openfn.org",

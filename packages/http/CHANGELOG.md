@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 4.2.1
+
+### Patch Changes
+
+- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+
 ## 4.2.0
 
 ### Minor Changes
