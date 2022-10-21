@@ -89,7 +89,7 @@ pnpm -r run build
 To publish the release, run:
 
 ```
-changeset publish
+pnmp changeset publish
 ```
 
 And finally, push the tags to Github so that the source code can be browsed for
