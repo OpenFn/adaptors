@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@changesets/cli': ^2.25.0
+      '@changesets/cli': 2.25.0
     devDependencies:
       '@changesets/cli': 2.25.0
 
@@ -12,16 +12,16 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': ^1.7.1
-      '@openfn/simple-ast': ^0.4.1
-      assertion-error: ^1.0.1
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
       axios: 0.26.1
-      chai: ^4.3.0
-      deep-eql: ^0.1.3
-      esno: ^0.16.3
-      mocha: ^9.2.2
-      nock: ^12.0.3
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      chai: 4.3.6
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 9.2.2
+      nock: 12.0.3
+      rimraf: 3.0.2
+      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': 1.7.3
       axios: 0.26.1
@@ -41,15 +41,15 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': ^1.6.2
-      '@openfn/simple-ast': ^0.3.2
-      assertion-error: ^1.0.1
-      chai: ^4.2.0
-      deep-eql: ^4.0.0
-      esno: ^0.16.3
-      mocha: ^7.1.0
-      nock: ^13.0.5
-      rimraf: ^3.0.2
-      sinon: ^9.2.3
+      '@openfn/simple-ast': 0.3.2
+      assertion-error: 1.1.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 7.2.0
+      nock: 13.2.9
+      rimraf: 3.0.2
+      sinon: 9.2.4
     dependencies:
       '@openfn/language-common': 1.7.3
     devDependencies:
@@ -68,17 +68,17 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       JSONPath: ^0.10.0
-      assertion-error: ^1.0.1
-      chai: ^3.4.0
-      deep-eql: ^0.1.3
-      esno: ^0.16.3
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
       language-common: github:openfn/language-common
       lodash-fp: ^0.10.2
-      mocha: ^7.1.1
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      mocha: 7.2.0
+      rimraf: 3.0.2
+      sinon: 1.17.7
       superagent: ^1.7.2
-      superagent-mock: ^1.10.0
+      superagent-mock: 1.12.0
     dependencies:
       JSONPath: 0.10.0
       language-common: github.com/openfn/language-common/d9ef5e47ee156906cabd79d874bc44096ca139fd
@@ -99,19 +99,19 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.6.2
-      '@openfn/simple-ast': ^0.4.0
-      assertion-error: ^1.0.1
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
       axios: ^0.24.0
-      chai: ^3.4.0
-      chai-http: ^4.3.0
-      deep-eql: ^0.1.3
-      esno: ^0.16.3
+      chai: 3.5.0
+      chai-http: 4.3.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
       lodash: ^4.17.19
-      mocha: ^7.1.1
-      nock: ^13.0.5
+      mocha: 7.2.0
+      nock: 13.2.9
       qs: ^6.10.3
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      rimraf: 3.0.2
+      sinon: 1.17.7
     dependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/language-common': 1.6.2
@@ -134,22 +134,22 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.7.1
-      '@openfn/simple-ast': ^0.4.1
-      '@types/node': ^18.8.4
-      chai: ^4.2.0
+      '@openfn/simple-ast': 0.4.1
+      '@types/node': 18.11.3
+      chai: 4.3.6
       cheerio: ^1.0.0-rc.10
       cheerio-tableparser: ^1.0.1
       csv-parse: ^4.10.1
-      deep-eql: ^4.0.0
-      esno: ^0.16.3
+      deep-eql: 4.1.1
+      esno: 0.16.3
       fast-safe-stringify: ^2.0.7
       form-data: ^3.0.0
       import: 0.0.6
       lodash: ^4.17.19
-      mocha: ^9.2.2
-      nock: ^13.0.5
+      mocha: 9.2.2
+      nock: 13.2.9
       request: ^2.88.2
-      sinon: ^9.2.3
+      sinon: 9.2.4
       tough-cookie: ^4.0.0
     dependencies:
       '@openfn/language-common': 1.7.1
@@ -165,7 +165,7 @@ importers:
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: 0.16.3
@@ -177,16 +177,16 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': 1.6.2
-      '@openfn/simple-ast': ^0.4.1
-      assertion-error: ^1.0.1
-      chai: ^3.4.0
-      deep-eql: ^0.1.3
-      esno: ^0.16.3
-      mocha: ^10.0.0
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 10.1.0
       request: 2.88.0
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
-      superagent-mock: ^4.0.0
+      rimraf: 3.0.2
+      sinon: 1.17.7
+      superagent-mock: 4.0.0
       tedious: 15.1.0
     dependencies:
       '@openfn/language-common': 1.6.2
@@ -208,17 +208,17 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': 1.6.2
-      '@openfn/simple-ast': ^0.4.1
-      assertion-error: ^1.0.1
-      chai: ^3.4.0
-      deep-eql: ^0.1.3
-      esno: ^0.16.3
-      mocha: ^7.1.1
-      nock: ^12.0.3
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 7.2.0
+      nock: 12.0.3
       pg: ^8.3.2
       pg-format: ^1.0.4
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      rimraf: 3.0.2
+      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': 1.6.2
       pg: 8.8.0
@@ -239,23 +239,23 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': 1.7.1
-      '@openfn/simple-ast': ^0.4.1
-      assertion-error: ^1.0.1
-      chai: ^3.4.0
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
       cheerio: ^1.0.0-rc.10
       cheerio-tableparser: 1.0.1
       csv-parse: ^4.8.3
-      deep-eql: ^0.1.3
-      eslint: ^6.8.0
-      eslint-config-prettier: ^6.10.1
-      eslint-plugin-prettier: ^3.1.2
-      esno: ^0.16.3
-      mocha: ^7.1.1
-      nock: ^12.0.3
-      prettier: ^2.0.4
+      deep-eql: 0.1.3
+      eslint: 6.8.0
+      eslint-config-prettier: 6.15.0
+      eslint-plugin-prettier: 3.4.1
+      esno: 0.16.3
+      mocha: 7.2.0
+      nock: 12.0.3
+      prettier: 2.7.1
       request: ^2.72.0
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      rimraf: 3.0.2
+      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': 1.7.1
       cheerio: 1.0.0-rc.12
@@ -282,23 +282,23 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
       '@openfn/language-common': 1.7.3
-      '@openfn/simple-ast': ^0.4.1
+      '@openfn/simple-ast': 0.4.1
       JSONStream: ^1.3.5
-      assertion-error: ^1.0.1
-      chai: ^3.4.0
+      assertion-error: 1.1.0
+      chai: 3.5.0
       csv-parser: ^3.0.0
       csvtojson: ^2.0.10
-      deep-eql: ^0.1.3
-      eslint: ^8.23.1
-      eslint-config-airbnb-base: ^15.0.0
-      eslint-plugin-import: ^2.13.0
-      esno: ^0.16.3
+      deep-eql: 0.1.3
+      eslint: 8.25.0
+      eslint-config-airbnb-base: 15.0.0
+      eslint-plugin-import: 2.26.0
+      esno: 0.16.3
       json2csv: ^4.1.6
       lodash: ^4.17.19
-      mocha: ^7.1.1
-      nock: ^12.0.3
-      rimraf: ^3.0.2
-      sinon: ^1.17.2
+      mocha: 7.2.0
+      nock: 12.0.3
+      rimraf: 3.0.2
+      sinon: 1.17.7
       ssh2-sftp-client: 9.0.4
     dependencies:
       '@openfn/language-common': 1.7.3
@@ -325,35 +325,35 @@ importers:
 
   tools/build:
     specifiers:
-      '@openfn/simple-ast': ^0.4.1
-      '@types/node': ^18.8.4
-      esno: ^0.16.3
-      jsdoc-api: ^7.1.1
-      ts-node: ^10.9.1
-      tsup: ^6.2.3
-      typescript: ^4.8.4
-      yargs: ^17.6.0
-    dependencies:
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
       esno: 0.16.3
       jsdoc-api: 7.1.1
-      ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
-      tsup: 6.2.3_mwhvu7sfp6vq5ryuwb6hlbjfka
+      ts-node: 10.9.1
+      tsup: 6.3.0
+      typescript: 4.8.4
+      yargs: 17.6.0
+    dependencies:
+      '@openfn/simple-ast': 0.4.1
+      '@types/node': 18.11.3
+      esno: 0.16.3
+      jsdoc-api: 7.1.1
+      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
+      tsup: 6.3.0_mwhvu7sfp6vq5ryuwb6hlbjfka
       typescript: 4.8.4
       yargs: 17.6.0
 
   tools/migrate:
     specifiers:
-      '@types/node': ^18.8.4
-      esno: ^0.16.3
-      ts-node: ^10.9.1
-      typescript: ^4.8.4
-      yargs: ^17.6.0
-    dependencies:
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
       esno: 0.16.3
-      ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
+      ts-node: 10.9.1
+      typescript: 4.8.4
+      yargs: 17.6.0
+    dependencies:
+      '@types/node': 18.11.3
+      esno: 0.16.3
+      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
       typescript: 4.8.4
       yargs: 17.6.0
 
@@ -1174,7 +1174,7 @@ packages:
   /@types/es-aggregate-error/1.0.2:
     resolution: {integrity: sha512-erqUpFXksaeR2kejKnhnjZjbFxUpGZx4Z7ydNL9ie8tEhXPiZTsLeUDJ6aR1F8j5wWUAtOAQWUqkc7givBJbBA==}
     dependencies:
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
     dev: false
 
   /@types/is-ci/3.0.0:
@@ -1210,8 +1210,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node/18.8.4:
-    resolution: {integrity: sha512-WdlVphvfR/GJCLEMbNA8lJ0lhFNBj4SW3O+O5/cEGw9oYrv0al9zTwuQsq+myDUXgNx2jgBynoVgZ2MMJ6pbow==}
+  /@types/node/18.11.3:
+    resolution: {integrity: sha512-fNjDQzzOsZeKZu5NATgXUPsaFaTxeRgFXoosrHivTl8RGeV733OLawXsGfEk9a8/tySyZUyiZ6E8LcjPFZ2y1A==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1225,7 +1225,7 @@ packages:
     resolution: {integrity: sha512-9KhCkyXv268A2nZ1Wvu7rQWM+BmdYUVkycFeNnYrUL5Zwu7o8wPQ3wBfW59dDP+wuoxw0ww8YKgTNv8j/cgscA==}
     dependencies:
       '@types/cookiejar': 2.1.2
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
     dev: true
 
   /@ungap/promise-all-settled/1.1.2:
@@ -5007,7 +5007,7 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.6
-      ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
+      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
       yaml: 1.10.2
     dev: false
 
@@ -5995,7 +5995,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: false
 
-  /ts-node/10.9.1_xkk4lltwku4cysulzbqoieownu:
+  /ts-node/10.9.1_lw7q66ikwuedwcorwkk4v6trsa:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -6014,7 +6014,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.8.4
+      '@types/node': 18.11.3
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -6043,8 +6043,8 @@ packages:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: false
 
-  /tsup/6.2.3_mwhvu7sfp6vq5ryuwb6hlbjfka:
-    resolution: {integrity: sha512-J5Pu2Dx0E1wlpIEsVFv9ryzP1pZ1OYsJ2cBHZ7GrKteytNdzaSz5hmLX7/nAxtypq+jVkVvA79d7S83ETgHQ5w==}
+  /tsup/6.3.0_mwhvu7sfp6vq5ryuwb6hlbjfka:
+    resolution: {integrity: sha512-IaNQO/o1rFgadLhNonVKNCT2cks+vvnWX3DnL8sB87lBDqRvJXHENr5lSPJlqwplUlDxSwZK8dSg87rgBu6Emw==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
