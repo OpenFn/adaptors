@@ -1,5 +1,5 @@
 {
-  "name": "language-beyonic",
+  "name": "@openfn/language-beyonic",
   "version": "0.0.2",
   "description": "beyonic Language Pack for OpenFn",
   "main": "dist/index.cjs",

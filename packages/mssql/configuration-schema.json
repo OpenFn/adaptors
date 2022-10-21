@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "server": {
+      "title": "Server URL",
+      "type": "string",
+      "description": "The database instance server URL or IP address",
+      "format": "uri",
+      "minLength": 1
+    },
+    "database": {
+      "title": "Database",
+      "type": "string",
+      "description": "The database name",
+      "minLength": 1
+    },
+    "userName": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "minLength": 1
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["server", "database"]
+}

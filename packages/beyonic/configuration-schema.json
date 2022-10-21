@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiUrl": {
+      "title": "API URL",
+      "type": "string",
+      "description": "API URL",
+      "format": "uri",
+      "minLength": 1
+    },
+    "apiToken": {
+      "title": "API Token",
+      "type": "string",
+      "description": "API token",
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiUrl", "apiToken"]
+}

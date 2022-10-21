@@ -114,3 +114,5 @@ dist
 
 # ubuntu fuse files
 .fuse_*
+
+.vscode/
