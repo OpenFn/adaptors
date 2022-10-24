@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
-    "chai": "3.5.0",
+    "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "mocha": "7.2.0",
     "sinon": "1.17.7",

@@ -35,7 +35,7 @@
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
-    "chai": "3.5.0",
+    "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "eslint": "8.25.0",
     "eslint-config-airbnb-base": "15.0.0",
