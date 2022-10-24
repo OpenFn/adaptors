@@ -274,7 +274,7 @@ importers:
       csv-parse: ^4.8.3
       deep-eql: 4.1.1
       eslint: 8.26.0
-      eslint-config-prettier: 6.15.0
+      eslint-config-prettier: 8.5.0
       eslint-plugin-prettier: 3.4.1
       esno: 0.16.3
       mocha: 7.2.0
@@ -296,8 +296,8 @@ importers:
       chai: 4.3.6
       deep-eql: 4.1.1
       eslint: 8.26.0
-      eslint-config-prettier: 6.15.0_eslint@8.26.0
-      eslint-plugin-prettier: 3.4.1_snafiz63ybdkdjgcpc3wprj5i4
+      eslint-config-prettier: 8.5.0_eslint@8.26.0
+      eslint-plugin-prettier: 3.4.1_aniwkeyvlpmwkidetuytnokvcm
       esno: 0.16.3
       mocha: 7.2.0
       nock: 12.0.3
@@ -2630,14 +2630,13 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-config-prettier/6.15.0_eslint@8.26.0:
-    resolution: {integrity: sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==}
+  /eslint-config-prettier/8.5.0_eslint@8.26.0:
+    resolution: {integrity: sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==}
     hasBin: true
     peerDependencies:
-      eslint: '>=3.14.1'
+      eslint: '>=7.0.0'
     dependencies:
       eslint: 8.26.0
-      get-stdin: 6.0.0
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
@@ -2707,7 +2706,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-prettier/3.4.1_snafiz63ybdkdjgcpc3wprj5i4:
+  /eslint-plugin-prettier/3.4.1_aniwkeyvlpmwkidetuytnokvcm:
     resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -2719,7 +2718,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.26.0
-      eslint-config-prettier: 6.15.0_eslint@8.26.0
+      eslint-config-prettier: 8.5.0_eslint@8.26.0
       prettier: 2.7.1
       prettier-linter-helpers: 1.0.0
     dev: true
@@ -3207,11 +3206,6 @@ packages:
       function-bind: 1.1.1
       has: 1.0.3
       has-symbols: 1.0.3
-
-  /get-stdin/6.0.0:
-    resolution: {integrity: sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==}
-    engines: {node: '>=4'}
-    dev: true
 
   /get-stream/6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
@@ -4881,11 +4875,6 @@ packages:
   /path-is-absolute/1.0.1:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
     engines: {node: '>=0.10.0'}
-
-  /path-key/2.0.1:
-    resolution: {integrity: sha512-fEHGKCSmUSDPv4uoj8AlD+joPlq3peND+HRYyxFz4KPw4z926S/b8rIuFs2FYJg3BwsxJf6A9/3eIdLaYC+9Dw==}
-    engines: {node: '>=4'}
-    dev: true
 
   /path-key/3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
