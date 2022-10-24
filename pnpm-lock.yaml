@@ -275,7 +275,7 @@ importers:
       deep-eql: 4.1.1
       eslint: 8.26.0
       eslint-config-prettier: 8.5.0
-      eslint-plugin-prettier: 3.4.1
+      eslint-plugin-prettier: 4.2.1
       esno: 0.16.3
       mocha: 7.2.0
       nock: 12.0.3
@@ -297,7 +297,7 @@ importers:
       deep-eql: 4.1.1
       eslint: 8.26.0
       eslint-config-prettier: 8.5.0_eslint@8.26.0
-      eslint-plugin-prettier: 3.4.1_aniwkeyvlpmwkidetuytnokvcm
+      eslint-plugin-prettier: 4.2.1_aniwkeyvlpmwkidetuytnokvcm
       esno: 0.16.3
       mocha: 7.2.0
       nock: 12.0.3
@@ -2706,13 +2706,13 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-prettier/3.4.1_aniwkeyvlpmwkidetuytnokvcm:
-    resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
-    engines: {node: '>=6.0.0'}
+  /eslint-plugin-prettier/4.2.1_aniwkeyvlpmwkidetuytnokvcm:
+    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
+    engines: {node: '>=12.0.0'}
     peerDependencies:
-      eslint: '>=5.0.0'
+      eslint: '>=7.28.0'
       eslint-config-prettier: '*'
-      prettier: '>=1.13.0'
+      prettier: '>=2.0.0'
     peerDependenciesMeta:
       eslint-config-prettier:
         optional: true
