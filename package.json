@@ -4,7 +4,7 @@
   "description": "Monoerepo for openfn language adaptors",
   "type": "module",
   "private": "true",
-  "packageManager": "pnpm@7.13.6",
+  "packageManager": "pnpm@7.14.0",
   "scripts": {
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
