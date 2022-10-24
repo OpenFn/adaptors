@@ -201,7 +201,7 @@ export function getCases(query, options, callback) {
             )}`
           );
 
-          if (expandedOptions.withReferrals) {
+          if (expandedOptions?.withReferrals) {
             for await (const c of cases) {
               const requestParams = {
                 method: 'GET',
