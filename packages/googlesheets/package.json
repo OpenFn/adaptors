@@ -1,15 +1,15 @@
 {
-  "name": "@openfn/language-mssql",
-  "version": "3.1.0",
-  "description": "A Microsoft SQL language pack for OpenFn",
-  "main": "dist/index.cjs",
+  "name": "@openfn/language-googlesheets",
+  "version": "2.0.0",
+  "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
     "url": "https://github.com/openfn/adaptors.git"
   },
+  "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor mssql",
+    "build": "pnpm clean && build-adaptor googlesheets",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rm -rf dist types docs",
@@ -24,21 +24,19 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.6.2",
-    "request": "2.88.0",
-    "tedious": "15.1.0"
+    "@openfn/language-common": "1.7.1",
+    "googleapis": "100.0.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
-    "assertion-error": "2.0.0",
-    "chai": "3.5.0",
-    "deep-eql": "4.1.1",
-    "mocha": "10.1.0",
-    "sinon": "1.17.7",
-    "superagent-mock": "4.0.0",
-    "superagent": "3.6.0",
-    "esno": "0.16.3",
-    "rimraf": "3.0.2",
+    "@openfn/simple-ast": "^0.4.1",
+    "assertion-error": "^1.0.1",
+    "chai": "^4.2.0",
+    "deep-eql": "^4.0.0",
+    "mocha": "^9.2.2",
+    "nock": "^13.0.5",
+    "sinon": "^9.2.3",
+    "esno": "^0.16.3",
+    "rimraf": "^3.0.2",
     "@openfn/buildtools": "workspace:^1.0.0"
   },
   "type": "module",
