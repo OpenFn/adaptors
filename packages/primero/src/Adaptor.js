@@ -2,10 +2,22 @@
 import {
   execute as commonExecute,
   expandReferences,
-  composeNextState,
 } from '@openfn/language-common';
 import { assembleError, scrubResponse, tryJson } from './Utils';
 import request from 'request';
+
+const composeNextState = (state, data, meta) => {
+  const nextState = {
+    ...state,
+    data,
+    references: [...state.references, state.data],
+  };
+
+  if (meta) {
+    return { ...nextState, metadata: meta };
+  }
+  return nextState;
+};
 
 /**
  * Execute a sequence of operations.
@@ -193,6 +205,7 @@ export function getCases(query, options, callback) {
           );
           const resp = tryJson(body);
           const cases = resp.data;
+          const metadata = resp.metadata;
           console.log(
             `${cases.length} cases retrieved from request: ${JSON.stringify(
               response.request,
@@ -223,7 +236,7 @@ export function getCases(query, options, callback) {
             }
           }
 
-          const nextState = composeNextState(state, cases);
+          const nextState = composeNextState(state, cases, metadata);
           if (callback) resolve(callback(nextState));
           resolve(nextState);
         }
