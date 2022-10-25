@@ -1,5 +1,11 @@
 # @openfn/language-beyonic
 
+## 0.1.3
+
+### Patch Changes
+
+- 63080d0: Update common for build
+
 ## 0.1.2
 
 ### Patch Changes
