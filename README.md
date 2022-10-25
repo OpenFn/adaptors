@@ -1,4 +1,4 @@
-# Adaptors Monorepo ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg)
+# Adaptors Monorepo ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg?branch=main)
 
 The new home for all @openfn language adaptors.
 
