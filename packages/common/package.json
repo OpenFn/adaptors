@@ -3,6 +3,11 @@
   "version": "1.7.3",
   "description": "Common Expressions for OpenFn",
   "main": "dist/index.cjs",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
   "scripts": {
     "build": "pnpm clean && build-adaptor common",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
@@ -18,6 +23,8 @@
     "ast.json",
     "configuration-schema.json"
   ],
+  "type": "module",
+  "types": "types/index.d.ts",
   "dependencies": {
     "axios": "^0.21.4",
     "date-fns": "^2.25.0",
@@ -25,24 +32,14 @@
     "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.3.2",
-    "chai": "^4.2.0",
-    "deep-eql": "^4.0.0",
-    "mocha": "^7.1.0",
-    "nock": "^13.0.5",
-    "sinon": "^9.2.3",
-    "esno": "^0.16.3",
+    "@openfn/simple-ast": "0.4.1",
+    "chai": "4.3.6",
+    "deep-eql": "4.1.1",
+    "mocha": "9.2.2",
+    "nock": "13.2.9",
+    "sinon": "9.2.4",
+    "esno": "0.16.3",
     "rimraf": "^3.0.2",
-    "@openfn/buildtools": "workspace:^1.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/openfn/adaptors.git"
-  },
-  "bugs": {
-    "url": "https://github.com/OpenFn/language-common/issues"
-  },
-  "homepage": "https://github.com/OpenFn/language-common#readme",
-  "type": "module",
-  "types": "types/index.d.ts"
+    "@openfn/buildtools": "workspace:^1.0.1"
+  }
 }

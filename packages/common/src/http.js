@@ -1,7 +1,8 @@
-import { expandReferences, splitKeys } from '../';
+import { expandReferences, splitKeys } from './Adaptor';
 import axios from 'axios';
 import https from 'https';
-exports.axios = axios;
+
+export { axios };
 
 /**
  * Recursively resolves objects that have resolvable values (functions), but
@@ -119,7 +120,7 @@ function del(requestParams) {
   };
 }
 
-exports.delete = del;
+export { del as delete };
 
 /**
  * Make a HEAD request

@@ -1,6 +1,5 @@
 import { assert, expect } from 'chai';
 import testData from './testData.json' assert { type: 'json' };
-
 import {
   arrayToString,
   chunk,
@@ -24,7 +23,7 @@ import {
   sourceValue,
   splitKeys,
   toArray,
-} from '../src/index';
+} from '../src/Adaptor';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -94,8 +93,6 @@ describe('map', () => {
     let results = map(
       '$.data.store.book[*]',
       function (state) {
-        // console.log(JSON.stringify( state ));
-        // items.push( { title: sourceValue("$.data.title", state) } )
         return { references: [1, ...state.references], ...state };
       },
       state

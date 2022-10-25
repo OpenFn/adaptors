@@ -1,5 +1,8 @@
-import { curry, fromPairs } from 'lodash/fp';
+import _ from 'lodash/fp';
+const { curry, fromPairs } = _;
+
 import { JSONPath } from 'jsonpath-plus';
+
 export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
@@ -512,7 +515,8 @@ export function scrubEmojis(text, replacementChars) {
     );
   } else if (!replacementChars) replacementChars = '\uFFFD';
 
-  const emojisPattern = /(\uFE0F|\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+  const emojisPattern =
+    /(\uFE0F|\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
 
   return text.replace(emojisPattern, replacementChars);
 }

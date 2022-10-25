@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { expect } from 'chai';
-import { http } from '../src/http';
+import { http } from '../src/Adaptor';
 
 describe('post', () => {
   before(() => {
@@ -274,6 +274,7 @@ describe('get', () => {
 
     expect(response.config.httpsAgent.options).to.eql({
       ca: '123',
+      noDelay: true,
       path: null,
     });
   });
