@@ -3,13 +3,9 @@ const { curry, fromPairs } = _;
 
 import { JSONPath } from 'jsonpath-plus';
 
-import * as beta from './beta';
-import * as http from './http';
-import * as dateFns from './dateFns';
-
-export { beta };
-export { http };
-export { dateFns };
+export * as beta from './beta';
+export * as http from './http';
+export * as dateFns from './dateFns';
 
 /**
  * Execute a sequence of operations.
