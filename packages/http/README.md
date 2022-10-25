@@ -140,6 +140,4 @@ Clone the repo, run `pnpm install`.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`.
 
-Build the project using `make`.
-
 To build the docs for this repo, run `pnpm build:docs`.
