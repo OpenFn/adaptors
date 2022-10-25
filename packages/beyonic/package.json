@@ -23,6 +23,7 @@
     "superagent": "^8.0.0"
   },
   "devDependencies": {
+    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

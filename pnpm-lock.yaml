@@ -67,6 +67,7 @@ importers:
   packages/beyonic:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -81,11 +82,12 @@ importers:
       superagent-mock: 1.12.0
     dependencies:
       JSONPath: 0.10.0
-      language-common: github.com/openfn/language-common/d9ef5e47ee156906cabd79d874bc44096ca139fd
+      language-common: github.com/openfn/language-common/5303ad80cf6363579109dfccbaf50704a7ee67ba
       lodash-fp: 0.10.4
       superagent: 8.0.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
       deep-eql: 4.1.1
@@ -6541,8 +6543,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/openfn/language-common/d9ef5e47ee156906cabd79d874bc44096ca139fd:
-    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/d9ef5e47ee156906cabd79d874bc44096ca139fd}
+  github.com/openfn/language-common/5303ad80cf6363579109dfccbaf50704a7ee67ba:
+    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/5303ad80cf6363579109dfccbaf50704a7ee67ba}
     name: '@openfn/language-common'
     version: 1.7.3
     dependencies:
