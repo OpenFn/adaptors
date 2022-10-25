@@ -1,5 +1,11 @@
 # @openfn/language-beyonic
 
+## 0.1.1
+
+### Patch Changes
+
+- 06ff25f: Update superagent to v8
+
 ## 0.1.0
 
 ### Minor Changes

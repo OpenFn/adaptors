@@ -1,5 +1,11 @@
 # @openfn/language-template
 
+## 1.7.2
+
+### Patch Changes
+
+- f4b3dd6: remove travis build url
+
 ## 1.7.1
 
 ### Patch Changes
