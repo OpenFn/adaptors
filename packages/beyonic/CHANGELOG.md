@@ -1,5 +1,11 @@
 # @openfn/language-beyonic
 
+## 0.1.2
+
+### Patch Changes
+
+- 0d358b6: Add ast.json for beyonic
+
 ## 0.1.1
 
 ### Patch Changes
