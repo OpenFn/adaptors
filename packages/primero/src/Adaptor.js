@@ -6,13 +6,17 @@ import {
 import { assembleError, scrubResponse, tryJson } from './Utils';
 import request from 'request';
 
-const composeNextState = (state, data, metadata) => {
-  return {
+const composeNextState = (state, data, meta) => {
+  const nextState = {
     ...state,
     data,
-    metadata,
     references: [...state.references, state.data],
   };
+
+  if (meta) {
+    return { ...nextState, metadata: meta };
+  }
+  return nextState;
 };
 
 /**
