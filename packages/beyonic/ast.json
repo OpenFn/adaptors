@@ -3,6 +3,41 @@
   "exports": [],
   "common": [
     {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "sourceValue",
       "params": [
         "path"
