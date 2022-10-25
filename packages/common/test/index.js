@@ -1,5 +1,5 @@
 import { assert, expect } from 'chai';
-import testData from './testData';
+import testData from './testData.json' assert { type: 'json' };
 
 import {
   arrayToString,
@@ -24,7 +24,7 @@ import {
   sourceValue,
   splitKeys,
   toArray,
-} from '../';
+} from '../src/index';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {

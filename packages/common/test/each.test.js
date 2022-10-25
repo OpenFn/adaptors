@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import testData from './testData';
-import { each, beta } from '../';
+import testData from './testData.json' assert { type: 'json' };
+import { each, beta } from '../src/index';
 
 function shouldBehaveLikeEach(each) {
   let state, operation;
