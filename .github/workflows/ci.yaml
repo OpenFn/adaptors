@@ -26,7 +26,7 @@ jobs:
           cache: 'pnpm'
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
-      - name: Unit Tests
-        run: pnpm run test
       - name: Build
         run: pnpm run build
+      - name: Unit Tests
+        run: pnpm run test
