@@ -274,6 +274,31 @@ importers:
       nock: 13.2.9
       sinon: 9.2.4
 
+  packages/kobotoolbox:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/language-common': 1.2.4
+      assertion-error: ^1.0.1
+      chai: ^3.4.0
+      deep-eql: ^0.1.3
+      esno: ^0.16.3
+      mocha: ^7.1.1
+      nock: ^12.0.3
+      rimraf: ^3.0.2
+      sinon: ^1.17.2
+    dependencies:
+      '@openfn/language-common': 1.2.4
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 7.2.0
+      nock: 12.0.3
+      rimraf: 3.0.2
+      sinon: 1.17.7
+
   packages/mssql:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
@@ -1216,6 +1241,16 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
+
+  /@openfn/language-common/1.2.4:
+    resolution: {integrity: sha512-VEYfutS8UFN7lHUSSpME0OlLv9ZSbTLZ2lP569RSLwXOGvmJ4f6mn/zShh3ZGpmLuD+XgkCepFkdw+DVfQA2qA==}
+    dependencies:
+      axios: 0.21.4
+      jsonpath-plus: 4.0.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@openfn/language-common/1.6.2:
     resolution: {integrity: sha512-ZyjpC7S9Tf0zGvvHYQ+0n2PM5hpYLP3/yJImJQXoYa2hpL0yZo5ef0prGzLmPJJECraiRyY6vkBJp/uKg2SRdw==}
