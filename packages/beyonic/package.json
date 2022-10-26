@@ -1,10 +1,17 @@
 {
   "name": "@openfn/language-beyonic",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "beyonic Language Pack for OpenFn",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor beyonic",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rm -rf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
@@ -18,24 +25,20 @@
   ],
   "dependencies": {
     "JSONPath": "^0.10.0",
-    "language-common": "github:openfn/language-common",
+    "@openfn/language-common": "^1.7.1",
     "lodash-fp": "^0.10.2",
     "superagent": "^8.0.0"
   },
   "devDependencies": {
+    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "mocha": "7.2.0",
-    "sinon": "1.17.7",
-    "superagent-mock": "1.12.0",
+    "sinon": "9.2.4",
     "esno": "0.16.3",
     "rimraf": "3.0.2",
     "@openfn/buildtools": "workspace:^1.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/openfn/adaptors.git"
   },
   "type": "module",
   "types": "types/index.d.ts"

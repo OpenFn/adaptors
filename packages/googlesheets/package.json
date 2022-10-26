@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-googlesheets",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {

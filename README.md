@@ -1,4 +1,4 @@
-# Adaptors Monorepo ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg)
+# Adaptors Monorepo ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg?branch=main)
 
 The new home for all @openfn language adaptors.
 
@@ -89,7 +89,7 @@ pnpm -r run build
 To publish the release, run:
 
 ```
-pnmp changeset publish
+pnpm changeset publish
 ```
 
 And finally, push the tags to Github so that the source code can be browsed for

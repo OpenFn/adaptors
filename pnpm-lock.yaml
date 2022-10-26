@@ -67,33 +67,34 @@ importers:
   packages/beyonic:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/language-common': ^1.7.1
+      '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
       assertion-error: 2.0.0
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: 0.16.3
-      language-common: github:openfn/language-common
       lodash-fp: ^0.10.2
       mocha: 7.2.0
       rimraf: 3.0.2
-      sinon: 1.17.7
+      sinon: 9.2.4
       superagent: ^8.0.0
-      superagent-mock: 1.12.0
     dependencies:
+      '@openfn/language-common': 1.7.3
       JSONPath: 0.10.0
       language-common: github.com/openfn/language-common/5303ad80cf6363579109dfccbaf50704a7ee67ba
       lodash-fp: 0.10.4
       superagent: 8.0.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: 0.16.3
       mocha: 7.2.0
       rimraf: 3.0.2
-      sinon: 1.17.7
-      superagent-mock: 1.12.0
+      sinon: 9.2.4
 
   packages/dhis2:
     specifiers:
@@ -1546,10 +1547,6 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /async/1.5.2:
-    resolution: {integrity: sha512-nSVgobk4rv61R9PUSDtYt7mPVB2olxNR5RWJcAsH676/ef11bUZwvu7+RGYrYauVdDPcO519v68wRhXQtxsV9w==}
-    dev: true
-
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
@@ -2002,10 +1999,6 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
-  /component-emitter/1.2.1:
-    resolution: {integrity: sha512-jPatnhd33viNplKjqXKRkGU345p263OIWzDL2wH3LGIGp5Kojo+uXizHmOADRvhGFFTnJqX3jBAKP6vvmSDKcA==}
-    dev: true
-
   /component-emitter/1.3.0:
     resolution: {integrity: sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==}
 
@@ -2030,10 +2023,6 @@ packages:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
     dependencies:
       safe-buffer: 5.1.2
-
-  /cookiejar/2.0.6:
-    resolution: {integrity: sha512-X9IsySmsr1heROBZCpyEYhqJyU7CXNJoVxIlQ5bBb7DskYUx0mQ+g2f7yPYajceZeGJWHQbIfGB6j0hywV/ARQ==}
-    dev: true
 
   /cookiejar/2.1.3:
     resolution: {integrity: sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==}
@@ -2939,10 +2928,6 @@ packages:
       strip-final-newline: 2.0.0
     dev: false
 
-  /extend/3.0.0:
-    resolution: {integrity: sha512-5mYyg57hpD+sFaJmgNL9BidQ5C7dmJE3U5vzlRWbuqG+8dytvYEoxvKs6Tj5cm3LpMsFvRt20qz1ckezmsOUgQ==}
-    dev: true
-
   /extend/3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
@@ -3122,15 +3107,6 @@ packages:
     resolution: {integrity: sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==}
     dev: false
 
-  /form-data/1.0.0-rc3:
-    resolution: {integrity: sha512-Z5JWXWsFDI8x73Rt/Dc7SK/EvKBzudhqIVBtEhcAhtoevCTqO3YJmctGBLzT0Ggg39xFcefkXt00t1TYLz6D0w==}
-    engines: {node: '>= 0.10'}
-    dependencies:
-      async: 1.5.2
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
-    dev: true
-
   /form-data/2.3.3:
     resolution: {integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==}
     engines: {node: '>= 0.12'}
@@ -3162,12 +3138,6 @@ packages:
     deprecated: This package is unmaintained. Use @sinonjs/formatio instead
     dependencies:
       samsam: 1.1.2
-    dev: true
-
-  /formidable/1.0.17:
-    resolution: {integrity: sha512-95MFT5qipMvUiesmuvGP1BI4hh5XWCzyTapiNJ/k8JBQda7rPy7UCWYItz2uZEdTgGNy1eInjzlL9Wx1O9fedg==}
-    engines: {node: '>=0.8.0'}
-    deprecated: 'Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau'
     dev: true
 
   /formidable/1.2.6:
@@ -4428,11 +4398,6 @@ packages:
     dependencies:
       mime-db: 1.52.0
 
-  /mime/1.3.4:
-    resolution: {integrity: sha512-sAaYXszED5ALBt665F0wMQCUXpGuZsGdopoqcHPdL39ZYdi7uHoZlhrfZfhv8WzivhBzr/oXwaj+yiK5wY8MXQ==}
-    hasBin: true
-    dev: true
-
   /mime/1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
@@ -5274,14 +5239,6 @@ packages:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
 
-  /qs/2.3.3:
-    resolution: {integrity: sha512-f5M0HQqZWkzU8GELTY8LyMrGkr3bPjKoFtTkwUEqJQbcljbeK8M7mliP9Ia2xoOI6oMerp+QPS7oYJtpGmWe/A==}
-    dev: true
-
-  /qs/2.4.2:
-    resolution: {integrity: sha512-Ur2glV49dt6jknphzkWeLUNCy7pmwGxGaEJuuxVVBioSwQzT00cZPLEtRqr4cg/iO/6N+RbfB0lFD2EovyeEng==}
-    dev: true
-
   /qs/6.11.0:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
@@ -5362,15 +5319,6 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /readable-stream/1.0.27-1:
-    resolution: {integrity: sha512-uQE31HGhpMrqZwtDjRliOs2aC3XBi+DdkhLs+Xa0dvVD5eDiZr3+k8rKVZcyTzxosgtMw7B/twQsK3P1KTZeVg==}
-    dependencies:
-      core-util-is: 1.0.2
-      inherits: 2.0.4
-      isarray: 0.0.1
-      string_decoder: 0.10.31
-    dev: true
-
   /readable-stream/2.3.7:
     resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
     dependencies:
@@ -5410,10 +5358,6 @@ packages:
     dependencies:
       indent-string: 4.0.0
       strip-indent: 3.0.0
-    dev: true
-
-  /reduce-component/1.0.1:
-    resolution: {integrity: sha512-y0wyCcdQul3hI3xHfIs0vg/jSbboQc/YTOAqaxjFG7At+XSexduuOqBVL9SmOLSwa/ldkbzVzdwuk9s2EKTAZg==}
     dev: true
 
   /regenerator-runtime/0.13.9:
@@ -5848,10 +5792,6 @@ packages:
       define-properties: 1.1.4
       es-abstract: 1.20.4
 
-  /string_decoder/0.10.31:
-    resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==}
-    dev: true
-
   /string_decoder/1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
@@ -5933,35 +5873,6 @@ packages:
       pirates: 4.0.5
       ts-interface-checker: 0.1.13
     dev: false
-
-  /superagent-mock/1.12.0:
-    resolution: {integrity: sha512-jrQDaHRhRtoE3GD2BiT14HfRdwveR8plbChhdHXw+7/Ln5kV26iPrga5hjhe0dAehOTPUgwtH4ct2TzvPyAr1Q==}
-    dependencies:
-      qs: 2.4.2
-      superagent: 1.8.5
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /superagent/1.8.5:
-    resolution: {integrity: sha512-4h4R6fISQXvgjIqZ8DjONYy3y2XPxgZO0LgHsBI6tDAEhzJLpWuK+thM60SmUiERJOEJzmxlIGx/GP6+azky/A==}
-    engines: {node: '>= 0.8'}
-    deprecated: Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>.
-    dependencies:
-      component-emitter: 1.2.1
-      cookiejar: 2.0.6
-      debug: 2.6.9
-      extend: 3.0.0
-      form-data: 1.0.0-rc3
-      formidable: 1.0.17
-      methods: 1.1.2
-      mime: 1.3.4
-      qs: 2.3.3
-      readable-stream: 1.0.27-1
-      reduce-component: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /superagent/3.8.3:
     resolution: {integrity: sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==}

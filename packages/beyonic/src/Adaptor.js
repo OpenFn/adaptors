@@ -1,4 +1,7 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
@@ -19,13 +22,12 @@ import { resolve as resolveUrl } from 'url';
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -39,24 +41,21 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function createPayment(data) {
-
   return state => {
     const body = expandReferences(data)(state);
 
     const { apiUrl, apiToken } = state.configuration;
 
-    const url = resolveUrl(apiUrl + '/', 'payments')
+    const url = resolveUrl(apiUrl + '/', 'payments');
 
-    console.log("Posting payment:");
-    console.log(body)
+    console.log('Posting payment:');
+    console.log(body);
 
-    return post({ apiToken, body, url })
-    .then((result) => {
-      console.log("Success:", result);
-      return { ...state, references: [ result, ...state.references ] }
-    })
-
-  }
+    return post({ apiToken, body, url }).then(result => {
+      console.log('Success:', result);
+      return { ...state, references: [result, ...state.references] };
+    });
+  };
 }
 
 /**
@@ -70,24 +69,21 @@ export function createPayment(data) {
  * @returns {Operation}
  */
 export function createContact(data) {
-
   return state => {
     const body = expandReferences(data)(state);
 
     const { apiUrl, apiToken } = state.configuration;
 
-    const url = resolveUrl(apiUrl + '/', 'contacts')
+    const url = resolveUrl(apiUrl + '/', 'contacts');
 
-    console.log("Posting contact:");
-    console.log(body)
+    console.log('Posting contact:');
+    console.log(body);
 
-    return post({ apiToken, body, url })
-    .then((result) => {
-      console.log("Success:", result);
-      return { ...state, references: [ result, ...state.references ] }
-    })
-
-  }
+    return post({ apiToken, body, url }).then(result => {
+      console.log('Success:', result);
+      return { ...state, references: [result, ...state.references] };
+    });
+  };
 }
 
 /**
@@ -101,27 +97,30 @@ export function createContact(data) {
  * @returns {Operation}
  */
 export function createCollectionRequest(data) {
-
   return state => {
     const body = expandReferences(data)(state);
 
     const { apiUrl, apiToken } = state.configuration;
 
-    const url = resolveUrl(apiUrl + '/', 'collectionrequests')
+    const url = resolveUrl(apiUrl + '/', 'collectionrequests');
 
-    console.log("Posting collection request:");
-    console.log(body)
+    console.log('Posting collection request:');
+    console.log(body);
 
-    return post({ apiToken, body, url })
-    .then((result) => {
-      console.log("Success:", result);
-      return { ...state, references: [ result, ...state.references ] }
-    })
-
-  }
+    return post({ apiToken, body, url }).then(result => {
+      console.log('Success:', result);
+      return { ...state, references: [result, ...state.references] };
+    });
+  };
 }
 
 export {
-  field, fields, sourceValue,
-  merge, dataPath, dataValue, lastReferenceValue
-} from 'language-common';
+  fn,
+  field,
+  fields,
+  sourceValue,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+} from '@openfn/language-common';

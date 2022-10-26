@@ -1,5 +1,21 @@
 # @openfn/language-primero
 
+## 2.10.0
+
+### Minor Changes
+
+- 33742bf: Modify `composeNextState` so that `getCases` can pass it a third
+  argument: the metadata from Primero's response.
+
+  `getCases` will now not only return an array of `cases` in `state.data`, but
+  metadata related to pagination in `state.metadata`.
+
+### Patch Changes
+
+- 2014694: remove travis url in readme
+- bb764db: Conditionally check for 'withReferrals' in case no options are
+  provided"
+
 ## 2.9.2
 
 ### Patch Changes
