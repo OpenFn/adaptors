@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "resource": {
+            "title": "Resource Url",
+            "type": "string",
+            "description": "The resource url to post transactionBundle in to the destination system"
+        },
+        "authType": {
+            "title": "Auth Type",
+            "type": "string",
+            "description": "The type of authentication used to authenticate into the destination system"
+        },
+        "token": {
+            "title": "Token",
+            "type": "string",
+            "description": "The token  used to authenticate into the destination system"
+        }
+    },
+    "required": [
+        "resource",
+        "authType",
+        "token"
+    ]
+}
