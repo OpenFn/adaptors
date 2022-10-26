@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "baseURL": {
+            "title": "Base URL",
+            "type": "string",
+            "default": "https://kf.kobotoolbox.org",
+            "description": "Kobotoolbox URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Kobotoolbox username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Kobotoolbox password",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "apiVersion": {
+            "title": "API Version",
+            "type": "string",
+            "default": "v2",
+            "description": "Kobotoolbox API version to use",
+            "enum": [
+                "v1",
+                "v2"
+            ],
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "username",
+        "baseURL",
+        "password",
+        "apiVersion"
+    ]
+}
