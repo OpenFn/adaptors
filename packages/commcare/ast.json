@@ -1,0 +1,634 @@
+{
+  "operations": [
+    {
+      "name": "submitXls",
+      "params": [
+        "formData",
+        "params"
+      ],
+      "docs": {
+        "description": "Convert form data to xls then submit.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
+          },
+          {
+            "title": "constructor",
+            "description": null,
+            "type": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Object including form data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "formData"
+          },
+          {
+            "title": "param",
+            "description": "Request params including case type and external id.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "submit",
+      "params": [
+        "formData"
+      ],
+      "docs": {
+        "description": "Submit form data",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "submit(\n   fields(\n     field(\"@\", function(state) {\n       return {\n         \"xmlns\": \"http://openrosa.org/formdesigner/form-id-here\"\n       };\n     }),\n     field(\"question1\", dataValue(\"answer1\")),\n     field(\"question2\", \"Some answer here.\")\n   )\n )"
+          },
+          {
+            "title": "constructor",
+            "description": null,
+            "type": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Object including form data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "formData"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fetchReportData",
+      "params": [
+        "reportId",
+        "params",
+        "postUrl"
+      ],
+      "docs": {
+        "description": "Make a GET request to CommCare's Reports API\nand POST the response to somewhere else.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fetchReportData(reportId, params, postUrl)"
+          },
+          {
+            "title": "constructor",
+            "description": null,
+            "type": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "API name of the report.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "reportId"
+          },
+          {
+            "title": "param",
+            "description": "Query params, incl: limit, offset, and custom report filters.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "Url to which the response object will be posted.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "postUrl"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [
+        "fields"
+      ],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "arrayToString",
+      "params": [
+        "arr",
+        "separator"
+      ],
+      "docs": {
+        "description": "Turns an array into a string, separated by X.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array of toString'able primatives.",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "arr"
+          },
+          {
+            "title": "param",
+            "description": "Separator string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "separator"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ]
+}
