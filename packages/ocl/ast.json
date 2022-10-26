@@ -1,14 +1,13 @@
 {
   "operations": [
     {
-      "name": "create",
+      "name": "map",
       "params": [
-        "path",
-        "params",
-        "callback"
+        "state",
+        "params"
       ],
       "docs": {
-        "description": "Creates a fictional resource in a fictional destination system using a POST request",
+        "description": "Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure",
         "tags": [
           {
             "title": "public",
@@ -17,7 +16,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"/endpoint\", {\"foo\": \"bar\"})"
+            "description": "mapp(state, state)"
           },
           {
             "title": "function",
@@ -26,83 +25,24 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Json object containing keys and data values;",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "Object"
             },
-            "name": "path"
+            "name": "state"
           },
           {
             "title": "param",
-            "description": "data to create the new resource",
+            "description": "E.g. `{users:\"haftamuk\", sources: \"eCHIS-CODES\", concepts: \"fp_new_at_10_to_14\" }",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
             },
             "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "createPatient",
-      "params": [
-        "params",
-        "callback"
-      ],
-      "docs": {
-        "description": "Create a fictional patient in a fictional universe with a fictional REST api",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "createPatient({\"foo\": \"bar\"})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "data to create the new resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -119,41 +59,6 @@
   ],
   "exports": [],
   "common": [
-    {
-      "name": "alterState",
-      "params": [
-        "func"
-      ],
-      "docs": {
-        "description": "Runs a function using state.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "alterState(callback)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "is the function",
-            "type": {
-              "type": "NameExpression",
-              "name": "Function"
-            },
-            "name": "func"
-          }
-        ]
-      },
-      "valid": true
-    },
     {
       "name": "sourceValue",
       "params": [
@@ -238,7 +143,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
         "tags": [
           {
             "title": "public",
@@ -394,7 +299,9 @@
     },
     {
       "name": "fields",
-      "params": [],
+      "params": [
+        "fields"
+      ],
       "docs": {
         "description": "Zips key value pairs into an object.",
         "tags": [
@@ -411,6 +318,15 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
           },
           {
             "title": "returns",
