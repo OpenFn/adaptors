@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "hostUrl": {
+            "title": "Host URL",
+            "type": "string",
+            "description": "The OCL API URL",
+            "default": "https://api.openconceptlab.org/",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "The username to log in to OCL",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "The password to log in to OCL",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "hostUrl",
+        "username",
+        "password"
+    ]
+}
