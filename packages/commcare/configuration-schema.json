@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "hostUrl": {
+            "title": "Host URL",
+            "type": "string",
+            "description": "The CommCare host url",
+            "format": "uri",
+            "minLength": 1
+        },
+        "applicationName": {
+            "title": "Application Name",
+            "type": "string",
+            "description": "The CommCare application name",
+            "minLength": 1
+        },
+        "appId": {
+            "title": "App ID",
+            "type": "string",
+            "description": "Your CommCare project UUID",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "The username to log in to CommCare",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "The password to log in to CommCare",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "hostUrl",
+        "applicationName",
+        "appId"
+    ]
+}
