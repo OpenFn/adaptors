@@ -2,7 +2,6 @@
   "name": "@openfn/language-common",
   "version": "1.7.3",
   "description": "Common Expressions for OpenFn",
-  "main": "dist/index.cjs",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
