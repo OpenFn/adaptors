@@ -1,8 +1,5 @@
-import pkg from 'chai';
-const { expect } = pkg;
-
-import Adaptor from '../src';
-const { execute, event } = Adaptor;
+import { expect } from 'chai';
+import { execute, } from '../src';
 
 describe('execute', () => {
   // Mock this endpoint...
@@ -38,8 +35,6 @@ describe('execute', () => {
         server: 'testurl',
       },
     };
-
-    let finalState = execute()(state);
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({
