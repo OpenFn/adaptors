@@ -1,10 +1,8 @@
-import * as Adaptor from '../src/Adaptor';
+import { execute, get, post, put, patch, del, alterState, request } from '../src';
 import { each } from '@openfn/language-common';
 import { expect } from 'chai';
 import nock from 'nock';
 import { setUrl } from '../src/Utils';
-
-const { execute, get, post, put, patch, del, alterState, request } = Adaptor;
 
 function stdGet(state) {
   return execute(get('https://www.example.com/api/fake', {}))(state).then(
