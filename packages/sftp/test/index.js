@@ -1,12 +1,6 @@
-import pkg from 'chai';
-const { expect } = pkg;
+import { expect } from 'chai';
 
-import nock from 'nock';
-
-import Adaptor from '../src';
-const { execute } = Adaptor;
-
-import { getJSON } from '../src/Adaptor';
+import { execute } from '../src';
 
 describe('The execute() function', () => {
   it('executes each operation in sequence', done => {
