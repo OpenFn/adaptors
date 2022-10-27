@@ -73,6 +73,14 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -118,6 +126,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -153,6 +169,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -292,6 +316,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -370,6 +402,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -481,6 +521,14 @@
               "name": "Operation"
             },
             "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -579,6 +627,14 @@
               "name": "String"
             },
             "name": "targetKey"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -623,6 +679,14 @@
               }
             },
             "name": "skipFilter"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -668,6 +732,14 @@
               "name": "Value"
             },
             "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Field"
+            }
           }
         ]
       },
@@ -788,6 +860,14 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
           }
         ]
       },
@@ -1141,6 +1221,14 @@
               "name": "State"
             },
             "name": "state"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            }
           }
         ]
       },

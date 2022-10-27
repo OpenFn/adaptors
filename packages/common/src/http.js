@@ -10,7 +10,7 @@ export { axios };
  * @public
  * @function
  * @param {object} value - data
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function expandRequestReferences(params) {
   const [toKeep, toExpand] = splitKeys(params || {}, [
@@ -42,7 +42,7 @@ export function expandRequestReferences(params) {
  * Creates an https agent for axios from the agentOptions key passed in params.
  * @function
  * @param {object} params - data
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 function withAgent(params) {
   const { agentOptions } = params;

@@ -8,7 +8,7 @@
     "require": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor _template",
+    "build": "pnpm clean && build-adaptor template",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rm -rf dist types docs",

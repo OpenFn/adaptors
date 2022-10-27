@@ -8,35 +8,6 @@ importers:
     devDependencies:
       '@changesets/cli': 2.25.0
 
-  packages/_template:
-    specifiers:
-      '@openfn/buildtools': workspace:^1.0.0
-      '@openfn/language-common': ^1.7.1
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      axios: 0.26.1
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: 0.16.3
-      mocha: 9.2.2
-      nock: 12.0.3
-      rimraf: 3.0.2
-      sinon: 1.17.7
-    dependencies:
-      '@openfn/language-common': link:../common
-      axios: 0.26.1
-    devDependencies:
-      '@openfn/buildtools': link:../../tools/build
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: 0.16.3
-      mocha: 9.2.2
-      nock: 12.0.3
-      rimraf: 3.0.2
-      sinon: 1.17.7
-
   packages/asana:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.0
@@ -544,6 +515,35 @@ importers:
       eslint-plugin-import: 2.26.0_eslint@8.26.0
       esno: 0.16.3
       mocha: 7.2.0
+      nock: 12.0.3
+      rimraf: 3.0.2
+      sinon: 1.17.7
+
+  packages/template:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.0
+      '@openfn/language-common': ^1.7.1
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      axios: 0.26.1
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
+      nock: 12.0.3
+      rimraf: 3.0.2
+      sinon: 1.17.7
+    dependencies:
+      '@openfn/language-common': link:../common
+      axios: 0.26.1
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
       nock: 12.0.3
       rimraf: 3.0.2
       sinon: 1.17.7
