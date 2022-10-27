@@ -1,8 +1,6 @@
-import chai from 'chai';
+import { expect } from 'chai';
 
-import Adaptor from '../src';
-const { execute } = Adaptor;
-const { expect } = chai;
+import { execute } from '../src';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {

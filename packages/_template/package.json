@@ -3,7 +3,10 @@
   "version": "1.7.2",
   "description": "An adaptor template for OpenFn",
   "type": "module",
-  "main": "dist/index.cjs",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "scripts": {
     "build": "pnpm clean && build-adaptor _template",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",

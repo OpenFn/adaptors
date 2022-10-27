@@ -2,7 +2,9 @@ import { build } from 'tsup';
 import resolvePath from '../util/resolve-path';
 
 const compilerOptions = {
-  allowJs: true,
+  // Enabling allowJs will break common's doc build
+  // because of export { del as delete } in http
+  //allowJs: true,
   declaration: true,
   emitDeclarationOnly: true,
   esModuleInterop: true,

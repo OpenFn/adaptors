@@ -35,7 +35,10 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   };
 
   updated.type = 'module';
-  updated.main = 'dist/index.cjs';
+  updated.exports = {
+    import: './dist/index.js',
+    require: './dist/index.cjs',
+  };
   updated.types = 'types/index.d.ts';
 
   updated.files = ['dist/', 'types/', 'ast.json', 'configuration-schema.json'];

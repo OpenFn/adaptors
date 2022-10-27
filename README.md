@@ -141,6 +141,7 @@ Then, from inside your new `packages/<name>`:
 - Commit your changes `git commit -am "cloned <name> into monorepo"`
 - Delete `package-lock.json`
 - Remove `bundledDependencies` from package.json
+- Fix index.js (see `index.js` below)
 - Run `pnpm install`
 - Remove the `docs` and `lib` dirs
 - Remove `.prettierrc`
@@ -159,6 +160,23 @@ Then, from inside your new `packages/<name>`:
   version bump for the package).
 - Commit your changes, including the changeset, and open a pull request against
   `main`.
+
+### index.js
+
+The index.js file should be exactly this:
+
+```
+import * as Adaptor from './Adaptor';
+export default Adaptor;
+
+export * from './Adaptor';
+```
+
+The first two lines export the Adaptor object as the default export from the
+module, so you can do `import common from '@openfn/common'`
+
+The second line exports every export of Adaptor from the main index, so you can
+do `import { fn } from '@openfn/common'`.
 
 ### Readme
 
@@ -182,35 +200,9 @@ In addition, you may need to replace any references to `npm` with `pnpm`
 
 ### Tests
 
-You'll need to update tests and get them passing. There are a few things to be
-aware of here.
-
-**Import paths**
+You'll need to update tests and get them passing.
 
 Instead of importing test files from `lib`, import directly from `src`.
 
 Ie, replace `import Adaptor from '../lib/Adaptor'` becomes
 `import Adaptor from '../src/Adaptor'`
-
-**Importing CJS modules**
-
-Packages in this repo should assume native support for esm modules (ie, `import`
-instead of `require`).
-
-Although adaptors use EJS syntax, many used to transpile through babel into CJS
-format.
-
-You will probably find that `chai` and `lodash` throw exceptions when you try
-and run the tests. To fix this, read closely the error message that is returned.
-You probably need to change the import from:
-
-```
-import { isEmpty } from 'lodash/fp';
-```
-
-to:
-
-```
-import _ from 'lodash/fp';
-const { isEmpty } = _;
-```
