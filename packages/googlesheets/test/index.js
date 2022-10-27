@@ -1,10 +1,6 @@
 import { expect } from 'chai';
 
-import nock from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
-
-import Adaptor from '../src';
-const { execute, event, dataElement, get } = Adaptor;
+import { execute } from '../src';
 
 describe('execute', () => {
   it('executes each operation in sequence', (done) => {
@@ -31,8 +27,6 @@ describe('execute', () => {
 
   it('assigns references, data to the initialState', () => {
     let state = {};
-
-    let finalState = execute()(state);
 
     execute()(state).then((finalState) => {
       expect(finalState).to.eql({
