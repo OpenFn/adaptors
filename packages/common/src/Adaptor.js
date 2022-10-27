@@ -34,7 +34,7 @@ export function execute(...operations) {
  * alias for "fn()"
  * @function
  * @param {Function} func is the function
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function alterState(func) {
   return fn(func);
@@ -50,7 +50,7 @@ export function alterState(func) {
  * });
  * @function
  * @param {Function} func is the function
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function fn(func) {
   return state => {
@@ -68,7 +68,7 @@ export function fn(func) {
  * @function
  * @param {object} obj - A valid JSON object.
  * @param {String} path - JSONPath referencing a point in given JSON object.
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function jsonValue(obj, path) {
   return JSONPath({ path, json: obj })[0];
@@ -83,7 +83,7 @@ export function jsonValue(obj, path) {
  * sourceValue('$.key')
  * @function
  * @param {String} path - JSONPath referencing a point in `state`.
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function sourceValue(path) {
   return state => {
@@ -133,7 +133,7 @@ export function dataPath(path) {
  * dataValue('key')
  * @function
  * @param {String} path - JSONPath referencing a point in `data`.
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function dataValue(path) {
   return sourceValue(dataPath(path));
@@ -162,7 +162,7 @@ export function referencePath(path) {
  * lastReferenceValue('key')
  * @function
  * @param {String} path - JSONPath referencing a point in `references`.
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function lastReferenceValue(path) {
   const lastReferencePath = referencePath('[0]'.concat('.', path));
@@ -187,7 +187,7 @@ export function lastReferenceValue(path) {
  * @param {string} path - JSONPath referencing a point in `state.data`.
  * @param {function} operation - The operation needed to be repeated.
  * @param {State} state - Runtime state.
- * @returns {<State>}
+ * @returns {State}
  */
 export const map = curry(function (path, operation, state) {
   switch (typeof path) {
@@ -249,7 +249,7 @@ export function asData(data, state) {
  * @function
  * @param {DataSource} dataSource - JSONPath referencing a point in `state`.
  * @param {Operation} operation - The operation needed to be repeated.
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function each(dataSource, operation) {
   if (!dataSource) {
@@ -304,7 +304,7 @@ export function combine(...operations) {
  * @param {String} targetPath - Target path
  * @param {String} sourcePath - Source path
  * @param {String} targetKey - Target Key
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function join(targetPath, sourcePath, targetKey) {
   return state => {
@@ -320,7 +320,7 @@ export function join(targetPath, sourcePath, targetKey) {
  * @function
  * @param {object} value - data
  * @param {Function} [skipFilter] - a function which returns true if a value should be skipped
- * @returns {<Operation>}
+ * @returns {Operation}
  */
 export function expandReferences(value, skipFilter) {
   return state => {
@@ -351,7 +351,7 @@ export function expandReferences(value, skipFilter) {
  * @function
  * @param {string} key - Name of the field
  * @param {Value} value - The value itself or a sourceable operation.
- * @returns {<Field>}
+ * @returns {Field}
  */
 export function field(key, value) {
   return [key, value];
@@ -403,7 +403,7 @@ export function merge(dataSource, fields) {
  * @example
  * index()
  * @function
- * @returns {<DataSource>}
+ * @returns {DataSource}
  */
 export function index() {
   return state => {
