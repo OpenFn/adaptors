@@ -1,13 +1,9 @@
-import chai from 'chai';
-
-const { expect } = chai;
+import { expect } from 'chai';
 
 import nock from 'nock';
-import ClientFixtures from './ClientFixtures';
-const { fixtures } = ClientFixtures;
+import { fixtures } from './ClientFixtures';
 
-import Adaptor from '../src';
-const { execute, event, dataElement, get } = Adaptor;
+import { execute, event, dataElement, get } from '../src';
 
 describe.skip('execute', () => {
   // TODO: determine how to get travis to test against a local DB.
