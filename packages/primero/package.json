@@ -2,7 +2,10 @@
   "name": "@openfn/language-primero",
   "version": "2.10.0",
   "description": "A UNICEF Primero language package for use with Open Function",
-  "main": "dist/index.cjs",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",

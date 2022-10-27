@@ -3,7 +3,10 @@
   "version": "2.11.0",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
-  "main": "dist/index.cjs",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "scripts": {
     "build": "pnpm clean && build-adaptor salesforce",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
