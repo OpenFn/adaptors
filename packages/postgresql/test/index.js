@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import nock from 'nock';
 import { fixtures } from './ClientFixtures';
 
-import { execute, event, dataElement, get } from '../src';
+import { execute/*, get*/ } from '../src';
 
 describe.skip('execute', () => {
   // TODO: determine how to get travis to test against a local DB.
