@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import nock from 'nock';
-import * as Adaptor from '../src/Adaptor.js';
-
-const { execute, create, dataValue } = Adaptor;
+import { execute, create, dataValue } from '../src/Adaptor.js';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
