@@ -1092,59 +1092,6 @@
       "valid": true
     },
     {
-      "name": "dedupArrayOfObjects",
-      "params": [
-        "array",
-        "uid"
-      ],
-      "docs": {
-        "description": "Deduplicates an array of objects by a unique attribute",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "dedupArrayOfObjects([{a:1}, {b:2}, {a:1, b:2}], 'a')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Array of objects to be deduplicated",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "array"
-          },
-          {
-            "title": "param",
-            "description": "The attribute name on which to deduplicate",
-            "type": {
-              "type": "NameExpression",
-              "name": "Integer"
-            },
-            "name": "uid"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "map",
       "params": [
         "path",
