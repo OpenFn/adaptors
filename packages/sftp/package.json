@@ -7,7 +7,10 @@
     "type": "git",
     "url": "https://github.com/openfn/adaptors.git"
   },
-  "main": "dist/index.js",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "scripts": {
     "build": "pnpm clean && build-adaptor sftp",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
