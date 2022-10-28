@@ -2,4 +2,4 @@
 '@openfn/language-ocl': minor
 ---
 
-Migrate OCL
+Migrate OCL, update package export

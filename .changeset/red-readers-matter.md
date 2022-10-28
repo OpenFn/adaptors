@@ -2,4 +2,4 @@
 '@openfn/language-fhir': minor
 ---
 
-Migrate FHIR
+Migrate FHIR, update package export
