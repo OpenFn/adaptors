@@ -28,25 +28,25 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.3",
+    "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
-    "JSONPath": "^0.10.0",
     "lodash-fp": "^0.10.2",
     "mustache": "^2.2.0",
+    "sinon": "^14.0.1",
     "yargs": "^3.30.0"
   },
   "devDependencies": {
+    "@openfn/buildtools": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "1.1.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
+    "esno": "0.16.3",
     "mocha": "7.2.0",
     "nock": "13.2.9",
-    "sinon": "14.0.1",
-    "type-detect": "1.0.0",
-    "esno": "0.16.3",
     "rimraf": "3.0.2",
-    "@openfn/buildtools": "workspace:^1.0.0"
+    "type-detect": "1.0.0"
   },
   "type": "module",
   "types": "types/index.d.ts"
