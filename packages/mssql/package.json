@@ -32,15 +32,14 @@
     "tedious": "15.1.0"
   },
   "devDependencies": {
+    "@openfn/buildtools": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "mocha": "10.1.0",
-    "sinon": "1.17.7",
     "esno": "0.16.3",
-    "rimraf": "3.0.2",
-    "@openfn/buildtools": "workspace:^1.0.0"
+    "mocha": "10.1.0",
+    "rimraf": "3.0.2"
   },
   "type": "module",
   "types": "types/index.d.ts"

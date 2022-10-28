@@ -20,7 +20,6 @@ importers:
       mocha: 7.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
     dependencies:
       '@openfn/language-common': link:../common
     devDependencies:
@@ -33,7 +32,6 @@ importers:
       mocha: 7.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
 
   packages/beyonic:
     specifiers:
@@ -48,7 +46,6 @@ importers:
       lodash-fp: ^0.10.2
       mocha: 7.2.0
       rimraf: 3.0.2
-      sinon: 9.2.4
       superagent: ^8.0.0
     dependencies:
       '@openfn/language-common': link:../common
@@ -64,7 +61,6 @@ importers:
       esno: 0.16.3
       mocha: 7.2.0
       rimraf: 3.0.2
-      sinon: 9.2.4
 
   packages/commcare:
     specifiers:
@@ -83,7 +79,6 @@ importers:
       mocha: ^9.2.2
       nock: ^13.0.5
       rimraf: ^3.0.2
-      sinon: ^9.2.3
       superagent: ^6.1.0
       superagent-mock: ^4.0.0
       xlsx: ^0.17.0
@@ -106,7 +101,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
       superagent-mock: 4.0.0_superagent@6.1.0
 
   packages/common:
@@ -123,7 +117,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       rimraf: ^3.0.2
-      sinon: 9.2.4
     dependencies:
       axios: 1.1.3
       date-fns: 2.29.3
@@ -138,7 +131,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
 
   packages/dhis2:
     specifiers:
@@ -156,7 +148,6 @@ importers:
       nock: 13.2.9
       qs: ^6.10.3
       rimraf: 3.0.2
-      sinon: 1.17.7
     dependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/language-common': 1.6.2
@@ -173,7 +164,6 @@ importers:
       mocha: 7.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/fhir:
     specifiers:
@@ -188,7 +178,6 @@ importers:
       mocha: ^7.1.1
       nock: ^12.0.3
       rimraf: ^3.0.2
-      sinon: ^1.17.2
     dependencies:
       '@openfn/language-common': link:../common
       axios: 0.21.4
@@ -202,7 +191,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/googlesheets:
     specifiers:
@@ -217,7 +205,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
     dependencies:
       '@openfn/language-common': 1.7.1
       googleapis: 100.0.0
@@ -231,7 +218,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
 
   packages/http:
     specifiers:
@@ -252,7 +238,6 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       request: ^2.88.2
-      sinon: 9.2.4
       tough-cookie: ^4.0.0
     dependencies:
       '@openfn/language-common': 1.7.1
@@ -274,7 +259,6 @@ importers:
       esno: 0.16.3
       mocha: 9.2.2
       nock: 13.2.9
-      sinon: 9.2.4
 
   packages/kobotoolbox:
     specifiers:
@@ -287,7 +271,6 @@ importers:
       mocha: ^7.1.1
       nock: ^12.0.3
       rimraf: ^3.0.2
-      sinon: ^1.17.2
     dependencies:
       '@openfn/language-common': 1.2.4
     devDependencies:
@@ -299,7 +282,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/mssql:
     specifiers:
@@ -313,7 +295,6 @@ importers:
       mocha: 10.1.0
       request: 2.88.0
       rimraf: 3.0.2
-      sinon: 1.17.7
       tedious: 15.1.0
     dependencies:
       '@openfn/language-common': 1.6.2
@@ -328,7 +309,6 @@ importers:
       esno: 0.16.3
       mocha: 10.1.0
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/ocl:
     specifiers:
@@ -343,7 +323,6 @@ importers:
       mocha: ^7.1.1
       nock: ^12.0.3
       rimraf: ^3.0.2
-      sinon: ^1.17.2
     dependencies:
       '@openfn/language-common': link:../common
       axios: 0.21.2
@@ -357,7 +336,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/postgresql:
     specifiers:
@@ -373,7 +351,6 @@ importers:
       pg: ^8.3.2
       pg-format: ^1.0.4
       rimraf: 3.0.2
-      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': 1.6.2
       pg: 8.8.0
@@ -388,7 +365,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/primero:
     specifiers:
@@ -410,7 +386,6 @@ importers:
       prettier: 2.7.1
       request: ^2.72.0
       rimraf: 3.0.2
-      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': 1.7.1
       cheerio: 1.0.0-rc.12
@@ -431,7 +406,6 @@ importers:
       nock: 12.0.3
       prettier: 2.7.1
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/salesforce:
     specifiers:
@@ -450,7 +424,7 @@ importers:
       mustache: ^2.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
+      sinon: ^14.0.1
       type-detect: 1.0.0
       yargs: ^3.30.0
     dependencies:
@@ -471,7 +445,7 @@ importers:
       mocha: 7.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 9.2.4
+      sinon: 14.0.1
       type-detect: 1.0.0
 
   packages/sftp:
@@ -494,7 +468,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
       ssh2-sftp-client: 9.0.4
     dependencies:
       '@openfn/language-common': link:../common
@@ -517,7 +490,6 @@ importers:
       mocha: 7.2.0
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   packages/template:
     specifiers:
@@ -532,7 +504,6 @@ importers:
       mocha: 9.2.2
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
     dependencies:
       '@openfn/language-common': link:../common
       axios: 0.26.1
@@ -546,7 +517,6 @@ importers:
       mocha: 9.2.2
       nock: 12.0.3
       rimraf: 3.0.2
-      sinon: 1.17.7
 
   tools/build:
     specifiers:
@@ -1343,14 +1313,14 @@ packages:
       type-detect: 4.0.8
     dev: true
 
-  /@sinonjs/fake-timers/6.0.1:
-    resolution: {integrity: sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==}
+  /@sinonjs/fake-timers/9.1.2:
+    resolution: {integrity: sha512-BPS4ynJW/o92PUR4wgriz2Ud5gpST5vz6GQfMixEDK0Z8ZCUv2M7SkBLykH56T++Xs+8ln9zTGbOvNGIe02/jw==}
     dependencies:
       '@sinonjs/commons': 1.8.3
     dev: true
 
-  /@sinonjs/samsam/5.3.1:
-    resolution: {integrity: sha512-1Hc0b1TtyfBu8ixF/tpfSHTVWKwCBLY4QJbkgnE7HcwyvT2xArDxb4K7dMgqRm3szI+LJbzmW/s4xxEhv6hwDg==}
+  /@sinonjs/samsam/6.1.1:
+    resolution: {integrity: sha512-cZ7rKJTLiE7u7Wi/v9Hc2fs3Ucc3jrWeMgPHbbTCeVAB2S0wOBbYlkJVeNSL04i7fdhT8wIbDq1zhC/PXTD2SA==}
     dependencies:
       '@sinonjs/commons': 1.8.3
       lodash.get: 4.4.2
@@ -1703,11 +1673,6 @@ packages:
 
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-
-  /available-typed-arrays/1.0.5:
-    resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
-    engines: {node: '>= 0.4'}
-    dev: true
 
   /aws-sign2/0.7.0:
     resolution: {integrity: sha512-08kcGqnYf/YmjoRhfxyu+CLxBjUtHLXLXX/vUfx9l2LYzG3c1m61nrpyFUZI6zeS+Li/wWMMidD9KgrqtGq3mA==}
@@ -2532,6 +2497,7 @@ packages:
   /diff/4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
+    dev: false
 
   /diff/5.0.0:
     resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
@@ -3364,12 +3330,6 @@ packages:
         optional: true
     dev: false
 
-  /for-each/0.3.3:
-    resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
-    dependencies:
-      is-callable: 1.2.7
-    dev: true
-
   /forever-agent/0.6.1:
     resolution: {integrity: sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==}
     dev: false
@@ -3398,13 +3358,6 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
     dev: false
-
-  /formatio/1.1.1:
-    resolution: {integrity: sha512-cPh7is6k3d8tIUh+pnXXuAbD/uhSXGgqLPw0UrYpv5lfdJ+MMMSjx40JNpqP7Top9Nt25YomWEiRmkHbOvkCaA==}
-    deprecated: This package is unmaintained. Use @sinonjs/formatio instead
-    dependencies:
-      samsam: 1.1.2
-    dev: true
 
   /formidable/1.2.6:
     resolution: {integrity: sha512-KcpbcpuLNOwrEjnbpMC0gS+X8ciDoZE1kkqzat4a8vrprf+s9pKNQ/QIwWfbfs4ltgmFl3MD177SNTkve3BwGQ==}
@@ -3910,14 +3863,6 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /is-arguments/1.1.1:
-    resolution: {integrity: sha512-8Q7EARjzEnKpt/PCD7e1cgUS0a6X8u5tdSiMqXhojOdoV9TsMsiO+9VLC5vAmO8N7/GmXn7yjR8qnA6bVAEzfA==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.2
-      has-tostringtag: 1.0.0
-    dev: true
-
   /is-arrayish/0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
     dev: true
@@ -3992,13 +3937,6 @@ packages:
   /is-fullwidth-code-point/3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
-
-  /is-generator-function/1.0.10:
-    resolution: {integrity: sha512-jsEjy9l3yiXEQ+PsXdmBwEPcOxaXWLspKdplFUVI9vq1iZgIekeC0L167qeu86czQaxed3q/Uzuw0swL0irL8A==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      has-tostringtag: 1.0.0
-    dev: true
 
   /is-glob/4.0.3:
     resolution: {integrity: sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==}
@@ -4082,17 +4020,6 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       has-symbols: 1.0.3
-
-  /is-typed-array/1.1.9:
-    resolution: {integrity: sha512-kfrlnTTn8pZkfpJMUgYD7YZ3qzeJgWUn8XfVYBARc4wnmNOmLbmuuaAs3q5fvB0UJOn6yHAKaGTPM7d6ezoD/A==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
-      es-abstract: 1.20.4
-      for-each: 0.3.3
-      has-tostringtag: 1.0.0
-    dev: true
 
   /is-typedarray/1.0.0:
     resolution: {integrity: sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==}
@@ -4605,10 +4532,6 @@ packages:
       is-unicode-supported: 0.1.0
     dev: true
 
-  /lolex/1.3.2:
-    resolution: {integrity: sha512-YYp8cqz7/8eruZ15L1mzcPkvLYxipfdsWIDESvNdNmQP9o7TsDitRhNuV2xb7aFu2ofZngao1jiVrVZ842x4BQ==}
-    dev: true
-
   /loupe/2.3.4:
     resolution: {integrity: sha512-OvKfgCC2Ndby6aSTREl5aCCPTNIzlDfQZvZxNUrBrihDhL3xcrYegTblhmEiCrg2kKQz4XsFIaemE5BF4ybSaQ==}
     dependencies:
@@ -4965,11 +4888,11 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-  /nise/4.1.0:
-    resolution: {integrity: sha512-eQMEmGN/8arp0xsvGoQ+B1qvSkR73B1nWSCh7nOt5neMCtwcQVYQGdzQMhcNscktTsWB54xnlSQFzOAPJD8nXA==}
+  /nise/5.1.1:
+    resolution: {integrity: sha512-yr5kW2THW1AkxVmCnKEh4nbYkJdB3I7LUkiUgOvEkOp414mc2UMaHMA7pjq1nYowhdoJZGwEKGaQVbxfpWj10A==}
     dependencies:
       '@sinonjs/commons': 1.8.3
-      '@sinonjs/fake-timers': 6.0.1
+      '@sinonjs/fake-timers': 9.1.2
       '@sinonjs/text-encoding': 0.7.2
       just-extend: 4.2.1
       path-to-regexp: 1.8.0
@@ -5889,11 +5812,6 @@ packages:
   /safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /samsam/1.1.2:
-    resolution: {integrity: sha512-iVL7LibpM3tl4rQPweOXXrmjGegxx27flTOjQEZD3PXe4oZNFzuz6Si4mgleK/JWU/hyCvtV01RUovjvBEpDmw==}
-    deprecated: This package has been deprecated in favour of @sinonjs/samsam
-    dev: true
-
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
@@ -5960,24 +5878,14 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
 
-  /sinon/1.17.7:
-    resolution: {integrity: sha512-M9rtyQxKfcTTdB64rpPSRaTzOvunb+HHPv/3PxvNPrEDnFSny95Pi6/3VoD471ody0ay0IHyzT3BErfcLXj6NA==}
-    engines: {node: '>=0.1.103'}
-    dependencies:
-      formatio: 1.1.1
-      lolex: 1.3.2
-      samsam: 1.1.2
-      util: 0.12.4
-    dev: true
-
-  /sinon/9.2.4:
-    resolution: {integrity: sha512-zljcULZQsJxVra28qIAL6ow1Z9tpattkCTEJR4RBP3TGc00FcttsP5pK284Nas5WjMZU5Yzy3kAIp3B3KRf5Yg==}
+  /sinon/14.0.1:
+    resolution: {integrity: sha512-JhJ0jCiyBWVAHDS+YSjgEbDn7Wgz9iIjA1/RK+eseJN0vAAWIWiXBdrnb92ELPyjsfreCYntD1ORtLSfIrlvSQ==}
     dependencies:
       '@sinonjs/commons': 1.8.3
-      '@sinonjs/fake-timers': 6.0.1
-      '@sinonjs/samsam': 5.3.1
-      diff: 4.0.2
-      nise: 4.1.0
+      '@sinonjs/fake-timers': 9.1.2
+      '@sinonjs/samsam': 6.1.1
+      diff: 5.0.0
+      nise: 5.1.1
       supports-color: 7.2.0
     dev: true
 
@@ -6757,17 +6665,6 @@ packages:
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  /util/0.12.4:
-    resolution: {integrity: sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==}
-    dependencies:
-      inherits: 2.0.4
-      is-arguments: 1.1.1
-      is-generator-function: 1.0.10
-      is-typed-array: 1.1.9
-      safe-buffer: 5.2.1
-      which-typed-array: 1.1.8
-    dev: true
-
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
@@ -6871,18 +6768,6 @@ packages:
     dependencies:
       load-yaml-file: 0.2.0
       path-exists: 4.0.0
-    dev: true
-
-  /which-typed-array/1.1.8:
-    resolution: {integrity: sha512-Jn4e5PItbcAHyLoRDwvPj1ypu27DJbtdYXUa5zsinrUx77Uvfb0cXwwnGMTn7cjUfhhqgVQnVJCwF+7cgU7tpw==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
-      es-abstract: 1.20.4
-      for-each: 0.3.3
-      has-tostringtag: 1.0.0
-      is-typed-array: 1.1.9
     dev: true
 
   /which/1.3.1:
