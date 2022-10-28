@@ -12,6 +12,7 @@ export default async (lang: string) => {
   const str = await jsdoc2md.render({
     files: `${root}/src/**/*.js`,
     readme: `${root}/README.md`,
+    template: `{{/docs}}`,
     //template: ? // TODO
   });
 
