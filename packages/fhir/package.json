@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.0",
-    "@openfn/simple-ast": "^0.3.0",
+    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
