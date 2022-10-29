@@ -224,7 +224,7 @@ importers:
       '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.7.1
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       chai: 4.3.6
       cheerio: ^1.0.0-rc.10
       cheerio-tableparser: ^1.0.1
@@ -253,7 +253,7 @@ importers:
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: 0.16.3
@@ -521,7 +521,7 @@ importers:
   tools/build:
     specifiers:
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       esno: 0.16.3
       jsdoc-to-markdown: ^7.1.1
       ts-node: 10.9.1
@@ -530,25 +530,25 @@ importers:
       yargs: 17.6.0
     dependencies:
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       esno: 0.16.3
       jsdoc-to-markdown: 7.1.1
-      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
+      ts-node: 10.9.1_evej5wzm4hojmu6uzxwpspdmsu
       tsup: 6.3.0_mwhvu7sfp6vq5ryuwb6hlbjfka
       typescript: 4.8.4
       yargs: 17.6.0
 
   tools/migrate:
     specifiers:
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       esno: 0.16.3
       ts-node: 10.9.1
       typescript: 4.8.4
       yargs: 17.6.0
     dependencies:
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       esno: 0.16.3
-      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
+      ts-node: 10.9.1_evej5wzm4hojmu6uzxwpspdmsu
       typescript: 4.8.4
       yargs: 17.6.0
 
@@ -1368,7 +1368,7 @@ packages:
   /@types/es-aggregate-error/1.0.2:
     resolution: {integrity: sha512-erqUpFXksaeR2kejKnhnjZjbFxUpGZx4Z7ydNL9ie8tEhXPiZTsLeUDJ6aR1F8j5wWUAtOAQWUqkc7givBJbBA==}
     dependencies:
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
     dev: false
 
   /@types/is-ci/3.0.0:
@@ -1404,8 +1404,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node/18.11.3:
-    resolution: {integrity: sha512-fNjDQzzOsZeKZu5NATgXUPsaFaTxeRgFXoosrHivTl8RGeV733OLawXsGfEk9a8/tySyZUyiZ6E8LcjPFZ2y1A==}
+  /@types/node/18.11.7:
+    resolution: {integrity: sha512-LhFTglglr63mNXUSRYD8A+ZAIu5sFqNJ4Y2fPuY7UlrySJH87rRRlhtVmMHplmfk5WkoJGmDjE9oiTfyX94CpQ==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1419,7 +1419,7 @@ packages:
     resolution: {integrity: sha512-9KhCkyXv268A2nZ1Wvu7rQWM+BmdYUVkycFeNnYrUL5Zwu7o8wPQ3wBfW59dDP+wuoxw0ww8YKgTNv8j/cgscA==}
     dependencies:
       '@types/cookiejar': 2.1.2
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
     dev: true
 
   /@ungap/promise-all-settled/1.1.2:
@@ -5268,7 +5268,7 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.6
-      ts-node: 10.9.1_lw7q66ikwuedwcorwkk4v6trsa
+      ts-node: 10.9.1_evej5wzm4hojmu6uzxwpspdmsu
       yaml: 1.10.2
     dev: false
 
@@ -6257,7 +6257,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: false
 
-  /ts-node/10.9.1_lw7q66ikwuedwcorwkk4v6trsa:
+  /ts-node/10.9.1_evej5wzm4hojmu6uzxwpspdmsu:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -6276,7 +6276,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.11.3
+      '@types/node': 18.11.7
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
