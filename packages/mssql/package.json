@@ -15,7 +15,7 @@
     "build": "pnpm clean && build-adaptor mssql",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-    "clean": "rm -rf dist types docs",
+    "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
@@ -32,15 +32,16 @@
     "tedious": "15.1.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.0",
+    "@openfn/buildtools": "workspace:^1.0.1",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "0.16.3",
+    "esno": "^0.16.3",
     "mocha": "10.1.0",
     "rimraf": "3.0.2"
   },
   "type": "module",
-  "types": "types/index.d.ts"
+  "types": "types/index.d.ts",
+  "main": "dist/index.cjs"
 }
