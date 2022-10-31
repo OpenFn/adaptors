@@ -11,11 +11,12 @@
     "import": "./dist/index.js",
     "require": "./dist/index.cjs"
   },
+  "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor sftp",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-    "clean": "rimraf dist types docs",
+    "clean": "rm -rf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
@@ -36,7 +37,7 @@
     "ssh2-sftp-client": "9.0.4"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.0",
+    "@openfn/buildtools": "workspace:^1.0.1",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
@@ -44,19 +45,11 @@
     "eslint": "8.26.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.26.0",
-    "esno": "0.16.3",
+    "esno": "^0.16.3",
     "mocha": "7.2.0",
     "nock": "12.0.3",
-    "rimraf": "3.0.2"
+    "rimraf": "^3.0.2"
   },
-  "bundleDependencies": [
-    "@openfn/language-common",
-    "csv-parser",
-    "csvtojson",
-    "json2csv",
-    "JSONStream",
-    "lodash",
-    "ssh2-sftp-client"
-  ],
-  "type": "module"
+  "type": "module",
+  "types": "types/index.d.ts"
 }
