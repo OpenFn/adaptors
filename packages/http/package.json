@@ -38,6 +38,7 @@
     "import": "0.0.6",
     "lodash": "^4.17.19",
     "request": "^2.88.2",
+    "rimraf": "^3.0.2",
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {

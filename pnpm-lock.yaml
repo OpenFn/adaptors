@@ -238,6 +238,7 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       request: ^2.88.2
+      rimraf: ^3.0.2
       tough-cookie: ^4.0.0
     dependencies:
       '@openfn/language-common': 1.7.1
@@ -249,6 +250,7 @@ importers:
       import: 0.0.6
       lodash: 4.17.21
       request: 2.88.2
+      rimraf: 3.0.2
       tough-cookie: 4.1.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -5617,7 +5619,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.0
-    dev: true
 
   /rollup/2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
