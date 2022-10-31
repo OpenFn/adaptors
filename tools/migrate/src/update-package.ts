@@ -66,7 +66,7 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   updated.devDependencies.esno = '^0.16.3';
   updated.devDependencies['@openfn/buildtools'] = 'workspace:^1.0.1';
 
-  updated.scripts.clean = 'rm -rf dist types docs';
+  updated.scripts.clean = 'rimraf dist types docs';
   updated.scripts.build = `pnpm clean && build-adaptor ${lang}`;
   updated.scripts.pack = 'pnpm pack --pack-destination ../../dist';
   delete updated.scripts.ast;

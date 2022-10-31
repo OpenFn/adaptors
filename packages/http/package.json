@@ -14,7 +14,7 @@
   "type": "module",
   "types": "types/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist types docs",
+    "clean": "rimraf dist types docs",
     "build": "pnpm clean && build-adaptor http",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",

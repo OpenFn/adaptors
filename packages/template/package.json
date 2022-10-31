@@ -11,7 +11,7 @@
     "build": "pnpm clean && build-adaptor template",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-    "clean": "rm -rf dist types docs",
+    "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",

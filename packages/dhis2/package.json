@@ -14,7 +14,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "pnpm clean && build-adaptor dhis2",
-    "clean": "rm -rf dist types docs",
+    "clean": "rimraf dist types docs",
     "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings test/index.js",
