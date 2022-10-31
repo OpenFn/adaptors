@@ -18,4 +18,4 @@
 '@openfn/migrate-adaptor': patch
 ---
 
-update all packages to include main="dist/index.cjs"
+Fix CJS export of npm package.
