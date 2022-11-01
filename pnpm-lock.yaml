@@ -135,7 +135,7 @@ importers:
   packages/dhis2:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': workspace:^1.7.3
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       axios: ^0.24.0
@@ -150,7 +150,7 @@ importers:
       rimraf: 3.0.2
     dependencies:
       '@openfn/buildtools': link:../../tools/build
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': link:../common
       axios: 0.24.0
       lodash: 4.17.21
       qs: 6.11.0
@@ -195,7 +195,7 @@ importers:
   packages/googlesheets:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': workspace:^1.7.3
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 4.3.6
@@ -206,7 +206,7 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': link:../common
       googleapis: 100.0.0
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -222,9 +222,8 @@ importers:
   packages/http:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': workspace:1.7.3
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.7
       chai: 4.3.6
       cheerio: ^1.0.0-rc.10
       cheerio-tableparser: ^1.0.1
@@ -233,7 +232,6 @@ importers:
       esno: ^0.16.3
       fast-safe-stringify: ^2.0.7
       form-data: ^3.0.0
-      import: 0.0.6
       lodash: ^4.17.19
       mocha: 9.2.2
       nock: 13.2.9
@@ -241,26 +239,24 @@ importers:
       rimraf: ^3.0.2
       tough-cookie: ^4.0.0
     dependencies:
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': link:../common
       cheerio: 1.0.0-rc.12
       cheerio-tableparser: 1.0.1
       csv-parse: 4.16.3
       fast-safe-stringify: 2.1.1
       form-data: 3.0.1
-      import: 0.0.6
       lodash: 4.17.21
       request: 2.88.2
-      rimraf: 3.0.2
       tough-cookie: 4.1.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
-      '@types/node': 18.11.7
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: 0.16.3
       mocha: 9.2.2
       nock: 13.2.9
+      rimraf: 3.0.2
 
   packages/kobotoolbox:
     specifiers:
@@ -3779,14 +3775,6 @@ packages:
       resolve-from: 4.0.0
     dev: true
 
-  /import/0.0.6:
-    resolution: {integrity: sha512-QPhTdjy9J4wUzmWSG7APkSgMFuPGPw+iJTYUblcfc2AfpqaatbwgCldK1HoLYx+v/+lWvab63GWZtNkcnj9JcQ==}
-    engines: {node: '>=0.10.0'}
-    hasBin: true
-    dependencies:
-      optimist: 0.3.7
-    dev: false
-
   /imurmurhash/0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
@@ -5012,12 +5000,6 @@ packages:
       is-wsl: 1.1.0
     dev: false
 
-  /optimist/0.3.7:
-    resolution: {integrity: sha512-TCx0dXQzVtSCg2OgY/bO9hjM9cV4XYx09TVK+s3+FhkjT6LovsLe+pPMzpWf+6yXK/hUizs2gUoTw3jHM0VaTQ==}
-    dependencies:
-      wordwrap: 0.0.3
-    dev: false
-
   /optionator/0.9.1:
     resolution: {integrity: sha512-74RlY5FCnhq4jRxVUPKDaRwrVNXMqsGsiW6AJw4XK8hmtm10wC0ypZBLw5IIp85NZMr91+qd1RvvENwg7jjRFw==}
     engines: {node: '>= 0.8.0'}
@@ -5619,6 +5601,7 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.0
+    dev: true
 
   /rollup/2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
@@ -6643,11 +6626,6 @@ packages:
   /word/0.3.0:
     resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==}
     engines: {node: '>=0.8'}
-    dev: false
-
-  /wordwrap/0.0.3:
-    resolution: {integrity: sha512-1tMA907+V4QmxV7dbRvb4/8MaRALK6q9Abid3ndMYnbyo8piisCmeONVqVSXqQA3KaP4SLt5b7ud6E2sqP8TFw==}
-    engines: {node: '>=0.4.0'}
     dev: false
 
   /wordwrap/1.0.0:

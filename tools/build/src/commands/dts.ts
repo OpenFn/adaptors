@@ -1,24 +1,8 @@
-import { build } from 'tsup';
-import resolvePath from '../util/resolve-path';
+import path from 'node:path';
+import * as url from 'url';
+import { exec } from 'node:child_process';
 
-const compilerOptions = {
-  // Enabling allowJs will break common's doc build
-  // because of export { del as delete } in http
-  //allowJs: true,
-  declaration: true,
-  emitDeclarationOnly: true,
-  esModuleInterop: true,
-  isolatedModules: true,
-  module: 'es2020',
-  moduleResolution: 'node',
-  noImplicitAny: false,
-  preserveConstEnums: true,
-  removeComments: false,
-  resolveJsonModule: true,
-  sourceMap: false,
-  strictNullChecks: false,
-  target: 'ES2020',
-};
+import resolvePath from '../util/resolve-path';
 
 export default (lang: string) => {
   const root = resolvePath(lang);
@@ -26,14 +10,26 @@ export default (lang: string) => {
   console.log('Building DTS');
   console.log();
 
-  return build({
-    entry: [`${root}/src/index.js`],
-    outDir: `${root}/types`,
-    clean: true,
-    // We can emit dts only with tsup
-    dts: {
-      only: true,
-      compilerOptions,
-    },
+  const args = [
+    '--allowJs',
+    '--declaration',
+    '--emitDeclarationOnly',
+    '--lib es2020',
+    `--declarationDir ${root}/types`,
+    `${root}/src/index.js`,
+  ];
+  // Need to run the command out of the build tool dir
+  const cwd = path.dirname(url.fileURLToPath(import.meta.url));
+  return new Promise<void>(resolve => {
+    exec(
+      'pnpm exec tsc ' + args.join(' '),
+      {
+        cwd,
+      },
+      (err, stdout) => {
+        console.log(stdout);
+        resolve();
+      }
+    );
   });
 };
