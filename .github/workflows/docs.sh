@@ -11,7 +11,7 @@ git config user.name "$GH_USER"
 
 # Commit new changes to docs
 git pull
-git checkout docs
+git switch docs
 git add docs --force
 git status
 git commit -m "Update auto-generated documentation."
