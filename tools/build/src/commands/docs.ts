@@ -12,13 +12,10 @@ export default async (lang: string) => {
   const template = await fs.readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
-  const readme = await fs.readFile(`${root}/README.md`);
 
-  // TODO: @Mtuchi remove readme: `${root}/README.md` if not needed
   const str = await jsdoc2md.render({
     files: `${root}/src/**/*.js`,
-    // readme: `${root}/README.md`,
-    template: `${readme} \n ${template}`,
+    template: `${template}`,
   });
 
   const destinationDir = `${root}/docs`;
