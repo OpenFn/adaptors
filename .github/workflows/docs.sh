@@ -10,6 +10,7 @@ git config user.email "$GH_EMAIL"
 git config user.name "$GH_USER"
 
 # Commit new changes to docs
+git pull
 git checkout docs
 git add docs --force
 git status
