@@ -7,6 +7,11 @@ export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
 
+// TMP does this work?
+import axios from 'axios';
+export { axios };
+
+
 /**
  * Execute a sequence of operations.
  * Main outer API for executing expressions.
