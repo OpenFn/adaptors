@@ -6,8 +6,8 @@ rm -rf docs/*.md
 rsync -pr packages/*/docs/ docs/
 
 # Check in changes.
-git config --global user.email "$GH_EMAIL"
-git config --global user.name "$GH_USER"
+git config user.email "$GH_EMAIL"
+git config user.name "$GH_USER"
 
 git add docs --force
 git status
