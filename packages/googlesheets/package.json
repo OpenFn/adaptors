@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.1",
+    "@openfn/language-common": "workspace:^1.7.3",
     "googleapis": "100.0.0"
   },
   "devDependencies": {

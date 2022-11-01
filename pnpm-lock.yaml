@@ -135,7 +135,7 @@ importers:
   packages/dhis2:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': workspace:^1.7.3
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       axios: ^0.24.0
@@ -150,7 +150,7 @@ importers:
       rimraf: 3.0.2
     dependencies:
       '@openfn/buildtools': link:../../tools/build
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': link:../common
       axios: 0.24.0
       lodash: 4.17.21
       qs: 6.11.0
@@ -195,7 +195,7 @@ importers:
   packages/googlesheets:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': workspace:^1.7.3
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 4.3.6
@@ -206,7 +206,7 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': link:../common
       googleapis: 100.0.0
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
