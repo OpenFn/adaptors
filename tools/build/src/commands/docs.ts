@@ -1,4 +1,5 @@
 import jsdoc2md from 'jsdoc-to-markdown';
+import fs from 'node:fs/promises';
 import { writeFile, mkdir } from 'node:fs/promises';
 import resolvePath from '../util/resolve-path';
 
@@ -8,11 +9,13 @@ export default async (lang: string) => {
   console.log(`Building docs`);
   console.log();
 
-  // for some reason there is no async render API
+  const template = await fs.readFile(
+    '../../tools/build/src/util/docs-template.hbs'
+  );
+
   const str = await jsdoc2md.render({
     files: `${root}/src/**/*.js`,
-    readme: `${root}/README.md`,
-    //template: ? // TODO
+    template: `${template}`,
   });
 
   const destinationDir = `${root}/docs`;
