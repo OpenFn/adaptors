@@ -29,4 +29,7 @@ jobs:
       - name: Build
         run: pnpm -r run build docs
       - name: Copy docs to docs branch
+        env:
+          GH_EMAIL: ${{ secrets.GH_EMAIL }}
+          GH_USER: ${{ secrets.GH_USER }}
         run: pnpm exec .github/workflows/docs.sh
