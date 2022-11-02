@@ -8,7 +8,7 @@ git config user.name "$GH_USER"
 git fetch origin main
 git fetch origin docs
 git switch docs
-git rebase main
+git rebase origin main
 
 # clean docs directory
 rm -rf docs/*
@@ -29,7 +29,25 @@ find docs/*/docs -name '*.md' -type f -execdir mv -n '{}' ../ \;
 find  docs/*/* -type d -empty -delete;
 
 # flatten json files
-jq -s flatten packages/*/docs/*.json > docs/docs.json
+rm docs/*.json
+# add first opening bracked
+echo [ >> docs/tmp.json
+# use all json files in current folder
+for i in packages/*/docs/*.json
+do 
+    # first create the key; it is the filename without the extension
+    # echo \"$i\": | sed 's/\.json//' >> output/tmp.json
+    # dump the file's content
+    cat "$i" >> docs/tmp.json
+    # add a comma afterwards
+    echo , >>  docs/tmp.json
+done
+# remove the last comma from the file; otherwise it's not valid json
+cat docs/tmp.json | sed '$ s/.$//' >> docs/docs.json
+# remove tempfile
+rm docs/tmp.json
+# add closing bracket
+echo ] >> docs/docs.json
 
 # commit new docs 
 git add docs --force
