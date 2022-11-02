@@ -5,9 +5,9 @@ git config user.name "$GH_USER"
 
 # sudo apt install jq
 # Commit new changes to docs
-# git pull
-# git switch docs
-# git rebase origin/main
+git pull
+git switch docs
+git rebase main
 
 # clean docs directory
 rm -rf docs/*
@@ -48,9 +48,7 @@ rm docs/tmp.json
 # add closing bracket
 echo ] >> docs/docs.json
 
-# commit new docs 
-git fetch docs
-git switch docs
+# commit new docs
 git add docs --force
 git status
 git commit -m "Update auto-generated documentation."
