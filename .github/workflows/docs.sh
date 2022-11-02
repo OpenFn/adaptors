@@ -49,6 +49,8 @@ rm docs/tmp.json
 echo ] >> docs/docs.json
 
 # commit new docs 
+git fetch docs
+git switch docs
 git add docs --force
 git status
 git commit -m "Update auto-generated documentation."
