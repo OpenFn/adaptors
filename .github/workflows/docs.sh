@@ -5,9 +5,9 @@ git config user.name "$GH_USER"
 
 # sudo apt install jq
 # Commit new changes to docs
-git pull
-git switch docs
-git rebase origin/main
+# git pull
+# git switch docs
+# git rebase origin/main
 
 # clean docs directory
 rm -rf docs/*
