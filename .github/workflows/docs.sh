@@ -6,7 +6,7 @@ git config user.name "$GH_USER"
 # sudo apt install jq
 # Commit new changes to docs
 git pull
-git switch docs
+git checkout docs
 git rebase 22_docs_github_action
 
 # clean docs directory
