@@ -3,6 +3,7 @@
 git config user.email "$GH_EMAIL"
 git config user.name "$GH_USER"
 
+sudo apt install jq
 # Commit new changes to docs
 git fetch origin main
 git fetch origin docs
@@ -26,6 +27,9 @@ rsync -zvr packages/ docs/ --include="*.md" --include="*/" --exclude="*" --prune
 # move index.md to root directory
 find docs/*/docs -name '*.md' -type f -execdir mv -n '{}' ../ \;
 find  docs/*/* -type d -empty -delete;
+
+# flatten json files
+jq -s 'flatten' packages/*/docs/*.json > docs/docs.json
 
 # commit new docs 
 git add docs --force
