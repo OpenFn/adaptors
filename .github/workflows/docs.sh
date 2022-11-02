@@ -1,6 +1,21 @@
 #!/bin/sh -l
+# Identity config
+git config user.email "$GH_EMAIL"
+git config user.name "$GH_USER"
+
+# Commit new changes to docs
+git fetch origin docs
+git switch docs
+git rebase main
+
 # clean docs directory
 rm -rf docs/*
+
+# Setup pnpm
+pnpm install --frozen-lockfile
+
+# build new docs
+pnpm -r run build docs
 
 # copy new packages docs files to the root docs directory
 # rsync -pr packages/*/docs/ docs/
@@ -11,13 +26,7 @@ rsync -zvr packages/ docs/ --include="*.md" --include="*/" --exclude="*" --prune
 find docs/*/docs -name '*.md' -type f -execdir mv -n '{}' ../ \;
 find  docs/*/* -type d -empty -delete;
 
-# Identity config
-git config user.email "$GH_EMAIL"
-git config user.name "$GH_USER"
-
-# Commit new changes to docs
-git fetch origin docs
-git switch docs
+# commit new docs 
 git add docs --force
 git status
 git commit -m "Update auto-generated documentation."
