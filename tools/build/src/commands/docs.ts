@@ -19,7 +19,7 @@ export default async (lang: string) => {
   });
 
   const destinationDir = `${root}/docs`;
-  const destination = `${destinationDir}/${lang}.md`;
+  const destination = `${destinationDir}/index.md`;
   await mkdir(destinationDir, { recursive: true });
   await writeFile(destination, str);
 
