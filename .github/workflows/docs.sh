@@ -7,7 +7,7 @@ git config user.name "$GH_USER"
 # Commit new changes to docs
 git fetch origin docs
 git switch docs
-git rebase -i --root
+git rebase --continue
 
 # clean docs directory
 rm -rf docs/*
