@@ -1,6 +1,6 @@
 {
   "name": "@openfn/buildtools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "builder tool for openfn adaptors",
   "type": "module",
   "bin": {

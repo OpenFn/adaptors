@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-common",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -35,7 +35,7 @@
     "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.1",
+    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
