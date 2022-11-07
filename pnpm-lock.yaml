@@ -38,7 +38,7 @@ importers:
       '@openfn/buildtools': workspace:^1.0.2
       '@openfn/language-common': ^1.7.4
       '@openfn/simple-ast': 0.4.1
-      JSONPath: ^0.10.0
+      JSONPath: ^0.11.0
       assertion-error: 2.0.0
       chai: 4.3.6
       deep-eql: 4.1.1
@@ -49,7 +49,7 @@ importers:
       superagent: ^8.0.0
     dependencies:
       '@openfn/language-common': link:../common
-      JSONPath: 0.10.0
+      JSONPath: 0.11.2
       lodash-fp: 0.10.4
       superagent: 8.0.2
     devDependencies:
@@ -68,7 +68,7 @@ importers:
       '@openfn/language-common': 1.7.4
       '@openfn/language-http': ^4.2.2
       '@openfn/simple-ast': ^0.4.1
-      JSONPath: ^0.10.0
+      JSONPath: ^0.11.0
       assertion-error: ^1.0.1
       chai: ^4.2.0
       deep-eql: ^4.0.0
@@ -85,7 +85,7 @@ importers:
     dependencies:
       '@openfn/language-common': link:../common
       '@openfn/language-http': link:../http
-      JSONPath: 0.10.0
+      JSONPath: 0.11.2
       form-data: 4.0.0
       js2xmlparser: 1.0.0
       lodash-fp: 0.10.4
@@ -410,7 +410,7 @@ importers:
       '@openfn/buildtools': workspace:^1.0.2
       '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
-      JSONPath: ^0.10.0
+      JSONPath: ^0.11.0
       assertion-error: 1.1.0
       axios: ^0.21.1
       chai: 4.3.6
@@ -427,7 +427,7 @@ importers:
       yargs: ^3.30.0
     dependencies:
       '@openfn/language-common': link:../common
-      JSONPath: 0.10.0
+      JSONPath: 0.11.2
       axios: 0.21.4
       jsforce: 1.11.0
       lodash-fp: 0.10.4
@@ -1383,10 +1383,8 @@ packages:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
     dev: true
 
-  /JSONPath/0.10.0:
-    resolution: {integrity: sha512-lHY1b16vUBuvjuz6m82KQTBp4+ckFmfM0VQB3pe+MPwBx99ARVOTrISXt5yxs3DqADzE79s8xZlBjRfOIIwsaQ==}
-    dependencies:
-      underscore: 1.13.6
+  /JSONPath/0.11.2:
+    resolution: {integrity: sha512-rb/B7XKD/stAMqhao/DKEveRkFkYNOr8S/YjTjfisIrYvzcFdnQl0nlg32AHAws++Avv7AdiDHRyP9yZM6Lscw==}
     dev: false
 
   /JSONStream/1.3.5:
