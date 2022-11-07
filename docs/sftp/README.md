@@ -163,8 +163,6 @@ alterState(state => {
 });
 ```
 
-[Docs](docs/index)
-
 ## Development
 
 Clone the repo, run `pnpm install`.

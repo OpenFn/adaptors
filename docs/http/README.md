@@ -132,8 +132,6 @@ parseCSV('PatientsJan2009.csv', {
 });
 ```
 
-[Docs](docs/index)
-
 ## Development
 
 Clone the repo, run `pnpm install`.
