@@ -1,5 +1,11 @@
 # @openfn/migrate-adaptor
 
+## 1.0.2
+
+### Patch Changes
+
+- b3d45ff: Fix CJS export of npm package.
+
 ## 1.0.1
 
 ### Patch Changes

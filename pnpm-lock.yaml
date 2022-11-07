@@ -10,8 +10,8 @@ importers:
 
   packages/asana:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': ^1.6.2
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -35,8 +35,8 @@ importers:
 
   packages/beyonic:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': ^1.7.1
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.4
       '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
       assertion-error: 2.0.0
@@ -64,9 +64,9 @@ importers:
 
   packages/commcare:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.1
-      '@openfn/language-http': ^4.0.0
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
+      '@openfn/language-http': ^4.2.2
       '@openfn/simple-ast': ^0.4.1
       JSONPath: ^0.10.0
       assertion-error: ^1.0.1
@@ -83,7 +83,7 @@ importers:
       superagent-mock: ^4.0.0
       xlsx: ^0.18.0
     dependencies:
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': link:../common
       '@openfn/language-http': link:../http
       JSONPath: 0.10.0
       form-data: 4.0.0
@@ -105,7 +105,7 @@ importers:
 
   packages/common:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
+      '@openfn/buildtools': workspace:^1.0.2
       '@openfn/simple-ast': 0.4.1
       axios: 1.1.3
       chai: 4.3.6
@@ -134,8 +134,8 @@ importers:
 
   packages/dhis2:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': workspace:^1.7.3
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': workspace:^1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       axios: ^0.24.0
@@ -167,8 +167,8 @@ importers:
 
   packages/fhir:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': ^1.6.2
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.4
       '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
       axios: 0.21.4
@@ -194,8 +194,8 @@ importers:
 
   packages/googlesheets:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': workspace:^1.7.3
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': workspace:^1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 4.3.6
@@ -221,8 +221,8 @@ importers:
 
   packages/http:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': workspace:1.7.3
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': workspace:1.7.4
       '@openfn/simple-ast': 0.4.1
       chai: 4.3.6
       cheerio: ^1.0.0-rc.10
@@ -260,8 +260,8 @@ importers:
 
   packages/kobotoolbox:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.2.4
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       assertion-error: ^1.0.1
       chai: ^3.4.0
       deep-eql: ^0.1.3
@@ -270,7 +270,7 @@ importers:
       nock: ^12.0.3
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.2.4
+      '@openfn/language-common': link:../common
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       assertion-error: 1.1.0
@@ -283,8 +283,8 @@ importers:
 
   packages/mssql:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.6.2
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -295,7 +295,7 @@ importers:
       rimraf: 3.0.2
       tedious: 15.1.0
     dependencies:
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': link:../common
       request: 2.88.0
       tedious: 15.1.0
     devDependencies:
@@ -310,8 +310,8 @@ importers:
 
   packages/ocl:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.X
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
       axios: 0.21.2
@@ -337,8 +337,8 @@ importers:
 
   packages/postgresql:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.6.2
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -350,7 +350,7 @@ importers:
       pg-format: ^1.0.4
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': link:../common
       pg: 8.8.0
       pg-format: 1.0.4
     devDependencies:
@@ -366,8 +366,8 @@ importers:
 
   packages/primero:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.1
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -385,7 +385,7 @@ importers:
       request: ^2.72.0
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.1
+      '@openfn/language-common': link:../common
       cheerio: 1.0.0-rc.12
       cheerio-tableparser: 1.0.1
       csv-parse: 4.16.3
@@ -407,8 +407,8 @@ importers:
 
   packages/salesforce:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.3
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
       assertion-error: 1.1.0
@@ -448,8 +448,8 @@ importers:
 
   packages/sftp:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.7.3
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': 1.7.4
       '@openfn/simple-ast': 0.4.1
       JSONStream: ^1.3.5
       assertion-error: 2.0.0
@@ -491,8 +491,8 @@ importers:
 
   packages/template:
     specifiers:
-      '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': ^1.7.1
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.4
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       axios: 0.26.1
@@ -1257,47 +1257,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
-
-  /@openfn/language-common/1.2.4:
-    resolution: {integrity: sha512-VEYfutS8UFN7lHUSSpME0OlLv9ZSbTLZ2lP569RSLwXOGvmJ4f6mn/zShh3ZGpmLuD+XgkCepFkdw+DVfQA2qA==}
-    dependencies:
-      axios: 0.21.4
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /@openfn/language-common/1.6.2:
-    resolution: {integrity: sha512-ZyjpC7S9Tf0zGvvHYQ+0n2PM5hpYLP3/yJImJQXoYa2hpL0yZo5ef0prGzLmPJJECraiRyY6vkBJp/uKg2SRdw==}
-    dependencies:
-      axios: 0.21.4
-      date-fns: 2.29.3
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-    dev: false
-    bundledDependencies:
-      - axios
-      - jsonpath-plus
-      - lodash
-
-  /@openfn/language-common/1.7.1:
-    resolution: {integrity: sha512-jH2pEnkmrICO/EtdITj/AgTJNjpkusrjMGBGkAIAhhCeXOA5vr337av1tnNAoRl/GfIss2PiFKQVDmvgFwAHLA==}
-    dependencies:
-      axios: 0.21.4
-      date-fns: 2.29.3
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-    dev: false
-    bundledDependencies:
-      - axios
-      - date-fns
-      - jsonpath-plus
-      - lodash
 
   /@openfn/simple-ast/0.4.1:
     resolution: {integrity: sha512-O0YUYgNkQpTadkUzviJShvw0JNz1rZex6aySq2rBF3I63qBo+OTi4TrQfr8lHqJXhrVMsBuW9tYOYwUGZ+aAqA==}

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -29,7 +29,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.7.3",
+    "@openfn/language-common": "workspace:1.7.4",
     "cheerio": "^1.0.0-rc.10",
     "cheerio-tableparser": "^1.0.1",
     "csv-parse": "^4.10.1",
@@ -40,7 +40,7 @@
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.1",
+    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

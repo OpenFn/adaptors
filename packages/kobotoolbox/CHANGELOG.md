@@ -1,20 +1,18 @@
-# @openfn/language-salesforce
+# @openfn/language-kobotoolbox
 
-## 2.11.1
+## 1.1.0
+
+### Minor Changes
+
+- 7fc47d8: Migrate kobotoolbox
 
 ### Patch Changes
 
-- e7bf865: chore(deps): update dependency sinon to v14
 - 8566b26: Fix typings
 - b3d45ff: Fix CJS export of npm package.
+- ecf5d30: remove sinon since it was not being used
 - Updated dependencies [8566b26]
 - Updated dependencies [b3d45ff]
 - Updated dependencies [b5eb665]
 - Updated dependencies [ecf5d30]
   - @openfn/language-common@1.7.4
-
-## 2.11.0
-
-### Minor Changes
-
-- edff578: Migrate salesforce
