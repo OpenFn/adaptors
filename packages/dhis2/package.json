@@ -31,7 +31,7 @@
   "dependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/language-common": "workspace:^1.7.4",
-    "axios": "^0.24.0",
+    "axios": "^0.27.0",
     "lodash": "^4.17.19",
     "qs": "^6.10.3"
   },
