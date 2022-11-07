@@ -29,7 +29,7 @@
   "dependencies": {
     "@openfn/language-common": "1.7.4",
     "JSONPath": "^0.10.0",
-    "axios": "^0.21.1",
+    "axios": "^1.0.0",
     "jsforce": "^1.11.0",
     "lodash-fp": "^0.10.2",
     "mustache": "^2.2.0",
