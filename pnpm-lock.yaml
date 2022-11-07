@@ -466,7 +466,6 @@ importers:
       mocha: 7.2.0
       nock: 13.2.9
       rimraf: 3.0.2
-      sinon: 1.17.7
       ssh2-sftp-client: 9.0.4
     dependencies:
       '@openfn/language-common': link:../common
