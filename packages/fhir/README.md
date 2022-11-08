@@ -1,4 +1,4 @@
-# language-fhir [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20">](https://www.openfn.org) [![Build Status](https://travis-ci.org/OpenFn/language-fhir.svg?branch=master)](https://travis-ci.org/OpenFn/language-fhir)
+# language-fhir [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20"/>](https://www.openfn.org)
 
 An OpenFn **_adaptor_** for building integration jobs for use with the HAPI FHIR
 API.
@@ -17,7 +17,8 @@ The Restfull API can be seen here: https://www.hl7.org/fhir/http.html
 
 #### Sample configuration
 
-> See [credential schema ](./credential-schema.json)
+> See
+> [credential schema ](https://github.com/OpenFn/adaptors/tree/main/packages/fhir/credential-schema.json)
 
 ```json
 {

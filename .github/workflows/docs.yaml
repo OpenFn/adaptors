@@ -1,0 +1,31 @@
+name: Docs
+
+on:
+  push:
+    branches: [22_docs_github_action]
+
+jobs:
+  build:
+    name: 'Build docs to docs branch'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.13.2
+      - name: Setup node ${{ matrix.node-version }}
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Build docs to docs branch
+        env:
+          GH_EMAIL: ${{ secrets.GH_EMAIL }}
+          GH_USER: ${{ secrets.GH_USER }}
+        run: pnpm exec .github/workflows/docs.sh
