@@ -5,9 +5,18 @@ type Options = {
   dry?: boolean;
 };
 
-// Update package json
-export default async (lang: string, { dry }: Options = {}) => {
-  console.log('Migrating package.json for ', lang);
+export default async (langs: string[] | string, opts: Options = {}) => {
+  if (Array.isArray(langs)) {
+    for (const l of langs) {
+      await migrate(l, opts);
+    }
+  } else {
+    migrate(langs as string, opts);
+  }
+};
+
+const migrate = async (lang: string, { dry }: Options = {}) => {
+  console.log('\nMigrating package.json for ', lang);
   const root = resolvePath(lang);
 
   // load the package json for a language
