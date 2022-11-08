@@ -1,6 +1,6 @@
 ## Summary
 
-Add a high-level, single-sentence summmary of what this PR changes.
+Add a high-level, single-sentence summary of what this PR changes.
 
 ## Details
 
