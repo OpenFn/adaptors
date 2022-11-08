@@ -1,4 +1,6 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
+import _ from 'lodash';
 import resolvePath from './resolve-path';
 
 type Options = {
@@ -6,12 +8,11 @@ type Options = {
 };
 
 export default async (langs: string[] | string, opts: Options = {}) => {
-  if (Array.isArray(langs)) {
-    for (const l of langs) {
-      await migrate(l, opts);
-    }
-  } else {
-    migrate(langs as string, opts);
+  if (langs[0] == 'all') {
+    langs = await fs.readdir(path.resolve('../../packages'));
+  }
+  for (const l of langs) {
+    await migrate(l, opts);
   }
 };
 
@@ -46,14 +47,16 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   updated.main = 'dist/index.cjs';
   updated.type = 'module';
   updated.exports = {
-    import: './dist/index.js',
-    require: './dist/index.cjs',
+    '.': {
+      import: './dist/index.js',
+      require: './dist/index.cjs',
+    },
+    './package.json': './package.json',
   };
   updated.types = 'types/index.d.ts';
 
   updated.files = ['dist/', 'types/', 'ast.json', 'configuration-schema.json'];
 
-  // TODO is babel needed for mocha? ... yes hmm.
   ['dependencies', 'devDependencies'].forEach(depsKey => {
     const { esbuild, esdoc, babel, jsdoc, ...otherDeps } = pkg[depsKey];
 
@@ -70,10 +73,11 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
       });
   });
 
-  // For now we need to ensure esno is a dev dependency
-  // so that we can hook into the build tool
-  updated.devDependencies.esno = '^0.16.3';
-  updated.devDependencies['@openfn/buildtools'] = 'workspace:^1.0.1';
+  // Update dev dependencies (do this with _.defaults so we don't override existing values)
+  _.defaults(updated.devDependencies, {
+    esno: '^0.16.3',
+    '@openfn/buildtools': 'workspace:^1.0.1',
+  });
 
   updated.scripts.clean = 'rimraf dist types docs';
   updated.scripts.build = `pnpm clean && build-adaptor ${lang}`;

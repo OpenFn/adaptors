@@ -15,8 +15,11 @@
     "pack": "pnpm pack --pack-destination ../../dist"
   },
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "author": "Open Function Group",
   "license": "LGPL-3.0-or-later",
