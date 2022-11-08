@@ -1,13 +1,4 @@
 #!/bin/sh -l
-# Identity config
-git config user.email "$GH_EMAIL"
-git config user.name "$GH_USER"
-
-# sudo apt install jq
-# Commit new changes to docs
-# git pull
-# git switch docs
-# git rebase 22_docs_github_action
 
 # clean tmp directory
 mkdir -p tmp
@@ -58,5 +49,5 @@ rsync -pr tmp/* docs/
 
 git add docs --force
 git status
-git commit -m "Update auto-generated documentation."
+git commit -c "user.email $GH_EMAIL" -c "user.name $GH_USER" -m "Update auto-generated documentation."
 git push origin docs
