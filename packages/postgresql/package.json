@@ -4,8 +4,11 @@
   "description": "A PostgreSQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",

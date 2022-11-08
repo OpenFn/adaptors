@@ -8,8 +8,11 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor beyonic",
