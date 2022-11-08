@@ -1,4 +1,4 @@
-# Language Google Sheets [![Build Status](https://travis-ci.org/OpenFn/language-googlesheets.svg?branch=master)](https://travis-ci.org/OpenFn/language-googlesheets)
+# Language Google Sheets
 
 Language Pack for building expressions and operations to make Google Sheets API
 calls.
@@ -27,8 +27,6 @@ appendValues({
   ],
 });
 ````
-
-[Docs](docs/index)
 
 ## Development
 

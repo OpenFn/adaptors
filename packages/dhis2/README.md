@@ -1,4 +1,4 @@
-# Language DHIS2 [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20">](https://www.openfn.org) [![CircleCI](https://circleci.com/gh/OpenFn/language-dhis2.svg?style=svg)](https://circleci.com/gh/OpenFn/language-dhis2)
+# Language DHIS2 [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20"/>](https://www.openfn.org) [![CircleCI](https://circleci.com/gh/OpenFn/language-dhis2.svg?style=svg)](https://circleci.com/gh/OpenFn/language-dhis2)
 
 An OpenFn language Pack for building expressions and operations for working with
 the
@@ -16,12 +16,12 @@ core execute \
 
 ## Documentation
 
-View the [docs site](https://openfn.github.io/language-dhis2/) for full
+View the [docs site](https://docs.openfn.org/adaptors/packages/dhis2-docs) for full
 technical documentation.
 
 There are lots of **examples** for how to use the various helper functions on
 the main
-[Adaptor docs](https://openfn.github.io/language-dhis2/module-Adaptor.html)
+[Adaptor docs](https://docs.openfn.org/adaptors/packages/dhis2-docs#modules)
 page.
 
 ## Sample State
@@ -91,7 +91,7 @@ modifying the orgUnit, program, etc., IDs set in `globalState`.
   trackedEntityInstance need to be enrolled to the program, which should be
   created in that organisation unit and contains at least that programStage. If
   the tests fail, you must adjust these attributes in the
-  [before hook](test/integration.js):
+  [before hook](https://github.com/OpenFn/adaptors/tree/main/packages/dhis2/test/integration.js):
 
 ```javascript
 before(done => {
