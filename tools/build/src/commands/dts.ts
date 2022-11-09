@@ -27,7 +27,8 @@ export default (lang: string) => {
         cwd,
       },
       (err, stdout) => {
-        console.log(stdout);
+        // Hide error reports (for now)
+        // console.log(stdout);
         resolve();
       }
     );
