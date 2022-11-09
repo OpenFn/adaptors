@@ -2,7 +2,7 @@ name: Docs
 
 on:
   push:
-    branches: [22_docs_github_action]
+    branches: [main]
 
 jobs:
   build:
