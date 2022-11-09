@@ -1,0 +1,16 @@
+{
+  "name": "import-tests",
+  "version": "1.0.0",
+  "description": "A suite of unit tests against module exports",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openfn/language-common": "workspace:^1.7.4",
+    "mocha": "^10.1.0"
+  }
+}

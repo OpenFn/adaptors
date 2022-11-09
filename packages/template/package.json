@@ -4,8 +4,11 @@
   "description": "An adaptor template for OpenFn",
   "type": "module",
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor template",

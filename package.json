@@ -9,7 +9,8 @@
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
     "build": "pnpm --filter \"./packages/**\" build",
-    "test": "pnpm --filter \"./packages/**\" test"
+    "test:imports": "cd tools/import-tests && pnpm test",
+    "test": "pnpm --filter \"./packages/**\" test && pnpm test:imports"
   },
   "author": "Open Function Group",
   "license": "ISC",

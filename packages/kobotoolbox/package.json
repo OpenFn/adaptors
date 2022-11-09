@@ -24,7 +24,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.4"
+    "@openfn/language-common": "workspace:^1.7.4"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
@@ -39,7 +39,10 @@
   "type": "module",
   "types": "types/index.d.ts",
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   }
 }

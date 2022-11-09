@@ -3,8 +3,11 @@
   "version": "2.10.1",
   "description": "A UNICEF Primero language package for use with Open Function",
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "homepage": "https://docs.openfn.org",
   "repository": {
