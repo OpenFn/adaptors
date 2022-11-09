@@ -29,9 +29,9 @@ export default async (lang: string) => {
 
   // Extract functions name from ast.json
   const functions = existsSync(`${root}/ast.json`)
-    ? await fs.readFile(`${root}/CHANGELOG.md`, 'utf8', data =>
-        JSON.parse(data).operations.map(op => op.name)
-      )
+    ? JSON.parse(
+        await fs.readFile(`${root}/ast.json`, 'utf8', data => data)
+      ).operations.map(op => op.name)
     : [];
 
   const str = await jsdoc2md.render({
