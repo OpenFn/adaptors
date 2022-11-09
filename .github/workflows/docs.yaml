@@ -8,8 +8,7 @@ jobs:
   build:
     name: "Build docs to docs branch"
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
+    permissions: write-all
 
     strategy:
       matrix:
