@@ -8,6 +8,8 @@ jobs:
   build:
     name: "Build docs to docs branch"
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
 
     strategy:
       matrix:
@@ -35,3 +37,10 @@ jobs:
       - name: Build docs to docs branch
 
         run: pnpm exec .github/workflows/docs.sh
+      - name: Trigger deploy on openFn/docs
+        run: |
+          sleep 10s && curl -X POST \
+          -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/openFn/docs/actions/workflows/deploy.yml/dispatches \
+          -d '{"ref": "main"}'
