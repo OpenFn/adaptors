@@ -1,4 +1,4 @@
-# language-template [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20">](https://www.openfn.org)
+# language-template [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20"/>](https://www.openfn.org)
 
 An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
 API.
