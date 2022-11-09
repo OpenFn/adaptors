@@ -16,6 +16,7 @@ export default (lang: string) => {
     const cmd = `pnpm exec simple-ast  --adaptor ${root}/src/Adaptor.js --output ${dest}`;
     exec(cmd, (err, stdout, stderr) => {
       if (err) {
+        console.error('AST build failed!', dest);
         console.error(err);
         return reject();
       }
