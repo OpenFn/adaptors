@@ -7,7 +7,7 @@ export default (lang: string) => {
   console.log(`Building AST`);
   console.log();
 
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve, reject) => {
     const dest = `${root}/ast.json`;
 
     // TODO adaptor.js is a problem
@@ -15,11 +15,13 @@ export default (lang: string) => {
     // and enable it to parse from index
     const cmd = `pnpm exec simple-ast  --adaptor ${root}/src/Adaptor.js --output ${dest}`;
     exec(cmd, (err, stdout, stderr) => {
+      if (err) {
+        console.error('AST build failed!', dest);
+        console.error(err);
+        return reject();
+      }
       if (stdout) {
         console.log(stdout);
-      }
-      if (stderr) {
-        console.error(stderr);
       }
       console.log('... done!', dest);
       resolve();

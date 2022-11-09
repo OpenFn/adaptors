@@ -77,6 +77,7 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   _.defaults(updated.devDependencies, {
     esno: '^0.16.3',
     '@openfn/buildtools': 'workspace:^1.0.1',
+    '@openfn/simple-ast': '0.4.1',
   });
 
   updated.scripts.clean = 'rimraf dist types docs';
