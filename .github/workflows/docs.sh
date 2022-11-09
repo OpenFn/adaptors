@@ -49,5 +49,5 @@ rsync -pr tmp/* docs/
 
 git add docs --force
 git status
-git commit -c "user.email $GH_EMAIL" -c "user.name $GH_USER" -m "Update auto-generated documentation."
+git add -A && git commit -m"Update auto-generated documentation."
 git push origin docs

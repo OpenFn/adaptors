@@ -46,7 +46,7 @@ export default async (lang: string) => {
     docs: `${JSON.stringify(str)}`,
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
-    functions: `${JSON.stringify(functions)}`,
+    functions: functions,
   };
 
   const destinationDir = `${root}/docs`;

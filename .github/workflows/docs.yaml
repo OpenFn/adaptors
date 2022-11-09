@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: 'Build docs to docs branch'
+    name: "Build docs to docs branch"
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,9 +23,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Build docs to docs branch
+          cache: "pnpm"
+      - name: config commit username
+        run: git config user.name $GH_USER
+        env:
+          GH_USER: ${{ secrets.GH_USER }}
+      - name: config commit email
+        run: git config user.email $GH_EMAIL
         env:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
-          GH_USER: ${{ secrets.GH_USER }}
+      - name: Build docs to docs branch
+
         run: pnpm exec .github/workflows/docs.sh
