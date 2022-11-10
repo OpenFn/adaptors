@@ -1,4 +1,4 @@
-# Language BigQuery [![Build Status](https://travis-ci.org/OpenFn/language-bigquery.svg?branch=master)](https://travis-ci.org/OpenFn/language-bigquery)
+# Language BigQuery
 
 Language Pack for building expressions and operations to make HTTP calls.
 
@@ -30,7 +30,8 @@ The configuration key must be a valid GCP credential as JSON.
 
 #### load(...)
 
-Load data to a table in bigquery from a CSV. See full [options here](https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#JobConfigurationLoad).
+Load data to a table in bigquery from a CSV. See full
+[options here](https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#JobConfigurationLoad).
 
 ```js
 load(
@@ -51,8 +52,11 @@ load(
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
