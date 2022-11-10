@@ -80,6 +80,7 @@ importers:
       nock: 13.2.9
       regenerator-runtime: ^0.13.7
       request: ^2.72.0
+      rimraf: 3.0.2
       unzipper: ^0.10.11
       xml2js: ^0.4.23
     dependencies:
@@ -102,6 +103,7 @@ importers:
       mocha: 9.2.2
       nock: 13.2.9
       regenerator-runtime: 0.13.9
+      rimraf: 3.0.2
 
   packages/commcare:
     specifiers:

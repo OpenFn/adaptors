@@ -2,4 +2,4 @@
 'language-bigquery': minor
 ---
 
-bigquery migration
+bigquery migration and build
