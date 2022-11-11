@@ -2,5 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "assignees": [],
-  "schedule": ["on Friday", "every weekend"]
+  "schedule": ["on Friday", "every weekend"],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": false,
+    "assignees": ["@mtuchi"]
+  }
 }
