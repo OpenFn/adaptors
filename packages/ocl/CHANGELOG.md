@@ -1,5 +1,13 @@
 # @openfn/language-ocl
 
+## 0.2.1
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.7.5
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+
 ## 1.7.4
 
 ### Patch Changes
