@@ -24,7 +24,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.4",
+    "@openfn/language-common": "1.7.5",
     "@openfn/language-http": "^4.2.2",
     "JSONPath": "^0.10.0",
     "form-data": "^4.0.0",

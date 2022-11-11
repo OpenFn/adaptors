@@ -21,7 +21,7 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
@@ -48,7 +48,7 @@ importers:
       rimraf: 3.0.2
       superagent: ^8.0.0
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       JSONPath: 0.10.0
       lodash-fp: 0.10.4
       superagent: 8.0.2
@@ -66,7 +66,7 @@ importers:
     specifiers:
       '@google-cloud/bigquery': ^5.2.0
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': v1.4.1
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -85,7 +85,7 @@ importers:
       xml2js: ^0.4.23
     dependencies:
       '@google-cloud/bigquery': 5.12.0
-      '@openfn/language-common': 1.4.1
+      '@openfn/language-common': 1.7.5
       csv-parse: 4.16.3
       import: 0.0.6
       json2csv: 5.0.7
@@ -108,7 +108,7 @@ importers:
   packages/commcare:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/language-http': ^4.2.2
       '@openfn/simple-ast': ^0.4.1
       JSONPath: ^0.10.0
@@ -126,8 +126,8 @@ importers:
       superagent-mock: ^4.0.0
       xlsx: ^0.18.0
     dependencies:
-      '@openfn/language-common': link:../common
-      '@openfn/language-http': link:../http
+      '@openfn/language-common': 1.7.5
+      '@openfn/language-http': 4.2.3
       JSONPath: 0.10.0
       form-data: 4.0.0
       js2xmlparser: 1.0.0
@@ -222,7 +222,7 @@ importers:
       nock: ^12.0.3
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       axios: 0.21.4
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -329,7 +329,7 @@ importers:
   packages/mssql:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -340,7 +340,7 @@ importers:
       rimraf: 3.0.2
       tedious: 15.1.0
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       request: 2.88.0
       tedious: 15.1.0
     devDependencies:
@@ -356,7 +356,7 @@ importers:
   packages/ocl:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
       axios: 0.21.2
@@ -367,7 +367,7 @@ importers:
       nock: ^12.0.3
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       axios: 0.21.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -383,7 +383,7 @@ importers:
   packages/postgresql:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -395,7 +395,7 @@ importers:
       pg-format: ^1.0.4
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       pg: 8.8.0
       pg-format: 1.0.4
     devDependencies:
@@ -412,7 +412,7 @@ importers:
   packages/primero:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -430,7 +430,7 @@ importers:
       request: ^2.72.0
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       cheerio: 1.0.0-rc.12
       cheerio-tableparser: 1.0.1
       csv-parse: 4.16.3
@@ -453,7 +453,7 @@ importers:
   packages/salesforce:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
       assertion-error: 1.1.0
@@ -471,7 +471,7 @@ importers:
       type-detect: 1.0.0
       yargs: ^3.30.0
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       JSONPath: 0.10.0
       axios: 0.21.4
       jsforce: 1.11.0
@@ -494,7 +494,7 @@ importers:
   packages/sftp:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': 1.7.4
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       JSONStream: ^1.3.5
       assertion-error: 2.0.0
@@ -513,7 +513,7 @@ importers:
       rimraf: ^3.0.2
       ssh2-sftp-client: 9.0.4
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       JSONStream: 1.3.5
       csv-parser: 3.0.0
       csvtojson: 2.0.10
@@ -548,7 +548,7 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common': 1.7.5
       axios: 0.26.1
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1370,19 +1370,32 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
 
-  /@openfn/language-common/1.4.1:
-    resolution: {integrity: sha512-d1Lr3fqVdHRw+A5SZR1FXPgF2lb100Xiv/HFHsEZkRXheR58HxIh8YZT4j0mOFNCZUqw+1JK6LRHDb56JuyIrw==}
+  /@openfn/language-common/1.7.5:
+    resolution: {integrity: sha512-QivV3v5Oq5fb4QMopzyqUUh+UGHaFXBdsGr6RCmu6bFnGXdJdcQ7GpGpW5hKNq29CkmE23L/qAna1OLr4rP/0w==}
     dependencies:
-      axios: 0.21.4
+      axios: 1.1.3
+      date-fns: 2.29.3
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
     transitivePeerDependencies:
       - debug
     dev: false
-    bundledDependencies:
-      - axios
-      - jsonpath-plus
-      - lodash
+
+  /@openfn/language-http/4.2.3:
+    resolution: {integrity: sha512-seGY3fnXBUjTL8tQDAhIuhiEpUnrG6LCyAV0tZzw4fROUfSFmQMSh/HDOil0MdiRT1UT5/SRnzVn6yQYz7BL2A==}
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      cheerio: 1.0.0-rc.12
+      cheerio-tableparser: 1.0.1
+      csv-parse: 4.16.3
+      fast-safe-stringify: 2.1.1
+      form-data: 3.0.1
+      lodash: 4.17.21
+      request: 2.88.2
+      tough-cookie: 4.1.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@openfn/simple-ast/0.4.1:
     resolution: {integrity: sha512-O0YUYgNkQpTadkUzviJShvw0JNz1rZex6aySq2rBF3I63qBo+OTi4TrQfr8lHqJXhrVMsBuW9tYOYwUGZ+aAqA==}

@@ -30,7 +30,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.4",
+    "@openfn/language-common": "1.7.5",
     "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
