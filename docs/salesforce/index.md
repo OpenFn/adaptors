@@ -15,6 +15,8 @@
     * _static_
         * [.relationship](#module_Adaptor.relationship)
             * [new exports.relationship(relationshipName, externalId, dataSource)](#new_module_Adaptor.relationship_new)
+        * [.describeAll](#module_Adaptor.describeAll)
+            * [new exports.describeAll(state)](#new_module_Adaptor.describeAll_new)
         * [.describe](#module_Adaptor.describe)
             * [new exports.describe(sObject, state)](#new_module_Adaptor.describe_new)
         * [.retrieve](#module_Adaptor.retrieve)
@@ -69,6 +71,25 @@ Data Sourced Value:
  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
 Fixed Value:
  relationship("relationship_name__r", "externalID on related object", "hello world")
+```
+<a name="module_Adaptor.describeAll"></a>
+
+### Adaptor.describeAll
+**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
+**Access**: public  
+<a name="new_module_Adaptor.describeAll_new"></a>
+
+#### new exports.describeAll(state)
+Outputs basic information about available sObjects.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
+
+**Example**  
+```js
+describeAll()
 ```
 <a name="module_Adaptor.describe"></a>
 
