@@ -65,6 +65,50 @@
       "valid": true
     },
     {
+      "name": "describeAll",
+      "params": [
+        "state"
+      ],
+      "docs": {
+        "description": "Outputs basic information about available sObjects.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "describeAll()"
+          },
+          {
+            "title": "constructor",
+            "description": null,
+            "type": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Runtime state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            },
+            "name": "state"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "describe",
       "params": [
         "sObject",

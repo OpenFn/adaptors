@@ -47,6 +47,29 @@ export function relationship(relationshipName, externalId, dataSource) {
 }
 
 /**
+ * Outputs basic information about available sObjects.
+ * @public
+ * @example
+ * describeAll()
+ * @constructor
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+export const describeAll = curry(function (state) {
+  let { connection } = state;
+
+  return connection.describeGlobal().then(result => {
+    const { sobjects } = result;
+    console.log(`Retrieved ${sobjects.length} sObjects`);
+
+    return {
+      ...state,
+      references: [sobjects, ...state.references],
+    };
+  });
+});
+
+/**
  * Outputs basic information about an sObject to `STDOUT`.
  * @public
  * @example
@@ -59,8 +82,10 @@ export function relationship(relationshipName, externalId, dataSource) {
 export const describe = curry(function (sObject, state) {
   let { connection } = state;
 
+  const objectName = expandReferences(sObject)(state);
+
   return connection
-    .sobject(sObject)
+    .sobject(objectName)
     .describe()
     .then(result => {
       console.log('Label : ' + result.label);
