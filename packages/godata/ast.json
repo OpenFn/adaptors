@@ -1,0 +1,1210 @@
+{
+  "operations": [
+    {
+      "name": "listContacts",
+      "params": [
+        "id",
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch the list of contacts within a particular outbreak using its ID.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listContacts(\"343d-dc3e\", // Outbreak Id\n   state => {\n      console.log(state);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getContact",
+      "params": [
+        "id",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get one or multiple contacts within an outbreak from a query filter",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getContact(\"343d-dc3e\", {\"where\":{\"firstName\": \"Luca\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "An object with a query filter parameter",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertContact",
+      "params": [
+        "id",
+        "externalId",
+        "goDataContact",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert contact to godata using an external id to match a specific record.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertContact(\"4dce-3eedce3-rd33\", 'visualId',\n   {\n     firstName: 'Luca',\n     gender: 'male',\n     'age:years': '20'\n     ...\n   }\n )"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "External Id to match",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "externalId"
+          },
+          {
+            "title": "param",
+            "description": "an object with some case data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "goDataContact"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listOutbreaks",
+      "params": [
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch the list of outbreaks",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listOutbreaks(state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getOutbreak",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get one or multiple outbreaks from a query filter",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getOutbreak({\"where\":{\"name\": \"Outbreak demo\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "An object with a query filter parameter",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertOutbreak",
+      "params": [
+        "outbreak",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert outbreak to godata",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertOutbreak({externalId: \"3dec33-ede3\", data: {...}})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "an object with an externalId and some outbreak data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "outbreak"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listCases",
+      "params": [
+        "id",
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch the list of cases within a particular outbreak using its ID.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listCases(\"343d-dc3e\", state => {\n   console.log(state);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getCase",
+      "params": [
+        "id",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get one or multiple cases within an outbreak from a query filter",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getCase(\n   '3b55-cdf4',\n   { 'where.relationship': { active: true }, where: { firstName: 'Luca'} },\n   state => {\n     console.log(state);\n     return state;\n   }\n);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "An object with a query filter parameter",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertCase",
+      "params": [
+        "id",
+        "externalId",
+        "goDataCase",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert case to godata using an external id to mach a specific record",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertCase(\"4dce-3eedce3-rd33\", 'visualId',\n   data: state => {\n     const patient = state.data.body;\n      return {\n        firstName: patient.Patient_name.split(' ')[0],\n        lastName: patient.Patient_name.split(' ')[1],\n        visualId: patient.Case_ID,\n        'age:years': patient.Age_in_year,\n        gender: patient.Sex,\n      };\n })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Outbreak id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "External Id to match",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "externalId"
+          },
+          {
+            "title": "param",
+            "description": "an object with some case data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "goDataCase"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listLocations",
+      "params": [
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch the list of locations",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listLocations(state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getLocation",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get one or multiple locations from a query filter",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getLocation({\"where\":{\"name\": \"30 DE OCTUBRE\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "An object with a query filter parameter",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertLocation",
+      "params": [
+        "externalId",
+        "goDataLocation",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert location to godata",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertLocation('name', {...})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "External Id to match",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "externalId"
+          },
+          {
+            "title": "param",
+            "description": "an object with some location data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "goDataLocation"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listReferenceData",
+      "params": [
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch the list of reference data",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listReferenceData(state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getReferenceData",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get one or multiple reference data from a query filter",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getReferenceData({\"where\":{\"categoryId\": \"LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "An object with a query filter parameter",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertReferenceData",
+      "params": [
+        "externalId",
+        "goDataReferenceData",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert reference data to godata",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertReferenceData('id', {...})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "External Id to match",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "externalId"
+          },
+          {
+            "title": "param",
+            "description": "an object with some reference data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "goDataReferenceData"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "alterState",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Runs a function using state.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "alterState(callback)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ]
+}

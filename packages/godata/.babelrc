@@ -1,4 +1,0 @@
-{
-  "plugins": ["@babel/plugin-proposal-function-bind"],
-  "presets": ["@babel/preset-env"]
-}

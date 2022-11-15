@@ -2,8 +2,8 @@
 
 <img src="https://github.com/OpenFn/language-godata/raw/master/logo.png" alt="alt text" height="50">
 
-An OpenFn **_adaptor_** for building integration jobs for use with the WHO Go.Data
-API.
+An OpenFn **_adaptor_** for building integration jobs for use with the WHO
+Go.Data API.
 
 [Go.Data](https://www.who.int/godata) is an outbreak investigation tool for
 field data collection during public health emergencies. The tool includes
@@ -14,7 +14,8 @@ in the field, to adapt to the wide range of outbreak scenarios.
 ## Documentation
 
 - View the documentation at https://openfn.github.io/language-godata/
-- To update the documentation site, run: `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
+- To update the documentation site, run:
+  `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
 
 ## Helper Functions
 
@@ -43,7 +44,9 @@ listOutbreaks(state => {
 
 ## Get a specific outbreak
 
-This function can be used to fetch one specific outbreak. A filtering mechanism is used to specify a criteria to match. Mutliple outbreaks could be returned if matched by the filter.
+This function can be used to fetch one specific outbreak. A filtering mechanism
+is used to specify a criteria to match. Mutliple outbreaks could be returned if
+matched by the filter.
 
 ```js
 getOutbreak({ where: { name: 'Outbreak demo' } }, state => {
@@ -54,7 +57,8 @@ getOutbreak({ where: { name: 'Outbreak demo' } }, state => {
 
 ## Insert or Update an outbreak using a unique id as a key
 
-This function is used to either update a record in Go.Data if matched or insert a new one if no record matched the unique id.
+This function is used to either update a record in Go.Data if matched or insert
+a new one if no record matched the unique id.
 
 ```js
 upsertOutbreak({
@@ -78,7 +82,8 @@ upsertOutbreak({
 
 ## Fetch the list of cases
 
-This function is used to fetch the whole list of cases for a specific outbreak in Go.Data.
+This function is used to fetch the whole list of cases for a specific outbreak
+in Go.Data.
 
 ```js
 listCases('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
@@ -89,7 +94,9 @@ listCases('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
 
 ## Get a specific case
 
-This function can be used to fetch one specific case for an outbreak. A filtering mechanism can specify a criteria to match. Mutliple cases could be returned if matched by the filter.
+This function can be used to fetch one specific case for an outbreak. A
+filtering mechanism can specify a criteria to match. Mutliple cases could be
+returned if matched by the filter.
 
 ```js
 getCase(
@@ -104,7 +111,8 @@ getCase(
 
 ## Insert or Update a case using a unique id as a key
 
-This function is used to either update a case in Go.Data if matched or insert a new one if no record matched the unique id.
+This function is used to either update a case in Go.Data if matched or insert a
+new one if no record matched the unique id.
 
 ```js
 upsertCase('4dce-3eedce3-rd33', 'visualId',
@@ -122,7 +130,8 @@ upsertCase('4dce-3eedce3-rd33', 'visualId',
 
 ## Fetch the list of contacts
 
-This function is used to fetch the whole list of contacts for a specific outbreak in Go.Data.
+This function is used to fetch the whole list of contacts for a specific
+outbreak in Go.Data.
 
 ```js
 listContacts('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
@@ -133,7 +142,9 @@ listContacts('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
 
 ## Get a specific contact
 
-This function can be used to get one specific contact for an outbreak. A filtering mechanism can specify a criteria to match. Mutliple contacts could be returned if matched by the filter.
+This function can be used to get one specific contact for an outbreak. A
+filtering mechanism can specify a criteria to match. Mutliple contacts could be
+returned if matched by the filter.
 
 ```js
 getContact('343d-dc3e', { where: { firstName: 'Luca' } }, state => {
@@ -144,7 +155,8 @@ getContact('343d-dc3e', { where: { firstName: 'Luca' } }, state => {
 
 ## Insert or Update a contact using a unique id as a key
 
-This function is used to either update a contact in Go.Data if matched or insert a new one if no record matched the unique id.
+This function is used to either update a contact in Go.Data if matched or insert
+a new one if no record matched the unique id.
 
 ```js
 upsertContact('4dce-3eedce3-rd33', 'visualId', {
@@ -167,7 +179,9 @@ listLocations(state => {
 
 ## Get a specific location
 
-This function can be used to get one specific location. A filtering mechanism can specify a criteria to match. Mutliple locations could be returned if matched by the filter.
+This function can be used to get one specific location. A filtering mechanism
+can specify a criteria to match. Mutliple locations could be returned if matched
+by the filter.
 
 ```js
 getLocation({ where: { name: '30 DE MAYO' } }, state => {
@@ -178,7 +192,8 @@ getLocation({ where: { name: '30 DE MAYO' } }, state => {
 
 ## Insert or Update a location using a unique id as a key
 
-This function is used to either update a location if matched or insert a new. A custom `externalId` can be provided.
+This function is used to either update a location if matched or insert a new. A
+custom `externalId` can be provided.
 
 ```js
 upsertLocation('name', {
@@ -207,7 +222,8 @@ listReferenceData(state => {
 
 ## Get a specific reference data
 
-This function can be used to get one specific reference data. A filtering mechanism can specify a criteria to match.
+This function can be used to get one specific reference data. A filtering
+mechanism can specify a criteria to match.
 
 ```js
 getReferenceData(
@@ -221,7 +237,8 @@ getReferenceData(
 
 ## Insert or Update a reference data using a unique id as a key
 
-This function is used to either update a location if matched or insert a new. A custom `externalId` can be provided.
+This function is used to either update a location if matched or insert a new. A
+custom `externalId` can be provided.
 
 ```js
 upsertReferenceData('id', {
@@ -241,8 +258,11 @@ upsertReferenceData('id', {
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`

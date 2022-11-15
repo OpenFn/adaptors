@@ -879,7 +879,7 @@ export function upsertReferenceData(externalId, goDataReferenceData, callback) {
 }
 
 // Note that we expose the entire axios package to the user here.
-exports.axios = axios;
+export { axios };
 
 // What functions do you want from the common adaptor?
 export {
