@@ -175,6 +175,15 @@ Then, from inside your new `packages/<name>`:
   should have the label `postgres`.
 - Update the adaptor repository readme to add archive note
 - Archive the adaptor if you can
+- Update the adaptor readme to indicate where the package has been moved to adaptors repo. See example below
+```
+# _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
+
+**N.B.: New versions are available at:
+https://github.com/OpenFn/adaptors/tree/main/packages/<name>**
+
+# Language <name> (Archived)
+```
 
 ### index.js
 
