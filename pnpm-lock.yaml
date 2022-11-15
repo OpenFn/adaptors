@@ -880,6 +880,37 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
 
+  packages/zoho:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      JSONPath: ^0.10.0
+      assertion-error: ^1.1.0
+      chai: ^3.5.0
+      deep-eql: ^0.1.3
+      esno: ^0.16.3
+      lodash-fp: ^0.10.4
+      mocha: 7.2.0
+      rimraf: ^3.0.2
+      superagent: ^1.8.5
+      superagent-mock: ^1.12.0
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      JSONPath: 0.10.0
+      lodash-fp: 0.10.4
+      superagent: 1.8.5
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 7.2.0
+      rimraf: 3.0.2
+      superagent-mock: 1.12.0
+
   tools/build:
     specifiers:
       '@openfn/simple-ast': 0.4.1
@@ -1231,7 +1262,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.20.0
+      '@babel/types': 7.19.4
     dev: false
 
   /@babel/parser/7.20.0:
@@ -1272,6 +1303,15 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+
+  /@babel/types/7.19.4:
+    resolution: {integrity: sha512-M5LK7nAeS6+9j7hAq+b3fQs+pNfUtTGq+yFFfHnauFA8zQtLRfmuipmsKDKKLuyG+wC8ABW43A153YNawNTEtw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-string-parser': 7.19.4
+      '@babel/helper-validator-identifier': 7.19.1
+      to-fast-properties: 2.0.0
+    dev: false
 
   /@babel/types/7.20.0:
     resolution: {integrity: sha512-Jlgt3H0TajCW164wkTOTzHkZb075tMQMULzrLUoUeKmO7eFL96GgDxf7/Axhc5CAuKE3KFyVW1p6ysKsi2oXAg==}
@@ -6587,11 +6627,6 @@ packages:
       asap: 2.0.6
     dev: false
 
-  /propagate/0.4.0:
-    resolution: {integrity: sha512-B2oM5/8COVRM/gc/3slgBtaRO1h/ZiGwEi+zyB5FcZa3lpb0UBc3ncH4O0BxANHLUsuFUG1F+LWFREJ0/WuTFg==}
-    engines: {'0': node >= 0.8.1}
-    dev: true
-
   /promise/8.3.0:
     resolution: {integrity: sha512-rZPNPKTOYVNEEKFaq1HqTgOwZD+4/YHS5ukLzQCypkj+OkYx7iv0mA91lJlpPPZ8vMau3IIGj5Qlwrx+8iiSmg==}
     dependencies:
@@ -6604,6 +6639,11 @@ packages:
     dependencies:
       with-callback: 1.0.2
     dev: false
+
+  /propagate/0.4.0:
+    resolution: {integrity: sha512-B2oM5/8COVRM/gc/3slgBtaRO1h/ZiGwEi+zyB5FcZa3lpb0UBc3ncH4O0BxANHLUsuFUG1F+LWFREJ0/WuTFg==}
+    engines: {'0': node >= 0.8.1}
+    dev: true
 
   /propagate/2.0.1:
     resolution: {integrity: sha512-vGrhOavPSTz4QVNuBNdcNXePNdNMaO1xj9yBeH1ScQPjk/rhg9sSlCXPhMkFuaNNW/syTvYqsnbIJxMBfRbbag==}
