@@ -117,6 +117,9 @@ artefacts removed and the package.json updated.
 
 This checklist walks you through the process.
 
+**IMPORTANT**: before starting the migration process, please make sure all open
+pull-requests are merged or closed (maybe discuss with authors / responsibles)
+
 First, create a new branch for your work:
 
 ```
@@ -153,6 +156,7 @@ Then, from inside your new `packages/<name>`:
 - Remove the `Makefile`
 - Remove the `.devcontainer`
 - Remove the `.tool-versions`
+- Rename `crendential-schema.json` file to `configuration-schema.json`
 - Remove the all files related to Travis CI (`travis.yml`, `.travis.yml`, ...)
 - Update the readme (see the `Readme` below)
 - Fix unit tests (see `Tests` below)
@@ -162,6 +166,24 @@ Then, from inside your new `packages/<name>`:
   version bump for the package).
 - Commit your changes, including the changeset, and open a pull request against
   `main`.
+
+**IMPORTANT**:
+
+- Make sure all open issues are transfered to the
+  `https://github.com/openfn/adaptors` repositiory and labelled as the name of
+  the source adaptor name. For example issues coming from `language-postgres`
+  should have the label `postgres`.
+- Update the adaptor repository readme to add archive note
+- Archive the adaptor if you can
+- Update the adaptor readme to indicate where the package has been moved to adaptors repo. See example below
+```
+# _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
+
+**N.B.: New versions are available at:
+https://github.com/OpenFn/adaptors/tree/main/packages/<name>**
+
+# Language <name> (Archived)
+```
 
 ### index.js
 
