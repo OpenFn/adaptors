@@ -5,8 +5,8 @@ import {
   composeNextState,
 } from 'language-common';
 
-// const MongoClient = require('mongodb').MongoClient;
-import { MongoClient } from 'mongodb';
+import pkg from 'mongodb';
+const { MongoClient } = pkg;
 
 /**
  * Execute a sequence of operations.
@@ -26,7 +26,7 @@ export function execute(...operations) {
     data: null,
   };
 
-  return (state) => {
+  return state => {
     return commonExecute(
       connect,
       ...operations,
@@ -55,7 +55,7 @@ function connect(state) {
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
   return new Promise((resolve, reject) => {
-    client.connect((err) => {
+    client.connect(err => {
       if (err) {
         reject(err);
       } else {
@@ -93,13 +93,12 @@ function disconnect(state) {
  * @returns {State}
  */
 export function insertDocuments(params) {
-  return (state) => {
+  return state => {
     const { client } = state;
 
     try {
-      const { database, collection, documents, callback } = expandReferences(
-        params
-      )(state);
+      const { database, collection, documents, callback } =
+        expandReferences(params)(state);
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -140,13 +139,12 @@ export function insertDocuments(params) {
  * @returns {State}
  */
 export function findDocuments(params) {
-  return (state) => {
+  return state => {
     const { client } = state;
 
     try {
-      const { database, collection, query, callback } = expandReferences(
-        params
-      )(state);
+      const { database, collection, query, callback } =
+        expandReferences(params)(state);
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -187,17 +185,11 @@ export function findDocuments(params) {
  * @returns {State}
  */
 export function updateDocument(params) {
-  return (state) => {
+  return state => {
     const { client } = state;
     try {
-      const {
-        database,
-        collection,
-        filter,
-        changes,
-        options,
-        callback,
-      } = expandReferences(params)(state);
+      const { database, collection, filter, changes, options, callback } =
+        expandReferences(params)(state);
 
       const db = client.db(database);
       const mCollection = db.collection(collection);

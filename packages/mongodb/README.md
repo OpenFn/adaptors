@@ -1,4 +1,4 @@
-# Language MongoDB [![Build Status](https://travis-ci.org/OpenFn/language-mongodb.svg?branch=master)](https://travis-ci.org/OpenFn/language-mongodb)
+# Language MongoDB
 
 Language Pack for building expressions and operations for use with MongoDB.
 
@@ -20,8 +20,8 @@ Language Pack for building expressions and operations for use with MongoDB.
 insertDocuments({
   database: 'yourDb',
   collection: 'yourCollection',
-  documents: (state) => {
-    return state.data.map((item) => {
+  documents: state => {
+    return state.data.map(item => {
       return { name: item.name, age: item.age };
     });
   },
@@ -35,7 +35,7 @@ insertDocuments({
 findDocuments({
   database: 'yourDb',
   collection: 'yourCollection',
-  query: (state) => {
+  query: state => {
     return { name: 'stu' };
   },
   // callback: (state) => state, // optional
@@ -46,8 +46,11 @@ findDocuments({
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
