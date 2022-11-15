@@ -141,6 +141,7 @@ Then, from inside your new `packages/<name>`:
 - Commit your changes `git commit -am "cloned <name> into monorepo"`
 - Delete `package-lock.json`
 - Remove `bundledDependencies` from package.json
+- Make sure `"rimraf": "^3.0.2"` is in `devDependencies`
 - Fix index.js (see `index.js` below)
 - Run `pnpm install`
 - Remove the `docs` and `lib` dirs
