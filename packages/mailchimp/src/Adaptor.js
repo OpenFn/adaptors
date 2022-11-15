@@ -132,8 +132,7 @@ export function listBatches(params) {
 }
 
 // Note that we expose the entire axios package to the user here.
-exports.axios = axios;
-exports.md5 = md5;
+export { axios, md5 };
 
 // What functions do you want from the common adaptor?
 export {
