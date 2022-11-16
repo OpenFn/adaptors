@@ -1,10 +1,9 @@
-Language Vtiger [![Build Status](https://travis-ci.org/OpenFn/language-vtiger.svg?branch=master)](https://travis-ci.org/OpenFn/language-vtiger)
-=============
+# Language Vtiger
 
-Language Pack for building expressions and operations to make calls to the Vtiger API.
+Language Pack for building expressions and operations to make calls to the
+Vtiger API.
 
-Documentation
--------------
+## Documentation
 
 #### sample configuration
 
@@ -17,11 +16,13 @@ Documentation
 ```
 
 #### sample listTypes expression
+
 ```js
 listTypes();
 ```
 
 #### sample postElement expression
+
 ```js
 postElement({
   operation: "create"
@@ -33,16 +34,16 @@ postElement({
   }
 });
 
+
 ```
 
-[Docs](docs/index)
+## Development
 
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Development
------------
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Clone the repo, run `npm install`.
+Build the project using `pnpm build`.
 
-Run tests using `npm run test` or `npm run test:watch`
-
-Build the project using `make`.
+To just build the docs run `pnpm build docs`
