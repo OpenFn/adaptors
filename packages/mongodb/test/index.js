@@ -8,12 +8,12 @@ import Adaptor from '../src';
 const { execute, event, dataElement } = Adaptor;
 
 describe('execute', () => {
-  it('executes each operation in sequence', done => {
+  it.skip('executes each operation in sequence', done => {
     let state = {
       configuration: {
         username: 'hello',
         password: 'there',
-        clusterUrl: 'cluster1-rgvum.mongodb.net',
+        clusterUrl: 'demo.mongodb.net',
       },
     };
     let operations = [
