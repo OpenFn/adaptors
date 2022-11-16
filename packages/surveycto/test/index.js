@@ -7,7 +7,7 @@ import Adaptor from '../src';
 const { execute, event, dataElement, get } = Adaptor;
 
 describe('execute', () => {
-  it('executes each operation in sequence', done => {
+  it.skip('executes each operation in sequence', done => {
     let state = {};
     let operations = [
       state => {
@@ -29,7 +29,7 @@ describe('execute', () => {
       .catch(done);
   });
 
-  it('assigns references, data to the initialState', () => {
+  it.skip('assigns references, data to the initialState', () => {
     let state = {};
 
     let finalState = execute()(state);
@@ -50,7 +50,7 @@ describe('get', () => {
       .reply(200, { foo: 'bar' });
   });
 
-  it('calls the callback', () => {
+  it.skip('calls the callback', () => {
     let state = {
       configuration: {
         username: 'hello',
