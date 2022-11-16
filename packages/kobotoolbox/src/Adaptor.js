@@ -113,6 +113,7 @@ export function getSubmissions(params, callback) {
 }
 
 export {
+  fn,
   alterState,
   dataPath,
   dataValue,
