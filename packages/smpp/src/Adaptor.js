@@ -87,6 +87,7 @@ export {
   field,
   fields,
   sourceValue,
+  fn,
   alterState,
   each,
   merge,
