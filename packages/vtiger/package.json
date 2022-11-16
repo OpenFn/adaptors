@@ -1,0 +1,55 @@
+{
+  "name": "language-vtiger",
+  "version": "1.0.0",
+  "description": "A Vtiger Language Pack for OpenFn",
+  "main": "dist/index.cjs",
+  "scripts": {
+    "build": "pnpm clean && build-adaptor vtiger",
+    "test": "mocha --compilers js:babel-core/register",
+    "test:watch": "mocha -w --compilers js:babel-core/register",
+    "clean": "rimraf dist types docs",
+    "pack": "pnpm pack --pack-destination ../../dist"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ],
+  "dependencies": {
+    "@openfn/language-common": "^1.7.5",
+    "md5": "^2.3.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/simple-ast": "0.4.1",
+    "assertion-error": "^1.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^3.5.0",
+    "deep-eql": "^0.1.3",
+    "esno": "^0.16.3",
+    "mocha": "^2.5.3",
+    "nock": "^8.2.2",
+    "request-debug": "^0.2.0",
+    "rimraf": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "types/index.d.ts"
+}
