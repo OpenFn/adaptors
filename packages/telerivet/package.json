@@ -19,25 +19,25 @@
     "configuration-schema.json"
   ],
   "dependencies": {
+    "@openfn/language-common": "workspace:1.7.4",
     "JSONPath": "^0.10.0",
-    "@openfn/language-common": "1.7.4",
-    "lodash-fp": "^0.10.2",
-    "superagent": "^1.7.2"
+    "lodash-fp": "^0.10.4",
+    "superagent": "^1.8.5"
   },
   "devDependencies": {
-    "assertion-error": "^1.0.1",
-    "babel-cli": "^6.1.2",
-    "babel-core": "^6.1.2",
-    "babel-preset-es2015": "^6.1.2",
-    "babel-preset-stage-0": "^6.3.13",
-    "chai": "^3.4.0",
+    "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/simple-ast": "0.4.1",
+    "assertion-error": "^1.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^3.5.0",
     "deep-eql": "^0.1.3",
-    "mocha": "^2.3.3",
-    "rimraf": "^3.0.2",
-    "superagent-mock": "^1.10.0",
     "esno": "^0.16.3",
-    "@openfn/buildtools": "workspace:^1.0.1",
-    "@openfn/simple-ast": "0.4.1"
+    "mocha": "^10.1.0",
+    "rimraf": "^3.0.2",
+    "superagent-mock": "^1.12.0"
   },
   "repository": {
     "type": "git",

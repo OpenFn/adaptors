@@ -1,12 +1,14 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
-import { resolve as resolveUrl } from 'url';
 
 /** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for telerivet.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for telerivet.
  * @example
  * execute(
  *   create('foo'),
@@ -19,13 +21,12 @@ import { resolve as resolveUrl } from 'url';
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -39,28 +40,35 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function send(sendData) {
-
   return state => {
     const body = expandReferences(sendData)(state);
 
     const { projectId, apiKey } = state.configuration;
 
-    const url = 'https://api.telerivet.com/v1/projects/'.concat(projectId, '/messages/send')
+    const url = 'https://api.telerivet.com/v1/projects/'.concat(
+      projectId,
+      '/messages/send'
+    );
 
-    console.log(url)
-    console.log("Posting message to send:");
-    console.log(body)
+    console.log(url);
+    console.log('Posting message to send:');
+    console.log(body);
 
-    return post({ apiKey, body, url })
-    .then((result) => {
-      console.log("Success:", result);
-      return { ...state, references: [ result, ...state.references ] }
-    })
-
-  }
+    return post({ apiKey, body, url }).then(result => {
+      console.log('Success:', result);
+      return { ...state, references: [result, ...state.references] };
+    });
+  };
 }
 
 export {
-  field, fields, sourceValue,
-  merge, dataPath, dataValue, lastReferenceValue
-} from 'language-common';
+  fn,
+  alterState,
+  field,
+  fields,
+  sourceValue,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+} from '@openfn/language-common';

@@ -1,10 +1,9 @@
-Language telerivet
-==============
+# Language Telerivet
 
-Language Pack for sending messages using the [telerivet API](https://telerivet.com/api/rest/curl).
+Language Pack for sending messages using the
+[telerivet API](https://telerivet.com/api/rest/curl).
 
-Documentation
--------------
+## Documentation
 
 ## Sample configuration
 
@@ -18,19 +17,23 @@ Documentation
 ## Send message
 
 #### Current `send` expression:
+
 ```js
-send(fields(
-  field("to_number", dataValue("recipient_number")),
-  field("content", dataValue("recipient_text")),
-  // Lots of optional parameters...
-  field("message_type", "sms"),
-  field("route_id", dataValue("some_route"))
-))
+send(
+  fields(
+    field('to_number', dataValue('recipient_number')),
+    field('content', dataValue('recipient_text')),
+    // Lots of optional parameters...
+    field('message_type', 'sms'),
+    field('route_id', dataValue('some_route'))
+  )
+);
 ```
 
 ## sendBulk messages - WIP
 
 #### Current `sendBulk` expression:
+
 ```js
 send(fields(
   field("content", dataValue("recipient_text")),
@@ -46,21 +49,24 @@ send(fields(
 ```
 
 Note that "recipient_text" may be a concatenation like this:
+
 ```js
-field("content", function (state) {
-          return (
-            dataValue("salutation")(state).concat(
-              ". ", dataValue("last_name")(state), ", )"
-            )
-          )
-        })
+field('content', function (state) {
+  return dataValue('salutation')(state).concat(
+    '. ',
+    dataValue('last_name')(state),
+    ', )'
+  );
+});
 ```
 
-Development
------------
+## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
