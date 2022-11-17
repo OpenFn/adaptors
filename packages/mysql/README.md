@@ -21,6 +21,7 @@ for the full list of available helper functions including `upsert(...)`.**
 ```
 
 ## Execute a query
+
 Execute an sql query with the node mysql package.
 
 ```js
@@ -34,7 +35,9 @@ query({
 ```
 
 ## Execute a sql query
-This function takes either a `string` or a `function` that takes states and returns a string.
+
+This function takes either a `string` or a `function` that takes states and
+returns a string.
 
 ```js
 sqlString(state => {
@@ -86,7 +89,7 @@ upsertMany(
   'users', // the DB table
   [
     { name: 'one', email: 'one@openfn.org' },
-    { name: 'two', email: 'two@openfn.org' }
+    { name: 'two', email: 'two@openfn.org' },
   ]
 );
 ```
@@ -104,11 +107,11 @@ upsertMany('users', state =>
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
 
-To build the docs for this repo, run
-`./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`.
+To just build the docs run `pnpm build docs`

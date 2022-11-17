@@ -1,4 +1,5 @@
-import { expect } from 'chai';
+import chai from 'chai';
+const { expect } = chai;
 import { execute } from '@openfn/language-common';
 import nock from 'nock';
 import ClientFixtures, { fixtures } from './ClientFixtures';
