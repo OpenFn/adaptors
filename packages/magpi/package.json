@@ -1,0 +1,38 @@
+{
+  "name": "language-magpi",
+  "version": "0.3.2",
+  "description": "A Magpi Language Pack for OpenFn",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "make",
+    "test": "mocha --compilers js:babel-core/register",
+    "test:watch": "mocha -w --compilers js:babel-core/register"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {
+    "JSONPath": "^0.10.0",
+    "js2xmlparser": "^3.0.0",
+    "language-common": "github:openfn/language-common",
+    "lodash-fp": "^0.10.2",
+    "request": "^2.81.0",
+    "superagent": "^1.7.2",
+    "xml2json": "^0.11.0"
+  },
+  "devDependencies": {
+    "assertion-error": "^1.0.1",
+    "babel": "^6.0.15",
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.1.2",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-stage-0": "^6.3.13",
+    "chai": "^3.4.0",
+    "deep-eql": "^0.1.3",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.2",
+    "superagent-mock": "^1.10.0"
+  }
+}
