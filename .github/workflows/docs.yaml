@@ -35,10 +35,11 @@ jobs:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
       - name: Build docs to docs branch
         run: pnpm exec .github/workflows/docs.sh
-      - name: Trigger deploy on openFn/docs
-        run: |
-          sleep 10s && curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.WF_DEPLOY_KEY }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/openFn/docs/actions/workflows/5178103/dispatches \
-          -d '{"ref": "main"}'
+      # Enable this after migration
+      # - name: Trigger deploy on openFn/docs
+      #   run: |
+      #     sleep 10s && curl -X POST \
+      #     -H "Authorization: Bearer ${{ secrets.WF_DEPLOY_KEY }}" \
+      #     -H "Accept: application/vnd.github.v3+json" \
+      #     https://api.github.com/repos/openFn/docs/actions/workflows/5178103/dispatches \
+      #     -d '{"ref": "main"}'
