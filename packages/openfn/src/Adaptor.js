@@ -6,9 +6,9 @@ import {
 import axios from 'axios';
 import { resolve } from 'path';
 
-import { version } from '../package.json';
+import pkg from '../package.json' assert { type: 'json' };
+const { version } = pkg;
 const defaultHeaders = { 'User-Agent': `language-openfn-v${version}` };
-
 
 /**
  * Execute a sequence of operations.
