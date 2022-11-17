@@ -17,8 +17,8 @@ import { resolve as resolveUrl } from 'url';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
- * @param {Operations} operations - Operations to be performed.
+ * @function
+ * @param {Array} operations - Operations to be performed.
  * @returns {Operation}
  */
 export function execute(...operations) {
@@ -27,7 +27,7 @@ export function execute(...operations) {
     data: null,
   };
 
-  return (state) => {
+  return state => {
     return commonExecute(
       login,
       ...operations,
@@ -118,7 +118,7 @@ function cleanupState(state) {
  * @returns {Operation}
  */
 export function getPatient(params) {
-  return (state) => {
+  return state => {
     const { uuid } = expandReferences(params)(state);
     console.log(`Searching for patient with uuid: ${uuid}`);
 
@@ -152,12 +152,13 @@ export function getPatient(params) {
  * execute(
  *   getPatients(criteria)
  * )(state)
- * @constructor
+ * @function
  * @param {object} criteria - Criteria object for the patient
+ * @param {object} options - Options
  * @returns {Operation}
  */
 export function getPatients(criteria, options) {
-  return (state) => {
+  return state => {
     const qs = expandReferences(criteria)(state);
     const { instanceUrl } = state.configuration;
     const url = resolveUrl(instanceUrl + '/', 'ws/rest/v1/patient');
@@ -211,7 +212,7 @@ export function getPatients(criteria, options) {
  * @returns {Operation}
  */
 export function getPeople(criteria, options) {
-  return (state) => {
+  return state => {
     const qs = expandReferences(criteria)(state);
     const { instanceUrl } = state.configuration;
     const url = resolveUrl(instanceUrl + '/', 'ws/rest/v1/person');
@@ -257,7 +258,7 @@ export function getPeople(criteria, options) {
  * @returns {Operation}
  */
 export function createEncounter(params) {
-  return (state) => {
+  return state => {
     const body = expandReferences(params)(state);
     const { instanceUrl } = state.configuration;
     const url = resolveUrl(instanceUrl + '/', 'ws/rest/v1/encounter');
@@ -323,7 +324,7 @@ export function createEncounter(params) {
  * @returns {Operation}
  */
 export function req(params, callback) {
-  return (state) => {
+  return state => {
     const { instanceUrl } = state.configuration;
     return new Promise((resolve, reject) => {
       params.jar = true;
@@ -353,4 +354,5 @@ export {
   dataValue,
   lastReferenceValue,
   each,
+  arrayToString,
 } from 'language-common';

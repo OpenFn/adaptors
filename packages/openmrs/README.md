@@ -1,7 +1,7 @@
 # Language OpenMRS [![Build Status](https://travis-ci.org/OpenFn/language-openmrs.svg?branch=master)](https://travis-ci.org/OpenFn/language-openmrs)
 
-Language Pack for building expressions and operations for working with
-the [OpenMRS API](https://wiki.openmrs.org/display/docs/API).
+Language Pack for building expressions and operations for working with the
+[OpenMRS API](https://wiki.openmrs.org/display/docs/API).
 
 [OpenMRS Data Model Explorer](http://burkeware.com/openmrs-data-model/openmrs-data-model-1.11.html#)
 
@@ -23,10 +23,12 @@ the [OpenMRS API](https://wiki.openmrs.org/display/docs/API).
 // getPatient({ uuid: '516af9aa-0402-4e11-ad79-e394fdec0c91' });
 // getPatient({ uuid: dataValue('patientId')(state) });
 getPatient({
-  uuid: (state) => state.data[0].uuid,
+  uuid: state => state.data[0].uuid,
 });
 ```
+
 #### Example of searching for patients based on their `EMR Id`
+
 ```js
 getPatients(
   {
@@ -38,11 +40,13 @@ getPatients(
   }
 );
 ```
+
 ### Create an Encounter
+
 ```js
 createEncounter({
   encounterDatetime: dataValue('visit_date'), //dynamically fill with source app data
-  patient: dataValue('uuid'), 
+  patient: dataValue('uuid'),
   encounterType: dataValue('visit_type'),
   location: dataValue('location.uuid'),
   encounterProviders: [
@@ -57,7 +61,7 @@ createEncounter({
 ### Make a request to any OpenMRS endpoint
 
 ```js
-req({ method: 'GET', url: '/ws/rest/v1/concept' }, (state) => {
+req({ method: 'GET', url: '/ws/rest/v1/concept' }, state => {
   console.log(JSON.stringify(state, null, 2));
   return state;
 });
@@ -84,22 +88,26 @@ person(
 ```js
 patient(
   fields(
-    field("gender", "M"),
-    field("names", function(state) {
-      return [{
-        "patient_id": dataValue("form.patientId")(state),
-        "creator": dataValue("form.user")(state)
-      }]
+    field('gender', 'M'),
+    field('names', function (state) {
+      return [
+        {
+          patient_id: dataValue('form.patientId')(state),
+          creator: dataValue('form.user')(state),
+        },
+      ];
     })
   )
-)
-``` 
-
+);
+```
 
 ## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
