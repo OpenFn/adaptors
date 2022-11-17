@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "url": {
+            "title": "URL",
+            "type": "string",
+            "description": "The Progres URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "key": {
+            "title": "Private Key",
+            "type": "string",
+            "description": "Your Progres private key",
+            "minLength": 1
+        },
+        "cert": {
+            "title": "Certificate",
+            "type": "string",
+            "description": "Your Progres certificate",
+            "minLength": 1
+        },
+        "token": {
+            "title": "Token",
+            "type": "string",
+            "description": "Your Progres token",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "url",
+        "key",
+        "cert",
+        "token"
+    ]
+}
