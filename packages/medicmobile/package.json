@@ -1,0 +1,35 @@
+{
+  "name": "language-medicmobile",
+  "version": "0.2.0",
+  "description": "A Medic Mobile language pack for OpenFn",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "make",
+    "test": "mocha --compilers js:babel-core/register",
+    "test:watch": "mocha -w --compilers js:babel-core/register"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {
+    "language-common": "github:openfn/language-common#v0.1.0",
+    "lodash": "^4.17.4",
+    "query-string": "^5.0.0",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "assertion-error": "^1.0.1",
+    "babel": "^6.0.15",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.1.2",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-stage-0": "^6.3.13",
+    "chai": "^3.4.0",
+    "deep-eql": "^0.1.3",
+    "mocha": "^2.3.3",
+    "nock": "^8.0.0",
+    "sinon": "^1.17.2"
+  }
+}
