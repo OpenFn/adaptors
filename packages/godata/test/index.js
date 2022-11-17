@@ -7,7 +7,7 @@ import ClientFixtures, { fixtures } from './ClientFixtures';
 import Adaptor from '../src';
 const { execute, post } = Adaptor;
 
-describe('execute', () => {
+describe.skip('execute', () => {
   it('executes each operation in sequence', done => {
     let state = {};
     let operations = [
