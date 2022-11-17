@@ -326,6 +326,37 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
 
+  packages/medicmobile:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^2.0.0
+      chai: ^4.3.7
+      deep-eql: ^4.1.2
+      esno: ^0.16.3
+      lodash: ^4.17.21
+      mocha: ^10.1.0
+      nock: ^13.2.9
+      query-string: ^5.1.1
+      request: ^2.88.2
+      rimraf: ^3.0.2
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      lodash: 4.17.21
+      query-string: 5.1.1
+      request: 2.88.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.7
+      deep-eql: 4.1.2
+      esno: 0.16.3
+      mocha: 10.1.0
+      nock: 13.2.9
+      rimraf: 3.0.2
+
   packages/mssql:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -1411,12 +1442,6 @@ packages:
 
   /@openfn/language-common/1.4.1:
     resolution: {integrity: sha512-d1Lr3fqVdHRw+A5SZR1FXPgF2lb100Xiv/HFHsEZkRXheR58HxIh8YZT4j0mOFNCZUqw+1JK6LRHDb56JuyIrw==}
-    dependencies:
-      axios: 0.21.4
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
     dev: false
     bundledDependencies:
       - axios
@@ -2140,6 +2165,19 @@ packages:
       type-detect: 4.0.8
     dev: true
 
+  /chai/4.3.7:
+    resolution: {integrity: sha512-HLnAzZ2iupm25PlN0xFreAlBA5zaBSv3og0DdeGA4Ar6h6rJ3A0rolRUKJhSF2V10GZKDgWF/VmAEsNWjCRB+A==}
+    engines: {node: '>=4'}
+    dependencies:
+      assertion-error: 1.1.0
+      check-error: 1.0.2
+      deep-eql: 4.1.2
+      get-func-name: 2.0.0
+      loupe: 2.3.4
+      pathval: 1.1.1
+      type-detect: 4.0.8
+    dev: true
+
   /chainsaw/0.1.0:
     resolution: {integrity: sha512-75kWfWt6MEKNC8xYXIdRpDehRYY/tNSgwKaJq+dbbDcxORuVrrQ+SEHoWsniVn9XPYfP4gmdWIeDk/4YNp1rNQ==}
     dependencies:
@@ -2614,6 +2652,11 @@ packages:
     resolution: {integrity: sha512-9iE1PgSik9HeIIw2JO94IidnE3eBoQrFJ3w7sFuzSX4DpmZ3v5sZpUiV5Swcf6mQEF+Y0ru8Neo+p+nyh2J+hQ==}
     engines: {node: '>=10'}
 
+  /decode-uri-component/0.2.0:
+    resolution: {integrity: sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==}
+    engines: {node: '>=0.10'}
+    dev: false
+
   /deep-eql/0.1.3:
     resolution: {integrity: sha512-6sEotTRGBFiNcqVoeHwnfopbSpi5NbH1VWJmYCVkmxMmaVTT0bUTrNaGyBwhgP4MZL012W/mkzIn3Da+iDYweg==}
     dependencies:
@@ -2629,6 +2672,13 @@ packages:
 
   /deep-eql/4.1.1:
     resolution: {integrity: sha512-rc6HkZswtl+KMi/IODZ8k7C/P37clC2Rf1HYI11GqdbgvggIyHjsU5MdjlTlaP6eu24c0sR3mcW2SqsVZ1sXUw==}
+    engines: {node: '>=6'}
+    dependencies:
+      type-detect: 4.0.8
+    dev: true
+
+  /deep-eql/4.1.2:
+    resolution: {integrity: sha512-gT18+YW4CcW/DBNTwAmqTtkJh7f9qqScu2qFVlx7kCoeY9tlBu9cUcr7+I+Z/noG8INehS3xQgLpTtd/QUTn4w==}
     engines: {node: '>=6'}
     dependencies:
       type-detect: 4.0.8
@@ -5639,6 +5689,15 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
+  /query-string/5.1.1:
+    resolution: {integrity: sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      decode-uri-component: 0.2.0
+      object-assign: 4.1.1
+      strict-uri-encode: 1.1.0
+    dev: false
+
   /querystringify/2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
     dev: false
@@ -6172,6 +6231,11 @@ packages:
 
   /stream-via/1.0.4:
     resolution: {integrity: sha512-DBp0lSvX5G9KGRDTkR/R+a29H+Wk2xItOF+MpZLLNDWbEV9tGPnqLPxHEYjmiz8xGtJHRIqmI+hCjmNzqoA4nQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /strict-uri-encode/1.1.0:
+    resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==}
     engines: {node: '>=0.10.0'}
     dev: false
 
