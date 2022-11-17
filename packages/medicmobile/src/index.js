@@ -1,3 +1,4 @@
 import * as Adaptor from './Adaptor';
-export { Adaptor };
 export default Adaptor;
+
+export * from './Adaptor';
