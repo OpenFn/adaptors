@@ -1,13 +1,11 @@
-Language Mailgun
-================
+# Language Mailgun
 
-Language Pack for building expressions and operations for working with
-the mailgun API.
+Language Pack for building expressions and operations for working with the
+mailgun API.
 
 [mailgun-js on npm](https://www.npmjs.com/package/mailgun-js)
 
-Documentation
--------------
+## Documentation
 
 ## Sample configuration
 
@@ -19,6 +17,7 @@ Documentation
 ```
 
 ## send
+
 ```js
 send(
   fields(
@@ -26,17 +25,19 @@ send(
     field('to', 'to_email'),
     field('subject', 'Your Subject'),
     field('text', 'Your message goes here')
-  ))
+  )
+);
 ```
 
 [Docs](docs/index)
 
+## Development
 
-Development
------------
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Clone the repo, run `npm install`.
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Run tests using `npm run test` or `npm run test:watch`
+Build the project using `pnpm build`.
 
-Build the project using `make`.
+To just build the docs run `pnpm build docs`
