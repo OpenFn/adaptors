@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "projectId": {
+            "title": "Project ID",
+            "type": "string",
+            "description": "Your Telerivet project id",
+            "minLength": 1
+        },
+        "apiKey": {
+            "title": "API Key",
+            "type": "string",
+            "description": "Your Telerivet API Key",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "projectId",
+        "apiKey"
+    ]
+}
