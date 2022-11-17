@@ -4,8 +4,6 @@ import {
 } from '@openfn/language-common';
 import { post } from './Client';
 
-/** @module Adaptor */
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for telerivet.
@@ -14,7 +12,7 @@ import { post } from './Client';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -35,7 +33,7 @@ export function execute(...operations) {
  * execute(
  *   send(data)
  * )(state)
- * @constructor
+ * @function
  * @param {object} sendData - Payload data for the message
  * @returns {Operation}
  */
