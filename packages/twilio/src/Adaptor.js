@@ -1,4 +1,3 @@
-/** @module Adaptor */
 import {
   execute as commonExecute,
   expandReferences,
@@ -13,7 +12,7 @@ import {
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
