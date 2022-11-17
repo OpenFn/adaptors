@@ -3,7 +3,7 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-} from 'language-common';
+} from '@openfn/language-common';
 import axios from 'axios';
 import client from '@mailchimp/mailchimp_marketing';
 import md5 from 'md5';
@@ -11,7 +11,7 @@ import { resolve } from 'path';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   create('foo'),
@@ -136,6 +136,7 @@ export { axios, md5 };
 
 // What functions do you want from the common adaptor?
 export {
+  fn,
   alterState,
   dataPath,
   dataValue,
@@ -145,4 +146,4 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-} from 'language-common';
+} from '@openfn/language-common';

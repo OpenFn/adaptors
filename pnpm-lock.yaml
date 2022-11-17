@@ -330,21 +330,21 @@ importers:
     specifiers:
       '@mailchimp/mailchimp_marketing': ^3.0.80
       '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: ^1.1.0
       axios: ^0.20.0
       chai: ^3.5.0
       deep-eql: ^0.1.3
       esno: ^0.16.3
-      language-common: github:openfn/language-common#v0.3.0
       md5: ^2.3.0
       mocha: ^7.2.0
       nock: ^12.0.3
       rimraf: ^3.0.2
     dependencies:
       '@mailchimp/mailchimp_marketing': 3.0.80
+      '@openfn/language-common': 1.7.5
       axios: 0.20.0
-      language-common: github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
       md5: 2.3.0
     devDependencies:
       '@openfn/buildtools': link:../../tools/build

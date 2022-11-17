@@ -20,8 +20,8 @@
   ],
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@openfn/language-common": "^1.7.5",
     "axios": "^0.20.0",
-    "language-common": "github:openfn/language-common#v0.3.0",
     "md5": "^2.3.0"
   },
   "devDependencies": {
