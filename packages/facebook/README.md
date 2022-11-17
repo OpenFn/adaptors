@@ -1,37 +1,38 @@
-Language Facebook [![Build Status](https://travis-ci.org/OpenFn/language-facebook.svg?branch=master)](https://travis-ci.org/OpenFn/language-facebook)
-=================
+# Language Facebook
 
 Language Pack for building expressions and operations to interact with the Facebook Messenger API.
 
-Documentation
--------------
+## Documentation
 
 ## sample configuration
 
 ```json
 {
-  "accessToken": "yOuR-aCcEsS-tOkEn",
+  "accessToken": "yOuR-aCcEsS-tOkEn"
 }
 ```
 
 ## postMessage
+
 #### sample expression using operation
+
 ```js
 postMessage({
-  "recipient": {
-    "id": "<PSID>"
+  recipient: {
+    id: "<PSID>",
   },
-  "message": {
-    "text": "<YOUR MESSAGE GOES HERE>"
-  }
-})
+  message: {
+    text: "<YOUR MESSAGE GOES HERE>",
+  },
+});
 ```
 
-Development
------------
+## Development
 
-Clone the repo, run `npm install`.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
 
-Run tests using `npm run test` or `npm run test:watch`
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Build the project using `make`.
+Build the project using `pnpm build`.
+
+To just build the docs run `pnpm build docs`
