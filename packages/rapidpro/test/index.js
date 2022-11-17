@@ -1,9 +1,11 @@
-import { expect } from 'chai';
-import nock, { back } from 'nock';
+import chai from 'chai';
+const { expect } = chai;
+import nock from 'nock';
+const { back } = nock;
 import ClientFixtures, { fixtures } from './ClientFixtures';
 
-import Adaptor from '../lib';
-const { execute, create, dataValue } = Adaptor;
+import Adaptor from '../src';
+const { execute } = Adaptor;
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -37,123 +39,4 @@ describe('execute', () => {
       expect(finalState).to.eql({ references: [], data: null });
     });
   });
-});
-
-describe('create', () => {
-  before(() => {
-    nock('https://fake.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
-
-    nock('https://fake.server.com')
-      .post('/api/noAccess')
-      .reply(404, (uri, requestBody) => {
-        return { detail: 'Not found.' };
-      });
-
-    nock('https://fake.server.com')
-      .post('/api/differentError')
-      .reply(500, (uri, requestBody) => {
-        return { body: 'Other error.' };
-      });
-  });
-
-  it('makes a post request to the right endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await execute(
-      create('api/patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-    });
-  });
-
-  it('throws an error for a 404', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await execute(create('api/noAccess', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
-    expect(error.message).to.eql('Request failed with status code 404');
-  });
-
-  it('handles and throws different kinds of errors', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await execute(
-      create('api/differentError', { name: 'taylor' })
-    )(state).catch(error => {
-      return error;
-    });
-    expect(error.message).to.eql('Request failed with status code 500');
-  });
-});
-
-describe('createPatient', () => {
-  before(() => {
-    nock('https://fakepatient.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
-  });
-
-  it('makes a post request to the patient endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fakepatient.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await execute(
-      create('api/patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-    });
-  });
-
 });

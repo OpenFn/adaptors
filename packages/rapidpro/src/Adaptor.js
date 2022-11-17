@@ -7,7 +7,7 @@ import {
 } from '@openfn/language-common';
 
 const { axios } = http;
-exports.axios = axios;
+export { axios };
 
 /**
  * Execute a sequence of operations.
