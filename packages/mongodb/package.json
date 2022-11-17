@@ -19,19 +19,19 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "language-common": "github:openfn/language-common#v0.3.0",
-    "mongodb": "^3.5.7"
+    "@openfn/language-common": "^1.7.5",
+    "mongodb": "^3.7.3"
   },
   "devDependencies": {
-    "assertion-error": "^1.0.1",
-    "chai": "^3.4.0",
+    "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/simple-ast": "0.4.1",
+    "assertion-error": "^1.1.0",
+    "chai": "^3.5.0",
     "deep-eql": "^0.1.3",
+    "esno": "^0.16.3",
     "mocha": "^10.1.0",
     "nock": "^12.0.3",
-    "esno": "^0.16.3",
-    "rimraf": "^3.0.2",
-    "@openfn/buildtools": "workspace:^1.0.1",
-    "@openfn/simple-ast": "0.4.1"
+    "rimraf": "^3.0.2"
   },
   "repository": {
     "type": "git",

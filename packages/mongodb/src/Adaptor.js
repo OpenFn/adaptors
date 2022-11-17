@@ -1,22 +1,21 @@
-/** @module Adaptor */
 import {
   execute as commonExecute,
   expandReferences,
   composeNextState,
-} from 'language-common';
+} from '@openfn/language-common';
 
 import pkg from 'mongodb';
 const { MongoClient } = pkg;
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   insertDocuments(params),
  *   findDocuments(params)
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -228,10 +227,11 @@ export {
   field,
   fields,
   sourceValue,
+  fn,
   alterState,
   each,
   merge,
   dataPath,
   dataValue,
   lastReferenceValue,
-} from 'language-common';
+} from '@openfn/language-common';
