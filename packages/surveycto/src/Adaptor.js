@@ -1,7 +1,9 @@
-import { execute as commonExecute, expandReferences } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import request from 'request';
 import { resolve as resolveUrl } from 'url';
-/** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
@@ -21,7 +23,7 @@ export function execute(...operations) {
     data: null,
   };
 
-  return (state) => {
+  return state => {
     state.configuration.baseUrl = 'https://'.concat(
       state.configuration.instanceName,
       '.surveycto.com/api/v1'
@@ -36,12 +38,12 @@ export function execute(...operations) {
  * execute(
  *   fetch(params)
  * )(state)
- * @constructor
+ * @function
  * @param {object} params - data to make the fetch
  * @returns {Operation}
  */
 export function fetchSubmissions(formId, afterDate, postUrl) {
-  return (state) => {
+  return state => {
     const { baseUrl, username, password, instanceName } = state.configuration;
 
     return new Promise((resolve, reject) => {
@@ -104,6 +106,7 @@ export {
   field,
   fields,
   sourceValue,
+  fn,
   alterState,
   merge,
   dataPath,
