@@ -4,9 +4,9 @@
   "description": "A Microsoft Dynamics Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor dynamics",
-    "test": "mocha --compilers js:babel-core/register",
-    "test:watch": "mocha -w --compilers js:babel-core/register",
+    "build": "pnpm clean && build-adaptor rapidpro",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
@@ -19,23 +19,20 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "language-common": "github:openfn/language-common#v0.0.5",
+    "@openfn/language-common": "1.4.1",
     "request": "^2.72.0"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.1.2",
-    "babel-preset-es2015": "^6.1.2",
-    "babel-preset-stage-0": "^6.3.13",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
-    "mocha": "^2.3.3",
+    "mocha": "10.1.0",
     "nock": "^8.0.0",
     "sinon": "^1.17.2",
     "esno": "^0.16.3",
     "@openfn/buildtools": "workspace:^1.0.1",
-    "@openfn/simple-ast": "0.4.1"
+    "@openfn/simple-ast": "0.4.1",
+    "rimraf": "^3.0.2"
   },
   "repository": {
     "type": "git",
