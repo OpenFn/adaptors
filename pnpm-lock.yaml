@@ -648,6 +648,33 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
 
+  packages/surveycto:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^2.0.0
+      chai: ^4.3.7
+      deep-eql: ^4.1.2
+      esno: ^0.16.3
+      mocha: ^10.1.0
+      nock: ^13.2.9
+      request: ^2.88.2
+      rimraf: ^3.0.2
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      request: 2.88.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.7
+      deep-eql: 4.1.2
+      esno: 0.16.3
+      mocha: 10.1.0
+      nock: 13.2.9
+      rimraf: 3.0.2
+
   packages/template:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
