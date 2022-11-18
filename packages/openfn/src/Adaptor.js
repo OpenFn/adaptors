@@ -6,7 +6,8 @@ import {
 import axios from 'axios';
 import { resolve } from 'path';
 
-import pkg from '../package.json';
+import fs from 'fs';
+const pkg = JSON.parse(fs.readFileSync('../package.json'));
 const { version } = pkg;
 const defaultHeaders = { 'User-Agent': `language-openfn-v${version}` };
 
