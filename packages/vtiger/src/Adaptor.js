@@ -15,8 +15,6 @@ function assembleError({ response, error }) {
   return new Error(`Server responded with ${response.statusCode}`);
 }
 
-/** @module Adaptor */
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
@@ -25,7 +23,7 @@ function assembleError({ response, error }) {
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
