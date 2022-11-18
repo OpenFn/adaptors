@@ -3,41 +3,6 @@
   "exports": [],
   "common": [
     {
-      "name": "alterState",
-      "params": [
-        "func"
-      ],
-      "docs": {
-        "description": "Runs a function using state.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "alterState(callback)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "is the function",
-            "type": {
-              "type": "NameExpression",
-              "name": "Function"
-            },
-            "name": "func"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "sourceValue",
       "params": [
         "path"
@@ -67,6 +32,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -121,7 +94,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
         "tags": [
           {
             "title": "public",
@@ -145,6 +118,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -180,6 +161,14 @@
               "name": "String"
             },
             "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -225,6 +214,14 @@
               "name": "Operation"
             },
             "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
@@ -270,6 +267,14 @@
               "name": "Value"
             },
             "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Field"
+            }
           }
         ]
       },
@@ -277,7 +282,9 @@
     },
     {
       "name": "fields",
-      "params": [],
+      "params": [
+        "fields"
+      ],
       "docs": {
         "description": "Zips key value pairs into an object.",
         "tags": [
@@ -294,6 +301,15 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
           },
           {
             "title": "returns",
@@ -363,7 +379,8 @@
     {
       "name": "arrayToString",
       "params": [
-        "arr"
+        "arr",
+        "separator"
       ],
       "docs": {
         "description": "Turns an array into a string, separated by X.",
@@ -375,7 +392,7 @@
           },
           {
             "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n   return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n })"
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "function",
@@ -390,6 +407,23 @@
               "name": "array"
             },
             "name": "arr"
+          },
+          {
+            "title": "param",
+            "description": "Separator string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "separator"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
           }
         ]
       },

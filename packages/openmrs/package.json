@@ -24,7 +24,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "language-common": "github:openfn/language-common#v0.3.0",
+    "@openfn/language-common": "1.7.5",
     "request": "^2.72.0"
   },
   "devDependencies": {

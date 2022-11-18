@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
   composeNextState,
-} from 'language-common';
+} from '@openfn/language-common';
 import request from 'request';
 import { assembleError, tryJson } from './Utils';
 import { resolve as resolveUrl } from 'url';
@@ -79,33 +79,6 @@ function cleanupState(state) {
   delete state.auth;
   return state;
 }
-
-// /**
-//  * Create a person
-//  * @example
-//  * execute(
-//  *   person(data)
-//  * )(state)
-//  * @constructor
-//  * @param {object} personData - Payload data for the person
-//  * @returns {Operation}
-//  */
-// export function person(personData) {
-//   return (state) => {
-//     const body = expandReferences(personData)(state);
-
-//     const { instanceUrl } = state.configuration;
-
-//     const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
-
-//     console.log('Posting person.');
-
-//     return req({ auth: { username, password }, body, url }).then((result) => {
-//       console.log('Success:', result);
-//       return { ...state, references: [result, ...state.references] };
-//     });
-//   };
-// }
 
 /**
  * Gets patient matching a uuid
@@ -283,34 +256,6 @@ export function createEncounter(params) {
   };
 }
 
-// /**
-//  * Create a patient
-//  * @example
-//  * execute(
-//  *   createPatient(data)
-//  * )(state)
-//  * @constructor
-//  * @param {object} patientData - Payload data for the patient
-//  * @returns {Operation}
-//  */
-// export function createPatient(patientData) {
-//   return (state) => {
-//     const body = expandReferences(patientData)(state);
-
-//     const { username, password, instanceUrl } = state.configuration;
-
-//     const url = resolveUrl(instanceUrl + '/', 'ws/rest/v1/patient');
-
-//     console.log('Posting patient:');
-//     console.log(JSON.stringify(body));
-
-//     return post({ auth: { username, password }, body, url }).then((result) => {
-//       console.log('Success:', result);
-//       return { ...state, references: [result, ...state.references] };
-//     });
-//   };
-// }
-
 /**
  * Make a request to any OpenMRS endpoint and execute a callback
  * @example
@@ -355,4 +300,4 @@ export {
   lastReferenceValue,
   each,
   arrayToString,
-} from 'language-common';
+} from '@openfn/language-common';

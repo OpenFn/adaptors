@@ -441,19 +441,19 @@ importers:
   packages/openmrs:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
       chai: ^3.4.0
       deep-eql: ^0.1.3
       esno: ^0.16.3
-      language-common: github:openfn/language-common#v0.3.0
       mocha: ^10.1.0
       nock: ^12.0.3
       request: ^2.72.0
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      language-common: github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
+      '@openfn/language-common': 1.7.5
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1529,6 +1529,8 @@ packages:
       axios: 0.21.4
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
     dev: false
     bundledDependencies:
       - axios
@@ -1561,6 +1563,18 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: false
+
+  /@openfn/simple-ast/0.3.2:
+    resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
+    hasBin: true
+    dependencies:
+      '@babel/core': 7.19.6
+      doctrine: 2.1.0
+      lodash.isequal: 4.5.0
+      yargs: 8.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@openfn/simple-ast/0.4.1:
     resolution: {integrity: sha512-O0YUYgNkQpTadkUzviJShvw0JNz1rZex6aySq2rBF3I63qBo+OTi4TrQfr8lHqJXhrVMsBuW9tYOYwUGZ+aAqA==}
