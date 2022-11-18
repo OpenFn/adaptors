@@ -4,8 +4,6 @@ import {
 } from '@openfn/language-common';
 import request from 'request';
 
-/** @module Adaptor */
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
@@ -14,7 +12,7 @@ import request from 'request';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
