@@ -1,12 +1,12 @@
 import {
   execute as commonExecute,
   expandReferences,
-} from '@openfn/@openfn/language-common';
+} from '@openfn/language-common';
 import request from 'request';
-
 import md5 from 'md5';
-import { resolve as resolveUrl } from 'url';
-import { curry, mapValues, flatten } from 'lodash-fp';
+
+import pkg from 'lodash-fp';
+const { flatten } = pkg;
 
 function assembleError({ response, error }) {
   if (response && [200, 201, 202, 204].indexOf(response.statusCode) > -1)
@@ -34,10 +34,6 @@ export function execute(...operations) {
     references: [],
     data: null,
   };
-
-  // return state => {
-  //   return commonExecute(...operations)({ ...initialState, ...state })
-  // };
 
   return state => {
     return commonExecute(
@@ -184,6 +180,7 @@ export {
   fields,
   sourceValue,
   alterState,
+  fn,
   each,
   merge,
   dataPath,
