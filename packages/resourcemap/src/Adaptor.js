@@ -1,12 +1,14 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
-import request from 'request'
-import { resolve as resolveUrl } from 'url';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
+import request from 'request';
 
 /** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for resourcemap.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for resourcemap.
  * @example
  * execute(
  *   create('foo'),
@@ -19,15 +21,12 @@ import { resolve as resolveUrl } from 'url';
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({...initialState,
-      ...state
-    })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -41,66 +40,73 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function submitSite(collection_id, submissionData) {
-
   function assembleError({ response, error }) {
-    if ([200,201,202].indexOf(response.statusCode) > -1) return false;
+    if ([200, 201, 202].indexOf(response.statusCode) > -1) return false;
     if (error) return error;
-    return new Error(`Server responded with ${response.statusCode} \n ${response.body}`)
+    return new Error(
+      `Server responded with ${response.statusCode} \n ${response.body}`
+    );
   }
 
   return state => {
-
     const body = expandReferences(submissionData)(state);
-    console.log("Submitting site to collection " + collection_id + ":" +
-                "\n" + JSON.stringify(body, null, 4) + "\n"
-              );
+    console.log(
+      'Submitting site to collection ' +
+        collection_id +
+        ':' +
+        '\n' +
+        JSON.stringify(body, null, 4) +
+        '\n'
+    );
 
-    const {
-      username,
-      password,
-      baseUrl
-    } = state.configuration;
+    const { username, password, baseUrl } = state.configuration;
 
     // /api/collections/:collection_id/sites.json
-    const url = resolveUrl(baseUrl + '/', 'api/collections/' + collection_id + "/sites.json")
+    const url = resolveUrl(
+      baseUrl + '/',
+      'api/collections/' + collection_id + '/sites.json'
+    );
 
     return new Promise((resolve, reject) => {
-      request.post ({
-        url: url,
-        json: body,
-        auth: {
-          'user': username,
-          'pass': password,
-          'sendImmediately': true
+      request.post(
+        {
+          url: url,
+          json: body,
+          auth: {
+            user: username,
+            pass: password,
+            sendImmediately: true,
+          },
+          headers: {
+            'content-disposition': 'form-data; name=\\"site\\"',
+          },
         },
-        headers: {
-          "content-disposition": "form-data; name=\\\"site\\\""
+        function (error, response, body) {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+          } else {
+            console.log('Printing response...\n');
+            console.log(JSON.stringify(response, null, 4) + '\n');
+            console.log('Site submission succeeded.');
+            resolve(body);
+          }
         }
-      }, function(error, response, body){
-        error = assembleError({error, response})
-        if(error) {
-          reject(error);
-        } else {
-          console.log("Printing response...\n");
-          console.log(JSON.stringify(response, null, 4) + "\n");
-          console.log("Site submission succeeded.");
-          resolve(body);
-        }
-      })
-    })
+      );
+    });
 
     return request.post({
-        username,
-        password,
-        body,
-        url
-      })
-
-
-  }
+      username,
+      password,
+      body,
+      url,
+    });
+  };
 }
 
 export {
+  fn,
+  alterState,
   field,
   fields,
   sourceValue,
@@ -108,6 +114,5 @@ export {
   each,
   dataPath,
   dataValue,
-  lastReferenceValue
-}
-from 'language-common';
+  lastReferenceValue,
+} from '@openfn/language-common';
