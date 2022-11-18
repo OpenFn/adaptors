@@ -211,7 +211,7 @@ importers:
   packages/dynamics:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.4.1
+      '@openfn/language-common': 1.7.5
       '@openfn/simple-ast': 0.4.1
       assertion-error: ^1.0.1
       chai: ^3.4.0
@@ -223,7 +223,7 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.4.1
+      '@openfn/language-common': 1.7.5
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1510,6 +1510,8 @@ packages:
       axios: 0.21.4
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /@openfn/language-common/1.4.1:
@@ -1518,6 +1520,8 @@ packages:
       axios: 0.21.4
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
     dev: false
     bundledDependencies:
       - axios
@@ -1550,6 +1554,18 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: false
+
+  /@openfn/simple-ast/0.3.2:
+    resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
+    hasBin: true
+    dependencies:
+      '@babel/core': 7.19.6
+      doctrine: 2.1.0
+      lodash.isequal: 4.5.0
+      yargs: 8.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@openfn/simple-ast/0.4.1:
     resolution: {integrity: sha512-O0YUYgNkQpTadkUzviJShvw0JNz1rZex6aySq2rBF3I63qBo+OTi4TrQfr8lHqJXhrVMsBuW9tYOYwUGZ+aAqA==}
@@ -2785,6 +2801,17 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       type-detect: 4.0.8
+    dev: true
+
+  /deep-equal/1.1.1:
+    resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
+    dependencies:
+      is-arguments: 1.1.1
+      is-date-object: 1.0.5
+      is-regex: 1.1.4
+      object-is: 1.1.5
+      object-keys: 1.1.1
+      regexp.prototype.flags: 1.4.3
     dev: true
 
   /deep-extend/0.6.0:
@@ -6374,7 +6401,7 @@ packages:
       sparse-bitfield: 3.0.3
     dev: false
     optional: true
-    
+
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
