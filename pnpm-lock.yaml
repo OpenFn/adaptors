@@ -208,6 +208,35 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
 
+  packages/dynamics:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.1
+      '@openfn/language-common': 1.7.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^1.0.1
+      chai: ^3.4.0
+      deep-eql: ^0.1.3
+      esno: ^0.16.3
+      mocha: 10.1.0
+      nock: ^8.0.0
+      request: ^2.72.0
+      rimraf: ^3.0.2
+      sinon: ^1.17.2
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      request: 2.88.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 10.1.0
+      nock: 8.2.2
+      rimraf: 3.0.2
+      sinon: 1.17.7
+
   packages/fhir:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -1202,7 +1231,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.19.4
+      '@babel/types': 7.20.0
     dev: false
 
   /@babel/parser/7.20.0:
@@ -1243,15 +1272,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  /@babel/types/7.19.4:
-    resolution: {integrity: sha512-M5LK7nAeS6+9j7hAq+b3fQs+pNfUtTGq+yFFfHnauFA8zQtLRfmuipmsKDKKLuyG+wC8ABW43A153YNawNTEtw==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.19.4
-      '@babel/helper-validator-identifier': 7.19.1
-      to-fast-properties: 2.0.0
-    dev: false
 
   /@babel/types/7.20.0:
     resolution: {integrity: sha512-Jlgt3H0TajCW164wkTOTzHkZb075tMQMULzrLUoUeKmO7eFL96GgDxf7/Axhc5CAuKE3KFyVW1p6ysKsi2oXAg==}
@@ -3081,6 +3101,17 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       type-detect: 4.0.8
+    dev: true
+
+  /deep-equal/1.1.1:
+    resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
+    dependencies:
+      is-arguments: 1.1.1
+      is-date-object: 1.0.5
+      is-regex: 1.1.4
+      object-is: 1.1.5
+      object-keys: 1.1.1
+      regexp.prototype.flags: 1.4.3
     dev: true
 
   /deep-extend/0.6.0:
@@ -5410,6 +5441,10 @@ packages:
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
+  /lodash/4.9.0:
+    resolution: {integrity: sha512-UGUdLhDm+6tXViVGFOiDt+3HXNxVpLPaEcqzoTowq9XtmsHTq1nskdpr6UR1XV3aM1eJaiFtwg0DarxFW/ypsA==}
+    dev: true
+
   /log-symbols/3.0.0:
     resolution: {integrity: sha512-dSkNGuI7iG3mfvDzUuYZyvk5dD9ocYCYzNU6CYDE6+Xqd+gwme6Z00NS3dUh8mq/73HaEtT7m6W+yUPtU6BZnQ==}
     engines: {node: '>=8'}
@@ -5901,6 +5936,22 @@ packages:
       - supports-color
     dev: true
 
+  /nock/8.2.2:
+    resolution: {integrity: sha512-f4s5qR4Eg/NgaLuBYTThc/abl5mohCgIvnGdHkoqR5WgRe5amjFQTU2aia085OE8o3OAY7ZerDkRAeXfR720TA==}
+    engines: {'0': node >= 0.10.0}
+    dependencies:
+      chai: 3.5.0
+      debug: 2.6.9
+      deep-equal: 1.1.1
+      json-stringify-safe: 5.0.1
+      lodash: 4.9.0
+      mkdirp: 0.5.5
+      propagate: 0.4.0
+      qs: 6.11.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /node-abort-controller/3.0.1:
     resolution: {integrity: sha512-/ujIVxthRs+7q6hsdjHMaj8hRG9NuWmwrz+JdRwZ14jdFoKSkm+vDsCbF9PLpnSqjaWQJuTmVtcWHNLr+vrOFw==}
     dev: false
@@ -5984,6 +6035,14 @@ packages:
 
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}
+
+  /object-is/1.1.5:
+    resolution: {integrity: sha512-3cyDsyHgtmi7I7DfSSI2LDp6SK2lwvtbg0p0R1e0RvTqF5ceGx+K2dfSjm1bKDMVCFEDAQvy+o8c6a7VujOddw==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.4
+    dev: true
 
   /object-keys/1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
@@ -6527,6 +6586,11 @@ packages:
     dependencies:
       asap: 2.0.6
     dev: false
+
+  /propagate/0.4.0:
+    resolution: {integrity: sha512-B2oM5/8COVRM/gc/3slgBtaRO1h/ZiGwEi+zyB5FcZa3lpb0UBc3ncH4O0BxANHLUsuFUG1F+LWFREJ0/WuTFg==}
+    engines: {'0': node >= 0.8.1}
+    dev: true
 
   /promise/8.3.0:
     resolution: {integrity: sha512-rZPNPKTOYVNEEKFaq1HqTgOwZD+4/YHS5ukLzQCypkj+OkYx7iv0mA91lJlpPPZ8vMau3IIGj5Qlwrx+8iiSmg==}
