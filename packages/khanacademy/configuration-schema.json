@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "email": {
+            "title": "Email",
+            "type": "string",
+            "description": "Your Khanacademy login email",
+            "format": "email",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Your Khanacademy login password",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "consumerKey": {
+            "title": "Consumer Key",
+            "type": "string",
+            "description": "Your Khanacademy consumer key",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "secretKey": {
+            "title": "Secret Key",
+            "type": "string",
+            "description": "Your Khanacademy secret key",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "email",
+        "password",
+        "secretKey",
+        "consumerKey"
+    ]
+}

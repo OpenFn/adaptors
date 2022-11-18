@@ -1,10 +1,10 @@
 {
-  "name": "@openfn/language-mongodb",
-  "version": "1.0.4",
-  "description": "A language package for working with MongoDb",
+  "name": "@openfn/language-telerivet",
+  "version": "0.0.2",
+  "description": "telerivet Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor mongodb",
+    "build": "pnpm clean && build-adaptor telerivet",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -20,7 +20,9 @@
   ],
   "dependencies": {
     "@openfn/language-common": "^1.7.5",
-    "mongodb": "^3.7.3"
+    "JSONPath": "^0.10.0",
+    "lodash-fp": "^0.10.4",
+    "superagent": "^1.8.5"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
@@ -30,8 +32,8 @@
     "deep-eql": "^0.1.3",
     "esno": "^0.16.3",
     "mocha": "^10.1.0",
-    "nock": "^12.0.3",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "superagent-mock": "^1.12.0"
   },
   "repository": {
     "type": "git",

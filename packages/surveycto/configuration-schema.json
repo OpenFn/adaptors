@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "instanceName": {
+            "title": "Instance name",
+            "type": "string",
+            "description": "Your Surveycto instance name",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Your Surveycto instance username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Your Surveycto instance password",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "instanceName",
+        "username",
+        "password"
+    ]
+}
