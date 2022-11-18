@@ -1,5 +1,13 @@
 # @openfn/language-primero
 
+## 2.10.2
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 2.10.1
 
 ### Patch Changes

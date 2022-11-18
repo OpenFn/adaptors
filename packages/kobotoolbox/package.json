@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-kobotoolbox",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Kobo Toolbox Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -24,7 +24,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^1.7.4"
+    "@openfn/language-common": "workspace:^1.7.5"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
