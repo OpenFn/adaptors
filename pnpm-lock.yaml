@@ -472,8 +472,8 @@ importers:
   packages/openfn:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
-      '@openfn/language-common': 1.6.2
-      '@openfn/simple-ast': ^0.3.2
+      '@openfn/language-common': 1.7.5
+      '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
       axios: ^0.21.1
       chai: ^3.4.0
@@ -484,11 +484,11 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.6.2
+      '@openfn/language-common': 1.7.5
       axios: 0.21.4
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
-      '@openfn/simple-ast': 0.3.2
+      '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 3.5.0
       deep-eql: 0.1.3
@@ -1653,21 +1653,6 @@ packages:
     resolution: {integrity: sha512-d1Lr3fqVdHRw+A5SZR1FXPgF2lb100Xiv/HFHsEZkRXheR58HxIh8YZT4j0mOFNCZUqw+1JK6LRHDb56JuyIrw==}
     dependencies:
       axios: 0.21.4
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-    dev: false
-    bundledDependencies:
-      - axios
-      - jsonpath-plus
-      - lodash
-
-  /@openfn/language-common/1.6.2:
-    resolution: {integrity: sha512-ZyjpC7S9Tf0zGvvHYQ+0n2PM5hpYLP3/yJImJQXoYa2hpL0yZo5ef0prGzLmPJJECraiRyY6vkBJp/uKg2SRdw==}
-    dependencies:
-      axios: 0.21.4
-      date-fns: 2.29.3
       jsonpath-plus: 4.0.0
       lodash: 4.17.21
     transitivePeerDependencies:

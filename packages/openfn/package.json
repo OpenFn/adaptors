@@ -9,11 +9,11 @@
   },
   "main": "dist/index.cjs",
   "scripts": {
-    "clean": "rimraf dist types docs",
     "build": "pnpm clean && build-adaptor openfn",
-    "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings"
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "clean": "rimraf dist types docs",
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -24,11 +24,11 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "axios": "^0.21.1",
-    "@openfn/language-common": "1.6.2"
+    "@openfn/language-common": "1.7.5",
+    "axios": "^0.21.1"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.3.2",
+    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
