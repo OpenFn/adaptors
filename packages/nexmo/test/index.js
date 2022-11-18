@@ -3,7 +3,7 @@ import Adaptor from '../src';
 const { execute, sendSMS } = Adaptor;
 
 describe('execute', () => {
-  it('sends an SMS and expects a delivery status', done => {
+  it.skip('sends an SMS and expects a delivery status', done => {
     let state = {
       configuration: {
         apiKey: '613118f9',

@@ -1,10 +1,14 @@
 /** @module Adaptor */
-import {execute as commonExecute, expandReferences, composeNextState } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+  composeNextState,
+} from '@openfn/language-common';
 import Nexmo from 'nexmo';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   create('foo'),
@@ -17,16 +21,15 @@ import Nexmo from 'nexmo';
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
+    data: null,
+  };
 
   return state => {
     return commonExecute(...operations)({
       ...initialState,
-      ...state
-    })
+      ...state,
+    });
   };
-
 }
 
 /**
@@ -41,50 +44,44 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function sendSMS(from, toNumber, message) {
-
   return state => {
-
     const { apiKey, apiSecret } = state.configuration;
 
     const nexmo = new Nexmo({
       apiKey: apiKey,
-      apiSecret: apiSecret
-    })
+      apiSecret: apiSecret,
+    });
 
     return new Promise((resolve, reject) => {
-
-      nexmo.message.sendSms(from, toNumber, message,
-        (error, response) => {
-          if(error) {
-            console.error(error)
-            reject(error)
-          } else if(response.messages[0].status != '0') {
-            console.error("Nexmo Error:")
-            console.error(response)
-            reject(response)
-          } else {
-            console.log(response);
-            resolve(response)
-          }
-        })
-    }).then((response) => {
+      nexmo.message.sendSms(from, toNumber, message, (error, response) => {
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else if (response.messages[0].status != '0') {
+          console.error('Nexmo Error:');
+          console.error(response);
+          reject(response);
+        } else {
+          console.log(response);
+          resolve(response);
+        }
+      });
+    }).then(response => {
       const nextState = composeNextState(state, response);
       return nextState;
-    })
-
-  }
-
+    });
+  };
 }
 
 export {
   field,
   fields,
   sourceValue,
+  fn,
   alterState,
   each,
   merge,
   dataPath,
   dataValue,
-  lastReferenceValue
-}
-from 'language-common';
+  lastReferenceValue,
+} from '@openfn/language-common';
