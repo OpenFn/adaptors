@@ -45,6 +45,8 @@ function createConnection(state) {
         resolve({ ...state, connection });
       }
     });
+    // Initialize connection
+    connection.connect();
   });
 }
 
@@ -126,13 +128,16 @@ function flattenRows(state, rows) {
 }
 
 function composeNextState(state, rows) {
-  const obj = {};
+  let rowObj = {};
+  const flattenedRows = [];
   rows.forEach(row => {
-    row.forEach(col => {
-      obj[col.metadata.colName] = col.value;
-    });
+    rowObj = row.reduce(
+      (o, col) => Object.assign(o, { [col.metadata.colName]: col.value }),
+      {}
+    );
+    flattenedRows.push(rowObj);
   });
-  return { ...state, response: { body: obj } };
+  return { ...state, response: { rowCount: rows.length, rows: flattenedRows } };
 }
 
 function queryHandler(state, query, callback, options) {
@@ -161,6 +166,7 @@ function queryHandler(state, query, callback, options) {
         resolve(callback(state, rows));
       }
     });
+
     connection.execSql(request);
   });
 }
