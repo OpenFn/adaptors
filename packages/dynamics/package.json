@@ -4,7 +4,7 @@
   "description": "A Microsoft Dynamics Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor rapidpro",
+    "build": "pnpm clean && build-adaptor dynamics",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
