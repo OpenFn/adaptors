@@ -1,4 +1,7 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import request from 'request';
@@ -7,26 +10,25 @@ import parser from 'xml2json';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for magpi.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for magpi.
  * @example
  * execute(
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -43,106 +45,113 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function fetchSurveyData(params) {
-
   return state => {
-
     function assembleError({ response, error }) {
-      if (response && ([200, 201, 202].indexOf(response.statusCode) > -1)) return false;
+      if (response && [200, 201, 202].indexOf(response.statusCode) > -1)
+        return false;
       if (error) return error;
-      return new Error(`Server responded with ${response.statusCode}`)
-    };
+      return new Error(`Server responded with ${response.statusCode}`);
+    }
 
     console.log(params.surveyId);
-    const { surveyId, afterDate, beforeDate, postUrl } = expandReferences(params)(state);
+    const { surveyId, afterDate, beforeDate, postUrl } =
+      expandReferences(params)(state);
     console.log(surveyId);
-
 
     const { accessToken, username } = state.configuration;
 
     const enddate = beforeDate;
-    const startdate = ( state.lastSubmissionDate || afterDate );
+    const startdate = state.lastSubmissionDate || afterDate;
 
-    const url = "https://www.magpi.com/api/surveydata/v3";
+    const url = 'https://www.magpi.com/api/surveydata/v3';
 
     const form = {
       username,
       accesstoken: accessToken,
       surveyid: surveyId,
       startdate,
-      enddate: enddate
+      enddate: enddate,
     };
 
     console.log(`Fetching Survey ${form.surveyid} submissions from ${url}`);
     console.log(`Date filters: "${form.startdate}" to "${form.enddate}".`);
 
     return new Promise((resolve, reject) => {
-      request({
-        method: 'POST',
-        url: url,
-        form: form
-      }, (error, response, body) => {
-        error = assembleError({ error, response })
-        if (error) {
-          console.log("Failed to fetch submission data.")
-          console.log("Response body: " + response.body);
-          reject(error);
-        } else {
-          const jsonBody = JSON.parse(parser.toJson(body));
-          if (jsonBody.SurveyDataList.SurveyData) {
-            console.log("Successfully fetched submission data.")
-
-            // Coerce survey data into an array for iteration...
-            if (jsonBody.SurveyDataList.SurveyData.length) {
-              var submissions = jsonBody.SurveyDataList.SurveyData;
-            } else {
-              var submissions = [jsonBody.SurveyDataList.SurveyData];
-            }
-
-            console.log(`Converted ${submissions.length} submission(s) to JSON:`)
-            // console.log(submissions);
-            resolve(submissions);
-
-          } else {
-            console.log("There is no survey data matching the current parameters.")
-            resolve([])
-          }
-
-        }
-      })
-    })
-    .then((submissions) => {
-      submissions.forEach((item) => {
-        item.surveyId = surveyId;
-        item.source = "Magpi API"
-        console.log(item)
-        request.post({
-          url: postUrl,
-          json: item
-        }, (error, response, postResponseBody) => {
-          error = assembleError({ error, response })
+      request(
+        {
+          method: 'POST',
+          url: url,
+          form: form,
+        },
+        (error, response, body) => {
+          error = assembleError({ error, response });
           if (error) {
-            console.error("POST failed.")
-            throw(error)
+            console.log('Failed to fetch submission data.');
+            console.log('Response body: ' + response.body);
+            reject(error);
           } else {
-            console.log("POST succeeded.");
+            const jsonBody = JSON.parse(parser.toJson(body));
+            if (jsonBody.SurveyDataList.SurveyData) {
+              console.log('Successfully fetched submission data.');
+
+              // Coerce survey data into an array for iteration...
+              if (jsonBody.SurveyDataList.SurveyData.length) {
+                var submissions = jsonBody.SurveyDataList.SurveyData;
+              } else {
+                var submissions = [jsonBody.SurveyDataList.SurveyData];
+              }
+
+              console.log(
+                `Converted ${submissions.length} submission(s) to JSON:`
+              );
+              // console.log(submissions);
+              resolve(submissions);
+            } else {
+              console.log(
+                'There is no survey data matching the current parameters.'
+              );
+              resolve([]);
+            }
           }
-        })
-      });
-      return submissions;
+        }
+      );
     })
-    .then((submissions) => {
-      if (submissions.length) {
-        // TODO: if Magpi API does not return in date order, find oldest...
-        state.lastSubmissionDate = submissions[0].LastSubmissionDate
-        console.log(`Set \"lastSubmissionDate\" for next run to: ${submissions[0].LastSubmissionDate}`)
-      }
-      // Set the lastSubmissionDate for the next time the job runs.
-      return state;
-    });
-
-  } // done returning state.
-
-}; // done with exported function.
+      .then(submissions => {
+        submissions.forEach(item => {
+          item.surveyId = surveyId;
+          item.source = 'Magpi API';
+          console.log(item);
+          request.post(
+            {
+              url: postUrl,
+              json: item,
+            },
+            (error, response, postResponseBody) => {
+              error = assembleError({ error, response });
+              if (error) {
+                console.error('POST failed.');
+                throw error;
+              } else {
+                console.log('POST succeeded.');
+              }
+            }
+          );
+        });
+        return submissions;
+      })
+      .then(submissions => {
+        if (submissions.length) {
+          // TODO: if Magpi API does not return in date order, find oldest...
+          state.lastSubmissionDate = submissions[0].LastSubmissionDate;
+          console.log(
+            `Set \"lastSubmissionDate\" for next run to: ${submissions[0].LastSubmissionDate}`
+          );
+        }
+        // Set the lastSubmissionDate for the next time the job runs.
+        return state;
+      });
+  }; // done returning state.
+} // done with exported function.
 
 /**
  * Submit a record for a form/survey which already exists in a Magpi user account
@@ -154,34 +163,30 @@ export function fetchSurveyData(params) {
  * @returns {Operation}
  */
 export function submitRecord(jsonData) {
-
   return state => {
     const jsonBody = expandReferences(data)(state);
-    const body = js2xmlparser("form", jsonBody);
+    const body = js2xmlparser('form', jsonBody);
 
-    const {
-      username,
-      password,
-      apiUrl
-    } = state.configuration;
+    const { username, password, apiUrl } = state.configuration;
 
-    const url = resolveUrl(apiUrl + '/', 'mobileApi/uploadData')
+    const url = resolveUrl(apiUrl + '/', 'mobileApi/uploadData');
     //const url = 'https://www.magpi.com/mobileApi/uploadData'
 
-    console.log("Posting to url: ".concat(url));
-    console.log("Raw JSON body: ".concat(JSON.stringify(jsonBody)));
-    console.log("X-form submission: ".concat(body));
+    console.log('Posting to url: '.concat(url));
+    console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
+    console.log('X-form submission: '.concat(body));
 
     // return post({ url, body })
     // .then((result) => {
     //   console.log("Success:", result);
     //   return { ...state, references: [ result, ...state.references ] }
     // })
-
-  }
+  };
 }
 
 export {
+  fn,
+  alterState,
   field,
   fields,
   sourceValue,
@@ -189,6 +194,5 @@ export {
   merge,
   dataPath,
   dataValue,
-  lastReferenceValue
-}
-from 'language-common';
+  lastReferenceValue,
+} from '@openfn/language-common';
