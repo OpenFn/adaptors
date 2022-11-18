@@ -1,174 +1,186 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
-import request from 'request'
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
+import request from 'request';
 import { resolve as resolveUrl } from 'url';
-var base64 = require('base-64');
-var utf8 = require('utf8');
+import base64 from 'base-64';
+import utf8 from 'utf8';
 
 /** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
  * Make a GET request and POST it somewhere else
  * @example
- * execute(
- *   fetch(params)
- * )(state)
- * @constructor
+ * fetch({
+ *  endpoint: 'maxrest/rest/os/mxinventory',
+ *  query: {
+ *    ITEMNUM: '01226',
+ *    _format: 'json',
+ *  },
+ *  postUrl: 'https://www.openfn.org/inbox/not-real',
+ * });
+ * @function
  * @param {object} params - data to make the fetch
  * @returns {Operation}
  */
 export function fetch(params) {
-
   return state => {
-
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && [200, 201, 202].indexOf(response.statusCode) > -1)
+        return false;
       if (error) return error;
-      return new Error(`Server responded with ${response.statusCode}`)
+      return new Error(`Server responded with ${response.statusCode}`);
     }
 
     const { endpoint, query, postUrl } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
-    var authy = username+":"+password;
+    const authy = username + ':' + password;
     // console.log(authy)
-    var bytes = utf8.encode(authy);
-    var encoded = base64.encode(bytes);
+    const bytes = utf8.encode(authy);
+    const encoded = base64.encode(bytes);
     // console.log(encoded)
 
-    const url = resolveUrl(baseUrl + '/', endpoint)
+    const url = resolveUrl(baseUrl + '/', endpoint);
 
-    console.log("Fetching data from URL: " + url);
-    console.log("Applying query: " + JSON.stringify(query))
+    console.log('Fetching data from URL: ' + url);
+    console.log('Applying query: ' + JSON.stringify(query));
 
     return new Promise((resolve, reject) => {
-
-      request({
-        url: url, //URL to hit
-        qs: query, //Query string data
-        headers: {
-          // Maximo's authentication header
-          'maxauth': encoded
+      request(
+        {
+          url: url, //URL to hit
+          qs: query, //Query string data
+          headers: {
+            // Maximo's authentication header
+            maxauth: encoded,
+          },
+        },
+        function (error, response, getResponseBody) {
+          error = assembleError({ error, response });
+          if (error) {
+            console.error('GET failed.');
+            console.log(response);
+            reject(error);
+          } else {
+            console.log('GET succeeded.');
+            // console.log(response)
+            console.log('Response body: ' + getResponseBody);
+            request.post(
+              {
+                url: postUrl,
+                json: JSON.parse(getResponseBody),
+              },
+              function (error, response, postResponseBody) {
+                error = assembleError({ error, response });
+                if (error) {
+                  console.error('POST failed.');
+                  reject(error);
+                } else {
+                  console.log('POST succeeded.');
+                  resolve(getResponseBody);
+                }
+              }
+            );
+          }
         }
-      }, function(error, response, getResponseBody){
-        error = assembleError({error, response})
-        if (error) {
-          console.error("GET failed.")
-          console.log(response)
-          reject(error);
-        } else {
-          console.log("GET succeeded.");
-          // console.log(response)
-          console.log("Response body: " + getResponseBody)
-          request.post ({
-            url: postUrl,
-            json: JSON.parse(getResponseBody)
-          }, function(error, response, postResponseBody){
-            error = assembleError({error, response})
-            if (error) {
-              console.error("POST failed.")
-              reject(error);
-            } else {
-              console.log("POST succeeded.");
-              resolve(getResponseBody);
-            }
-          })
-        }
+      );
+    })
+      .then(response => {
+        console.log('Success:', response);
+        let result =
+          typeof response === 'object' ? response : JSON.parse(response);
+        return { ...state, references: [result, ...state.references] };
+      })
+      .then(data => {
+        const nextState = { ...state, response: { body: data } };
+        return nextState;
       });
-    })
-    .then((response) => {
-      console.log("Success:", response);
-      let result = (typeof response === 'object') ? response : JSON.parse(response);
-      return { ...state, references: [ result, ...state.references ] }
-    }).then((data) => {
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    })
-
-  }
+  };
 }
 
 /*
-* Make a POST request using existing data from state
-*/
+ * Make a POST request using existing data from state
+ */
 export function create(params) {
-
   return state => {
-
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && [200, 201, 202].indexOf(response.statusCode) > -1)
+        return false;
       if (error) return error;
-      return new Error(`Server responded with ${response.statusCode}`)
+      return new Error(`Server responded with ${response.statusCode}`);
     }
 
     const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
-    var authy = username+":"+password;
+    const authy = username + ':' + password;
     // console.log(authy)
-    var bytes = utf8.encode(authy);
-    var encoded = base64.encode(bytes);
+    const bytes = utf8.encode(authy);
+    const encoded = base64.encode(bytes);
     // console.log(encoded);
 
-    const url = resolveUrl(baseUrl + '/', endpoint)
+    const url = resolveUrl(baseUrl + '/', endpoint);
 
-    console.log("Creating data at URL: " + url);
-    console.log("Post body:")
-    console.log(JSON.stringify(body, null, 4) + "\n");
+    console.log('Creating data at URL: ' + url);
+    console.log('Post body:');
+    console.log(JSON.stringify(body, null, 4) + '\n');
 
     return new Promise((resolve, reject) => {
-      request.post ({
-        url: url,
-        json: body,
-        headers: {
-          // Maximo's authentication header
-          'maxauth': encoded
+      request.post(
+        {
+          url: url,
+          json: body,
+          headers: {
+            // Maximo's authentication header
+            maxauth: encoded,
+          },
+        },
+        function (error, response, body) {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+            console.log(body);
+          } else {
+            console.log(response);
+            console.log('Printing response body...\n');
+            console.log(JSON.stringify(body, null, 4) + '\n');
+            console.log('POST succeeded.');
+            resolve(body);
+          }
         }
-      }, function(error, response, body){
-        error = assembleError({error, response})
-        if(error) {
-          reject(error);
-          console.log(body);
-        } else {
-          console.log(response)
-          console.log("Printing response body...\n");
-          console.log(JSON.stringify(body, null, 4) + "\n");
-          console.log("POST succeeded.");
-          resolve(body);
-        }
-      })
-    }).then((data) => {
+      );
+    }).then(data => {
       const nextState = { ...state, response: { body: data } };
       return nextState;
-    })
-
-  }
-
+    });
+  };
 }
 
 /**
@@ -177,63 +189,63 @@ export function create(params) {
  * execute(
  *   update(params)
  * )(state)
- * @constructor
+ * @function
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
 export function update(params) {
-
   return state => {
-
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && [200, 201, 202].indexOf(response.statusCode) > -1)
+        return false;
       if (error) return error;
-      return new Error(`Server responded with ${response.statusCode}`)
+      return new Error(`Server responded with ${response.statusCode}`);
     }
 
     const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
-    var authy = username + ":" + password;
-    var bytes = utf8.encode(authy);
-    var encoded = base64.encode(bytes);
+    const authy = username + ':' + password;
+    const bytes = utf8.encode(authy);
+    const encoded = base64.encode(bytes);
 
-    const url = resolveUrl(baseUrl + '/', endpoint)
+    const url = resolveUrl(baseUrl + '/', endpoint);
 
-    console.log("Performing update at URL: " + url);
-    console.log("Update data:")
-    console.log(JSON.stringify(body, null, 4) + "\n");
+    console.log('Performing update at URL: ' + url);
+    console.log('Update data:');
+    console.log(JSON.stringify(body, null, 4) + '\n');
 
     return new Promise((resolve, reject) => {
-      request.post ({
-        url: url,
-        json: body,
-        headers: {
-          // Maximo's authentication header
-          'maxauth': encoded,
-          'x-methodoverride': 'PATCH',
-          'patchtype': 'MERGE'
+      request.post(
+        {
+          url: url,
+          json: body,
+          headers: {
+            // Maximo's authentication header
+            maxauth: encoded,
+            'x-methodoverride': 'PATCH',
+            patchtype: 'MERGE',
+          },
+        },
+        function (error, response, body) {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+            console.log(body);
+          } else {
+            console.log('Printing response body...\n');
+            console.log(JSON.stringify(body, null, 4) + '\n');
+            console.log('Update succeeded.');
+            resolve(body);
+          }
         }
-      }, function(error, response, body){
-        error = assembleError({error, response})
-        if(error) {
-          reject(error);
-          console.log(body);
-        } else {
-          console.log("Printing response body...\n");
-          console.log(JSON.stringify(body, null, 4) + "\n");
-          console.log("Update succeeded.");
-          resolve(body);
-        }
-      })
-    }).then((data) => {
+      );
+    }).then(data => {
       const nextState = { ...state, response: { body: data } };
       return nextState;
-    })
-
-  }
-
+    });
+  };
 }
 
 /**
@@ -242,66 +254,74 @@ export function update(params) {
  * execute(
  *   update75(params)
  * )(state)
- * @constructor
+ * @function
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
 export function update75(params) {
-
   return state => {
-
     function assembleError({ response, error }) {
-      if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
+      if (response && [200, 201, 202].indexOf(response.statusCode) > -1)
+        return false;
       if (error) return error;
-      return new Error(`Server responded with ${response.statusCode}`)
+      return new Error(`Server responded with ${response.statusCode}`);
     }
 
     const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
-    var authy = username + ":" + password;
-    var bytes = utf8.encode(authy);
-    var encoded = base64.encode(bytes);
+    const authy = username + ':' + password;
+    const bytes = utf8.encode(authy);
+    const encoded = base64.encode(bytes);
 
-    const url = resolveUrl(baseUrl + '/', endpoint)
+    const url = resolveUrl(baseUrl + '/', endpoint);
 
-    console.log("Performing update at URL: " + url);
-    console.log("Update data:")
-    console.log(JSON.stringify(body, null, 4) + "\n");
+    console.log('Performing update at URL: ' + url);
+    console.log('Update data:');
+    console.log(JSON.stringify(body, null, 4) + '\n');
 
     return new Promise((resolve, reject) => {
-      request.post ({
-        url: url,
-        form: body,
-        headers: {
-          // Maximo's authentication header
-          'maxauth': encoded,
-          'x-methodoverride': 'PATCH',
-          'patchtype': 'MERGE'
+      request.post(
+        {
+          url: url,
+          form: body,
+          headers: {
+            // Maximo's authentication header
+            maxauth: encoded,
+            'x-methodoverride': 'PATCH',
+            patchtype: 'MERGE',
+          },
+        },
+        function (error, response, body) {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+            console.log(body);
+          } else {
+            console.log('Printing update response body...\n');
+            console.log(JSON.stringify(body, null, 4) + '\n');
+            console.log('Update succeeded.');
+            resolve(body);
+          }
         }
-      }, function(error, response, body){
-        error = assembleError({error, response})
-        if(error) {
-          reject(error);
-          console.log(body);
-        } else {
-          console.log("Printing update response body...\n");
-          console.log(JSON.stringify(body, null, 4) + "\n");
-          console.log("Update succeeded.");
-          resolve(body);
-        }
-      })
-    }).then((data) => {
+      );
+    }).then(data => {
       const nextState = { ...state, response: { body: data } };
       return nextState;
-    })
-
-  }
-
+    });
+  };
 }
 
 export {
-  field, fields, sourceValue, alterState, each,
-  merge, dataPath, dataValue, lastReferenceValue
-} from 'language-common';
+  field,
+  fields,
+  sourceValue,
+  fn,
+  alterState,
+  each,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+} from '@openfn/language-common';
