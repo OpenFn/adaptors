@@ -1,4 +1,3 @@
-/** @module Adaptor */
 import {
   execute as commonExecute,
   expandReferences,
@@ -14,7 +13,7 @@ import Nexmo from 'nexmo';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
