@@ -1,10 +1,9 @@
-Language Mogli [![Build Status](https://travis-ci.org/OpenFn/language-mogli.svg?branch=master)](https://travis-ci.org/OpenFn/language-mogli)
-==============
+# Language Mogli
 
-Language Pack for building expressions and operations to interact with Mogli SMS.
+Language Pack for building expressions and operations to interact with Mogli
+SMS.
 
-Documentation
--------------
+## Documentation
 
 #### sample configuration
 
@@ -19,12 +18,13 @@ Documentation
 ```
 
 ### Create inbound SMS
+
 ```js
 createSMS(
   fields(
-    field("sender", dataValue("from_number")),
-    field("receivedAt", dataValue("timestamp")),
-    field("message", dataValue("message"))
+    field('sender', dataValue('from_number')),
+    field('receivedAt', dataValue('timestamp')),
+    field('message', dataValue('message'))
   )
 );
 ```
@@ -40,13 +40,13 @@ updateSMS(
 );
 ``` -->
 
-[Docs](docs/index)
+## Development
 
-Development
------------
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Clone the repo, run `npm install`.
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Run tests using `npm run test` or `npm run test:watch`
+Build the project using `pnpm build`.
 
-Build the project using `make`.
+To just build the docs run `pnpm build docs`
