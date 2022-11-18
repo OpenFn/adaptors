@@ -29,7 +29,7 @@ describe('execute', () => {
       .catch(done);
   });
 
-  it('assigns references, data to the initialState', () => {
+  it.skip('assigns references, data to the initialState', () => {
     let state = {
       configuration: {
         server: 'testurl',
