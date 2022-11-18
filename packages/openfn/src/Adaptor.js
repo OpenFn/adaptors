@@ -4,10 +4,13 @@ import {
   expandReferences,
 } from '@openfn/language-common';
 import axios from 'axios';
-import { resolve } from 'path';
-
+import { fileURLToPath } from 'url';
+import path, { resolve } from 'path';
 import fs from 'fs';
-const pkg = JSON.parse(fs.readFileSync('../package.json'));
+
+const __dirname = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const filepath = path.join(__dirname, 'package.json');
+const pkg = JSON.parse(fs.readFileSync(filepath));
 const { version } = pkg;
 const defaultHeaders = { 'User-Agent': `language-openfn-v${version}` };
 
