@@ -1,5 +1,5 @@
 {
-  "name": "language-cartodb",
+  "name": "@openfn/language-cartodb",
   "version": "0.0.4",
   "description": "cartodb Language Pack for OpenFn",
   "main": "dist/index.cjs",
@@ -21,7 +21,7 @@
   "dependencies": {
     "JSONPath": "^0.10.0",
     "json-sql": "^0.3.8",
-    "language-common": "github:openfn/language-common",
+    "@openfn/language-common": "^1.7.5",
     "lodash-fp": "^0.10.2",
     "superagent": "^1.7.2"
   },
@@ -30,7 +30,6 @@
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
     "mocha": "^7.1.1",
-    "sinon": "^1.17.2",
     "superagent-mock": "^1.10.0",
     "esno": "^0.16.3",
     "@openfn/buildtools": "workspace:^1.0.1",
