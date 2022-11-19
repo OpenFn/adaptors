@@ -105,6 +105,39 @@ importers:
       regenerator-runtime: 0.13.9
       rimraf: 3.0.2
 
+  packages/cartodb:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.1
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      JSONPath: ^0.10.0
+      assertion-error: ^1.0.1
+      chai: ^3.4.0
+      deep-eql: ^0.1.3
+      esno: ^0.16.3
+      json-sql: ^0.3.8
+      lodash-fp: ^0.10.2
+      mocha: ^7.1.1
+      rimraf: ^3.0.2
+      superagent: ^1.7.2
+      superagent-mock: ^1.10.0
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      JSONPath: 0.10.0
+      json-sql: 0.3.11
+      lodash-fp: 0.10.4
+      superagent: 1.8.5
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 1.1.0
+      chai: 3.5.0
+      deep-eql: 0.1.3
+      esno: 0.16.3
+      mocha: 7.2.0
+      rimraf: 3.0.2
+      superagent-mock: 1.12.0
+
   packages/commcare:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -5430,6 +5463,12 @@ packages:
     resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
     dev: false
 
+  /json-sql/0.3.11:
+    resolution: {integrity: sha512-9celRCPS1omv2gQOCKg4adPefE8CiDmB6aLbuAYlgXMWTut0wYP9wOLCQDYcXY/VAp6BEY2N2KnEiZU0DQ2qeg==}
+    dependencies:
+      underscore: 1.8.2
+    dev: false
+
   /json-stable-stringify-without-jsonify/1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
@@ -8452,6 +8491,10 @@ packages:
 
   /underscore/1.13.6:
     resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
+    dev: false
+
+  /underscore/1.8.2:
+    resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
     dev: false
 
   /universalify/0.1.2:
