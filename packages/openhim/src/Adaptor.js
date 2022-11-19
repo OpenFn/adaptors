@@ -1,4 +1,7 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
@@ -19,13 +22,12 @@ import { resolve as resolveUrl } from 'url';
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -39,27 +41,30 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function encounter(encounterData) {
-
   return state => {
     const body = expandReferences(encounterData)(state);
 
     const { username, password, apiUrl } = state.configuration;
 
-    const url = resolveUrl(apiUrl + '/', 'chw/encounter')
+    const url = resolveUrl(apiUrl + '/', 'chw/encounter');
 
-    console.log("Posting encounter:");
+    console.log('Posting encounter:');
     console.log(JSON.stringify(body, null, 2));
 
-    return post({ username, password, body, url })
-    .then((result) => {
-      console.log("Success:", result);
-      return { ...state, references: [ result, ...state.references ] }
-    })
-
-  }
+    return post({ username, password, body, url }).then(result => {
+      console.log('Success:', result);
+      return { ...state, references: [result, ...state.references] };
+    });
+  };
 }
 
 export {
-  field, fields, sourceValue,
-  merge, dataPath, dataValue, lastReferenceValue
-} from 'language-common';
+  fn,
+  field,
+  fields,
+  sourceValue,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+} from '@openfn/language-common';
