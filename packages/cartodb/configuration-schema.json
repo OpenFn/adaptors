@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "account": {
+            "title": "Account",
+            "type": "string",
+            "description": "CartoDB account name",
+            "minLength": 1
+        },
+        "apiKey": {
+            "title": "API Key",
+            "type": "string",
+            "description": "CartoDB API key",
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "account",
+        "apiKey"
+    ]
+}

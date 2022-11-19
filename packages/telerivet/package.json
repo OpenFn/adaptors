@@ -1,5 +1,5 @@
 {
-  "name": "language-telerivet",
+  "name": "@openfn/language-telerivet",
   "version": "0.0.2",
   "description": "telerivet Language Pack for OpenFn",
   "main": "dist/index.cjs",

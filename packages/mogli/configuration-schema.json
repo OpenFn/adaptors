@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "loginUrl": {
+            "title": "Login URL",
+            "type": "string",
+            "description": "Mogli instance login URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Mogli instance username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Mogli instance password",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "securityToken": {
+            "title": "Security Token",
+            "type": "string",
+            "description": "Mogli instance security token",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "secret": {
+            "title": "Secret",
+            "type": "string",
+            "description": "Mogli instance secret",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "loginUrl",
+        "username",
+        "password",
+        "securityToken",
+        "secret"
+    ]
+}
