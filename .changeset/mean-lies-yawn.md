@@ -1,5 +1,5 @@
 ---
-'language-mailchimp': minor
+'@openfn/language-mailchimp': minor
 ---
 
 migrate mailchimp

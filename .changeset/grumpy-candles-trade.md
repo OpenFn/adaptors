@@ -1,5 +1,5 @@
 ---
-'language-medicmobile': minor
+'@openfn/language-medicmobile': minor
 ---
 
 migrate medicmobile
