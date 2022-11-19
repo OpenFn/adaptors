@@ -1,5 +1,5 @@
 ---
-'language-bigquery': minor
+'@openfn/language-bigquery': minor
 ---
 
 bigquery migration and build
