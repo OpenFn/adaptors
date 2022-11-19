@@ -880,6 +880,39 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
 
+  packages/vtiger:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^2.0.0
+      chai: ^4.3.7
+      deep-eql: ^4.1.2
+      esno: ^0.16.3
+      lodash-fp: ^0.10.4
+      md5: ^2.3.0
+      mocha: ^10.1.0
+      nock: ^13.2.9
+      request: ^2.88.2
+      request-debug: ^0.2.0
+      rimraf: ^3.0.2
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      lodash-fp: 0.10.4
+      md5: 2.3.0
+      request: 2.88.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.7
+      deep-eql: 4.1.2
+      esno: 0.16.3
+      mocha: 10.1.0
+      nock: 13.2.9
+      request-debug: 0.2.0
+      rimraf: 3.0.2
+
   packages/zoho:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -6905,6 +6938,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /request-debug/0.2.0:
+    resolution: {integrity: sha512-NWYi/Gz4xKSkK1oPAsLLjMkSbp4aaW77fxPGe7uoKg1bgN7qXKVI5S/Cm/cubTKD62yJd7eKQLdlQ9QRLhgvvA==}
+    dependencies:
+      stringify-clone: 1.1.1
+    dev: true
+
   /request/2.88.0:
     resolution: {integrity: sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==}
     engines: {node: '>= 4'}
@@ -7446,6 +7485,11 @@ packages:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
       safe-buffer: 5.1.2
+
+  /stringify-clone/1.1.1:
+    resolution: {integrity: sha512-LIFpvBnQJF3ZGoV770s3feH+wRVCMRSisI8fl1E57WfgKOZKUMaC1r4eJXybwGgXZ/iTTJoK/tsOku1GLPyyxQ==}
+    engines: {node: '>=0.8'}
+    dev: true
 
   /strip-ansi/3.0.1:
     resolution: {integrity: sha512-VhumSSbBqDTP8p2ZLKj40UjBCV4+v8bUSEpUb4KjRgWk9pbqGF4REFj6KEagidb2f/M6AzC0EmFyDNGaw9OCzg==}
