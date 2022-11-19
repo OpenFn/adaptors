@@ -1,5 +1,60 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "request",
+      "params": [
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a POST request",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request({method: 'get', path: '/jobs/});"
+          },
+          {
+            "title": "constructor",
+            "description": null,
+            "type": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Body, Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
@@ -257,6 +312,49 @@
               "name": "Operation"
             },
             "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
           },
           {
             "title": "returns",

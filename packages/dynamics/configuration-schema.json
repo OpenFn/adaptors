@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "resource": {
+            "title": "Resource",
+            "type": "string",
+            "description": "Dynamics resource URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "apiVersion": {
+            "title": "API Version",
+            "type": "string",
+            "default": "8.2.0",
+            "description": "Dynamics API version to use",
+            "minLength": 1
+        },
+        "accessToken": {
+            "title": "Access Token",
+            "type": "string",
+            "description": "Dynamics API access token",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "resource",
+        "apiVersion",
+        "accessToken"
+    ]
+}

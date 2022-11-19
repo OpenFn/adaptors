@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "Your Nexmo API Key",
+      "minLength": 1
+    },
+    "apiSecret": {
+      "title": "API Secret",
+      "type": "string",
+      "description": "Your Nexmo API Secret key",
+      "writeOnly": true,
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiKey", "apiSecret"]
+}

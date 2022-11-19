@@ -1,5 +1,49 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "postMessage",
+      "params": [
+        "params"
+      ],
+      "docs": {
+        "description": "Post a message",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "postMessage({\n \"recipient\": {\n    \"id\": \"your-psid\"\n  },\n  \"message\": {\n    \"text\": \"your-message\"\n  }\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "data to make the fetch",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {

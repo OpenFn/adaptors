@@ -1,5 +1,69 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "sendSMS",
+      "params": [
+        "from",
+        "toNumber",
+        "message"
+      ],
+      "docs": {
+        "description": "Sends an SMS message to a specific phone number",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "sendSMS(\"OpenFn\", \"phoneNumber\", \"Hello World!\")"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Name or number the message should be sent from.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "from"
+          },
+          {
+            "title": "param",
+            "description": "Destination phone number.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "toNumber"
+          },
+          {
+            "title": "param",
+            "description": "Text message",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "message"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
