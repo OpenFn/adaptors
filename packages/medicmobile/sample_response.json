@@ -1,0 +1,478 @@
+{
+  "results": [{
+      "seq": 144,
+      "id": "_design/medic-conflicts",
+      "changes": [{
+        "rev": "1-4d52c6c51780866e3dd4e79700bfb21a"
+      }],
+      "doc": {
+        "_id": "_design/medic-conflicts",
+        "_rev": "1-4d52c6c51780866e3dd4e79700bfb21a",
+        "views": {
+          "conflicts": {
+            "map": "function(doc) {\n  if (doc._conflicts) {\n    emit(doc._conflicts);\n  }\n}"
+          }
+        }
+      }
+    },
+    {
+      "seq": 181,
+      "id": "8dd683710e8b9cbaba2195ecc21c3fba",
+      "changes": [{
+        "rev": "21-1405826540feb53ec16d57697ddb72f0"
+      }],
+      "deleted": true,
+      "doc": {
+        "_id": "8dd683710e8b9cbaba2195ecc21c3fba",
+        "_rev": "21-1405826540feb53ec16d57697ddb72f0",
+        "type": "meta",
+        "migrations": ["drop-couchmark-db", "extract-person-contacts", "associate-records-with-people", "namespace-form-fields", "extract-user-settings", "add-permissions-configuration", "add-resources-doc", "enable-erlang-support", "separate-audit-db", "convert-bad-dob-format", "extract-user-settings-roles", "extract-translations", "remove-empty-parents", "remove-obsolete-ddocs", "disable-erlang-support", "drop-audit-doc-index", "clean-up-corrupted-users", "add-uuid-to-scheduled-tasks", "create-patient-contacts", "emit-complete"],
+        "_deleted": true
+      }
+    },
+    {
+      "seq": 185,
+      "id": "migration-log",
+      "changes": [{
+        "rev": "4-be453a783c47969a8041bc31dd8dcb31"
+      }],
+      "doc": {
+        "_id": "migration-log",
+        "_rev": "4-be453a783c47969a8041bc31dd8dcb31",
+        "type": "meta",
+        "migrations": ["drop-couchmark-db", "extract-person-contacts", "associate-records-with-people", "namespace-form-fields", "extract-user-settings", "add-permissions-configuration", "add-resources-doc", "enable-erlang-support", "separate-audit-db", "convert-bad-dob-format", "extract-user-settings-roles", "extract-translations", "remove-empty-parents", "remove-obsolete-ddocs", "disable-erlang-support", "drop-audit-doc-index", "clean-up-corrupted-users", "add-uuid-to-scheduled-tasks", "create-patient-contacts", "emit-complete", "add-national_admin-role", "restrict-access-to-audit-db", "extract-read-status"]
+      }
+    },
+    {
+      "seq": 250,
+      "id": "migration-log-info",
+      "changes": [{
+        "rev": "1-53945495ed8bf66d5e3af24b046ecfcd"
+      }],
+      "doc": {
+        "_id": "migration-log-info",
+        "_rev": "1-53945495ed8bf66d5e3af24b046ecfcd",
+        "type": "info",
+        "doc_id": "migration-log",
+        "initial_replication_date": "unknown",
+        "latest_replication_date": "2017-08-28T21:34:41.934Z"
+      }
+    },
+    {
+      "seq": 289,
+      "id": "7f203734713286725fd1cfcc1a591f4c",
+      "changes": [{
+        "rev": "1-eeda037a689c4182aba207109a918489"
+      }],
+      "doc": {
+        "_id": "7f203734713286725fd1cfcc1a591f4c",
+        "_rev": "1-eeda037a689c4182aba207109a918489",
+        "visits_per_delivery": {
+          "1+": 0,
+          "2+": 0,
+          "3+": 0,
+          "4+": 0
+        },
+        "estimated_deliveries": 0,
+        "delivery_locations": {},
+        "valid_form_submissions": {
+          "_totalReports": 0
+        },
+        "active_facilities": {
+          "_totalReports": 0,
+          "_total": 0
+        },
+        "type": "usage_stats",
+        "version": 2,
+        "reported_date": 1503975606865,
+        "year": 2017,
+        "month": 6
+      }
+    },
+    {
+      "seq": 290,
+      "id": "7f203734713286725fd1cfcc1a591f4c-info",
+      "changes": [{
+        "rev": "1-7f3fc2fe9651ea5dc1c279caa2db4841"
+      }],
+      "doc": {
+        "_id": "7f203734713286725fd1cfcc1a591f4c-info",
+        "_rev": "1-7f3fc2fe9651ea5dc1c279caa2db4841",
+        "type": "info",
+        "doc_id": "7f203734713286725fd1cfcc1a591f4c",
+        "initial_replication_date": "unknown",
+        "latest_replication_date": "2017-08-29T03:00:07.670Z"
+      }
+    },
+    {
+      "seq": 293,
+      "id": "b4958f6e-6426-4c33-900a-22f8befe5897",
+      "changes": [{
+        "rev": "1-a895e2898d2262b1e25162e4c7e829a5"
+      }],
+      "doc": {
+        "_id": "b4958f6e-6426-4c33-900a-22f8befe5897",
+        "_rev": "1-a895e2898d2262b1e25162e4c7e829a5",
+        "type": "person",
+        "created_by": "admin",
+        "name": "Antoine",
+        "phone": "+14165551111",
+        "phone_alternate": "",
+        "role": "",
+        "role_other": "",
+        "external_id": "",
+        "notes": "",
+        "reported_date": 1504015531828,
+        "parent": {
+          "parent": "",
+          "type": "district_hospital",
+          "is_name_generated": "true",
+          "name": "Antoine's District",
+          "external_id": "",
+          "use_cases": "anc pnc imm",
+          "notes": "",
+          "created_by": "admin",
+          "contact": {
+            "type": "person",
+            "created_by": "admin",
+            "name": "Antoine",
+            "phone": "+14165551111",
+            "phone_alternate": "",
+            "role": "",
+            "role_other": "",
+            "external_id": "",
+            "notes": "",
+            "_id": "b4958f6e-6426-4c33-900a-22f8befe5897",
+            "reported_date": 1504015531828
+          },
+          "geolocation": "",
+          "_id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455",
+          "reported_date": 1504015531828
+        }
+      }
+    },
+    {
+      "seq": 294,
+      "id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455",
+      "changes": [{
+        "rev": "1-e60a8747db2d524867cf243c39d17f27"
+      }],
+      "doc": {
+        "_id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455",
+        "_rev": "1-e60a8747db2d524867cf243c39d17f27",
+        "parent": "",
+        "type": "district_hospital",
+        "is_name_generated": "true",
+        "name": "Antoine's District",
+        "external_id": "",
+        "use_cases": "anc pnc imm",
+        "notes": "",
+        "created_by": "admin",
+        "contact": {
+          "type": "person",
+          "created_by": "admin",
+          "name": "Antoine",
+          "phone": "+14165551111",
+          "phone_alternate": "",
+          "role": "",
+          "role_other": "",
+          "external_id": "",
+          "notes": "",
+          "_id": "b4958f6e-6426-4c33-900a-22f8befe5897",
+          "reported_date": 1504015531828
+        },
+        "geolocation": "",
+        "reported_date": 1504015531828
+      }
+    },
+    {
+      "seq": 295,
+      "id": "b4958f6e-6426-4c33-900a-22f8befe5897-info",
+      "changes": [{
+        "rev": "1-c48b57ed232cbf36d19dc8ec9cbc18ae"
+      }],
+      "doc": {
+        "_id": "b4958f6e-6426-4c33-900a-22f8befe5897-info",
+        "_rev": "1-c48b57ed232cbf36d19dc8ec9cbc18ae",
+        "type": "info",
+        "doc_id": "b4958f6e-6426-4c33-900a-22f8befe5897",
+        "initial_replication_date": "2017-08-29T14:05:33.309Z",
+        "latest_replication_date": "2017-08-29T14:05:34.290Z"
+      }
+    },
+    {
+      "seq": 297,
+      "id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455-info",
+      "changes": [{
+        "rev": "1-b26f47cca1dbb55e78b64a88ad0a56c9"
+      }],
+      "doc": {
+        "_id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455-info",
+        "_rev": "1-b26f47cca1dbb55e78b64a88ad0a56c9",
+        "type": "info",
+        "doc_id": "9a6741f5-304d-48a6-ac9b-0b9f6a041455",
+        "initial_replication_date": "2017-08-29T14:05:33.310Z",
+        "latest_replication_date": "2017-08-29T14:05:35.866Z"
+      }
+    },
+    {
+      "seq": 331,
+      "id": "form:postnatal_visit",
+      "changes": [{
+        "rev": "3-7be9eb956efdb329b2cc83e3e7715958"
+      }],
+      "doc": {
+        "_id": "form:postnatal_visit",
+        "_rev": "3-7be9eb956efdb329b2cc83e3e7715958",
+        "type": "form",
+        "internalId": "postnatal_visit",
+        "title": [{
+          "locale": "en",
+          "content": "Postnatal Care Visit"
+        }, {
+          "locale": "hi",
+          "content": "Postnatal Care Visit"
+        }, {
+          "locale": "id",
+          "content": "Postnatal Care Visit"
+        }],
+        "context": {
+          "person": true,
+          "place": false,
+          "expression": "((user && user.parent) && ((user.parent.use_cases && user.parent.use_cases.split(' ').indexOf('pnc') !== -1) || (user.parent.parent && user.parent.parent.use_cases && user.parent.parent.use_cases.split(' ').indexOf('pnc') !== -1))) && (!contact || (contact.type === 'person' && (!contact.sex || contact.sex === 'female') && (!contact.date_of_birth || (ageInYears(contact) >= 10 && ageInYears(contact) < 65))))"
+        },
+        "icon": "clinic",
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 3,
+            "digest": "md5-GGcXuOCsTi3Cs8pzXokLBw==",
+            "length": 96688,
+            "stub": true
+          }
+        }
+      }
+    },
+    {
+      "seq": 334,
+      "id": "form:pregnancy",
+      "changes": [{
+        "rev": "3-0326d91d1fcf54859a65ec135a1f7459"
+      }],
+      "doc": {
+        "_id": "form:pregnancy",
+        "_rev": "3-0326d91d1fcf54859a65ec135a1f7459",
+        "type": "form",
+        "internalId": "pregnancy",
+        "title": [{
+          "locale": "en",
+          "content": "New Pregnancy"
+        }, {
+          "locale": "hi",
+          "content": "नई गर्भावस्था"
+        }, {
+          "locale": "id",
+          "content": "Kehamilan baru"
+        }],
+        "context": {
+          "person": true,
+          "place": false,
+          "expression": "!contact || (contact.type === 'person' && (!contact.sex || contact.sex === 'female') && (!contact.date_of_birth || (ageInYears(contact) >= 10 && ageInYears(contact) < 65)))"
+        },
+        "icon": "pregnancy-1",
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 3,
+            "digest": "md5-UIZH6DVjXskR3OrDnaefBw==",
+            "length": 92370,
+            "stub": true
+          }
+        }
+      }
+    },
+    {
+      "seq": 335,
+      "id": "form:outreach-info",
+      "changes": [{
+        "rev": "1-28f2745bc912bfab3058fa188790090a"
+      }],
+      "doc": {
+        "_id": "form:outreach-info",
+        "_rev": "1-28f2745bc912bfab3058fa188790090a",
+        "type": "info",
+        "doc_id": "form:outreach",
+        "initial_replication_date": "2017-08-29T14:16:15.072Z",
+        "latest_replication_date": "2017-08-29T14:16:21.817Z"
+      }
+    },
+    {
+      "seq": 337,
+      "id": "form:pregnancy_visit",
+      "changes": [{
+        "rev": "3-faa3bae7911deb5d5b1334ed4871ecb6"
+      }],
+      "doc": {
+        "_id": "form:pregnancy_visit",
+        "_rev": "3-faa3bae7911deb5d5b1334ed4871ecb6",
+        "type": "form",
+        "internalId": "pregnancy_visit",
+        "title": [{
+          "locale": "en",
+          "content": "Pregnancy Visit"
+        }, {
+          "locale": "hi",
+          "content": "गर्भावस्था जांच"
+        }, {
+          "locale": "id",
+          "content": "Kunjungan kehamilan"
+        }],
+        "context": {
+          "person": true,
+          "place": false,
+          "expression": "!contact || (contact.type === 'person' && (!contact.sex || contact.sex === 'female') && (!contact.date_of_birth || (ageInYears(contact) >= 10 && ageInYears(contact) < 65)))"
+        },
+        "icon": "clinic",
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 3,
+            "digest": "md5-9n8nhzQ4ZZMJ8dXGv7mU5w==",
+            "length": 62149,
+            "stub": true
+          }
+        }
+      }
+    },
+    {
+      "seq": 339,
+      "id": "form:postnatal_visit-info",
+      "changes": [{
+        "rev": "2-87473290080c84d7bb725f57e1e480f0"
+      }],
+      "doc": {
+        "_id": "form:postnatal_visit-info",
+        "_rev": "2-87473290080c84d7bb725f57e1e480f0",
+        "type": "info",
+        "doc_id": "form:postnatal_visit",
+        "initial_replication_date": "unknown",
+        "latest_replication_date": "2017-08-29T14:16:24.363Z"
+      }
+    },
+    {
+      "seq": 343,
+      "id": "form:pregnancy-info",
+      "changes": [{
+        "rev": "2-5c18edd7e7e4bf4fc5fc8f751e6b26a9"
+      }],
+      "doc": {
+        "_id": "form:pregnancy-info",
+        "_rev": "2-5c18edd7e7e4bf4fc5fc8f751e6b26a9",
+        "type": "info",
+        "doc_id": "form:pregnancy",
+        "initial_replication_date": "unknown",
+        "latest_replication_date": "2017-08-29T14:16:29.845Z"
+      }
+    },
+    {
+      "seq": 344,
+      "id": "form:c",
+      "changes": [{
+        "rev": "1-022c4df687f87f4ae390d7ce1d4376bb"
+      }],
+      "doc": {
+        "_id": "form:c",
+        "_rev": "1-022c4df687f87f4ae390d7ce1d4376bb",
+        "type": "form",
+        "internalId": "c",
+        "title": "New Child",
+        "context": {
+          "person": false,
+          "place": false,
+          "expression": "false"
+        },
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 1,
+            "digest": "md5-O1A1d5ykzU5WppWRcr7y/g==",
+            "length": 3289,
+            "stub": true
+          }
+        }
+      }
+    },
+    {
+      "seq": 346,
+      "id": "form:d",
+      "changes": [{
+        "rev": "1-fd47d0069ca2c5a7249ad401cd8cae71"
+      }],
+      "doc": {
+        "_id": "form:d",
+        "_rev": "1-fd47d0069ca2c5a7249ad401cd8cae71",
+        "type": "form",
+        "internalId": "d",
+        "title": "Delivery Report",
+        "context": {
+          "person": false,
+          "place": false,
+          "expression": "false"
+        },
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 1,
+            "digest": "md5-uKSB67Ql5nV6LHfQL09kHw==",
+            "length": 5999,
+            "stub": true
+          }
+        }
+      }
+    },
+    {
+      "seq": 348,
+      "id": "form:pregnancy_visit-info",
+      "changes": [{
+        "rev": "2-eb7a513c802347f86a5e9e5353eb6b8f"
+      }],
+      "doc": {
+        "_id": "form:pregnancy_visit-info",
+        "_rev": "2-eb7a513c802347f86a5e9e5353eb6b8f",
+        "type": "info",
+        "doc_id": "form:pregnancy_visit",
+        "initial_replication_date": "unknown",
+        "latest_replication_date": "2017-08-29T14:16:35.540Z"
+      }
+    },
+    {
+      "seq": 349,
+      "id": "form:f",
+      "changes": [{
+        "rev": "1-88cf6bd08d2d54b1049705b46f1ef20b"
+      }],
+      "doc": {
+        "_id": "form:f",
+        "_rev": "1-88cf6bd08d2d54b1049705b46f1ef20b",
+        "type": "form",
+        "internalId": "f",
+        "title": "Danger Sign",
+        "context": {
+          "person": false,
+          "place": false,
+          "expression": "false"
+        },
+        "_attachments": {
+          "xml": {
+            "content_type": "application/xml",
+            "revpos": 1,
+            "digest": "md5-LkRHIQuCako7zuoop6/UbQ==",
+            "length": 2558,
+            "stub": true
+          }
+        }
+      }
+    }
+  ],
+  "last_seq": 349
+}
