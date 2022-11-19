@@ -5,7 +5,7 @@ import {
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import request from 'request';
-import parser from 'xml2json';
+import xml2js from 'xml2js';
 /** @module Adaptor */
 
 /**
@@ -90,6 +90,7 @@ export function fetchSurveyData(params) {
             console.log('Response body: ' + response.body);
             reject(error);
           } else {
+            const parser = new xml2js.Parser();
             const jsonBody = JSON.parse(parser.toJson(body));
             if (jsonBody.SurveyDataList.SurveyData) {
               console.log('Successfully fetched submission data.');
