@@ -1,4 +1,4 @@
-# Language CommCare [![Build Status](https://travis-ci.org/OpenFn/language-commcare.svg?branch=master)](https://travis-ci.org/OpenFn/language-commcare)
+# Language CommCare
 
 Language Pack for interacting with the CommCare API.
 
@@ -83,6 +83,7 @@ complex body target:
 ## Submitting data to CommCare HQ
 
 ### Submit an XLS file
+
 This function bulk submit a JSON object as xls file to CommCare HQ
 
 ```js
@@ -175,7 +176,8 @@ So the JSON emitted by your expression should look like this:
 
 ## Development
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`
 

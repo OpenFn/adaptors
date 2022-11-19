@@ -1,4 +1,4 @@
-# language-fhir [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20"/>](https://www.openfn.org)
+# language-fhir
 
 An OpenFn **_adaptor_** for building integration jobs for use with the HAPI FHIR
 API.

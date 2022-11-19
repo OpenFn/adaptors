@@ -1,6 +1,4 @@
-# language-godata [<img src="https://avatars2.githubusercontent.com/u/9555108?s=200&v=4)" alt="alt text" height="20">](https://www.openfn.org) [![Build Status](https://travis-ci.org/OpenFn/language-godata.svg?branch=master)](https://travis-ci.org/OpenFn/language-godata)
-
-<img src="https://github.com/OpenFn/language-godata/raw/master/logo.png" alt="alt text" height="50">
+# language-godata
 
 An OpenFn **_adaptor_** for building integration jobs for use with the WHO
 Go.Data API.

@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import nock from 'nock';
 import { fixtures } from './ClientFixtures';
 
-import { execute/*, get*/ } from '../src';
+import { execute /*, get*/ } from '../src';
 
 describe.skip('execute', () => {
-  // TODO: determine how to get travis to test against a local DB.
+  // TODO: determine how to get CI to test against a local DB.
   before(() => {
     nock('some-host-url.compute-1.amazonaws.com')
       .persist()

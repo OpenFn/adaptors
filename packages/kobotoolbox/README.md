@@ -1,4 +1,4 @@
-# Language KoboToolbox [![Build Status](https://travis-ci.org/OpenFn/language-kobotoolbox.svg?branch=master)](https://travis-ci.org/OpenFn/language-kobotoolbox)
+# Language KoboToolbox
 
 Language Pack for building expressions and operations to interact with the
 [TEMPLATE] API.
@@ -43,7 +43,8 @@ getSubmissions(
 
 ## Development
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`
 

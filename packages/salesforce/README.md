@@ -1,4 +1,4 @@
-# language-salesforce [![Build Status](https://travis-ci.org/OpenFn/language-salesforce.svg?branch=master)](https://travis-ci.org/OpenFn/language-salesforce)
+# Language Salesforce
 
 Salesforce Language Pack for OpenFn. **See the main docs site:
 http://openfn.github.io/language-salesforce/ **
