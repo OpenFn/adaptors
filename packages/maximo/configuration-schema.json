@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "baseUrl": {
+            "title": "Base URL",
+            "type": "string",
+            "description": "Maximo instance base URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Maximo instance username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Maximo instance password",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "server",
+        "username",
+        "password"
+    ]
+}
