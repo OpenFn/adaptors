@@ -138,10 +138,6 @@ openhim API.
 }
 ```
 
-## Documentation
-
-[Docs](docs/index)
-
 ## Sample configuration
 
 ```json
