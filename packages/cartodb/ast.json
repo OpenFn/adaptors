@@ -3,49 +3,6 @@
   "exports": [],
   "common": [
     {
-      "name": "fn",
-      "params": [
-        "func"
-      ],
-      "docs": {
-        "description": "Creates a custom step (or operation) for more flexible job writing.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "is the function",
-            "type": {
-              "type": "NameExpression",
-              "name": "Function"
-            },
-            "name": "func"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "sourceValue",
       "params": [
         "path"
@@ -75,14 +32,6 @@
               "name": "String"
             },
             "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           }
         ]
       },
@@ -161,14 +110,6 @@
               "name": "String"
             },
             "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           }
         ]
       },
@@ -204,14 +145,6 @@
               "name": "String"
             },
             "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           }
         ]
       },
@@ -257,14 +190,6 @@
               "name": "Operation"
             },
             "name": "operation"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           }
         ]
       },
@@ -310,14 +235,6 @@
               "name": "Value"
             },
             "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Field"
-            }
           }
         ]
       },
