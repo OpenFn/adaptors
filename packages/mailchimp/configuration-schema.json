@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "server": {
+            "title": "Server URL",
+            "type": "string",
+            "description": "Mailchimp API domain URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "apiKey": {
+            "title": "API Key",
+            "type": "string",
+            "description": "Mailchimp API Key",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "server",
+        "apiKey"
+    ]
+}
