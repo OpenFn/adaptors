@@ -1,4 +1,7 @@
-import { execute as commonExecute, expandReferences } from 'language-common';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 import jsonSqlPkg from 'json-sql';
 
@@ -99,6 +102,7 @@ export function addRow(table, rowData) {
 }
 
 export {
+  fn,
   field,
   fields,
   sourceValue,
@@ -107,4 +111,4 @@ export {
   dataPath,
   dataValue,
   lastReferenceValue,
-} from 'language-common';
+} from '@openfn/language-common';
