@@ -1,6 +1,7 @@
-# Language OpenFn [![Build Status](https://travis-ci.org/OpenFn/language-openfn.svg?branch=master)](https://travis-ci.org/OpenFn/language-openfn)
+# Language OpenFn
 
-Adaptor for building expressions and operations to interact with the OpenFn API.
+Adaptor for building expressions and operations to interact with the OpenFn v1
+API.
 
 ## Documentation
 

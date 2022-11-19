@@ -1,4 +1,4 @@
-# Language MySQL [![Build Status](https://travis-ci.org/OpenFn/language-mysql.svg?branch=master)](https://travis-ci.org/OpenFn/language-mysql)
+# Language MySQL
 
 Language Pack for building expressions and operations to run MySQL queries.
 

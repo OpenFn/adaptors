@@ -1,4 +1,4 @@
-# language-asana [![Build Status](https://travis-ci.org/OpenFn/language-asana.svg?branch=master)](https://travis-ci.org/OpenFn/language-asana)
+# language-asana
 
 Language Pack for connecting with Asana.
 

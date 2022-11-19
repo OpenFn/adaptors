@@ -1,4 +1,4 @@
-# Language OCL [![Build Status](https://travis-ci.org/OpenFn/language-ocl.svg?branch=main)](https://travis-ci.org/OpenFn/language-ocl)
+# Language OCL
 
 Language Pack for building expressions and operations for working with the
 [OCL API](http://ocl.github.io/ocl-docs/master/en/developer/html/ocl_developer_manual.html).

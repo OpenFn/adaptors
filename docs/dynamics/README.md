@@ -1,4 +1,4 @@
-# Language Dynamics [![Build Status](https://travis-ci.org/OpenFn/language-dynamics.svg?branch=master)](https://travis-ci.org/OpenFn/language-dynamics)
+# Language Dynamics
 
 Language Pack for building expressions and operations to make calls to the
 Microsoft Dynamics API.
