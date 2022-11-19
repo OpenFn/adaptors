@@ -1,14 +1,11 @@
-import { expect } from 'chai';
-import { execute, } from '../src';
+import pkg from 'chai';
+const { expect } = pkg;
+
+import { execute } from '../src';
 
 describe('execute', () => {
-  // Mock this endpoint...
-  it.skip('executes each operation in sequence', done => {
-    let state = {
-      configuration: {
-        server: 'testurl',
-      },
-    };
+  it('executes each operation in sequence', done => {
+    let state = {};
     let operations = [
       state => {
         return { counter: 1 };
@@ -29,12 +26,10 @@ describe('execute', () => {
       .catch(done);
   });
 
-  it.skip('assigns references, data to the initialState', () => {
-    let state = {
-      configuration: {
-        server: 'testurl',
-      },
-    };
+  it('assigns references, data to the initialState', () => {
+    let state = {};
+
+    let finalState = execute()(state);
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({

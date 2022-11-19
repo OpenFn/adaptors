@@ -1,5 +1,5 @@
 ---
-'language-telerivet': minor
+'@openfn/language-telerivet': minor
 ---
 
 migrate telerivet

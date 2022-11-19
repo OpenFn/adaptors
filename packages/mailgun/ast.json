@@ -1,5 +1,41 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "send",
+      "params": [
+        "params"
+      ],
+      "docs": {
+        "description": "Create an event",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "send({\n  from: 'from_email',\n  to: 'to_email',\n  subject: 'Your Subject',\n  text: 'Your message goes here',\n  attachment: {\n    url: 'www.google.com/doodle.png',\n    filename: 'forYou.png',\n  },\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Params for sending an email",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
