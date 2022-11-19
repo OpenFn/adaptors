@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "hostUrl": {
+            "title": "Host URL",
+            "type": "string",
+            "description": "VTiger instance host URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "VTiger instance username",
+            "minLength": 1
+        },
+        "accessToken": {
+            "title": "Access Token",
+            "type": "string",
+            "description": "VTiger instance access token",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "hostUrl",
+        "username",
+        "accessToken"
+    ]
+}
