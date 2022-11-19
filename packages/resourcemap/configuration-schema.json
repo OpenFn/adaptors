@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "baseUrl": {
+            "title": "Base URL",
+            "type": "string",
+            "default": "http://some-site-of-yours.com:8080",
+            "description": "ResourceMap base URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Your ResourceMap username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Your ResourceMap password",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "baseUrl"
+    ]
+}

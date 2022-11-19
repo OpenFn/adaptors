@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "server": {
+            "title": "Server URL",
+            "type": "string",
+            "description": "Medic's CouchDB api URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "db": {
+            "title": "Database",
+            "type": "string",
+            "description": "Database name",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Medic instance username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Medic instance password",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "server",
+        "username",
+        "password",
+        "db"
+    ]
+}

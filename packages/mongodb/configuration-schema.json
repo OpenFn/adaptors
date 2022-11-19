@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "clusterUrl": {
+            "title": "Cluster URL",
+            "type": "string",
+            "description": "Your MongoDB cluster / host URL",
+            "format": "uri",
+            "minLength": 1
+        },
+        "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "Your MongoDB instance username",
+            "minLength": 1
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Your MongoDB instance password",
+            "writeOnly": true,
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "clusterUrl",
+        "username",
+        "password"
+    ]
+}
