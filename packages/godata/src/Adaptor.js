@@ -3,7 +3,7 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-} from 'language-common';
+} from '@openfn/language-common';
 import axios from 'axios';
 
 /**
@@ -892,4 +892,4 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-} from 'language-common';
+} from '@openfn/language-common';
