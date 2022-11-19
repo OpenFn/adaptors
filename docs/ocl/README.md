@@ -3,11 +3,6 @@
 Language Pack for building expressions and operations for working with the
 [OCL API](http://ocl.github.io/ocl-docs/master/en/developer/html/ocl_developer_manual.html).
 
-## Documentation
-
-View the [docs site](https://openfn.github.io/language-ocl/) for full technical
-documentation. Below, find a samples of the most commonly used helper functions.
-
 ## Sample configuration
 
 ```json

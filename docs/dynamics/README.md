@@ -84,8 +84,6 @@ deleteEntity({
 });
 ```
 
-[Docs](docs/index)
-
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
