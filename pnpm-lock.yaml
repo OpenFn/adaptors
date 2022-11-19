@@ -531,6 +531,37 @@ importers:
       mocha: 10.1.0
       rimraf: 3.0.2
 
+  packages/nexmo:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^2.0.0
+      chai: ^4.3.7
+      deep-eql: ^4.1.2
+      esdoc-es7-plugin: 0.0.3
+      esno: ^0.16.3
+      mocha: ^10.1.0
+      nexmo: 2.1.1
+      nock: ^13.2.9
+      request: ^2.88.2
+      rimraf: ^3.0.2
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      nexmo: 2.1.1
+      request: 2.88.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.7
+      deep-eql: 4.1.2
+      esdoc-es7-plugin: 0.0.3
+      esno: 0.16.3
+      mocha: 10.1.0
+      nock: 13.2.9
+      rimraf: 3.0.2
+
   packages/ocl:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -2334,6 +2365,10 @@ packages:
       - debug
     dev: false
 
+  /babylon/5.8.20:
+    resolution: {integrity: sha512-C2FmUgJHSyHRJYsM5hBHoudaqw6zAI9TJWdNpdmdphgZI/n4TlOAhR3UvitV6MmJ1m285Nwy8cbKYpltRSZB+g==}
+    dev: true
+
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -2917,6 +2952,11 @@ packages:
 
   /cookiejar/2.1.3:
     resolution: {integrity: sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==}
+
+  /core-js/1.0.1:
+    resolution: {integrity: sha512-zJjMnWELJrSpquUFc5MD9dAvFitwDmrBNAwOjQu+z4y+e8kyotQx/x6vLRxIuy0AFtKNKbNG9uRDaGM99U8+1Q==}
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+    dev: true
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -3692,6 +3732,14 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /esdoc-es7-plugin/0.0.3:
+    resolution: {integrity: sha512-2Ztev0mX/xLCBKJ5Aez0VjBcd3O9UUAJ0lSpperceJ/xii9elfr7xkOPYZkbnwr8HI102t97tptDfxJkI1Ogbg==}
+    dependencies:
+      babylon: 5.8.20
+      core-js: 1.0.1
+      estraverse: 4.1.0
+    dev: true
+
   /eslint-config-airbnb-base/15.0.0_mynvxvmq5qtyojffiqgev4x7mm:
     resolution: {integrity: sha512-xaX3z4ZZIcFLvh2oUNvcX5oEofXda7giYmuplVxoOg5A7EXJMrUyqRgR+mhDhPK8LZ4PttFOBvCYDbX3sUoUig==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -3914,6 +3962,11 @@ packages:
     engines: {node: '>=4.0'}
     dependencies:
       estraverse: 5.3.0
+    dev: true
+
+  /estraverse/4.1.0:
+    resolution: {integrity: sha512-oczetKWPj5mF6hd8/g9tvdUtGHsJdTVwRYRpLVy68CCoJGVE2uWKfmjHEVzx7SEuDGFaUlYbaecePMlC7pVaIQ==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /estraverse/4.3.0:
@@ -4616,6 +4669,12 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /hoek/2.16.3:
+    resolution: {integrity: sha512-V6Yw1rIcYV/4JsnggjBU0l4Kr+EXhpwqXRusENU1Xx6ro00IHPHYNynCuBTOZAPlr3AAmLvchH9I7N/VUdvOwQ==}
+    engines: {node: '>=0.10.40'}
+    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+    dev: false
+
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
@@ -5040,11 +5099,27 @@ packages:
   /isarray/1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
 
+  /isemail/1.2.0:
+    resolution: {integrity: sha512-pZMb1rDrWRAPtVY92VCxWtF+1gExWrCnao+GL1EKHx6z19ovW+xNcnC1iNB7WkbSYWlyl3uwlaH5eaBx2s2crw==}
+    engines: {node: '>=0.10'}
+    dev: false
+
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
   /isstream/0.1.2:
     resolution: {integrity: sha512-Yljz7ffyPbrLpLngrMtZ7NduUgVvi6wG9RJ9IUcyCd59YQ911PBJphODUcbOVbqYfxe1wuYf/LJ8PauMRwsM/g==}
+    dev: false
+
+  /joi/6.10.1:
+    resolution: {integrity: sha512-K6+OwGaWM1sBEu+XMbgC4zDmg6hnddS2DWiCVtjnhkcrzv+ejSfh7HGUsoxmWQkv6kHEsVFAywttfkpmIE2QwQ==}
+    engines: {node: '>=0.10.40', npm: '>=2.0.0'}
+    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+    dependencies:
+      hoek: 2.16.3
+      isemail: 1.2.0
+      moment: 2.29.4
+      topo: 1.1.0
     dev: false
 
   /joycon/3.1.1:
@@ -5262,6 +5337,17 @@ packages:
   /jsonpath-plus/4.0.0:
     resolution: {integrity: sha512-e0Jtg4KAzDJKKwzbLaUtinCn0RZseWBVRTRGihSpvFlM3wTR7ExSp+PTdeTsDrLNJUe7L7JYJe8mblHX5SCT6A==}
     engines: {node: '>=10.0'}
+    dev: false
+
+  /jsonwebtoken/7.4.3:
+    resolution: {integrity: sha512-7WWGEZ+/xedHUHLDvSwvN7LbmLIEgOuBNQOBKvfX5zpLok5q6873aCR2zOuJ/DrORp/DlyYImz06nlNoRCWugw==}
+    engines: {node: '>=0.12', npm: '>=1.4.28'}
+    dependencies:
+      joi: 6.10.1
+      jws: 3.2.2
+      lodash.once: 4.1.1
+      ms: 2.1.3
+      xtend: 4.0.2
     dev: false
 
   /jsonwebtoken/8.5.1:
@@ -5865,6 +5951,10 @@ packages:
       yargs-unparser: 2.0.0
     dev: true
 
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
+
   /mongodb/3.7.3:
     resolution: {integrity: sha512-Psm+g3/wHXhjBEktkxXsFMZvd3nemI0r3IPsE0bU+4//PnvNWKkzhZcEsbPcYiWqe8XqXJJEg4Tgtr7Raw67Yw==}
     engines: {node: '>=4'}
@@ -5963,6 +6053,13 @@ packages:
   /netmask/1.0.6:
     resolution: {integrity: sha512-3DWDqAtIiPSkBXZyYEjwebfK56nrlQfRGt642fu8RPaL+ePu750+HCMHxjJCG3iEHq/0aeMvX6KIzlv7nuhfrA==}
     engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /nexmo/2.1.1:
+    resolution: {integrity: sha512-Mz5TPVzHXEsDBxEihylFidBujfs9CMSOHWG/b29faxJP3i8V4dIECJtyc2BCP/wR5Ia1/dP2fYAAZadnl8r3tg==}
+    dependencies:
+      jsonwebtoken: 7.4.3
+      uuid: 2.0.3
     dev: false
 
   /nise/4.1.0:
@@ -7877,6 +7974,14 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
+  /topo/1.1.0:
+    resolution: {integrity: sha512-vpmONxdZoD0R3hzH0lovwv8QmsqZmGCDE1wXW9YGD/reiDOAbPKEgRDlBCAt8u8nJhav/s/I+r+1gvdpA11x7Q==}
+    engines: {node: '>=0.10.40'}
+    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+    dependencies:
+      hoek: 2.16.3
+    dev: false
+
   /tough-cookie/2.4.3:
     resolution: {integrity: sha512-Q5srk/4vDM54WJsJio3XNn6K2sCG+CQ8G5Wz6bZhRZoAe/+TxjWB/GlFAnYEbkYVlON9FMk/fE3h2RLpPXo4lQ==}
     engines: {node: '>=0.8'}
@@ -8233,6 +8338,11 @@ packages:
       is-typed-array: 1.1.10
       which-typed-array: 1.1.9
     dev: true
+
+  /uuid/2.0.3:
+    resolution: {integrity: sha512-FULf7fayPdpASncVy4DLh3xydlXEJJpvIELjYjNeQWYUZ9pclcpvCZSr2gkmN2FrrGcI7G/cJsIEwk5/8vfXpg==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    dev: false
 
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
