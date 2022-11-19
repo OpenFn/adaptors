@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "account": {
+            "title": "Account",
+            "type": "string",
+            "description": "Your Zoho account",
+            "minLength": 1
+        },
+        "authToken": {
+            "title": "Auth Token",
+            "type": "string",
+            "description": "Your Zoho authentication token",
+            "writeOnly": true,
+            "minLength": 1
+        },
+        "apiVersion": {
+            "title": "API Version",
+            "type": "string",
+            "default": "v2",
+            "enum": [
+                "v1",
+                "v2"
+            ],
+            "description": "Zoho API version",
+            "minLength": 1
+        }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "account",
+        "authToken",
+        "apiVersion"
+    ]
+}
