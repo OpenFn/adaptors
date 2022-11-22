@@ -1,5 +1,17 @@
 # @openfn/language-salesforce
 
+## 2.12.0
+
+### Minor Changes
+
+- 5c883c6: Allow expansion for describe(), add describeAll()
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 2.11.1
 
 ### Patch Changes

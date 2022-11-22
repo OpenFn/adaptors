@@ -1,5 +1,13 @@
 # @openfn/language-sftp
 
+## 0.6.4
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 0.6.3
 
 ### Patch Changes
