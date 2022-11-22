@@ -122,7 +122,7 @@ importers:
       superagent: ^1.7.2
       superagent-mock: ^1.10.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       JSONPath: 0.10.0
       json-sql: 0.3.11
       lodash-fp: 0.10.4
@@ -256,7 +256,7 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -285,7 +285,7 @@ importers:
       request: ^2.88.2
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -341,7 +341,7 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       axios: 0.20.0
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -436,7 +436,7 @@ importers:
       request: ^2.88.2
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       qs: 6.11.0
       request: 2.88.2
     devDependencies:
@@ -494,7 +494,7 @@ importers:
       superagent-mock: ^4.0.0
       xml2js: ^0.4.23
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       JSONPath: 0.10.0
       js2xmlparser: 3.0.0
       lodash-fp: 0.10.4
@@ -559,7 +559,7 @@ importers:
       superagent-mock: ^1.10.0
       sync-request: ^6.0.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       mailgun-js: 0.22.0
       sync-request: 6.1.0
     devDependencies:
@@ -594,7 +594,7 @@ importers:
       rimraf: ^3.0.2
       utf8: ^2.1.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       base-64: 0.1.0
       request: 2.88.2
       utf8: 2.1.2
@@ -664,7 +664,7 @@ importers:
       type-detect: ^4.0.8
       yargs: ^3.32.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       JSONPath: 0.10.0
       jsforce: 1.5.1
       lodash-fp: 0.10.4
@@ -788,7 +788,7 @@ importers:
       request: ^2.88.2
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       nexmo: 2.1.1
       request: 2.88.2
     devDependencies:
@@ -845,7 +845,7 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       axios: 0.21.4
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -880,7 +880,7 @@ importers:
       superagent: ^1.7.2
       superagent-mock: ^1.10.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       JSONPath: 0.10.0
       lodash-fp: 0.10.4
       superagent: 1.8.5
@@ -915,7 +915,7 @@ importers:
       rimraf: ^3.0.2
       sinon: ^1.17.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1069,7 +1069,7 @@ importers:
       rimraf: ^3.0.2
       superagent-mock: ^1.12.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1180,7 +1180,7 @@ importers:
       request: ^2.88.2
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       request: 2.88.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
@@ -1322,7 +1322,7 @@ importers:
       request-debug: ^0.2.0
       rimraf: ^3.0.2
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       lodash-fp: 0.10.4
       md5: 2.3.0
       request: 2.88.2
@@ -1354,7 +1354,7 @@ importers:
       superagent: ^1.8.5
       superagent-mock: ^1.12.0
     dependencies:
-      '@openfn/language-common': 1.7.5
+      '@openfn/language-common': link:../common
       JSONPath: 0.10.0
       lodash-fp: 0.10.4
       superagent: 1.8.5
@@ -2187,6 +2187,14 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
+
+  /@openfn/language-common/1.4.1:
+    resolution: {integrity: sha512-d1Lr3fqVdHRw+A5SZR1FXPgF2lb100Xiv/HFHsEZkRXheR58HxIh8YZT4j0mOFNCZUqw+1JK6LRHDb56JuyIrw==}
+    dev: false
+    bundledDependencies:
+      - axios
+      - jsonpath-plus
+      - lodash
 
   /@openfn/simple-ast/0.3.2:
     resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
@@ -3590,6 +3598,7 @@ packages:
 
   /bindings/1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: true
