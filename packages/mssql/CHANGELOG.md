@@ -1,5 +1,18 @@
 # @openfn/language-mssql
 
+## 4.0.0
+
+### Major Changes
+
+- 3878624: Modify composeNextState function, to flattern all rows into an array
+  of rows with their corresponding column names
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 3.1.1
 
 ### Patch Changes

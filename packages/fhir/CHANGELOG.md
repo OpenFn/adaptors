@@ -1,5 +1,13 @@
 # @openfn/language-fhir
 
+## 1.1.1
+
+### Patch Changes
+
+- f2a91a4: Update package exports
+- Updated dependencies [f2a91a4]
+  - @openfn/language-common@1.7.5
+
 ## 1.1.0
 
 ### Minor Changes

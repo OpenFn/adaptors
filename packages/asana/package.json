@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-asana",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "An adaptor to access objects in Asana",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -30,7 +30,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.4"
+    "@openfn/language-common": "^1.7.5"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
