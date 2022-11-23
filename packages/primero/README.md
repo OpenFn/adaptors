@@ -3,7 +3,7 @@
 An OpenFn **_adaptor_** for building integration jobs for use with UNICEF's
 Primero API.
 
-**See Update Docs Site: https://openfn.github.io/language-primero/ **
+**See Update Docs Site: https://docs.openfn.org/adaptors/packages/primero-docs**
 
 ## Primero API Versions
 
