@@ -169,26 +169,20 @@ function cleanupState(state) {
  * @public
  * @example <caption> Get cases from Primero with query parameters</caption>
  * getCases(
- *  {
- *    remote: true,
- *    query: 'sex=male',
- *  },
- *  state => {
- *    console.log('Here is the callback.');
- *    return state;
- *  }
+ *   {
+ *     remote: true,
+ *     query: 'sex=male',
+ *   },
+ *   state => {
+ *     console.log('Here is the callback.');
+ *     return state;
+ *   }
  * );
  * @example <caption>Fetching a unique case id</caption>
- * getCases(
- *  {
- *    remote: true,
- *    case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
- *  },
- *  (state) => {
- *    console.log("We are fetching a unique case id");
- *    return state;
- *  }
- * );
+ * getCases({
+ *   remote: true,
+ *   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
+ * });
  * @function
  * @param {object} query - an object with a query param at minimum, option to getReferrals
  * @param {object} options - (Optional) an object with a getReferrals key to fetch referrals
@@ -280,7 +274,8 @@ export function getCases(query, options, callback) {
  *     "status": "open",
  *     "case_id": "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  *     "owned_by": "primero_cp"
- *   }}, callback)
+ *   }
+ * })
  * @example
  * createCase(
  * {
