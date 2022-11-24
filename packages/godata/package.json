@@ -19,7 +19,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.2",
     "@openfn/language-common": "^1.7.5"
   },
   "devDependencies": {
