@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.5",
-    "axios": "0.21.1"
+    "axios": "^0.21.2"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.3.0",

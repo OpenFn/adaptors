@@ -22,7 +22,7 @@
     "@openfn/language-common": "^1.7.5",
     "JSONPath": "^0.10.0",
     "lodash-fp": "^0.10.4",
-    "superagent": "^1.8.5"
+    "superagent": "^3.7.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

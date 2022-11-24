@@ -23,7 +23,7 @@
     "json-sql": "^0.3.8",
     "@openfn/language-common": "^1.7.5",
     "lodash-fp": "^0.10.2",
-    "superagent": "^1.7.2"
+    "superagent": "^3.7.0"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
