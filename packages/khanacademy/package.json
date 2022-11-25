@@ -1,6 +1,6 @@
 {
-  "name": "language-khanacademy",
-  "version": "0.2.0",
+  "name": "@openfn/language-khanacademy",
+  "version": "0.3.0",
   "description": "A Khan Academy Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

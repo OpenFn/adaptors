@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-godata",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "An OpenFn adaptor for use with the WHO's GoData API",
   "main": "dist/index.cjs",
   "scripts": {
