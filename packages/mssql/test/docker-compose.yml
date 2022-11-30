@@ -1,0 +1,36 @@
+# mssql:
+#     image: 'mcr.microsoft.com/mssql/server'
+#     ports:
+#         - '1433:1433'
+#     environment:
+#         - ACCEPT_EULA=Y
+#         - SA_PASSWORD=Secret1234
+#     volumes:
+#         - './drive:/var/opt/mssql'
+
+version: '3'
+
+services:
+  app:
+    image: "mcr.microsoft.com/vscode/devcontainers/javascript-node:14"
+
+    volumes:
+      - "..:/workspace:cached"
+      - "./test-connection.json:/root/test-connection.json"
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: "sleep infinity"
+
+    depends_on:
+      - mssql
+
+  mssql:
+    image: "mcr.microsoft.com/mssql/server"
+    ports:
+      - '1433:1433'
+
+    restart: unless-stopped
+
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "SA_PASSWORD=yourStrong(!)Password"
