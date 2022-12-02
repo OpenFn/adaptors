@@ -1,6 +1,6 @@
 {
-  "name": "language-vtiger",
-  "version": "1.0.0",
+  "name": "@openfn/language-vtiger",
+  "version": "1.1.0",
   "description": "A Vtiger Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
