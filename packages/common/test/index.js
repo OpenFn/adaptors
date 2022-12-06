@@ -23,7 +23,44 @@ import {
   sourceValue,
   splitKeys,
   toArray,
+  convertCSVToJSON,
 } from '../src/Adaptor';
+
+describe('convertCSVToJSON', () => {
+  it('converts an array of csv data to a JSON string', () => {
+    expect(convertCSVToJSON(['a,b,c,d', '1,2,3,4'])).to.eql(
+      '[{"a":"1","b":"2","c":"3","d":"4"}]'
+    );
+  });
+
+  it('removes invisible ZERO WIDTH NO-BREAK SPACE (U+FEFF) character', () => {
+    const data = [
+      '﻿number,number__0,number__1,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 1,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 2,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 3,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 4,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 5,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 6,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 7,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 8,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 9,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 10,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 96,form.illness_gr.illness_gr.ill_gr.lcf_17-0 | extra,form.illness_gr.illness_gr.ill_gr.lcf_17_96x,form.illness_gr.illness_gr.ill_gr.lcf_18-0,form.illness_gr.illness_gr.ill_gr.lcf_19-0,form.illness_gr.illness_gr.ill_gr.lcf_19a,form.illness_gr.illness_gr.ill_gr.lcf_20-0,form.illness_gr.illness_gr.ill_gr.lcf_20a,form.illness_gr.illness_gr.ill_gr.lcf_21-0,form.illness_gr.illness_gr.ill_gr.lcf_21a,form.illness_gr.illness_gr.ill_gr.lcf_22-0,form.illness_gr.illness_gr.ill_gr.lcf_23-0,form.illness_gr.illness_gr.ill_gr.lcf_24-0,form.illness_gr.illness_gr.ill_gr.lcf_24a,form.illness_gr.illness_gr.ill_gr.lcf_25-0,form.illness_gr.illness_gr.ill_gr.lcf_25a,form.illness_gr.illness_gr.incpos',
+      '1,1,0,,1,1,,1,,,,,,,,---,1,2,25111991,1,98,1,98,1,1,2,---,1,5,1',
+      '0,0,0,,1,1,,1,,,,,,,,---,1,2,25111991,1,98,1,98,1,1,2,---,1,5,1',
+      '0.1,0,1,,1,1,,1,,,,,,,,---,1,2,25111991,1,98,1,98,1,1,2,---,1,5,1',
+      '',
+    ];
+    const expected = convertCSVToJSON(data);
+    const columnWithInvisibleChar = data[0].split(',')[0];
+    const columnWithInvisibleCharRemoved = Object.keys(
+      JSON.parse(expected)[0]
+    )[0];
+    expect(columnWithInvisibleChar).to.not.eql(columnWithInvisibleCharRemoved);
+
+    const invisibleCharCode = columnWithInvisibleChar.charCodeAt();
+    const expectedCharCode = columnWithInvisibleCharRemoved.charCodeAt();
+    expect(invisibleCharCode).to.not.eql(expectedCharCode);
+
+    expect(columnWithInvisibleCharRemoved).to.eql(
+      columnWithInvisibleChar.slice(1)
+    );
+
+    expect(expected).to.eql(
+      '[{"number":"1","number__0":"1","number__1":"0","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 1":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 2":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 3":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 4":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 5":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 6":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 7":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 8":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 9":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 10":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 96":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | extra":"","form.illness_gr.illness_gr.ill_gr.lcf_17_96x":"---","form.illness_gr.illness_gr.ill_gr.lcf_18-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_19-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_19a":"25111991","form.illness_gr.illness_gr.ill_gr.lcf_20-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_20a":"98","form.illness_gr.illness_gr.ill_gr.lcf_21-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_21a":"98","form.illness_gr.illness_gr.ill_gr.lcf_22-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_23-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_24-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_24a":"---","form.illness_gr.illness_gr.ill_gr.lcf_25-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_25a":"5","form.illness_gr.illness_gr.incpos":"1"},{"number":"0","number__0":"0","number__1":"0","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 1":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 2":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 3":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 4":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 5":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 6":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 7":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 8":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 9":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 10":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 96":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | extra":"","form.illness_gr.illness_gr.ill_gr.lcf_17_96x":"---","form.illness_gr.illness_gr.ill_gr.lcf_18-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_19-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_19a":"25111991","form.illness_gr.illness_gr.ill_gr.lcf_20-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_20a":"98","form.illness_gr.illness_gr.ill_gr.lcf_21-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_21a":"98","form.illness_gr.illness_gr.ill_gr.lcf_22-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_23-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_24-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_24a":"---","form.illness_gr.illness_gr.ill_gr.lcf_25-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_25a":"5","form.illness_gr.illness_gr.incpos":"1"},{"number":"0.1","number__0":"0","number__1":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 1":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 2":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 3":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 4":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 5":"1","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 6":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 7":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 8":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 9":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 10":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | 96":"","form.illness_gr.illness_gr.ill_gr.lcf_17-0 | extra":"","form.illness_gr.illness_gr.ill_gr.lcf_17_96x":"---","form.illness_gr.illness_gr.ill_gr.lcf_18-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_19-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_19a":"25111991","form.illness_gr.illness_gr.ill_gr.lcf_20-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_20a":"98","form.illness_gr.illness_gr.ill_gr.lcf_21-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_21a":"98","form.illness_gr.illness_gr.ill_gr.lcf_22-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_23-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_24-0":"2","form.illness_gr.illness_gr.ill_gr.lcf_24a":"---","form.illness_gr.illness_gr.ill_gr.lcf_25-0":"1","form.illness_gr.illness_gr.ill_gr.lcf_25a":"5","form.illness_gr.illness_gr.incpos":"1"}]'
+    );
+  });
+});
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
