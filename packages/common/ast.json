@@ -1172,6 +1172,49 @@
       "valid": true
     },
     {
+      "name": "convertCSVToJSON",
+      "params": [
+        "data"
+      ],
+      "docs": {
+        "description": "Converts a CSV array data to a JSON Object",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "convertCSVToJSON(['a,b,c,d', '1,2,3,4'])"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "CSV array data",
+            "type": {
+              "type": "NameExpression",
+              "name": "Array"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": [
         "path",
