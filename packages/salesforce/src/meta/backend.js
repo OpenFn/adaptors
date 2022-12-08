@@ -16,10 +16,15 @@ export default async (configuration, useMock) => {
   // pull out the sobjects and filter according to config
   const processGlobals = describeGlobalResult => {
     const sobjects = describeGlobalResult.sobjects;
-    if (configuration.filter) {
-      return sobjects.filter(({ name }) => configuration.filter.includes(name));
-    }
-    return sobjects;
+    return sobjects.filter(({ name, deprecatedAndHidden }) => {
+      if (deprecatedAndHidden) {
+        return false;
+      }
+      if (configuration.filter) {
+        return configuration.filter.includes(name);
+      }
+      return true;
+    });
   };
 
   const processFields = describeSobjectResult => {
@@ -69,6 +74,8 @@ export default async (configuration, useMock) => {
   }
 
   const liveHelper = {
+    fetchGlobals,
+    fetchSobject,
     getGlobals: async () => fetchGlobals().then(processGlobals),
     getFields: async sobjectName =>
       fetchSobject(sobjectName).then(processFields),

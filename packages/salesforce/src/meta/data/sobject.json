@@ -1,0 +1,30 @@
+{
+  "activateable": false,
+  "createable": false,
+  "custom": false,
+  "customSetting": false,
+  "deletable": false,
+  "deprecatedAndHidden": false,
+  "feedEnabled": false,
+  "hasSubtypes": false,
+  "isSubtype": false,
+  "keyPrefix": null,
+  "label": "Accepted Event Relation",
+  "labelPlural": "Accepted Event Relations",
+  "layoutable": false,
+  "mergeable": false,
+  "mruEnabled": false,
+  "name": "AcceptedEventRelation",
+  "queryable": true,
+  "replicateable": false,
+  "retrieveable": true,
+  "searchable": false,
+  "triggerable": false,
+  "undeletable": false,
+  "updateable": false,
+  "urls": {
+    "rowTemplate": "/services/data/v42.0/sobjects/AcceptedEventRelation/{ID}",
+    "describe": "/services/data/v42.0/sobjects/AcceptedEventRelation/describe",
+    "sobject": "/services/data/v42.0/sobjects/AcceptedEventRelation"
+  }
+}

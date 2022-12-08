@@ -23,22 +23,27 @@ const state = {
 // This will contact SF, pull down data and write it to ./mock
 // Unit tests can then test against that
 const generateGlobals = async () => {
+  console.log('Generating global sobjects');
   const helper = await createBackend(state.configuration);
   const globals = await helper.fetchGlobals();
-  writeFile(
+  console.log(`${globals.sobjects.length} sobjects found`);
+  await writeFile(
     path.resolve('./src/meta/data/globals.json'),
     JSON.stringify(globals)
   );
+  console.log('Done!');
 };
 
 const generateSobject = async name => {
+  console.log('Generating sobject ', name);
   const helper = await createBackend(state.configuration);
   const sobject = await helper.fetchSobject(name);
-
-  writeFile(
+  await writeFile(
     path.resolve(`./src/meta/data/sobject-${name}.json`),
     JSON.stringify(sobject)
   );
+
+  console.log('Done!');
 };
 
 const generate = async () => {

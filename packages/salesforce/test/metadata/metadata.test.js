@@ -25,6 +25,21 @@ describe('metadata function', () => {
     const [asset] = model.entities;
     expect(asset.name).to.eql('Asset');
     expect(asset.type).to.eql('sobject');
+    expect(asset.system).to.be.true;
+  });
+
+  it('should build an entity for salesforce vera__Attendance__c', async () => {
+    const model = await metadata(
+      {
+        filter: ['vera__Attendance__c'],
+      },
+      true
+    );
+
+    const [asset] = model.entities;
+    expect(asset.name).to.eql('vera__Attendance__c');
+    expect(asset.type).to.eql('sobject');
+    expect(asset.system).to.not.be.ok;
   });
 
   it('should build fields for salesforce Asset', async () => {

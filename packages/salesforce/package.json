@@ -16,8 +16,8 @@
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "load:globals": "node src/meta/cli.js globals",
-    "load:sobject": "node src/meta/cli.js sobject",
+    "load:globals": "node --experimental-specifier-resolution=node src/meta/cli.js globals",
+    "load:sobject": "node --experimental-specifier-resolution=node src/meta/cli.js sobject",
     "metadata": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js"
   },
   "author": "Open Function Group",
