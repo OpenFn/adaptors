@@ -190,7 +190,6 @@ describe('Adaptor', () => {
 
       afterExecutionOf(operations)
         .then(state => {
-          console.log(state);
           let references = state.references.reverse();
 
           expect(references.length).to.eql(4);
