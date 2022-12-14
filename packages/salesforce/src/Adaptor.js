@@ -19,9 +19,9 @@ import {
   chunk,
 } from '@openfn/language-common';
 import jsforce from 'jsforce';
-import loadash from 'lodash-fp';
+import lodash from 'lodash/fp';
 
-const { curry, flatten } = loadash;
+const { curry, flatten } = lodash;
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
