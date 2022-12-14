@@ -168,17 +168,11 @@ function cleanupState(state) {
  * You can specify a `case_id` value to fetch a unique case and a query string to filter result.
  * @public
  * @example <caption> Get cases from Primero with query parameters</caption>
- * getCases(
- *   {
- *     remote: true,
- *     query: "sex=male",
- *   },
- *   state => {
- *     console.log("Here is the callback.");
- *     return state;
- *   }
- * );
- * @example <caption>Fetching a unique case id</caption>
+ * getCases({
+ *   remote: true,
+ *   query: "sex=male",
+ * });
+ * @example <caption>Get case from Primero for a specific case id</caption>
  * getCases({
  *   remote: true,
  *   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
@@ -262,32 +256,16 @@ export function getCases(query, options, callback) {
 /**
  * Create a new case in Primero
  *
- * Use this function to insert a new case in Primero based on a set of Data.
+ * Use this function to create a new case in Primero based on a set of Data.
  * @public
- * @example
+ * @example <caption>Create a new case in Primero based on a set of Data</caption>
  * createCase({
- *   data: state => data {
- *     "enabled": true,
- *     "age": 15,
- *     "sex": "male",
- *     "name": "Alex",
- *     "status": "open",
- *     "case_id": "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
- *     "owned_by": "primero_cp"
- *   }
- * })
- * @example
- *  createCase(
- *   {
- *     data: state => ({
- *       ...body,
- *     }),
+ *   data: {
+ *     age: 16,
+ *     sex: "female",
+ *     name: "Edwine Edgemont",
  *   },
- *   state => {
- *     console.log(`New case created for case id:${state.data.case_id}`);
- *     return state;
- *   }
- * );
+ * });
  * @function
  * @param {object} params - an object with some case data.
  * @param {function} callback - (Optional) Callback function
@@ -334,30 +312,25 @@ export function createCase(params, callback) {
 }
 
 /**
- * Update case in Primero
+ * Update an existing case in Primero
  *
  * Use this function to update an existing case from Primero.
- * In this implementation, the function uses an ID to check for the case to update.
+ * In this implementation, the function uses a case ID to check for the case to update,
+ * Then merge the values submitted in this call into an existing case.
+ * Fields not specified in this request will not be modified.
+ * For nested subform fields, the subform arrays will be recursively merged,
+ * keeping both the existing values and appending the new
  * @public
- * @example
- * updateCase(id, {
- *   data: state => state.data,
- * });
- * @example <caption>Update case with query Parameters</caption>
- * updateCase("case_id", {
+ * @example <caption>Update case for a specific case id</caption>
+ * updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
  *   data: {
- *     remote: true,
- *     oscar_number: c.oscar_number,
- *     case_id: c.case_id,
- *     child: {
- *       date_of_birth: "2020-01-02",
- *       services_section: [],
- *       transitions: [],
- *     },
+ *     age: 16,
+ *     sex: "female",
+ *     name: "Fiona Edgemont",
  *   },
  * });
  * @function
- * @param {string} id - an ID to use for the update.
+ * @param {string} id - A case ID to use for the update.
  * @param {object} params - an object with some case data.
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
@@ -401,11 +374,11 @@ export function updateCase(id, params, callback) {
 /**
  * Upsert case to Primero
  *
- * Use this function to update an existing case from Primero or to insert it otherwise.
+ * Use this function to update an existing case from Primero or to create it otherwise.
  * In this implementation, we first fetch the list of cases,
  * then we check if the case exist before choosing the right operation to do.
  * @public
- * @example
+ * @example <caption>Upsert case for a specific case id</caption>
  * upsertCase({
  *   externalIds: ["case_id"],
  *   data: state => ({
@@ -416,24 +389,8 @@ export function updateCase(id, params, callback) {
  *     case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  *   }),
  * });
- * @example
- * upsertCase(
- *   {
- *     externalIds: ["record_id"],
- *     data: dataValue("failure"),
- *   },
- *   state => {
- *     console.log(state.data);
- *     return state;
- *   }
- * );
- *  state => {
- *   console.log(state.data);
- *   return state;
- *  }
- * );
  * @function
- * @param {object} params - an object with an externalId and some case data.
+ * @param {object} params - an object with an externalIds and some case data.
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -499,45 +456,14 @@ export function upsertCase(params, callback) {
  * Use this function to get the list of referrals of one case from Primero.
  * The search can be done using either `record id` or `case id`.
  * @public
- * @example
- * getReferrals({ externalId: "record_id", id: dataValue("id") }, state => {
- *   //filter referrals where 'created_at_date' >= lastRUnDateTime || manualCursor
- *   state.data
- *     .filter((r) => new Date(r.created_at) >= new Date(state.cursor))
- *     .map((r) => {
- *       state.referralIds.push(r.service_record_id);
- *     });
- *   return state;
+ * @example <caption>Get referrals for a case in Primero by record id</caption>
+ * getReferrals({
+ *   externalId: "record_id",
+ *   id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
- * @example <caption>Get referrals for a case in Primero then updateReferrals</caption>
- * getReferrals({ externalId: "case_id", id: case_id }, (state) => {
- *   const referrals = state.data;
- *   const referral = findReferral(referrals, service_id);
- *
- *   if (!referral) {
- *     console.log(`No referral found for case_id ${case_id}. Skipping update.`);
- *     return state;
- *   }
- *
- *   decision["id"] = referral.id;
- *   decision["record_id"] = referral.record_id;
- *   console.log(
- *     `Found case ${case_id} to update with decision with Primero referral id: ${referral.id}`
- *   );
- *   return updateReferrals(
- *     {
- *       externalId: "case_id",
- *       id: case_id,
- *       referral_id: referral.id,
- *       data: decision,
- *     },
- *     (state) => {
- *       console.log(`Referral decision update succcessful for case: ${case_id}`);
- *       return state;
- *     }
- *   )(state);
- * })(state).catch(() => {
- *   throw new Error("No case found. Referral decision cannot be synced.");
+ * @example <caption>Get referrals for a case in Primero by case id</caption>
+ *  getReferrals({
+ *   id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
  * @function
  * @param {object} params - an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case.
@@ -616,30 +542,19 @@ export function getReferrals(params, callback) {
 /**
  * Create referrals in Primero
  *
- * Use this function to bulk refer to one or multiple cases from Primero
+ * Use this function to bulk refer to one or multiple cases from Primero to a single user
  * @public
- * @example
+ * @example <caption>Create referrals for multiple cases in Primero</caption>
  * createReferrals({
  *   data: {
- *     "ids": ['case_id'],
- *      "transitioned_to": "primero_cp",
- *      "notes": "Creating a referral"
- *   }
- * }, callback)
- * @example <caption>Create referrals for one or multiple cases in Primero</caption>
- * createReferrals(
- *  {
- *   data: {
- *     ids: ['case_id'],
- *     transitioned_to: 'primero_cp',
- *     notes: 'Creating a referral',
+ *     ids: [
+ *       "749e9c6e-60db-45ec-8f5a-69da7c223a79",
+ *       "dcea6052-07d9-4cfa-9abf-9a36987cdd25",
+ *     ],
+ *     transitioned_to: "primero_cp",
+ *     notes: "This is a bulk referral",
  *   },
- *  },
- *  state => {
- *    console.log('Here is the callback.');
- *    return state;
- *  }
- * );
+ * });
  * @function
  * @param {object} params - an object with referral data.
  * @param {function} callback - (Optional) Callback function
@@ -698,22 +613,15 @@ export function updateReferrals(params, callback) {
 /**
  * Update a single referral for a specific case in Primero
  * @public
- * @example
- * updateReferral(
- *   {
- *     externalId: "case_id",
- *     id: case_id,
- *     referral_id: referral.id,
- *     data: decision,
- *   },
- *   (state) => {
- *     console.log(`Referral decision update succcessful for case: ${case_id}`*);
- *     console.log(`Upload succcessful ${JSON.stringify(state.data, null, 2)}`);
- *     return state;
- *   }
- * );
+ * @example <caption>Update referral by record id</caption>
+ * updateReferral({
+ *   caseExternalId: "record_id",
+ *   id: "749e9c6e-60db-45ec-8f5a-69da7c223a79",
+ *   caseId: "dcea6052-07d9-4cfa-9abf-9a36987cdd25",
+ *   data: (state) => state.data,
+ * });
  * @function
- * @param {object} params - an object with an externalId value to use, the id and the referral id to update.
+ * @param {object} params - an object with an caseExternalId value to use, the id and the referral id to update.
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -798,25 +706,13 @@ export function updateReferral(params, callback) {
  * Use this function to get forms from Primero that are accessible to this user based on a set of query parameters.
  * The user can filter the form list by record type and module.
  * @public
- * @example <caption>Get the list of forms</caption>
- * getForms(state => {
- *    console.log('We are fetching forms from Primero for this user');
- *    return state;
+ * @example <caption>Get the list of all forms</caption>
+ * getForms();
+ *
+ * @example <caption>Get the list of all forms for a specific module</caption>
+ * getForms({
+ *   module_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
- *
- * @example <caption>fetching a unique form using `module_id`</caption>
- * getForms(
- *  {
- *   module_id: '6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz',
- *  },
- *  state => {
- *     console.log('We are fetching a unique form using module_id');
- *    return state;
- *  }
- * );
- *
- * @example <caption> Get all forms</caption>
- * getForms()
  * @function
  * @param {object} query - an object with a query param at minimum
  * @param {function} callback - (Optional) Callback function
@@ -875,22 +771,11 @@ export function getForms(query, callback) {
  * Note: You can specify a `per` value to fetch records per page(Defaults to 20).
  * Also you can specify `page` value to fetch pagination (Defaults to 1)
  * @public
- * @example
- * getLookups({
- *   page: 1 // Optional. Pagination. Defaults to 1,
- *   per: 20 // Optional. Records per page. Defaults to 20,
- * })
  * @example <caption>Get lookups from Primero with query parameters</caption>
- * getLookups(
- *   {
- *     per: 10000, // Optional. Records per page. Defaults to 20,
- *     page: 5, // Optional. Pagination. Defaults to 1,
- *  },
- *  state => {
- *   console.log('Here is the callback.');
- *   return state;
- *  }
- * );
+ * getLookups({
+ *   per: 10000,
+ *   page: 5
+ * });
  * @function
  * @param {object} query - an object with a query param at minimum
  * @param {function} callback - (Optional) Callback function
@@ -950,22 +835,11 @@ export function getLookups(query, callback) {
  * Also you can specify `page` value to fetch pagination (Defaults to 1).
  * Another parameter is `hierarchy: true` (Defaults to false)
  * @public
- * @example
- * getLocations({
- *   page: 1 // Optional.
- *   per: 20 // Optional. Records per page,
- *   hierarchy: // Defaults to false,
- * })
  * @example <caption>Get loocations from Primero with query parameters</caption>
- * getLocations(
- *  {
- *    per: 100000,
- *  },
- *  state => {
- *    console.log('Here is the callback.');
- *    return state;
- *  }
- * );
+ * getLocations({
+ *   page: 1,
+ *   per: 20
+ * })
  * @function
  * @param {object} query - an object with a query param at minimum
  * @param {function} callback - (Optional) Callback function
