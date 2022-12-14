@@ -1,7 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import loadash from 'lodash-fp';
-
-const { curry, mapValues, flatten } = loadash;
+import { mapValues, flatten } from 'lodash-es';
 
 /** @module FakeAdaptor */
 
@@ -157,9 +155,9 @@ function query(qs, state) {
   };
 }
 
-const reference = curry(function (position, { references }) {
+const reference = function (position, { references }) {
   return references[position].id;
-});
+};
 
 function execute(...operations) {
   const initialState = {

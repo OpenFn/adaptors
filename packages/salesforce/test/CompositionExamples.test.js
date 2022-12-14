@@ -14,11 +14,9 @@ import {
   steps,
 } from '../src/FakeAdaptor';
 
-import loadash from 'lodash-fp';
+import { filter } from 'lodash-es';
 
 import testData from './nestedTestData' assert { type: 'json' };
-
-const { filter, last } = loadash;
 
 describe('Composition Examples', () => {
   let initialState;

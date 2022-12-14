@@ -1,5 +1,3 @@
-
-
 /**
  * @typedef {Object} State
  * @property {object} data JSON Data.
@@ -15,13 +13,10 @@ import {
   execute as commonExecute,
   expandReferences,
   field,
-  sourceValue,
   chunk,
 } from '@openfn/language-common';
 import jsforce from 'jsforce';
-import loadash from 'lodash-fp';
-
-const { curry, flatten } = loadash;
+import { flatten, curry } from 'lodash-es';
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -55,7 +50,7 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-export const describeAll = curry(function (state) {
+export const describeAll = function (state) {
   let { connection } = state;
 
   return connection.describeGlobal().then(result => {
@@ -67,7 +62,7 @@ export const describeAll = curry(function (state) {
       references: [sobjects, ...state.references],
     };
   });
-});
+};
 
 /**
  * Outputs basic information about an sObject to `STDOUT`.
@@ -79,7 +74,7 @@ export const describeAll = curry(function (state) {
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-export const describe = curry(function (sObject, state) {
+export const describe = function (sObject, state) {
   let { connection } = state;
 
   const objectName = expandReferences(sObject)(state);
@@ -96,7 +91,7 @@ export const describe = curry(function (sObject, state) {
         references: [result, ...state.references],
       };
     });
-});
+};
 
 /**
  * Retrieves a Salesforce sObject(s).
@@ -110,7 +105,7 @@ export const describe = curry(function (sObject, state) {
  * @param {State} state - Runtime state
  * @returns {State}
  */
-export const retrieve = curry(function (sObject, id, callback, state) {
+export const retrieve = function (sObject, id, callback, state) {
   let { connection } = state;
 
   const finalId = expandReferences(id)(state);
@@ -130,7 +125,7 @@ export const retrieve = curry(function (sObject, id, callback, state) {
       }
       return state;
     });
-});
+};
 
 /**
  * Execute an SOQL query.
@@ -144,7 +139,7 @@ export const retrieve = curry(function (sObject, id, callback, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const query = curry(function (qs, state) {
+export const query = function (qs, state) {
   let { connection } = state;
   qs = expandReferences(qs)(state);
   console.log(`Executing query: ${qs}`);
@@ -163,7 +158,7 @@ export const query = curry(function (qs, state) {
       references: [result, ...state.references],
     };
   });
-});
+};
 
 /**
  * Create and execute a bulk job.
@@ -182,7 +177,7 @@ export const query = curry(function (qs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const bulk = curry(function (sObject, operation, options, fun, state) {
+export const bulk = function (sObject, operation, options, fun, state) {
   const { connection } = state;
   const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
   const finalAttrs = fun(state);
@@ -262,7 +257,7 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
     const merged = [].concat.apply([], arrayOfResults);
     return { ...state, references: [merged, ...state.references] };
   });
-});
+};
 
 /**
  * Delete records of an object.
@@ -279,7 +274,7 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const destroy = curry(function (sObject, attrs, options, state) {
+export const destroy = function (sObject, attrs, options, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   const { failOnError } = options;
@@ -303,7 +298,7 @@ export const destroy = curry(function (sObject, attrs, options, state) {
         references: [result, ...state.references],
       };
     });
-});
+};
 
 /**
  * Create a new object.
@@ -348,7 +343,7 @@ export const create = curry(function (sObject, attrs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const createIf = curry(function (logical, sObject, attrs, state) {
+export const createIf = function (logical, sObject, attrs, state) {
   let { connection } = state;
   logical = expandReferences(logical)(state);
 
@@ -368,7 +363,7 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
       ...state,
     };
   }
-});
+};
 
 /**
  * Upsert an object.
@@ -385,7 +380,7 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsert = curry(function (sObject, externalId, attrs, state) {
+export const upsert = function (sObject, externalId, attrs, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(
@@ -404,7 +399,7 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
         references: [recordResult, ...state.references],
       };
     });
-});
+};
 
 /**
  * Upsert if conditions are met.
@@ -422,13 +417,7 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsertIf = curry(function (
-  logical,
-  sObject,
-  externalId,
-  attrs,
-  state
-) {
+export const upsertIf = function (logical, sObject, externalId, attrs, state) {
   let { connection } = state;
   logical = expandReferences(logical)(state);
 
@@ -456,7 +445,7 @@ export const upsertIf = curry(function (
       ...state,
     };
   }
-});
+};
 
 /**
  * Update an object.
@@ -472,7 +461,7 @@ export const upsertIf = curry(function (
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const update = curry(function (sObject, attrs, state) {
+export const update = function (sObject, attrs, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(`Updating ${sObject}`, finalAttrs);
@@ -484,7 +473,7 @@ export const update = curry(function (sObject, attrs, state) {
       references: [recordResult, ...state.references],
     };
   });
-});
+};
 
 /**
  * Get a reference ID by an index.
@@ -496,10 +485,10 @@ export const update = curry(function (sObject, attrs, state) {
  * @param {State} state - Array of references.
  * @returns {State}
  */
-export const reference = curry(function (position, state) {
+export const reference = function (position, state) {
   const { references } = state;
   return references[position].id;
-});
+};
 
 /**
  * Creates a connection.
