@@ -16,6 +16,7 @@ export default (lang: string) => {
     '--emitDeclarationOnly',
     '--lib es2020',
     `--declarationDir ${root}/types`,
+    '--skipLibCheck',
     `${root}/src/index.js`,
   ];
   // Need to run the command out of the build tool dir
