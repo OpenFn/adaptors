@@ -3,6 +3,7 @@ import {
   execute as commonExecute,
   composeNextState,
   chunk,
+  convertCSVToJSON,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
@@ -279,4 +280,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  convertCSVToJSON,
 } from '@openfn/language-common';

@@ -538,6 +538,40 @@ export function chunk(array, chunkSize) {
   return output;
 }
 
+/**
+ * Converts a CSV array data to a JSON Object
+ * @public
+ * @example
+ * convertCSVToJSON(['a,b,c,d', '1,2,3,4'])
+ * @function
+ * @param {Array} data - CSV array data
+ * @returns {string}
+ */
+export function convertCSVToJSON(data) {
+  const lines = data.map(d => (d = d.replace(/"/g, '')));
+  let headers = lines.shift().split(',');
+
+  // this char code gets hidden in some of the column names.
+  // We don't want it. We need to remove it
+  const charCodeToRemove = 65279;
+  headers = headers.map(h =>
+    h.charCodeAt() == charCodeToRemove ? h.slice(1) : h
+  );
+
+  const result = lines
+    .filter(line => line.length > 0)
+    .map(line => {
+      const lineObject = {};
+      const currentline = line.split(',');
+      for (let i = 0; i < headers.length; i++) {
+        lineObject[headers[i]] = currentline[i];
+      }
+      return lineObject;
+    });
+
+  return JSON.stringify(result);
+}
+
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
