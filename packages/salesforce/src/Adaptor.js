@@ -1,3 +1,4 @@
+/// <reference path="./lodash-overrides.d.ts" />
 /** @module Adaptor */
 
 /**
@@ -31,7 +32,6 @@ const { curry, flatten } = lodash;
  *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
  * Fixed Value:
  *  relationship("relationship_name__r", "externalID on related object", "hello world")
- * @constructor
  * @param {string} relationshipName - `__r` relationship field on the record.
  * @param {string} externalId - Salesforce ExternalID field.
  * @param {string} dataSource - resolvable source.
@@ -51,11 +51,10 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @public
  * @example
  * describeAll()
- * @constructor
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-export const describeAll = curry(function (state) {
+const _describeAll = function (state) {
   let { connection } = state;
 
   return connection.describeGlobal().then(result => {
@@ -67,19 +66,19 @@ export const describeAll = curry(function (state) {
       references: [sobjects, ...state.references],
     };
   });
-});
+};
+export const describeAll = curry(_describeAll);
 
 /**
  * Outputs basic information about an sObject to `STDOUT`.
  * @public
  * @example
  * describe('obj_name')
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-export const describe = curry(function (sObject, state) {
+const _describe = function (sObject, state) {
   let { connection } = state;
 
   const objectName = expandReferences(sObject)(state);
@@ -96,21 +95,21 @@ export const describe = curry(function (sObject, state) {
         references: [result, ...state.references],
       };
     });
-});
+};
+export const describe = curry(_describe);
 
 /**
  * Retrieves a Salesforce sObject(s).
  * @public
  * @example
  * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
- * @constructor
  * @param {String} sObject - The sObject to retrieve
  * @param {String} id - The id of the record
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @param {State} state - Runtime state
  * @returns {State}
  */
-export const retrieve = curry(function (sObject, id, callback, state) {
+const _retrieve = function (sObject, id, callback, state) {
   let { connection } = state;
 
   const finalId = expandReferences(id)(state);
@@ -130,7 +129,8 @@ export const retrieve = curry(function (sObject, id, callback, state) {
       }
       return state;
     });
-});
+};
+export const retrieve = curry(_retrieve);
 
 /**
  * Execute an SOQL query.
@@ -139,12 +139,11 @@ export const retrieve = curry(function (sObject, id, callback, state) {
  * @public
  * @example
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @constructor
  * @param {String} qs - A query string.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const query = curry(function (qs, state) {
+const _query = function (qs, state) {
   let { connection } = state;
   qs = expandReferences(qs)(state);
   console.log(`Executing query: ${qs}`);
@@ -163,7 +162,8 @@ export const query = curry(function (qs, state) {
       references: [result, ...state.references],
     };
   });
-});
+};
+export const query = curry(_query);
 
 /**
  * Create and execute a bulk job.
@@ -174,7 +174,6 @@ export const query = curry(function (qs, state) {
  *     return { 'Age__c': x.age, 'Name': x.name }
  *   })
  * });
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
@@ -182,7 +181,7 @@ export const query = curry(function (qs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const bulk = curry(function (sObject, operation, options, fun, state) {
+const _bulk = function (sObject, operation, options, fun, state) {
   const { connection } = state;
   const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
   const finalAttrs = fun(state);
@@ -262,7 +261,8 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
     const merged = [].concat.apply([], arrayOfResults);
     return { ...state, references: [merged, ...state.references] };
   });
-});
+};
+export const bulk = curry(_bulk);
 
 /**
  * Delete records of an object.
@@ -272,14 +272,13 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
  *  '0060n00000JQWHYAA5',
  *  '0090n00000JQEWHYAA5
  * ], { failOnError: true })
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Array of IDs of records to delete.
  * @param {Object} options - Options for the destroy delete operation.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const destroy = curry(function (sObject, attrs, options, state) {
+const _destroy = function (sObject, attrs, options, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   const { failOnError } = options;
@@ -303,7 +302,8 @@ export const destroy = curry(function (sObject, attrs, options, state) {
         references: [result, ...state.references],
       };
     });
-});
+};
+export const destroy = curry(_destroy);
 
 /**
  * Create a new object.
@@ -313,13 +313,12 @@ export const destroy = curry(function (sObject, attrs, options, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const create = curry(function (sObject, attrs, state) {
+const _create = function (sObject, attrs, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(`Creating ${sObject}`, finalAttrs);
@@ -331,7 +330,8 @@ export const create = curry(function (sObject, attrs, state) {
       references: [recordResult, ...state.references],
     };
   });
-});
+};
+export const create = curry(_create);
 
 /**
  * Create a new object if conditions are met.
@@ -341,14 +341,13 @@ export const create = curry(function (sObject, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const createIf = curry(function (logical, sObject, attrs, state) {
+const _createIf = function (logical, sObject, attrs, state) {
   let { connection } = state;
   logical = expandReferences(logical)(state);
 
@@ -368,7 +367,8 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
       ...state,
     };
   }
-});
+};
+export const createIf = curry(_createIf);
 
 /**
  * Upsert an object.
@@ -378,14 +378,13 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsert = curry(function (sObject, externalId, attrs, state) {
+const _upsert = function (sObject, externalId, attrs, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(
@@ -404,7 +403,8 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
         references: [recordResult, ...state.references],
       };
     });
-});
+};
+export const upsert = curry(_upsert);
 
 /**
  * Upsert if conditions are met.
@@ -414,7 +414,6 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
@@ -422,13 +421,7 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsertIf = curry(function (
-  logical,
-  sObject,
-  externalId,
-  attrs,
-  state
-) {
+const _upsertIf = function (logical, sObject, externalId, attrs, state) {
   let { connection } = state;
   logical = expandReferences(logical)(state);
 
@@ -456,7 +449,8 @@ export const upsertIf = curry(function (
       ...state,
     };
   }
-});
+};
+export const upsertIf = curry(_upsertIf);
 
 /**
  * Update an object.
@@ -466,13 +460,12 @@ export const upsertIf = curry(function (
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const update = curry(function (sObject, attrs, state) {
+const _update = function (sObject, attrs, state) {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(`Updating ${sObject}`, finalAttrs);
@@ -484,22 +477,23 @@ export const update = curry(function (sObject, attrs, state) {
       references: [recordResult, ...state.references],
     };
   });
-});
+};
+export const update = curry(_update);
 
 /**
  * Get a reference ID by an index.
  * @public
  * @example
  * reference(0)
- * @constructor
  * @param {number} position - Position for references array.
  * @param {State} state - Array of references.
  * @returns {State}
  */
-export const reference = curry(function (position, state) {
+const _reference = function (position, state) {
   const { references } = state;
   return references[position].id;
-});
+};
+export const reference = curry(_reference);
 
 /**
  * Creates a connection.

@@ -15,10 +15,9 @@ import {
 } from '../src/FakeAdaptor';
 
 import lodash from 'lodash/fp';
+const { filter } = lodash;
 
 import testData from './nestedTestData' assert { type: 'json' };
-
-const { filter, last } = lodash;
 
 describe('Composition Examples', () => {
   let initialState;

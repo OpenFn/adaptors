@@ -1,6 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import lodash from 'lodash/fp';
-
 const { curry, mapValues, flatten } = lodash;
 
 /** @module FakeAdaptor */
