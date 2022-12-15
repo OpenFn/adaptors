@@ -36,7 +36,6 @@
     "jsforce": "^1.11.0",
     "lodash": "^4.17.21",
     "mustache": "^2.2.0",
-    "typescript": "4.8.4",
     "yargs": "^3.30.0"
   },
   "devDependencies": {
