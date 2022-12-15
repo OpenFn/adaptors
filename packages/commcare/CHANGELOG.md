@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 1.5.2
+
+### Patch Changes
+
+- 57f3513: Fix exports in index.js
+
 ## 1.5.1
 
 ### Patch Changes
