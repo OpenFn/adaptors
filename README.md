@@ -175,7 +175,9 @@ Then, from inside your new `packages/<name>`:
   should have the label `postgres`.
 - Update the adaptor repository readme to add archive note
 - Archive the adaptor if you can
-- Update the adaptor readme to indicate where the package has been moved to adaptors repo. See example below
+- Update the adaptor readme to indicate where the package has been moved to
+  adaptors repo. See example below
+
 ```
 # _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
 
@@ -190,10 +192,10 @@ https://github.com/OpenFn/adaptors/tree/main/packages/<name>**
 The index.js file should be exactly this:
 
 ```
-import * as Adaptor from './Adaptor';
+import * as Adaptor from './Adaptor.js';
 export default Adaptor;
 
-export * from './Adaptor';
+export * from './Adaptor.js';
 ```
 
 The first two lines export the Adaptor object as the default export from the
@@ -228,5 +230,7 @@ You'll need to update tests and get them passing.
 
 Instead of importing test files from `lib`, import directly from `src`.
 
+Make sure file extensions are in all imports.
+
 Ie, replace `import Adaptor from '../lib/Adaptor'` becomes
-`import Adaptor from '../src/Adaptor'`
+`import Adaptor from '../src/Adaptor.js'`

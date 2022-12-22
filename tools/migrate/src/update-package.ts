@@ -90,12 +90,12 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
   // remove babel from mocha tests
   updated.scripts.test = updated.scripts.test.replace(
     '--require @babel/register',
-    '--experimental-specifier-resolution=node --no-warnings'
+    ''
   );
   if (updated.scripts['test:watch']) {
     updated.scripts['test:watch'] = updated.scripts['test:watch'].replace(
       '--require @babel/register',
-      '--experimental-specifier-resolution=node --no-warnings'
+      ''
     );
   }
 
