@@ -1,4 +1,4 @@
-import { expandReferences, splitKeys } from './Adaptor';
+import { expandReferences, splitKeys } from './Adaptor.js';
 import axios from 'axios';
 import https from 'https';
 

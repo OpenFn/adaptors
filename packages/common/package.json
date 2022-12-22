@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor common",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha",
+    "test:watch": "mocha -w",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },

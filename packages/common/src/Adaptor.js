@@ -1,11 +1,11 @@
-import _ from 'lodash/fp';
-const { curry, fromPairs } = _;
+import curry from 'lodash/fp/curry.js';
+import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
 
-export * as beta from './beta';
-export * as http from './http';
-export * as dateFns from './dateFns';
+export * as beta from './beta.js';
+export * as http from './http.js';
+export * as dateFns from './dateFns.js';
 
 /**
  * Execute a sequence of operations.

@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { expect } from 'chai';
-import { http } from '../src/Adaptor';
+import { http } from '../src/Adaptor.js';
 
 describe('post', () => {
   before(() => {
