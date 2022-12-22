@@ -7,18 +7,15 @@ import {
   field,
   fields,
   join,
-  map,
-  reference,
-  source,
   sourceValue,
   steps,
-} from '../src/FakeAdaptor';
+} from '../src/FakeAdaptor.js';
 
 import loadash from 'lodash-fp';
 
-import testData from './nestedTestData' assert { type: 'json' };
+import testData from './nestedTestData.json' assert { type: 'json' };
 
-const { filter, last } = loadash;
+const { filter } = loadash;
 
 describe('Composition Examples', () => {
   let initialState;
