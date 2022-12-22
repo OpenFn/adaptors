@@ -146,6 +146,8 @@ Then, from inside your new `packages/<name>`:
 - Remove `bundledDependencies` from package.json
 - Make sure `"rimraf": "^3.0.2"` is in `devDependencies`
 - Fix index.js (see `index.js` below)
+- Ensure all relative imports have a file extension (ie
+  `import {} from './Adaptor` becomes `import {} from './Adaptor.js`)
 - Run `pnpm install`
 - Run `pnpm build`
 - Remove the `docs` and `lib` dirs
