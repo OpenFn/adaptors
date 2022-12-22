@@ -11,11 +11,9 @@ import {
   steps,
 } from '../src/FakeAdaptor.js';
 
-import loadash from 'lodash-fp';
+import filter from 'lodash/fp/filter.js';
 
 import testData from './nestedTestData.json' assert { type: 'json' };
-
-const { filter } = loadash;
 
 describe('Composition Examples', () => {
   let initialState;
