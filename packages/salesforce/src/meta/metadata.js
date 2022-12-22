@@ -33,12 +33,15 @@ const metadata = async (configuration = {}, mock = false) => {
           // Model the fields too
           const fields = await helper.getFields(name);
           if (fields) {
-            fields.forEach(({ name, type, label }) => {
+            fields.forEach(({ name, type, label, externalId }) => {
               const f = createEntity(name, 'field', {
                 datatype: type,
                 label,
+                externalId,
               });
               e.addEntity(f);
+
+              // Now the field's attributes
             });
 
             model.addEntity(e);
