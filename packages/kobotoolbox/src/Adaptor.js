@@ -143,11 +143,7 @@ export function getDeploymentInfo(params, callback) {
     return http
       .get(config)(state)
       .then(response => {
-        console.log(
-          '✓',
-          response.data.count,
-          'deployment information fetched.'
-        );
+        console.log('✓', 'deployment information fetched.');
 
         const nextState = composeNextState(state, response.data);
         if (callback) return callback(nextState);
