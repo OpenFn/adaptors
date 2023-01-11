@@ -19,9 +19,8 @@
             "description": "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -72,9 +71,8 @@
             "description": "submit(\n   fields(\n     field(\"@\", function(state) {\n       return {\n         \"xmlns\": \"http://openrosa.org/formdesigner/form-id-here\"\n       };\n     }),\n     field(\"question1\", dataValue(\"answer1\")),\n     field(\"question2\", \"Some answer here.\")\n   )\n )"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -118,9 +116,8 @@
             "description": "fetchReportData(reportId, params, postUrl)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

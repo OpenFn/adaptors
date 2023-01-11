@@ -5,7 +5,7 @@ import {
 import request from 'request';
 import { resolve as resolveUrl } from 'url';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -15,7 +15,7 @@ import { resolve as resolveUrl } from 'url';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

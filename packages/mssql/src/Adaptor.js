@@ -58,7 +58,7 @@ function createConnection(state) {
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -176,7 +176,7 @@ function queryHandler(state, query, callback, options) {
  * @public
  * @example
  * sql({ query, options })
- * @constructor
+ * @function
  * @param {object} params - Payload data for the message
  * @returns {Operation}
  */
@@ -244,7 +244,7 @@ function escapeQuote(stringExp) {
  *    where: { first_name: 'Mama%', last_name: 'Cisse'},
  *    operator: { first_name: 'like', last_name: '='}
  *  })
- * @constructor
+ * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
  * @returns {Operation}
  */
@@ -302,7 +302,7 @@ export function findValue(filter) {
  * @public
  * @example
  * insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object
  * @param {object} options - Optional options argument
@@ -347,7 +347,7 @@ export function insert(table, record, options) {
  * @public
  * @example
  * insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {function} records - A function that takes state and returns an array of records
  * @param {object} options - Optional options argument
@@ -396,7 +396,7 @@ export function insertMany(table, records, options) {
  * @example
  * upsert(table, uuid, record, { setNull: "'undefined'", logValues: false})
  * upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false})
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object
@@ -474,7 +474,7 @@ export function upsert(table, uuid, record, options) {
  *   { name: 'Elodie', id: 7 },
  *   { writeSql:true, execute: true, logValues: false }
  * )
- * @constructor
+ * @function
  * @param {string} logical - a data to check existing value for.
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
@@ -558,7 +558,7 @@ export function upsertIf(logical, table, uuid, record, options) {
  * upsertMany(
  *  'users', ['email', 'phone'], records, { logValues: false }
  * )
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {function} records - A function that takes state and returns an array of records
@@ -636,7 +636,7 @@ export function upsertMany(table, uuid, records, options) {
  * @public
  * @example
  * describeTable('clinic_visits')
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to describe
  * @param {object} options - Optional options argument
  * @returns {Operation}
@@ -673,7 +673,7 @@ export function describeTable(tableName, options) {
  *     unique: false, // optional - to be set to true for unique constraint
  *   })
  * ));
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument
@@ -732,7 +732,7 @@ export function insertTable(tableName, columns, options) {
  *     unique: false, // optional - to be set to true for unique constraint
  *   })
  * ));
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument

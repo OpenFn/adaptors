@@ -20,9 +20,8 @@
             "description": "Data Sourced Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", dataSource(\"path\"))\nFixed Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", \"hello world\")"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -82,9 +81,8 @@
             "description": "describeAll()"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -127,9 +125,8 @@
             "description": "describe('obj_name')"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -183,9 +180,8 @@
             "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -255,9 +251,8 @@
             "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -312,9 +307,8 @@
             "description": "bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {\n  return state.data.someArray.map(x => {\n    return { 'Age__c': x.age, 'Name': x.name }\n  })\n});"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -395,9 +389,8 @@
             "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -468,9 +461,8 @@
             "description": "create('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -533,9 +525,8 @@
             "description": "createIf(true, 'obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -607,9 +598,8 @@
             "description": "upsert('obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -682,9 +672,8 @@
             "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -764,9 +753,8 @@
             "description": "update('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -827,9 +815,8 @@
             "description": "reference(0)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

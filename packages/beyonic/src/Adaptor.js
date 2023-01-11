@@ -5,8 +5,6 @@ import {
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
-/** @module Adaptor */
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for beyonic.
@@ -15,7 +13,7 @@ import { resolve as resolveUrl } from 'url';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -36,7 +34,7 @@ export function execute(...operations) {
  * execute(
  *   createPayment(data)
  * )(state)
- * @constructor
+ * @function
  * @param {object} data - Payload data for the payment
  * @returns {Operation}
  */
@@ -64,7 +62,7 @@ export function createPayment(data) {
  * execute(
  *   createContact(data)
  * )(state)
- * @constructor
+ * @function
  * @param {object} data - Payload data for the contact
  * @returns {Operation}
  */
@@ -92,7 +90,7 @@ export function createContact(data) {
  * execute(
  *   createCollectionRequest(data)
  * )(state)
- * @constructor
+ * @function
  * @param {object} data - Payload data for the collection request
  * @returns {Operation}
  */

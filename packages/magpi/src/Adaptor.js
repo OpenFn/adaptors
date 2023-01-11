@@ -6,7 +6,7 @@ import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
 import request from 'request';
 import xml2js from 'xml2js';
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.

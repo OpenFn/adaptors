@@ -5,7 +5,7 @@ import {
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -15,7 +15,7 @@ import { resolve as resolveUrl } from 'url';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -36,7 +36,7 @@ export function execute(...operations) {
  * execute(
  *   encounter(data)
  * )(state)
- * @constructor
+ * @function
  * @param {object} encounterData - Payload data for the encounter
  * @returns {Operation}
  */

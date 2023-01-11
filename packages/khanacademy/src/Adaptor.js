@@ -6,7 +6,7 @@ import { resolve as resolveUrl } from 'url';
 import request from 'request';
 import qs from 'qs';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -16,7 +16,7 @@ import qs from 'qs';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -37,7 +37,7 @@ export function execute(...operations) {
  * execute(
  *   fetch(params)
  * )(state)
- * @constructor
+ * @function
  * @param {object} params - data to make the query
  * @returns {Operation}
  */
