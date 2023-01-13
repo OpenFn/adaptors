@@ -142,7 +142,7 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
       '@openfn/language-common': 1.7.5
-      '@openfn/language-http': ^4.2.3
+      '@openfn/language-http': ^4.2.4
       '@openfn/simple-ast': ^0.4.1
       JSONPath: ^0.10.0
       assertion-error: ^1.0.1

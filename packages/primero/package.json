@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-primero",
-  "version": "2.10.2",
+  "version": "2.10.3",
   "description": "A UNICEF Primero language package for use with Open Function",
   "exports": {
     ".": {
