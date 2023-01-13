@@ -1,36 +1,64 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#listContacts">listContacts(id, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch the list of contacts within a particular outbreak using its ID.</p>
+</dd>
+<dt><a href="#getContact">getContact(id, query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get one or multiple contacts within an outbreak from a query filter</p>
+</dd>
+<dt><a href="#upsertContact">upsertContact(id, externalId, goDataContact, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert contact to godata using an external id to match a specific record.</p>
+</dd>
+<dt><a href="#listOutbreaks">listOutbreaks(callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch the list of outbreaks</p>
+</dd>
+<dt><a href="#getOutbreak">getOutbreak(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get one or multiple outbreaks from a query filter</p>
+</dd>
+<dt><a href="#upsertOutbreak">upsertOutbreak(outbreak, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert outbreak to godata</p>
+</dd>
+<dt><a href="#listCases">listCases(id, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch the list of cases within a particular outbreak using its ID.</p>
+</dd>
+<dt><a href="#getCase">getCase(id, query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get one or multiple cases within an outbreak from a query filter</p>
+</dd>
+<dt><a href="#upsertCase">upsertCase(id, externalId, goDataCase, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert case to godata using an external id to mach a specific record</p>
+</dd>
+<dt><a href="#listLocations">listLocations(callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch the list of locations</p>
+</dd>
+<dt><a href="#getLocation">getLocation(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get one or multiple locations from a query filter</p>
+</dd>
+<dt><a href="#upsertLocation">upsertLocation(externalId, goDataLocation, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert location to godata</p>
+</dd>
+<dt><a href="#listReferenceData">listReferenceData(callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch the list of reference data</p>
+</dd>
+<dt><a href="#getReferenceData">getReferenceData(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get one or multiple reference data from a query filter</p>
+</dd>
+<dt><a href="#upsertReferenceData">upsertReferenceData(externalId, goDataReferenceData, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert reference data to godata</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.listContacts(id, callback)](#module_Adaptor.listContacts) ⇒ <code>Operation</code>
-    * [.getContact(id, query, callback)](#module_Adaptor.getContact) ⇒ <code>Operation</code>
-    * [.upsertContact(id, externalId, goDataContact, callback)](#module_Adaptor.upsertContact) ⇒ <code>Operation</code>
-    * [.listOutbreaks(callback)](#module_Adaptor.listOutbreaks) ⇒ <code>Operation</code>
-    * [.getOutbreak(query, callback)](#module_Adaptor.getOutbreak) ⇒ <code>Operation</code>
-    * [.upsertOutbreak(outbreak, callback)](#module_Adaptor.upsertOutbreak) ⇒ <code>Operation</code>
-    * [.listCases(id, callback)](#module_Adaptor.listCases) ⇒ <code>Operation</code>
-    * [.getCase(id, query, callback)](#module_Adaptor.getCase) ⇒ <code>Operation</code>
-    * [.upsertCase(id, externalId, goDataCase, callback)](#module_Adaptor.upsertCase) ⇒ <code>Operation</code>
-    * [.listLocations(callback)](#module_Adaptor.listLocations) ⇒ <code>Operation</code>
-    * [.getLocation(query, callback)](#module_Adaptor.getLocation) ⇒ <code>Operation</code>
-    * [.upsertLocation(externalId, goDataLocation, callback)](#module_Adaptor.upsertLocation) ⇒ <code>Operation</code>
-    * [.listReferenceData(callback)](#module_Adaptor.listReferenceData) ⇒ <code>Operation</code>
-    * [.getReferenceData(query, callback)](#module_Adaptor.getReferenceData) ⇒ <code>Operation</code>
-    * [.upsertReferenceData(externalId, goDataReferenceData, callback)](#module_Adaptor.upsertReferenceData) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -43,12 +71,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.listContacts"></a>
+<a name="listContacts"></a>
 
-### Adaptor.listContacts(id, callback) ⇒ <code>Operation</code>
+## listContacts(id, callback) ⇒ <code>Operation</code>
 Fetch the list of contacts within a particular outbreak using its ID.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -64,12 +92,12 @@ listContacts("343d-dc3e", // Outbreak Id
    return state;
  });
 ```
-<a name="module_Adaptor.getContact"></a>
+<a name="getContact"></a>
 
-### Adaptor.getContact(id, query, callback) ⇒ <code>Operation</code>
+## getContact(id, query, callback) ⇒ <code>Operation</code>
 Get one or multiple contacts within an outbreak from a query filter
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -85,12 +113,12 @@ getContact("343d-dc3e", {"where":{"firstName": "Luca"}}, state => {
    return state;
  });
 ```
-<a name="module_Adaptor.upsertContact"></a>
+<a name="upsertContact"></a>
 
-### Adaptor.upsertContact(id, externalId, goDataContact, callback) ⇒ <code>Operation</code>
+## upsertContact(id, externalId, goDataContact, callback) ⇒ <code>Operation</code>
 Upsert contact to godata using an external id to match a specific record.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -111,12 +139,12 @@ upsertContact("4dce-3eedce3-rd33", 'visualId',
    }
  )
 ```
-<a name="module_Adaptor.listOutbreaks"></a>
+<a name="listOutbreaks"></a>
 
-### Adaptor.listOutbreaks(callback) ⇒ <code>Operation</code>
+## listOutbreaks(callback) ⇒ <code>Operation</code>
 Fetch the list of outbreaks
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -130,12 +158,12 @@ listOutbreaks(state => {
    return state;
  });
 ```
-<a name="module_Adaptor.getOutbreak"></a>
+<a name="getOutbreak"></a>
 
-### Adaptor.getOutbreak(query, callback) ⇒ <code>Operation</code>
+## getOutbreak(query, callback) ⇒ <code>Operation</code>
 Get one or multiple outbreaks from a query filter
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -150,12 +178,12 @@ getOutbreak({"where":{"name": "Outbreak demo"}}, state => {
    return state;
  });
 ```
-<a name="module_Adaptor.upsertOutbreak"></a>
+<a name="upsertOutbreak"></a>
 
-### Adaptor.upsertOutbreak(outbreak, callback) ⇒ <code>Operation</code>
+## upsertOutbreak(outbreak, callback) ⇒ <code>Operation</code>
 Upsert outbreak to godata
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -167,12 +195,12 @@ Upsert outbreak to godata
 ```js
 upsertOutbreak({externalId: "3dec33-ede3", data: {...}})
 ```
-<a name="module_Adaptor.listCases"></a>
+<a name="listCases"></a>
 
-### Adaptor.listCases(id, callback) ⇒ <code>Operation</code>
+## listCases(id, callback) ⇒ <code>Operation</code>
 Fetch the list of cases within a particular outbreak using its ID.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -187,12 +215,12 @@ listCases("343d-dc3e", state => {
    return state;
  });
 ```
-<a name="module_Adaptor.getCase"></a>
+<a name="getCase"></a>
 
-### Adaptor.getCase(id, query, callback) ⇒ <code>Operation</code>
+## getCase(id, query, callback) ⇒ <code>Operation</code>
 Get one or multiple cases within an outbreak from a query filter
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -212,12 +240,12 @@ getCase(
    }
 );
 ```
-<a name="module_Adaptor.upsertCase"></a>
+<a name="upsertCase"></a>
 
-### Adaptor.upsertCase(id, externalId, goDataCase, callback) ⇒ <code>Operation</code>
+## upsertCase(id, externalId, goDataCase, callback) ⇒ <code>Operation</code>
 Upsert case to godata using an external id to mach a specific record
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -241,12 +269,12 @@ upsertCase("4dce-3eedce3-rd33", 'visualId',
       };
  })
 ```
-<a name="module_Adaptor.listLocations"></a>
+<a name="listLocations"></a>
 
-### Adaptor.listLocations(callback) ⇒ <code>Operation</code>
+## listLocations(callback) ⇒ <code>Operation</code>
 Fetch the list of locations
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -260,12 +288,12 @@ listLocations(state => {
    return state;
  });
 ```
-<a name="module_Adaptor.getLocation"></a>
+<a name="getLocation"></a>
 
-### Adaptor.getLocation(query, callback) ⇒ <code>Operation</code>
+## getLocation(query, callback) ⇒ <code>Operation</code>
 Get one or multiple locations from a query filter
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -280,12 +308,12 @@ getLocation({"where":{"name": "30 DE OCTUBRE"}}, state => {
    return state;
  });
 ```
-<a name="module_Adaptor.upsertLocation"></a>
+<a name="upsertLocation"></a>
 
-### Adaptor.upsertLocation(externalId, goDataLocation, callback) ⇒ <code>Operation</code>
+## upsertLocation(externalId, goDataLocation, callback) ⇒ <code>Operation</code>
 Upsert location to godata
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -298,12 +326,12 @@ Upsert location to godata
 ```js
 upsertLocation('name', {...})
 ```
-<a name="module_Adaptor.listReferenceData"></a>
+<a name="listReferenceData"></a>
 
-### Adaptor.listReferenceData(callback) ⇒ <code>Operation</code>
+## listReferenceData(callback) ⇒ <code>Operation</code>
 Fetch the list of reference data
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -317,12 +345,12 @@ listReferenceData(state => {
    return state;
  });
 ```
-<a name="module_Adaptor.getReferenceData"></a>
+<a name="getReferenceData"></a>
 
-### Adaptor.getReferenceData(query, callback) ⇒ <code>Operation</code>
+## getReferenceData(query, callback) ⇒ <code>Operation</code>
 Get one or multiple reference data from a query filter
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -337,12 +365,12 @@ getReferenceData({"where":{"categoryId": "LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAM
    return state;
  });
 ```
-<a name="module_Adaptor.upsertReferenceData"></a>
+<a name="upsertReferenceData"></a>
 
-### Adaptor.upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ <code>Operation</code>
+## upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ <code>Operation</code>
 Upsert reference data to godata
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

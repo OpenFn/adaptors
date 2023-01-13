@@ -1,13 +1,10 @@
-## Classes
-
-<dl>
-<dt><a href="#execute">execute</a></dt>
-<dd></dd>
-</dl>
-
 ## Functions
 
 <dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
 <dt><a href="#fetchSubmissions">fetchSubmissions(params)</a> ⇒ <code>Operation</code></dt>
 <dd><p>Make a GET request and POST it somewhere else</p>
 </dd>
@@ -15,14 +12,11 @@
 
 <a name="execute"></a>
 
-## execute
-**Kind**: global class  
-<a name="new_execute_new"></a>
-
-### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

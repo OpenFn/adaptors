@@ -1,23 +1,23 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#appendValues">appendValues(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Add an array of rows to the spreadsheet.
+<a href="https://developers.google.com/sheets/api/samples/writing#append_values">https://developers.google.com/sheets/api/samples/writing#append_values</a></p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.appendValues](#module_Adaptor.appendValues)
-        * [new exports.appendValues(params)](#new_module_Adaptor.appendValues_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -30,17 +30,14 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.appendValues"></a>
+<a name="appendValues"></a>
 
-### Adaptor.appendValues
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.appendValues_new"></a>
-
-#### new exports.appendValues(params)
+## appendValues(params) ⇒ <code>Operation</code>
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -1,20 +1,28 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#fetch">fetch(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a GET request and POST it somewhere else</p>
+</dd>
+<dt><a href="#update">update(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make an update in Maximo 7.6 and beyond</p>
+</dd>
+<dt><a href="#update75">update75(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make an upadte in Maximo 7.5</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.fetch(params)](#module_Adaptor.fetch) ⇒ <code>Operation</code>
-    * [.update(params)](#module_Adaptor.update) ⇒ <code>Operation</code>
-    * [.update75(params)](#module_Adaptor.update75) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -27,12 +35,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.fetch"></a>
+<a name="fetch"></a>
 
-### Adaptor.fetch(params) ⇒ <code>Operation</code>
+## fetch(params) ⇒ <code>Operation</code>
 Make a GET request and POST it somewhere else
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -49,12 +57,12 @@ fetch({
  postUrl: 'https://www.openfn.org/inbox/not-real',
 });
 ```
-<a name="module_Adaptor.update"></a>
+<a name="update"></a>
 
-### Adaptor.update(params) ⇒ <code>Operation</code>
+## update(params) ⇒ <code>Operation</code>
 Make an update in Maximo 7.6 and beyond
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -66,12 +74,12 @@ execute(
   update(params)
 )(state)
 ```
-<a name="module_Adaptor.update75"></a>
+<a name="update75"></a>
 
-### Adaptor.update75(params) ⇒ <code>Operation</code>
+## update75(params) ⇒ <code>Operation</code>
 Make an upadte in Maximo 7.5
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

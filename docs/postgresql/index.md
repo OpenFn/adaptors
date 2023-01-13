@@ -1,41 +1,49 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for postgresql.</p>
+</dd>
+<dt><a href="#sql">sql(sqlQuery, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute an SQL statement</p>
+</dd>
+<dt><a href="#findValue">findValue(filter)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch a uuid key given a condition</p>
+</dd>
+<dt><a href="#insert">insert(table, record, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert a record</p>
+</dd>
+<dt><a href="#insertMany">insertMany(table, records, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert many records, using the keys of the first as the column template</p>
+</dd>
+<dt><a href="#upsert">upsert(table, uuid, record, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert or update a record using ON CONFLICT UPDATE</p>
+</dd>
+<dt><a href="#upsertIf">upsertIf(logical, table, uuid, record, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert or update a record based on a logical condition using ON CONFLICT UPDATE</p>
+</dd>
+<dt><a href="#upsertMany">upsertMany(table, uuid, data, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert or update multiple records using ON CONFLICT UPDATE and excluded</p>
+</dd>
+<dt><a href="#describeTable">describeTable(tableName, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>List the columns of a table in a database.</p>
+</dd>
+<dt><a href="#insertTable">insertTable(tableName, columns, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a table in database when given an array of columns and a table_name.</p>
+</dd>
+<dt><a href="#modifyTable">modifyTable(tableName, columns, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Alter an existing table in the database.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.sql](#module_Adaptor.sql)
-        * [new exports.sql(sqlQuery, options)](#new_module_Adaptor.sql_new)
-    * [.findValue](#module_Adaptor.findValue)
-        * [new exports.findValue(filter)](#new_module_Adaptor.findValue_new)
-    * [.insert](#module_Adaptor.insert)
-        * [new exports.insert(table, record, options)](#new_module_Adaptor.insert_new)
-    * [.insertMany](#module_Adaptor.insertMany)
-        * [new exports.insertMany(table, records, options)](#new_module_Adaptor.insertMany_new)
-    * [.upsert](#module_Adaptor.upsert)
-        * [new exports.upsert(table, uuid, record, options)](#new_module_Adaptor.upsert_new)
-    * [.upsertIf](#module_Adaptor.upsertIf)
-        * [new exports.upsertIf(logical, table, uuid, record, options)](#new_module_Adaptor.upsertIf_new)
-    * [.upsertMany](#module_Adaptor.upsertMany)
-        * [new exports.upsertMany(table, uuid, data, options)](#new_module_Adaptor.upsertMany_new)
-    * [.describeTable](#module_Adaptor.describeTable)
-        * [new exports.describeTable(tableName, options)](#new_module_Adaptor.describeTable_new)
-    * [.insertTable](#module_Adaptor.insertTable)
-        * [new exports.insertTable(tableName, columns, options)](#new_module_Adaptor.insertTable_new)
-    * [.modifyTable](#module_Adaptor.modifyTable)
-        * [new exports.modifyTable(tableName, columns, options)](#new_module_Adaptor.modifyTable_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for postgresql.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -48,16 +56,13 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.sql"></a>
+<a name="sql"></a>
 
-### Adaptor.sql
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.sql_new"></a>
-
-#### new exports.sql(sqlQuery, options)
+## sql(sqlQuery, options) ⇒ <code>Operation</code>
 Execute an SQL statement
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -68,16 +73,13 @@ Execute an SQL statement
 ```js
 sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
 ```
-<a name="module_Adaptor.findValue"></a>
+<a name="findValue"></a>
 
-### Adaptor.findValue
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.findValue_new"></a>
-
-#### new exports.findValue(filter)
+## findValue(filter) ⇒ <code>Operation</code>
 Fetch a uuid key given a condition
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -92,16 +94,13 @@ findValue({
    operator: { first_name: 'like' }
  })
 ```
-<a name="module_Adaptor.insert"></a>
+<a name="insert"></a>
 
-### Adaptor.insert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.insert_new"></a>
-
-#### new exports.insert(table, record, options)
+## insert(table, record, options) ⇒ <code>Operation</code>
 Insert a record
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -113,16 +112,13 @@ Insert a record
 ```js
 insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
 ```
-<a name="module_Adaptor.insertMany"></a>
+<a name="insertMany"></a>
 
-### Adaptor.insertMany
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.insertMany_new"></a>
-
-#### new exports.insertMany(table, records, options)
+## insertMany(table, records, options) ⇒ <code>Operation</code>
 Insert many records, using the keys of the first as the column template
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -134,16 +130,13 @@ Insert many records, using the keys of the first as the column template
 ```js
 insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
 ```
-<a name="module_Adaptor.upsert"></a>
+<a name="upsert"></a>
 
-### Adaptor.upsert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsert_new"></a>
-
-#### new exports.upsert(table, uuid, record, options)
+## upsert(table, uuid, record, options) ⇒ <code>Operation</code>
 Insert or update a record using ON CONFLICT UPDATE
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -161,16 +154,13 @@ upsert(
   { setNull: ["''", "'undefined'"], writeSql:true, execute: true, logValues: true }
 )
 ```
-<a name="module_Adaptor.upsertIf"></a>
+<a name="upsertIf"></a>
 
-### Adaptor.upsertIf
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsertIf_new"></a>
-
-#### new exports.upsertIf(logical, table, uuid, record, options)
+## upsertIf(logical, table, uuid, record, options) ⇒ <code>Operation</code>
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -190,16 +180,13 @@ upsertIf(
   { writeSql:true, execute: true }
 )
 ```
-<a name="module_Adaptor.upsertMany"></a>
+<a name="upsertMany"></a>
 
-### Adaptor.upsertMany
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsertMany_new"></a>
-
-#### new exports.upsertMany(table, uuid, data, options)
+## upsertMany(table, uuid, data, options) ⇒ <code>Operation</code>
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -220,16 +207,13 @@ upsertMany(
  { logValues: true }
 )
 ```
-<a name="module_Adaptor.describeTable"></a>
+<a name="describeTable"></a>
 
-### Adaptor.describeTable
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.describeTable_new"></a>
-
-#### new exports.describeTable(tableName, options)
+## describeTable(tableName, options) ⇒ <code>Operation</code>
 List the columns of a table in a database.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -240,16 +224,13 @@ List the columns of a table in a database.
 ```js
 describeTable('clinic_visits')
 ```
-<a name="module_Adaptor.insertTable"></a>
+<a name="insertTable"></a>
 
-### Adaptor.insertTable
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.insertTable_new"></a>
-
-#### new exports.insertTable(tableName, columns, options)
+## insertTable(tableName, columns, options) ⇒ <code>Operation</code>
 Create a table in database when given an array of columns and a table_name.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -268,16 +249,13 @@ insertTable('table_name', state => state.data.map(
   })
 ));
 ```
-<a name="module_Adaptor.modifyTable"></a>
+<a name="modifyTable"></a>
 
-### Adaptor.modifyTable
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.modifyTable_new"></a>
-
-#### new exports.modifyTable(tableName, columns, options)
+## modifyTable(tableName, columns, options) ⇒ <code>Operation</code>
 Alter an existing table in the database.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

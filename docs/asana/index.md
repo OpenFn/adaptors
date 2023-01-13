@@ -1,22 +1,34 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#getTask">getTask(task_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get a single task of a given project.</p>
+</dd>
+<dt><a href="#getTasks">getTasks(project_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get the list of tasks for a given project.</p>
+</dd>
+<dt><a href="#updateTask">updateTask(task_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update a specific task.</p>
+</dd>
+<dt><a href="#createTask">createTask(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a task.</p>
+</dd>
+<dt><a href="#upsertTask">upsertTask(project_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update or create a task.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.getTask(task_gid, params, callback)](#module_Adaptor.getTask) ⇒ <code>Operation</code>
-    * [.getTasks(project_gid, params, callback)](#module_Adaptor.getTasks) ⇒ <code>Operation</code>
-    * [.updateTask(task_gid, params, callback)](#module_Adaptor.updateTask) ⇒ <code>Operation</code>
-    * [.createTask(params, callback)](#module_Adaptor.createTask) ⇒ <code>Operation</code>
-    * [.upsertTask(project_gid, params, callback)](#module_Adaptor.upsertTask) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -29,12 +41,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.getTask"></a>
+<a name="getTask"></a>
 
-### Adaptor.getTask(task_gid, params, callback) ⇒ <code>Operation</code>
+## getTask(task_gid, params, callback) ⇒ <code>Operation</code>
 Get a single task of a given project.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -50,12 +62,12 @@ getTask("task_gid",
    opt_fields: "name,notes,assignee"
  })
 ```
-<a name="module_Adaptor.getTasks"></a>
+<a name="getTasks"></a>
 
-### Adaptor.getTasks(project_gid, params, callback) ⇒ <code>Operation</code>
+## getTasks(project_gid, params, callback) ⇒ <code>Operation</code>
 Get the list of tasks for a given project.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -71,12 +83,12 @@ getTasks("project_gid",
    opt_fields: "name,notes,assignee"
  })
 ```
-<a name="module_Adaptor.updateTask"></a>
+<a name="updateTask"></a>
 
-### Adaptor.updateTask(task_gid, params, callback) ⇒ <code>Operation</code>
+## updateTask(task_gid, params, callback) ⇒ <code>Operation</code>
 Update a specific task.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -93,12 +105,12 @@ updateTask("task_gid",
  }
 )
 ```
-<a name="module_Adaptor.createTask"></a>
+<a name="createTask"></a>
 
-### Adaptor.createTask(params, callback) ⇒ <code>Operation</code>
+## createTask(params, callback) ⇒ <code>Operation</code>
 Create a task.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -114,12 +126,12 @@ createTask(
  }
 )
 ```
-<a name="module_Adaptor.upsertTask"></a>
+<a name="upsertTask"></a>
 
-### Adaptor.upsertTask(project_gid, params, callback) ⇒ <code>Operation</code>
+## upsertTask(project_gid, params, callback) ⇒ <code>Operation</code>
 Update or create a task.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

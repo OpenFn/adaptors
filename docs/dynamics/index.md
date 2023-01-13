@@ -1,21 +1,10 @@
-<a name="module_Adaptor"></a>
+<a name="execute"></a>
 
-## Adaptor
-
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

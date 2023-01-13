@@ -1,30 +1,53 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#list">list(dirPath)</a> ⇒ <code>Operation</code></dt>
+<dd><p>List files present in a directory</p>
+</dd>
+<dt><a href="#getCSV">getCSV(filePath)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get a CSV and return a JSON array of strings for each item separated by the delimiter</p>
+</dd>
+<dt><a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Convert JSON to CSV and upload to an FTP server</p>
+</dd>
+<dt><a href="#getJSON">getJSON(filePath, encoding)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Fetch a json file from an FTP server</p>
+</dd>
+<dt><a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Convert JSON array of strings into a normalized object</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.list](#module_Adaptor.list)
-        * [new exports.list(dirPath)](#new_module_Adaptor.list_new)
-    * [.getCSV](#module_Adaptor.getCSV)
-        * [new exports.getCSV(filePath)](#new_module_Adaptor.getCSV_new)
-    * [.putCSV](#module_Adaptor.putCSV)
-        * [new exports.putCSV(localFilePath, remoteFilePath, parsingOptions)](#new_module_Adaptor.putCSV_new)
-    * [.getJSON](#module_Adaptor.getJSON)
-        * [new exports.getJSON(filePath, encoding)](#new_module_Adaptor.getJSON_new)
-    * [.normalizeCSVarray](#module_Adaptor.normalizeCSVarray)
-        * [new exports.normalizeCSVarray(options, callback)](#new_module_Adaptor.normalizeCSVarray_new)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.list"></a>
+## execute(operations) ⇒ <code>Operation</code>
+Execute a sequence of operations.
+Wraps `language-common/execute`, and prepends initial state for http.
 
-### Adaptor.list
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.list_new"></a>
+**Kind**: global function  
 
-#### new exports.list(dirPath)
+| Param | Type | Description |
+| --- | --- | --- |
+| operations | <code>Operations</code> | Operations to be performed. |
+
+**Example**  
+```js
+execute(
+  create('foo'),
+  delete('bar')
+)(state)
+```
+<a name="list"></a>
+
+## list(dirPath) ⇒ <code>Operation</code>
 List files present in a directory
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -34,16 +57,13 @@ List files present in a directory
 ```js
 list('/some/path/')
 ```
-<a name="module_Adaptor.getCSV"></a>
+<a name="getCSV"></a>
 
-### Adaptor.getCSV
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.getCSV_new"></a>
-
-#### new exports.getCSV(filePath)
+## getCSV(filePath) ⇒ <code>Operation</code>
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -55,16 +75,13 @@ getCSV(
   '/some/path/to_file.csv'
 );
 ```
-<a name="module_Adaptor.putCSV"></a>
+<a name="putCSV"></a>
 
-### Adaptor.putCSV
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.putCSV_new"></a>
-
-#### new exports.putCSV(localFilePath, remoteFilePath, parsingOptions)
+## putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
 Convert JSON to CSV and upload to an FTP server
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -80,16 +97,13 @@ putCSV(
   { delimiter: ';', noheader: true }
 );
 ```
-<a name="module_Adaptor.getJSON"></a>
+<a name="getJSON"></a>
 
-### Adaptor.getJSON
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.getJSON_new"></a>
-
-#### new exports.getJSON(filePath, encoding)
+## getJSON(filePath, encoding) ⇒ <code>Operation</code>
 Fetch a json file from an FTP server
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -103,16 +117,13 @@ getJSON(
   'utf8',
 );
 ```
-<a name="module_Adaptor.normalizeCSVarray"></a>
+<a name="normalizeCSVarray"></a>
 
-### Adaptor.normalizeCSVarray
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.normalizeCSVarray_new"></a>
-
-#### new exports.normalizeCSVarray(options, callback)
+## normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
 Convert JSON array of strings into a normalized object
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -122,23 +133,4 @@ Convert JSON array of strings into a normalized object
 **Example**  
 ```js
 normalizeCSVarray({ delimiter: ';', noheader: true });
-```
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for http.
-
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
 ```

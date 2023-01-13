@@ -1,19 +1,25 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#load">load(dirPath, projectId, datasetId, tableId, loadOptions, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Load files to BigQuery</p>
+</dd>
+<dt><a href="#parseCSV">parseCSV(target, config)</a> ⇒ <code>Operation</code></dt>
+<dd><p>CSV-Parse for CSV conversion to JSON</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.load(dirPath, projectId, datasetId, tableId, loadOptions, callback)](#module_Adaptor.load) ⇒ <code>Operation</code>
-    * [.parseCSV(target, config)](#module_Adaptor.parseCSV) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -26,12 +32,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.load"></a>
+<a name="load"></a>
 
-### Adaptor.load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
+## load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
 Load files to BigQuery
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -59,12 +65,12 @@ load(
   }
 )
 ```
-<a name="module_Adaptor.parseCSV"></a>
+<a name="parseCSV"></a>
 
-### Adaptor.parseCSV(target, config) ⇒ <code>Operation</code>
+## parseCSV(target, config) ⇒ <code>Operation</code>
 CSV-Parse for CSV conversion to JSON
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

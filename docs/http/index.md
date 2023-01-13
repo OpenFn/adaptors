@@ -1,37 +1,43 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#get">get(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a GET request</p>
+</dd>
+<dt><a href="#post">post(path, params, callback)</a> ⇒ <code>operation</code></dt>
+<dd><p>Make a POST request</p>
+</dd>
+<dt><a href="#put">put(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a PUT request</p>
+</dd>
+<dt><a href="#patch">patch(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a PATCH request</p>
+</dd>
+<dt><a href="#del">del(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a DELETE request</p>
+</dd>
+<dt><a href="#parseXML">parseXML(body, script)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Parse XML with the Cheerio parser</p>
+</dd>
+<dt><a href="#parseCSV">parseCSV(target, config)</a> ⇒ <code>Operation</code></dt>
+<dd><p>CSV-Parse for CSV conversion to JSON</p>
+</dd>
+<dt><a href="#request">request(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a request using the &#39;request&#39; node module. This module is deprecated.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.get](#module_Adaptor.get)
-        * [new exports.get(path, params, callback)](#new_module_Adaptor.get_new)
-    * [.post](#module_Adaptor.post)
-        * [new exports.post(path, params, callback)](#new_module_Adaptor.post_new)
-    * [.put](#module_Adaptor.put)
-        * [new exports.put(path, params, callback)](#new_module_Adaptor.put_new)
-    * [.patch](#module_Adaptor.patch)
-        * [new exports.patch(path, params, callback)](#new_module_Adaptor.patch_new)
-    * [.del](#module_Adaptor.del)
-        * [new exports.del(path, params, callback)](#new_module_Adaptor.del_new)
-    * [.parseXML](#module_Adaptor.parseXML)
-        * [new exports.parseXML(body, script)](#new_module_Adaptor.parseXML_new)
-    * [.parseCSV](#module_Adaptor.parseCSV)
-        * [new exports.parseCSV(target, config)](#new_module_Adaptor.parseCSV_new)
-    * [.request](#module_Adaptor.request)
-        * [new exports.request(params)](#new_module_Adaptor.request_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -44,16 +50,13 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.get"></a>
+<a name="get"></a>
 
-### Adaptor.get
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.get_new"></a>
-
-#### new exports.get(path, params, callback)
+## get(path, params, callback) ⇒ <code>Operation</code>
 Make a GET request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -69,16 +72,13 @@ get('/myEndpoint', {
    authentication: {username: 'user', password: 'pass'}
  })
 ```
-<a name="module_Adaptor.post"></a>
+<a name="post"></a>
 
-### Adaptor.post
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.post_new"></a>
-
-#### new exports.post(path, params, callback)
+## post(path, params, callback) ⇒ <code>operation</code>
 Make a POST request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -94,16 +94,13 @@ post('/myEndpoint', {
    authentication: {username: 'user', password: 'pass'}
  })
 ```
-<a name="module_Adaptor.put"></a>
+<a name="put"></a>
 
-### Adaptor.put
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.put_new"></a>
-
-#### new exports.put(path, params, callback)
+## put(path, params, callback) ⇒ <code>Operation</code>
 Make a PUT request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -119,16 +116,13 @@ put('/myEndpoint', {
    authentication: {username: 'user', password: 'pass'}
  })
 ```
-<a name="module_Adaptor.patch"></a>
+<a name="patch"></a>
 
-### Adaptor.patch
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.patch_new"></a>
-
-#### new exports.patch(path, params, callback)
+## patch(path, params, callback) ⇒ <code>Operation</code>
 Make a PATCH request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -144,16 +138,13 @@ patch('/myEndpoint', {
    authentication: {username: 'user', password: 'pass'}
  })
 ```
-<a name="module_Adaptor.del"></a>
+<a name="del"></a>
 
-### Adaptor.del
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.del_new"></a>
-
-#### new exports.del(path, params, callback)
+## del(path, params, callback) ⇒ <code>Operation</code>
 Make a DELETE request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -167,16 +158,13 @@ del(`/myendpoint/${state => state.data.id}`, {
    headers: {'content-type': 'application/json'}
  })
 ```
-<a name="module_Adaptor.parseXML"></a>
+<a name="parseXML"></a>
 
-### Adaptor.parseXML
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.parseXML_new"></a>
-
-#### new exports.parseXML(body, script)
+## parseXML(body, script) ⇒ <code>Operation</code>
 Parse XML with the Cheerio parser
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -189,16 +177,13 @@ parseXML(body, function($){
    return $("table[class=your_table]").parsetable(true, true, true);
  })
 ```
-<a name="module_Adaptor.parseCSV"></a>
+<a name="parseCSV"></a>
 
-### Adaptor.parseCSV
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.parseCSV_new"></a>
-
-#### new exports.parseCSV(target, config)
+## parseCSV(target, config) ⇒ <code>Operation</code>
 CSV-Parse for CSV conversion to JSON
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -212,15 +197,12 @@ parseCSV("/home/user/someData.csv", {
 	  header: false,
 	});
 ```
-<a name="module_Adaptor.request"></a>
+<a name="request"></a>
 
-### Adaptor.request
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.request_new"></a>
-
-#### new exports.request(params)
+## request(params) ⇒ <code>Operation</code>
 Make a request using the 'request' node module. This module is deprecated.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

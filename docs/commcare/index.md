@@ -1,31 +1,32 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for commcare.</p>
+</dd>
+<dt><a href="#clientPost">clientPost(formData)</a> ⇒ <code>State</code></dt>
+<dd><p>Performs a post request</p>
+</dd>
+<dt><a href="#submitXls">submitXls(formData, params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Convert form data to xls then submit.</p>
+</dd>
+<dt><a href="#submit">submit(formData)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Submit form data</p>
+</dd>
+<dt><a href="#fetchReportData">fetchReportData(reportId, params, postUrl)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a GET request to CommCare&#39;s Reports API
+and POST the response to somewhere else.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * _static_
-        * [.execute](#module_Adaptor.execute)
-            * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-        * [.submitXls](#module_Adaptor.submitXls)
-            * [new exports.submitXls(formData, params)](#new_module_Adaptor.submitXls_new)
-        * [.submit](#module_Adaptor.submit)
-            * [new exports.submit(formData)](#new_module_Adaptor.submit_new)
-        * [.fetchReportData](#module_Adaptor.fetchReportData)
-            * [new exports.fetchReportData(reportId, params, postUrl)](#new_module_Adaptor.fetchReportData_new)
-    * _inner_
-        * [~clientPost](#module_Adaptor..clientPost)
-            * [new clientPost(formData)](#new_module_Adaptor..clientPost_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for commcare.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -38,16 +39,28 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.submitXls"></a>
+<a name="clientPost"></a>
 
-### Adaptor.submitXls
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.submitXls_new"></a>
+## clientPost(formData) ⇒ <code>State</code>
+Performs a post request
 
-#### new exports.submitXls(formData, params)
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Form Data with auth params and body |
+
+**Example**  
+```js
+clientPost(formData)
+```
+<a name="submitXls"></a>
+
+## submitXls(formData, params) ⇒ <code>Operation</code>
 Convert form data to xls then submit.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -67,16 +80,13 @@ submitXls(
    }
 )
 ```
-<a name="module_Adaptor.submit"></a>
+<a name="submit"></a>
 
-### Adaptor.submit
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.submit_new"></a>
-
-#### new exports.submit(formData)
+## submit(formData) ⇒ <code>Operation</code>
 Submit form data
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -96,17 +106,14 @@ submit(
    )
  )
 ```
-<a name="module_Adaptor.fetchReportData"></a>
+<a name="fetchReportData"></a>
 
-### Adaptor.fetchReportData
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.fetchReportData_new"></a>
-
-#### new exports.fetchReportData(reportId, params, postUrl)
+## fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
 Make a GET request to CommCare's Reports API
 and POST the response to somewhere else.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -117,22 +124,4 @@ and POST the response to somewhere else.
 **Example**  
 ```js
 fetchReportData(reportId, params, postUrl)
-```
-<a name="module_Adaptor..clientPost"></a>
-
-### Adaptor~clientPost
-**Kind**: inner class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor..clientPost_new"></a>
-
-#### new clientPost(formData)
-Performs a post request
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formData | <code>Object</code> | Form Data with auth params and body |
-
-**Example**  
-```js
-clientPost(formData)
 ```

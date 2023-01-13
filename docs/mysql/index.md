@@ -1,31 +1,34 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for mysql.</p>
+</dd>
+<dt><a href="#insert">insert(table, fields)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert a record</p>
+</dd>
+<dt><a href="#upsert">upsert(table, fields)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert or Update a record if matched</p>
+</dd>
+<dt><a href="#upsertMany">upsertMany(table, data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Insert or update multiple records using ON DUPLICATE KEY</p>
+</dd>
+<dt><a href="#query">query(options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a SQL statement</p>
+</dd>
+<dt><a href="#sqlString">sqlString(queryString)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a SQL statement</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.insert](#module_Adaptor.insert)
-        * [new exports.insert(table, fields)](#new_module_Adaptor.insert_new)
-    * [.upsert](#module_Adaptor.upsert)
-        * [new exports.upsert(table, fields)](#new_module_Adaptor.upsert_new)
-    * [.upsertMany](#module_Adaptor.upsertMany)
-        * [new exports.upsertMany(table, data)](#new_module_Adaptor.upsertMany_new)
-    * [.query](#module_Adaptor.query)
-        * [new exports.query(options)](#new_module_Adaptor.query_new)
-    * [.sqlString](#module_Adaptor.sqlString)
-        * [new exports.sqlString(queryString)](#new_module_Adaptor.sqlString_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for mysql.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -38,15 +41,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.insert"></a>
+<a name="insert"></a>
 
-### Adaptor.insert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.insert_new"></a>
-
-#### new exports.insert(table, fields)
+## insert(table, fields) ⇒ <code>Operation</code>
 Insert a record
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -61,15 +61,12 @@ execute(
   ))
 )(state)
 ```
-<a name="module_Adaptor.upsert"></a>
+<a name="upsert"></a>
 
-### Adaptor.upsert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.upsert_new"></a>
-
-#### new exports.upsert(table, fields)
+## upsert(table, fields) ⇒ <code>Operation</code>
 Insert or Update a record if matched
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -84,16 +81,13 @@ execute(
   ))
 )(state)
 ```
-<a name="module_Adaptor.upsertMany"></a>
+<a name="upsertMany"></a>
 
-### Adaptor.upsertMany
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsertMany_new"></a>
-
-#### new exports.upsertMany(table, data)
+## upsertMany(table, data) ⇒ <code>Operation</code>
 Insert or update multiple records using ON DUPLICATE KEY
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -110,15 +104,12 @@ upsertMany(
   ]
 )
 ```
-<a name="module_Adaptor.query"></a>
+<a name="query"></a>
 
-### Adaptor.query
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.query_new"></a>
-
-#### new exports.query(options)
+## query(options) ⇒ <code>Operation</code>
 Execute a SQL statement
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -130,15 +121,12 @@ execute(
   query({ sql: 'select * from users;' })
 )(state)
 ```
-<a name="module_Adaptor.sqlString"></a>
+<a name="sqlString"></a>
 
-### Adaptor.sqlString
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.sqlString_new"></a>
-
-#### new exports.sqlString(queryString)
+## sqlString(queryString) ⇒ <code>Operation</code>
 Execute a SQL statement
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

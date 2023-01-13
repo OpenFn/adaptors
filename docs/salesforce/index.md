@@ -1,63 +1,90 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_Adaptor">Adaptor</a></dt>
-<dd></dd>
 <dt><a href="#module_FakeAdaptor">FakeAdaptor</a></dt>
 <dd></dd>
 </dl>
 
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#relationship">relationship(relationshipName, externalId, dataSource)</a> ⇒ <code>object</code></dt>
+<dd><p>Adds a lookup relation or &#39;dome insert&#39; to a record.</p>
+</dd>
+<dt><a href="#describeAll">describeAll(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Outputs basic information about available sObjects.</p>
+</dd>
+<dt><a href="#describe">describe(sObject, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Outputs basic information about an sObject to <code>STDOUT</code>.</p>
+</dd>
+<dt><a href="#retrieve">retrieve(sObject, id, callback, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Retrieves a Salesforce sObject(s).</p>
+</dd>
+<dt><a href="#query">query(qs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Execute an SOQL query.
+Note that in an event of a query error,
+error logs will be printed but the operation will not throw the error.</p>
+</dd>
+<dt><a href="#bulk">bulk(sObject, operation, options, fun, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Create and execute a bulk job.</p>
+</dd>
+<dt><a href="#destroy">destroy(sObject, attrs, options, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Delete records of an object.</p>
+</dd>
+<dt><a href="#create">create(sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Create a new object.</p>
+</dd>
+<dt><a href="#createIf">createIf(logical, sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Create a new object if conditions are met.</p>
+</dd>
+<dt><a href="#upsert">upsert(sObject, externalId, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Upsert an object.</p>
+</dd>
+<dt><a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Upsert if conditions are met.</p>
+</dd>
+<dt><a href="#update">update(sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dd><p>Update an object.</p>
+</dd>
+<dt><a href="#reference">reference(position, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Get a reference ID by an index.</p>
+</dd>
+<dt><a href="#createConnection">createConnection(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Creates a connection.</p>
+</dd>
+<dt><a href="#login">login(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Performs a login.</p>
+</dd>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Executes an operation.</p>
+</dd>
+<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dd><p>Removes unserializable keys from the state.</p>
+</dd>
+<dt><a href="#steps">steps()</a> ⇒ <code>Array</code></dt>
+<dd><p>Flattens an array of operations.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * _static_
-        * [.relationship](#module_Adaptor.relationship)
-            * [new exports.relationship(relationshipName, externalId, dataSource)](#new_module_Adaptor.relationship_new)
-        * [.describeAll](#module_Adaptor.describeAll)
-            * [new exports.describeAll(state)](#new_module_Adaptor.describeAll_new)
-        * [.describe](#module_Adaptor.describe)
-            * [new exports.describe(sObject, state)](#new_module_Adaptor.describe_new)
-        * [.retrieve](#module_Adaptor.retrieve)
-            * [new exports.retrieve(sObject, id, callback, state)](#new_module_Adaptor.retrieve_new)
-        * [.query](#module_Adaptor.query)
-            * [new exports.query(qs, state)](#new_module_Adaptor.query_new)
-        * [.bulk](#module_Adaptor.bulk)
-            * [new exports.bulk(sObject, operation, options, fun, state)](#new_module_Adaptor.bulk_new)
-        * [.destroy](#module_Adaptor.destroy)
-            * [new exports.destroy(sObject, attrs, options, state)](#new_module_Adaptor.destroy_new)
-        * [.create](#module_Adaptor.create)
-            * [new exports.create(sObject, attrs, state)](#new_module_Adaptor.create_new)
-        * [.createIf](#module_Adaptor.createIf)
-            * [new exports.createIf(logical, sObject, attrs, state)](#new_module_Adaptor.createIf_new)
-        * [.upsert](#module_Adaptor.upsert)
-            * [new exports.upsert(sObject, externalId, attrs, state)](#new_module_Adaptor.upsert_new)
-        * [.upsertIf](#module_Adaptor.upsertIf)
-            * [new exports.upsertIf(logical, sObject, externalId, attrs, state)](#new_module_Adaptor.upsertIf_new)
-        * [.update](#module_Adaptor.update)
-            * [new exports.update(sObject, attrs, state)](#new_module_Adaptor.update_new)
-        * [.reference](#module_Adaptor.reference)
-            * [new exports.reference(position, state)](#new_module_Adaptor.reference_new)
-        * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>State</code>
-        * [.steps()](#module_Adaptor.steps) ⇒ <code>Array</code>
-    * _inner_
-        * [~createConnection(state)](#module_Adaptor..createConnection) ⇒ <code>State</code>
-        * [~login(state)](#module_Adaptor..login) ⇒ <code>State</code>
-        * [~cleanupState(state)](#module_Adaptor..cleanupState) ⇒ <code>State</code>
-        * [~State](#module_Adaptor..State) : <code>Object</code>
-        * [~Operation](#module_Adaptor..Operation) : <code>function</code>
+## Typedefs
 
-<a name="module_Adaptor.relationship"></a>
+<dl>
+<dt><a href="#State">State</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#Operation">Operation</a> : <code>function</code></dt>
+<dd></dd>
+</dl>
 
-### Adaptor.relationship
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.relationship_new"></a>
+<a name="module_FakeAdaptor"></a>
 
-#### new exports.relationship(relationshipName, externalId, dataSource)
+## FakeAdaptor
+<a name="relationship"></a>
+
+## relationship(relationshipName, externalId, dataSource) ⇒ <code>object</code>
 Adds a lookup relation or 'dome insert' to a record.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -72,99 +99,84 @@ Data Sourced Value:
 Fixed Value:
  relationship("relationship_name__r", "externalID on related object", "hello world")
 ```
-<a name="module_Adaptor.describeAll"></a>
+<a name="describeAll"></a>
 
-### Adaptor.describeAll
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.describeAll_new"></a>
-
-#### new exports.describeAll(state)
+## describeAll(state) ⇒ [<code>State</code>](#State)
 Outputs basic information about available sObjects.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
 describeAll()
 ```
-<a name="module_Adaptor.describe"></a>
+<a name="describe"></a>
 
-### Adaptor.describe
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.describe_new"></a>
-
-#### new exports.describe(sObject, state)
+## describe(sObject, state) ⇒ [<code>State</code>](#State)
 Outputs basic information about an sObject to `STDOUT`.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
 describe('obj_name')
 ```
-<a name="module_Adaptor.retrieve"></a>
+<a name="retrieve"></a>
 
-### Adaptor.retrieve
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.retrieve_new"></a>
-
-#### new exports.retrieve(sObject, id, callback, state)
+## retrieve(sObject, id, callback, state) ⇒ [<code>State</code>](#State)
 Retrieves a Salesforce sObject(s).
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | The sObject to retrieve |
 | id | <code>String</code> | The id of the record |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
-| state | <code>State</code> | Runtime state |
+| state | [<code>State</code>](#State) | Runtime state |
 
 **Example**  
 ```js
 retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ```
-<a name="module_Adaptor.query"></a>
+<a name="query"></a>
 
-### Adaptor.query
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.query_new"></a>
-
-#### new exports.query(qs, state)
+## query(qs, state) ⇒ [<code>Operation</code>](#Operation)
 Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | qs | <code>String</code> | A query string. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
 query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```
-<a name="module_Adaptor.bulk"></a>
+<a name="bulk"></a>
 
-### Adaptor.bulk
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.bulk_new"></a>
-
-#### new exports.bulk(sObject, operation, options, fun, state)
+## bulk(sObject, operation, options, fun, state) ⇒ [<code>Operation</code>](#Operation)
 Create and execute a bulk job.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -172,7 +184,7 @@ Create and execute a bulk job.
 | operation | <code>String</code> | The bulk operation to be performed |
 | options | <code>Object</code> | Options passed to the bulk api. |
 | fun | <code>function</code> | A function which takes state and returns an array. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -182,23 +194,20 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
   })
 });
 ```
-<a name="module_Adaptor.destroy"></a>
+<a name="destroy"></a>
 
-### Adaptor.destroy
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.destroy_new"></a>
-
-#### new exports.destroy(sObject, attrs, options, state)
+## destroy(sObject, attrs, options, state) ⇒ [<code>Operation</code>](#Operation)
 Delete records of an object.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Array of IDs of records to delete. |
 | options | <code>Object</code> | Options for the destroy delete operation. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -207,22 +216,19 @@ destroy('obj_name', [
  '0090n00000JQEWHYAA5
 ], { failOnError: true })
 ```
-<a name="module_Adaptor.create"></a>
+<a name="create"></a>
 
-### Adaptor.create
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.create_new"></a>
-
-#### new exports.create(sObject, attrs, state)
+## create(sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
 Create a new object.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -231,23 +237,20 @@ create('obj_name', {
   attr2: "bar"
 })
 ```
-<a name="module_Adaptor.createIf"></a>
+<a name="createIf"></a>
 
-### Adaptor.createIf
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.createIf_new"></a>
-
-#### new exports.createIf(logical, sObject, attrs, state)
+## createIf(logical, sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
 Create a new object if conditions are met.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | logical | <code>boolean</code> | a logical statement that will be evaluated. |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -256,23 +259,20 @@ createIf(true, 'obj_name', {
   attr2: "bar"
 })
 ```
-<a name="module_Adaptor.upsert"></a>
+<a name="upsert"></a>
 
-### Adaptor.upsert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsert_new"></a>
-
-#### new exports.upsert(sObject, externalId, attrs, state)
+## upsert(sObject, externalId, attrs, state) ⇒ [<code>Operation</code>](#Operation)
 Upsert an object.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | externalId | <code>String</code> | ID. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -281,16 +281,13 @@ upsert('obj_name', 'ext_id', {
   attr2: "bar"
 })
 ```
-<a name="module_Adaptor.upsertIf"></a>
+<a name="upsertIf"></a>
 
-### Adaptor.upsertIf
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsertIf_new"></a>
-
-#### new exports.upsertIf(logical, sObject, externalId, attrs, state)
+## upsertIf(logical, sObject, externalId, attrs, state) ⇒ [<code>Operation</code>](#Operation)
 Upsert if conditions are met.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -298,7 +295,7 @@ Upsert if conditions are met.
 | sObject | <code>String</code> | API name of the sObject. |
 | externalId | <code>String</code> | ID. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -307,22 +304,19 @@ upsertIf(true, 'obj_name', 'ext_id', {
   attr2: "bar"
 })
 ```
-<a name="module_Adaptor.update"></a>
+<a name="update"></a>
 
-### Adaptor.update
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.update_new"></a>
-
-#### new exports.update(sObject, attrs, state)
+## update(sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
 Update an object.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | <code>State</code> | Runtime state. |
+| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -331,43 +325,85 @@ update('obj_name', {
   attr2: "bar"
 })
 ```
-<a name="module_Adaptor.reference"></a>
+<a name="reference"></a>
 
-### Adaptor.reference
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.reference_new"></a>
-
-#### new exports.reference(position, state)
+## reference(position, state) ⇒ [<code>State</code>](#State)
 Get a reference ID by an index.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | position | <code>number</code> | Position for references array. |
-| state | <code>State</code> | Array of references. |
+| state | [<code>State</code>](#State) | Array of references. |
 
 **Example**  
 ```js
 reference(0)
 ```
-<a name="module_Adaptor.execute"></a>
+<a name="createConnection"></a>
 
-### Adaptor.execute(operations) ⇒ <code>State</code>
-Executes an operation.
+## createConnection(state) ⇒ [<code>State</code>](#State)
+Creates a connection.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| operations | <code>Operation</code> | Operations |
+| state | [<code>State</code>](#State) | Runtime state. |
 
-<a name="module_Adaptor.steps"></a>
+**Example**  
+```js
+createConnection(state)
+```
+<a name="login"></a>
 
-### Adaptor.steps() ⇒ <code>Array</code>
+## login(state) ⇒ [<code>State</code>](#State)
+Performs a login.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | [<code>State</code>](#State) | Runtime state. |
+
+**Example**  
+```js
+login(state)
+```
+<a name="execute"></a>
+
+## execute(operations) ⇒ [<code>State</code>](#State)
+Executes an operation.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| operations | [<code>Operation</code>](#Operation) | Operations |
+
+<a name="cleanupState"></a>
+
+## cleanupState(state) ⇒ [<code>State</code>](#State)
+Removes unserializable keys from the state.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| state | [<code>State</code>](#State) | 
+
+**Example**  
+```js
+cleanupState(state)
+```
+<a name="steps"></a>
+
+## steps() ⇒ <code>Array</code>
 Flattens an array of operations.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Example**  
 ```js
 steps(
@@ -375,55 +411,10 @@ steps(
   update(params)
 )
 ```
-<a name="module_Adaptor..createConnection"></a>
+<a name="State"></a>
 
-### Adaptor~createConnection(state) ⇒ <code>State</code>
-Creates a connection.
-
-**Kind**: inner method of [<code>Adaptor</code>](#module_Adaptor)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-createConnection(state)
-```
-<a name="module_Adaptor..login"></a>
-
-### Adaptor~login(state) ⇒ <code>State</code>
-Performs a login.
-
-**Kind**: inner method of [<code>Adaptor</code>](#module_Adaptor)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-login(state)
-```
-<a name="module_Adaptor..cleanupState"></a>
-
-### Adaptor~cleanupState(state) ⇒ <code>State</code>
-Removes unserializable keys from the state.
-
-**Kind**: inner method of [<code>Adaptor</code>](#module_Adaptor)  
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**  
-```js
-cleanupState(state)
-```
-<a name="module_Adaptor..State"></a>
-
-### Adaptor~State : <code>Object</code>
-**Kind**: inner typedef of [<code>Adaptor</code>](#module_Adaptor)  
+## State : <code>Object</code>
+**Kind**: global typedef  
 **Properties**
 
 | Name | Type | Description |
@@ -431,15 +422,12 @@ cleanupState(state)
 | data | <code>object</code> | JSON Data. |
 | references | <code>Array.&lt;Reference&gt;</code> | History of all previous operations. |
 
-<a name="module_Adaptor..Operation"></a>
+<a name="Operation"></a>
 
-### Adaptor~Operation : <code>function</code>
-**Kind**: inner typedef of [<code>Adaptor</code>](#module_Adaptor)  
+## Operation : <code>function</code>
+**Kind**: global typedef  
 
 | Param | Type |
 | --- | --- |
-| state | <code>State</code> | 
+| state | [<code>State</code>](#State) | 
 
-<a name="module_FakeAdaptor"></a>
-
-## FakeAdaptor

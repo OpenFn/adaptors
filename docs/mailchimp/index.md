@@ -1,27 +1,28 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#upsertMembers">upsertMembers(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Add members to a particular audience</p>
+</dd>
+<dt><a href="#tagMembers">tagMembers(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Tag members with a particular tag</p>
+</dd>
+<dt><a href="#startBatch">startBatch(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Start a batch with a list of operations.</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.upsertMembers](#module_Adaptor.upsertMembers)
-        * [new exports.upsertMembers(params)](#new_module_Adaptor.upsertMembers_new)
-    * [.tagMembers](#module_Adaptor.tagMembers)
-        * [new exports.tagMembers(params)](#new_module_Adaptor.tagMembers_new)
-    * [.startBatch](#module_Adaptor.startBatch)
-        * [new exports.startBatch(params)](#new_module_Adaptor.startBatch_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -34,15 +35,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.upsertMembers"></a>
+<a name="upsertMembers"></a>
 
-### Adaptor.upsertMembers
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.upsertMembers_new"></a>
-
-#### new exports.upsertMembers(params)
+## upsertMembers(params) ⇒ <code>Operation</code>
 Add members to a particular audience
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -52,15 +50,12 @@ Add members to a particular audience
 ```js
 upsertMembers(params)
 ```
-<a name="module_Adaptor.tagMembers"></a>
+<a name="tagMembers"></a>
 
-### Adaptor.tagMembers
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.tagMembers_new"></a>
-
-#### new exports.tagMembers(params)
+## tagMembers(params) ⇒ <code>Operation</code>
 Tag members with a particular tag
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -70,15 +65,12 @@ Tag members with a particular tag
 ```js
 tagMembers(params)
 ```
-<a name="module_Adaptor.startBatch"></a>
+<a name="startBatch"></a>
 
-### Adaptor.startBatch
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.startBatch_new"></a>
-
-#### new exports.startBatch(params)
+## startBatch(params) ⇒ <code>Operation</code>
 Start a batch with a list of operations.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -1,13 +1,52 @@
-## Modules
-
-<dl>
-<dt><a href="#module_Adaptor">Adaptor</a></dt>
-<dd></dd>
-</dl>
-
 ## Functions
 
 <dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for DHIS2.</p>
+</dd>
+<dt><a href="#configMigrationHelper">configMigrationHelper(state)</a> ⇒ <code>object</code></dt>
+<dd><p>Migrates <code>apiUrl</code> to <code>hostUrl</code> if <code>hostUrl</code> is <code>blank</code>.
+For <code>OpenFn.org</code> users with the <code>old-style configuration</code>.</p>
+</dd>
+<dt><a href="#create">create(resourceType, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a record</p>
+</dd>
+<dt><a href="#update">update(resourceType, path, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update data. A generic helper function to update a resource object of any type.
+Updating an object requires to send <code>all required fields</code> or the <code>full body</code></p>
+</dd>
+<dt><a href="#get">get(resourceType, query, [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get data. Generic helper method for getting data of any kind from DHIS2.</p>
+<ul>
+<li>This can be used to get <code>DataValueSets</code>,<code>events</code>,<code>trackedEntityInstances</code>,<code>etc.</code></li>
+</ul>
+</dd>
+<dt><a href="#upsert">upsert(resourceType, query, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.</p>
+</dd>
+<dt><a href="#discover">discover(httpMethod, endpoint)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Discover <code>DHIS2</code> <code>api</code> <code>endpoint</code> <code>query parameters</code> and allowed <code>operators</code> for a given resource&#39;s endpoint.</p>
+</dd>
+<dt><a href="#patch">patch(resourceType, path, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Patch a record. A generic helper function to send partial updates on one or more object properties.</p>
+<ul>
+<li>You are not required to send the full body of object properties.</li>
+<li>This is useful for cases where you don&#39;t want or need to update all properties on a object.</li>
+</ul>
+</dd>
+<dt><a href="#destroy">destroy(resourceType, path, [data], [options], [callback])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Delete a record. A generic helper function to delete an object</p>
+</dd>
+<dt><a href="#findAttributeValue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a> ⇒ <code>string</code></dt>
+<dd><p>Gets an attribute value by its case-insensitive display name</p>
+</dd>
+<dt><a href="#attr">attr(attribute, value)</a> ⇒ <code>object</code></dt>
+<dd><p>Converts an attribute ID and value into a DSHI2 attribute object</p>
+</dd>
+<dt><a href="#dv">dv(dataElement, value)</a> ⇒ <code>object</code></dt>
+<dd><p>Converts a dataElement and value into a DSHI2 dataValue object</p>
+</dd>
 <dt><a href="#request">request(configuration, axiosRequest)</a> ⇒ <code>Promise</code></dt>
 <dd><p>The request client takes configuration from state and an axios request object
 then (1) logs the method and URL, (2) applies standard headers and auth
@@ -19,48 +58,13 @@ axios request.</p>
 </dd>
 </dl>
 
-<a name="module_Adaptor"></a>
+<a name="execute"></a>
 
-## Adaptor
-
-* [Adaptor](#module_Adaptor)
-    * _static_
-        * [.execute](#module_Adaptor.execute)
-            * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-        * [.create](#module_Adaptor.create)
-            * [new exports.create(resourceType, data, [options], [callback])](#new_module_Adaptor.create_new)
-        * [.update](#module_Adaptor.update)
-            * [new exports.update(resourceType, path, data, [options], [callback])](#new_module_Adaptor.update_new)
-        * [.get](#module_Adaptor.get)
-            * [new exports.get(resourceType, query, [options], [callback])](#new_module_Adaptor.get_new)
-        * [.upsert](#module_Adaptor.upsert)
-            * [new exports.upsert(resourceType, query, data, [options], [callback])](#new_module_Adaptor.upsert_new)
-        * [.discover](#module_Adaptor.discover)
-            * [new exports.discover(httpMethod, endpoint)](#new_module_Adaptor.discover_new)
-        * [.patch](#module_Adaptor.patch)
-            * [new exports.patch(resourceType, path, data, [options], [callback])](#new_module_Adaptor.patch_new)
-        * [.destroy](#module_Adaptor.destroy)
-            * [new exports.destroy(resourceType, path, [data], [options], [callback])](#new_module_Adaptor.destroy_new)
-        * [.findAttributeValue](#module_Adaptor.findAttributeValue)
-            * [new exports.findAttributeValue(trackedEntityInstance, attributeDisplayName)](#new_module_Adaptor.findAttributeValue_new)
-        * [.attr](#module_Adaptor.attr)
-            * [new exports.attr(attribute, value)](#new_module_Adaptor.attr_new)
-        * [.dv](#module_Adaptor.dv)
-            * [new exports.dv(dataElement, value)](#new_module_Adaptor.dv_new)
-    * _inner_
-        * [~configMigrationHelper](#module_Adaptor..configMigrationHelper)
-            * [new configMigrationHelper(state)](#new_module_Adaptor..configMigrationHelper_new)
-
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for DHIS2.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -73,16 +77,29 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.create"></a>
+<a name="configMigrationHelper"></a>
 
-### Adaptor.create
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.create_new"></a>
+## configMigrationHelper(state) ⇒ <code>object</code>
+Migrates `apiUrl` to `hostUrl` if `hostUrl` is `blank`.
+For `OpenFn.org` users with the `old-style configuration`.
 
-#### new exports.create(resourceType, data, [options], [callback])
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>object</code> | the runtime state |
+
+**Example**  
+```js
+configMigrationHelper(state)
+```
+<a name="create"></a>
+
+## create(resourceType, data, [options], [callback]) ⇒ <code>Operation</code>
 Create a record
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -203,17 +220,14 @@ create('enrollments', {
   incidentDate: '2013-09-17',
 });
 ```
-<a name="module_Adaptor.update"></a>
+<a name="update"></a>
 
-### Adaptor.update
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.update_new"></a>
-
-#### new exports.update(resourceType, path, data, [options], [callback])
+## update(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
 Update data. A generic helper function to update a resource object of any type.
 Updating an object requires to send `all required fields` or the `full body`
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -366,18 +380,15 @@ update('enrollments', 'CmsHzercTBa' {
   incidentDate: '2013-10-17',
 });
 ```
-<a name="module_Adaptor.get"></a>
+<a name="get"></a>
 
-### Adaptor.get
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.get_new"></a>
-
-#### new exports.get(resourceType, query, [options], [callback])
+## get(resourceType, query, [options], [callback]) ⇒ <code>Operation</code>
 Get data. Generic helper method for getting data of any kind from DHIS2.
 - This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
 
+**Kind**: global function  
 **Returns**: <code>Operation</code> - state  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -406,20 +417,17 @@ get('trackedEntityInstances', {
   filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],
 });
 ```
-<a name="module_Adaptor.upsert"></a>
+<a name="upsert"></a>
 
-### Adaptor.upsert
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.upsert_new"></a>
-
-#### new exports.upsert(resourceType, query, data, [options], [callback])
+## upsert(resourceType, query, data, [options], [callback]) ⇒ <code>Operation</code>
 Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
 
+**Kind**: global function  
 **Throws**:
 
 - <code>RangeError</code> - Throws range error
 
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -445,16 +453,13 @@ upsert('trackedEntityInstances', {
  ],
 });
 ```
-<a name="module_Adaptor.discover"></a>
+<a name="discover"></a>
 
-### Adaptor.discover
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.discover_new"></a>
-
-#### new exports.discover(httpMethod, endpoint)
+## discover(httpMethod, endpoint) ⇒ <code>Operation</code>
 Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -465,18 +470,15 @@ Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for
 ```js
 discover('post', '/trackedEntityInstances')
 ```
-<a name="module_Adaptor.patch"></a>
+<a name="patch"></a>
 
-### Adaptor.patch
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.patch_new"></a>
-
-#### new exports.patch(resourceType, path, data, [options], [callback])
+## patch(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
 Patch a record. A generic helper function to send partial updates on one or more object properties.
 - You are not required to send the full body of object properties.
 - This is useful for cases where you don't want or need to update all properties on a object.
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -490,16 +492,13 @@ Patch a record. A generic helper function to send partial updates on one or more
 ```js
 patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
 ```
-<a name="module_Adaptor.destroy"></a>
+<a name="destroy"></a>
 
-### Adaptor.destroy
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.destroy_new"></a>
-
-#### new exports.destroy(resourceType, path, [data], [options], [callback])
+## destroy(resourceType, path, [data], [options], [callback]) ⇒ <code>Operation</code>
 Delete a record. A generic helper function to delete an object
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -513,16 +512,13 @@ Delete a record. A generic helper function to delete an object
 ```js
 destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
 ```
-<a name="module_Adaptor.findAttributeValue"></a>
+<a name="findAttributeValue"></a>
 
-### Adaptor.findAttributeValue
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.findAttributeValue_new"></a>
-
-#### new exports.findAttributeValue(trackedEntityInstance, attributeDisplayName)
+## findAttributeValue(trackedEntityInstance, attributeDisplayName) ⇒ <code>string</code>
 Gets an attribute value by its case-insensitive display name
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -533,16 +529,13 @@ Gets an attribute value by its case-insensitive display name
 ```js
 findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
 ```
-<a name="module_Adaptor.attr"></a>
+<a name="attr"></a>
 
-### Adaptor.attr
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.attr_new"></a>
-
-#### new exports.attr(attribute, value)
+## attr(attribute, value) ⇒ <code>object</code>
 Converts an attribute ID and value into a DSHI2 attribute object
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -553,16 +546,13 @@ Converts an attribute ID and value into a DSHI2 attribute object
 ```js
 attr('w75KJ2mc4zz', 'Elias')
 ```
-<a name="module_Adaptor.dv"></a>
+<a name="dv"></a>
 
-### Adaptor.dv
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-**Access**: public  
-<a name="new_module_Adaptor.dv_new"></a>
-
-#### new exports.dv(dataElement, value)
+## dv(dataElement, value) ⇒ <code>object</code>
 Converts a dataElement and value into a DSHI2 dataValue object
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -572,25 +562,6 @@ Converts a dataElement and value into a DSHI2 dataValue object
 **Example**  
 ```js
 dv('f7n9E0hX8qk', 12)
-```
-<a name="module_Adaptor..configMigrationHelper"></a>
-
-### Adaptor~configMigrationHelper
-**Kind**: inner class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor..configMigrationHelper_new"></a>
-
-#### new configMigrationHelper(state)
-Migrates `apiUrl` to `hostUrl` if `hostUrl` is `blank`.
-For `OpenFn.org` users with the `old-style configuration`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>object</code> | the runtime state |
-
-**Example**  
-```js
-configMigrationHelper(state)
 ```
 <a name="request"></a>
 

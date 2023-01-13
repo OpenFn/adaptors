@@ -1,23 +1,45 @@
-<a name="module_Adaptor"></a>
+## Members
 
-## Adaptor
+<dl>
+<dt><a href="#auth">auth</a></dt>
+<dd><p>Do we have a mechanism to retrieve those from configuration</p>
+</dd>
+<dt><a href="#params">params</a></dt>
+<dd><p>Specify query parameters that may include OCL Data Source, MappingType, includion and exclusion values</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * _static_
-        * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-        * [.map(state, [params])](#module_Adaptor.map) ⇒ <code>Operation</code>
-            * [~retrievedMapping](#module_Adaptor.map..retrievedMapping)
-    * _inner_
-        * [~auth](#module_Adaptor..auth)
-        * [~params](#module_Adaptor..params)
+## Functions
 
-<a name="module_Adaptor.execute"></a>
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#map">map(state, [params])</a> ⇒ <code>Operation</code></dt>
+<dd><p>Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure</p>
+</dd>
+</dl>
 
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+<a name="auth"></a>
+
+## auth
+Do we have a mechanism to retrieve those from configuration
+
+**Kind**: global variable  
+<a name="params"></a>
+
+## params
+Specify query parameters that may include OCL Data Source, MappingType, includion and exclusion values
+
+**Kind**: global variable  
+<a name="execute"></a>
+
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -30,12 +52,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.map"></a>
+<a name="map"></a>
 
-### Adaptor.map(state, [params]) ⇒ <code>Operation</code>
+## map(state, [params]) ⇒ <code>Operation</code>
 Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -47,23 +69,11 @@ Replaces source keys(data elements) to destination keys(data elements) with out 
 ```js
 mapp(state, state)
 ```
-<a name="module_Adaptor.map..retrievedMapping"></a>
+<a name="map..retrievedMapping"></a>
 
-#### map~retrievedMapping
+### map~retrievedMapping
 In order to minimize web trafic, already accessed mapping
 information is put into this variable to
 reuse values for the consucutive keys.
 
-**Kind**: inner constant of [<code>map</code>](#module_Adaptor.map)  
-<a name="module_Adaptor..auth"></a>
-
-### Adaptor~auth
-Do we have a mechanism to retrieve those from configuration
-
-**Kind**: inner property of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="module_Adaptor..params"></a>
-
-### Adaptor~params
-Specify query parameters that may include OCL Data Source, MappingType, includion and exclusion values
-
-**Kind**: inner property of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: inner constant of [<code>map</code>](#map)  

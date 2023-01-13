@@ -1,18 +1,22 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#postMessage">postMessage(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Post a message</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.postMessage(params)](#module_Adaptor.postMessage) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -25,12 +29,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.postMessage"></a>
+<a name="postMessage"></a>
 
-### Adaptor.postMessage(params) ⇒ <code>Operation</code>
+## postMessage(params) ⇒ <code>Operation</code>
 Post a message
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

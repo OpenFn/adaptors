@@ -1,20 +1,28 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#getForms">getForms(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a request to get the list of forms</p>
+</dd>
+<dt><a href="#getSubmissions">getSubmissions(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get submissions for a specific form</p>
+</dd>
+<dt><a href="#getDeploymentInfo">getDeploymentInfo(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get deployment information for a specific form</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.getForms(params, callback)](#module_Adaptor.getForms) ⇒ <code>Operation</code>
-    * [.getSubmissions(params, callback)](#module_Adaptor.getSubmissions) ⇒ <code>Operation</code>
-    * [.getDeploymentInfo(params, callback)](#module_Adaptor.getDeploymentInfo) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -27,12 +35,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.getForms"></a>
+<a name="getForms"></a>
 
-### Adaptor.getForms(params, callback) ⇒ <code>Operation</code>
+## getForms(params, callback) ⇒ <code>Operation</code>
 Make a request to get the list of forms
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -47,12 +55,12 @@ getForms({}, state => {
    return state;
 });
 ```
-<a name="module_Adaptor.getSubmissions"></a>
+<a name="getSubmissions"></a>
 
-### Adaptor.getSubmissions(params, callback) ⇒ <code>Operation</code>
+## getSubmissions(params, callback) ⇒ <code>Operation</code>
 Get submissions for a specific form
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -66,12 +74,12 @@ getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
   return state;
 });
 ```
-<a name="module_Adaptor.getDeploymentInfo"></a>
+<a name="getDeploymentInfo"></a>
 
-### Adaptor.getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
+## getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
 Get deployment information for a specific form
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

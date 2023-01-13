@@ -1,27 +1,28 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for beyonic.</p>
+</dd>
+<dt><a href="#createPayment">createPayment(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a payment</p>
+</dd>
+<dt><a href="#createContact">createContact(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a contact</p>
+</dd>
+<dt><a href="#createCollectionRequest">createCollectionRequest(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a collection request</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute](#module_Adaptor.execute)
-        * [new exports.execute(operations)](#new_module_Adaptor.execute_new)
-    * [.createPayment](#module_Adaptor.createPayment)
-        * [new exports.createPayment(data)](#new_module_Adaptor.createPayment_new)
-    * [.createContact](#module_Adaptor.createContact)
-        * [new exports.createContact(data)](#new_module_Adaptor.createContact_new)
-    * [.createCollectionRequest](#module_Adaptor.createCollectionRequest)
-        * [new exports.createCollectionRequest(data)](#new_module_Adaptor.createCollectionRequest_new)
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.execute_new"></a>
-
-#### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for beyonic.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -34,15 +35,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.createPayment"></a>
+<a name="createPayment"></a>
 
-### Adaptor.createPayment
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.createPayment_new"></a>
-
-#### new exports.createPayment(data)
+## createPayment(data) ⇒ <code>Operation</code>
 Create a payment
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -54,15 +52,12 @@ execute(
   createPayment(data)
 )(state)
 ```
-<a name="module_Adaptor.createContact"></a>
+<a name="createContact"></a>
 
-### Adaptor.createContact
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.createContact_new"></a>
-
-#### new exports.createContact(data)
+## createContact(data) ⇒ <code>Operation</code>
 Create a contact
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -74,15 +69,12 @@ execute(
   createContact(data)
 )(state)
 ```
-<a name="module_Adaptor.createCollectionRequest"></a>
+<a name="createCollectionRequest"></a>
 
-### Adaptor.createCollectionRequest
-**Kind**: static class of [<code>Adaptor</code>](#module_Adaptor)  
-<a name="new_module_Adaptor.createCollectionRequest_new"></a>
-
-#### new exports.createCollectionRequest(data)
+## createCollectionRequest(data) ⇒ <code>Operation</code>
 Create a collection request
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

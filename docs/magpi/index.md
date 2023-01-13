@@ -1,19 +1,25 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for magpi.</p>
+</dd>
+<dt><a href="#fetchSurveyData">fetchSurveyData(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a POST request to fetch Magpi data and POST it somewhere else</p>
+</dd>
+<dt><a href="#submitRecord">submitRecord(jsonData)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Submit a record for a form/survey which already exists in a Magpi user account</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.fetchSurveyData(params)](#module_Adaptor.fetchSurveyData) ⇒ <code>Operation</code>
-    * [.submitRecord(jsonData)](#module_Adaptor.submitRecord) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for magpi.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -26,12 +32,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.fetchSurveyData"></a>
+<a name="fetchSurveyData"></a>
 
-### Adaptor.fetchSurveyData(params) ⇒ <code>Operation</code>
+## fetchSurveyData(params) ⇒ <code>Operation</code>
 Make a POST request to fetch Magpi data and POST it somewhere else
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -46,12 +52,12 @@ fetchSurveyData({
  "postUrl": "https://www.openfn.org/inbox/your-inbox-url"
 })
 ```
-<a name="module_Adaptor.submitRecord"></a>
+<a name="submitRecord"></a>
 
-### Adaptor.submitRecord(jsonData) ⇒ <code>Operation</code>
+## submitRecord(jsonData) ⇒ <code>Operation</code>
 Submit a record for a form/survey which already exists in a Magpi user account
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

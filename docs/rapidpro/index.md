@@ -1,21 +1,31 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state.</p>
+</dd>
+<dt><a href="#addContact">addContact(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Adds a new contact to RapidPro</p>
+</dd>
+<dt><a href="#upsertContact">upsertContact(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upserts a contact to RapidPro by URN</p>
+</dd>
+<dt><a href="#startFlow">startFlow(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Start a RapidPro flow for a number of contacts</p>
+</dd>
+<dt><a href="#sendBroadcast">sendBroadcast(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Sends a message to a list of contacts and/or URNs</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.addContact(params, callback)](#module_Adaptor.addContact) ⇒ <code>Operation</code>
-    * [.upsertContact(params, callback)](#module_Adaptor.upsertContact) ⇒ <code>Operation</code>
-    * [.startFlow(params, callback)](#module_Adaptor.startFlow) ⇒ <code>Operation</code>
-    * [.sendBroadcast(params, callback)](#module_Adaptor.sendBroadcast) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -28,12 +38,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.addContact"></a>
+<a name="addContact"></a>
 
-### Adaptor.addContact(params, callback) ⇒ <code>Operation</code>
+## addContact(params, callback) ⇒ <code>Operation</code>
 Adds a new contact to RapidPro
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -49,12 +59,12 @@ addContact({
   urns: ["tel:+250788123123"]
 });
 ```
-<a name="module_Adaptor.upsertContact"></a>
+<a name="upsertContact"></a>
 
-### Adaptor.upsertContact(params, callback) ⇒ <code>Operation</code>
+## upsertContact(params, callback) ⇒ <code>Operation</code>
 Upserts a contact to RapidPro by URN
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -70,12 +80,12 @@ upsertContact({
   urns: ["tel:+250788123123"]
 });
 ```
-<a name="module_Adaptor.startFlow"></a>
+<a name="startFlow"></a>
 
-### Adaptor.startFlow(params, callback) ⇒ <code>Operation</code>
+## startFlow(params, callback) ⇒ <code>Operation</code>
 Start a RapidPro flow for a number of contacts
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -91,12 +101,12 @@ startFlow({
   contacts: ["a052b00c-15b3-48e6-9771-edbaa277a353"]
 });
 ```
-<a name="module_Adaptor.sendBroadcast"></a>
+<a name="sendBroadcast"></a>
 
-### Adaptor.sendBroadcast(params, callback) ⇒ <code>Operation</code>
+## sendBroadcast(params, callback) ⇒ <code>Operation</code>
 Sends a message to a list of contacts and/or URNs
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |

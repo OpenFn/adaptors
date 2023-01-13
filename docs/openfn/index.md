@@ -1,22 +1,22 @@
-## Classes
+## Functions
 
 <dl>
-<dt><a href="#execute">execute</a></dt>
-<dd></dd>
-<dt><a href="#request">request</a></dt>
-<dd></dd>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#request">request(options, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a POST request</p>
+</dd>
 </dl>
 
 <a name="execute"></a>
 
-## execute
-**Kind**: global class  
-<a name="new_execute_new"></a>
-
-### new exports.execute(operations)
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -31,14 +31,11 @@ execute(
 ```
 <a name="request"></a>
 
-## request
-**Kind**: global class  
-**Access**: public  
-<a name="new_request_new"></a>
-
-### new exports.request(options, callback)
+## request(options, callback) ⇒ <code>Operation</code>
 Make a POST request
 
+**Kind**: global function  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

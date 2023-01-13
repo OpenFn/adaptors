@@ -1,19 +1,25 @@
-<a name="module_Adaptor"></a>
+## Functions
 
-## Adaptor
+<dl>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#create">create(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates a resource in a destination system using a POST request</p>
+</dd>
+<dt><a href="#createTransactionBundle">createTransactionBundle(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates a transactionBundle for HAPI FHIR</p>
+</dd>
+</dl>
 
-* [Adaptor](#module_Adaptor)
-    * [.execute(operations)](#module_Adaptor.execute) ⇒ <code>Operation</code>
-    * [.create(path, params, callback)](#module_Adaptor.create) ⇒ <code>Operation</code>
-    * [.createTransactionBundle(params, callback)](#module_Adaptor.createTransactionBundle) ⇒ <code>Operation</code>
+<a name="execute"></a>
 
-<a name="module_Adaptor.execute"></a>
-
-### Adaptor.execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `language-common/execute`, and prepends initial state for http.
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -26,12 +32,12 @@ execute(
   delete('bar')
 )(state)
 ```
-<a name="module_Adaptor.create"></a>
+<a name="create"></a>
 
-### Adaptor.create(path, params, callback) ⇒ <code>Operation</code>
+## create(path, params, callback) ⇒ <code>Operation</code>
 Creates a resource in a destination system using a POST request
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
@@ -44,12 +50,12 @@ Creates a resource in a destination system using a POST request
 ```js
 create("/endpoint", {"foo": "bar"})
 ```
-<a name="module_Adaptor.createTransactionBundle"></a>
+<a name="createTransactionBundle"></a>
 
-### Adaptor.createTransactionBundle(params, callback) ⇒ <code>Operation</code>
+## createTransactionBundle(params, callback) ⇒ <code>Operation</code>
 Creates a transactionBundle for HAPI FHIR
 
-**Kind**: static method of [<code>Adaptor</code>](#module_Adaptor)  
+**Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
