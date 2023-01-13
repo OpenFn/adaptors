@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 4.2.4
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 4.2.3
 
 ### Patch Changes

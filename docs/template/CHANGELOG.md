@@ -1,5 +1,11 @@
 # @openfn/language-template
 
+## 1.7.5
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 1.7.4
 
 ### Patch Changes

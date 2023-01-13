@@ -1,5 +1,11 @@
 # @openfn/language-beyonic
 
+## 0.1.6
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 0.1.5
 
 ### Patch Changes
