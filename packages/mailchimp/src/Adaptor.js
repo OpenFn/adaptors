@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import {
   execute as commonExecute,
   composeNextState,
@@ -17,7 +17,7 @@ import { resolve } from 'path';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -39,7 +39,7 @@ export function execute(...operations) {
  * Add members to a particular audience
  * @example
  * upsertMembers(params)
- * @constructor
+ * @function
  * @param {object} params - a listId, users, and options
  * @returns {Operation}
  */
@@ -72,7 +72,7 @@ export function upsertMembers(params) {
  * Tag members with a particular tag
  * @example
  * tagMembers(params)
- * @constructor
+ * @function
  * @param {object} params - a tagId, members, and a list
  * @returns {Operation}
  */
@@ -96,7 +96,7 @@ export function tagMembers(params) {
  * Start a batch with a list of operations.
  * @example
  * startBatch(params)
- * @constructor
+ * @function
  * @param {object} params - operations batch job
  * @returns {Operation}
  */

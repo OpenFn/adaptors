@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import 'regenerator-runtime/runtime.js';
 import {
   execute as commonExecute,

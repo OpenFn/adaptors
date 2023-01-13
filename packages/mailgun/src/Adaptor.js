@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import {
   execute as commonExecute,
   expandReferences,
@@ -17,7 +17,7 @@ import request from "sync-request";
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

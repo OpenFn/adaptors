@@ -4,7 +4,7 @@ import request from 'request';
 // import { curry, mapValues, flatten } from 'lodash-fp';
 import pkg from 'lodash-fp';
 const { curry, mapValues, flatten } = pkg;
-/** @module Adaptor */
+
 
 /**
  * @typedef {Object} State
@@ -176,7 +176,7 @@ export function execute(...operations) {
 
 /**
  * Removes unserializable keys from the state.
- * @constructor
+ * @function
  * @param {State} state
  * @returns {State}
  */

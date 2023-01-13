@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import axios from 'axios';
 import _ from 'lodash';
 import {
@@ -26,7 +26,7 @@ const { indexOf } = _;
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -49,7 +49,7 @@ export function execute(...operations) {
  * For `OpenFn.org` users with the `old-style configuration`.
  * @example
  * configMigrationHelper(state)
- * @constructor
+ * @function
  * @param {object} state - the runtime state
  * @returns {object}
  */
@@ -122,7 +122,7 @@ axios.interceptors.response.use(
 /**
  * Create a record
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
  * @param {Object} data - Data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
@@ -252,7 +252,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  * Update data. A generic helper function to update a resource object of any type.
  * Updating an object requires to send `all required fields` or the `full body`
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
@@ -416,7 +416,7 @@ export function update(
  * Get data. Generic helper method for getting data of any kind from DHIS2.
  * - This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc.
  * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
  * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
@@ -464,7 +464,7 @@ export function get(resourceType, query, options = {}, callback = false) {
 /**
  * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntityInstances`
  * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
  * @param {Object} data - The data to use for update or create depending on the result of the query.
@@ -528,7 +528,7 @@ export function upsert(
 /**
  * Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
  * @public
- * @constructor
+ * @function
  * @param {string} httpMethod - The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete`
  * @param {string} endpoint - The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets`
  * @returns {Operation}
@@ -625,7 +625,7 @@ export function discover(httpMethod, endpoint) {
  * - You are not required to send the full body of object properties.
  * - This is useful for cases where you don't want or need to update all properties on a object.
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
  * @param {Object} data - Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}`
@@ -671,7 +671,7 @@ export function patch(
 /**
  * Delete a record. A generic helper function to delete an object
  * @public
- * @constructor
+ * @function
  * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc.
  * @param {string} path - Can be an `id` of an `object` or `path` to the `nested object` to `delete`.
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
@@ -717,7 +717,7 @@ export function destroy(
  * @public
  * @example
  * findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
- * @constructor
+ * @function
  * @param {Object} trackedEntityInstance - A tracked entity instance (TEI) object
  * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
  * @returns {string}
@@ -736,7 +736,7 @@ export function findAttributeValue(
  * @public
  * @example
  * attr('w75KJ2mc4zz', 'Elias')
- * @constructor
+ * @function
  * @param {string} attribute - A tracked entity instance (TEI) attribute ID.
  * @param {string} value - The value for that attribute.
  * @returns {object}
@@ -750,7 +750,7 @@ export function attr(attribute, value) {
  * @public
  * @example
  * dv('f7n9E0hX8qk', 12)
- * @constructor
+ * @function
  * @param {string} dataElement - A data element ID.
  * @param {string} value - The value for that data element.
  * @returns {object}

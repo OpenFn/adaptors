@@ -4,7 +4,7 @@ import {
 } from "@openfn/language-common";
 import { google } from "googleapis";
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -14,7 +14,7 @@ import { google } from "googleapis";
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -46,7 +46,7 @@ export function execute(...operations) {
  *     ['Really now!', '$100', '1', '3/20/2016'],
  *   ],
  * })
- * @constructor
+ * @function
  * @param {Object} params - Data object to add to the spreadsheet.
  * @returns {Operation}
  */

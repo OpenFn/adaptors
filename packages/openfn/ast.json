@@ -19,9 +19,8 @@
             "description": "request({method: 'get', path: '/jobs/});"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

@@ -22,7 +22,7 @@ const defaultHeaders = { 'User-Agent': `language-openfn-v${version}` };
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -88,7 +88,7 @@ function logout(state) {
  * @public
  * @example
  *  request({method: 'get', path: '/jobs/});
- * @constructor
+ * @function
  * @param {object} options - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}

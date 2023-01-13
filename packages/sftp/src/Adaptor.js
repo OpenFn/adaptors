@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import {
   execute as commonExecute,
   composeNextState,
@@ -37,7 +37,7 @@ export function execute(...operations) {
  * @public
  * @example
  * list('/some/path/')
- * @constructor
+ * @function
  * @param {string} dirPath - Path to resource
  * @returns {Operation}
  */
@@ -72,7 +72,7 @@ export function list(dirPath) {
  * getCSV(
  *   '/some/path/to_file.csv'
  * );
- * @constructor
+ * @function
  * @param {string} filePath - Path to resource
  * @returns {Operation}
  */
@@ -140,7 +140,7 @@ export function getCSV(filePath) {
  *   '/some/path/to_remove_file.csv',
  *   { delimiter: ';', noheader: true }
  * );
- * @constructor
+ * @function
  * @param {string} localFilePath -  Data source for data to copy to the remote server.
  * @param {string} remoteFilePath - Path to the remote file to be created on the server.
  * @param {object} parsingOptions - Options which can be passed to adjust the read and write stream used in sending the data to the remote server
@@ -177,7 +177,7 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
  *   '/path/To/File',
  *   'utf8',
  * );
- * @constructor
+ * @function
  * @param {string} filePath - Path to resource
  * @param {string} encoding - Character encoding for the json
  * @returns {Operation}
@@ -225,7 +225,7 @@ export function getJSON(filePath, encoding) {
  * @public
  * @example
  * normalizeCSVarray({ delimiter: ';', noheader: true });
- * @constructor
+ * @function
  * @param {options} options - Options passed to csvtojson parser
  * @param {callback} callback - Options passed to csvtojson parser
  * @returns {Operation}

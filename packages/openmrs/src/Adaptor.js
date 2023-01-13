@@ -7,7 +7,7 @@ import request from 'request';
 import { assembleError, tryJson } from './Utils';
 import { resolve as resolveUrl } from 'url';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -86,7 +86,7 @@ function cleanupState(state) {
  * execute(
  *   getPatient({ uuid: 123 })
  * )(state)
- * @constructor
+ * @function
  * @param {object} params - object with uuid for the patient
  * @returns {Operation}
  */
@@ -179,7 +179,7 @@ export function getPatients(criteria, options) {
  *   { identifier: '007' },
  *   { exactlyOne: true }
  * )(state)
- * @constructor
+ * @function
  * @param {object} criteria - Criteria object for the people
  * @param {object} options - Options object for the handling of responses
  * @returns {Operation}
@@ -226,7 +226,7 @@ export function getPeople(criteria, options) {
  * @example
  * execute(
  *   createEncounter(params)(state)
- * @constructor
+ * @function
  * @param {object} params - parameters of the encounter
  * @returns {Operation}
  */
@@ -263,7 +263,7 @@ export function createEncounter(params) {
  *   method: 'GET'
  *   url: 'encounterType'
  * })(state)
- * @constructor
+ * @function
  * @param {object} params - parameters for the request
  * @param {function} callback - a callback to execute on the next state
  * @returns {Operation}

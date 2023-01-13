@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 
 /**
  * @typedef {Object} State
@@ -31,7 +31,7 @@ const { curry, flatten } = loadash;
  *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
  * Fixed Value:
  *  relationship("relationship_name__r", "externalID on related object", "hello world")
- * @constructor
+ * @function
  * @param {string} relationshipName - `__r` relationship field on the record.
  * @param {string} externalId - Salesforce ExternalID field.
  * @param {string} dataSource - resolvable source.
@@ -51,7 +51,7 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @public
  * @example
  * describeAll()
- * @constructor
+ * @function
  * @param {State} state - Runtime state.
  * @returns {State}
  */
@@ -74,7 +74,7 @@ export const describeAll = curry(function (state) {
  * @public
  * @example
  * describe('obj_name')
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {State} state - Runtime state.
  * @returns {State}
@@ -103,7 +103,7 @@ export const describe = curry(function (sObject, state) {
  * @public
  * @example
  * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
- * @constructor
+ * @function
  * @param {String} sObject - The sObject to retrieve
  * @param {String} id - The id of the record
  * @param {Function} callback - A callback to execute once the record is retrieved
@@ -139,7 +139,7 @@ export const retrieve = curry(function (sObject, id, callback, state) {
  * @public
  * @example
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @constructor
+ * @function
  * @param {String} qs - A query string.
  * @param {State} state - Runtime state.
  * @returns {Operation}
@@ -174,7 +174,7 @@ export const query = curry(function (qs, state) {
  *     return { 'Age__c': x.age, 'Name': x.name }
  *   })
  * });
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
@@ -272,7 +272,7 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
  *  '0060n00000JQWHYAA5',
  *  '0090n00000JQEWHYAA5
  * ], { failOnError: true })
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Array of IDs of records to delete.
  * @param {Object} options - Options for the destroy delete operation.
@@ -313,7 +313,7 @@ export const destroy = curry(function (sObject, attrs, options, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
@@ -341,7 +341,7 @@ export const create = curry(function (sObject, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
+ * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
@@ -378,7 +378,7 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
  * @param {Object} attrs - Field attributes for the new object.
@@ -414,7 +414,7 @@ export const upsert = curry(function (sObject, externalId, attrs, state) {
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
+ * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
@@ -466,7 +466,7 @@ export const upsertIf = curry(function (
  *   attr1: "foo",
  *   attr2: "bar"
  * })
- * @constructor
+ * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
@@ -491,7 +491,7 @@ export const update = curry(function (sObject, attrs, state) {
  * @public
  * @example
  * reference(0)
- * @constructor
+ * @function
  * @param {number} position - Position for references array.
  * @param {State} state - Array of references.
  * @returns {State}

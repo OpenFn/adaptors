@@ -6,7 +6,7 @@ import { resolve as resolveUrl } from 'url';
 import mysql from 'mysql';
 import squel from 'squel';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -16,7 +16,7 @@ import squel from 'squel';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -70,7 +70,7 @@ function cleanupState(state) {
  *      field('name', dataValue('name'))
  *   ))
  * )(state)
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {object} fields - A fields object
  * @returns {Operation}
@@ -130,7 +130,7 @@ export function insert(table, fields) {
  *      field('name', dataValue('name'))
  *   ))
  * )(state)
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {object} fields - A fields object
  * @returns {Operation}
@@ -208,7 +208,7 @@ export function upsert(table, fields) {
  *     { name: 'two', email: 'two@openfn.org' },
  *   ]
  * )
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {array} data - An array of objects or a function that returns an array
  * @returns {Operation}
@@ -262,7 +262,7 @@ export function upsertMany(table, data) {
  * execute(
  *   query({ sql: 'select * from users;' })
  * )(state)
- * @constructor
+ * @function
  * @param {object} options - Payload data for the message
  * @returns {Operation}
  */
@@ -303,7 +303,7 @@ export function query(options) {
  * execute(
  *   sqlString(state => "select * from items;")
  * )(state)
- * @constructor
+ * @function
  * @param {String} queryString - A query string (or function which takes state and returns a string)
  * @returns {Operation}
  */

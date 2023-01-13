@@ -5,7 +5,7 @@ import {
 import pg from 'pg';
 import format from 'pg-format';
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -15,7 +15,7 @@ import format from 'pg-format';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -152,7 +152,7 @@ function queryHandler(state, query, options) {
  * @public
  * @example
  * sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
- * @constructor
+ * @function
  * @param {function} sqlQuery - a function which takes state and returns a
  * string of SQL.
  * @param {object} options - Optional options argument
@@ -184,7 +184,7 @@ export function sql(sqlQuery, options) {
  *    where: { first_name: 'Mamadou' },
  *    operator: { first_name: 'like' }
  *  })
- * @constructor
+ * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
  * @returns {Operation}
  */
@@ -239,7 +239,7 @@ export function findValue(filter) {
  * @public
  * @example
  * insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
@@ -277,7 +277,7 @@ export function insert(table, record, options) {
  * @public
  * @example
  * insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
  * @param {object} options - Optional options argument
@@ -328,7 +328,7 @@ export function insertMany(table, records, options) {
  *   { name: 'Elodie', id: 7 },
  *   { setNull: ["''", "'undefined'"], writeSql:true, execute: true, logValues: true }
  * )
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
@@ -389,7 +389,7 @@ export function upsert(table, uuid, record, options) {
  *   { name: 'Elodie', id: 7 },
  *   { writeSql:true, execute: true }
  * )
- * @constructor
+ * @function
  * @param {string} logical - a data to check existing value for.
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
@@ -462,7 +462,7 @@ export function upsertIf(logical, table, uuid, record, options) {
  *   ]
  *  { logValues: true }
  * )
- * @constructor
+ * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {array} data - An array of objects or a function that returns an array
@@ -525,7 +525,7 @@ export function upsertMany(table, uuid, data, options) {
  * @public
  * @example
  * describeTable('clinic_visits')
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to describe
  * @param {object} options - Optional options argument
  * @returns {Operation}
@@ -561,7 +561,7 @@ export function describeTable(tableName, options) {
  *     unique: false, // optional - to be set to true for unique constraint
  *   })
  * ));
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument
@@ -621,7 +621,7 @@ export function insertTable(tableName, columns, options) {
  *     unique: false, // optional - to be set to true for unique constraint
  *   })
  * ));
- * @constructor
+ * @function
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument
