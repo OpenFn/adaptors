@@ -1,4 +1,4 @@
-import craeteBackend from './backend';
+import createBackend from './backend';
 import { createModel, createEntity } from './model';
 
 // TODO - hide hidden and system fields
@@ -14,7 +14,7 @@ import { createModel, createEntity } from './model';
 
 const metadata = async (configuration = {}, mock = false) => {
   // load the helper
-  const helper = await craeteBackend(configuration, mock);
+  const helper = await createBackend(configuration, mock);
 
   // get the globals
   const globals = await helper.getGlobals();

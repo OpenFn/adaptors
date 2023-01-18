@@ -380,9 +380,12 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
  * })
  * @constructor
  * @param {String} sObject - API name of the sObject.
+ * @paramLookup sObject $.entities[?(@.type=="sobject" && !@.system)].name
  * @param {String} externalId - ID.
+ * @paramLookup externalId $.entities[?(@.name=="{{args.sObject}}")].entities[?(@.meta.externalId)].name
  * @param {Object} attrs - Field attributes for the new object.
  * @param {State} state - Runtime state.
+ * @paramLookup attrs $.entities[?(@.name=="{{args.sObject}}")].entities[?(!@.meta.externalId)]
  * @returns {Operation}
  */
 export const upsert = curry(function (sObject, externalId, attrs, state) {
