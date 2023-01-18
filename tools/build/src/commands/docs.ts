@@ -34,6 +34,17 @@ export default async (lang: string) => {
       ).operations.map(op => op.name)
     : [];
 
+  // configuration-schema
+  const configurationSchema = existsSync(`${root}/configuration-schema.json`)
+    ? JSON.parse(
+        await fs.readFile(
+          `${root}/configuration-schema.json`,
+          'utf8',
+          data => data
+        )
+      )
+    : 'No Configuration Schema';
+
   const str = await jsdoc2md.render({
     files: `${root}/src/**/*.js`,
     template: `${template}`,
@@ -47,6 +58,7 @@ export default async (lang: string) => {
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
     functions: functions,
+    'configuration-schema': configurationSchema,
   };
 
   const destinationDir = `${root}/docs`;
