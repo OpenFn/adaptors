@@ -7,8 +7,10 @@ import path from 'node:path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import createBackend from './backend';
+import createHelper, { api } from './helper';
+// import createBackend from './backend';
 import metadata from './metadata';
+import createMock from './create-mock';
 
 // TODO need to run some validation on this stuff before the command runs
 const state = {
@@ -20,17 +22,25 @@ const state = {
   },
 };
 
+const populateMocks = async () => {
+  const helper = await createHelper(state.configuration);
+  const mock = createMock(helper);
+  await mock.getGlobals();
+  await mock.getFields('vera__Attendance__c');
+  await mock.getFields('Asset');
+};
+
 // This will contact SF, pull down data and write it to ./mock
 // Unit tests can then test against that
 const generateGlobals = async () => {
   console.log('Generating global sobjects');
-  const helper = await createBackend(state.configuration);
-  const globals = await helper.fetchGlobals();
-  console.log(`${globals.sobjects.length} sobjects found`);
-  await writeFile(
-    path.resolve('./src/meta/data/globals.json'),
-    JSON.stringify(globals)
-  );
+  const helper = await createHelper(state.configuration);
+  const globals = await helper.getGlobals();
+  console.log(`${globals.length} sobjects found`);
+  // await writeFile(
+  //   path.resolve('./src/meta/data/globals.json'),
+  //   JSON.stringify(globals)
+  // );
   console.log('Done!');
 };
 
@@ -57,10 +67,18 @@ const generate = async () => {
 
 yargs(hideBin(process.argv))
   .command({
+    command: 'populate-mock',
+    desc: 'Populate the mock cache',
+    handler: () => {
+      populateMocks();
+    },
+  })
+  .command({
     command: 'metadata',
     aliases: ['$0'],
     desc: 'Generate metadata from the salesforce sandbox (no cache)',
     handler: () => {
+      console.log('**');
       generate();
     },
   })

@@ -1,4 +1,3 @@
-// look up the
 import { expect } from 'chai';
 import jp from 'jsonpath';
 import path from 'node:path';
@@ -13,7 +12,7 @@ before(async () => {
 });
 
 describe('Salesforce lookup tests', async () => {
-  // Unit unit tests of each query against a sample model
+  // Unit tests of each query against a sample model
   describe('upsert', () => {
     it('sObject: should list non-system sObject names', () => {
       const results = jp.query(data, queries.upsert.sObject);

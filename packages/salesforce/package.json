@@ -18,7 +18,8 @@
     "pack": "pnpm pack --pack-destination ../../dist",
     "load:globals": "node --experimental-specifier-resolution=node src/meta/cli.js globals",
     "load:sobject": "node --experimental-specifier-resolution=node src/meta/cli.js sobject",
-    "metadata": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js"
+    "metadata": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js",
+    "populate-mocks": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js populate-mock"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
