@@ -1,10 +1,5 @@
 import jsforce from 'jsforce';
 
-export const api = {
-  getGlobals: async () => ({}),
-  getFields: async sobjectName => ({}),
-};
-
 const createHelper = configuration => {
   const { loginUrl, username, password, securityToken } = configuration;
 
