@@ -2,13 +2,14 @@
   "name": "@openfn/parse-jsdoc",
   "private": true,
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "Utilities for parsing JSdocs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": "",
   "license": "ISC",
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc -w",
     "test": "pnpm ava"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import jsdoc2md from 'jsdoc-to-markdown';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
+import { fileURLToPath } from 'url';
 
 type JSDocResult = {
   kind: string;
@@ -30,15 +31,16 @@ type JSDocReturn = {
   };
 };
 
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const parseOperations = async (pathToSource: string) => {
   const parsed = (await jsdoc2md.getJsdocData({
     files: [pathToSource],
     'no-cache': true,
-    configure: path.resolve('jsdoc/jsdoc.conf.json'),
+    configure: path.resolve(dirname, '../jsdoc/jsdoc.conf.json'),
   })) as JSDocResult[];
-  return parsed.filter(
-    ({ kind, undocumented }) => !undocumented && kind === 'function'
-  );
+
+  return parsed.filter(({ returns, undocumented }) => !undocumented && returns);
 };
 
 export default parseOperations;

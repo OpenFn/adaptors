@@ -14,16 +14,16 @@ const extractLookups = async (path: string) => {
   const operations = await parseOperations(path);
 
   const result: LookupMap = operations.reduce((acc, fn) => {
-    acc[fn.name] = fn.params.reduce((params, p) => {
-      if (p.lookup) {
-        params[p.name] = p.lookup;
-      }
-      return params;
-    }, {} as { [paramName: string]: string });
-
+    if (fn.params) {
+      acc[fn.name] = fn.params.reduce((params, p) => {
+        if (p.lookup) {
+          params[p.name] = p.lookup;
+        }
+        return params;
+      }, {} as { [paramName: string]: string });
+    }
     return acc;
   }, {} as LookupMap);
-
   return result;
 };
 
