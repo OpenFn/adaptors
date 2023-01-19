@@ -1104,7 +1104,6 @@ importers:
       rimraf: 3.0.2
       sinon: ^14.0.1
       type-detect: 1.0.0
-      yargs: 17.5.1
     dependencies:
       '@openfn/language-common': link:../common
       '@openfn/metadata': link:../../tools/metadata
@@ -1127,7 +1126,6 @@ importers:
       rimraf: 3.0.2
       sinon: 14.0.1
       type-detect: 1.0.0
-      yargs: 17.5.1
 
   packages/sftp:
     specifiers:
@@ -1402,6 +1400,12 @@ importers:
     dependencies:
       '@openfn/language-common': link:../../packages/common
       mocha: 10.1.0
+
+  tools/metadata:
+    specifiers:
+      yargs: ^17.6.2
+    dependencies:
+      yargs: 17.6.2
 
   tools/migrate:
     specifiers:
@@ -11674,19 +11678,6 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.4
-
-  /yargs/17.5.1:
-    resolution: {integrity: sha512-t6YAJcxDkNX7NFYiVtKvWUz8l+PaKTLiL63mJYWR2GnHq2gjEWISzsLp9wg3aY36dY1j+gfIEL3pIF+XlJJfbA==}
-    engines: {node: '>=12'}
-    dependencies:
-      cliui: 7.0.4
-      escalade: 3.1.1
-      get-caller-file: 2.0.5
-      require-directory: 2.1.1
-      string-width: 4.2.3
-      y18n: 5.0.8
-      yargs-parser: 21.1.1
-    dev: true
 
   /yargs/17.6.0:
     resolution: {integrity: sha512-8H/wTDqlSwoSnScvV2N/JHfLWOKuh5MVla9hqLjK3nsfyy6Y4kDSYSvkU5YCUEPOSnRXfIyx3Sq+B/IWudTo4g==}

@@ -15,11 +15,7 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "load:globals": "node --experimental-specifier-resolution=node src/meta/cli.js globals",
-    "load:sobject": "node --experimental-specifier-resolution=node src/meta/cli.js sobject",
-    "metadata": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js",
-    "populate-mocks": "node --experimental-specifier-resolution=node --no-warnings src/meta/cli.js populate-mock"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -55,8 +51,7 @@
     "nock": "13.2.9",
     "rimraf": "3.0.2",
     "sinon": "^14.0.1",
-    "type-detect": "1.0.0",
-    "yargs": "17.5.1"
+    "type-detect": "1.0.0"
   },
   "type": "module",
   "types": "types/index.d.ts",

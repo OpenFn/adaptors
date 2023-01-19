@@ -27,7 +27,7 @@ const createHelper = (configuration = {}) => {
 
   const fetchGlobals = async () =>
     new Promise(resolve => {
-      conn.describeGlobal$((err, desc) => {
+      conn.describeGlobal((err, desc) => {
         resolve(desc);
       });
     });
