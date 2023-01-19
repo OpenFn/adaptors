@@ -1,9 +1,9 @@
 import test from 'ava';
 import path from 'node:path';
-import extractQueries from '../src/extract-queries';
+import extractQueries from '../src/extract-lookups';
 
-test.skip('should extract queries', async t => {
+test('should extract queries', async t => {
   const result = await extractQueries(path.resolve('test/fixtures/example.js'));
 
-  t.is(result.operation.x, '$[*]');
+  t.is(result.operation.y, '$[*]');
 });
