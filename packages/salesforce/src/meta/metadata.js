@@ -3,9 +3,10 @@ import salesforceHelper from './helper';
 import { createModel, createEntity } from './model';
 
 const metadata = async (configuration = {}, mock = false) => {
-  const helper = mock
-    ? createMock(salesforceHelper)
-    : await salesforceHelper(configuration);
+  let helper = await salesforceHelper(configuration);
+  if (mock) {
+    helper = createMock(helper);
+  }
 
   // get the globals
   const globals = await helper.getGlobals();

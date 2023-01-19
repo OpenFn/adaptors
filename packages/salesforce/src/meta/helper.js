@@ -1,6 +1,6 @@
 import jsforce from 'jsforce';
 
-const createHelper = configuration => {
+const createHelper = (configuration = {}) => {
   const { loginUrl, username, password, securityToken } = configuration;
 
   // These are needed by the mock and the real
@@ -11,6 +11,7 @@ const createHelper = configuration => {
       if (deprecatedAndHidden) {
         return false;
       }
+      // TODO filter is deprecated at the moment
       if (configuration.filter) {
         return configuration.filter.includes(name);
       }
@@ -22,9 +23,7 @@ const createHelper = configuration => {
     return describeSobjectResult.fields;
   };
 
-  var conn = new jsforce.Connection({
-    loginUrl,
-  });
+  let conn;
 
   const fetchGlobals = async () =>
     new Promise(resolve => {
@@ -41,20 +40,22 @@ const createHelper = configuration => {
     });
 
   const salesforceHelper = {
-    // _fetchGlobals,
-    // _fetchSobject,
     getGlobals: () => fetchGlobals().then(processGlobals),
     getFields: async sobjectName =>
       fetchSobject(sobjectName).then(processFields),
-
-    // won't be mocked
-    _somethingPrivate: () => {},
   };
 
   return new Promise(resolve => {
-    conn.login(username, password + securityToken, (err, res) => {
+    if (loginUrl) {
+      conn = new jsforce.Connection({
+        loginUrl,
+      });
+      conn.login(username, password + securityToken, (err, res) => {
+        resolve(salesforceHelper);
+      });
+    } else {
       resolve(salesforceHelper);
-    });
+    }
   });
 };
 
