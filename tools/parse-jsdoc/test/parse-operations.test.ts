@@ -3,43 +3,36 @@ import path from 'node:path';
 import parseOperations from '../src/parse-operations';
 
 test('should parse a single operation', async t => {
-  const result = await parseOperations(path.resolve('test/example.js'));
+  const result = await parseOperations(
+    path.resolve('test/fixtures/example.js')
+  );
 
   t.assert(result.length === 1);
 
   const [fn] = result;
   t.is(fn.name, 'operation');
   t.is(fn.description, 'A test operation');
-  t.assert(fn.params.length === 1);
+  t.assert(fn.params.length === 2);
   t.assert(fn.returns.length === 1);
 });
 
-// it.skip('should parse a parameter', () => {
-//   const result = parseOperations(path.resolve('test/example.js'));
+test('should parse a parameter', async t => {
+  const result = await parseOperations(
+    path.resolve('test/fixtures/example.js')
+  );
 
-//   expect(result).toHaveLength(1);
-// });
+  const [x, _y] = result[0].params;
+  t.is(x.name, 'x');
+  t.is(x.description, 'the input value');
+});
 
-// import chai, { expect } from 'chai';
-// import path from 'node:path';
-// import { describe, it } from 'node:test';
-// import parseOperations from '../src/parse-operations';
+test('should parse a parameter with a lookup', async t => {
+  const result = await parseOperations(
+    path.resolve('test/fixtures/example.js')
+  );
 
-// describe('parseOperations', () => {
-//   it('should parse a single operation', async () => {
-//     const result = await parseOperations(path.resolve('test/example.js'));
-
-//     expect(result).to.have.lengthOf(1);
-//     const [fn] = result;
-//     expect(fn.name).to.equal('operation');
-//     expect(fn.description).to.equal('A test operation');
-//     expect(fn.params).to.have.lengthOf(1);
-//     expect(fn.returns).to.have.lengthOf(1);
-//   });
-
-//   // it.skip('should parse a parameter', () => {
-//   //   const result = parseOperations(path.resolve('test/example.js'));
-
-//   //   expect(result).toHaveLength(1);
-//   // });
-// });
+  const [_x, y] = result[0].params;
+  t.is(y.name, 'y');
+  t.is(y.description, 'the other input value');
+  t.is(y.lookup, '$[*]');
+});

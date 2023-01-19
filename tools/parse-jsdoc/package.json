@@ -12,6 +12,7 @@
     "test": "pnpm ava"
   },
   "dependencies": {
+    "@types/jsdoc-to-markdown": "^7.0.3",
     "@types/node": "18.11.7",
     "ava": "^5.1.1",
     "esno": "0.16.3",

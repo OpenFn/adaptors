@@ -1415,6 +1415,7 @@ importers:
 
   tools/parse-jsdoc:
     specifiers:
+      '@types/jsdoc-to-markdown': ^7.0.3
       '@types/node': 18.11.7
       ava: ^5.1.1
       esno: 0.16.3
@@ -1422,6 +1423,7 @@ importers:
       ts-node: 10.9.1
       typescript: 4.8.4
     dependencies:
+      '@types/jsdoc-to-markdown': 7.0.3
       '@types/node': 18.11.7
       ava: 5.1.1
       esno: 0.16.3
@@ -2361,6 +2363,10 @@ packages:
     dependencies:
       ci-info: 3.5.0
     dev: true
+
+  /@types/jsdoc-to-markdown/7.0.3:
+    resolution: {integrity: sha512-bCHNFszkNNpq1adJP8w+E16V26kA2BAGlsclLyfYnaglf/lDOhnYmVxak2Ci4qXvtmxpGnZ53KZNBoi1Uk3NyQ==}
+    dev: false
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
