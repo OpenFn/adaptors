@@ -35,6 +35,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.5",
+    "@openfn/metadata": "workspace:^1.0.0",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "JSONPath": "^0.10.0",
     "axios": "^0.21.1",

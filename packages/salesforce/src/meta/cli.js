@@ -6,10 +6,10 @@ import path from 'node:path';
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { createMock } from '@openfn/metadata';
 
 import createHelper from './helper';
 import metadata from './metadata';
-import createMock from './create-mock';
 
 // TODO need to run some validation on this stuff before the command runs
 const state = {

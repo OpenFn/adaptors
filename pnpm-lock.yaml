@@ -1086,6 +1086,7 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
       '@openfn/language-common': 1.7.5
+      '@openfn/metadata': workspace:^1.0.0
       '@openfn/parse-jsdoc': workspace:^1.0.0
       '@openfn/simple-ast': 0.4.1
       JSONPath: ^0.10.0
@@ -1106,6 +1107,7 @@ importers:
       yargs: 17.5.1
     dependencies:
       '@openfn/language-common': link:../common
+      '@openfn/metadata': link:../../tools/metadata
       '@openfn/parse-jsdoc': link:../../tools/parse-jsdoc
       JSONPath: 0.10.0
       axios: 0.21.4

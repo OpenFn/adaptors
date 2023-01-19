@@ -1,6 +1,5 @@
-//import createBackend from './backend';
 import salesforceHelper from './helper';
-import { createModel, createEntity } from './model';
+import { createModel, createEntity } from '@openfn/metadata';
 
 const metadata = async (configuration = {}, mock = false) => {
   let helper = await salesforceHelper(configuration);
