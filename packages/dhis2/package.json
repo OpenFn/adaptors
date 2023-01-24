@@ -34,9 +34,10 @@
   "dependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/language-common": "workspace:^1.7.5",
+    "@openfn/metadata": "workspace:^1.0.0",
     "axios": "^0.24.0",
     "lodash": "^4.17.19",
-    "qs": "^6.10.3"
+    "qs": "^6.11.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

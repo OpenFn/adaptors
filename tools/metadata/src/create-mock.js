@@ -9,21 +9,28 @@ const getFileName = (fn, ...args) => {
   return `${fn}${extras}.json`;
 };
 
-const createMock = helper => {
+const callHelper = async (helper, fnName, dataPath, ...args) => {
+  const result = await helper[fnName](...args);
+  await fs.mkdir(path.dirname(dataPath), { recursive: true });
+  await fs.writeFile(dataPath, JSON.stringify(result));
+  return result;
+};
+
+const createMock = (helper, options = {}) => {
   const wrap =
     fnName =>
     async (...args) => {
       const dataPath = path.resolve(
         `src/meta/data/${getFileName(fnName, ...args)}`
       );
+      if (options.force) {
+        return callHelper(helper, fnName, dataPath, ...args);
+      }
       try {
         const raw = await fs.readFile(dataPath, 'utf8');
         return JSON.parse(raw);
       } catch (e) {
-        const result = await helper[fnName](...args);
-        await fs.mkdir(path.dirname(dataPath), { recursive: true });
-        await fs.writeFile(dataPath, JSON.stringify(result));
-        return result;
+        return callHelper(helper, fnName, dataPath, ...args);
       }
     };
 

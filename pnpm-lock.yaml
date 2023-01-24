@@ -212,6 +212,7 @@ importers:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
       '@openfn/language-common': workspace:^1.7.5
+      '@openfn/metadata': workspace:^1.0.0
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       axios: ^0.24.0
@@ -222,11 +223,12 @@ importers:
       lodash: ^4.17.19
       mocha: 7.2.0
       nock: 13.2.9
-      qs: ^6.10.3
+      qs: ^6.11.0
       rimraf: 3.0.2
     dependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/language-common': link:../common
+      '@openfn/metadata': link:../../tools/metadata
       axios: 0.24.0
       lodash: 4.17.21
       qs: 6.11.0
