@@ -30,9 +30,20 @@ const createHelper = (configuration = {}) => {
     return response.data;
   };
 
+  // Get a list of program ids
+  const getPrograms = () => {};
+
+  const getTrackedEntityTypes = async () => {
+    const url = generateUrl(configuration, {}, 'trackedEntityTypes');
+
+    const response = await get(url);
+
+    return response.data;
+  };
+
   // get all the attriobutes for a trackedEntityInstanceType
-  const getAttributes = async (orgUnit, entityType) => {
-    const url = generateUrl(configuration, {}, 'organisationUnitProfile');
+  const getAttributes = async () => {
+    const url = generateUrl(configuration, {}, 'attributes');
 
     const response = await get(url);
 
@@ -42,6 +53,8 @@ const createHelper = (configuration = {}) => {
   return {
     getResourceTypes,
     getOrgUnits,
+    getTrackedEntityTypes,
+    getAttributes,
   };
 };
 

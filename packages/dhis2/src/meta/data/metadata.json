@@ -9351,5 +9351,185 @@
     "programs",
     "events",
     "dataSets"
+  ],
+  "getTrackedEntityTypes": [
+    {
+      "name": "TFYpX5EXmYp",
+      "type": "trackedEntityType",
+      "label": "action",
+      "value": "TFYpX5EXmYp",
+      "datatype": "string"
+    },
+    {
+      "name": "bVkFYAvoUCP",
+      "type": "trackedEntityType",
+      "label": "ARV commodity",
+      "value": "bVkFYAvoUCP",
+      "datatype": "string"
+    },
+    {
+      "name": "UinS6TQnkUi",
+      "type": "trackedEntityType",
+      "label": "Borehole / well",
+      "value": "UinS6TQnkUi",
+      "datatype": "string"
+    },
+    {
+      "name": "jLaBp1GaZQ9",
+      "type": "trackedEntityType",
+      "label": "bottleneck",
+      "value": "jLaBp1GaZQ9",
+      "datatype": "string"
+    },
+    {
+      "name": "EawlYwOO61R",
+      "type": "trackedEntityType",
+      "label": "Building",
+      "value": "EawlYwOO61R",
+      "datatype": "string"
+    },
+    {
+      "name": "RNaVTQTPR8z",
+      "type": "trackedEntityType",
+      "label": "Drug batch",
+      "value": "RNaVTQTPR8z",
+      "datatype": "string"
+    },
+    {
+      "name": "hyKZglfYp0C",
+      "type": "trackedEntityType",
+      "label": "Equipment",
+      "value": "hyKZglfYp0C",
+      "datatype": "string"
+    },
+    {
+      "name": "We9I19a3vO1",
+      "type": "trackedEntityType",
+      "label": "Focus area",
+      "value": "We9I19a3vO1",
+      "datatype": "string"
+    },
+    {
+      "name": "kIeke8tAQnd",
+      "type": "trackedEntityType",
+      "label": "Lab sample",
+      "value": "kIeke8tAQnd",
+      "datatype": "string"
+    },
+    {
+      "name": "Zy2SEgA61ys",
+      "type": "trackedEntityType",
+      "label": "Malaria Entity",
+      "value": "Zy2SEgA61ys",
+      "datatype": "string"
+    },
+    {
+      "name": "nEenWmSyUEp",
+      "type": "trackedEntityType",
+      "label": "Person",
+      "value": "nEenWmSyUEp",
+      "datatype": "string"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "DnrLSdo4hMl",
+      "type": "attribute",
+      "label": "Alternative name",
+      "value": "DnrLSdo4hMl",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "ihn1wb9eho8",
+      "type": "attribute",
+      "label": "Catchment area",
+      "value": "ihn1wb9eho8",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "Z4X3J7jMLYV",
+      "type": "attribute",
+      "label": "Classification",
+      "value": "Z4X3J7jMLYV",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "qXS2NDUEAOS",
+      "type": "attribute",
+      "label": "Collection method",
+      "value": "qXS2NDUEAOS",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "UKNKz1H10EE",
+      "type": "attribute",
+      "label": "HR identifier",
+      "value": "UKNKz1H10EE",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "l1VmqIHKk6t",
+      "type": "attribute",
+      "label": "KE code",
+      "value": "l1VmqIHKk6t",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "n2xYlNbsfko",
+      "type": "attribute",
+      "label": "NGO ID",
+      "value": "n2xYlNbsfko",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "dLHLR5O4YFI",
+      "type": "attribute",
+      "label": "PEPFAR ID",
+      "value": "dLHLR5O4YFI",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "AhsCAtM3L0g",
+      "type": "attribute",
+      "label": "Rationale",
+      "value": "AhsCAtM3L0g",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "xqWyz9jNCA5",
+      "type": "attribute",
+      "label": "TZ code",
+      "value": "xqWyz9jNCA5",
+      "meta": {
+        "dataTypes": "string"
+      }
+    },
+    {
+      "name": "Y1LUDU8sWBR",
+      "type": "attribute",
+      "label": "Unit of measure",
+      "value": "Y1LUDU8sWBR",
+      "meta": {
+        "dataTypes": "string"
+      }
+    }
   ]
 }
