@@ -12,20 +12,29 @@ const createModel = datasource => {
   return m;
 };
 
-const createEntity = (name, type, props = {}, children = []) => {
-  const { label, datatype, ...meta } = props;
+const createEntity = (name, type, props = {}, children) => {
+  const { label, datatype, value, ...meta } = props;
 
   const e = {
-    name,
-    type,
-    label,
-    datatype,
-    meta,
-    entities: [],
+    name, // what is this?
+    type, // domain specific type
+    label, // the label to show the user
+    value, // the thing that's inserted in code. Could be a template?
+    datatype, // monaco-facing type
     addEntity: function (e) {
+      if (!this.entities) {
+        this.entities = [];
+      }
       this.entities.push(e);
     },
   };
+
+  if (children) {
+    e.entities = children;
+  }
+  if (meta && Object.keys(meta).length) {
+    e.meta = meta;
+  }
 
   return e;
 };

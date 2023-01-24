@@ -1,5 +1,4 @@
 import { createModel, createEntity } from '@openfn/metadata';
-import { stringify } from 'qs';
 import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, mock = false) => {
@@ -8,18 +7,19 @@ const metadata = async (configuration = {}, mock = false) => {
     helper = createMock(helper);
   }
 
-  const model = createModel('dhis2');
+  const model = {};
 
   const units = await helper.getOrgUnits();
-  const unitModels = units.organisationUnits.map(unit =>
+  model.orgUnits = units.organisationUnits.map(unit =>
     createEntity(unit.id, 'unitOrg', {
       datatype: 'string',
       label: unit.displayName,
+      value: unit.id,
     })
   );
-  const unitsRoot = createEntity('orgUnits');
-  unitsRoot.entities = unitModels;
-  model.addEntity(unitsRoot);
+
+  model.resourceTypes = await helper.getResourceTypes();
+
   return model;
 };
 
