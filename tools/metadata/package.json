@@ -7,6 +7,10 @@
   "main": "src/index.js",
   "author": "",
   "license": "ISC",
+  "type": "module",
+  "bin": {
+    "cli": "src/cli.js"
+  },
   "scripts": {
     "cli": "node --experimental-specifier-resolution=node --no-warnings src/cli.js"
   },

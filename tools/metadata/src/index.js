@@ -1,4 +1,4 @@
-import createMock from './create-mock';
+import createMock from './create-mock.js';
 export { createMock };
 
-export * from './model';
+export * from './model.js';

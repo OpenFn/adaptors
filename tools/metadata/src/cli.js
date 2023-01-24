@@ -5,15 +5,19 @@ import { hideBin } from 'yargs/helpers';
 import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
 
-const generate = async (adaptor, pathToState) => {
-  // config can be json or js
-  let state;
+// config can be json or js
+const loadState = async pathToState => {
   if (pathToState.endsWith('.json')) {
     const raw = fs.readFileSync(pathToState);
-    state = JSON.parse(raw);
+    return JSON.parse(raw);
   } else {
-    state = (await import(pathToState)).default;
+    const mod = await import(pathToState);
+    return mod.default;
   }
+};
+
+const generate = async (adaptor, pathToState) => {
+  const state = await loadState(pathToState);
 
   // import meta direct?
   // Or can we import { metadata } from root?
@@ -30,6 +34,19 @@ const generate = async (adaptor, pathToState) => {
   );
 };
 
+const populateMocks = async (adaptor, pathToState) => {
+  const state = await loadState(path.resolve(pathToState));
+
+  const pathToModule = path.resolve(
+    '../../packages',
+    adaptor,
+    'src/meta/populate-mock-data.js'
+  );
+  // TODO check it exists
+  const fn = (await import(pathToModule)).default;
+  await fn(state);
+};
+
 /*
  * The CLI needs to:
  * a) run the metadata function for a given adaptor and config (and write to disk)
@@ -37,13 +54,13 @@ const generate = async (adaptor, pathToState) => {
  * Is there more it can do to help create new metadata functions?
  */
 yargs(hideBin(process.argv))
-  // .command({
-  //   command: 'populate-mock',
-  //   desc: 'Populate the mock cache',
-  //   handler: () => {
-  //     populateMocks();
-  //   },
-  // })
+  .command({
+    command: 'populate-mock <adaptor> <config>',
+    desc: 'Populate the mock cache',
+    handler: args => {
+      populateMocks(args.adaptor, args.config);
+    },
+  })
   .command({
     command: 'metadata <adaptor> <config>',
     aliases: ['$0'],
