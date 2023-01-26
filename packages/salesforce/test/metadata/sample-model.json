@@ -1,11 +1,11 @@
 {
-  "datasource": "salesforce",
-  "entities": [
+  "name": "salesforce",
+  "children": [
     {
       "name": "AttachedContentDocument",
       "type": "sobject",
-      "meta": {},
-      "entities": [
+      "meta": { "system": true },
+      "children": [
         {
           "name": "Id",
           "type": "field",
@@ -13,8 +13,7 @@
           "datatype": "id",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "IsDeleted",
@@ -23,8 +22,7 @@
           "datatype": "boolean",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LinkedEntityId",
@@ -33,8 +31,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ContentDocumentId",
@@ -43,8 +40,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "Title",
@@ -53,8 +49,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "CreatedById",
@@ -63,8 +58,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "CreatedDate",
@@ -73,8 +67,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastModifiedById",
@@ -83,8 +76,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastModifiedDate",
@@ -93,8 +85,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "FileType",
@@ -103,8 +94,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ContentSize",
@@ -113,8 +103,7 @@
           "datatype": "int",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "FileExtension",
@@ -123,8 +112,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ContentUrl",
@@ -133,8 +121,7 @@
           "datatype": "url",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ExternalDataSourceName",
@@ -143,8 +130,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ExternalDataSourceType",
@@ -153,8 +139,7 @@
           "datatype": "picklist",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "SharingOption",
@@ -163,17 +148,15 @@
           "datatype": "picklist",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         }
-      ],
-      "system": true
+      ]
     },
     {
       "name": "vera__Beneficiary__c",
       "type": "sobject",
       "meta": {},
-      "entities": [
+      "children": [
         {
           "name": "Id",
           "type": "field",
@@ -181,8 +164,7 @@
           "datatype": "id",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "OwnerId",
@@ -191,8 +173,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "IsDeleted",
@@ -201,8 +182,7 @@
           "datatype": "boolean",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "Name",
@@ -211,8 +191,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "RecordTypeId",
@@ -221,8 +200,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "CreatedDate",
@@ -231,8 +209,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "CreatedById",
@@ -241,8 +218,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastModifiedDate",
@@ -251,8 +227,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastModifiedById",
@@ -261,8 +236,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "SystemModstamp",
@@ -271,8 +245,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastActivityDate",
@@ -281,8 +254,7 @@
           "datatype": "date",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastViewedDate",
@@ -291,8 +263,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "LastReferencedDate",
@@ -301,8 +272,7 @@
           "datatype": "datetime",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ConnectionReceivedId",
@@ -311,8 +281,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "ConnectionSentId",
@@ -321,8 +290,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Gender__c",
@@ -331,8 +299,7 @@
           "datatype": "picklist",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Date_of_Birth__c",
@@ -341,8 +308,7 @@
           "datatype": "date",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Age__c",
@@ -351,8 +317,7 @@
           "datatype": "double",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Address__c",
@@ -361,8 +326,7 @@
           "datatype": "textarea",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Town_City__c",
@@ -371,8 +335,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Province__c",
@@ -381,8 +344,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Mailing_Code__c",
@@ -391,8 +353,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Country__c",
@@ -401,8 +362,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Registration_Date__c",
@@ -411,8 +371,7 @@
           "datatype": "date",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Primary_Phone_Number__c",
@@ -421,8 +380,7 @@
           "datatype": "phone",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Emergency_Contact__c",
@@ -431,8 +389,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Emergency_Contact_Phone__c",
@@ -441,8 +398,7 @@
           "datatype": "phone",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Emergency_Contact_Email__c",
@@ -451,8 +407,7 @@
           "datatype": "email",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Email_Address__c",
@@ -461,8 +416,7 @@
           "datatype": "email",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Program_Exit_Date__c",
@@ -471,8 +425,7 @@
           "datatype": "date",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Reason_For_Leaving__c",
@@ -481,8 +434,7 @@
           "datatype": "picklist",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__GHI_ID_Number__c",
@@ -491,8 +443,7 @@
           "datatype": "string",
           "meta": {
             "externalId": true
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Height__c",
@@ -501,8 +452,7 @@
           "datatype": "double",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Weight__c",
@@ -511,8 +461,7 @@
           "datatype": "double",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Photo__c",
@@ -521,8 +470,7 @@
           "datatype": "textarea",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__rich_text_photo__c",
@@ -531,8 +479,7 @@
           "datatype": "textarea",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__text_photo_dest__c",
@@ -541,8 +488,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__House_ID__c",
@@ -551,8 +497,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Stunic_Test__c",
@@ -561,8 +506,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__second_test_nicstu__c",
@@ -571,8 +515,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Parents_House__c",
@@ -581,8 +524,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__School_ID__c",
@@ -591,8 +533,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Photo_URL__c",
@@ -601,8 +542,7 @@
           "datatype": "url",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__ODK_Key__c",
@@ -611,8 +551,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__mother__c",
@@ -621,8 +560,7 @@
           "datatype": "reference",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__estimated_age__c",
@@ -631,8 +569,7 @@
           "datatype": "double",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         },
         {
           "name": "vera__Nice_Photo__c",
@@ -641,8 +578,7 @@
           "datatype": "string",
           "meta": {
             "externalId": false
-          },
-          "entities": []
+          }
         }
       ]
     }

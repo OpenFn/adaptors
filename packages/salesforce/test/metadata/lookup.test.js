@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import jp from 'jsonpath';
 import path from 'node:path';
+// TODO shoul we not just use the checked in metadata object?
 import data from './sample-model.json' assert { type: 'json' };
 import extractLookups from '@openfn/parse-jsdoc';
 
@@ -16,7 +17,6 @@ describe('Salesforce lookup tests', async () => {
   describe('upsert', () => {
     it('sObject: should list non-system sObject names', () => {
       const results = jp.query(data, queries.upsert.sObject);
-
       expect(results).to.have.lengthOf(1);
       expect(results[0]).to.equal('vera__Beneficiary__c');
     });

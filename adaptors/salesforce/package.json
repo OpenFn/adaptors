@@ -1,0 +1,5 @@
+{
+	"dependencies": {
+		"@openfn/metadata": "workspace:^1.0.0"
+	}
+}

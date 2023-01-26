@@ -37,7 +37,6 @@ const generate = async (adaptor, pathToState) => {
 
 const populateMocks = async (adaptor, pathToState) => {
   const state = await loadState(path.resolve(pathToState));
-  console.log(state);
   const pathToModule = path.resolve(
     '../../packages',
     adaptor,

@@ -1,34 +1,17 @@
 // Generic entity in a data model
 type Entity = {
-  type: string;
-  name: string;
+  name: string; // the value when inserted
+  type: string; // domain-specific type string (eg OrgUnit, sObject)
 
-  // Is this system/admin entity?
-  system?: boolean;
-
-  // human readable definitions
-  label?: string;
-  desc?: string;
-  shortDesc?: string;
-
-  datatype?: string;
-
-  entities?: Entity[];
+  label?: string; // human readable label
+  datatype?: string; // the javascript type (shown in monaco)
+  desc?: string; // a longer description
 
   // arbitrary extra stuff  goes in the meta object
+  children?: Entity[] | Record<string, Entity>;
   meta?: Record<string, any>;
 
-  addEntity: (e: Entity) => void;
-};
-
-type Model = {
-  datasource: string; // ie salesforce
-  name?: string;
-
-  // this is the actual tree of data
-  entities: Entity[];
-
-  addEntity: (e: Entity) => void;
+  addChild: (e: Entity, name?: string) => void;
 };
 
 // we need to map data types into a standard

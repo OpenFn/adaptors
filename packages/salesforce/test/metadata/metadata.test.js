@@ -10,8 +10,8 @@ describe('metadata function', () => {
       true
     );
     expect(model).to.be.ok;
-    expect(model.datasource).to.eql('salesforce');
-    expect(model.entities.length).to.eql(1);
+    expect(model.name).to.eql('salesforce');
+    expect(model.children.length).to.eql(2);
   });
 
   it('should build an entity for salesforce Asset', async () => {
@@ -22,10 +22,10 @@ describe('metadata function', () => {
       true
     );
 
-    const [asset] = model.entities;
+    const [asset] = model.children;
     expect(asset.name).to.eql('Asset');
     expect(asset.type).to.eql('sobject');
-    expect(asset.system).to.be.true;
+    expect(asset.meta?.system).to.be.true;
   });
 
   it('should build an entity for salesforce vera__Attendance__c', async () => {
@@ -36,10 +36,10 @@ describe('metadata function', () => {
       true
     );
 
-    const [asset] = model.entities;
-    expect(asset.name).to.eql('vera__Attendance__c');
-    expect(asset.type).to.eql('sobject');
-    expect(asset.system).to.not.be.ok;
+    const [_asset, vera] = model.children;
+    expect(vera.name).to.eql('vera__Attendance__c');
+    expect(vera.type).to.eql('sobject');
+    expect(vera.meta?.system).to.not.be.ok;
   });
 
   it('should build fields for salesforce Asset', async () => {
@@ -50,8 +50,8 @@ describe('metadata function', () => {
       true
     );
 
-    const [asset] = model.entities;
-    const fields = asset.entities;
+    const [asset] = model.children;
+    const fields = asset.children;
     expect(fields).to.be.ok;
     expect(fields.length).to.eql(25);
   });
@@ -64,8 +64,8 @@ describe('metadata function', () => {
       true
     );
 
-    const [asset] = model.entities;
-    const sn = asset.entities.find(({ name }) => name === 'SerialNumber');
+    const [asset] = model.children;
+    const sn = asset.children.find(({ name }) => name === 'SerialNumber');
     expect(sn).to.be.ok;
     expect(sn.type, 'field');
     expect(sn.datatype, 'string');

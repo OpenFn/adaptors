@@ -1,6 +1,8 @@
-import salesforceHelper from './helper';
-import { createModel, createEntity } from '@openfn/metadata';
+import salesforceHelper from './helper.js';
+import { createEntity, createMock } from '@openfn/metadata';
 
+// TODO the mock metadata basically compeltely doens't work
+// it need sto only load the fields for which there's a filter
 const metadata = async (configuration = {}, mock = false) => {
   let helper = await salesforceHelper(configuration);
   if (mock) {
@@ -10,18 +12,19 @@ const metadata = async (configuration = {}, mock = false) => {
   // get the globals
   const globals = await helper.getGlobals();
 
-  const model = createModel('salesforce');
+  const root = createEntity('salesforce', 'model');
 
   // build a model of each global sobject
   await Promise.all(
     globals.map(
       ({ name, custom }) =>
         new Promise(async resolve => {
-          const e = createEntity(name, 'sobject');
+          const props = {};
           if (!custom) {
-            e.system = true;
+            props.system = true;
           }
-          // Model the fields too
+          const e = createEntity(name, 'sobject', props);
+
           const fields = await helper.getFields(name);
           if (fields) {
             fields.forEach(({ name, type, label, externalId }) => {
@@ -30,19 +33,19 @@ const metadata = async (configuration = {}, mock = false) => {
                 label,
                 externalId,
               });
-              e.addEntity(f);
+              e.addChild(f);
 
               // Now the field's attributes
             });
 
-            model.addEntity(e);
+            root.addChild(e);
           }
           resolve();
         })
     )
   );
 
-  return model;
+  return root;
 };
 
 export default metadata;

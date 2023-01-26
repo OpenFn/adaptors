@@ -30,7 +30,10 @@ const createMock = (helper, options = {}) => {
         const raw = await fs.readFile(dataPath, 'utf8');
         return JSON.parse(raw);
       } catch (e) {
-        return callHelper(helper, fnName, dataPath, ...args);
+        // TODO should the mock call the helper, or just happily ignore?
+        // salesforce wants to ignore, like, a lot
+        // console.log('-- call helper');
+        // return callHelper(helper, fnName, dataPath, ...args);
       }
     };
 

@@ -8,6 +8,12 @@ importers:
     devDependencies:
       '@changesets/cli': 2.25.0
 
+  adaptors/salesforce:
+    specifiers:
+      '@openfn/metadata': workspace:^1.0.0
+    dependencies:
+      '@openfn/metadata': link:../../tools/metadata
+
   packages/asana:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -1108,7 +1114,6 @@ importers:
       type-detect: 1.0.0
     dependencies:
       '@openfn/language-common': link:../common
-      '@openfn/metadata': link:../../tools/metadata
       '@openfn/parse-jsdoc': link:../../tools/parse-jsdoc
       JSONPath: 0.10.0
       axios: 0.21.4
@@ -1118,6 +1123,7 @@ importers:
       mustache: 2.3.2
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
+      '@openfn/metadata': link:../../tools/metadata
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 4.3.6
