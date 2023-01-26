@@ -21,7 +21,7 @@ const generate = async (adaptor, pathToState) => {
 
   // import meta direct?
   // Or can we import { metadata } from root?
-  console.log(path.resolve('../../packages', adaptor, 'src/meta/metadata.js'));
+  console.log(state);
   const metadata = (
     await import(
       path.resolve('../../packages', adaptor, 'src/meta/metadata.js')

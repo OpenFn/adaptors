@@ -12,7 +12,7 @@
     "cli": "src/cli.js"
   },
   "scripts": {
-    "cli": "node --experimental-specifier-resolution=node --no-warnings src/cli.js"
+    "cli": "node --experimental-specifier-resolution=node  src/cli.js"
   },
   "dependencies": {
     "yargs": "^17.6.2"

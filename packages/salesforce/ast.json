@@ -612,6 +612,10 @@
             "name": "sObject"
           },
           {
+            "title": "paramlookup",
+            "description": "sObject - $.children[?(!@.meta.system)].name"
+          },
+          {
             "title": "param",
             "description": "ID.",
             "type": {
@@ -619,6 +623,10 @@
               "name": "String"
             },
             "name": "externalId"
+          },
+          {
+            "title": "paramlookup",
+            "description": "externalId - $.children[?(@.name==\"{{args.sObject}}\")].children[?(@.meta.externalId)].name"
           },
           {
             "title": "param",
@@ -637,6 +645,10 @@
               "name": "State"
             },
             "name": "state"
+          },
+          {
+            "title": "paramlookup",
+            "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
             "title": "returns",

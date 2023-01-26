@@ -1,4 +1,4 @@
-import { createModel, createEntity } from '@openfn/metadata';
+import { createEntity } from '@openfn/metadata';
 import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, mock = false) => {
@@ -14,7 +14,6 @@ const metadata = async (configuration = {}, mock = false) => {
     createEntity(unit.id, 'unitOrg', {
       datatype: 'string',
       label: unit.displayName,
-      value: unit.id,
     })
   );
 
@@ -25,16 +24,14 @@ const metadata = async (configuration = {}, mock = false) => {
     createEntity(type.id, 'trackedEntityType', {
       datatype: 'string',
       label: type.displayName,
-      value: type.id,
     })
   );
 
   const attributes = await helper.getAttributes();
   model.attributes = attributes.attributes.map(attr =>
     createEntity(attr.id, 'attribute', {
-      dataTypes: 'string',
+      dataType: 'string',
       label: attr.displayName,
-      value: attr.id,
     })
   );
 

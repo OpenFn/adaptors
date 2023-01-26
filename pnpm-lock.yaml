@@ -8,12 +8,6 @@ importers:
     devDependencies:
       '@changesets/cli': 2.25.0
 
-  adaptors/salesforce:
-    specifiers:
-      '@openfn/metadata': workspace:^1.0.0
-    dependencies:
-      '@openfn/metadata': link:../../tools/metadata
-
   packages/asana:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -166,7 +160,7 @@ importers:
       xlsx: ^0.18.0
     dependencies:
       '@openfn/language-common': link:../common
-      '@openfn/language-http': 4.2.4
+      '@openfn/language-http': link:../http
       JSONPath: 0.10.0
       form-data: 4.0.0
       js2xmlparser: 1.0.0
@@ -234,11 +228,11 @@ importers:
     dependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/language-common': link:../common
-      '@openfn/metadata': link:../../tools/metadata
       axios: 0.24.0
       lodash: 4.17.21
       qs: 6.11.0
     devDependencies:
+      '@openfn/metadata': link:../../tools/metadata
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
       chai: 4.3.6
@@ -2220,33 +2214,6 @@ packages:
       - axios
       - jsonpath-plus
       - lodash
-
-  /@openfn/language-common/1.7.5:
-    resolution: {integrity: sha512-QivV3v5Oq5fb4QMopzyqUUh+UGHaFXBdsGr6RCmu6bFnGXdJdcQ7GpGpW5hKNq29CkmE23L/qAna1OLr4rP/0w==}
-    dependencies:
-      axios: 1.1.3
-      date-fns: 2.29.3
-      jsonpath-plus: 4.0.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /@openfn/language-http/4.2.4:
-    resolution: {integrity: sha512-T7gljd57iH6MJ5m+9Fr7bv+mvklMDP9nkdQiLdiZAST417fCN1hGvHL+JaxuBZLcHLqXGorSEOmWY9pCpGgobw==}
-    dependencies:
-      '@openfn/language-common': 1.7.5
-      cheerio: 1.0.0-rc.12
-      cheerio-tableparser: 1.0.1
-      csv-parse: 4.16.3
-      fast-safe-stringify: 2.1.1
-      form-data: 3.0.1
-      lodash: 4.17.21
-      request: 2.88.2
-      tough-cookie: 4.1.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /@openfn/simple-ast/0.3.2:
     resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
