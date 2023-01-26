@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import { execute as commonExecute, composeNextState, expandReferences, http } from '@openfn/language-common';
 const {
   axios

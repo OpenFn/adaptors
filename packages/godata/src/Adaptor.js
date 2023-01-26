@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import {
   execute as commonExecute,
   composeNextState,
@@ -14,7 +14,7 @@ import axios from 'axios';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

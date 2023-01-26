@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {

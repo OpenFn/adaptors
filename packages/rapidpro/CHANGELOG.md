@@ -1,5 +1,11 @@
 # @openfn/language-rapidpro
 
+## 0.5.2
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 0.5.1
 
 ### Patch Changes

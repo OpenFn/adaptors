@@ -7,7 +7,7 @@ import jsonSqlPkg from 'json-sql';
 
 const jsonSql = jsonSqlPkg();
 
-/** @module Adaptor */
+
 
 /**
  * Execute a sequence of operations.
@@ -38,7 +38,7 @@ export function execute(...operations) {
  * execute(
  *   sql(sqlQuery)
  * )(state)
- * @constructor
+ * @function
  * @param {object} sqlQuery - Payload data for the message
  * @returns {Operation}
  */

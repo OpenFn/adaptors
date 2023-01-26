@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get cases from Primero",
+        "description": "Get cases from Primero\n\nUse this function to get cases from Primero based on a set of query parameters.\nNote that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.\nYou can specify a `case_id` value to fetch a unique case and a query string to filter result.",
         "tags": [
           {
             "title": "public",
@@ -17,7 +17,13 @@
           },
           {
             "title": "example",
-            "description": "getCases({\n  remote: true,\n  case_id: '6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz'\n  query: 'sex=male' // optional\n}, { withReferrals: true }, callback)"
+            "description": "getCases({\n  remote: true,\n  query: \"sex=male\",\n});",
+            "caption": "Get cases from Primero with query parameters"
+          },
+          {
+            "title": "example",
+            "description": "getCases({\n  remote: true,\n  case_id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
+            "caption": "Get case from Primero for a specific case id"
           },
           {
             "title": "function",
@@ -70,7 +76,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Create case in Primero",
+        "description": "Create a new case in Primero\n\nUse this function to create a new case in Primero based on a set of Data.",
         "tags": [
           {
             "title": "public",
@@ -79,7 +85,8 @@
           },
           {
             "title": "example",
-            "description": "createCase({\n  data: state => data {\n    \"enabled\": true,\n    \"age\": 15,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n    \"owned_by\": \"primero_cp\"\n  }}, callback)"
+            "description": "createCase({\n  data: {\n    age: 16,\n    sex: \"female\",\n    name: \"Edwine Edgemont\",\n  },\n});",
+            "caption": "Create a new case in Primero based on a set of Data"
           },
           {
             "title": "function",
@@ -124,7 +131,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Update case in Primero",
+        "description": "Update an existing case in Primero\n\nUse this function to update an existing case from Primero.\nIn this implementation, the function uses a case ID to check for the case to update,\nThen merge the values submitted in this call into an existing case.\nFields not specified in this request will not be modified.\nFor nested subform fields, the subform arrays will be recursively merged,\nkeeping both the existing values and appending the new",
         "tags": [
           {
             "title": "public",
@@ -133,7 +140,8 @@
           },
           {
             "title": "example",
-            "description": "updateCase(\"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\", {\n  data: state => data {\n    \"age\": 20,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n  }}, callback)"
+            "description": "updateCase(\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\", {\n  data: {\n    age: 16,\n    sex: \"female\",\n    name: \"Fiona Edgemont\",\n  },\n});",
+            "caption": "Update case for a specific case id"
           },
           {
             "title": "function",
@@ -142,7 +150,7 @@
           },
           {
             "title": "param",
-            "description": "an ID to use for the update.",
+            "description": "A case ID to use for the update.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -186,7 +194,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Upsert case to Primero",
+        "description": "Upsert case to Primero\n\nUse this function to update an existing case from Primero or to create it otherwise.\nIn this implementation, we first fetch the list of cases,\nthen we check if the case exist before choosing the right operation to do.",
         "tags": [
           {
             "title": "public",
@@ -195,7 +203,8 @@
           },
           {
             "title": "example",
-            "description": "upsertCase({\n  externalIds: ['case_id'],\n  data: state => ({\n    \"age\": 20,\n    \"sex\": \"male\",\n    \"name\": \"Alex\",\n    \"status\": \"open\",\n    \"case_id\": \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n  })\n});"
+            "description": "upsertCase({\n  externalIds: [\"case_id\"],\n  data: state => ({\n    age: 20,\n    sex: \"male\",\n    name: \"Alex\",\n    status: \"open\",\n    case_id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n  }),\n});",
+            "caption": "Upsert case for a specific case id"
           },
           {
             "title": "function",
@@ -204,7 +213,7 @@
           },
           {
             "title": "param",
-            "description": "an object with an externalId and some case data.",
+            "description": "an object with an externalIds and some case data.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -239,7 +248,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get referrals for a specific case in Primero",
+        "description": "Get referrals for a specific case in Primero\n\nUse this function to get the list of referrals of one case from Primero.\nThe search can be done using either `record id` or `case id`.",
         "tags": [
           {
             "title": "public",
@@ -248,7 +257,13 @@
           },
           {
             "title": "example",
-            "description": "getReferrals({\n  externalId: \"record_id\",\n  id: \"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\",\n}, callback)"
+            "description": "getReferrals({\n  externalId: \"record_id\",\n  id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
+            "caption": "Get referrals for a case in Primero by record id"
+          },
+          {
+            "title": "example",
+            "description": "getReferrals({\n  id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
+            "caption": "Get referrals for a case in Primero by case id"
           },
           {
             "title": "function",
@@ -292,7 +307,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Create referrals in Primero",
+        "description": "Create referrals in Primero\n\nUse this function to bulk refer to one or multiple cases from Primero to a single user",
         "tags": [
           {
             "title": "public",
@@ -301,7 +316,8 @@
           },
           {
             "title": "example",
-            "description": "createReferrals({\n  data: {\n    \"ids\": ['case_id'],\n     \"transitioned_to\": \"primero_cp\",\n     \"notes\": \"Creating a referral\"\n  }\n}, callback)"
+            "description": "createReferrals({\n  data: {\n    ids: [\n      \"749e9c6e-60db-45ec-8f5a-69da7c223a79\",\n      \"dcea6052-07d9-4cfa-9abf-9a36987cdd25\",\n    ],\n    transitioned_to: \"primero_cp\",\n    notes: \"This is a bulk referral\",\n  },\n});",
+            "caption": "Create referrals for multiple cases in Primero"
           },
           {
             "title": "function",
@@ -354,7 +370,8 @@
           },
           {
             "title": "example",
-            "description": "updateReferral({\n  caseExternalId: \"record_id\",\n  caseId: \"7ed1d49f-14c7-4181-8d83-dc8ed1699f08\"\n  id: \"37612f65-3bda-48eb-b526-d31383f94166\",\n  data: state => state.data\n}, callback)"
+            "description": "updateReferral({\n  caseExternalId: \"record_id\",\n  id: \"749e9c6e-60db-45ec-8f5a-69da7c223a79\",\n  caseId: \"dcea6052-07d9-4cfa-9abf-9a36987cdd25\",\n  data: (state) => state.data,\n});",
+            "caption": "Update referral by record id"
           },
           {
             "title": "function",
@@ -363,7 +380,7 @@
           },
           {
             "title": "param",
-            "description": "an object with an externalId value to use, the id and the referral id to update.",
+            "description": "an object with an caseExternalId value to use, the id and the referral id to update.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -398,7 +415,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get forms from Primero",
+        "description": "Get forms from Primero\n\nUse this function to get forms from Primero that are accessible to this user based on a set of query parameters.\nThe user can filter the form list by record type and module.",
         "tags": [
           {
             "title": "public",
@@ -407,7 +424,13 @@
           },
           {
             "title": "example",
-            "description": "getForms({\n  record_type: '' // Optional. Filters by the record type of the form,\n  module_id: 'id' //Optional. Filter forms by module,\n}, callback)"
+            "description": "getForms();",
+            "caption": "Get the list of all forms"
+          },
+          {
+            "title": "example",
+            "description": "getForms({\n  module_id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
+            "caption": "Get the list of all forms for a specific module"
           },
           {
             "title": "function",
@@ -451,7 +474,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get lookups from Primero",
+        "description": "Get lookups from Primero\n\nUse this function to get a paginated list of all lookups that are accessible to this user from Primero.\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\nAlso you can specify `page` value to fetch pagination (Defaults to 1)",
         "tags": [
           {
             "title": "public",
@@ -460,7 +483,8 @@
           },
           {
             "title": "example",
-            "description": "getLookups({\n  page: 1 // Optional. Pagination. Defaults to 1,\n  per: 20 // Optional. Records per page. Defaults to 20,\n}, callback)"
+            "description": "getLookups({\n  per: 10000,\n  page: 5\n});",
+            "caption": "Get lookups from Primero with query parameters"
           },
           {
             "title": "function",
@@ -504,7 +528,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get locations from Primero",
+        "description": "Get locations from Primero\n\nUse this function to get a paginated list of all locations that are accessible to this user from Primero.\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\nAlso you can specify `page` value to fetch pagination (Defaults to 1).\nAnother parameter is `hierarchy: true` (Defaults to false)",
         "tags": [
           {
             "title": "public",
@@ -513,7 +537,8 @@
           },
           {
             "title": "example",
-            "description": "getLocations({\n  page: 1 // Optional.\n  per: 20 // Optional. Records per page,\n  hierarchy: // Defaults to false,\n}, callback)"
+            "description": "getLocations({\n  page: 1,\n  per: 20\n})",
+            "caption": "Get loocations from Primero with query parameters"
           },
           {
             "title": "function",

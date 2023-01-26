@@ -1,12 +1,12 @@
 import chai from 'chai';
-const { expect } = chai
+const { expect } = chai;
 
 import nock from 'nock';
 
 import Adaptor from '../src';
 const { execute } = Adaptor;
 
-import { getSubmissions, getForms } from '../src/Adaptor';
+import { getSubmissions, getForms, getDeploymentInfo } from '../src/Adaptor';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -131,7 +131,7 @@ describe('getSubmissions', () => {
 });
 
 describe('getForms', () => {
-   before(() => {
+  before(() => {
     nock('https://kf.kobotoolbox.org')
       .get('/api/v2/assets/?format=json')
       .basicAuth({ user: 'john', pass: 'doe' })
@@ -162,7 +162,7 @@ describe('getForms', () => {
       results: [{}, {}],
     });
   }).timeout(10 * 1000);
-/* 
+  /* 
   it('throws an error for a 404 response', async () => {
 
     const state = {
@@ -196,4 +196,84 @@ describe('getForms', () => {
     });
     expect(error.message).to.eql('Request failed with status code 500');
   }); */
+});
+
+describe('getDeploymentInfo', () => {
+  before(() => {
+    nock('https://kf.kobotoolbox.org')
+      .get('/api/v2/assets/aXecHjmbATuF6iGFmvBLBX/deployment/?format=json')
+      .basicAuth({ user: 'john', pass: 'doe' })
+      .reply(200, {
+        count: 2,
+        next: null,
+        previous: null,
+        results: [{}, {}],
+      });
+    nock('https://kf.kobotoolbox.org')
+      .get('/api/v2/assets/bXecHjmbATuF6iGFmvBLBX/deployment/?format=json')
+      .basicAuth({ user: 'john', pass: 'doe' })
+      .reply(404, {
+        body: 'A 404 error.',
+      });
+    nock('https://kf.kobotoolbox.org')
+      .get('/api/v2/assets/cXecHjmbATuF6iGFmvBLBX/deployment/?format=json')
+      .basicAuth({ user: 'john', pass: 'doe' })
+      .reply(500, {
+        body: 'Another error.',
+      });
+  });
+  it('should get a list of deployment', async () => {
+    let state = {
+      configuration: {
+        username: 'john',
+        password: 'doe',
+        baseURL: 'https://kf.kobotoolbox.org',
+        // type: 'process.env.type',
+        apiVersion: 'v2',
+      },
+    };
+    const nextState = await execute(
+      getDeploymentInfo({ formId: 'aXecHjmbATuF6iGFmvBLBX' })
+    )(state).then(nextState => {
+      return nextState;
+    });
+    expect(nextState.data).to.deep.eq({
+      count: 2,
+      next: null,
+      previous: null,
+      results: [{}, {}],
+    });
+  }).timeout(10 * 1000);
+  it('throws an error for a 404 response', async () => {
+    const state = {
+      configuration: {
+        username: 'john',
+        password: 'doe',
+        baseURL: 'https://kf.kobotoolbox.org',
+        apiVersion: 'v2',
+      },
+    };
+    const error = await execute(
+      getDeploymentInfo({ formId: 'bXecHjmbATuF6iGFmvBLBX' })
+    )(state).catch(error => {
+      return error;
+    });
+    expect(error.message).to.eql('Request failed with status code 404');
+  });
+  it('throws different kind of errors', async () => {
+    const state = {
+      configuration: {
+        username: 'john',
+        password: 'doe',
+        baseURL: 'https://kf.kobotoolbox.org',
+        apiVersion: 'v2',
+      },
+    };
+    const error = await execute(
+      getDeploymentInfo({ formId: 'cXecHjmbATuF6iGFmvBLBX' })
+    )(state).catch(error => {
+      return error;
+    });
+    expect(error.message).to.eql('Request failed with status code 500');
+  });
 });

@@ -1,4 +1,3 @@
-/** @module Adaptor */
 import {
   execute as commonExecute,
   composeNextState,

@@ -20,9 +20,8 @@
             "description": "get('/myEndpoint', {\n   query: {foo: 'bar', a: 1},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -84,9 +83,8 @@
             "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -148,9 +146,8 @@
             "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -212,9 +209,8 @@
             "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -276,9 +272,8 @@
             "description": "del(`/myendpoint/${state => state.data.id}`, {\n   headers: {'content-type': 'application/json'}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -339,9 +334,8 @@
             "description": "parseXML(body, function($){\n   return $(\"table[class=your_table]\").parsetable(true, true, true);\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -393,9 +387,8 @@
             "description": "parseCSV(\"/home/user/someData.csv\", {\n\t  quoteChar: '\"',\n\t  header: false,\n\t});"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

@@ -1,5 +1,15 @@
 # @openfn/language-kobotoolbox
 
+## 1.3.0
+
+### Minor Changes
+
+- e48c30c: add getDeploymentInfo function
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 1.2.0
 
 ### Minor Changes

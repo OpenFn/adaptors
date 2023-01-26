@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 3.4.3
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 3.4.2
 
 ### Patch Changes

@@ -18,9 +18,8 @@
             "description": "sql({ query, options })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -62,9 +61,8 @@
             "description": "findValue({\n   uuid: 'id',\n   relation: 'users',\n   where: { first_name: 'Mama%', last_name: 'Cisse'},\n   operator: { first_name: 'like', last_name: '='}\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -108,9 +106,8 @@
             "description": "insert(table, record, {setNull: [\"'undefined'\", \"''\"], logValues: false})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -172,9 +169,8 @@
             "description": "insertMany(table, records, { setNull: false, writeSql: true, logValues: false })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -237,9 +233,8 @@
             "description": "upsert(table, uuid, record, { setNull: \"'undefined'\", logValues: false})\nupsert(table, [uuid1, uuid2], record, { setNull: \"'undefined'\", logValues: false})"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -312,9 +307,8 @@
             "description": "upsertIf(\n  dataValue('name'),\n  'users', // the DB table\n  'uuid', // a DB column with a unique constraint\n  { name: 'Elodie', id: 7 },\n  { writeSql:true, execute: true, logValues: false }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -395,9 +389,8 @@
             "description": "upsertMany(\n 'users', 'email', records, { logValues: false }\n)\nupsertMany(\n 'users', ['email', 'phone'], records, { logValues: false }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -467,9 +460,8 @@
             "description": "describeTable('clinic_visits')"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -522,9 +514,8 @@
             "description": "insertTable('table_name', state => state.data.map(\n  column => ({\n    name: column.name,\n    type: column.type,\n    required: true, // optional\n    unique: false, // optional - to be set to true for unique constraint\n  })\n));"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -586,9 +577,8 @@
             "description": "modifyTable('table_name', state => state.data.map(\n  newColumn => ({\n    name: newColumn.name,\n    type: newColumn.type,\n    required: true, // optional\n    unique: false, // optional - to be set to true for unique constraint\n  })\n));"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

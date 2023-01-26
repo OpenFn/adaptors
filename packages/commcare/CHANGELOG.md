@@ -1,5 +1,14 @@
 # @openfn/language-commcare
 
+## 1.5.2
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 57f3513: Fix exports in index.js
+- Updated dependencies [6d8de03]
+  - @openfn/language-http@4.2.4
+
 ## 1.5.1
 
 ### Patch Changes

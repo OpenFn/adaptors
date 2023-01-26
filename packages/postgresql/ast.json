@@ -19,9 +19,8 @@
             "description": "sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -72,9 +71,8 @@
             "description": "findValue({\n   uuid: 'id',\n   relation: 'users',\n   where: { first_name: 'Mamadou' },\n   operator: { first_name: 'like' }\n })"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -118,9 +116,8 @@
             "description": "insert('users', { name: 'Elodie', id: 7 }, { setNull: \"'NaN'\", logValues: true });"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -182,9 +179,8 @@
             "description": "insertMany('users', state => state.data.recordArray, { setNull: \"'undefined'\", logValues: true });"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -247,9 +243,8 @@
             "description": "upsert(\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { setNull: [\"''\", \"'undefined'\"], writeSql:true, execute: true, logValues: true }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -322,9 +317,8 @@
             "description": "upsertIf(\n  dataValue('name'),\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { writeSql:true, execute: true }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -405,9 +399,8 @@
             "description": "upsertMany(\n  'users', // the DB table\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  [\n    { name: 'one', email: 'one@openfn.org },\n    { name: 'two', email: 'two@openfn.org },\n  ]\n { logValues: true }\n)"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -477,9 +470,8 @@
             "description": "describeTable('clinic_visits')"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -532,9 +524,8 @@
             "description": "insertTable('table_name', state => state.data.map(\n  column => ({\n    name: column.name,\n    type: column.type,\n    required: true, // optional\n    unique: false, // optional - to be set to true for unique constraint\n  })\n));"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -596,9 +587,8 @@
             "description": "modifyTable('table_name', state => state.data.map(\n  newColumn => ({\n    name: newColumn.name,\n    type: newColumn.type,\n    required: true, // optional\n    unique: false, // optional - to be set to true for unique constraint\n  })\n));"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

@@ -18,9 +18,8 @@
             "description": "list('/some/path/')"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -62,9 +61,8 @@
             "description": "getCSV(\n  '/some/path/to_file.csv'\n);"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -108,9 +106,8 @@
             "description": "putCSV(\n  '/some/path/to_local_file.csv',\n  '/some/path/to_remove_file.csv',\n  { delimiter: ';', noheader: true }\n);"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -171,9 +168,8 @@
             "description": "getJSON(\n  '/path/To/File',\n  'utf8',\n);"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
@@ -225,9 +221,8 @@
             "description": "normalizeCSVarray({ delimiter: ';', noheader: true });"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {

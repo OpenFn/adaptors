@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 2.12.1
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
 ## 2.12.0
 
 ### Minor Changes

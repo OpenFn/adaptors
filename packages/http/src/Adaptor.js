@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 import {
   setAuth,
   setUrl,
@@ -31,7 +31,7 @@ const { axios } = http;
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -128,7 +128,7 @@ function handleCallback(state, callback) {
  *    headers: {'content-type': 'application/json'},
  *    authentication: {username: 'user', password: 'pass'}
  *  })
- * @constructor
+ * @function
  * @param {string} path - Path to resource
  * @param {object} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
@@ -164,7 +164,7 @@ export function get(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *    authentication: {username: 'user', password: 'pass'}
  *  })
- * @constructor
+ * @function
  * @param {string} path - Path to resource
  * @param {object} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
@@ -200,7 +200,7 @@ export function post(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *    authentication: {username: 'user', password: 'pass'}
  *  })
- * @constructor
+ * @function
  * @param {string} path - Path to resource
  * @param {object} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
@@ -236,7 +236,7 @@ export function put(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *    authentication: {username: 'user', password: 'pass'}
  *  })
- * @constructor
+ * @function
  * @param {string} path - Path to resource
  * @param {object} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
@@ -270,7 +270,7 @@ export function patch(path, params, callback) {
  *  del(`/myendpoint/${state => state.data.id}`, {
  *    headers: {'content-type': 'application/json'}
  *  })
- * @constructor
+ * @function
  * @param {string} path - Path to resource
  * @param {object} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
@@ -304,7 +304,7 @@ export function del(path, params, callback) {
  *  parseXML(body, function($){
  *    return $("table[class=your_table]").parsetable(true, true, true);
  *  })
- * @constructor
+ * @function
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
  * @returns {Operation}
@@ -336,7 +336,7 @@ export function parseXML(body, script) {
  * 	  quoteChar: '"',
  * 	  header: false,
  * 	});
- * @constructor
+ * @function
  * @param {String} target - string or local file with CSV data
  * @param {Object} config - csv-parse config object
  * @returns {Operation}
@@ -378,7 +378,7 @@ export function parseCSV(target, config) {
  * Make a request using the 'request' node module. This module is deprecated.
  * @example
  *  request(params);
- * @constructor
+ * @function
  * @param {object} params - Query, Headers and Authentication parameters
  * @returns {Operation}
  */

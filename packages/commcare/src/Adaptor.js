@@ -1,4 +1,4 @@
-/** @module Adaptor */
+
 
 import {
   execute as commonExecute,
@@ -20,7 +20,7 @@ import xlsx from 'xlsx';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -43,7 +43,7 @@ export function execute(...operations) {
  * Performs a post request
  * @example
  *  clientPost(formData)
- * @constructor
+ * @function
  * @param {Object} formData - Form Data with auth params and body
  * @returns {State}
  */
@@ -77,7 +77,7 @@ function clientPost({ url, body, username, password }) {
  *      create_new_cases: 'on',
  *    }
  * )
- * @constructor
+ * @function
  * @param {Object} formData - Object including form data.
  * @param {Object} params - Request params including case type and external id.
  * @returns {Operation}
@@ -146,7 +146,7 @@ export function submitXls(formData, params) {
  *      field("question2", "Some answer here.")
  *    )
  *  )
- * @constructor
+ * @function
  * @param {Object} formData - Object including form data.
  * @returns {Operation}
  */
@@ -196,7 +196,7 @@ export function submit(formData) {
  * @public
  * @example
  * fetchReportData(reportId, params, postUrl)
- * @constructor
+ * @function
  * @param {String} reportId - API name of the report.
  * @param {Object} params - Query params, incl: limit, offset, and custom report filters.
  * @param {String} postUrl - Url to which the response object will be posted.
