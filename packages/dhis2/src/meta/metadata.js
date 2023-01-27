@@ -30,7 +30,7 @@ const metadata = async (configuration = {}, mock = false) => {
   const attributes = await helper.getAttributes();
   model.attributes = attributes.attributes.map(attr =>
     createEntity(attr.id, 'attribute', {
-      dataType: 'string',
+      datatype: 'string',
       label: attr.displayName,
     })
   );
