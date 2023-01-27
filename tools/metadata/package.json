@@ -3,16 +3,15 @@
   "private": true,
   "type": "module",
   "version": "1.0.0",
-  "description": "Helpers functions for adaptor metadata",
+  "description": "Helper functions for adaptor metadata",
   "main": "src/index.js",
-  "author": "",
   "license": "ISC",
-  "type": "module",
   "bin": {
-    "cli": "src/cli.js"
+    "metadata": "src/cli.js",
+    "jam": "src/cli.js"
   },
   "scripts": {
-    "cli": "node --experimental-specifier-resolution=node  src/cli.js"
+    "cli": "node src/cli.js"
   },
   "dependencies": {
     "yargs": "^17.6.2"

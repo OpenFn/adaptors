@@ -1,3 +1,4 @@
+// Config for dhis2 sandbox
 export default {
   configuration: {
     hostUrl: 'https://play.dhis2.org/2.39.0.1',
