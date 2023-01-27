@@ -1,4 +1,4 @@
-import { createEntity } from '@openfn/metadata';
+import { createMock, createEntity } from '@openfn/metadata';
 import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, mock = false) => {
@@ -11,7 +11,7 @@ const metadata = async (configuration = {}, mock = false) => {
 
   const units = await helper.getOrgUnits();
   children.orgUnits = units.organisationUnits.map(unit =>
-    createEntity(unit.id, 'unitOrg', {
+    createEntity(unit.id, 'orgUnit', {
       datatype: 'string',
       label: unit.displayName,
     })

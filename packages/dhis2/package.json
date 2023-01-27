@@ -21,7 +21,7 @@
     "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings test/index.js",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings test/index.js"
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings test/**/*.test.js"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -41,12 +41,14 @@
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/metadata": "workspace:^1.0.0",
+    "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "chai-http": "4.3.0",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
+    "jsonpath": "^1.1.1",
     "mocha": "7.2.0",
     "nock": "13.2.9",
     "rimraf": "3.0.2"
