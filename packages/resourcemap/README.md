@@ -8,17 +8,12 @@ Language Pack for building expressions and operations for working with the
 We are working towards this to start:
 https://github.com/instedd/resourcemap/wiki/REST_API#create-site
 
-## Sample configuration
+### Configuration
 
-ResourceMap uses Basic Auth.
-
-```json
-{
-  "baseUrl": "http://some-site-of-yours.com:8080",
-  "username": "blah",
-  "password": "shhh"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/resourcemap-configuration-schema/)
+definition.
 
 ## Expressions
 

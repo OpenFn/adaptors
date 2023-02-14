@@ -31,16 +31,12 @@ request(
 );
 ```
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "host": "https://www.openfn.org",
-  "username": "someone@ngo.org",
-  "password": "supersecret",
-  "projectId": "ID"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/openfn-configuration-schema/)
+definition.
 
 ## Development
 

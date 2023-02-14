@@ -12,14 +12,12 @@ An OpenFn **_adaptor_** for building integration jobs for use with the
 
 ## Usage
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "host": "https://app.rapidpro.io/",
-  "token": "super-secret-token-123"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/rapidpro-configuration-schema/)
+definition.
 
 #### sample job expression using operation
 

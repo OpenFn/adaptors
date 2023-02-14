@@ -7,14 +7,12 @@ mailgun API.
 
 ## Documentation
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "domain": "http://mailgun.com/domain",
-  "apiKey": "mailgunapikey"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mailgun-configuration-schema/)
+definition.
 
 ## send
 
