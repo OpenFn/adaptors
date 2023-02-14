@@ -16,7 +16,7 @@ https://github.com/dimagi/commcare/wiki/casexml20
 
 ## Configuration
 
-View all the required and optional properties for `state.configuration` in the official [configuration-schema](https://github.com/OpenFn/adaptors/blob/main/packages/commcare/configuration-schema.json) definition.
+View all the required and optional properties for `state.configuration` in the official [configuration-schema](https://docs.openfn.org/adaptors/packages/commcare-configuration-schema/) definition.
 
 - The "appId" is the UUID which designates your commcare project as different from
 everyone elses. It can be found in the URL of your application when you first
