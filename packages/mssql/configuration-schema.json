@@ -6,26 +6,38 @@
       "type": "string",
       "description": "The database instance server URL or IP address",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "something.database.windows.net"
+      ]
     },
     "database": {
       "title": "Database",
       "type": "string",
       "description": "The database name",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "demo-db"
+      ]
     },
     "userName": {
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "admin"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "@super(!)Password"
+      ]
     }
   },
   "type": "object",

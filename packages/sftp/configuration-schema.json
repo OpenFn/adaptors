@@ -6,27 +6,40 @@
       "type": "string",
       "description": "The SFTP server host url or ip address",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "191.173.128.88"
+      ]
     },
     "port": {
       "title": "Port",
       "type": "integer",
       "default": 21,
       "description": "The SFTP server port",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "22"
+      ]
+
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "admin"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "@some(!)Strongpassword"
+      ]
     }
   },
   "type": "object",

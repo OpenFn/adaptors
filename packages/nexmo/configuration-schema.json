@@ -5,14 +5,20 @@
       "title": "API Key",
       "type": "string",
       "description": "Your Nexmo API Key",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "mYaP1K3y"
+      ]
     },
     "apiSecret": {
       "title": "API Secret",
       "type": "string",
       "description": "Your Nexmo API Secret key",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "supersecret"
+      ]
     }
   },
   "type": "object",

@@ -6,26 +6,38 @@
             "type": "string",
             "description": "The Progres URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://endpoint/To/DTP"
+            ]
         },
         "key": {
             "title": "Private Key",
             "type": "string",
             "description": "Your Progres private key",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "-----BEGIN PRIVATE KEY-----SOMETYPEOFPRIVATEVALUE-----END PRIVATE KEY-----"
+            ]
         },
         "cert": {
             "title": "Certificate",
             "type": "string",
             "description": "Your Progres certificate",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "-----BEGIN CERTIFICATE-----SOMETYPEOFVALUE-----END CERTIFICATE-----"
+            ]
         },
         "token": {
             "title": "Token",
             "type": "string",
             "description": "Your Progres token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "[REDACTED]"
+            ]
         }
     },
     "type": "object",

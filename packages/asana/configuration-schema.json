@@ -4,12 +4,18 @@
     "apiVersion": {
       "title": "API Version",
       "type": "string",
-      "description": "The API version"
+      "description": "The API version",
+      "examples": [
+        "1.0"
+      ]
     },
     "token": {
       "title": "Token",
       "type": "string",
-      "description": "The API token"
+      "description": "The API token",
+      "examples": [
+        "sample-tokenyWSJdXBACMLLWMNGgADFA"
+      ]
     }
   },
   "type": "object",

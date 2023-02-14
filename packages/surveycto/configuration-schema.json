@@ -5,20 +5,29 @@
             "title": "Instance name",
             "type": "string",
             "description": "Your Surveycto instance name",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "openfn_test"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Your Surveycto instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "someusername"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Your Surveycto instance password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some(%)!Password"
+            ]
         }
     },
     "type": "object",

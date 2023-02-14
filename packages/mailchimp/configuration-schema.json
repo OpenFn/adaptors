@@ -6,14 +6,20 @@
             "type": "string",
             "description": "Mailchimp API domain URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://mailchimp.com/api"
+            ]
         },
         "apiKey": {
             "title": "API Key",
             "type": "string",
             "description": "Mailchimp API Key",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "somEThINGkeyish"
+            ]
         }
     },
     "type": "object",

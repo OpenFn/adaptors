@@ -5,14 +5,20 @@
             "title": "Account",
             "type": "string",
             "description": "Your Zoho account",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "yourzohoaccount"
+            ]
         },
         "authToken": {
             "title": "Auth Token",
             "type": "string",
             "description": "Your Zoho authentication token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "secreauthtoken"
+            ]
         },
         "apiVersion": {
             "title": "API Version",
@@ -23,7 +29,11 @@
                 "v2"
             ],
             "description": "Zoho API version",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "v2",
+                "v1"
+            ]
         }
     },
     "type": "object",

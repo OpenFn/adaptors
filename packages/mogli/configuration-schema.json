@@ -6,34 +6,49 @@
             "type": "string",
             "description": "Mogli instance login URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                " https://www.orange-or-airtel-or-vodafone.com/api/"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Mogli instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Mogli instance password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@secret(!)Pass"
+            ]
         },
         "securityToken": {
             "title": "Security Token",
             "type": "string",
             "description": "Mogli instance security token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "dGF5bG9yOnNlY3JldA=="
+            ]
         },
         "secret": {
             "title": "Secret",
             "type": "string",
             "description": "Mogli instance secret",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "someotherThiNGfSECret"
+            ]
         }
     },
     "type": "object",

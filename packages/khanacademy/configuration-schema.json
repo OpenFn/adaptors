@@ -6,28 +6,40 @@
             "type": "string",
             "description": "Your Khanacademy login email",
             "format": "email",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Your Khanacademy login password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some(!)Strongpassword"
+            ]
         },
         "consumerKey": {
             "title": "Consumer Key",
             "type": "string",
             "description": "Your Khanacademy consumer key",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "somEThINGkeyish"
+            ]
         },
         "secretKey": {
             "title": "Secret Key",
             "type": "string",
             "description": "Your Khanacademy secret key",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "otherThiNGfSECret"
+            ]
         }
     },
     "type": "object",
