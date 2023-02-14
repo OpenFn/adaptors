@@ -4,15 +4,12 @@ Language Pack for sending messages using the Zoho API.
 
 ## Documentation
 
-### Sample configuration
+### Configuration
 
-```json
-{
-  "account": "yourzohoaccount",
-  "authToken": "secretauthtoken",
-  "apiVersion": "v2"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/zoho-configuration-schema/)
+definition.
 
 ### addRow
 

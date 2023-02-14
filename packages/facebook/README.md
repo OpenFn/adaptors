@@ -1,35 +1,36 @@
 # Language Facebook
 
-Language Pack for building expressions and operations to interact with the Facebook Messenger API.
+Language Pack for building expressions and operations to interact with the
+Facebook Messenger API.
 
 ## Documentation
 
-## sample configuration
+### Configuration
 
-```json
-{
-  "accessToken": "yOuR-aCcEsS-tOkEn"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/facebook-configuration-schema/)
+definition.
 
-## postMessage
+### postMessage
 
 #### sample expression using operation
 
 ```js
 postMessage({
   recipient: {
-    id: "<PSID>",
+    id: '<PSID>',
   },
   message: {
-    text: "<YOUR MESSAGE GOES HERE>",
+    text: '<YOUR MESSAGE GOES HERE>',
   },
 });
 ```
 
 ## Development
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`
 

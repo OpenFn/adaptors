@@ -5,20 +5,14 @@ API.
 
 ## Documentation
 
-- View the documentation at https://openfn.github.io/adaptor/
-- To update the documentation site, run:
-  `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
+### Configuration
 
-## post
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/template-configuration-schema/)
+definition.
 
-#### sample configuration
-
-```json
-{
-  "username": "taylor@openfn.org",
-  "password": "supersecret"
-}
-```
+### post
 
 #### sample expression using operation
 

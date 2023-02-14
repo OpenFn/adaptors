@@ -4,15 +4,12 @@ Language Pack for building expressions and operations for use with MongoDB.
 
 ## Documentation
 
-### sample configuration
+### Configuration
 
-```json
-{
-  "username": "something",
-  "password": "secret",
-  "clusterUrl": "yourCluster-xxxyzzz.mongodb.net"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mongodb-configuration-schema/)
+definition.
 
 ### insertDocuments
 

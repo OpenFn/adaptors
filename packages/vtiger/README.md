@@ -5,15 +5,12 @@ Vtiger API.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "hostUrl": "https://openfunction.od2.vtiger.com",
-  "username": "taylor@openfn.org",
-  "accessToken": "blahBlahBlah"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/vtiger-configuration-schema/)
+definition.
 
 #### sample listTypes expression
 

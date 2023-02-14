@@ -5,16 +5,14 @@ API.
 
 ## Documentation
 
-## sendSMS
+### Configuration
 
-#### sample configuration
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/nexmo-configuration-schema/)
+definition.
 
-```json
-{
-  "apiKey": "mYaP1K3y",
-  "apiSecret": "supersecret"
-}
-```
+### sendSMS
 
 #### sample expression
 
