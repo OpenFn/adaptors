@@ -18,7 +18,7 @@
         "description": "Database instance port",
         "minLength": 1,
         "examples": [
-          "3306"
+          3306
         ]
       },
       "database": {

@@ -18,7 +18,7 @@
       "description": "The SFTP server port",
       "minLength": 1,
       "examples": [
-        "22"
+        22
       ]
 
     },
