@@ -5,12 +5,12 @@ calls.
 
 ## Documentation
 
-### sample configuration
+### Configuration
 
-````json
-{
-  "accessToken": "nu-uh"
-}
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/googlesheets-configuration-schema/)
+definition.
 
 ### appendValues()
 
@@ -26,7 +26,7 @@ appendValues({
     ['Really now!', '$100', '1', '3/20/2016'],
   ],
 });
-````
+```
 
 ## Development
 

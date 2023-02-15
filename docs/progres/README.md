@@ -19,16 +19,12 @@ ProGres v4 API.
 - To update the documentation site, run:
   `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
 
-### sample configuration
+### Configuration
 
-```json
-{
-  "url": "https://endpoint/To/DTP",
-  "key": "-----BEGIN PRIVATE KEY-----SOMETYPEOFPRIVATEVALUE-----END PRIVATE KEY-----",
-  "cert": "-----BEGIN CERTIFICATE-----SOMETYPEOFVALUE-----END CERTIFICATE-----",
-  "token": "[REDACTED]"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/progres-configuration-schema/)
+definition.
 
 ### Posting data to an endpoint with SSL cert authentication
 

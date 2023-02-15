@@ -7,15 +7,12 @@ Language Pack for building expressions and operations for working with the
 
 ## Documentation
 
-### Sample configuration
+### Configuration
 
-```json
-{
-  "instanceUrl": "http://openmrs.com/instance/url",
-  "username": "admin@openmrs",
-  "password": "supersecretopenmrspassword"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/openmrs-configuration-schema/)
+definition.
 
 ### Get a patient by some criteria
 

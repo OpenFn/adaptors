@@ -4,17 +4,14 @@ Language Pack for building expressions and operations to access IBM Maximo EAM.
 
 ## Documentation
 
-## Fetch
+### Configuration
 
-#### sample configuration
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/maximo-configuration-schema/)
+definition.
 
-```json
-{
-  "username": "taylor",
-  "password": "supersecret",
-  "baseUrl": "https://maximo-demo76.mro.com"
-}
-```
+### Fetch
 
 #### sample 'fetch' expression
 

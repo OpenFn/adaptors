@@ -5,14 +5,12 @@ marketing API.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "apiKey": "someSecretShhh",
-  "server": "us11"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mailchimp-configuration-schema/)
+definition.
 
 #### sample expression with multiple operations
 

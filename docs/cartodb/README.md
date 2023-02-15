@@ -5,14 +5,12 @@ Language Pack for sending messages using the
 
 ## Documentation
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "account": "oepnfn",
-  "apiKey": "longsecretapikey"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/cartodb-configuration-schema/)
+definition.
 
 ## Examples
 

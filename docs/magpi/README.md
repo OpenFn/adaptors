@@ -9,14 +9,12 @@ _N.B.: The Magpi API is under development and this pack may change._
 
 ## Documentation
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "username": "taylordowns2000",
-  "accessToken": "super-secret"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/magpi-configuration-schema/)
+definition.
 
 ## Fetch data from Magpi
 

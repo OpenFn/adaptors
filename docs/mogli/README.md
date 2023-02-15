@@ -5,17 +5,12 @@ SMS.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "username": "taylor@openfn.org",
-  "password": "supersecret",
-  "loginUrl": "https://instance_name.mogli.com",
-  "securityToken": "xxx123",
-  "secret": "abc456"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mogli-configuration-schema/)
+definition.
 
 ### Create inbound SMS
 
