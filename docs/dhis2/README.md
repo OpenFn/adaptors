@@ -24,18 +24,12 @@ the main
 [Adaptor docs](https://docs.openfn.org/adaptors/packages/dhis2-docs#modules)
 page.
 
-## Sample State
+### Configuration
 
-```json
-{
-  "configuration": {
-    "username": "admin",
-    "password": "district",
-    "hostUrl": "https://play.dhis2.org/2.36.6"
-  },
-  "data": { "a": 1, "b": 2 }
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/dhis2-configuration-schema/)
+definition.
 
 ## Development
 
