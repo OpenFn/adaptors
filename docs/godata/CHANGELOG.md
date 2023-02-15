@@ -1,5 +1,11 @@
 # @openfn/language-godata
 
+## 3.2.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 3.2.2
 
 ### Patch Changes

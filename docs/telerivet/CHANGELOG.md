@@ -1,5 +1,11 @@
 # @openfn/language-telerivet
 
+## 0.1.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 0.1.2
 
 ### Patch Changes

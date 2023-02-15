@@ -1,5 +1,11 @@
 # @openfn/language-surveycto
 
+## 1.1.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 1.1.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.6.7
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 0.6.6
 
 ### Patch Changes
