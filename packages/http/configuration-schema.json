@@ -4,13 +4,19 @@
     "username": {
       "title": "Username",
       "type": "string",
-      "description": "Username"
+      "description": "Username",
+      "examples": [
+        "test@openfn.org"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
-      "writeOnly": true
+      "writeOnly": true,
+      "examples": [
+        "@some(!)Password"
+      ]
     },
     "baseUrl": {
       "title": "Base URL",
@@ -24,7 +30,10 @@
       ],
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "https://instance_name.surveycto.com"
+      ]
     }
   },
   "type": "object",

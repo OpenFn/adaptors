@@ -7,20 +7,29 @@
             "default": "https://kf.kobotoolbox.org",
             "description": "Kobotoolbox URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://kf.kobotoolbox.org"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Kobotoolbox username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Kobotoolbox password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some(!)Strongpassword"
+            ]
         },
         "apiVersion": {
             "title": "API Version",
@@ -31,7 +40,10 @@
                 "v1",
                 "v2"
             ],
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "v2"
+            ]
         }
     },
     "type": "object",

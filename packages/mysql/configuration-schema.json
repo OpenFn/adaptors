@@ -6,33 +6,48 @@
         "type": "string",
         "description": "The database instance host URL",
         "format": "uri",
-        "minLength": 1
+        "minLength": 1,
+        "examples": [
+          "some-host-url.compute-1.amazonaws.com"
+        ]
       },
       "port": {
         "title": "Port",
         "type": "integer",
         "default": 3306,
         "description": "Database instance port",
-        "minLength": 1
+        "minLength": 1,
+        "examples": [
+          3306
+        ]
       },
       "database": {
         "title": "Database",
         "type": "string",
         "description": "The database name",
-        "minLength": 1
+        "minLength": 1,
+        "examples": [
+          "demo-db"
+        ]
       },
       "user": {
         "title": "Username",
         "type": "string",
         "description": "The username to log in the database",
-        "minLength": 1
+        "minLength": 1,
+        "examples": [
+          "admin-demo"
+        ]
       },
       "password": {
         "title": "Password",
         "type": "string",
         "description": "The password to log in the database",
         "writeOnly": true,
-        "minLength": 1
+        "minLength": 1,
+        "examples": [
+          "@super(!)Secretpass"
+        ]
       }
     },
     "type": "object",

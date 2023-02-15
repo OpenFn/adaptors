@@ -7,26 +7,38 @@
       "description": "The OpenFn host url",
       "format": "uri",
       "default": "https://www.openfn.org",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "https://www.openfn.org"
+      ]
     },
     "projectId": {
       "title": "Project ID",
       "type": "string",
       "description": "Your OpenFn project ID",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "some-id"
+      ]
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "The username to log in to OpenFn",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "test@openfn.org"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "The password to log in to OpenFn",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "@super(!)Secretpass"
+      ]
     }
   },
   "type": "object",

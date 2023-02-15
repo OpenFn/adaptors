@@ -6,20 +6,29 @@
             "type": "string",
             "description": "The OpenHIM API url",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "http://openhim.com/api"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "The username to log in to OpenHIM",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin@openhim.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "The password to log in to OpenHIM",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@super(!)Secretpass"
+            ]
         }
     },
     "type": "object",

@@ -6,26 +6,38 @@
             "type": "string",
             "description": "Medic's CouchDB api URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://standard.app.medicmobile.org"
+            ]
         },
         "db": {
             "title": "Database",
             "type": "string",
             "description": "Database name",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "medic"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Medic instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Medic instance password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@super(!)Secret"
+            ]
         }
     },
     "type": "object",

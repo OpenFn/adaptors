@@ -1,0 +1,99 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "type": {
+            "title": "Type",
+            "type": "string",
+            "description": "",
+            "examples": [
+                "service_acconut"
+            ]
+        },
+        "project_id": {
+            "title": "Prokect id",
+            "type": "string",
+            "description": "Project id",
+            "examples": [
+                "some-project-id"
+            ]
+        },
+        "private_key_id": {
+            "title": "Private Key Id",
+            "type": "string",
+            "description": "Private key id",
+            "examples": [
+                "670b9e3c8c366e83aa569dd57cbfc5c575b72e42"
+            ]
+        },
+        "private_key": {
+            "title": "Private Key",
+            "type": "string",
+            "description": "Private key",
+            "examples": [
+                "-----BEGIN PRIVATE KEY-----\nblah\nmoreblah=\n-----END PRIVATE KEY-----\n"
+            ]
+        },
+        "client_email": {
+            "title": "Client Email",
+            "type": "string",
+            "description": "Client email",
+            "examples": [
+                "bigquery@some-project.iam.gserviceaccount.com"
+            ]
+        },
+        "client_id": {
+            "title": "Client Id",
+            "type": "string",
+            "description": "Client id",
+            "examples": [
+                "someid"
+            ]
+        },
+        "auth_uri": {
+            "title": "Auth Uri",
+            "type": "string",
+            "description": "Auth Uri",
+            "examples": [
+                "https://accounts.google.com/o/oauth2/auth"
+            ]
+        },
+        "token_uri": {
+            "title": "Token Uri",
+            "type": "string",
+            "description": "Token Uri",
+            "examples": [
+                "https://oauth2.googleapis.com/token"
+            ]
+        },
+        "auth_provider_x509_cert_url": {
+            "title": "Auth Provider x509 Cert Url",
+            "type": "string",
+            "description": "",
+            "examples": [
+                "https://www.googleapis.com/oauth2/v1/certs"
+            ]
+        },
+        "client_x509_cert_url": {
+            "title": "Client x509 Cert Url",
+            "type": "string",
+            "description": "",
+            "examples": [
+                "https://www.googleapis.com/robot/v1/metadata/x509/bigquery%40some-project.iam.gserviceaccount.com"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "project_id",
+        "private_key_id",
+        "private_key",
+        "client_email",
+        "client_id",
+        "auth_uri",
+        "token_uri",
+        "auth_provider_x509_cert_url",
+        "client_x509_cert_url"
+    ]
+}

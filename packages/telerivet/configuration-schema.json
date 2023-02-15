@@ -5,14 +5,20 @@
             "title": "Project ID",
             "type": "string",
             "description": "Your Telerivet project id",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "telerivet_project_id"
+            ]
         },
         "apiKey": {
             "title": "API Key",
             "type": "string",
             "description": "Your Telerivet API Key",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "telerivet_api_key"
+            ]
         }
     },
     "type": "object",

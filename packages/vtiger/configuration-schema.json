@@ -6,20 +6,29 @@
             "type": "string",
             "description": "VTiger instance host URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://openfunction.od2.vtiger.com"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "VTiger instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "accessToken": {
             "title": "Access Token",
             "type": "string",
             "description": "VTiger instance access token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some()!veryHugeToke"
+            ]
         }
     },
     "type": "object",

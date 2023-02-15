@@ -6,14 +6,20 @@
             "type": "string",
             "description": "Mailgun API domain URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://mailgun.com/api/example"
+            ]
         },
         "apiKey": {
             "title": "API Key",
             "type": "string",
             "description": "Mailgun API Key",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "otherThiNGfSECret"
+            ]
         }
     },
     "type": "object",

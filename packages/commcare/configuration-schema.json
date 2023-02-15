@@ -6,32 +6,47 @@
             "type": "string",
             "description": "The CommCare host url",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://www.commcarehq.org"
+            ]
         },
         "applicationName": {
             "title": "Application Name",
             "type": "string",
             "description": "The CommCare application name",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "some-proof-of-concept"
+            ]
         },
         "appId": {
             "title": "App ID",
             "type": "string",
             "description": "Your CommCare project UUID",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "The username to log in to CommCare",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "The password to log in to CommCare",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "superscretepassword"
+            ]
         }
     },
     "type": "object",

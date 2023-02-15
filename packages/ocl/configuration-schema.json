@@ -7,20 +7,29 @@
             "description": "The OCL API URL",
             "default": "https://api.openconceptlab.org/",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://api.openconceptlab.org/"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "The username to log in to OCL",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "usernmame"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "The password to log in to OCL",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "supersecretpassword"
+            ]
         }
     },
     "type": "object",

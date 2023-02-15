@@ -6,26 +6,38 @@
             "type": "string",
             "description": "Your SMPP client host URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://some-smpp.com:3000"
+            ]
         },
         "systemId": {
             "title": "System ID",
             "type": "string",
             "description": "Your SMPP client name",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "some_smpp_client_name"
+            ]
         },
         "inboxId": {
             "title": "Inbox ID",
             "type": "string",
             "description": "Your SMPP client inbox ID",
-            "minLength": 1
+            "minLength": 1, 
+            "examples": [
+                "1c908151-8273-431c-b1d4-blah"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Your SMPP client password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some(!)StrongPassword"
+            ]
         }
     },
     "type": "object",
