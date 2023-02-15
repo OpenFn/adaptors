@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { add } from 'date-fns';
-import * as dateFns from '../src/dateFns';
+import * as dateFns from '../src/dateFns.js';
 
 describe('date fns', () => {
   it('should parse a random given date', () => {

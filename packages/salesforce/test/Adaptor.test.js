@@ -11,9 +11,9 @@ import {
   field,
   fields,
   sourceValue,
-} from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
-import testData from './testData' assert { type: 'json' };
+} from '../src/Adaptor.js';
+import { execute } from '../src/FakeAdaptor.js';
+import testData from './testData.json' assert { type: 'json' };
 
 const { expect } = chai;
 

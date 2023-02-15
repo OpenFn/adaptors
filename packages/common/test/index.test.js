@@ -23,7 +23,7 @@ import {
   sourceValue,
   splitKeys,
   toArray,
-} from '../src/Adaptor';
+} from '../src/Adaptor.js';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
