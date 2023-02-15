@@ -1,5 +1,11 @@
 # @openfn/language-beyonic
 
+## 0.1.7
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.1.6
 
 ### Patch Changes

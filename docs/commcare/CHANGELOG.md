@@ -1,5 +1,13 @@
 # @openfn/language-commcare
 
+## 1.5.3
+
+### Patch Changes
+
+- f2aed32: add examples
+- Updated dependencies [f2aed32]
+  - @openfn/language-http@4.2.5
+
 ## 1.5.2
 
 ### Patch Changes
