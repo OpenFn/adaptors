@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-rapidpro",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A RapidPro adaptor for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

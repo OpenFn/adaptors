@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.0.2
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 1.0.1
 
 ### Patch Changes

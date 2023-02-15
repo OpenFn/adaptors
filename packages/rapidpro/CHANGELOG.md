@@ -1,5 +1,11 @@
 # @openfn/language-rapidpro
 
+## 0.5.3
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.5.2
 
 ### Patch Changes

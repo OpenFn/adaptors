@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.6.6
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.6.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-template
 
+## 1.7.6
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 1.7.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 2.12.2
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 2.12.1
 
 ### Patch Changes

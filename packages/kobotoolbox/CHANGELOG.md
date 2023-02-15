@@ -1,5 +1,11 @@
 # @openfn/language-kobotoolbox
 
+## 1.3.1
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 1.3.0
 
 ### Minor Changes

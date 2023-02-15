@@ -1,5 +1,11 @@
 # @openfn/language-asana
 
+## 2.1.4
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 2.1.3
 
 ### Patch Changes

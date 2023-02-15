@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 0.10.2
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.10.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 0.3.1
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.3.0
 
 ### Minor Changes
