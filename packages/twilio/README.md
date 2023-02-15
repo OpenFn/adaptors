@@ -5,16 +5,14 @@ twilio API.
 
 ## Documentation
 
-## sendSMS
+### Configuration
 
-#### Sample configuration
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/twilio-configuration-schema/)
+definition.
 
-```json
-{
-  "accountSid": "secret",
-  "authToken": "evenMoreSecret"
-}
-```
+### sendSMS
 
 #### sample expression, sending an sms
 

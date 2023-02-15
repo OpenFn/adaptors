@@ -4,14 +4,12 @@ Language Pack for connecting with Asana.
 
 ## Documentation
 
-### sample configuration
+### Configuration
 
-```json
-{
-  "apiVersion": "1.0",
-  "token": "shhhhhhhh"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/asana-configuration-schema/)
+definition.
 
 ### How to create an API token
 

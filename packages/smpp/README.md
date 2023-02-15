@@ -5,16 +5,12 @@ SMPP client API.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-```json
-{
-  "systemId": "some_smpp_client_name",
-  "password": "password",
-  "clientHost": "http://localhost:4000",
-  "inboxId": "1c908151-8273-431c-b1d4-blah"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/smpp-configuration-schema/)
+definition.
 
 #### sample send expression
 

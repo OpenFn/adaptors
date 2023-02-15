@@ -8,17 +8,12 @@ for the full list of available helper functions including `upsert(...)`.**
 
 ## Documentation
 
-## sample configuration
+### Configuration
 
-```json
-{
-  "host": "some-host-url.compute-1.amazonaws.com",
-  "port": "3306",
-  "database": "wouldntyouliketoknow",
-  "user": "me",
-  "password": "noway"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mysql-configuration-schema/)
+definition.
 
 ## Execute a query
 

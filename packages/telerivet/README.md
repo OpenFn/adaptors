@@ -5,14 +5,12 @@ Language Pack for sending messages using the
 
 ## Documentation
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "projectId": "telerivet_project_id",
-  "apiKey": "telerivetapikey"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/telerivet-configuration-schema/)
+definition.
 
 ## Send message
 

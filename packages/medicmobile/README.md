@@ -17,18 +17,12 @@ the README.md
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-We connect to Medic's CouchDB api.
-
-```json
-{
-  "server": "https://standard.app.medicmobile.org",
-  "db": "medic",
-  "username": "something",
-  "password": "secret"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/medicmobile-configuration-schema/)
+definition.
 
 #### sample fetchSubmissions expression
 

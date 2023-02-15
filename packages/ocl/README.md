@@ -3,15 +3,12 @@
 Language Pack for building expressions and operations for working with the
 [OCL API](http://ocl.github.io/ocl-docs/master/en/developer/html/ocl_developer_manual.html).
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "username": "username",
-  "password": "supersecretpassword",
-  "hostUrl": "https://api.openconceptlab.org/"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/ocl-configuration-schema/)
+definition.
 
 ## Mapping source concepts to destination API
 

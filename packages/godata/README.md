@@ -15,15 +15,12 @@ in the field, to adapt to the wide range of outbreak scenarios.
 - To update the documentation site, run:
   `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
 
-### sample configuration
+### Configuration
 
-```json
-{
-  "email": "mamadou@openfn.org",
-  "password": "supersecret",
-  "apiUrl": "https://www.who-godata.com/api"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/godata-configuration-schema/)
+definition.
 
 ## Helper Functions
 

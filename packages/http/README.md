@@ -4,15 +4,12 @@ Language Pack for building expressions and operations to make HTTP calls.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-```js
-{
-  "username": "<name@email>",
-  "password": "<supersecret>",
-  "baseUrl": "https://instance_name.surveycto.com",
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/http-configuration-schema/)
+definition.
 
 ### Get data
 

@@ -5,18 +5,12 @@ Language Pack for building expressions and operations to interact with the
 
 ## Documentation
 
-## post
+### Configuration
 
-#### sample configuration
-
-```json
-{
-  "baseURL": "https://kf.kobotoolbox.org",
-  "username": "mamadou@openfn.org",
-  "password": "supersecret",
-  "apiVersion": "v2"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/kobotoolbox-configuration-schema/)
+definition.
 
 #### Get the list of forms
 
