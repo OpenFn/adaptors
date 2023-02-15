@@ -1,5 +1,11 @@
 # @openfn/language-mysql
 
+## 1.3.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 1.3.2
 
 ### Patch Changes

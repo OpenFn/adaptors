@@ -1,5 +1,11 @@
 # @openfn/language-vtiger
 
+## 1.1.2
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 1.1.1
 
 ### Patch Changes

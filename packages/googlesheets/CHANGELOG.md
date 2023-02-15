@@ -1,5 +1,11 @@
 # @openfn/language-googlesheets
 
+## 2.1.5
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 2.1.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 0.10.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 0.10.2
 
 ### Patch Changes

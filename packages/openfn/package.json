@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openfn",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "An (experimental) adaptor for accessing the OpenFn web API",
   "homepage": "https://docs.openfn.org",
   "repository": {

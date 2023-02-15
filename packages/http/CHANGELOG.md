@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 4.2.6
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 4.2.5
 
 ### Patch Changes

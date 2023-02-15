@@ -1,5 +1,11 @@
 # @openfn/language-smpp
 
+## 1.2.2
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 1.2.1
 
 ### Patch Changes

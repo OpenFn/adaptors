@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 0.3.4
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 0.3.3
 
 ### Patch Changes

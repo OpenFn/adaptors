@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.0.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 1.0.2
 
 ### Patch Changes

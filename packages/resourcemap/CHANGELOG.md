@@ -1,5 +1,11 @@
 # @openfn/language-resourcemap
 
+## 0.2.2
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
 ## 0.2.1
 
 ### Patch Changes

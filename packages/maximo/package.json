@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-maximo",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An IBM Maximo EAM Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

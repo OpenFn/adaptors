@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-asana",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "An adaptor to access objects in Asana",
   "homepage": "https://docs.openfn.org",
   "repository": {
