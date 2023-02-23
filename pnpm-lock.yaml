@@ -160,7 +160,7 @@ importers:
       xlsx: ^0.18.0
     dependencies:
       '@openfn/language-common': link:../common
-      '@openfn/language-http': link:../http
+      '@openfn/language-http': 4.2.6
       JSONPath: 0.10.0
       form-data: 4.0.0
       js2xmlparser: 1.0.0
@@ -1094,7 +1094,7 @@ importers:
       deep-eql: 4.1.1
       esno: ^0.16.3
       jsforce: ^1.11.0
-      lodash-fp: ^0.10.2
+      lodash: ^4.17.21
       mocha: 7.2.0
       mustache: ^2.2.0
       nock: 13.2.9
@@ -1107,7 +1107,7 @@ importers:
       JSONPath: 0.10.0
       axios: 0.21.4
       jsforce: 1.11.0
-      lodash-fp: 0.10.4
+      lodash: 4.17.21
       mustache: 2.3.2
       yargs: 3.32.0
     devDependencies:
@@ -2201,6 +2201,33 @@ packages:
       - axios
       - jsonpath-plus
       - lodash
+
+  /@openfn/language-common/1.7.5:
+    resolution: {integrity: sha512-QivV3v5Oq5fb4QMopzyqUUh+UGHaFXBdsGr6RCmu6bFnGXdJdcQ7GpGpW5hKNq29CkmE23L/qAna1OLr4rP/0w==}
+    dependencies:
+      axios: 1.1.3
+      date-fns: 2.29.3
+      jsonpath-plus: 4.0.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@openfn/language-http/4.2.6:
+    resolution: {integrity: sha512-aoDu9DzAx53aNU9t1l9ZlPmsfBrDTiJiJvlTEp27dbnaTiiCfMVLtncSnePNBRO5VAJp/XGnOfJC9b+vt1+rDA==}
+    dependencies:
+      '@openfn/language-common': 1.7.5
+      cheerio: 1.0.0-rc.12
+      cheerio-tableparser: 1.0.1
+      csv-parse: 4.16.3
+      fast-safe-stringify: 2.1.1
+      form-data: 3.0.1
+      lodash: 4.17.21
+      request: 2.88.2
+      tough-cookie: 4.1.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@openfn/simple-ast/0.3.2:
     resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}

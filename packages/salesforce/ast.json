@@ -65,9 +65,7 @@
     },
     {
       "name": "describeAll",
-      "params": [
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Outputs basic information about available sObjects.",
         "tags": [
@@ -104,14 +102,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "describe",
-      "params": [
-        "sObject",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Outputs basic information about an sObject to `STDOUT`.",
         "tags": [
@@ -139,15 +134,6 @@
             "name": "sObject"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -157,16 +143,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "retrieve",
-      "params": [
-        "sObject",
-        "id",
-        "callback",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Retrieves a Salesforce sObject(s).",
         "tags": [
@@ -212,15 +193,6 @@
             "name": "callback"
           },
           {
-            "title": "param",
-            "description": "Runtime state",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -230,14 +202,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "query",
-      "params": [
-        "qs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
         "tags": [
@@ -265,15 +234,6 @@
             "name": "qs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -283,17 +243,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "bulk",
-      "params": [
-        "sObject",
-        "operation",
-        "options",
-        "fun",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Create and execute a bulk job.",
         "tags": [
@@ -348,15 +302,6 @@
             "name": "fun"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -366,16 +311,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "destroy",
-      "params": [
-        "sObject",
-        "attrs",
-        "options",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Delete records of an object.",
         "tags": [
@@ -421,15 +361,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -439,15 +370,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "create",
-      "params": [
-        "sObject",
-        "attrs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Create a new object.",
         "tags": [
@@ -484,15 +411,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -502,16 +420,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createIf",
-      "params": [
-        "logical",
-        "sObject",
-        "attrs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Create a new object if conditions are met.",
         "tags": [
@@ -557,15 +470,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -575,16 +479,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "upsert",
-      "params": [
-        "sObject",
-        "externalId",
-        "attrs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Upsert an object.",
         "tags": [
@@ -630,15 +529,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -648,17 +538,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "upsertIf",
-      "params": [
-        "logical",
-        "sObject",
-        "externalId",
-        "attrs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Upsert if conditions are met.",
         "tags": [
@@ -713,15 +597,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -731,15 +606,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "update",
-      "params": [
-        "sObject",
-        "attrs",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Update an object.",
         "tags": [
@@ -776,15 +647,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -794,14 +656,11 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "reference",
-      "params": [
-        "position",
-        "state"
-      ],
+      "params": {},
       "docs": {
         "description": "Get a reference ID by an index.",
         "tags": [
@@ -829,15 +688,6 @@
             "name": "position"
           },
           {
-            "title": "param",
-            "description": "Array of references.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -847,7 +697,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],

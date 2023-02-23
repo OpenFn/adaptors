@@ -14,7 +14,8 @@ import {
   steps,
 } from '../src/FakeAdaptor';
 
-import { filter } from 'lodash-es';
+import _ from 'lodash/fp';
+const { filter } = _;
 
 import testData from './nestedTestData' assert { type: 'json' };
 

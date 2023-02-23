@@ -16,7 +16,7 @@ import {
   chunk,
 } from '@openfn/language-common';
 import jsforce from 'jsforce';
-import { flatten, curry } from 'lodash-es';
+import flatten from 'lodash/flatten';
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -51,7 +51,7 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @returns {State}
  */
 export const describeAll = function (state) {
-  let { connection } = state;
+  const { connection } = state;
 
   return connection.describeGlobal().then(result => {
     const { sobjects } = result;
@@ -71,11 +71,10 @@ export const describeAll = function (state) {
  * describe('obj_name')
  * @function
  * @param {String} sObject - API name of the sObject.
- * @param {State} state - Runtime state.
  * @returns {State}
  */
-export const describe = function (sObject, state) {
-  let { connection } = state;
+export const describe = sObject => state => {
+  const { connection } = state;
 
   const objectName = expandReferences(sObject)(state);
 
@@ -102,11 +101,10 @@ export const describe = function (sObject, state) {
  * @param {String} sObject - The sObject to retrieve
  * @param {String} id - The id of the record
  * @param {Function} callback - A callback to execute once the record is retrieved
- * @param {State} state - Runtime state
  * @returns {State}
  */
-export const retrieve = function (sObject, id, callback, state) {
-  let { connection } = state;
+export const retrieve = (sObject, id, callback) => state => {
+  const { connection } = state;
 
   const finalId = expandReferences(id)(state);
 
@@ -136,11 +134,10 @@ export const retrieve = function (sObject, id, callback, state) {
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
  * @function
  * @param {String} qs - A query string.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const query = function (qs, state) {
-  let { connection } = state;
+export const query = qs => state => {
+  const { connection } = state;
   qs = expandReferences(qs)(state);
   console.log(`Executing query: ${qs}`);
 
@@ -174,10 +171,9 @@ export const query = function (qs, state) {
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
  * @param {Function} fun - A function which takes state and returns an array.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const bulk = function (sObject, operation, options, fun, state) {
+export const bulk = (sObject, operation, options, fun) => state => {
   const { connection } = state;
   const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
   const finalAttrs = fun(state);
@@ -271,11 +267,10 @@ export const bulk = function (sObject, operation, options, fun, state) {
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Array of IDs of records to delete.
  * @param {Object} options - Options for the destroy delete operation.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const destroy = function (sObject, attrs, options, state) {
-  let { connection } = state;
+export const destroy = (sObject, attrs, options) => state => {
+  const { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   const { failOnError } = options;
   console.info(`Deleting ${sObject} records`);
@@ -311,10 +306,9 @@ export const destroy = function (sObject, attrs, options, state) {
  * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const create = curry(function (sObject, attrs, state) {
+export const create = (sObject, attrs) => state => {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(`Creating ${sObject}`, finalAttrs);
@@ -326,7 +320,7 @@ export const create = curry(function (sObject, attrs, state) {
       references: [recordResult, ...state.references],
     };
   });
-});
+};
 
 /**
  * Create a new object if conditions are met.
@@ -340,14 +334,13 @@ export const create = curry(function (sObject, attrs, state) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const createIf = function (logical, sObject, attrs, state) {
-  let { connection } = state;
+export const createIf = (logical, sObject, attrs) => state => {
   logical = expandReferences(logical)(state);
 
   if (logical) {
+    const { connection } = state;
     const finalAttrs = expandReferences(attrs)(state);
     console.info(`Creating ${sObject}`, finalAttrs);
     return connection.create(sObject, finalAttrs).then(function (recordResult) {
@@ -377,11 +370,10 @@ export const createIf = function (logical, sObject, attrs, state) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsert = function (sObject, externalId, attrs, state) {
-  let { connection } = state;
+export const upsert = (sObject, externalId, attrs) => state => {
+  const { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(
     `Upserting ${sObject} with externalId`,
@@ -414,14 +406,13 @@ export const upsert = function (sObject, externalId, attrs, state) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const upsertIf = function (logical, sObject, externalId, attrs, state) {
-  let { connection } = state;
+export const upsertIf = (logical, sObject, externalId, attrs) => state => {
   logical = expandReferences(logical)(state);
 
   if (logical) {
+    const { connection } = state;
     const finalAttrs = expandReferences(attrs)(state);
     console.info(
       `Upserting ${sObject} with externalId`,
@@ -458,10 +449,9 @@ export const upsertIf = function (logical, sObject, externalId, attrs, state) {
  * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const update = function (sObject, attrs, state) {
+export const update = (sObject, attrs) => state => {
   let { connection } = state;
   const finalAttrs = expandReferences(attrs)(state);
   console.info(`Updating ${sObject}`, finalAttrs);
@@ -482,12 +472,10 @@ export const update = function (sObject, attrs, state) {
  * reference(0)
  * @function
  * @param {number} position - Position for references array.
- * @param {State} state - Array of references.
  * @returns {State}
  */
-export const reference = function (position, state) {
-  const { references } = state;
-  return references[position].id;
+export const reference = position => state => {
+  return state.references[position].id;
 };
 
 /**
