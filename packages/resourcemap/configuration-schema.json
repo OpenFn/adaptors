@@ -7,20 +7,29 @@
             "default": "http://some-site-of-yours.com:8080",
             "description": "ResourceMap base URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1, 
+            "examples": [
+                "http://some-site-of-yours.com:8080"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Your ResourceMap username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Your ResourceMap password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1, 
+            "examples": [
+                "@super(!)Secret"
+            ]
         }
     },
     "type": "object",

@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 2.10.4
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 2.10.3
 
 ### Patch Changes

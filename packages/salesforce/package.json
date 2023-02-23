@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "2.12.1",
+  "version": "2.12.3",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -36,8 +36,9 @@
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
     "jsonpath": "^1.1.1",
-    "lodash-fp": "^0.10.2",
-    "mustache": "^2.2.0"
+    "mustache": "^2.2.0",
+    "lodash": "^4.17.21",
+    "yargs": "^3.30.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

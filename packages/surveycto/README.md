@@ -5,15 +5,12 @@ SurveyCTO.
 
 ## Documentation
 
-## sample configuration
+### Configuration
 
-```js
-{
-  "username": "taylor@openfn.org",
-  "password": "supersecret",
-  "instanceName": "openfn_test"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/surveycto-configuration-schema/)
+definition.
 
 ## fetchSubmissions
 

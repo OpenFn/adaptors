@@ -1,5 +1,17 @@
 # @openfn/language-ocl
 
+## 0.2.4
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
+## 0.2.3
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.2.2
 
 ### Patch Changes

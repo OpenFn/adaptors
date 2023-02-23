@@ -4,18 +4,14 @@ Language Pack for building expressions and operations to make HTTP calls.
 
 ## Documentation
 
+### Configuration
+
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/khanacademy-configuration-schema/)
+definition.
+
 ## fetch
-
-#### Sample configuration
-
-```json
-{
-  "email": "yours",
-  "password": "notmine",
-  "consumerKey": "somEThINGkeyish",
-  "secretKey": "otherThiNGfSECret"
-}
-```
 
 #### sample usage
 

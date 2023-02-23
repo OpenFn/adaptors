@@ -5,13 +5,19 @@
             "title": "Account",
             "type": "string",
             "description": "CartoDB account name",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "openfn"
+            ]
         },
         "apiKey": {
             "title": "API Key",
             "type": "string",
             "description": "CartoDB API key",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "longsecretkey"
+            ]
         }
     },
     "type": "object",

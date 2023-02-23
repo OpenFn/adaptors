@@ -138,15 +138,12 @@ openhim API.
 }
 ```
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "apiUrl": "http://openhim.com/api",
-  "username": "admin@openhim",
-  "password": "supersecretopenhimpassword"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/openhim-configuration-schema/)
+definition.
 
 ## Development
 

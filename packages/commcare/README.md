@@ -14,24 +14,16 @@ https://github.com/dimagi/commcare/wiki/casexml20
 
 ## Documentation
 
-## Sample configuration
+## Configuration
 
-The "appId" is the UUID which designates your commcare project as different from
+View all the required and optional properties for `state.configuration` in the official [configuration-schema](https://docs.openfn.org/adaptors/packages/commcare-configuration-schema/) definition.
+
+- The "appId" is the UUID which designates your commcare project as different from
 everyone elses. It can be found in the URL of your application when you first
 enter it from the project screen. I.e., the last part of this url:
 `https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`
 
-Note that the username is your full email address.
-
-```json
-{
-  "appId": "the-long-uuid-in-the-url-that-designates-a-unique-commcare-project",
-  "password": "shhh",
-  "username": "test@openfn.org",
-  "applicationName": "some-proof-of-concept",
-  "hostUrl": "https://www.commcarehq.org"
-}
-```
+- Note that the username is your full email address.
 
 ## `fetchReportData` to pull aggregate data from CommCare
 

@@ -1,21 +1,30 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
         "resource": {
             "title": "Resource Url",
             "type": "string",
-            "description": "The resource url to post transactionBundle in to the destination system"
+            "description": "The resource url to post transactionBundle in to the destination system",
+            "examples": [
+                "resource_url"
+            ]
         },
         "authType": {
             "title": "Auth Type",
             "type": "string",
-            "description": "The type of authentication used to authenticate into the destination system"
+            "description": "The type of authentication used to authenticate into the destination system",
+            "examples": [
+                "Basic"
+            ]
         },
         "token": {
             "title": "Token",
             "type": "string",
-            "description": "The token  used to authenticate into the destination system"
+            "description": "The token  used to authenticate into the destination system",
+            "examples": [
+                "@super!scretetoken"
+            ]
         }
     },
     "required": [

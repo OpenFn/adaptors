@@ -1,5 +1,17 @@
 # @openfn/language-beyonic
 
+## 0.1.8
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
+## 0.1.7
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 0.1.6
 
 ### Patch Changes

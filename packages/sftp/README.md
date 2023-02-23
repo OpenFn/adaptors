@@ -4,16 +4,12 @@ Language Pack for building expressions and operations to work with SFTP servers.
 
 ## Documentation
 
-### sample configuration
+### Configuration
 
-```js
-{
-  "username": "sftp_user",
-  "password": "sftp_pass",
-  "host": "191.173.xxx.yy",
-  "port": PORT
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/sftp-configuration-schema/)
+definition.
 
 ## List the content of a directory
 

@@ -9,24 +9,14 @@ The Restfull API can be seen here: https://www.hl7.org/fhir/http.html
 
 ## Documentation
 
-- View the documentation at https://openfn.github.io/adaptor/
-- To update the documentation site, run:
-  `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
 
-## Technical Documentation
 
-#### Sample configuration
+### Configuration
 
-> See
-> [credential schema ](https://github.com/OpenFn/adaptors/tree/main/packages/fhir/credential-schema.json)
-
-```json
-{
-  "resource": "resource_url",
-  "authType": "Basic",
-  "token": "supersecrettoken"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-configuration-schema/)
+definition.
 
 #### Creates a resource in a destination system using a POST request
 

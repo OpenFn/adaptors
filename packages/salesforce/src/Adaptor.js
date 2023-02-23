@@ -16,9 +16,7 @@ import {
   chunk,
 } from '@openfn/language-common';
 import jsforce from 'jsforce';
-import loadash from 'lodash-fp';
-
-const { curry, flatten } = loadash;
+import flatten from 'lodash/flatten';
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -49,22 +47,23 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @example
  * describeAll()
  * @function
- * @param {State} state - Runtime state.
- * @returns {State}
+ * @returns {Operation}
  */
-export const describeAll = curry(function (state) {
-  let { connection } = state;
+export function describeAll() {
+  return state => {
+    const { connection } = state;
 
-  return connection.describeGlobal().then(result => {
-    const { sobjects } = result;
-    console.log(`Retrieved ${sobjects.length} sObjects`);
+    return connection.describeGlobal().then(result => {
+      const { sobjects } = result;
+      console.log(`Retrieved ${sobjects.length} sObjects`);
 
-    return {
-      ...state,
-      references: [sobjects, ...state.references],
-    };
-  });
-});
+      return {
+        ...state,
+        references: [sobjects, ...state.references],
+      };
+    });
+  };
+}
 
 /**
  * Outputs basic information about an sObject to `STDOUT`.
@@ -73,27 +72,28 @@ export const describeAll = curry(function (state) {
  * describe('obj_name')
  * @function
  * @param {String} sObject - API name of the sObject.
- * @param {State} state - Runtime state.
- * @returns {State}
+ * @returns {Operation}
  */
-export const describe = curry(function (sObject, state) {
-  let { connection } = state;
+export function describe(sObject) {
+  return state => {
+    const { connection } = state;
 
-  const objectName = expandReferences(sObject)(state);
+    const objectName = expandReferences(sObject)(state);
 
-  return connection
-    .sobject(objectName)
-    .describe()
-    .then(result => {
-      console.log('Label : ' + result.label);
-      console.log('Num of Fields : ' + result.fields.length);
+    return connection
+      .sobject(objectName)
+      .describe()
+      .then(result => {
+        console.log('Label : ' + result.label);
+        console.log('Num of Fields : ' + result.fields.length);
 
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
-    });
-});
+        return {
+          ...state,
+          references: [result, ...state.references],
+        };
+      });
+  };
+}
 
 /**
  * Retrieves a Salesforce sObject(s).
@@ -104,30 +104,31 @@ export const describe = curry(function (sObject, state) {
  * @param {String} sObject - The sObject to retrieve
  * @param {String} id - The id of the record
  * @param {Function} callback - A callback to execute once the record is retrieved
- * @param {State} state - Runtime state
- * @returns {State}
+ * @returns {Operation}
  */
-export const retrieve = curry(function (sObject, id, callback, state) {
-  let { connection } = state;
+export function retrieve(sObject, id, callback) {
+  return state => {
+    const { connection } = state;
 
-  const finalId = expandReferences(id)(state);
+    const finalId = expandReferences(id)(state);
 
-  return connection
-    .sobject(sObject)
-    .retrieve(finalId)
-    .then(result => {
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
-    })
-    .then(state => {
-      if (callback) {
-        return callback(state);
-      }
-      return state;
-    });
-});
+    return connection
+      .sobject(sObject)
+      .retrieve(finalId)
+      .then(result => {
+        return {
+          ...state,
+          references: [result, ...state.references],
+        };
+      })
+      .then(state => {
+        if (callback) {
+          return callback(state);
+        }
+        return state;
+      });
+  };
+}
 
 /**
  * Execute an SOQL query.
@@ -138,29 +139,30 @@ export const retrieve = curry(function (sObject, id, callback, state) {
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
  * @function
  * @param {String} qs - A query string.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const query = curry(function (qs, state) {
-  let { connection } = state;
-  qs = expandReferences(qs)(state);
-  console.log(`Executing query: ${qs}`);
+export function query(qs) {
+  return state => {
+    const { connection } = state;
+    qs = expandReferences(qs)(state);
+    console.log(`Executing query: ${qs}`);
 
-  return connection.query(qs, function (err, result) {
-    if (err) {
-      return console.error(err);
-    }
+    return connection.query(qs, function (err, result) {
+      if (err) {
+        return console.error(err);
+      }
 
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
+      console.log(
+        'Results retrieved and pushed to position [0] of the references array.'
+      );
 
-    return {
-      ...state,
-      references: [result, ...state.references],
-    };
-  });
-});
+      return {
+        ...state,
+        references: [result, ...state.references],
+      };
+    });
+  };
+}
 
 /**
  * Create and execute a bulk job.
@@ -176,90 +178,91 @@ export const query = curry(function (qs, state) {
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
  * @param {Function} fun - A function which takes state and returns an array.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const bulk = curry(function (sObject, operation, options, fun, state) {
-  const { connection } = state;
-  const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
-  const finalAttrs = fun(state);
+export function bulk(sObject, operation, options, fun) {
+  return state => {
+    const { connection } = state;
+    const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
+    const finalAttrs = fun(state);
 
-  if (allowNoOp && finalAttrs.length === 0) {
-    console.info(
-      `No items in ${sObject} array. Skipping bulk ${operation} operation.`
-    );
-    return state;
-  }
+    if (allowNoOp && finalAttrs.length === 0) {
+      console.info(
+        `No items in ${sObject} array. Skipping bulk ${operation} operation.`
+      );
+      return state;
+    }
 
-  if (finalAttrs.length > 10000)
-    console.log('Your batch is bigger than 10,000 records; chunking...');
+    if (finalAttrs.length > 10000)
+      console.log('Your batch is bigger than 10,000 records; chunking...');
 
-  const chunkedBatches = chunk(finalAttrs, 10000);
+    const chunkedBatches = chunk(finalAttrs, 10000);
 
-  return Promise.all(
-    chunkedBatches.map(
-      chunkedBatch =>
-        new Promise((resolve, reject) => {
-          const timeout = pollTimeout || 240000;
-          const interval = pollInterval || 6000;
+    return Promise.all(
+      chunkedBatches.map(
+        chunkedBatch =>
+          new Promise((resolve, reject) => {
+            const timeout = pollTimeout || 240000;
+            const interval = pollInterval || 6000;
 
-          console.info(
-            `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
-          );
+            console.info(
+              `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
+            );
 
-          const job = connection.bulk.createJob(sObject, operation, options);
+            const job = connection.bulk.createJob(sObject, operation, options);
 
-          job.on('error', err => reject(err));
+            job.on('error', err => reject(err));
 
-          console.info('Creating batch for job.');
-          var batch = job.createBatch();
+            console.info('Creating batch for job.');
+            var batch = job.createBatch();
 
-          console.info('Executing batch.');
-          batch.execute(chunkedBatch);
+            console.info('Executing batch.');
+            batch.execute(chunkedBatch);
 
-          batch.on('error', function (err) {
-            job.close();
-            console.error('Request error:');
-            reject(err);
-          });
-
-          return batch
-            .on('queue', function (batchInfo) {
-              console.info(batchInfo);
-              const batchId = batchInfo.id;
-              var batch = job.batch(batchId);
-              batch.poll(interval, timeout);
-            })
-            .then(res => {
+            batch.on('error', function (err) {
               job.close();
-              const errors = res
-                .map((r, i) => ({ ...r, position: i + 1 }))
-                .filter(item => {
-                  return !item.success;
+              console.error('Request error:');
+              reject(err);
+            });
+
+            return batch
+              .on('queue', function (batchInfo) {
+                console.info(batchInfo);
+                const batchId = batchInfo.id;
+                var batch = job.batch(batchId);
+                batch.poll(interval, timeout);
+              })
+              .then(res => {
+                job.close();
+                const errors = res
+                  .map((r, i) => ({ ...r, position: i + 1 }))
+                  .filter(item => {
+                    return !item.success;
+                  });
+
+                errors.forEach(err => {
+                  err[`${options.extIdField}`] =
+                    chunkedBatch[err.position - 1][options.extIdField];
                 });
 
-              errors.forEach(err => {
-                err[`${options.extIdField}`] =
-                  chunkedBatch[err.position - 1][options.extIdField];
+                if (failOnError && errors.length > 0) {
+                  console.error('Errors detected:');
+
+                  reject(JSON.stringify(errors, null, 2));
+                } else {
+                  console.log('Result : ' + JSON.stringify(res, null, 2));
+                  resolve(res);
+                }
               });
-
-              if (failOnError && errors.length > 0) {
-                console.error('Errors detected:');
-
-                reject(JSON.stringify(errors, null, 2));
-              } else {
-                console.log('Result : ' + JSON.stringify(res, null, 2));
-                resolve(res);
-              }
-            });
-        })
-    )
-  ).then(arrayOfResults => {
-    console.log('Merging results arrays.');
-    const merged = [].concat.apply([], arrayOfResults);
-    return { ...state, references: [merged, ...state.references] };
-  });
-});
+          })
+      )
+    ).then(arrayOfResults => {
+      console.log('Merging results arrays.');
+      const merged = [].concat.apply([], arrayOfResults);
+      return { ...state, references: [merged, ...state.references] };
+    });
+  };
+}
 
 /**
  * Delete records of an object.
@@ -273,34 +276,38 @@ export const bulk = curry(function (sObject, operation, options, fun, state) {
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Array of IDs of records to delete.
  * @param {Object} options - Options for the destroy delete operation.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const destroy = curry(function (sObject, attrs, options, state) {
-  let { connection } = state;
-  const finalAttrs = expandReferences(attrs)(state);
-  const { failOnError } = options;
-  console.info(`Deleting ${sObject} records`);
+export function destroy(sObject, attrs, options) {
+  return state => {
+    const { connection } = state;
+    const finalAttrs = expandReferences(attrs)(state);
+    const { failOnError } = options;
+    console.info(`Deleting ${sObject} records`);
 
-  return connection
-    .sobject(sObject)
-    .del(finalAttrs)
-    .then(function (result) {
-      const successes = result.filter(r => r.success);
-      console.log('Sucessfully deleted: ', JSON.stringify(successes, null, 2));
+    return connection
+      .sobject(sObject)
+      .del(finalAttrs)
+      .then(function (result) {
+        const successes = result.filter(r => r.success);
+        console.log(
+          'Sucessfully deleted: ',
+          JSON.stringify(successes, null, 2)
+        );
 
-      const failures = result.filter(r => !r.success);
-      console.log('Failed to delete: ', JSON.stringify(failures, null, 2));
+        const failures = result.filter(r => !r.success);
+        console.log('Failed to delete: ', JSON.stringify(failures, null, 2));
 
-      if (failOnError && result.some(r => !r.success))
-        throw 'Some deletes failed; exiting with failure code.';
+        if (failOnError && result.some(r => !r.success))
+          throw 'Some deletes failed; exiting with failure code.';
 
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
-    });
-});
+        return {
+          ...state,
+          references: [result, ...state.references],
+        };
+      });
+  };
+}
 
 /**
  * Create a new object.
@@ -313,22 +320,23 @@ export const destroy = curry(function (sObject, attrs, options, state) {
  * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const create = curry(function (sObject, attrs, state) {
-  let { connection } = state;
-  const finalAttrs = expandReferences(attrs)(state);
-  console.info(`Creating ${sObject}`, finalAttrs);
+export function create(sObject, attrs) {
+  return state => {
+    let { connection } = state;
+    const finalAttrs = expandReferences(attrs)(state);
+    console.info(`Creating ${sObject}`, finalAttrs);
 
-  return connection.create(sObject, finalAttrs).then(function (recordResult) {
-    console.log('Result : ' + JSON.stringify(recordResult));
-    return {
-      ...state,
-      references: [recordResult, ...state.references],
-    };
-  });
-});
+    return connection.create(sObject, finalAttrs).then(function (recordResult) {
+      console.log('Result : ' + JSON.stringify(recordResult));
+      return {
+        ...state,
+        references: [recordResult, ...state.references],
+      };
+    });
+  };
+}
 
 /**
  * Create a new object if conditions are met.
@@ -342,30 +350,33 @@ export const create = curry(function (sObject, attrs, state) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const createIf = curry(function (logical, sObject, attrs, state) {
-  let { connection } = state;
-  logical = expandReferences(logical)(state);
+export function createIf(logical, sObject, attrs) {
+  return state => {
+    logical = expandReferences(logical)(state);
 
-  if (logical) {
-    const finalAttrs = expandReferences(attrs)(state);
-    console.info(`Creating ${sObject}`, finalAttrs);
-    return connection.create(sObject, finalAttrs).then(function (recordResult) {
-      console.log('Result : ' + JSON.stringify(recordResult));
+    if (logical) {
+      const { connection } = state;
+      const finalAttrs = expandReferences(attrs)(state);
+      console.info(`Creating ${sObject}`, finalAttrs);
+      return connection
+        .create(sObject, finalAttrs)
+        .then(function (recordResult) {
+          console.log('Result : ' + JSON.stringify(recordResult));
+          return {
+            ...state,
+            references: [recordResult, ...state.references],
+          };
+        });
+    } else {
+      console.info(`Not creating ${sObject} because logical is false.`);
       return {
         ...state,
-        references: [recordResult, ...state.references],
       };
-    });
-  } else {
-    console.info(`Not creating ${sObject} because logical is false.`);
-    return {
-      ...state,
-    };
-  }
-});
+    }
+  };
+}
 
 /**
  * Upsert an object.
@@ -381,58 +392,12 @@ export const createIf = curry(function (logical, sObject, attrs, state) {
  * @param {String} externalId - ID.
  * @paramlookup externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @paramlookup attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {Operation}
  */
-export const upsert = curry(function (sObject, externalId, attrs, state) {
-  let { connection } = state;
-  const finalAttrs = expandReferences(attrs)(state);
-  console.info(
-    `Upserting ${sObject} with externalId`,
-    externalId,
-    ':',
-    finalAttrs
-  );
-
-  return connection
-    .upsert(sObject, finalAttrs, externalId)
-    .then(function (recordResult) {
-      console.log('Result : ' + JSON.stringify(recordResult));
-      return {
-        ...state,
-        references: [recordResult, ...state.references],
-      };
-    });
-});
-
-/**
- * Upsert if conditions are met.
- * @public
- * @example
- * upsertIf(true, 'obj_name', 'ext_id', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
- * @function
- * @param {boolean} logical - a logical statement that will be evaluated.
- * @param {String} sObject - API name of the sObject.
- * @param {String} externalId - ID.
- * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
- * @returns {Operation}
- */
-export const upsertIf = curry(function (
-  logical,
-  sObject,
-  externalId,
-  attrs,
-  state
-) {
-  let { connection } = state;
-  logical = expandReferences(logical)(state);
-
-  if (logical) {
+export function upsert(sObject, externalId, attrs) {
+  return state => {
+    const { connection } = state;
     const finalAttrs = expandReferences(attrs)(state);
     console.info(
       `Upserting ${sObject} with externalId`,
@@ -450,13 +415,55 @@ export const upsertIf = curry(function (
           references: [recordResult, ...state.references],
         };
       });
-  } else {
-    console.info(`Not upserting ${sObject} because logical is false.`);
-    return {
-      ...state,
-    };
-  }
-});
+  };
+}
+
+/**
+ * Upsert if conditions are met.
+ * @public
+ * @example
+ * upsertIf(true, 'obj_name', 'ext_id', {
+ *   attr1: "foo",
+ *   attr2: "bar"
+ * })
+ * @function
+ * @param {boolean} logical - a logical statement that will be evaluated.
+ * @param {String} sObject - API name of the sObject.
+ * @param {String} externalId - ID.
+ * @param {Object} attrs - Field attributes for the new object.
+ * @returns {Operation}
+ */
+export function upsertIf(logical, sObject, externalId, attrs) {
+  return state => {
+    logical = expandReferences(logical)(state);
+
+    if (logical) {
+      const { connection } = state;
+      const finalAttrs = expandReferences(attrs)(state);
+      console.info(
+        `Upserting ${sObject} with externalId`,
+        externalId,
+        ':',
+        finalAttrs
+      );
+
+      return connection
+        .upsert(sObject, finalAttrs, externalId)
+        .then(function (recordResult) {
+          console.log('Result : ' + JSON.stringify(recordResult));
+          return {
+            ...state,
+            references: [recordResult, ...state.references],
+          };
+        });
+    } else {
+      console.info(`Not upserting ${sObject} because logical is false.`);
+      return {
+        ...state,
+      };
+    }
+  };
+}
 
 /**
  * Update an object.
@@ -469,22 +476,23 @@ export const upsertIf = curry(function (
  * @function
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
- * @param {State} state - Runtime state.
  * @returns {Operation}
  */
-export const update = curry(function (sObject, attrs, state) {
-  let { connection } = state;
-  const finalAttrs = expandReferences(attrs)(state);
-  console.info(`Updating ${sObject}`, finalAttrs);
+export function update(sObject, attrs) {
+  return state => {
+    let { connection } = state;
+    const finalAttrs = expandReferences(attrs)(state);
+    console.info(`Updating ${sObject}`, finalAttrs);
 
-  return connection.update(sObject, finalAttrs).then(function (recordResult) {
-    console.log('Result : ' + JSON.stringify(recordResult));
-    return {
-      ...state,
-      references: [recordResult, ...state.references],
-    };
-  });
-});
+    return connection.update(sObject, finalAttrs).then(function (recordResult) {
+      console.log('Result : ' + JSON.stringify(recordResult));
+      return {
+        ...state,
+        references: [recordResult, ...state.references],
+      };
+    });
+  };
+}
 
 /**
  * Get a reference ID by an index.
@@ -493,13 +501,11 @@ export const update = curry(function (sObject, attrs, state) {
  * reference(0)
  * @function
  * @param {number} position - Position for references array.
- * @param {State} state - Array of references.
  * @returns {State}
  */
-export const reference = curry(function (position, state) {
-  const { references } = state;
-  return references[position].id;
-});
+export function reference(position) {
+  return state => state.references[position].id;
+}
 
 /**
  * Creates a connection.

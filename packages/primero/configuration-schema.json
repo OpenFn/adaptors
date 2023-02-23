@@ -6,24 +6,36 @@
       "type": "string",
       "description": "The Primero host url",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "https://primero.org/some-org"
+      ]
     },
     "user": {
       "title": "User",
       "type": "string",
       "description": "The username",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "admin"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "@super(!)Superpass"
+      ]
     },
     "basicAuth": {
       "title": "Use Basic Auth",
-      "type": "boolean"
+      "type": "boolean",
+      "examples": [
+        true
+      ]
     }
   },
   "type": "object",

@@ -1,5 +1,17 @@
 # @openfn/language-dhis2
 
+## 3.2.6
+
+### Patch Changes
+
+- df6098d: replace sample state with configuration
+
+## 3.2.5
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 3.2.4
 
 ### Patch Changes

@@ -6,20 +6,29 @@
             "type": "string",
             "description": "The OpenMRS host url",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "http://openmrs.com/instance/url"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "The username to log in to OpenMRS",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin@openmrs.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "The password to log in to OpenMRS",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@super(!)Secretpass"
+            ]
         }
     },
     "type": "object",

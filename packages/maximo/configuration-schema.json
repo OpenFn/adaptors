@@ -6,20 +6,29 @@
             "type": "string",
             "description": "Maximo instance base URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "https://maximo-demo76.mro.com"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Maximo instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Maximo instance password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@some(!)passowrd"
+            ]
         }
     },
     "type": "object",

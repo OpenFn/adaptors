@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 3.4.4
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 3.4.3
 
 ### Patch Changes

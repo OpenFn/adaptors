@@ -6,20 +6,29 @@
             "type": "string",
             "description": "Your MongoDB cluster / host URL",
             "format": "uri",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "yourCluster-xxxyzzz.mongodb.net"
+            ]
         },
         "username": {
             "title": "Username",
             "type": "string",
             "description": "Your MongoDB instance username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "admin"
+            ]
         },
         "password": {
             "title": "Password",
             "type": "string",
             "description": "Your MongoDB instance password",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "@secret(!)Pass"
+            ]
         }
     },
     "type": "object",

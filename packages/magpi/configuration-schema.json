@@ -5,14 +5,20 @@
             "title": "username",
             "type": "string",
             "description": "Magpi username",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "test@openfn.org"
+            ]
         },
         "accessToken": {
             "title": "Access Token",
             "type": "string",
             "description": "Magpi access token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "somEThINGkeyish"
+            ]
         }
     },
     "type": "object",

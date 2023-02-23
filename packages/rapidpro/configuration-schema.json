@@ -7,20 +7,29 @@
       "default": "https://app.rapidpro.io/",
       "description": "instance host URL",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "https://app.rapidpro.io/"
+      ]
     },
     "token": {
       "title": "Token",
       "type": "string",
       "description": "instance access token",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "#Super-sSCrecrete-token"
+      ]
     },
     "apiVersion": {
       "title": "API Version",
       "type": "string",
       "description": "API version to use. Leave this empty to use the default v2",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "v2"
+      ]
     }
   },
   "type": "object",

@@ -1,5 +1,17 @@
 # @openfn/language-template
 
+## 1.7.7
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
+## 1.7.6
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 1.7.5
 
 ### Patch Changes

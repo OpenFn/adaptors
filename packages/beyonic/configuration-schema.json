@@ -6,13 +6,19 @@
       "type": "string",
       "description": "API URL",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "https://beyonic.com/api"
+      ]
     },
     "apiToken": {
       "title": "API Token",
       "type": "string",
       "description": "API token",
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "cdjhiooiSIUJHDYSYUIHASIOHKAANOAJJjsiujhaka"
+      ]
     }
   },
   "type": "object",

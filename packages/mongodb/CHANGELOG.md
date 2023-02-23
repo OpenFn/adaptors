@@ -1,19 +1,13 @@
-# @openfn/language-smpp
+# @openfn/language-mongodb
 
-## 1.2.2
+## 1.0.6
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 1.2.1
+## 1.0.5
 
 ### Patch Changes
 
 - f2aed32: add examples
-
-## 1.2.0
-
-### Minor Changes
-
-- 3aedd05: migrate smpp

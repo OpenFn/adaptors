@@ -1,5 +1,17 @@
 # @openfn/language-mssql
 
+## 4.0.3
+
+### Patch Changes
+
+- f7ebd3c: remove sample configuration
+
+## 4.0.2
+
+### Patch Changes
+
+- f2aed32: add examples
+
 ## 4.0.1
 
 ### Patch Changes

@@ -6,7 +6,10 @@
             "type": "string",
             "description": "Your Google Sheets access token",
             "writeOnly": true,
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+            ]
         }
     },
     "type": "object",

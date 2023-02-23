@@ -5,20 +5,17 @@ Microsoft Dynamics API.
 
 ## Documentation
 
-#### sample configuration
+### Configuration
 
-_Dynamics uses oauth2. The language-package will expect to be given a valid
-oauth token. If a valid token is not provided, it will fail. On OpenFn.org, the
-`CredentialService` is responsible for making sure the the oauth token is valid
-each time it assembles state to hand to `execute`._
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/dynamics-configuration-schema/)
+definition.
 
-```json
-{
-  "resource": "https://openfn.crm2.dynamics.com",
-  "apiVersion": "8.2.0",
-  "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
-}
-```
+- _Dynamics uses oauth2. The language-package will expect to be given a valid
+  oauth token. If a valid token is not provided, it will fail. On OpenFn.org,
+  the `CredentialService` is responsible for making sure the the oauth token is
+  valid each time it assembles state to hand to `execute`._
 
 #### sample createEntity expression
 

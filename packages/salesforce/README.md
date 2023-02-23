@@ -5,19 +5,15 @@ http://openfn.github.io/language-salesforce/ **
 
 ## Release notes and deprecated CHANGELOG.md
 
-See [releases](https://github.com/OpenFn/language-salesforce/releases) for all
-changes.
+See [releases](https://docs.openfn.org/adaptors/packages/salesforce-changelog)
+for all changes.
 
-## Sample configuration
+### Configuration
 
-```json
-{
-  "loginUrl": "https://somesalesforcelogin.url/",
-  "username": "someusername",
-  "password": "somesupersecretpassword",
-  "securityToken": "salesforcesecuritytoken"
-}
-```
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/saleforce-configuration-schema/)
+definition.
 
 ## Intent
 
