@@ -32,7 +32,7 @@
           },
           {
             "title": "paramlookup",
-            "description": "resourceType $.resourceTypes[*]"
+            "description": "resourceType $.children.resourceTypes[*]"
           },
           {
             "title": "param",

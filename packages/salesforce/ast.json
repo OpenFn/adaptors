@@ -556,22 +556,10 @@
             "name": "attrs"
           },
           {
-<<<<<<< HEAD
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "paramlookup",
             "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
-=======
->>>>>>> salesforce-no-curry
             "title": "returns",
             "description": null,
             "type": {
