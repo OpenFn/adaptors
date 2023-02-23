@@ -65,7 +65,7 @@
     },
     {
       "name": "describeAll",
-      "params": {},
+      "params": [],
       "docs": {
         "description": "Outputs basic information about available sObjects.",
         "tags": [
@@ -84,29 +84,22 @@
             "name": null
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "describe",
-      "params": {},
+      "params": [
+        "sObject"
+      ],
       "docs": {
         "description": "Outputs basic information about an sObject to `STDOUT`.",
         "tags": [
@@ -138,16 +131,20 @@
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "retrieve",
-      "params": {},
+      "params": [
+        "sObject",
+        "id",
+        "callback"
+      ],
       "docs": {
         "description": "Retrieves a Salesforce sObject(s).",
         "tags": [
@@ -197,16 +194,18 @@
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "query",
-      "params": {},
+      "params": [
+        "qs"
+      ],
       "docs": {
         "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
         "tags": [
@@ -243,11 +242,16 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "bulk",
-      "params": {},
+      "params": [
+        "sObject",
+        "operation",
+        "options",
+        "fun"
+      ],
       "docs": {
         "description": "Create and execute a bulk job.",
         "tags": [
@@ -311,11 +315,15 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "destroy",
-      "params": {},
+      "params": [
+        "sObject",
+        "attrs",
+        "options"
+      ],
       "docs": {
         "description": "Delete records of an object.",
         "tags": [
@@ -370,11 +378,14 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "create",
-      "params": {},
+      "params": [
+        "sObject",
+        "attrs"
+      ],
       "docs": {
         "description": "Create a new object.",
         "tags": [
@@ -420,11 +431,15 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "createIf",
-      "params": {},
+      "params": [
+        "logical",
+        "sObject",
+        "attrs"
+      ],
       "docs": {
         "description": "Create a new object if conditions are met.",
         "tags": [
@@ -479,11 +494,15 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsert",
-      "params": {},
+      "params": [
+        "sObject",
+        "externalId",
+        "attrs"
+      ],
       "docs": {
         "description": "Upsert an object.",
         "tags": [
@@ -538,11 +557,16 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsertIf",
-      "params": {},
+      "params": [
+        "logical",
+        "sObject",
+        "externalId",
+        "attrs"
+      ],
       "docs": {
         "description": "Upsert if conditions are met.",
         "tags": [
@@ -606,11 +630,14 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "update",
-      "params": {},
+      "params": [
+        "sObject",
+        "attrs"
+      ],
       "docs": {
         "description": "Update an object.",
         "tags": [
@@ -656,11 +683,13 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "reference",
-      "params": {},
+      "params": [
+        "position"
+      ],
       "docs": {
         "description": "Get a reference ID by an index.",
         "tags": [
@@ -697,7 +726,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
