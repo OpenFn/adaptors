@@ -10,7 +10,7 @@
     "setup": "pnpm --filter \"./tools/**\" install",
     "build:tools": "pnpm --filter \"./tools/**\" build",
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
-    "build": "build:tools && build:adaptors",
+    "build": "pnpm build:tools && pnpm build:adaptors",
     "test:imports": "cd tools/import-tests && pnpm test",
     "test": "pnpm --filter \"./packages/**\" test && pnpm test:imports",
     "metadata": "pnpm -C tools/metadata cli"
