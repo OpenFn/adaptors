@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { generateUrl } from '../Utils.js';
 
-// this is wher ei'll fetch data down
-
 const createHelper = (configuration = {}) => {
   const { username, password } = configuration;
 
@@ -15,8 +13,7 @@ const createHelper = (configuration = {}) => {
       params: { paging: false },
     });
 
-  // get resource types
-  // is this static?
+  // get resource types (static, incomplete)
   const getResourceTypes = async () => {
     return ['trackedEntityInstances', 'programs', 'events', 'dataSets'];
   };

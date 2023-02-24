@@ -1,7 +1,3 @@
-/**
- * new rule: the dts builder will build from index.ts if it exists
- * (tsc doesnt seem to work if we build from a .d.ts)
- */
 export type Dhis2Attribute = {
   /**
    * The attribute id
