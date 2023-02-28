@@ -1,0 +1,36 @@
+{
+  "name": "language-xmlscraper",
+  "version": "0.1.0",
+  "description": "A Webscraper Language Pack for OpenFn",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "make",
+    "test": "mocha --compilers js:babel-core/register",
+    "test:watch": "mocha -w --compilers js:babel-core/register"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {
+    "language-common": "github:openfn/language-common#v0.2.4",
+    "language-http": "github:openfn/language-http#v2.0.0",
+    "request": "^2.72.0",
+    "cheerio": "1.0.0-rc.2",
+    "cheerio-tableparser": "1.0.1"
+  },
+  "devDependencies": {
+    "assertion-error": "^1.0.1",
+    "babel": "^6.0.15",
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.1.2",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-stage-0": "^6.3.13",
+    "chai": "^3.4.0",
+    "deep-eql": "^0.1.3",
+    "mocha": "^2.3.3",
+    "nock": "^8.0.0",
+    "sinon": "^1.17.2"
+  }
+}
