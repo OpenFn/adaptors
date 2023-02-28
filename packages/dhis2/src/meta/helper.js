@@ -15,7 +15,21 @@ const createHelper = (configuration = {}) => {
 
   // get resource types (static, incomplete)
   const getResourceTypes = async () => {
-    return ['trackedEntityInstances', 'programs', 'events', 'dataSets'];
+    return [
+      'dataElementGroups',
+      'dataElementGroupSets',
+      'dataElements',
+      'dataSetNotificationTemplates',
+      'dataSets',
+      'dataValueSets',
+      'enrollments',
+      'events',
+      'organisationUnitProfile',
+      'organisationUnits',
+      'programs',
+      'trackedEntityAttributes',
+      'trackedEntityInstances',
+    ];
   };
 
   // get a list of all the org units
