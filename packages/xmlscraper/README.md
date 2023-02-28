@@ -1,40 +1,35 @@
-Language XML Scraper [![Build Status](https://travis-ci.org/OpenFn/language-xmlscraper.svg?branch=master)](https://travis-ci.org/OpenFn/language-xmlscraper)
-======================
+# Language XML Scraper
 
 Language Pack for scraping XML data from websites.
 
-Documentation
--------------
+## Documentation
 
-#### sample configuration
-```json
-{
-  "username": "taylor@openfn.org",
-  "password": "supersecret",
-  "baseUrl": "https://instance_name.surveycto.com",
-  "authType": "digest"
-}
-```
+### Configuration
+
+View all the required and optional properties for `state.configuration` in the
+official
+[configuration-schema](https://docs.openfn.org/adaptors/packages/xmlscraper-configuration-schema/)
+definition.
 
 #### sample fetch expression
+
 ```js
-fetch("spreadsheetId", {
-  "getEndpoint": "api/v1/forms/data/wide/json/mod_coach",
-  "query": function(state) {
-      return { "date": dataValue("_json[(@.length-1)].SubmissionDate")(state) }
+fetch('spreadsheetId', {
+  getEndpoint: 'api/v1/forms/data/wide/json/mod_coach',
+  query: function (state) {
+    return { date: dataValue('_json[(@.length-1)].SubmissionDate')(state) };
   },
-  "postUrl": "http://localhost:4000/inbox/8ad63a29-5c25-4d8d-ba2c-fe6274dcfbab",
-})
+  postUrl: 'http://localhost:4000/inbox/8ad63a29-5c25-4d8d-ba2c-fe6274dcfbab',
+});
 ```
 
-[Docs](docs/index)
+## Development
 
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
-Development
------------
+Run tests using `pnpm run test` or `pnpm run test:watch`
 
-Clone the repo, run `npm install`.
+Build the project using `pnpm build`.
 
-Run tests using `npm run test` or `npm run test:watch`
-
-Build the project using `make`.
+To just build the docs run `pnpm build docs`

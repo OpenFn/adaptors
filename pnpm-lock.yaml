@@ -1338,6 +1338,39 @@ importers:
       request-debug: 0.2.0
       rimraf: 3.0.2
 
+  packages/xmlscraper:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.1
+      '@openfn/language-common': 1.7.5
+      '@openfn/language-http': ^4.2.5
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: ^2.0.0
+      chai: ^4.3.7
+      cheerio: 1.0.0-rc.2
+      cheerio-tableparser: 1.0.1
+      deep-eql: ^4.1.3
+      esno: ^0.16.3
+      mocha: ^10.2.0
+      nock: ^13.3.0
+      rimraf: ^4.1.2
+      sinon: ^15.0.1
+    dependencies:
+      '@openfn/language-common': link:../common
+      '@openfn/language-http': link:../http
+      cheerio: 1.0.0-rc.2
+      cheerio-tableparser: 1.0.1
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.7
+      deep-eql: 4.1.3
+      esno: 0.16.3
+      mocha: 10.2.0
+      nock: 13.3.0
+      rimraf: 4.1.2
+      sinon: 15.0.1
+
   packages/zoho:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -2235,6 +2268,12 @@ packages:
     resolution: {integrity: sha512-uLa0j859mMrg2slwQYdO/AkrOfmH+X6LTVmNTS9CqexuE2IvVORIkSpJLqePAbEnKJ77aMmCwr1NUZ57120Xcg==}
     dependencies:
       type-detect: 4.0.8
+    dev: true
+
+  /@sinonjs/fake-timers/10.0.2:
+    resolution: {integrity: sha512-SwUDyjWnah1AaNl7kxsa7cfLhlTYoiyhDAIgyh+El30YvXs/o7OLXpYH88Zdhyx9JExKrmHDJ+10bwIcY80Jmw==}
+    dependencies:
+      '@sinonjs/commons': 2.0.0
     dev: true
 
   /@sinonjs/fake-timers/6.0.1:
@@ -3954,6 +3993,18 @@ packages:
       parse5-htmlparser2-tree-adapter: 7.0.0
     dev: false
 
+  /cheerio/1.0.0-rc.2:
+    resolution: {integrity: sha512-9LDHQy1jHc/eXMzPN6/oah9Qba4CjdKECC7YYEE/2zge/tsGwt19NQp5NFdfd5Lx6TZlyC5SXNQkG41P9r6XDg==}
+    engines: {node: '>= 0.6'}
+    dependencies:
+      css-select: 1.2.0
+      dom-serializer: 0.1.1
+      entities: 1.1.2
+      htmlparser2: 3.10.1
+      lodash: 4.17.21
+      parse5: 3.0.3
+    dev: false
+
   /chokidar/1.7.0:
     resolution: {integrity: sha512-mk8fAWcRUOxY7btlLtitj3A45jOwSAxH4tOFOoEGbVsl6cL6pPMWUy7dwZ/canfj3QEdP6FHSnf/l1c6/WkzVg==}
     deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
@@ -4300,6 +4351,15 @@ packages:
       sequin: 0.1.1
     dev: false
 
+  /css-select/1.2.0:
+    resolution: {integrity: sha512-dUQOBoqdR7QwV90WysXPLXG5LO7nhYBgiWVfxF80DKPF8zx1t/pUd2FYy73emg3zrjtM6dzmYgbHKfV2rxiHQA==}
+    dependencies:
+      boolbase: 1.0.0
+      css-what: 2.1.3
+      domutils: 1.5.1
+      nth-check: 1.0.2
+    dev: false
+
   /css-select/5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
     dependencies:
@@ -4308,6 +4368,10 @@ packages:
       domhandler: 5.0.3
       domutils: 3.0.1
       nth-check: 2.1.1
+    dev: false
+
+  /css-what/2.1.3:
+    resolution: {integrity: sha512-a+EPoD+uZiNfh+5fxw2nO9QwFa6nJe2Or35fGY6Ipw1R3R4AGz1d1TEZrCegvw2YTmZ0jXirGYlzxxpYSHwpEg==}
     dev: false
 
   /css-what/6.1.0:
@@ -4507,6 +4571,13 @@ packages:
       type-detect: 4.0.8
     dev: true
 
+  /deep-eql/4.1.3:
+    resolution: {integrity: sha512-WaEtAOpRA1MQ0eohqZjpGD8zdI0Ovsm8mmFhaDN8dvDZzyoUMcYDnf5Y6iu7HTXxf8JDS23qWa4a+hKCDyOPzw==}
+    engines: {node: '>=6'}
+    dependencies:
+      type-detect: 4.0.8
+    dev: true
+
   /deep-equal/1.1.1:
     resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
     dependencies:
@@ -4659,6 +4730,13 @@ packages:
       esutils: 2.0.3
     dev: true
 
+  /dom-serializer/0.1.1:
+    resolution: {integrity: sha512-l0IU0pPzLWSHBcieZbpOKgkIn3ts3vAh7ZuFyXNwJxJXk/c4Gwj9xaTJwIDVQCXawWD0qb3IzMGH5rglQaO0XA==}
+    dependencies:
+      domelementtype: 1.3.1
+      entities: 1.1.2
+    dev: false
+
   /dom-serializer/2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
     dependencies:
@@ -4667,8 +4745,18 @@ packages:
       entities: 4.4.0
     dev: false
 
+  /domelementtype/1.3.1:
+    resolution: {integrity: sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==}
+    dev: false
+
   /domelementtype/2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
+    dev: false
+
+  /domhandler/2.4.2:
+    resolution: {integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==}
+    dependencies:
+      domelementtype: 1.3.1
     dev: false
 
   /domhandler/5.0.3:
@@ -4676,6 +4764,13 @@ packages:
     engines: {node: '>= 4'}
     dependencies:
       domelementtype: 2.3.0
+    dev: false
+
+  /domutils/1.5.1:
+    resolution: {integrity: sha512-gSu5Oi/I+3wDENBsOWBiRK1eoGxcywYSqg3rR960/+EfY0CF4EX1VPkgHOZ3WiS/Jg2DtliF6BhWcHlfpYUcGw==}
+    dependencies:
+      dom-serializer: 0.1.1
+      domelementtype: 1.3.1
     dev: false
 
   /domutils/3.0.1:
@@ -4744,6 +4839,10 @@ packages:
 
   /ent/2.2.0:
     resolution: {integrity: sha512-GHrMyVZQWvTIdDtpiEXdHZnFQKzeO09apj8Cbl4pKWy4i0Oprcq17usfDt5aO63swf0JOeMWjWQE/LzgSRuWpA==}
+    dev: false
+
+  /entities/1.1.2:
+    resolution: {integrity: sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==}
     dev: false
 
   /entities/2.1.0:
@@ -6217,6 +6316,17 @@ packages:
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
+
+  /htmlparser2/3.10.1:
+    resolution: {integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==}
+    dependencies:
+      domelementtype: 1.3.1
+      domhandler: 2.4.2
+      domutils: 1.5.1
+      entities: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+    dev: false
 
   /htmlparser2/8.0.1:
     resolution: {integrity: sha512-4lVbmc1diZC7GUJQtRQ5yBAeUCL1exyMwmForWkRLnwyzWBFxN633SALPMGYaWZvKe9j1pRZJpauvmxENSp/EA==}
@@ -7746,6 +7856,34 @@ packages:
       yargs-parser: 20.2.4
       yargs-unparser: 2.0.0
 
+  /mocha/10.2.0:
+    resolution: {integrity: sha512-IDY7fl/BecMwFHzoqF2sg/SHHANeBoMMXFlS9r0OXKDssYE1M5O43wUY/9BVPeIvfH2zmEbBfseqN9gBQZzXkg==}
+    engines: {node: '>= 14.0.0'}
+    hasBin: true
+    dependencies:
+      ansi-colors: 4.1.1
+      browser-stdout: 1.3.1
+      chokidar: 3.5.3
+      debug: 4.3.4_supports-color@8.1.1
+      diff: 5.0.0
+      escape-string-regexp: 4.0.0
+      find-up: 5.0.0
+      glob: 7.2.0
+      he: 1.2.0
+      js-yaml: 4.1.0
+      log-symbols: 4.1.0
+      minimatch: 5.0.1
+      ms: 2.1.3
+      nanoid: 3.3.3
+      serialize-javascript: 6.0.0
+      strip-json-comments: 3.1.1
+      supports-color: 8.1.1
+      workerpool: 6.2.1
+      yargs: 16.2.0
+      yargs-parser: 20.2.4
+      yargs-unparser: 2.0.0
+    dev: true
+
   /mocha/7.2.0:
     resolution: {integrity: sha512-O9CIypScywTVpNaRrCAgoUnJgozpIofjKUYmJhiCIJMiuYnLI6otcb1/kpW9/n/tJODHGZ7i8aLQoDVsMtOKQQ==}
     engines: {node: '>= 8.10.0'}
@@ -7962,7 +8100,7 @@ packages:
     resolution: {integrity: sha512-yr5kW2THW1AkxVmCnKEh4nbYkJdB3I7LUkiUgOvEkOp414mc2UMaHMA7pjq1nYowhdoJZGwEKGaQVbxfpWj10A==}
     dependencies:
       '@sinonjs/commons': 1.8.3
-      '@sinonjs/fake-timers': 9.1.2
+      '@sinonjs/fake-timers': 10.0.2
       '@sinonjs/text-encoding': 0.7.2
       just-extend: 4.2.1
       path-to-regexp: 1.8.0
@@ -7992,6 +8130,18 @@ packages:
 
   /nock/13.2.9:
     resolution: {integrity: sha512-1+XfJNYF1cjGB+TKMWi29eZ0b82QOvQs2YoLNzbpWGqFMtRQHTa57osqdGj4FrFPgkO4D4AZinzUJR9VvW3QUA==}
+    engines: {node: '>= 10.13'}
+    dependencies:
+      debug: 4.3.4
+      json-stringify-safe: 5.0.1
+      lodash: 4.17.21
+      propagate: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /nock/13.3.0:
+    resolution: {integrity: sha512-HHqYQ6mBeiMc+N038w8LkMpDCRquCHWeNmN3v6645P3NhN2+qXOBqvPqo7Rt1VyCMzKhJ733wZqw5B7cQVFNPg==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4
@@ -8082,6 +8232,12 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-key: 3.1.1
+    dev: false
+
+  /nth-check/1.0.2:
+    resolution: {integrity: sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==}
+    dependencies:
+      boolbase: 1.0.0
     dev: false
 
   /nth-check/2.1.1:
@@ -8476,6 +8632,12 @@ packages:
     dependencies:
       domhandler: 5.0.3
       parse5: 7.1.1
+    dev: false
+
+  /parse5/3.0.3:
+    resolution: {integrity: sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==}
+    dependencies:
+      '@types/node': 18.11.7
     dev: false
 
   /parse5/7.1.1:
@@ -9285,6 +9447,12 @@ packages:
       glob: 7.2.0
     dev: true
 
+  /rimraf/4.1.2:
+    resolution: {integrity: sha512-BlIbgFryTbw3Dz6hyoWFhKk+unCcHMSkZGrTFVAx2WmttdBSonsdtRlwiuTbDqTKr+UlXIUqJVS4QT5tUzGENQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
   /rollup/2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
     engines: {node: '>=10.0.0'}
@@ -9453,6 +9621,17 @@ packages:
     dependencies:
       '@sinonjs/commons': 2.0.0
       '@sinonjs/fake-timers': 9.1.2
+      '@sinonjs/samsam': 7.0.1
+      diff: 5.0.0
+      nise: 5.1.2
+      supports-color: 7.2.0
+    dev: true
+
+  /sinon/15.0.1:
+    resolution: {integrity: sha512-PZXKc08f/wcA/BMRGBze2Wmw50CWPiAH3E21EOi4B49vJ616vW4DQh4fQrqsYox2aNR/N3kCqLuB0PwwOucQrg==}
+    dependencies:
+      '@sinonjs/commons': 2.0.0
+      '@sinonjs/fake-timers': 10.0.2
       '@sinonjs/samsam': 7.0.1
       diff: 5.0.0
       nise: 5.1.2

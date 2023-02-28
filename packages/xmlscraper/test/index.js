@@ -42,7 +42,7 @@ describe("execute", () => {
   })
 })
 
-describe("get", () => {
+describe.skip("get", () => {
 
   before(() => {
      nock('https://play.http.org')

@@ -1,9 +1,11 @@
-import { execute as commonExecute, expandReferences, composeNextState } from 'language-common';
-import request from 'request';
+import {
+  execute as commonExecute,
+  expandReferences,
+  composeNextState,
+} from '@openfn/language-common';
+
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
-
-/** @module Adaptor */
 
 /**
  * Execute a sequence of operations.
@@ -13,20 +15,19 @@ import cheerioTableparser from 'cheerio-tableparser';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @constructor
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
-  }
-
-  return state => {
-    return commonExecute(...operations)({ ...initialState, ...state })
+    data: null,
   };
 
+  return state => {
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
 
 /**
@@ -39,9 +40,7 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function parse(params, script) {
-
   return state => {
-
     // function assembleError({ response, error }) {
     //   if (response && ([200,201,202].indexOf(response.statusCode) > -1)) return false;
     //   if (error) return error;
@@ -53,25 +52,30 @@ export function parse(params, script) {
     const $ = cheerio.load(body);
     cheerioTableparser($);
 
-    if(script) {
-      const result = script($)
+    if (script) {
+      const result = script($);
       try {
         const r = JSON.parse(result);
-        return composeNextState(state, r)
-      } catch(e) {
-        return composeNextState(state, {body: result})
+        return composeNextState(state, r);
+      } catch (e) {
+        return composeNextState(state, { body: result });
       }
     } else {
-      return composeNextState(state, {body: body})
+      return composeNextState(state, { body: body });
     }
-  }
+  };
 }
 
 export {
-  field, fields, sourceValue, alterState, each,
-  merge, dataPath, dataValue, lastReferenceValue
-} from 'language-common';
+  field,
+  fields,
+  sourceValue,
+  alterState,
+  each,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+} from '@openfn/language-common';
 
-export {
-  get, post, put, patch, del
-} from 'language-http';
+export { get, post, put, patch, del } from '@openfn/language-http';
