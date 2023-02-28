@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { create, execute, get, update, upsert } = require('../dist/Adaptor');
+const { create, execute, get, update, upsert } = require('../dist/index.cjs');
 const crypto = require('crypto');
 
 const getRandomProgramPayload = () => {
