@@ -21,7 +21,7 @@ describe('Adaptor', () => {
   describe('reference', () => {
     it('returns the Id of a previous operation', () => {
       let state = { references: [{ id: '12345' }] };
-      let Id = reference(0, state);
+      let Id = reference(0)(state);
       expect(Id).to.eql('12345');
     });
   });
@@ -40,7 +40,10 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(fakeConnection, 'create');
 
-      create(sObject, fields, state)
+      create(
+        sObject,
+        fields
+      )(state)
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields]);
           expect(spy.called).to.eql(true);
@@ -67,7 +70,7 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(fakeConnection, 'create');
 
-      createIf(logical, sObject, fields, state);
+      createIf(logical, sObject, fields)(state);
 
       expect(spy.called).to.eql(false);
       expect(state).to.eql({ connection: fakeConnection, references: [] });
@@ -89,7 +92,11 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(fakeConnection, 'create');
 
-      createIf(logical, sObject, fields, state)
+      createIf(
+        logical,
+        sObject,
+        fields
+      )(state)
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields]);
           expect(spy.called).to.eql(true);
@@ -115,7 +122,11 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(connection, 'upsert');
 
-      upsert(sObject, externalId, fields, state)
+      upsert(
+        sObject,
+        externalId,
+        fields
+      )(state)
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields, externalId]);
           expect(spy.called).to.eql(true);
@@ -143,7 +154,12 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(fakeConnection, 'upsert');
 
-      upsertIf(logical, sObject, externalId, fields, state)
+      upsertIf(
+        logical,
+        sObject,
+        externalId,
+        fields
+      )(state)
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields, externalId]);
           expect(spy.called).to.eql(true);
@@ -190,7 +206,6 @@ describe('Adaptor', () => {
 
       afterExecutionOf(operations)
         .then(state => {
-          console.log(state);
           let references = state.references.reverse();
 
           expect(references.length).to.eql(4);
