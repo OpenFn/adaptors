@@ -110,29 +110,28 @@ name.
 
 You can run `build --help` for more information.
 
-## Metadata [WIP]
+## Metadata
 
-TODO: Fill out or direct to metadata creation guide
+Check the Wiki for the metadata creation guide:
+[https://github.com/OpenFn/adaptors/wiki/Magic-Metadata](https://github.com/OpenFn/adaptors/wiki/Magic-Metadata)
 
 There are two CLI utils you can run to generate metadata and populate mock data.
-
-You can run these from the repo root or from the adaptor folder.
-
-```
-pnpm metadata generate <adaptorName> <path/to/config>
-pnpm metadata populate-mock <adaptorName> <path/to/config>
-```
-
-Note that `pnpm metadata <adaptorName> <path>` will run `metadata generate`.
-
-Config paths can point to JSON or JS files with a default export. They are
-always specified relative to the adaptor directory.
 
 Use `generate` to create a metadata.json based on the provided config. This will
 be saved to `packages/<adaptorName>/src/meta/metadata.json`.
 
 Use `populate-mock` to execute the `populate-mock-data.js` file and save the
 results into the meta/data dir. Unit tests will use this mock data.
+
+```
+pnpm metadata generate <adaptorName> <path/to/config>
+pnpm metadata populate-mock <adaptorName> <path/to/config>
+```
+
+Config paths can point to JSON or JS files with a default export. They are
+always specified relative to the adaptor directory.
+
+You can run these from the repo root or from the adaptor folder.
 
 ## Migration Guide
 
