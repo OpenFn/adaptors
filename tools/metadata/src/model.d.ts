@@ -7,8 +7,9 @@ type Entity = {
   datatype?: string; // the javascript type (shown in monaco)
   desc?: string; // a longer description
 
-  // arbitrary extra stuff  goes in the meta object
   children?: Entity[] | Record<string, Entity>;
+
+  // arbitrary extra stuff  goes in the meta object
   meta?: Record<string, any>;
 
   addChild: (e: Entity, name?: string) => void;
