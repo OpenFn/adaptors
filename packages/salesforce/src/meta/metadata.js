@@ -1,8 +1,6 @@
 import salesforceHelper from './helper.js';
 import { createEntity, createMock } from '@openfn/metadata';
 
-// TODO the mock metadata basically compeltely doens't work
-// it need sto only load the fields for which there's a filter
 const metadata = async (configuration = {}, mock = false) => {
   let helper = await salesforceHelper(configuration);
   if (mock) {
