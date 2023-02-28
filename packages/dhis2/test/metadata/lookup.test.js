@@ -11,10 +11,10 @@ before(async () => {
   queries = await extractLookups(path.resolve('src/Adaptor.js'));
 });
 
-describe('Salesforce lookup tests', async () => {
+describe('DHIS2 lookup tests', async () => {
   // Unit tests of each query against a sample model
   describe('create', () => {
-    it('sObject: should list resourceTypes', () => {
+    it('should list resourceTypes', () => {
       const results = jp.query(data, queries.create.resourceType);
       expect(results).to.have.lengthOf(4);
       expect(results[0]).to.equal('trackedEntityInstances');
