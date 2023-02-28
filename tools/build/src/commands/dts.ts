@@ -5,8 +5,10 @@ import { existsSync } from 'node:fs';
 
 import resolvePath from '../util/resolve-path';
 
+const tsEntryPoints = ['index.ts', 'index.js'];
+
 const findEntryPoint = (rootPath: string) => {
-  const entries = ['index.ts', 'index.js'].reverse();
+  const entries = [...tsEntryPoints].reverse();
   while (entries.length) {
     const fileName = entries.pop();
     const entryPath = `${rootPath}/src/${fileName}`;
