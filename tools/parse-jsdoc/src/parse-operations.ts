@@ -33,6 +33,7 @@ type JSDocReturn = {
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// TODO can I just use typedoc for this so that I only have to have one interface?
 const parseOperations = async (pathToSource: string) => {
   const parsed = (await jsdoc2md.getJsdocData({
     files: [pathToSource],

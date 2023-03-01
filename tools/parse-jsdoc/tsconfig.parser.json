@@ -1,0 +1,11 @@
+{
+  // dodgy include pathing
+  "include": ["**/*.ts"],
+  "compilerOptions": {
+    "strict": false,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  }
+}

@@ -1,9 +1,9 @@
 import test from 'ava';
 import path from 'node:path';
-import extractQueries from '../src/extract-lookups';
+import extractLookups from '../src/extract-lookups';
 
-test('should extract queries', async t => {
-  const result = await extractQueries(
+test('should extract lookups for function parameters', async t => {
+  const result = await extractLookups(
     path.resolve('test/fixtures/operation-const.js')
   );
 
