@@ -4,6 +4,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 
+import request from 'superagent';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
@@ -66,7 +67,24 @@ export function parse(params, script) {
   };
 }
 
+export function fetch({ url, body, username, password }) {
+  return new Promise((resolve, reject) => {
+    request
+      .post(url)
+      .auth(username, password)
+      .set('Content-Type', 'text/xml')
+      .send(body)
+      .end((error, res) => {
+        if (!!error || !res.ok) {
+          reject(error);
+        }
+        resolve(res);
+      });
+  });
+}
+
 export {
+  fn,
   field,
   fields,
   sourceValue,
@@ -77,5 +95,3 @@ export {
   dataValue,
   lastReferenceValue,
 } from '@openfn/language-common';
-
-export { get, post, put, patch, del } from '@openfn/language-http';

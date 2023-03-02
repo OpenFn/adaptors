@@ -1,10 +1,10 @@
 {
-  "name": "language-xmlscraper",
+  "name": "language-xml",
   "version": "0.1.0",
   "description": "A Webscraper Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor xmlscraper",
+    "build": "pnpm clean && build-adaptor xml",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -22,7 +22,8 @@
     "@openfn/language-common": "1.7.5",
     "@openfn/language-http": "^4.2.5",
     "cheerio": "1.0.0-rc.2",
-    "cheerio-tableparser": "1.0.1"
+    "cheerio-tableparser": "1.0.1",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {
     "rimraf": "^4.1.2",

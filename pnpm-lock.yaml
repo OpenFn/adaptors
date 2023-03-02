@@ -1338,7 +1338,7 @@ importers:
       request-debug: 0.2.0
       rimraf: 3.0.2
 
-  packages/xmlscraper:
+  packages/xml:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
       '@openfn/language-common': 1.7.5
@@ -1354,11 +1354,13 @@ importers:
       nock: ^13.3.0
       rimraf: ^4.1.2
       sinon: ^15.0.1
+      superagent: ^6.1.0
     dependencies:
       '@openfn/language-common': link:../common
       '@openfn/language-http': link:../http
       cheerio: 1.0.0-rc.2
       cheerio-tableparser: 1.0.1
+      superagent: 6.1.0
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
