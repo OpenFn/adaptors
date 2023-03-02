@@ -3,7 +3,10 @@ import path from 'node:path';
 import parseTs from '../src/parse-ts';
 
 test('should parse a single interface', async t => {
-  const result = await parseTs(path.resolve('test/fixtures/types.ts'));
+  const result = await parseTs(
+    path.resolve('test/fixtures/types.ts'),
+    path.resolve('tsconfig.test.json')
+  );
 
   t.assert(result.length === 1);
 

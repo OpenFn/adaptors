@@ -1,6 +1,5 @@
 {
-  // dodgy include pathing
-  "include": ["**/*.ts"],
+  "include": ["test/**/*.ts"],
   "compilerOptions": {
     "strict": false,
     "module": "es2020",
