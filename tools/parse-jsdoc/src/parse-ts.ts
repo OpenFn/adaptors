@@ -1,4 +1,4 @@
-import TypeDoc from 'typedoc';
+import TypeDoc, { TypeDocOptions } from 'typedoc';
 
 export default async (pathToSource: string, pathToTsConfig?: string) => {
   const app = new TypeDoc.Application();
@@ -7,17 +7,16 @@ export default async (pathToSource: string, pathToTsConfig?: string) => {
 
   app.options.addReader(new TypeDoc.TSConfigReader());
 
-  app.bootstrap({
+  const options = {
     entryPoints: [pathToSource],
-    showConfig: true,
+  } as Partial<TypeDocOptions>;
 
-    // TODO lots of weird warnings come from common... what can we do about externals?
-    // this doesn't seem to help...
-    excludeExternals: true,
+  // If not defined, this will look in the working dir (usually the adaptor dir) for a tsconfig
+  if (pathToTsConfig) {
+    options.tsconfig = pathToTsConfig;
+  }
 
-    // If not defined, this will look in the working dir (usually the adaptor dir) for a tsconfig
-    tsconfig: pathToTsConfig,
-  });
+  app.bootstrap(options);
 
   const project = app.convert();
   const json = s.projectToObject(project!);

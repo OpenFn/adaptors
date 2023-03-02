@@ -9,7 +9,7 @@ let queries;
 before(async () => {
   // Parse Adaptor.js and pull out all of its lookup queries
   queries = await extractLookups(
-    path.resolve('src/index.ts'),
+    path.resolve('src/types.ts'),
     path.resolve('src/Adaptor.js')
   );
 });
