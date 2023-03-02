@@ -1,6 +1,4 @@
 import TypeDoc from 'typedoc';
-import path from 'node:path';
-import { fileURLToPath } from 'url';
 
 export default async (pathToSource: string, pathToTsConfig?: string) => {
   const app = new TypeDoc.Application();
