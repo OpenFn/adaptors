@@ -20,7 +20,6 @@ test('should parse a single operation (as a const)', async t => {
   const result = await parseOperations(
     path.resolve('test/fixtures/operation-const.js')
   );
-  console.log(result);
 
   t.assert(result.length === 1);
 

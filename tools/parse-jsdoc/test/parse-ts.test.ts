@@ -1,6 +1,6 @@
 import test from 'ava';
 import path from 'node:path';
-import { ReflectionType } from 'typedoc';
+import { DeclarationReflection, ReflectionType } from 'typedoc';
 
 import parseTs from '../src/parse-ts';
 
@@ -15,7 +15,8 @@ test('should parse a single interface', async t => {
   const [iface] = result;
   t.is(iface.name, 'Dhis2Attribute');
 
-  const props = (iface.type as ReflectionType).declaration.children ?? [];
+  const props =
+    (iface.type as unknown as ReflectionType).declaration.children ?? [];
   t.is(props.length, 2);
 
   const [attr] = props;

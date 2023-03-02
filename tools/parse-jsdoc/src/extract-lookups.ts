@@ -9,7 +9,6 @@ type LookupMap = {
 
 const extractJsLookups = async (path: string) => {
   const operations = await parseOperations(path);
-
   return operations?.reduce((result: LookupMap, fn) => {
     if (fn.params) {
       result[fn.name] = fn.params.reduce((params, p) => {

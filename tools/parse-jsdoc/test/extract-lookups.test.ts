@@ -7,6 +7,6 @@ test('should extract lookups for function parameters', async t => {
     path.resolve('test/fixtures/operation-const.js')
   );
 
-  t.false(result.operation.x);
+  t.falsy(result.operation.x);
   t.is(result.operation.y, '$[*]');
 });
