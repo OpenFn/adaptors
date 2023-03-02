@@ -9,6 +9,8 @@ export default async (pathToSource: string, pathToTsConfig?: string) => {
 
   const options = {
     entryPoints: [pathToSource],
+    // Ignore errors (our adaptors have a lot of undefined types, like Operation)
+    skipErrorChecking: true,
   } as Partial<TypeDocOptions>;
 
   // If not defined, this will look in the working dir (usually the adaptor dir) for a tsconfig
