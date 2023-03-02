@@ -16,11 +16,10 @@ test('should parse a single operation (as a function)', async t => {
   t.assert(fn.returns.length === 1);
 });
 
-test.only('should parse a single operation (as a const)', async t => {
+test('should parse a single operation (as a const)', async t => {
   const result = await parseOperations(
     path.resolve('test/fixtures/operation-const.js')
   );
-  console.log(result);
 
   t.assert(result.length === 1);
 

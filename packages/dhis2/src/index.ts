@@ -1,36 +1,8 @@
-export type Dhis2Attribute = {
-  /**
-   * The attribute id
-   * @lookup $.children.attributes[*]
-   */
-  attribute: string;
-
-  value: any;
-};
-
-export type Dhis2Data = {
-  /**
-   * The id of an organisation unit
-   * @lookup $.children.orgUnits[*]
-   */
-  orgUnit?: string;
-
-  /**
-   * Tracked instance id
-   */
-  trackedEntityInstance?: string;
-
-  /**
-   * Tracked instance type
-   * @lookup $.children.trackedEntityTypes[*]
-   */
-  trackedEntityType?: string;
-
-  /**
-   * List of attributes
-   */
-  attributes?: Dhis2Attribute[];
-};
+// Note that if we define types inline here, we get noise and warnings from
+// typedoc in our unit tests (because of spurious "errors" in our jsdocs, including
+// from imported files)
+// Splitting the typedefs out into their own file makes testing a bit cleaner
+import './types';
 
 import * as Adaptor from './Adaptor';
 export default Adaptor;
