@@ -1,7 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import loadash from 'lodash-fp';
-
-const { curry, mapValues, flatten } = loadash;
+import mapValues from 'lodash/mapValues';
+import flatten from 'lodash/flatten';
 
 /** @module FakeAdaptor */
 
@@ -9,20 +8,11 @@ function steps(...operations) {
   return flatten(operations);
 }
 
-function relationship(relationshipName, externalId, dataSource) {
-  return field(relationshipName, state => {
-    if (typeof dataSource == 'function') {
-      return { [externalId]: dataSource(state) };
-    }
-    return { [externalId]: dataSource };
-  });
-}
-
 // TODO: use the one from language-common
 function expandReferences(attrs, state) {
-  return mapValues(function (value) {
+  return mapValues(attrs, function (value) {
     return typeof value == 'function' ? value(state) : value;
-  })(attrs);
+  });
 }
 
 function create(sObject, fields) {
@@ -157,9 +147,9 @@ function query(qs, state) {
   };
 }
 
-const reference = curry(function (position, { references }) {
+const reference = function (position, { references }) {
   return references[position].id;
-});
+};
 
 function execute(...operations) {
   const initialState = {

@@ -65,9 +65,7 @@
     },
     {
       "name": "describeAll",
-      "params": [
-        "state"
-      ],
+      "params": [],
       "docs": {
         "description": "Outputs basic information about available sObjects.",
         "tags": [
@@ -86,20 +84,11 @@
             "name": null
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
@@ -109,8 +98,7 @@
     {
       "name": "describe",
       "params": [
-        "sObject",
-        "state"
+        "sObject"
       ],
       "docs": {
         "description": "Outputs basic information about an sObject to `STDOUT`.",
@@ -139,20 +127,11 @@
             "name": "sObject"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
@@ -164,8 +143,7 @@
       "params": [
         "sObject",
         "id",
-        "callback",
-        "state"
+        "callback"
       ],
       "docs": {
         "description": "Retrieves a Salesforce sObject(s).",
@@ -212,20 +190,11 @@
             "name": "callback"
           },
           {
-            "title": "param",
-            "description": "Runtime state",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
@@ -235,8 +204,7 @@
     {
       "name": "query",
       "params": [
-        "qs",
-        "state"
+        "qs"
       ],
       "docs": {
         "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
@@ -265,15 +233,6 @@
             "name": "qs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -291,8 +250,7 @@
         "sObject",
         "operation",
         "options",
-        "fun",
-        "state"
+        "fun"
       ],
       "docs": {
         "description": "Create and execute a bulk job.",
@@ -348,15 +306,6 @@
             "name": "fun"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -373,8 +322,7 @@
       "params": [
         "sObject",
         "attrs",
-        "options",
-        "state"
+        "options"
       ],
       "docs": {
         "description": "Delete records of an object.",
@@ -421,15 +369,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -445,8 +384,7 @@
       "name": "create",
       "params": [
         "sObject",
-        "attrs",
-        "state"
+        "attrs"
       ],
       "docs": {
         "description": "Create a new object.",
@@ -484,15 +422,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -509,8 +438,7 @@
       "params": [
         "logical",
         "sObject",
-        "attrs",
-        "state"
+        "attrs"
       ],
       "docs": {
         "description": "Create a new object if conditions are met.",
@@ -557,15 +485,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -582,8 +501,7 @@
       "params": [
         "sObject",
         "externalId",
-        "attrs",
-        "state"
+        "attrs"
       ],
       "docs": {
         "description": "Upsert an object.",
@@ -630,15 +548,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -656,8 +565,7 @@
         "logical",
         "sObject",
         "externalId",
-        "attrs",
-        "state"
+        "attrs"
       ],
       "docs": {
         "description": "Upsert if conditions are met.",
@@ -713,15 +621,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -737,8 +636,7 @@
       "name": "update",
       "params": [
         "sObject",
-        "attrs",
-        "state"
+        "attrs"
       ],
       "docs": {
         "description": "Update an object.",
@@ -776,15 +674,6 @@
             "name": "attrs"
           },
           {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -799,8 +688,7 @@
     {
       "name": "reference",
       "params": [
-        "position",
-        "state"
+        "position"
       ],
       "docs": {
         "description": "Get a reference ID by an index.",
@@ -827,15 +715,6 @@
               "name": "number"
             },
             "name": "position"
-          },
-          {
-            "title": "param",
-            "description": "Array of references.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
           },
           {
             "title": "returns",

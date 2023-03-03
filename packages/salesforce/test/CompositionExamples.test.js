@@ -7,18 +7,13 @@ import {
   field,
   fields,
   join,
-  map,
-  reference,
-  source,
   sourceValue,
   steps,
 } from '../src/FakeAdaptor';
 
-import loadash from 'lodash-fp';
+import filter from 'lodash/filter';
 
 import testData from './nestedTestData' assert { type: 'json' };
-
-const { filter, last } = loadash;
 
 describe('Composition Examples', () => {
   let initialState;
@@ -79,9 +74,9 @@ describe('Composition Examples', () => {
     afterExecutionOf(operations)
       .then(state => {
         let references = state.references.reverse();
-        let boats = filter({ sObject: 'Boat' }, references);
-        let catches = filter({ sObject: 'Catch' }, references);
-        let samples = filter({ sObject: 'Sample' }, references);
+        let boats = filter(references, { sObject: 'Boat' });
+        let catches = filter(references, { sObject: 'Catch' });
+        let samples = filter(references, { sObject: 'Sample' });
 
         expect(references.length).to.eql(17);
 

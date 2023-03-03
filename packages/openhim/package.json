@@ -4,7 +4,7 @@
   "description": "openhim Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor mssql",
+    "build": "pnpm clean && build-adaptor openhim",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
