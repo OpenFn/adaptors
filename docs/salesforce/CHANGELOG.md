@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.0
+
+### Major Changes
+
+- 190f667: Remove curry from salesforce
+
 ## 2.12.3
 
 ### Patch Changes
