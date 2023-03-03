@@ -11,42 +11,42 @@
 <dt><a href="#relationship">relationship(relationshipName, externalId, dataSource)</a> ⇒ <code>object</code></dt>
 <dd><p>Adds a lookup relation or &#39;dome insert&#39; to a record.</p>
 </dd>
-<dt><a href="#describeAll">describeAll(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dt><a href="#describeAll">describeAll()</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Outputs basic information about available sObjects.</p>
 </dd>
-<dt><a href="#describe">describe(sObject, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dt><a href="#describe">describe(sObject)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Outputs basic information about an sObject to <code>STDOUT</code>.</p>
 </dd>
-<dt><a href="#retrieve">retrieve(sObject, id, callback, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dt><a href="#retrieve">retrieve(sObject, id, callback)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Retrieves a Salesforce sObject(s).</p>
 </dd>
-<dt><a href="#query">query(qs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#query">query(qs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.</p>
 </dd>
-<dt><a href="#bulk">bulk(sObject, operation, options, fun, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#bulk">bulk(sObject, operation, options, fun)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Create and execute a bulk job.</p>
 </dd>
-<dt><a href="#destroy">destroy(sObject, attrs, options, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#destroy">destroy(sObject, attrs, options)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Delete records of an object.</p>
 </dd>
-<dt><a href="#create">create(sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#create">create(sObject, attrs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Create a new object.</p>
 </dd>
-<dt><a href="#createIf">createIf(logical, sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#createIf">createIf(logical, sObject, attrs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Create a new object if conditions are met.</p>
 </dd>
-<dt><a href="#upsert">upsert(sObject, externalId, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#upsert">upsert(sObject, externalId, attrs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Upsert an object.</p>
 </dd>
-<dt><a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Upsert if conditions are met.</p>
 </dd>
-<dt><a href="#update">update(sObject, attrs, state)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
+<dt><a href="#update">update(sObject, attrs)</a> ⇒ <code><a href="#Operation">Operation</a></code></dt>
 <dd><p>Update an object.</p>
 </dd>
-<dt><a href="#reference">reference(position, state)</a> ⇒ <code><a href="#State">State</a></code></dt>
+<dt><a href="#reference">reference(position)</a> ⇒ <code><a href="#State">State</a></code></dt>
 <dd><p>Get a reference ID by an index.</p>
 </dd>
 <dt><a href="#createConnection">createConnection(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
@@ -101,23 +101,18 @@ Fixed Value:
 ```
 <a name="describeAll"></a>
 
-## describeAll(state) ⇒ [<code>State</code>](#State)
+## describeAll() ⇒ [<code>Operation</code>](#Operation)
 Outputs basic information about available sObjects.
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | [<code>State</code>](#State) | Runtime state. |
-
 **Example**  
 ```js
 describeAll()
 ```
 <a name="describe"></a>
 
-## describe(sObject, state) ⇒ [<code>State</code>](#State)
+## describe(sObject) ⇒ [<code>Operation</code>](#Operation)
 Outputs basic information about an sObject to `STDOUT`.
 
 **Kind**: global function  
@@ -126,7 +121,6 @@ Outputs basic information about an sObject to `STDOUT`.
 | Param | Type | Description |
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -134,7 +128,7 @@ describe('obj_name')
 ```
 <a name="retrieve"></a>
 
-## retrieve(sObject, id, callback, state) ⇒ [<code>State</code>](#State)
+## retrieve(sObject, id, callback) ⇒ [<code>Operation</code>](#Operation)
 Retrieves a Salesforce sObject(s).
 
 **Kind**: global function  
@@ -145,7 +139,6 @@ Retrieves a Salesforce sObject(s).
 | sObject | <code>String</code> | The sObject to retrieve |
 | id | <code>String</code> | The id of the record |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
-| state | [<code>State</code>](#State) | Runtime state |
 
 **Example**  
 ```js
@@ -153,7 +146,7 @@ retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ```
 <a name="query"></a>
 
-## query(qs, state) ⇒ [<code>Operation</code>](#Operation)
+## query(qs) ⇒ [<code>Operation</code>](#Operation)
 Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
@@ -164,7 +157,6 @@ error logs will be printed but the operation will not throw the error.
 | Param | Type | Description |
 | --- | --- | --- |
 | qs | <code>String</code> | A query string. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -172,7 +164,7 @@ query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```
 <a name="bulk"></a>
 
-## bulk(sObject, operation, options, fun, state) ⇒ [<code>Operation</code>](#Operation)
+## bulk(sObject, operation, options, fun) ⇒ [<code>Operation</code>](#Operation)
 Create and execute a bulk job.
 
 **Kind**: global function  
@@ -184,7 +176,6 @@ Create and execute a bulk job.
 | operation | <code>String</code> | The bulk operation to be performed |
 | options | <code>Object</code> | Options passed to the bulk api. |
 | fun | <code>function</code> | A function which takes state and returns an array. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -196,7 +187,7 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
 ```
 <a name="destroy"></a>
 
-## destroy(sObject, attrs, options, state) ⇒ [<code>Operation</code>](#Operation)
+## destroy(sObject, attrs, options) ⇒ [<code>Operation</code>](#Operation)
 Delete records of an object.
 
 **Kind**: global function  
@@ -207,7 +198,6 @@ Delete records of an object.
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Array of IDs of records to delete. |
 | options | <code>Object</code> | Options for the destroy delete operation. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -218,7 +208,7 @@ destroy('obj_name', [
 ```
 <a name="create"></a>
 
-## create(sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
+## create(sObject, attrs) ⇒ [<code>Operation</code>](#Operation)
 Create a new object.
 
 **Kind**: global function  
@@ -228,7 +218,6 @@ Create a new object.
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -239,7 +228,7 @@ create('obj_name', {
 ```
 <a name="createIf"></a>
 
-## createIf(logical, sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
+## createIf(logical, sObject, attrs) ⇒ [<code>Operation</code>](#Operation)
 Create a new object if conditions are met.
 
 **Kind**: global function  
@@ -250,7 +239,6 @@ Create a new object if conditions are met.
 | logical | <code>boolean</code> | a logical statement that will be evaluated. |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -261,7 +249,7 @@ createIf(true, 'obj_name', {
 ```
 <a name="upsert"></a>
 
-## upsert(sObject, externalId, attrs, state) ⇒ [<code>Operation</code>](#Operation)
+## upsert(sObject, externalId, attrs) ⇒ [<code>Operation</code>](#Operation)
 Upsert an object.
 
 **Kind**: global function  
@@ -272,7 +260,6 @@ Upsert an object.
 | sObject | <code>String</code> | API name of the sObject. |
 | externalId | <code>String</code> | ID. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -283,7 +270,7 @@ upsert('obj_name', 'ext_id', {
 ```
 <a name="upsertIf"></a>
 
-## upsertIf(logical, sObject, externalId, attrs, state) ⇒ [<code>Operation</code>](#Operation)
+## upsertIf(logical, sObject, externalId, attrs) ⇒ [<code>Operation</code>](#Operation)
 Upsert if conditions are met.
 
 **Kind**: global function  
@@ -295,7 +282,6 @@ Upsert if conditions are met.
 | sObject | <code>String</code> | API name of the sObject. |
 | externalId | <code>String</code> | ID. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -306,7 +292,7 @@ upsertIf(true, 'obj_name', 'ext_id', {
 ```
 <a name="update"></a>
 
-## update(sObject, attrs, state) ⇒ [<code>Operation</code>](#Operation)
+## update(sObject, attrs) ⇒ [<code>Operation</code>](#Operation)
 Update an object.
 
 **Kind**: global function  
@@ -316,7 +302,6 @@ Update an object.
 | --- | --- | --- |
 | sObject | <code>String</code> | API name of the sObject. |
 | attrs | <code>Object</code> | Field attributes for the new object. |
-| state | [<code>State</code>](#State) | Runtime state. |
 
 **Example**  
 ```js
@@ -327,7 +312,7 @@ update('obj_name', {
 ```
 <a name="reference"></a>
 
-## reference(position, state) ⇒ [<code>State</code>](#State)
+## reference(position) ⇒ [<code>State</code>](#State)
 Get a reference ID by an index.
 
 **Kind**: global function  
@@ -336,7 +321,6 @@ Get a reference ID by an index.
 | Param | Type | Description |
 | --- | --- | --- |
 | position | <code>number</code> | Position for references array. |
-| state | [<code>State</code>](#State) | Array of references. |
 
 **Example**  
 ```js
