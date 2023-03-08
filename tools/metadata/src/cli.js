@@ -38,26 +38,34 @@ const loadState = async (adaptorRoot, pathToState) => {
 const generate = async (adaptor, pathToState) => {
   const adaptorRoot = findAdaptorRoot(adaptor);
   const state = await loadState(adaptorRoot, pathToState);
-
+  console.log(`Generating metadata for ${adaptor}`);
   // import meta direct?
   // Or can we import { metadata } from root?
   const metadata = (await import(`${adaptorRoot}/src/meta/metadata.js`))
     .default;
   const result = await metadata(state.configuration);
-
-  writeFile(
-    path.resolve(`${adaptorRoot}/src/meta/data/metadata.json`),
-    JSON.stringify(result, null, 2)
-  );
+  if (result) {
+    console.log(`Done! Generated ${result.children.length} items`);
+    result.created = new Date().toISOString();
+    writeFile(
+      path.resolve(`${adaptorRoot}/src/meta/data/metadata.json`),
+      JSON.stringify(result, null, 2)
+    );
+  } else {
+    console.error('Error: no data returned from function');
+    process.exit(1);
+  }
 };
 
 const populateMocks = async (adaptor, pathToState) => {
+  console.log(`Populating mock data for ${adaptor}`);
   const adaptorRoot = findAdaptorRoot(adaptor);
   const state = await loadState(adaptorRoot, pathToState);
   // TODO check it exists
   const fn = (await import(`${adaptorRoot}/src/meta/populate-mock-data.js`))
     .default;
   await fn(state);
+  console.log('Done!');
 };
 
 /*
