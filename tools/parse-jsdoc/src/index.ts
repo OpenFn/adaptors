@@ -1,3 +1,3 @@
-import extractLookups from './extract-lookups';
+import extractMagic from './extract-magic';
 
-export default extractLookups;
+export default extractMagic;

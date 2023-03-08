@@ -22,7 +22,7 @@ type JSDocParam = {
   type: {
     names: string[];
   };
-  lookup?: string; // from @paramlookup extension
+  magic?: string; // from @magic extension
 };
 
 type JSDocReturn = {

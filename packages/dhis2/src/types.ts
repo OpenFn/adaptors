@@ -1,7 +1,7 @@
 export type Dhis2Attribute = {
   /**
    * The attribute id
-   * @lookup $.children.attributes[*]
+   * @magic $.children.attributes[*]
    */
   attribute: string;
 
@@ -11,7 +11,7 @@ export type Dhis2Attribute = {
 export type Dhis2Data = {
   /**
    * The id of an organisation unit
-   * @lookup $.children.orgUnits[*]
+   * @magic $.children.orgUnits[*]
    */
   orgUnit?: string;
 
@@ -22,7 +22,7 @@ export type Dhis2Data = {
 
   /**
    * Tracked instance type
-   * @lookup $.children.trackedEntityTypes[*]
+   * @magic $.children.trackedEntityTypes[*]
    */
   trackedEntityType?: string;
 

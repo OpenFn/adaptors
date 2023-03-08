@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import jp from 'jsonpath';
 import path from 'node:path';
 import data from '../fixtures/metadata.json' assert { type: 'json' };
-import extractLookups from '@openfn/parse-jsdoc';
+import extractMagic from '@openfn/parse-jsdoc';
 
 let queries;
 
 before(async () => {
   // Parse Adaptor.js and pull out all of its lookup queries
-  queries = await extractLookups(
+  queries = await extractMagic(
     path.resolve('src/types.ts'),
     path.resolve('src/Adaptor.js')
   );

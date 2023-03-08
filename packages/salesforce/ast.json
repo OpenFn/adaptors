@@ -530,7 +530,7 @@
             "name": "sObject"
           },
           {
-            "title": "paramlookup",
+            "title": "magic",
             "description": "sObject - $.children[?(!@.meta.system)].name"
           },
           {
@@ -543,7 +543,7 @@
             "name": "externalId"
           },
           {
-            "title": "paramlookup",
+            "title": "magic",
             "description": "externalId - $.children[?(@.name==\"{{args.sObject}}\")].children[?(@.meta.externalId)].name"
           },
           {
@@ -556,7 +556,7 @@
             "name": "attrs"
           },
           {
-            "title": "paramlookup",
+            "title": "magic",
             "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {

@@ -1,11 +1,11 @@
 exports.defineTags = dictionary => {
-  dictionary.defineTag('paramlookup', {
+  dictionary.defineTag('magic', {
     canHaveName: true,
     mustHaveValue: true,
     onTagged: (doclet, tag) => {
       const param = doclet.params.find(({ name }) => name == tag.value.name);
       if (param) {
-        param.lookup = tag.value.description;
+        param.magic = tag.value.description;
       }
     },
   });
