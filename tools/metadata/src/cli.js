@@ -3,7 +3,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import path from 'node:path';
-import { writeFile, stat } from 'node:fs/promises';
+import { writeFile, stat, mkdir } from 'node:fs/promises';
 
 const findAdaptorRoot = adaptor => {
   const cwd = process.cwd();
@@ -35,22 +35,29 @@ const loadState = async (adaptorRoot, pathToState) => {
   }
 };
 
+const getModelSize = ({ children }) => {
+  if (Array.isArray(children)) {
+    return children.length;
+  }
+  return Object.keys(children).length;
+};
+
 const generate = async (adaptor, pathToState) => {
   const adaptorRoot = findAdaptorRoot(adaptor);
   const state = await loadState(adaptorRoot, pathToState);
   console.log(`Generating metadata for ${adaptor}`);
-  // import meta direct?
-  // Or can we import { metadata } from root?
+
   const metadata = (await import(`${adaptorRoot}/src/meta/metadata.js`))
     .default;
   const result = await metadata(state.configuration);
   if (result) {
-    console.log(`Done! Generated ${result.children.length} items`);
+    console.log(`Generated ${getModelSize(result)} items`);
+    const outputPath = path.resolve(`${adaptorRoot}/tmp/metadata.json`);
     result.created = new Date().toISOString();
-    writeFile(
-      path.resolve(`${adaptorRoot}/src/meta/data/metadata.json`),
-      JSON.stringify(result, null, 2)
-    );
+    await mkdir(path.dirname(outputPath), { recursive: true });
+    console.log(`writing result to ${outputPath}`);
+    writeFile(path.resolve(outputPath), JSON.stringify(result, null, 2));
+    console.log('Done!');
   } else {
     console.error('Error: no data returned from function');
     process.exit(1);
