@@ -10,7 +10,7 @@ let helper;
 // and the helpers are actually super thin
 before(async () => {
   const impl = createHelper();
-  helper = createMock(impl);
+  helper = createMock(impl, { path: 'test/fixtures' });
 });
 
 describe('Dhis2 helper', () => {
@@ -18,9 +18,13 @@ describe('Dhis2 helper', () => {
     const data = await helper.getOrgUnits();
     expect(data).to.be.ok;
 
-    expect(data.organisationUnits.length).to.be.greaterThan(0);
+    expect(data.organisationUnits.length).to.equal(2);
+  });
+
+  it('loads Adonkia CHOP', async () => {
+    const data = await helper.getOrgUnits();
     const [adonkia] = data.organisationUnits;
-    expect(adonkia.displayName).eq('30101-OVC-0001');
-    expect(adonkia.id).eq('y4kDUliaw7e');
+    expect(adonkia.displayName).eq('Adonkia CHP');
+    expect(adonkia.id).eq('Rp268JB6Ne4');
   });
 });
