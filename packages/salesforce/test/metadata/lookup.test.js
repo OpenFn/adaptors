@@ -16,7 +16,8 @@ describe('Salesforce lookup tests', async () => {
   describe('upsert', () => {
     it('sObject: should list non-system sObject names', () => {
       const results = jp.query(data, queries.upsert.sObject);
-      expect(results).to.have.lengthOf(36);
+      // Note that there are two sobjects in the model - this should correctly just return 1
+      expect(results).to.have.lengthOf(1);
       expect(results).to.include('vera__Beneficiary__c');
     });
 
