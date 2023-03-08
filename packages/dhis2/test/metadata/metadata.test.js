@@ -1,11 +1,20 @@
 import { expect } from 'chai';
+import { createMock } from '@openfn/metadata';
 import metadata from '../../src/meta/metadata';
+import dhis2Helper from '../../src/meta/helper';
+
+let mockHelper;
+
+before(async () => {
+  const impl = await dhis2Helper();
+  mockHelper = createMock(impl, { path: 'test/fixtures' });
+});
 
 describe('metadata function', () => {
   let model;
 
   before(async () => {
-    model = await metadata({}, true);
+    model = await metadata({}, mockHelper);
   });
 
   it('should build a model for dhis2', async () => {
@@ -21,8 +30,8 @@ describe('metadata function', () => {
 
     const [first] = orgUnits;
     expect(first.type).eql('orgUnit');
-    expect(first.name).eql('y4kDUliaw7e');
-    expect(first.label).eql('30101-OVC-0001');
+    expect(first.name).eql('Rp268JB6Ne4');
+    expect(first.label).eql('Adonkia CHP');
     expect(first.datatype).eql('string');
   });
 

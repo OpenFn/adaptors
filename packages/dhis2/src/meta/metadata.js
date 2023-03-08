@@ -1,10 +1,9 @@
-import { createMock, createEntity } from '@openfn/metadata';
+import { createEntity } from '@openfn/metadata';
 import dhis2helper from './helper.js';
 
-const metadata = async (configuration = {}, mock = false) => {
-  let helper = dhis2helper(configuration);
-  if (mock) {
-    helper = createMock(helper);
+const metadata = async (configuration = {}, helper) => {
+  if (!helper) {
+    helper = dhis2helper(configuration);
   }
 
   const children = {};
@@ -19,21 +18,23 @@ const metadata = async (configuration = {}, mock = false) => {
 
   children.resourceTypes = await helper.getResourceTypes();
 
-  const types = await helper.getTrackedEntityTypes();
-  children.trackedEntityTypes = types.trackedEntityTypes.map(type =>
-    createEntity(type.id, 'trackedEntityType', {
-      datatype: 'string',
-      label: type.displayName,
-    })
-  );
+  const types = (await helper.getTrackedEntityTypes()) ?? [];
+  children.trackedEntityTypes =
+    types.trackedEntityTypes?.map(type =>
+      createEntity(type.id, 'trackedEntityType', {
+        datatype: 'string',
+        label: type.displayName,
+      })
+    ) ?? [];
 
-  const attributes = await helper.getAttributes();
-  children.attributes = attributes.attributes.map(attr =>
-    createEntity(attr.id, 'attribute', {
-      datatype: 'string',
-      label: attr.displayName,
-    })
-  );
+  const attributes = (await helper.getAttributes()) ?? [];
+  children.attributes =
+    attributes.attributes?.map(attr =>
+      createEntity(attr.id, 'attribute', {
+        datatype: 'string',
+        label: attr.displayName,
+      })
+    ) ?? [];
 
   return {
     type: 'model',
