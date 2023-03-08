@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import jp from 'jsonpath';
 import path from 'node:path';
-import data from '../../src/meta/data/metadata.json' assert { type: 'json' };
+import data from '../fixtures/metadata.json' assert { type: 'json' };
 import extractLookups from '@openfn/parse-jsdoc';
 
 let queries;
@@ -19,8 +19,7 @@ describe('DHIS2 lookup tests', async () => {
   describe('create', () => {
     it('resourceType: should list resourceTypes', () => {
       const results = jp.query(data, queries.create.resourceType);
-      // TODO the cached model is actually out of dae
-      expect(results).to.have.lengthOf(4);
+      expect(results).to.have.lengthOf(13);
       expect(results).to.include('trackedEntityInstances');
       expect(results).to.include('events');
       expect(results).to.include('programs');
@@ -28,15 +27,37 @@ describe('DHIS2 lookup tests', async () => {
   });
 
   // Query against a type interface
-  // This sort of works but there's a lot of problems in the set up
   describe('Dhis2Data', () => {
     it('should list orgUnits', () => {
       const results = jp.query(data, queries.Dhis2Data.orgUnit);
-      expect(results).to.have.lengthOf(1334);
+      expect(results).to.have.lengthOf(1);
 
       const [first] = results;
-      expect(first.name).to.equal('y4kDUliaw7e');
+      expect(first.name).to.equal('Rp268JB6Ne4');
       expect(first.type).to.equal('orgUnit');
+      expect(first.label).to.equal('Adonkia CHP');
+    });
+
+    it('should list trackedEntityTypes', () => {
+      const results = jp.query(data, queries.Dhis2Data.trackedEntityType);
+      expect(results).to.have.lengthOf(1);
+
+      const [first] = results;
+      expect(first.name).to.equal('bVkFYAvoUCP');
+      expect(first.type).to.equal('trackedEntityType');
+      expect(first.label).to.equal('ARV commodity');
+    });
+  });
+
+  describe('Dhis2Attribute', () => {
+    it('should list atributes', () => {
+      const results = jp.query(data, queries.Dhis2Attribute.attribute);
+      expect(results).to.have.lengthOf(1);
+
+      const [first] = results;
+      expect(first.name).to.equal('DnrLSdo4hMl');
+      expect(first.type).to.equal('attribute');
+      expect(first.label).to.equal('Alternative name');
     });
   });
 });
