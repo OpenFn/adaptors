@@ -23,10 +23,7 @@ const extractJsMagic = async (path: string) => {
 };
 
 const extractTsMagic = async (path: string) => {
-  console.log(' **** parsing types');
   const types = await parseTs(path);
-  console.log(' **** types parsed');
-  console.log(types);
   return types?.reduce((result: magicMap, iface) => {
     // TODO come back and look at typings
     // @ts-ignore

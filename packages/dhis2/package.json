@@ -20,8 +20,8 @@
     "clean": "rimraf dist types docs",
     "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.cjs",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive"
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",

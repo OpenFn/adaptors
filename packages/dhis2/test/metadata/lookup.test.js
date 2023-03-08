@@ -49,7 +49,7 @@ describe('DHIS2 lookup tests', async () => {
     });
   });
 
-  describe.skip('Dhis2Attribute', () => {
+  describe('Dhis2Attribute', () => {
     it('should list atributes', () => {
       const results = jp.query(data, queries.Dhis2Attribute.attribute);
       expect(results).to.have.lengthOf(1);
