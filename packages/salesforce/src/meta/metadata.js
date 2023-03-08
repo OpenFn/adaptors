@@ -1,10 +1,9 @@
 import salesforceHelper from './helper.js';
-import { createEntity, createMock } from '@openfn/metadata';
+import { createEntity } from '@openfn/metadata';
 
-const metadata = async (configuration = {}, mock = false) => {
-  let helper = await salesforceHelper(configuration);
-  if (mock) {
-    helper = createMock(helper);
+const metadata = async (configuration = {}, helper) => {
+  if (!helper) {
+    helper = await salesforceHelper(configuration);
   }
 
   const globals = await helper.getGlobals();

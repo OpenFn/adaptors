@@ -67,5 +67,39 @@
       "layouts": "/services/data/v42.0/sobjects/vera__Beneficiary__c/describe/layouts",
       "sobject": "/services/data/v42.0/sobjects/vera__Beneficiary__c"
     }
+  },
+  {
+    "activateable": false,
+    "createable": true,
+    "custom": true,
+    "customSetting": false,
+    "deletable": true,
+    "deprecatedAndHidden": false,
+    "feedEnabled": false,
+    "hasSubtypes": false,
+    "isSubtype": false,
+    "keyPrefix": "a0S",
+    "label": "Attendance",
+    "labelPlural": "Attendance",
+    "layoutable": true,
+    "mergeable": false,
+    "mruEnabled": true,
+    "name": "vera__Attendance__c",
+    "queryable": true,
+    "replicateable": true,
+    "retrieveable": true,
+    "searchable": true,
+    "triggerable": true,
+    "undeletable": true,
+    "updateable": true,
+    "urls": {
+      "compactLayouts": "/services/data/v42.0/sobjects/vera__Attendance__c/describe/compactLayouts",
+      "rowTemplate": "/services/data/v42.0/sobjects/vera__Attendance__c/{ID}",
+      "approvalLayouts": "/services/data/v42.0/sobjects/vera__Attendance__c/describe/approvalLayouts",
+      "describe": "/services/data/v42.0/sobjects/vera__Attendance__c/describe",
+      "quickActions": "/services/data/v42.0/sobjects/vera__Attendance__c/quickActions",
+      "layouts": "/services/data/v42.0/sobjects/vera__Attendance__c/describe/layouts",
+      "sobject": "/services/data/v42.0/sobjects/vera__Attendance__c"
+    }
   }
 ]

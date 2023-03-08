@@ -18,7 +18,7 @@ describe('Salesforce helper', () => {
     const data = await helper.getGlobals();
     expect(data).ok;
 
-    expect(data.length).to.equal(2);
+    expect(data.length).to.equal(3);
   });
 
   it('includes the Asset sobject', async () => {

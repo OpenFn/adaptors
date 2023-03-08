@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import jp from 'jsonpath';
 import path from 'node:path';
-import data from '../../src/meta/data/metadata.json' assert { type: 'json' };
+import data from '../fixtures/metadata.json' assert { type: 'json' };
 import extractLookups from '@openfn/parse-jsdoc';
 
 let queries;

@@ -2,6 +2,7 @@
   "name": "salesforce",
   "type": "model",
   "meta": {},
+
   "children": [
     {
       "name": "AccountShare",
