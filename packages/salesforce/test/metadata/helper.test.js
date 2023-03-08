@@ -10,7 +10,7 @@ let helper;
 before(async () => {
   // bit of a wierd API now because the mock creator is generic
   const impl = await createHelper();
-  helper = createMock(impl);
+  helper = createMock(impl, { path: 'test/fixtures' });
 });
 
 describe('Salesforce helper', () => {
@@ -18,7 +18,7 @@ describe('Salesforce helper', () => {
     const data = await helper.getGlobals();
     expect(data).ok;
 
-    expect(data.length).to.equal(404);
+    expect(data.length).to.equal(2);
   });
 
   it('includes the Asset sobject', async () => {
@@ -50,7 +50,7 @@ describe('Salesforce helper', () => {
     const data = await helper.getFields('Asset');
 
     expect(data).to.not.be.undefined;
-    expect(data.length).to.eql(25);
+    expect(data.length).to.eql(2);
   });
 
   it('loads the SerialNumber field', async () => {

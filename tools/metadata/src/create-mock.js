@@ -21,7 +21,9 @@ const createMock = (helper, options = {}) => {
   const wrap =
     fnName =>
     async (...args) => {
-      const dataPath = path.resolve(`tmp/${getFileName(fnName, ...args)}`);
+      const dataPath = path.resolve(
+        `${options.path || 'tmp'}/${getFileName(fnName, ...args)}`
+      );
       await fs.mkdir(path.dirname(dataPath), { recursive: true });
       if (options.force) {
         return callHelper(helper, fnName, dataPath, ...args);
