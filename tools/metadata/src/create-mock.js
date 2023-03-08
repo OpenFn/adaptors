@@ -13,6 +13,7 @@ const callHelper = async (helper, fnName, dataPath, ...args) => {
   const result = await helper[fnName](...args);
   await fs.mkdir(path.dirname(dataPath), { recursive: true });
   await fs.writeFile(dataPath, JSON.stringify(result));
+  console.log(`  Writing to ${dataPath}`);
   return result;
 };
 
@@ -20,9 +21,8 @@ const createMock = (helper, options = {}) => {
   const wrap =
     fnName =>
     async (...args) => {
-      const dataPath = path.resolve(
-        `src/meta/data/${getFileName(fnName, ...args)}`
-      );
+      const dataPath = path.resolve(`tmp/${getFileName(fnName, ...args)}`);
+      await fs.mkdir(path.dirname(dataPath), { recursive: true });
       if (options.force) {
         return callHelper(helper, fnName, dataPath, ...args);
       }

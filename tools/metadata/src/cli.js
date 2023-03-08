@@ -3,7 +3,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import path from 'node:path';
-import { writeFile } from 'node:fs/promises';
+import { writeFile, stat } from 'node:fs/promises';
 
 const findAdaptorRoot = adaptor => {
   const cwd = process.cwd();
@@ -62,10 +62,15 @@ const populateMocks = async (adaptor, pathToState) => {
   const adaptorRoot = findAdaptorRoot(adaptor);
   const state = await loadState(adaptorRoot, pathToState);
   // TODO check it exists
-  const fn = (await import(`${adaptorRoot}/src/meta/populate-mock-data.js`))
-    .default;
-  await fn(state);
-  console.log('Done!');
+  const importPath = `${adaptorRoot}/src/meta/populate-mock-data.js`;
+  const exists = await stat(importPath);
+  if (exists) {
+    const fn = (await import(importPath)).default;
+    await fn(state);
+    console.log('Done!');
+  } else {
+    console.error(`Error ${importPath} does not exist`);
+  }
 };
 
 /*
