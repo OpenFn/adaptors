@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import _ from 'lodash';
 import {
@@ -124,7 +123,8 @@ axios.interceptors.response.use(
  * @public
  * @function
  * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
- * @param {Object} data - Data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @magic resourceType $.children.resourceTypes[*]
+ * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -559,9 +559,8 @@ export function discover(httpMethod, endpoint) {
                     if (param.schema['$ref']) {
                       let schemaRefIndex =
                         param.schema['$ref'].lastIndexOf('/') + 1;
-                      let schemaRef = param.schema['$ref'].slice(
-                        schemaRefIndex
-                      );
+                      let schemaRef =
+                        param.schema['$ref'].slice(schemaRefIndex);
                       param.schema = tempData.components.schemas[schemaRef];
                     }
 

@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor salesforce",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
@@ -31,15 +31,18 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.7.5",
+    "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
-    "lodash": "^4.17.21",
+    "jsonpath": "^1.1.1",
     "mustache": "^2.2.0",
+    "lodash": "^4.17.21",
     "yargs": "^3.30.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/metadata": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "1.1.0",
     "chai": "4.3.6",

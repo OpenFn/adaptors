@@ -1,0 +1,25 @@
+{
+  "name": "@openfn/parse-jsdoc",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Utilities for parsing JSdocs",
+  "main": "dist/index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "test": "pnpm ava"
+  },
+  "dependencies": {
+    "@types/jsdoc-to-markdown": "^7.0.3",
+    "@types/node": "18.11.7",
+    "ava": "^5.1.1",
+    "esno": "0.16.3",
+    "jsdoc-to-markdown": "^7.1.1",
+    "ts-node": "10.9.1",
+    "typedoc": "^0.23.26",
+    "typescript": "4.8.4"
+  }
+}
