@@ -1,0 +1,19 @@
+{
+  "name": "@openfn/metadata",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Helper functions for adaptor metadata",
+  "main": "src/index.js",
+  "license": "ISC",
+  "bin": {
+    "metadata": "src/cli.js",
+    "jam": "src/cli.js"
+  },
+  "scripts": {
+    "cli": "node src/cli.js"
+  },
+  "dependencies": {
+    "yargs": "^17.6.2"
+  }
+}

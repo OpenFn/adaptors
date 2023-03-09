@@ -530,6 +530,10 @@
             "name": "sObject"
           },
           {
+            "title": "magic",
+            "description": "sObject - $.children[?(!@.meta.system)].name"
+          },
+          {
             "title": "param",
             "description": "ID.",
             "type": {
@@ -539,6 +543,10 @@
             "name": "externalId"
           },
           {
+            "title": "magic",
+            "description": "externalId - $.children[?(@.name==\"{{args.sObject}}\")].children[?(@.meta.externalId)].name"
+          },
+          {
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
@@ -546,6 +554,10 @@
               "name": "Object"
             },
             "name": "attrs"
+          },
+          {
+            "title": "magic",
+            "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
             "title": "returns",

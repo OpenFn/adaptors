@@ -18,10 +18,10 @@
   "scripts": {
     "build": "pnpm clean && build-adaptor dhis2",
     "clean": "rimraf dist types docs",
-    "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
+    "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.cjs",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings test/index.js",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings test/index.js"
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -36,16 +36,19 @@
     "@openfn/language-common": "workspace:^1.7.5",
     "axios": "^0.24.0",
     "lodash": "^4.17.19",
-    "qs": "^6.10.3"
+    "qs": "^6.11.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/metadata": "workspace:^1.0.0",
+    "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "chai-http": "4.3.0",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
+    "jsonpath": "^1.1.1",
     "mocha": "7.2.0",
     "nock": "13.2.9",
     "rimraf": "3.0.2"

@@ -110,6 +110,29 @@ name.
 
 You can run `build --help` for more information.
 
+## Metadata
+
+Check the Wiki for the metadata creation guide:
+[https://github.com/OpenFn/adaptors/wiki/Magic-Metadata](https://github.com/OpenFn/adaptors/wiki/Magic-Metadata)
+
+There are two CLI utils you can run to generate metadata and populate mock data.
+
+Use `generate` to create a metadata.json based on the provided config. This will
+be saved to `packages/<adaptorName>/src/meta/metadata.json`.
+
+Use `populate-mock` to execute the `populate-mock-data.js` file and save the
+results into the meta/data dir. Unit tests will use this mock data.
+
+```
+pnpm metadata generate <adaptorName> <path/to/config>
+pnpm metadata populate-mock <adaptorName> <path/to/config>
+```
+
+Config paths can point to JSON or JS files with a default export. They are
+always specified relative to the adaptor directory.
+
+You can run these from the repo root or from the adaptor folder.
+
 ## Migration Guide
 
 Adaptors should be copied/cloned into this repo, with all build, lint and git
@@ -175,7 +198,9 @@ Then, from inside your new `packages/<name>`:
   should have the label `postgres`.
 - Update the adaptor repository readme to add archive note
 - Archive the adaptor if you can
-- Update the adaptor readme to indicate where the package has been moved to adaptors repo. See example below
+- Update the adaptor readme to indicate where the package has been moved to
+  adaptors repo. See example below
+
 ```
 # _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
 

@@ -31,11 +31,15 @@
             "name": "resourceType"
           },
           {
+            "title": "magic",
+            "description": "resourceType $.children.resourceTypes[*]"
+          },
+          {
             "title": "param",
-            "description": "Data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "Dhis2Data"
             },
             "name": "data"
           },
