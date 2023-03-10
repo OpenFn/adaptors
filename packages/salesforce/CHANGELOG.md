@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.1
+
+### Patch Changes
+
+- c09b821: Add @magic annotations
+
 ## 3.0.0
 
 ### Major Changes
