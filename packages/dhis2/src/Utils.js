@@ -23,8 +23,10 @@ export class Log {
 }
 
 export function buildUrl(urlString, hostUrl, apiVersion) {
-  const pathSuffix = apiVersion ? `/${apiVersion}${urlString}` : `${urlString}`;
-  return hostUrl + '/api' + pathSuffix;
+  const pathSuffix = apiVersion
+    ? `/${apiVersion}/api${urlString}`
+    : `/api${urlString}`;
+  return hostUrl + pathSuffix;
 }
 
 /**
