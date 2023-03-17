@@ -1,49 +1,38 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "properties": {
-        "loginUrl": {
-            "title": "Login URL",
-            "type": "string",
-            "description": "The Salesforce instance login URL",
-            "format": "uri",
-            "minLength": 1,
-            "examples": [
-                "https://somesalesforcelogin.url"
-            ]
-        },
-        "username": {
-            "title": "Username",
-            "type": "string",
-            "description": "The username to log in the Salesforce instance",
-            "minLength": 1,
-            "examples": [
-                "someusername"
-            ]
-        },
-        "password": {
-            "title": "Password",
-            "type": "string",
-            "description": "The password to log in the Salesforce instance",
-            "writeOnly": true,
-            "minLength": 1,
-            "examples": [
-                "@super(!)SecretPass"
-            ]
-        },
-        "securityToken": {
-            "title": "Security Token",
-            "type": "string",
-            "description": "The security token to access the Salesforce instance",
-            "minLength": 1,
-            "examples": [
-                "salesforcesecuritytoken"
-            ]
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "loginUrl": {
+      "title": "Login URL",
+      "type": "string",
+      "description": "The Salesforce instance login URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://somesalesforcelogin.url"]
     },
-    "type": "object",
-    "additionalProperties": true,
-    "required": [
-        "host",
-        "database"
-    ]
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "The username to log in the Salesforce instance",
+      "minLength": 1,
+      "examples": ["someusername"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "The password to log in the Salesforce instance",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["@super(!)SecretPass"]
+    },
+    "securityToken": {
+      "title": "Security Token",
+      "type": "string",
+      "description": "The security token to access the Salesforce instance",
+      "minLength": 1,
+      "examples": ["salesforcesecuritytoken"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["loginUrl", "username", "password", "securityToken"]
 }
