@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 3.2.7
+
+### Patch Changes
+
+- c09b821: Add @magic annotations
+
 ## 3.2.6
 
 ### Patch Changes
