@@ -1,5 +1,11 @@
 # @openfn/language-maximo
 
+## 0.3.4
+
+### Patch Changes
+
+- aed7e0b: fix required field in configuration schema
+
 ## 0.3.3
 
 ### Patch Changes

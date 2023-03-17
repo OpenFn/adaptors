@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.2
+
+### Patch Changes
+
+- aed7e0b: fix required field in configuration schema
+
 ## 3.0.1
 
 ### Patch Changes
