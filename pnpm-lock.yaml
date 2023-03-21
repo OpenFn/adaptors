@@ -1034,6 +1034,47 @@ importers:
       rimraf: 3.0.2
       sinon: 9.2.4
 
+  packages/qontak:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': workspace:1.7.5
+      '@openfn/simple-ast': 0.4.1
+      chai: 4.3.6
+      cheerio: ^1.0.0-rc.10
+      cheerio-tableparser: ^1.0.1
+      csv-parse: ^4.10.1
+      deep-eql: 4.1.1
+      esno: ^0.16.3
+      fast-safe-stringify: ^2.0.7
+      form-data: ^3.0.0
+      limiter: ^2.1.0
+      lodash: ^4.17.19
+      mocha: 9.2.2
+      nock: 13.2.9
+      request: ^2.88.2
+      rimraf: ^3.0.2
+      tough-cookie: ^4.0.0
+    dependencies:
+      '@openfn/language-common': link:../common
+      cheerio: 1.0.0-rc.12
+      cheerio-tableparser: 1.0.1
+      csv-parse: 4.16.3
+      fast-safe-stringify: 2.1.1
+      form-data: 3.0.1
+      limiter: 2.1.0
+      lodash: 4.17.21
+      request: 2.88.2
+      tough-cookie: 4.1.2
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
+      nock: 13.2.9
+      rimraf: 3.0.2
+
   packages/rapidpro:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.1
@@ -7484,6 +7525,10 @@ packages:
     resolution: {integrity: sha512-g3UB796vUFIY90VIv/WX3L2c8CS2MdWUww3CNrYmqza1Fg0DURc2K/O4YrnklBdQarSJ/y8JnJYDGc+1iumQjg==}
     dev: true
 
+  /just-performance/4.3.0:
+    resolution: {integrity: sha512-L7RjvtJsL0QO8xFs5wEoDDzzJwoiowRw6Rn/GnvldlchS2JQr9wFYPiwZcDfrbbujEKqKN0tvENdbjXdYhDp5Q==}
+    dev: false
+
   /jwa/1.4.1:
     resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
     dependencies:
@@ -7580,6 +7625,12 @@ packages:
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
+    dev: false
+
+  /limiter/2.1.0:
+    resolution: {integrity: sha512-361TYz6iay6n+9KvUUImqdLuFigK+K79qrUtBsXhJTLdH4rIt/r1y8r1iozwh8KbZNpujbFTSh74mJ7bwbAMOw==}
+    dependencies:
+      just-performance: 4.3.0
     dev: false
 
   /lines-and-columns/1.2.4:
