@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.3
+
+### Patch Changes
+
+- 06aced8: Fix dependencies
+
 ## 3.0.2
 
 ### Patch Changes
