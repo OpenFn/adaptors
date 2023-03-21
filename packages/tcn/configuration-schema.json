@@ -12,7 +12,7 @@
           "password": "somePassword",
           "ancVisitReminder": {
             "payloadFilePath": "/mnt/d/tmp/contacts_CSV/TCN-ANC_Visit_Reminder.txt",
-            "jobName": "TCN - RoboCall - ANC Visit Reminder",
+            "description": "TCN - RoboCall - ANC Visit Reminder",
             "country": "Indonesia",
             "importTemplateNumber": "1",
             "scheduleTemplateNumber": "2"
