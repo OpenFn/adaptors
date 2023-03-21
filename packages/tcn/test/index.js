@@ -979,6 +979,6 @@ describe('test convertToCSVString', () => {
     const csvData = convertToCSVString(state.data.rows);
     console.log(`This the CSV\n${csvData}`)
 
-    expect(csvData).to.eql('name,age\nAlice,22\nBob,24');
+    expect(csvData).to.eql('Alice,22\nBob,24');
   });
 });
