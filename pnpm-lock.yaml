@@ -1113,7 +1113,6 @@ importers:
       yargs: ^3.30.0
     dependencies:
       '@openfn/language-common': link:../common
-      '@openfn/parse-jsdoc': link:../../tools/parse-jsdoc
       JSONPath: 0.10.0
       axios: 0.21.4
       jsforce: 1.11.0
@@ -1124,6 +1123,7 @@ importers:
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/metadata': link:../../tools/metadata
+      '@openfn/parse-jsdoc': link:../../tools/parse-jsdoc
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
       chai: 4.3.6
