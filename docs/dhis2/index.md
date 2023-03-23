@@ -100,11 +100,12 @@ Create a record
 
 **Kind**: global function  
 **Access**: public  
+**Magic**: resourceType $.children.resourceTypes[*]  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | resourceType | <code>string</code> | Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ... |
-| data | <code>Object</code> | Data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
+| data | <code>Dhis2Data</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
 | [options] | <code>Object</code> | Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
