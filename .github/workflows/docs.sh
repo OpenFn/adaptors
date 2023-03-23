@@ -8,7 +8,7 @@ rm -rf tmp/*
 pnpm install --frozen-lockfile
 
 # build new docs
-pnpm -r run build docs
+pnpm build:adaptors docs
 
 # copy new packages docs files to the root docs directory
 # rsync -pr packages/*/docs/ docs/
