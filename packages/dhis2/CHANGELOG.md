@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 3.2.8
+
+### Patch Changes
+
+- Fix metadata function export
+
 ## 3.2.7
 
 ### Patch Changes
