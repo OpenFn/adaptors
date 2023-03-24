@@ -1,7 +1,12 @@
 # Language Salesforce
 
-Salesforce Language Pack for OpenFn. **See the main docs site:
-http://openfn.github.io/language-salesforce/ **
+An OpenFn **_adaptor_** for building integration jobs for use with the
+Salesforce API.
+
+## Documentation
+
+View the [docs site](https://docs.openfn.org/adaptors/packages/salesforce-docs)
+for full technical documentation.
 
 ## Release notes and deprecated CHANGELOG.md
 
@@ -50,30 +55,6 @@ describe('vera__Test_Event__c'),
   });
 ```
 
-## ## API
-
-`field("key","value")` Returns `{ "key": "value" }`
-
-[`relationship("relationship_name__r", "externalID", dataSource("path"))`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L23-L44)
-
-[`describe("obj_name")`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L46-L71)
-
-[`query('queryString')`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L107-L136)
-
-[`bulk('obj_name', 'operation', 'options', arrayOfFields)`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L138-L210)
-
-[`create('obj_name', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L212-L238)
-
-[`destroy('obj_name', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#225-259)
-
-[`createIf(logical, 'obj_name', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L240-L279)
-
-[`upsert(sObject, 'externalID', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L281-L315)
-
-[`upsertIf(logical, 'obj_name', 'externalID', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L317-L370)
-
-[`update('obj_name', fields())`](https://github.com/OpenFn/language-salesforce/blob/master/src/Adaptor.js#L372-L398)
-
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
@@ -85,7 +66,7 @@ Build the project using `pnpm build`.
 
 To just build the docs run `pnpm build docs`
 
-## ## Other
+## Other
 
 Create SOAP session
 
