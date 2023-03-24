@@ -11,9 +11,8 @@ in the field, to adapt to the wide range of outbreak scenarios.
 
 ## Documentation
 
-- View the documentation at https://openfn.github.io/language-godata/
-- To update the documentation site, run:
-  `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
+View the [docs site](https://docs.openfn.org/adaptors/packages/godata-docs) for
+full technical documentation.
 
 ### Configuration
 

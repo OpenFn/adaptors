@@ -2,11 +2,10 @@
 
 Language Pack for building expressions and operations to run MySQL queries.
 
-**See
-[`src/Adaptor.js`](https://github.com/OpenFn/language-mysql/blob/master/src/Adaptor.js)
-for the full list of available helper functions including `upsert(...)`.**
-
 ## Documentation
+
+View the [docs site](https://docs.openfn.org/adaptors/packages/mysql-docs) for
+full technical documentation.
 
 ### Configuration
 

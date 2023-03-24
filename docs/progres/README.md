@@ -15,9 +15,8 @@ ProGres v4 API.
 
 ## Documentation
 
-- View the documentation at https://openfn.github.io/language-progres/
-- To update the documentation site, run:
-  `./node_modules/.bin/jsdoc --readme ./README.md ./lib -d docs`
+View the [docs site](https://docs.openfn.org/adaptors/packages/progres-docs) for
+full technical documentation.
 
 ### Configuration
 
