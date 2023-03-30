@@ -1,5 +1,13 @@
 # @openfn/language-salesforce
 
+## 3.0.4
+
+### Patch Changes
+
+- ef828e7: update old urls in readme
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
+
 ## 3.0.3
 
 ### Patch Changes

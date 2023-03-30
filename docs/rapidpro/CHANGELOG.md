@@ -1,5 +1,14 @@
 # @openfn/language-rapidpro
 
+## 0.5.5
+
+### Patch Changes
+
+- ef828e7: update old urls in readme
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
+
 ## 0.5.4
 
 ### Patch Changes

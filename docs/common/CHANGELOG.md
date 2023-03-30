@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.7.6
+
+### Patch Changes
+
+- 2b4c61a: mark execute private and ast build
+
 ## 1.7.5
 
 ### Patch Changes

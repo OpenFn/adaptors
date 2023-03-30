@@ -1,5 +1,15 @@
 # @openfn/language-commcare
 
+## 1.5.4
+
+### Patch Changes
+
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+- Updated dependencies [14f481e]
+  - @openfn/language-common@1.7.6
+  - @openfn/language-http@4.2.7
+
 ## 1.5.3
 
 ### Patch Changes
