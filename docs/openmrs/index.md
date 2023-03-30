@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for OpenMRS.</p>
-</dd>
 <dt><a href="#login">login(state)</a> ⇒ <code>State</code></dt>
 <dd><p>Logs in to OpenMRS, gets a session token.</p>
 </dd>
@@ -28,25 +24,6 @@ Wraps <code>language-common/execute</code>, and prepends initial state for OpenM
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for OpenMRS.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Array</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="login"></a>
 
 ## login(state) ⇒ <code>State</code>

@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for magpi.</p>
-</dd>
 <dt><a href="#fetchSurveyData">fetchSurveyData(params)</a> ⇒ <code>Operation</code></dt>
 <dd><p>Make a POST request to fetch Magpi data and POST it somewhere else</p>
 </dd>
@@ -13,25 +9,6 @@ Wraps <code>@openfn/language-common/execute</code>, and prepends initial state f
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `@openfn/language-common/execute`, and prepends initial state for magpi.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="fetchSurveyData"></a>
 
 ## fetchSurveyData(params) ⇒ <code>Operation</code>

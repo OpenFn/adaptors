@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Promise</code></dt>
-<dd><p>Execute a sequence of operations.
-Main outer API for executing expressions.</p>
-</dd>
 <dt><a href="#alterState">alterState(func)</a> ⇒ <code>Operation</code></dt>
 <dd><p>alias for &quot;fn()&quot;</p>
 </dd>
@@ -145,26 +141,6 @@ omits HTTP request specific modules like <code>FormData</code>.</p>
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Promise</code>
-Execute a sequence of operations.
-Main outer API for executing expressions.
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-   create('foo'),
-   delete('bar')
- )
-```
 <a name="alterState"></a>
 
 ## alterState(func) ⇒ <code>Operation</code>

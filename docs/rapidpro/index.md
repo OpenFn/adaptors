@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state.</p>
-</dd>
 <dt><a href="#addContact">addContact(params, callback)</a> ⇒ <code>Operation</code></dt>
 <dd><p>Adds a new contact to RapidPro</p>
 </dd>
@@ -19,25 +15,6 @@ Wraps <code>language-common/execute</code>, and prepends initial state.</p>
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="addContact"></a>
 
 ## addContact(params, callback) ⇒ <code>Operation</code>

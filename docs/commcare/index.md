@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for commcare.</p>
-</dd>
 <dt><a href="#clientPost">clientPost(formData)</a> ⇒ <code>State</code></dt>
 <dd><p>Performs a post request</p>
 </dd>
@@ -20,25 +16,6 @@ and POST the response to somewhere else.</p>
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for commcare.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="clientPost"></a>
 
 ## clientPost(formData) ⇒ <code>State</code>

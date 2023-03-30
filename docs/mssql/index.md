@@ -4,10 +4,6 @@
 <dt><a href="#createConnection">createConnection(state)</a> ⇒ <code>State</code></dt>
 <dd><p>Creates a connection.</p>
 </dd>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for mssql.</p>
-</dd>
 <dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code>State</code></dt>
 <dd><p>Removes unserializable keys from the state.</p>
 </dd>
@@ -64,25 +60,6 @@ Creates a connection.
 **Example**  
 ```js
 createConnection(state)
-```
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for mssql.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
 ```
 <a name="cleanupState"></a>
 

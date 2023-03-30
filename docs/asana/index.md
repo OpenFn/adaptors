@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
-</dd>
 <dt><a href="#getTask">getTask(task_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
 <dd><p>Get a single task of a given project.</p>
 </dd>
@@ -22,25 +18,6 @@ Wraps <code>language-common/execute</code>, and prepends initial state for http.
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for http.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="getTask"></a>
 
 ## getTask(task_gid, params, callback) ⇒ <code>Operation</code>

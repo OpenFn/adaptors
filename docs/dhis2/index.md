@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for DHIS2.</p>
-</dd>
 <dt><a href="#configMigrationHelper">configMigrationHelper(state)</a> ⇒ <code>object</code></dt>
 <dd><p>Migrates <code>apiUrl</code> to <code>hostUrl</code> if <code>hostUrl</code> is <code>blank</code>.
 For <code>OpenFn.org</code> users with the <code>old-style configuration</code>.</p>
@@ -58,25 +54,6 @@ axios request.</p>
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for DHIS2.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="configMigrationHelper"></a>
 
 ## configMigrationHelper(state) ⇒ <code>object</code>

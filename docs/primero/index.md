@@ -1,10 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>language-common/execute</code>, and prepends initial state for http.</p>
-</dd>
 <dt><a href="#generateAuthString">generateAuthString(state)</a> ⇒ <code>string</code></dt>
 <dd><p>Generate an auth string to support multiple types of auth credentials.</p>
 </dd>
@@ -74,25 +70,6 @@ Another parameter is <code>hierarchy: true</code> (Defaults to false)</p>
 </dd>
 </dl>
 
-<a name="execute"></a>
-
-## execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `language-common/execute`, and prepends initial state for http.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  create('foo'),
-  delete('bar')
-)(state)
-```
 <a name="generateAuthString"></a>
 
 ## generateAuthString(state) ⇒ <code>string</code>
