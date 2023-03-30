@@ -12,7 +12,7 @@ import { post } from './Client';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

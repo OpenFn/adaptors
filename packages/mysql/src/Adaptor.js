@@ -16,7 +16,7 @@ import squel from 'squel';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

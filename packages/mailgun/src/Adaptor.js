@@ -17,7 +17,7 @@ import request from "sync-request";
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
