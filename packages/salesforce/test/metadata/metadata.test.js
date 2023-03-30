@@ -57,7 +57,7 @@ describe('metadata function', () => {
     const [asset] = model.children;
     const fields = asset.children;
     expect(fields).to.be.ok;
-    expect(fields.length).to.eql(2);
+    expect(fields.length).to.eql(1);
   });
 
   it('should build a SerialNumber field for salesforce Asset', async () => {

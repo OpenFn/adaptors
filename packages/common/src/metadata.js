@@ -11,7 +11,7 @@
  * @param {object} props - Properties to describe the entity (label, datatype)
  * @returns {Entity}
  */
-const createEntity = (name, type, props = {}, children) => {
+export const createEntity = (name, type, props = {}, children) => {
   const { label, datatype, value, ...meta } = props;
 
   const e = {
@@ -50,5 +50,3 @@ const createEntity = (name, type, props = {}, children) => {
 
   return e;
 };
-
-export { createEntity };

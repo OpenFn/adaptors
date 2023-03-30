@@ -19,7 +19,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./metadata": {
+      "import": "./dist/metadata.js",
+      "require": "./dist/metadata.cjs"
+    }
   },
   "author": "Open Function Group",
   "license": "LGPL-3.0-or-later",

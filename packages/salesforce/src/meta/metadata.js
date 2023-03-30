@@ -1,5 +1,5 @@
 import salesforceHelper from './helper.js';
-import { metadata as m } from '@openfn/language-common';
+import { createEntity } from '@openfn/language-common/metadata';
 
 const metadata = async (configuration = {}, helper) => {
   if (!helper) {
@@ -8,19 +8,19 @@ const metadata = async (configuration = {}, helper) => {
 
   const globals = await helper.getGlobals();
 
-  const root = m.createEntity('salesforce', 'model');
+  const root = createEntity('salesforce', 'model');
 
   const buildModel = async ({ name, custom }) => {
     const props = {};
     if (!custom) {
       props.system = true;
     }
-    const e = m.createEntity(name, 'sobject', props);
+    const e = createEntity(name, 'sobject', props);
 
     const fields = await helper.getFields(name);
     if (fields) {
       fields.forEach(({ name, type, label, externalId }) => {
-        const f = m.createEntity(name, 'field', {
+        const f = createEntity(name, 'field', {
           datatype: type,
           label,
           externalId,
