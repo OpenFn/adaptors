@@ -16,7 +16,7 @@ const fetchConfig = async (adaptorPath: string) => {
       return fn.default(adaptorPath);
     }
   } catch (e) {
-    console.log(e);
+    // do nothing
   }
   return {};
 };
@@ -34,7 +34,6 @@ export default async (lang: string) => {
   };
 
   const overrides = await fetchConfig(p);
-  console.log(overrides);
 
   return build({
     ...defaultBuildConfig,
