@@ -1,5 +1,13 @@
 # @openfn/language-asana
 
+## 2.1.6
+
+### Patch Changes
+
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
+
 ## 2.1.5
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-resourcemap",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Resourcemap Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -19,7 +19,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.5",
+    "@openfn/language-common": "^1.7.6",
     "request": "^2.88.2"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailgun",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "mailgun Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -19,7 +19,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.6.2",
+    "@openfn/language-common": "^1.7.6",
     "mailgun-js": "^0.22.0",
     "sync-request": "^6.0.0"
   },

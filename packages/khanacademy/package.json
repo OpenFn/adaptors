@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-khanacademy",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A Khan Academy Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -19,7 +19,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.5",
+    "@openfn/language-common": "^1.7.6",
     "qs": "^6.11.0",
     "request": "^2.88.2"
   },

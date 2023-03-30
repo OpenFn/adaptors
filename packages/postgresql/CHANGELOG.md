@@ -1,5 +1,13 @@
 # @openfn/language-postgresql
 
+## 3.4.5
+
+### Patch Changes
+
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
+
 ## 3.4.4
 
 ### Patch Changes

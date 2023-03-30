@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-template",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "An adaptor template for OpenFn",
   "type": "module",
   "exports": {
@@ -26,7 +26,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.5",
+    "@openfn/language-common": "^1.7.6",
     "axios": "0.26.1"
   },
   "devDependencies": {

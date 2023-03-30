@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailchimp",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "An OpenFn adaptor for use with Mailchimp",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@openfn/language-common": "^1.7.5",
+    "@openfn/language-common": "^1.7.6",
     "axios": "^0.21.2",
     "md5": "^2.3.0"
   },

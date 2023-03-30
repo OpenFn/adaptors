@@ -1,5 +1,13 @@
 # @openfn/language-ocl
 
+## 0.2.5
+
+### Patch Changes
+
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
+
 ## 0.2.4
 
 ### Patch Changes

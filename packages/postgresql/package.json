@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-postgresql",
-  "version": "3.4.4",
+  "version": "3.4.5",
   "description": "A PostgreSQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -30,7 +30,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.5",
+    "@openfn/language-common": "1.7.6",
     "pg": "^8.3.2",
     "pg-format": "^1.0.4"
   },
