@@ -3,7 +3,9 @@ import { execute as commonExecute } from '@openfn/language-common';
 import pkg from 'lodash-fp';
 const { curry, mapValues, flatten } = pkg;
 
-/** @module FakeAdaptor */
+/**
+ * @ignore
+ */
 
 function steps(...operations) {
   return flatten(operations);

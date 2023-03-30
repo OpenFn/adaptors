@@ -57,7 +57,7 @@ export default async (lang: string) => {
     docs: `${JSON.stringify(str)}`,
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
-    functions: functions,
+    functions: functions.sort(),
     'configuration-schema': configurationSchema,
   };
 

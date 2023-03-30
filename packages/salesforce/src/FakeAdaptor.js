@@ -2,7 +2,9 @@ import { execute as commonExecute } from '@openfn/language-common';
 import mapValues from 'lodash/mapValues';
 import flatten from 'lodash/flatten';
 
-/** @module FakeAdaptor */
+/**
+ * @ignore
+ */
 
 function steps(...operations) {
   return flatten(operations);
