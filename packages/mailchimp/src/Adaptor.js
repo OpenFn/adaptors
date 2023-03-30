@@ -17,7 +17,7 @@ import { resolve } from 'path';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

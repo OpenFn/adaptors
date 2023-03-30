@@ -16,7 +16,7 @@ import xml2js from 'xml2js';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

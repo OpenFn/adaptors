@@ -18,9 +18,9 @@
             "description": "execute(\n   create('foo'),\n   delete('bar')\n )"
           },
           {
-            "title": "function",
+            "title": "private",
             "description": null,
-            "name": null
+            "type": null
           },
           {
             "title": "param",

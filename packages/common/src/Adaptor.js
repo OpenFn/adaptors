@@ -16,7 +16,7 @@ export * as dateFns from './dateFns';
  *    create('foo'),
  *    delete('bar')
  *  )
- * @function
+ * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Promise}
  */

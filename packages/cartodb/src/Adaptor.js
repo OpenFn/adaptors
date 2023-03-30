@@ -17,7 +17,7 @@ const jsonSql = jsonSqlPkg();
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @function
+ * @private
  * @param {Array} ...operations - Operations to be performed.
  * @returns {Operation}
  */
