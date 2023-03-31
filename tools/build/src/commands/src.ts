@@ -6,17 +6,37 @@ const config: Options = {
   target: 'node14',
   platform: 'node',
   clean: true,
+  splitting: false,
 };
 
-export default (lang: string) => {
+const fetchConfig = async (adaptorPath: string) => {
+  try {
+    const fn = await import(`${adaptorPath}/build.config.js`);
+    if (fn) {
+      return fn.default(adaptorPath);
+    }
+  } catch (e) {
+    // do nothing
+  }
+  return {};
+};
+
+export default async (lang: string) => {
   const p = resolvePath(lang);
   console.log();
   console.log('Building JS');
   console.log();
 
-  return build({
-    entry: [`${p}/src/index.js`], // TODO what if it's typescript?
+  const defaultBuildConfig = {
+    entry: [`${p}/src/index.js`],
     outDir: `${p}/dist`,
     ...config,
+  };
+
+  const overrides = await fetchConfig(p);
+
+  return build({
+    ...defaultBuildConfig,
+    ...overrides,
   });
 };

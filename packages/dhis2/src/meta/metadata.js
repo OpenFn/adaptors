@@ -1,4 +1,4 @@
-import { createEntity } from '@openfn/metadata';
+import { createEntity } from '@openfn/language-common/metadata';
 import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, helper) => {

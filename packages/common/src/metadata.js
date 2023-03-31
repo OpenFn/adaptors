@@ -1,6 +1,17 @@
-// TODO this need to be defined elsewhere, with type definitions behind it
-// Either in /tools or in kit
-const createEntity = (name, type, props = {}, children) => {
+/*
+ * This file contains utility and helper methods for metadata functions
+ */
+
+/**
+ * Creates a metadata model entity representing some data in a dataaousrce
+ * @private
+ * @function
+ * @param {string} name - The entity name (ie, Account or Table)
+ * @param {string} type - A type label for the entity (ie, sObject, orgUnit)
+ * @param {object} props - Properties to describe the entity (label, datatype)
+ * @returns {Entity}
+ */
+export const createEntity = (name, type, props = {}, children) => {
   const { label, datatype, value, ...meta } = props;
 
   const e = {
@@ -39,5 +50,3 @@ const createEntity = (name, type, props = {}, children) => {
 
   return e;
 };
-
-export { createEntity };

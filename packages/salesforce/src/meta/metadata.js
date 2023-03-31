@@ -1,5 +1,5 @@
 import salesforceHelper from './helper.js';
-import { createEntity } from '@openfn/metadata';
+import { createEntity } from '@openfn/language-common/metadata';
 
 const metadata = async (configuration = {}, helper) => {
   if (!helper) {
