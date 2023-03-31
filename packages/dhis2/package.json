@@ -32,17 +32,12 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/language-common": "workspace:^1.7.7",
     "axios": "^0.24.0",
     "lodash": "^4.17.19",
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/metadata": "workspace:^1.0.1",
-    "@openfn/parse-jsdoc": "workspace:^1.0.0",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "chai-http": "4.3.0",
