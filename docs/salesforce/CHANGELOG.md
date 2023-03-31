@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.6
+
+### Patch Changes
+
+- 705caab: Remove tools as devdependencies
+
 ## 3.0.5
 
 ### Patch Changes
