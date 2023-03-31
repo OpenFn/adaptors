@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 3.2.11
+
+### Patch Changes
+
+- 705caab: Remove tools as devdependencies
+
 ## 3.2.10
 
 ### Patch Changes
