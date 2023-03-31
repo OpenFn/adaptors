@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.7.7
+
+### Patch Changes
+
+- 929bca6: Export metadata helper function
+
 ## 1.7.6
 
 ### Patch Changes
