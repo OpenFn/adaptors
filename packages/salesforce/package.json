@@ -40,10 +40,6 @@
     "yargs": "^3.30.0"
   },
   "devDependencies": {
-    "@openfn/parse-jsdoc": "workspace:^1.0.0",
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/metadata": "workspace:^1.0.1",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "1.1.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

@@ -18,6 +18,10 @@
   "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
-    "@changesets/cli": "2.25.0"
+    "@changesets/cli": "2.25.0",
+    "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/metadata": "workspace:^1.0.1",
+    "@openfn/parse-jsdoc": "workspace:^1.0.0",
+    "@openfn/simple-ast": "0.4.1"
   }
 }
