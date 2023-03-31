@@ -2,7 +2,7 @@
   "name": "@openfn/metadata",
   "private": true,
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helper functions for adaptor metadata",
   "main": "src/index.js",
   "license": "ISC",

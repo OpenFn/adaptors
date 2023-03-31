@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -30,7 +30,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.6",
+    "@openfn/language-common": "1.7.7",
     "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/metadata": "workspace:^1.0.0",
+    "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "1.1.0",
     "chai": "4.3.6",

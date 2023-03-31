@@ -1,5 +1,13 @@
 # @openfn/language-dhis2
 
+## 3.2.10
+
+### Patch Changes
+
+- 929bca6: Use metadata helper function from common
+- Updated dependencies [929bca6]
+  - @openfn/language-common@1.7.7
+
 ## 3.2.9
 
 ### Patch Changes

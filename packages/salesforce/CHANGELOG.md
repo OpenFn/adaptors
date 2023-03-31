@@ -1,5 +1,13 @@
 # @openfn/language-salesforce
 
+## 3.0.5
+
+### Patch Changes
+
+- 929bca6: Use metadata helper function from common
+- Updated dependencies [929bca6]
+  - @openfn/language-common@1.7.7
+
 ## 3.0.4
 
 ### Patch Changes
