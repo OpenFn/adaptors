@@ -1,11 +1,10 @@
 import {
   execute as commonExecute,
+  composeNextState,
   expandReferences,
 } from '@openfn/language-common';
 import pg from 'pg';
 import format from 'pg-format';
-
-
 
 /**
  * Execute a sequence of operations.
@@ -115,7 +114,7 @@ function handleOptions(options) {
   return (options && options.setNull) || "'undefined'";
 }
 
-function queryHandler(state, query, options) {
+function queryHandler(state, query, options, callback) {
   const { client } = state;
   return new Promise((resolve, reject) => {
     if (options) {
@@ -142,8 +141,13 @@ function queryHandler(state, query, options) {
         resolve(result);
       }
     });
-  }).then(data => {
-    return { ...state, response: { body: data } };
+  }).then(response => {
+    const nextState = {
+      ...composeNextState(state, response.rows),
+      response,
+    };
+    if (callback) return callback(nextState);
+    return nextState;
   });
 }
 
@@ -156,9 +160,10 @@ function queryHandler(state, query, options) {
  * @param {function} sqlQuery - a function which takes state and returns a
  * string of SQL.
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function sql(sqlQuery, options) {
+export function sql(sqlQuery, options, callback) {
   return state => {
     let { client } = state;
 
@@ -166,7 +171,7 @@ export function sql(sqlQuery, options) {
       const body = sqlQuery(state);
 
       console.log('Preparing to execute sql statement');
-      return queryHandler(state, body, options);
+      return queryHandler(state, body, options, callback);
     } catch (e) {
       client.end();
       throw e;

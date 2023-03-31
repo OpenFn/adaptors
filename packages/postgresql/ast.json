@@ -4,7 +4,8 @@
       "name": "sql",
       "params": [
         "sqlQuery",
-        "options"
+        "options",
+        "callback"
       ],
       "docs": {
         "description": "Execute an SQL statement",
@@ -40,6 +41,15 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
