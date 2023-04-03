@@ -248,9 +248,10 @@ export function findValue(filter) {
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function insert(table, record, options) {
+export function insert(table, record, options, callback) {
   return state => {
     const { client } = state;
 
@@ -269,7 +270,7 @@ export function insert(table, record, options) {
 
       const queryToLog = options && options.logValues ? query : safeQuery;
       console.log('Preparing to insert via:', queryToLog);
-      return queryHandler(state, query, options);
+      return queryHandler(state, query, options, callback);
     } catch (e) {
       client.end();
       throw e;
@@ -286,9 +287,10 @@ export function insert(table, record, options) {
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function insertMany(table, records, options) {
+export function insertMany(table, records, options, callback) {
   return state => {
     let { client } = state;
 
@@ -314,7 +316,7 @@ export function insertMany(table, records, options) {
 
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log('Preparing to insertMany via:', queryToLog);
-        resolve(queryHandler(state, query, options));
+        resolve(queryHandler(state, query, options, callback));
       });
     } catch (e) {
       client.end();
@@ -338,9 +340,10 @@ export function insertMany(table, records, options) {
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function upsert(table, uuid, record, options) {
+export function upsert(table, uuid, record, options, callback) {
   return state => {
     let { client } = state;
 
@@ -375,7 +378,7 @@ export function upsert(table, uuid, record, options) {
 
       const queryToLog = options && options.logValues ? query : safeQuery;
       console.log('Preparing to upsert via:', queryToLog);
-      return queryHandler(state, query, options);
+      return queryHandler(state, query, options, callback);
     } catch (e) {
       client.end();
       throw e;
@@ -400,9 +403,10 @@ export function upsert(table, uuid, record, options) {
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function upsertIf(logical, table, uuid, record, options) {
+export function upsertIf(logical, table, uuid, record, options, callback) {
   return state => {
     let { client } = state;
 
@@ -445,7 +449,7 @@ export function upsertIf(logical, table, uuid, record, options) {
 
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log('Preparing to upsert via:', queryToLog);
-        resolve(queryHandler(state, query, options));
+        resolve(queryHandler(state, query, options, callback));
       });
     } catch (e) {
       client.end();
@@ -472,9 +476,10 @@ export function upsertIf(logical, table, uuid, record, options) {
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {array} data - An array of objects or a function that returns an array
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function upsertMany(table, uuid, data, options) {
+export function upsertMany(table, uuid, data, options, callback) {
   return state => {
     let { client } = state;
 
@@ -516,7 +521,7 @@ export function upsertMany(table, uuid, data, options) {
 
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log('Preparing to upsert via:', queryToLog);
-        resolve(queryHandler(state, query, options));
+        resolve(queryHandler(state, query, options, callback));
       });
     } catch (e) {
       client.end();
@@ -533,9 +538,10 @@ export function upsertMany(table, uuid, data, options) {
  * @function
  * @param {string} tableName - The name of the table to describe
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function describeTable(tableName, options) {
+export function describeTable(tableName, options, callback) {
   return state => {
     let { client } = state;
     const name = expandReferences(tableName)(state);
@@ -546,7 +552,7 @@ export function describeTable(tableName, options) {
         WHERE table_name='${name}';`;
 
       console.log('Preparing to describe table via:', query);
-      return queryHandler(state, query, options);
+      return queryHandler(state, query, options, callback);
     } catch (e) {
       client.end();
       throw e;
@@ -570,9 +576,10 @@ export function describeTable(tableName, options) {
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function insertTable(tableName, columns, options) {
+export function insertTable(tableName, columns, options, callback) {
   return state => {
     let { client } = state;
     try {
@@ -605,7 +612,7 @@ export function insertTable(tableName, columns, options) {
       );`;
 
         console.log('Preparing to create table via:', query);
-        resolve(queryHandler(state, query, options));
+        resolve(queryHandler(state, query, options, callback));
       });
     } catch (e) {
       client.end();
@@ -630,9 +637,10 @@ export function insertTable(tableName, columns, options) {
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
  * @param {object} options - Optional options argument
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function modifyTable(tableName, columns, options) {
+export function modifyTable(tableName, columns, options, callback) {
   return state => {
     let { client } = state;
 
@@ -664,7 +672,7 @@ export function modifyTable(tableName, columns, options) {
         const query = `ALTER TABLE ${tableName} ${structureData};`;
 
         console.log('Preparing to modify table via:', query);
-        resolve(queryHandler(state, query, options));
+        resolve(queryHandler(state, query, options, callback));
       });
     } catch (e) {
       client.end();
