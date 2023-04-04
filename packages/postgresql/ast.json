@@ -37,10 +37,37 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -61,7 +88,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "findValue",
@@ -89,8 +116,11 @@
             "title": "param",
             "description": "A filter object with the lookup table, a uuid and the condition",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "filter"
           },
@@ -98,37 +128,49 @@
             "title": "param",
             "description": "The uuid value to search for in the specified relation.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
-            "name": "options.uuid"
+            "name": "filter.uuid"
           },
           {
             "title": "param",
             "description": "The name of the relation to search for the uuid value.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
-            "name": "options.relation"
+            "name": "filter.relation"
           },
           {
             "title": "param",
             "description": "An object that contains key-value pairs to filter the search results.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "options.where"
+            "name": "filter.where"
           },
           {
             "title": "param",
             "description": "An object that contains key-value pairs to specify the type of comparison to perform on the where clause.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "options.operator"
+            "name": "filter.operator"
           },
           {
             "title": "returns",
@@ -189,8 +231,11 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -198,8 +243,11 @@
             "title": "param",
             "description": "A string value that specifies the behavior for inserting null values.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
             "name": "options.setNull"
           },
@@ -207,10 +255,37 @@
             "title": "param",
             "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
             "type": {
-              "type": "NameExpression",
-              "name": "boolean"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
             "name": "options.logValues"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -280,8 +355,11 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -289,8 +367,11 @@
             "title": "param",
             "description": "A string value that specifies the behavior for inserting null values.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
             "name": "options.setNull"
           },
@@ -298,10 +379,37 @@
             "title": "param",
             "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
             "type": {
-              "type": "NameExpression",
-              "name": "boolean"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
             "name": "options.logValues"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -381,8 +489,11 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -390,8 +501,11 @@
             "title": "param",
             "description": "A string value that specifies the behavior for inserting null values.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
             "name": "options.setNull"
           },
@@ -399,8 +513,11 @@
             "title": "param",
             "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
             "type": {
-              "type": "NameExpression",
-              "name": "boolean"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
             "name": "options.writeSql"
           },
@@ -408,8 +525,11 @@
             "title": "param",
             "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
             "type": {
-              "type": "NameExpression",
-              "name": "boolean"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
             "name": "options.execute"
           },
@@ -417,8 +537,11 @@
             "title": "param",
             "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
             "type": {
-              "type": "NameExpression",
-              "name": "boolean"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
             "name": "options.logValues"
           },
@@ -510,10 +633,61 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A string value that specifies the behavior for inserting null values.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.setNull"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.logValues"
           },
           {
             "title": "param",
@@ -534,7 +708,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "upsertMany",
@@ -593,10 +767,61 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A string value that specifies the behavior for inserting null values.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.setNull"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.logValues"
           },
           {
             "title": "param",
@@ -617,7 +842,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "describeTable",
@@ -656,10 +881,37 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -680,7 +932,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "insertTable",
@@ -729,10 +981,37 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -753,7 +1032,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "modifyTable",
@@ -802,10 +1081,37 @@
             "title": "param",
             "description": "Optional options argument",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute"
           },
           {
             "title": "param",
@@ -826,7 +1132,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],

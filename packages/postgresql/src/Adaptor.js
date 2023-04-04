@@ -159,7 +159,9 @@ function queryHandler(state, query, options, callback) {
  * @function
  * @param {function} sqlQuery - a function which takes state and returns a
  * string of SQL.
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -190,11 +192,11 @@ export function sql(sqlQuery, options, callback) {
  *    operator: { first_name: 'like' }
  *  })
  * @function
- * @param {object} filter - A filter object with the lookup table, a uuid and the condition
- * @param {string} options.uuid - The uuid value to search for in the specified relation.
- * @param {string} options.relation - The name of the relation to search for the uuid value.
- * @param {object} options.where - An object that contains key-value pairs to filter the search results.
- * @param {object} options.operator - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
+ * @param {object} [filter] - A filter object with the lookup table, a uuid and the condition
+ * @param {string} [filter.uuid] - The uuid value to search for in the specified relation.
+ * @param {string} [filter.relation] - The name of the relation to search for the uuid value.
+ * @param {object} [filter.where] - An object that contains key-value pairs to filter the search results.
+ * @param {object} [filter.operator] - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
  * @returns {Operation}
  */
 export function findValue(filter) {
@@ -251,9 +253,11 @@ export function findValue(filter) {
  * @function
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} options - Optional options argument
- * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
- * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {object} [options] - Optional options argument
+ * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -292,9 +296,11 @@ export function insert(table, record, options, callback) {
  * @function
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
- * @param {object} options - Optional options argument
- * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
- * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {object} [options] - Optional options argument
+ * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -347,11 +353,11 @@ export function insertMany(table, records, options, callback) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} options - Optional options argument
- * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
- * @param {boolean} options.writeSql - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} options.execute - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {object} [options] - Optional options argument
+ * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -414,7 +420,11 @@ export function upsert(table, uuid, record, options, callback) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -487,7 +497,11 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {array} data - An array of objects or a function that returns an array
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -549,7 +563,9 @@ export function upsertMany(table, uuid, data, options, callback) {
  * describeTable('clinic_visits')
  * @function
  * @param {string} tableName - The name of the table to describe
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -587,7 +603,9 @@ export function describeTable(tableName, options, callback) {
  * @function
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -648,7 +666,9 @@ export function insertTable(tableName, columns, options, callback) {
  * @function
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
- * @param {object} options - Optional options argument
+ * @param {object} [options] - Optional options argument
+ * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
