@@ -26,7 +26,7 @@ describe('metadata function', () => {
       mockHelper
     );
 
-    const [asset] = model.children;
+    const asset = model.children.find(({ name }) => name === 'Asset');
     expect(asset.name).to.eql('Asset');
     expect(asset.type).to.eql('sobject');
     expect(asset.meta?.system).to.be.true;
@@ -40,7 +40,9 @@ describe('metadata function', () => {
       mockHelper
     );
 
-    const [_asset, vera] = model.children;
+    const vera = model.children.find(
+      ({ name }) => name === 'vera__Attendance__c'
+    );
     expect(vera.name).to.eql('vera__Attendance__c');
     expect(vera.type).to.eql('sobject');
     expect(vera.meta?.system).to.not.be.ok;
@@ -54,7 +56,7 @@ describe('metadata function', () => {
       mockHelper
     );
 
-    const [asset] = model.children;
+    const asset = model.children.find(({ name }) => name === 'Asset');
     const fields = asset.children;
     expect(fields).to.be.ok;
     expect(fields.length).to.eql(2);
@@ -68,7 +70,7 @@ describe('metadata function', () => {
       mockHelper
     );
 
-    const [asset] = model.children;
+    const asset = model.children.find(({ name }) => name === 'Asset');
     const sn = asset.children.find(({ name }) => name === 'SerialNumber');
     expect(sn).to.be.ok;
     expect(sn.type, 'field');
