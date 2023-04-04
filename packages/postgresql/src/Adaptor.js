@@ -191,6 +191,10 @@ export function sql(sqlQuery, options, callback) {
  *  })
  * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
+ * @param {string} options.uuid - The uuid value to search for in the specified relation.
+ * @param {string} options.relation - The name of the relation to search for the uuid value.
+ * @param {object} options.where - An object that contains key-value pairs to filter the search results.
+ * @param {object} options.operator - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
  * @returns {Operation}
  */
 export function findValue(filter) {
@@ -248,6 +252,8 @@ export function findValue(filter) {
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
+ * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -287,6 +293,8 @@ export function insert(table, record, options, callback) {
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
  * @param {object} options - Optional options argument
+ * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -340,6 +348,10 @@ export function insertMany(table, records, options, callback) {
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
  * @param {object} options - Optional options argument
+ * @param {string} options.setNull - A string value that specifies the behavior for inserting null values.
+ * @param {boolean} options.writeSql - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
+ * @param {boolean} options.execute - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {boolean} options.logValues - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
