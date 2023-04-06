@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-twilio",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "An Language Package for twilio",
   "main": "dist/index.cjs",
   "scripts": {
