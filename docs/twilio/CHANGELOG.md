@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 0.3.4
+
+### Patch Changes
+
+- a22daa6: rename credential-schema to configuration-schemawq
+
 ## 0.3.3
 
 ### Patch Changes

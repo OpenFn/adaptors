@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 4.0.6
+
+### Patch Changes
+
+- 43c3669: patch versions
+
 ## 4.0.5
 
 ### Patch Changes
