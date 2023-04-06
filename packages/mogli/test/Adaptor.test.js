@@ -10,7 +10,7 @@ import {
   sourceValue,
   dataValue,
 } from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
+import { execute } from '../src/Adaptor';
 import testData from './testData' assert { type: 'json' };
 
 describe('Adaptor', () => {

@@ -12,7 +12,7 @@ import {
   fields,
   sourceValue,
 } from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
+import { execute } from '../src/Adaptor';
 import testData from './testData' assert { type: 'json' };
 
 const { expect } = chai;

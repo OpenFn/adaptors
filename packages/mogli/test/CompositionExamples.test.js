@@ -12,7 +12,7 @@ import {
   source,
   sourceValue,
   steps,
-} from '../src/FakeAdaptor';
+} from '../src/Adaptor';
 
 import pkg from 'lodash-fp';
 const { filter, last } = pkg;

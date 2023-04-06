@@ -9,7 +9,7 @@ import {
   join,
   sourceValue,
   steps,
-} from '../src/FakeAdaptor';
+} from '../src/Adaptor';
 
 import filter from 'lodash/filter';
 

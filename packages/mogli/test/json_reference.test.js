@@ -7,7 +7,7 @@ import {
   sourceValue,
   steps,
   map,
-} from '../src/FakeAdaptor';
+} from '../src/Adaptor';
 import testData from './testData' assert { type: 'json' };
 
 const fakeLogger = { debug: function () {}, info: function () {} };
