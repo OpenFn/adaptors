@@ -10,11 +10,13 @@ const { curry, mapValues, flatten } = pkg;
  * @typedef {Object} State
  * @property {object} data JSON Data.
  * @property {Array<Reference>} references History of all previous operations.
+ * @ignore
  */
 
 /**
  * @typedef {Function} Operation
  * @param {State} state
+ * @ignore
  */
 
 export const createSMS = curry(function (params, state) {

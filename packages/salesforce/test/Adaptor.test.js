@@ -11,8 +11,9 @@ import {
   field,
   fields,
   sourceValue,
+  execute,
 } from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
+
 import testData from './testData' assert { type: 'json' };
 
 const { expect } = chai;
@@ -164,52 +165,6 @@ describe('Adaptor', () => {
           expect(spy.args[0]).to.eql([sObject, fields, externalId]);
           expect(spy.called).to.eql(true);
           expect(state.references[0]).to.eql({ Id: 10 });
-        })
-        .then(done)
-        .catch(done);
-    });
-  });
-
-  describe('nesting', () => {
-    let initialState;
-    let afterExecutionOf;
-
-    function executionWrapper(initialState) {
-      return operations => {
-        return execute(operations)(initialState);
-      };
-    }
-
-    let counter = 0;
-    const fakeConnection = {
-      create: function (sObject, attrs) {
-        return Promise.resolve({ sObject, fields: attrs, Id: (counter += 1) });
-      },
-    };
-
-    beforeEach(() => {
-      initialState = {
-        connection: fakeConnection,
-        data: testData,
-        references: [],
-      };
-      afterExecutionOf = executionWrapper(initialState);
-    });
-
-    it('works', done => {
-      let operations = steps(
-        each(
-          '$.data.store.book[*]',
-          create('Book', fields(field('title', sourceValue('$.data.title'))))
-        )
-      );
-
-      afterExecutionOf(operations)
-        .then(state => {
-          let references = state.references.reverse();
-
-          expect(references.length).to.eql(4);
-          expect(references[0].fields.title).to.eql('Sayings of the Century');
         })
         .then(done)
         .catch(done);

@@ -13,6 +13,37 @@ export default async (lang: string) => {
   const template = await fs.readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
+  /* get template data */
+  const templateData = jsdoc2md.getTemplateDataSync({
+    files: `${root}/src/**/*.js`,
+  });
+
+  // sort template data
+  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+  templateData.sort(function (a, b) {
+    const nameA = a.longname.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.longname.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    // names must be equal
+    return 0;
+  });
+
+  const renderOpts = {
+    template: `${template}`,
+    data: templateData,
+    separators: true,
+    'name-format': false,
+    'no-gfm': true,
+    'example-lang': 'js',
+    'member-index-format': 'list',
+  };
+  console.log(`rendering all that good stuff..`);
+  const docs = jsdoc2md.renderSync(renderOpts);
 
   const readme = await fs.readFile(`${root}/README.md`, 'utf8', (err, data) =>
     err ? '### README' : data
@@ -45,26 +76,21 @@ export default async (lang: string) => {
       )
     : 'No Configuration Schema';
 
-  const str = await jsdoc2md.render({
-    files: `${root}/src/**/*.js`,
-    template: `${template}`,
-  });
-
   const docsJson = {
     name: `${lang}`,
     adaptor: `${name}`,
     version: `${version}`,
-    docs: `${JSON.stringify(str)}`,
+    docs: `${JSON.stringify(docs)}`,
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
-    functions: functions,
+    functions: functions.sort(),
     'configuration-schema': configurationSchema,
   };
 
   const destinationDir = `${root}/docs`;
   const destination = `${destinationDir}/index.md`;
   await mkdir(destinationDir, { recursive: true });
-  await writeFile(destination, str);
+  await writeFile(destination, docs);
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
   console.log(`... done! `, destination);
