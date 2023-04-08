@@ -1,13 +1,21 @@
-<a name="fetchSubmissions"></a>
+## fetchSubmissions
 
-## fetchSubmissions(params) ⇒ <code>Operation</code>
+fetchSubmissions(params) ⇒ <code>Operation</code>
 Make a GET request and POST it somewhere else
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the fetch |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>data to make the fetch</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -15,3 +23,6 @@ execute(
   fetch(params)
 )(state)
 ```
+
+* * *
+

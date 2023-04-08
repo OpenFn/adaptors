@@ -1,30 +1,69 @@
 ## Functions
 
 <dl>
-<dt><a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Access form submissions and post them as JSON.</p>
-</dd>
-<dt><a href="#changesApi">changesApi(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Access the CouchDB Changes API</p>
-</dd>
-<dt><a href="#pickFormData">pickFormData(formId)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Select submissions for a specific form</p>
-</dd>
+<dt>
+    <a href="#changesApi">changesApi(params, callback)</a></dt>
+<dt>
+    <a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
+<dt>
+    <a href="#pickFormData">pickFormData(formId)</a></dt>
 </dl>
 
-<a name="fetchSubmissions"></a>
+## changesApi
 
-## fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
+changesApi(params, callback) ⇒ <code>Operation</code>
+Access the CouchDB Changes API
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>Query parameters</p>
+</td>
+    </tr><tr>
+    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+changesApi(params, callback)
+```
+
+* * *
+
+## fetchSubmissions
+
+fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
 Access form submissions and post them as JSON.
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formId | <code>string</code> | Query parameters |
-| params | <code>object</code> | Starting sequence id |
-| postUrl | <code>string</code> | Inbox to post form data |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>formId</td><td><code>string</code></td><td><p>Query parameters</p>
+</td>
+    </tr><tr>
+    <td>params</td><td><code>object</code></td><td><p>Starting sequence id</p>
+</td>
+    </tr><tr>
+    <td>postUrl</td><td><code>string</code></td><td><p>Inbox to post form data</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -34,36 +73,33 @@ fetchSubmissions(
   "http://localhost:4000/inbox/abc-123-xyz" // postUrl
 );
 ```
-<a name="changesApi"></a>
 
-## changesApi(params, callback) ⇒ <code>Operation</code>
-Access the CouchDB Changes API
+* * *
 
-**Kind**: global function  
-**Access**: public  
+## pickFormData
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Query parameters |
-| callback | <code>function</code> | (Optional) Callback function |
-
-**Example**  
-```js
-changesApi(params, callback)
-```
-<a name="pickFormData"></a>
-
-## pickFormData(formId) ⇒ <code>Operation</code>
+pickFormData(formId) ⇒ <code>Operation</code>
 Select submissions for a specific form
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formId | <code>string</code> | The form ID. |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>formId</td><td><code>string</code></td><td><p>The form ID.</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
 pickFormData(formId)
 ```
+
+* * *
+

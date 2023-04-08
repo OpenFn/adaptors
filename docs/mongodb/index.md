@@ -1,38 +1,90 @@
 ## Functions
 
 <dl>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a sequence of operations.
-Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
-</dd>
-<dt><a href="#connect">connect(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Connects to a mongoDb instance</p>
-</dd>
-<dt><a href="#disconnect">disconnect(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Removes connection from the state.</p>
-</dd>
-<dt><a href="#insertDocuments">insertDocuments(params)</a> ⇒ <code>State</code></dt>
-<dd><p>Inserts documents into a mongoDb collection</p>
-</dd>
-<dt><a href="#findDocuments">findDocuments(params)</a> ⇒ <code>State</code></dt>
-<dd><p>Find documents in a mongoDb collection</p>
-</dd>
-<dt><a href="#updateDocument">updateDocument(params)</a> ⇒ <code>State</code></dt>
-<dd><p>Updates document (optionally upserting) into a mongoDb collection</p>
-</dd>
+<dt>
+    <a href="#connect">connect(state)</a></dt>
+<dt>
+    <a href="#disconnect">disconnect(state)</a></dt>
+<dt>
+    <a href="#execute">execute(operations)</a></dt>
+<dt>
+    <a href="#findDocuments">findDocuments(params)</a></dt>
+<dt>
+    <a href="#insertDocuments">insertDocuments(params)</a></dt>
+<dt>
+    <a href="#updateDocument">updateDocument(params)</a></dt>
 </dl>
 
-<a name="execute"></a>
+## connect
 
-## execute(operations) ⇒ <code>Operation</code>
+connect(state) ⇒ <code>State</code>
+Connects to a mongoDb instance
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+connect(state)
+```
+
+* * *
+
+## disconnect
+
+disconnect(state) ⇒ <code>State</code>
+Removes connection from the state.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>state</td><td><code>State</code></td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+disconnect(state)
+```
+
+* * *
+
+## execute
+
+execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>operations</td><td><code>Operations</code></td><td><p>Operations to be performed.</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -41,65 +93,27 @@ execute(
   findDocuments(params)
 )(state)
 ```
-<a name="connect"></a>
 
-## connect(state) ⇒ <code>State</code>
-Connects to a mongoDb instance
+* * *
 
-**Kind**: global function  
+## findDocuments
 
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-connect(state)
-```
-<a name="disconnect"></a>
-
-## disconnect(state) ⇒ <code>State</code>
-Removes connection from the state.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**  
-```js
-disconnect(state)
-```
-<a name="insertDocuments"></a>
-
-## insertDocuments(params) ⇒ <code>State</code>
-Inserts documents into a mongoDb collection
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Configuration for mongo |
-
-**Example**  
-```js
-insertDocuments({
-   database: 'str',
-   collection: 'kids',
-   documents: [1,2,3]
-  });
-```
-<a name="findDocuments"></a>
-
-## findDocuments(params) ⇒ <code>State</code>
+findDocuments(params) ⇒ <code>State</code>
 Find documents in a mongoDb collection
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Configuration for mongo |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -109,16 +123,57 @@ findDocuments({
    query: {a:3}
   });
 ```
-<a name="updateDocument"></a>
 
-## updateDocument(params) ⇒ <code>State</code>
+* * *
+
+## insertDocuments
+
+insertDocuments(params) ⇒ <code>State</code>
+Inserts documents into a mongoDb collection
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+insertDocuments({
+   database: 'str',
+   collection: 'kids',
+   documents: [1,2,3]
+  });
+```
+
+* * *
+
+## updateDocument
+
+updateDocument(params) ⇒ <code>State</code>
 Updates document (optionally upserting) into a mongoDb collection
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Configuration for mongo |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -130,3 +185,6 @@ updateDocuments({
    options: { upsert: true }
   });
 ```
+
+* * *
+

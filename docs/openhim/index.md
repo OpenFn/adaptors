@@ -1,13 +1,21 @@
-<a name="encounter"></a>
+## encounter
 
-## encounter(encounterData) ⇒ <code>Operation</code>
+encounter(encounterData) ⇒ <code>Operation</code>
 Create an encounter
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| encounterData | <code>object</code> | Payload data for the encounter |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>encounterData</td><td><code>object</code></td><td><p>Payload data for the encounter</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -15,3 +23,6 @@ execute(
   encounter(data)
 )(state)
 ```
+
+* * *
+

@@ -1,76 +1,91 @@
-## Modules
-
-<dl>
-<dt><a href="#module_FakeAdaptor">FakeAdaptor</a></dt>
-<dd></dd>
-</dl>
-
 ## Functions
 
 <dl>
-<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code><a href="#State">State</a></code></dt>
-<dd><p>Removes unserializable keys from the state.</p>
-</dd>
-<dt><a href="#lookup">lookup(relationshipName, externalID, path)</a> ⇒ <code>object</code></dt>
-<dd><p>Adds a lookup or &#39;dome insert&#39; to a record.</p>
-</dd>
-<dt><a href="#relationship">relationship(relationshipName, externalID, dataSource)</a> ⇒ <code>object</code></dt>
-<dd><p>Adds a lookup or &#39;dome insert&#39; to a record.</p>
-</dd>
+<dt>
+    <a href="#cleanupState">cleanupState(state)</a></dt>
+<dt>
+    <a href="#lookup">lookup(relationshipName, externalID, path)</a></dt>
+<dt>
+    <a href="#relationship">relationship(relationshipName, externalID, dataSource)</a></dt>
 </dl>
 
-## Typedefs
+## cleanupState
 
-<dl>
-<dt><a href="#State">State</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#Operation">Operation</a> : <code>function</code></dt>
-<dd></dd>
-</dl>
-
-<a name="module_FakeAdaptor"></a>
-
-## FakeAdaptor
-<a name="cleanupState"></a>
-
-## cleanupState(state) ⇒ [<code>State</code>](#State)
+cleanupState(state) ⇒ <code>State</code>
 Removes unserializable keys from the state.
 
 **Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>state</td><td><code>State</code></td>
+    </tr>  </tbody>
+</table>
 
-| Param | Type |
-| --- | --- |
-| state | [<code>State</code>](#State) | 
 
-<a name="lookup"></a>
+* * *
 
-## lookup(relationshipName, externalID, path) ⇒ <code>object</code>
+## lookup
+
+lookup(relationshipName, externalID, path) ⇒ <code>object</code>
 Adds a lookup or 'dome insert' to a record.
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| relationshipName | <code>string</code> | `__r` relationship field on the record. |
-| externalID | <code>string</code> | Salesforce ExternalID field. |
-| path | <code>string</code> | JSONPath to data source. |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>relationshipName</td><td><code>string</code></td><td><p><code>__r</code> relationship field on the record.</p>
+</td>
+    </tr><tr>
+    <td>externalID</td><td><code>string</code></td><td><p>Salesforce ExternalID field.</p>
+</td>
+    </tr><tr>
+    <td>path</td><td><code>string</code></td><td><p>JSONPath to data source.</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example** *(Example)*  
 ```js
 lookup("relationship_name__r", "externalID on related object", "$.path")
 ```
-<a name="relationship"></a>
 
-## relationship(relationshipName, externalID, dataSource) ⇒ <code>object</code>
+* * *
+
+## relationship
+
+relationship(relationshipName, externalID, dataSource) ⇒ <code>object</code>
 Adds a lookup or 'dome insert' to a record.
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| relationshipName | <code>string</code> | `__r` relationship field on the record. |
-| externalID | <code>string</code> | Salesforce ExternalID field. |
-| dataSource | <code>string</code> | resolvable source. |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>relationshipName</td><td><code>string</code></td><td><p><code>__r</code> relationship field on the record.</p>
+</td>
+    </tr><tr>
+    <td>externalID</td><td><code>string</code></td><td><p>Salesforce ExternalID field.</p>
+</td>
+    </tr><tr>
+    <td>dataSource</td><td><code>string</code></td><td><p>resolvable source.</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example** *(Data Sourced Value)*  
 ```js
@@ -80,23 +95,6 @@ relationship("relationship_name__r", "externalID on related object", dataSource(
 ```js
 relationship("relationship_name__r", "externalID on related object", "hello world")
 ```
-<a name="State"></a>
 
-## State : <code>Object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | JSON Data. |
-| references | <code>Array.&lt;Reference&gt;</code> | History of all previous operations. |
-
-<a name="Operation"></a>
-
-## Operation : <code>function</code>
-**Kind**: global typedef  
-
-| Param | Type |
-| --- | --- |
-| state | [<code>State</code>](#State) | 
+* * *
 

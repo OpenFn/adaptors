@@ -1,90 +1,120 @@
 ## Functions
 
 <dl>
-<dt><a href="#configMigrationHelper">configMigrationHelper(state)</a> ⇒ <code>object</code></dt>
-<dd><p>Migrates <code>apiUrl</code> to <code>hostUrl</code> if <code>hostUrl</code> is <code>blank</code>.
-For <code>OpenFn.org</code> users with the <code>old-style configuration</code>.</p>
-</dd>
-<dt><a href="#create">create(resourceType, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Create a record</p>
-</dd>
-<dt><a href="#update">update(resourceType, path, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Update data. A generic helper function to update a resource object of any type.
-Updating an object requires to send <code>all required fields</code> or the <code>full body</code></p>
-</dd>
-<dt><a href="#get">get(resourceType, query, [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get data. Generic helper method for getting data of any kind from DHIS2.</p>
-<ul>
-<li>This can be used to get <code>DataValueSets</code>,<code>events</code>,<code>trackedEntityInstances</code>,<code>etc.</code></li>
-</ul>
-</dd>
-<dt><a href="#upsert">upsert(resourceType, query, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.</p>
-</dd>
-<dt><a href="#discover">discover(httpMethod, endpoint)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Discover <code>DHIS2</code> <code>api</code> <code>endpoint</code> <code>query parameters</code> and allowed <code>operators</code> for a given resource&#39;s endpoint.</p>
-</dd>
-<dt><a href="#patch">patch(resourceType, path, data, [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Patch a record. A generic helper function to send partial updates on one or more object properties.</p>
-<ul>
-<li>You are not required to send the full body of object properties.</li>
-<li>This is useful for cases where you don&#39;t want or need to update all properties on a object.</li>
-</ul>
-</dd>
-<dt><a href="#destroy">destroy(resourceType, path, [data], [options], [callback])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Delete a record. A generic helper function to delete an object</p>
-</dd>
-<dt><a href="#findAttributeValue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a> ⇒ <code>string</code></dt>
-<dd><p>Gets an attribute value by its case-insensitive display name</p>
-</dd>
-<dt><a href="#attr">attr(attribute, value)</a> ⇒ <code>object</code></dt>
-<dd><p>Converts an attribute ID and value into a DSHI2 attribute object</p>
-</dd>
-<dt><a href="#dv">dv(dataElement, value)</a> ⇒ <code>object</code></dt>
-<dd><p>Converts a dataElement and value into a DSHI2 dataValue object</p>
-</dd>
-<dt><a href="#request">request(configuration, axiosRequest)</a> ⇒ <code>Promise</code></dt>
-<dd><p>The request client takes configuration from state and an axios request object
-then (1) logs the method and URL, (2) applies standard headers and auth
-before spreading the rest of the axios configuration, and (3) executes an
-axios request.</p>
-</dd>
-<dt><a href="#selectId">selectId(resourceType)</a> ⇒ <code>string</code></dt>
-<dd><p>Determines the attribute name for a DHIS2 system ID given a resource type.</p>
-</dd>
+<dt>
+    <a href="#attr">attr(attribute, value)</a></dt>
+<dt>
+    <a href="#configMigrationHelper">configMigrationHelper(state)</a></dt>
+<dt>
+    <a href="#create">create(resourceType, data, [options], [callback])</a></dt>
+<dt>
+    <a href="#destroy">destroy(resourceType, path, [data], [options], [callback])</a></dt>
+<dt>
+    <a href="#discover">discover(httpMethod, endpoint)</a></dt>
+<dt>
+    <a href="#dv">dv(dataElement, value)</a></dt>
+<dt>
+    <a href="#findAttributeValue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a></dt>
+<dt>
+    <a href="#get">get(resourceType, query, [options], [callback])</a></dt>
+<dt>
+    <a href="#patch">patch(resourceType, path, data, [options], [callback])</a></dt>
+<dt>
+    <a href="#request">request(configuration, axiosRequest)</a></dt>
+<dt>
+    <a href="#selectId">selectId(resourceType)</a></dt>
+<dt>
+    <a href="#update">update(resourceType, path, data, [options], [callback])</a></dt>
+<dt>
+    <a href="#upsert">upsert(resourceType, query, data, [options], [callback])</a></dt>
 </dl>
 
-<a name="configMigrationHelper"></a>
+## attr
 
-## configMigrationHelper(state) ⇒ <code>object</code>
+attr(attribute, value) ⇒ <code>object</code>
+Converts an attribute ID and value into a DSHI2 attribute object
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>attribute</td><td><code>string</code></td><td><p>A tracked entity instance (TEI) attribute ID.</p>
+</td>
+    </tr><tr>
+    <td>value</td><td><code>string</code></td><td><p>The value for that attribute.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+attr('w75KJ2mc4zz', 'Elias')
+```
+
+* * *
+
+## configMigrationHelper
+
+configMigrationHelper(state) ⇒ <code>object</code>
 Migrates `apiUrl` to `hostUrl` if `hostUrl` is `blank`.
 For `OpenFn.org` users with the `old-style configuration`.
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>object</code> | the runtime state |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>state</td><td><code>object</code></td><td><p>the runtime state</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
 configMigrationHelper(state)
 ```
-<a name="create"></a>
 
-## create(resourceType, data, [options], [callback]) ⇒ <code>Operation</code>
+* * *
+
+## create
+
+create(resourceType, data, [options], [callback]) ⇒ <code>Operation</code>
 Create a record
 
 **Kind**: global function  
 **Access**: public  
 **Magic**: resourceType $.children.resourceTypes[*]  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ... |
-| data | <code>Dhis2Data</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
-| [options] | <code>Object</code> | Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>Type of resource to create. E.g. <code>trackedEntityInstances</code>, <code>programs</code>, <code>events</code>, ...</p>
+</td>
+    </tr><tr>
+    <td>data</td><td><code>Dhis2Data</code></td><td><p>Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, <code>data</code> must be a javascript object, and to create multiple instances of a resources, <code>data</code> must be an array of javascript objects.</p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional <code>options</code> to define URL parameters via params (E.g. <code>filter</code>, <code>dimension</code> and other import parameters), request config (E.g. <code>auth</code>) and the DHIS2 apiVersion.</p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example** *(a program)*  
 ```js
@@ -198,22 +228,315 @@ create('enrollments', {
   incidentDate: '2013-09-17',
 });
 ```
-<a name="update"></a>
 
-## update(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
+* * *
+
+## destroy
+
+destroy(resourceType, path, [data], [options], [callback]) ⇒ <code>Operation</code>
+Delete a record. A generic helper function to delete an object
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>The type of resource to be deleted. E.g. <code>trackedEntityInstances</code>, <code>organisationUnits</code>, etc.</p>
+</td>
+    </tr><tr>
+    <td>path</td><td><code>string</code></td><td><p>Can be an <code>id</code> of an <code>object</code> or <code>path</code> to the <code>nested object</code> to <code>delete</code>.</p>
+</td>
+    </tr><tr>
+    <td>[data]</td><td><code>Object</code></td><td><p>Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send <code>data</code> as, for example, <code>{&quot;identifiableObjects&quot;: [{&quot;id&quot;: &quot;IDA&quot;}, {&quot;id&quot;: &quot;IDB&quot;}, {&quot;id&quot;: &quot;IDC&quot;}]}</code>. See more <a href="https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects">on DHIS2 API docs</a></p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional <code>options</code> for <code>del</code> operation including params e.g. <code>{preheatCache: true, strategy: &#39;UPDATE&#39;, mergeMode: &#39;REPLACE&#39;}</code>. Run <code>discover</code> or see <a href="https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters">DHIS2 documentation</a>. Defaults to <code>{operationName: &#39;delete&#39;, apiVersion: state.configuration.apiVersion, responseType: &#39;json&#39;}</code></p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example** *(a tracked entity instance)*  
+```js
+destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
+```
+
+* * *
+
+## discover
+
+discover(httpMethod, endpoint) ⇒ <code>Operation</code>
+Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>httpMethod</td><td><code>string</code></td><td><p>The HTTP to inspect parameter usage for a given endpoint, e.g., <code>get</code>, <code>post</code>,<code>put</code>,<code>patch</code>,<code>delete</code></p>
+</td>
+    </tr><tr>
+    <td>endpoint</td><td><code>string</code></td><td><p>The path for a given endpoint. E.g. <code>/trackedEntityInstances</code> or <code>/dataValueSets</code></p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example** *(a list of parameters allowed on a given endpoint for specific http method)*  
+```js
+discover('post', '/trackedEntityInstances')
+```
+
+* * *
+
+## dv
+
+dv(dataElement, value) ⇒ <code>object</code>
+Converts a dataElement and value into a DSHI2 dataValue object
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>dataElement</td><td><code>string</code></td><td><p>A data element ID.</p>
+</td>
+    </tr><tr>
+    <td>value</td><td><code>string</code></td><td><p>The value for that data element.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+dv('f7n9E0hX8qk', 12)
+```
+
+* * *
+
+## findAttributeValue
+
+findAttributeValue(trackedEntityInstance, attributeDisplayName) ⇒ <code>string</code>
+Gets an attribute value by its case-insensitive display name
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>trackedEntityInstance</td><td><code>Object</code></td><td><p>A tracked entity instance (TEI) object</p>
+</td>
+    </tr><tr>
+    <td>attributeDisplayName</td><td><code>string</code></td><td><p>The &#39;displayName&#39; to search for in the TEI&#39;s attributes</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
+```
+
+* * *
+
+## get
+
+get(resourceType, query, [options], [callback]) ⇒ <code>Operation</code>
+Get data. Generic helper method for getting data of any kind from DHIS2.
+- This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
+
+**Kind**: global function  
+**Returns**: <code>Operation</code> - state  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>The type of resource to get(use its <code>plural</code> name). E.g. <code>dataElements</code>, <code>trackedEntityInstances</code>,<code>organisationUnits</code>, etc.</p>
+</td>
+    </tr><tr>
+    <td>query</td><td><code>Object</code></td><td><p>A query object that will limit what resources are retrieved when converted into request params.</p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional <code>options</code> to define URL parameters via params beyond filters, request configuration (e.g. <code>auth</code>) and DHIS2 api version to use.</p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example** *(all data values for the &#x27;pBOMPrpg1QX&#x27; dataset)*  
+```js
+get('dataValueSets', {
+  dataSet: 'pBOMPrpg1QX',
+  orgUnit: 'DiszpKrYNg8',
+  period: '201401',
+  fields: '*',
+});
+```
+**Example** *(all programs for an organization unit)*  
+```js
+get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
+```
+**Example** *(a single tracked entity instance by a unique external ID)*  
+```js
+get('trackedEntityInstances', {
+  ou: 'DiszpKrYNg8',
+  filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],
+});
+```
+
+* * *
+
+## patch
+
+patch(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
+Patch a record. A generic helper function to send partial updates on one or more object properties.
+- You are not required to send the full body of object properties.
+- This is useful for cases where you don't want or need to update all properties on a object.
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>The type of resource to be updated. E.g. <code>dataElements</code>, <code>organisationUnits</code>, etc.</p>
+</td>
+    </tr><tr>
+    <td>path</td><td><code>string</code></td><td><p>The <code>id</code> or <code>path</code> to the <code>object</code> to be updated. E.g. <code>FTRrcoaog83</code> or <code>FTRrcoaog83/{collection-name}/{object-id}</code></p>
+</td>
+    </tr><tr>
+    <td>data</td><td><code>Object</code></td><td><p>Data to update. Include only the fields you want to update. E.g. <code>{name: &quot;New Name&quot;}</code></p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional configuration, including params for the update ({preheatCache: true, strategy: &#39;UPDATE&#39;, mergeMode: &#39;REPLACE&#39;}). Defaults to <code>{operationName: &#39;patch&#39;, apiVersion: state.configuration.apiVersion, responseType: &#39;json&#39;}</code></p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example** *(a dataElement)*  
+```js
+patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
+```
+
+* * *
+
+## request
+
+request(configuration, axiosRequest) ⇒ <code>Promise</code>
+The request client takes configuration from state and an axios request object
+then (1) logs the method and URL, (2) applies standard headers and auth
+before spreading the rest of the axios configuration, and (3) executes an
+axios request.
+
+**Kind**: global function  
+**Returns**: <code>Promise</code> - a promise that will resolve to either a response object or an error object.  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>configuration</td><td><code>object</code></td><td><p>configuration must have a username and password</p>
+</td>
+    </tr><tr>
+    <td>axiosRequest</td><td><code>object</code></td><td><p>the axiosRequest contains valid axios params: <a href="https://axios-http.com/docs/req_config">https://axios-http.com/docs/req_config</a></p>
+</td>
+    </tr>  </tbody>
+</table>
+
+
+* * *
+
+## selectId
+
+selectId(resourceType) ⇒ <code>string</code>
+Determines the attribute name for a DHIS2 system ID given a resource type.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td>
+    </tr>  </tbody>
+</table>
+
+
+* * *
+
+## update
+
+update(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
 Update data. A generic helper function to update a resource object of any type.
 Updating an object requires to send `all required fields` or the `full body`
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc. |
-| path | <code>string</code> | The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}` |
-| data | <code>Object</code> | Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation. |
-| [options] | <code>Object</code> | Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>The type of resource to be updated. E.g. <code>dataElements</code>, <code>organisationUnits</code>, etc.</p>
+</td>
+    </tr><tr>
+    <td>path</td><td><code>string</code></td><td><p>The <code>id</code> or <code>path</code> to the <code>object</code> to be updated. E.g. <code>FTRrcoaog83</code> or <code>FTRrcoaog83/{collection-name}/{object-id}</code></p>
+</td>
+    </tr><tr>
+    <td>data</td><td><code>Object</code></td><td><p>Data to update. It requires to send <code>all required fields</code> or the <code>full body</code>. If you want <code>partial updates</code>, use <code>patch</code> operation.</p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional <code>options</code> to define URL parameters via params (E.g. <code>filter</code>, <code>dimension</code> and other import parameters), request config (E.g. <code>auth</code>) and the DHIS2 apiVersion.</p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example** *(a program)*  
 ```js
@@ -358,46 +681,12 @@ update('enrollments', 'CmsHzercTBa' {
   incidentDate: '2013-10-17',
 });
 ```
-<a name="get"></a>
 
-## get(resourceType, query, [options], [callback]) ⇒ <code>Operation</code>
-Get data. Generic helper method for getting data of any kind from DHIS2.
-- This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
+* * *
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - state  
-**Access**: public  
+## upsert
 
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc. |
-| query | <code>Object</code> | A query object that will limit what resources are retrieved when converted into request params. |
-| [options] | <code>Object</code> | Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example** *(all data values for the &#x27;pBOMPrpg1QX&#x27; dataset)*  
-```js
-get('dataValueSets', {
-  dataSet: 'pBOMPrpg1QX',
-  orgUnit: 'DiszpKrYNg8',
-  period: '201401',
-  fields: '*',
-});
-```
-**Example** *(all programs for an organization unit)*  
-```js
-get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
-```
-**Example** *(a single tracked entity instance by a unique external ID)*  
-```js
-get('trackedEntityInstances', {
-  ou: 'DiszpKrYNg8',
-  filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],
-});
-```
-<a name="upsert"></a>
-
-## upsert(resourceType, query, data, [options], [callback]) ⇒ <code>Operation</code>
+upsert(resourceType, query, data, [options], [callback]) ⇒ <code>Operation</code>
 Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
 
 **Kind**: global function  
@@ -406,14 +695,30 @@ Upsert a record. A generic helper function used to atomically either insert a ro
 - <code>RangeError</code> - Throws range error
 
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of a resource to `upsert`. E.g. `trackedEntityInstances` |
-| query | <code>Object</code> | A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created. |
-| data | <code>Object</code> | The data to use for update or create depending on the result of the query. |
-| [options] | <code>Object</code> | Optional configuration that will be applied to both the `get` and the `create` or `update` operations. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>resourceType</td><td><code>string</code></td><td><p>The type of a resource to <code>upsert</code>. E.g. <code>trackedEntityInstances</code></p>
+</td>
+    </tr><tr>
+    <td>query</td><td><code>Object</code></td><td><p>A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.</p>
+</td>
+    </tr><tr>
+    <td>data</td><td><code>Object</code></td><td><p>The data to use for update or create depending on the result of the query.</p>
+</td>
+    </tr><tr>
+    <td>[options]</td><td><code>Object</code></td><td><p>Optional configuration that will be applied to both the <code>get</code> and the <code>create</code> or <code>update</code> operations.</p>
+</td>
+    </tr><tr>
+    <td>[callback]</td><td><code>function</code></td><td><p>Optional callback to handle the response</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example** *(Example &#x60;expression.js&#x60; of upsert)*  
 ```js
@@ -431,140 +736,6 @@ upsert('trackedEntityInstances', {
  ],
 });
 ```
-<a name="discover"></a>
 
-## discover(httpMethod, endpoint) ⇒ <code>Operation</code>
-Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| httpMethod | <code>string</code> | The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete` |
-| endpoint | <code>string</code> | The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets` |
-
-**Example** *(a list of parameters allowed on a given endpoint for specific http method)*  
-```js
-discover('post', '/trackedEntityInstances')
-```
-<a name="patch"></a>
-
-## patch(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
-Patch a record. A generic helper function to send partial updates on one or more object properties.
-- You are not required to send the full body of object properties.
-- This is useful for cases where you don't want or need to update all properties on a object.
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc. |
-| path | <code>string</code> | The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}` |
-| data | <code>Object</code> | Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}` |
-| [options] | <code>Object</code> | Optional configuration, including params for the update ({preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}). Defaults to `{operationName: 'patch', apiVersion: state.configuration.apiVersion, responseType: 'json'}` |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example** *(a dataElement)*  
-```js
-patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
-```
-<a name="destroy"></a>
-
-## destroy(resourceType, path, [data], [options], [callback]) ⇒ <code>Operation</code>
-Delete a record. A generic helper function to delete an object
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc. |
-| path | <code>string</code> | Can be an `id` of an `object` or `path` to the `nested object` to `delete`. |
-| [data] | <code>Object</code> | Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more [on DHIS2 API docs](https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects) |
-| [options] | <code>Object</code> | Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see [DHIS2 documentation](https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters). Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}` |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example** *(a tracked entity instance)*  
-```js
-destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
-```
-<a name="findAttributeValue"></a>
-
-## findAttributeValue(trackedEntityInstance, attributeDisplayName) ⇒ <code>string</code>
-Gets an attribute value by its case-insensitive display name
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| trackedEntityInstance | <code>Object</code> | A tracked entity instance (TEI) object |
-| attributeDisplayName | <code>string</code> | The 'displayName' to search for in the TEI's attributes |
-
-**Example**  
-```js
-findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
-```
-<a name="attr"></a>
-
-## attr(attribute, value) ⇒ <code>object</code>
-Converts an attribute ID and value into a DSHI2 attribute object
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| attribute | <code>string</code> | A tracked entity instance (TEI) attribute ID. |
-| value | <code>string</code> | The value for that attribute. |
-
-**Example**  
-```js
-attr('w75KJ2mc4zz', 'Elias')
-```
-<a name="dv"></a>
-
-## dv(dataElement, value) ⇒ <code>object</code>
-Converts a dataElement and value into a DSHI2 dataValue object
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dataElement | <code>string</code> | A data element ID. |
-| value | <code>string</code> | The value for that data element. |
-
-**Example**  
-```js
-dv('f7n9E0hX8qk', 12)
-```
-<a name="request"></a>
-
-## request(configuration, axiosRequest) ⇒ <code>Promise</code>
-The request client takes configuration from state and an axios request object
-then (1) logs the method and URL, (2) applies standard headers and auth
-before spreading the rest of the axios configuration, and (3) executes an
-axios request.
-
-**Kind**: global function  
-**Returns**: <code>Promise</code> - a promise that will resolve to either a response object or an error object.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| configuration | <code>object</code> | configuration must have a username and password |
-| axiosRequest | <code>object</code> | the axiosRequest contains valid axios params: https://axios-http.com/docs/req_config |
-
-<a name="selectId"></a>
-
-## selectId(resourceType) ⇒ <code>string</code>
-Determines the attribute name for a DHIS2 system ID given a resource type.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| resourceType | <code>string</code> | 
+* * *
 

@@ -1,13 +1,21 @@
-<a name="send"></a>
+## send
 
-## send(sendData) ⇒ <code>Operation</code>
+send(sendData) ⇒ <code>Operation</code>
 Send a message
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| sendData | <code>object</code> | Payload data for the message |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>sendData</td><td><code>object</code></td><td><p>Payload data for the message</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -15,3 +23,6 @@ execute(
   send(data)
 )(state)
 ```
+
+* * *
+

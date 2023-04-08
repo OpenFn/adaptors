@@ -1,15 +1,23 @@
-<a name="appendValues"></a>
+## appendValues
 
-## appendValues(params) ⇒ <code>Operation</code>
+appendValues(params) ⇒ <code>Operation</code>
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> | Data object to add to the spreadsheet. |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>Object</code></td><td><p>Data object to add to the spreadsheet.</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -22,3 +30,6 @@ appendValues({
   ],
 })
 ```
+
+* * *
+

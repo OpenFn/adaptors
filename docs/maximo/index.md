@@ -1,27 +1,32 @@
 ## Functions
 
 <dl>
-<dt><a href="#fetch">fetch(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a GET request and POST it somewhere else</p>
-</dd>
-<dt><a href="#update">update(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make an update in Maximo 7.6 and beyond</p>
-</dd>
-<dt><a href="#update75">update75(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make an upadte in Maximo 7.5</p>
-</dd>
+<dt>
+    <a href="#fetch">fetch(params)</a></dt>
+<dt>
+    <a href="#update">update(params)</a></dt>
+<dt>
+    <a href="#update75">update75(params)</a></dt>
 </dl>
 
-<a name="fetch"></a>
+## fetch
 
-## fetch(params) ⇒ <code>Operation</code>
+fetch(params) ⇒ <code>Operation</code>
 Make a GET request and POST it somewhere else
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the fetch |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>data to make the fetch</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -34,16 +39,27 @@ fetch({
  postUrl: 'https://www.openfn.org/inbox/not-real',
 });
 ```
-<a name="update"></a>
 
-## update(params) ⇒ <code>Operation</code>
+* * *
+
+## update
+
+update(params) ⇒ <code>Operation</code>
 Make an update in Maximo 7.6 and beyond
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the update |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>data to make the update</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -51,16 +67,27 @@ execute(
   update(params)
 )(state)
 ```
-<a name="update75"></a>
 
-## update75(params) ⇒ <code>Operation</code>
+* * *
+
+## update75
+
+update75(params) ⇒ <code>Operation</code>
 Make an upadte in Maximo 7.5
 
 **Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the update |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>data to make the update</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -68,3 +95,6 @@ execute(
   update75(params)
 )(state)
 ```
+
+* * *
+

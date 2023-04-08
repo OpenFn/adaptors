@@ -1,50 +1,37 @@
 ## Functions
 
 <dl>
-<dt><a href="#list">list(dirPath)</a> ⇒ <code>Operation</code></dt>
-<dd><p>List files present in a directory</p>
-</dd>
-<dt><a href="#getCSV">getCSV(filePath)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get a CSV and return a JSON array of strings for each item separated by the delimiter</p>
-</dd>
-<dt><a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Convert JSON to CSV and upload to an FTP server</p>
-</dd>
-<dt><a href="#getJSON">getJSON(filePath, encoding)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch a json file from an FTP server</p>
-</dd>
-<dt><a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Convert JSON array of strings into a normalized object</p>
-</dd>
+<dt>
+    <a href="#getCSV">getCSV(filePath)</a></dt>
+<dt>
+    <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
+<dt>
+    <a href="#list">list(dirPath)</a></dt>
+<dt>
+    <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
+<dt>
+    <a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
 </dl>
 
-<a name="list"></a>
+## getCSV
 
-## list(dirPath) ⇒ <code>Operation</code>
-List files present in a directory
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dirPath | <code>string</code> | Path to resource |
-
-**Example**  
-```js
-list('/some/path/')
-```
-<a name="getCSV"></a>
-
-## getCSV(filePath) ⇒ <code>Operation</code>
+getCSV(filePath) ⇒ <code>Operation</code>
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| filePath | <code>string</code> | Path to resource |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>filePath</td><td><code>string</code></td><td><p>Path to resource</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -52,19 +39,124 @@ getCSV(
   '/some/path/to_file.csv'
 );
 ```
-<a name="putCSV"></a>
 
-## putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
+* * *
+
+## getJSON
+
+getJSON(filePath, encoding) ⇒ <code>Operation</code>
+Fetch a json file from an FTP server
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>filePath</td><td><code>string</code></td><td><p>Path to resource</p>
+</td>
+    </tr><tr>
+    <td>encoding</td><td><code>string</code></td><td><p>Character encoding for the json</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+getJSON(
+  '/path/To/File',
+  'utf8',
+);
+```
+
+* * *
+
+## list
+
+list(dirPath) ⇒ <code>Operation</code>
+List files present in a directory
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>dirPath</td><td><code>string</code></td><td><p>Path to resource</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+list('/some/path/')
+```
+
+* * *
+
+## normalizeCSVarray
+
+normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
+Convert JSON array of strings into a normalized object
+
+**Kind**: global function  
+**Access**: public  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>options</td><td><code>options</code></td><td><p>Options passed to csvtojson parser</p>
+</td>
+    </tr><tr>
+    <td>callback</td><td><code>callback</code></td><td><p>Options passed to csvtojson parser</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+normalizeCSVarray({ delimiter: ';', noheader: true });
+```
+
+* * *
+
+## putCSV
+
+putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
 Convert JSON to CSV and upload to an FTP server
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| localFilePath | <code>string</code> | Data source for data to copy to the remote server. |
-| remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |
-| parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>localFilePath</td><td><code>string</code></td><td><p>Data source for data to copy to the remote server.</p>
+</td>
+    </tr><tr>
+    <td>remoteFilePath</td><td><code>string</code></td><td><p>Path to the remote file to be created on the server.</p>
+</td>
+    </tr><tr>
+    <td>parsingOptions</td><td><code>object</code></td><td><p>Options which can be passed to adjust the read and write stream used in sending the data to the remote server</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -74,40 +166,6 @@ putCSV(
   { delimiter: ';', noheader: true }
 );
 ```
-<a name="getJSON"></a>
 
-## getJSON(filePath, encoding) ⇒ <code>Operation</code>
-Fetch a json file from an FTP server
+* * *
 
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| filePath | <code>string</code> | Path to resource |
-| encoding | <code>string</code> | Character encoding for the json |
-
-**Example**  
-```js
-getJSON(
-  '/path/To/File',
-  'utf8',
-);
-```
-<a name="normalizeCSVarray"></a>
-
-## normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
-Convert JSON array of strings into a normalized object
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>options</code> | Options passed to csvtojson parser |
-| callback | <code>callback</code> | Options passed to csvtojson parser |
-
-**Example**  
-```js
-normalizeCSVarray({ delimiter: ';', noheader: true });
-```

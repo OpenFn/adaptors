@@ -1,14 +1,22 @@
-<a name="postMessage"></a>
+## postMessage
 
-## postMessage(params) ⇒ <code>Operation</code>
+postMessage(params) ⇒ <code>Operation</code>
 Post a message
 
 **Kind**: global function  
 **Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the fetch |
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>params</td><td><code>object</code></td><td><p>data to make the fetch</p>
+</td>
+    </tr>  </tbody>
+</table>
 
 **Example**  
 ```js
@@ -21,3 +29,6 @@ postMessage({
   }
 })
 ```
+
+* * *
+
