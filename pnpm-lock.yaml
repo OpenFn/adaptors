@@ -1378,7 +1378,7 @@ importers:
       '@openfn/simple-ast': 0.4.1
       '@types/node': 18.11.7
       esno: 0.16.3
-      jsdoc-to-markdown: ^7.1.1
+      jsdoc-to-markdown: 8.0.0
       ts-node: 10.9.1
       tsup: 6.3.0
       typescript: 4.8.4
@@ -1387,7 +1387,7 @@ importers:
       '@openfn/simple-ast': 0.4.1
       '@types/node': 18.11.7
       esno: 0.16.3
-      jsdoc-to-markdown: 7.1.1
+      jsdoc-to-markdown: 8.0.0
       ts-node: 10.9.1_evej5wzm4hojmu6uzxwpspdmsu
       tsup: 6.3.0_mwhvu7sfp6vq5ryuwb6hlbjfka
       typescript: 4.8.4
@@ -1429,7 +1429,7 @@ importers:
       '@types/node': 18.11.7
       ava: ^5.1.1
       esno: 0.16.3
-      jsdoc-to-markdown: ^7.1.1
+      jsdoc-to-markdown: 8.0.0
       ts-node: 10.9.1
       typedoc: ^0.23.26
       typescript: 4.8.4
@@ -1438,7 +1438,7 @@ importers:
       '@types/node': 18.11.7
       ava: 5.1.1
       esno: 0.16.3
-      jsdoc-to-markdown: 7.1.1
+      jsdoc-to-markdown: 8.0.0
       ts-node: 10.9.1_evej5wzm4hojmu6uzxwpspdmsu
       typedoc: 0.23.26_typescript@4.8.4
       typescript: 4.8.4
@@ -1855,6 +1855,7 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.20.0
+    dev: true
 
   /@babel/parser/7.21.3:
     resolution: {integrity: sha512-lobG0d7aOfQRXh8AyklEAgZGvA4FShxo6xQbUrrT/cNBPUdIDojlokwJsQyCC/eKia7ifqM0yP+2DRZ4WKw2RQ==}
@@ -1862,6 +1863,14 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.21.3
+
+  /@babel/parser/7.21.4:
+    resolution: {integrity: sha512-alVJj7k7zIxqBZ7BTRhz0IqJFxW1VJbm6N8JbcYhQ186df9ZBPbZBmWSqAMXwHGsCJdYks7z/voa3ibiS5bCIw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+    dependencies:
+      '@babel/types': 7.21.4
+    dev: false
 
   /@babel/runtime/7.19.4:
     resolution: {integrity: sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==}
@@ -1929,6 +1938,7 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: true
 
   /@babel/types/7.21.3:
     resolution: {integrity: sha512-sBGdETxC+/M4o/zKC0sl6sjWv62WFR/uzxrJ6uYyMLZOUlPnwzw0tKgVHOXxaAd5l2g8pEDM5RZ495GPQI77kg==}
@@ -1937,6 +1947,15 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+
+  /@babel/types/7.21.4:
+    resolution: {integrity: sha512-rU2oY501qDxE8Pyo7i/Orqma4ziCOrby0/9mvbDUGEfvZjb279Nk9k19e2fiCxHbRRpY2ZyrgW1eq22mvmOIzA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-string-parser': 7.19.4
+      '@babel/helper-validator-identifier': 7.19.1
+      to-fast-properties: 2.0.0
+    dev: false
 
   /@changesets/apply-release-plan/6.1.1:
     resolution: {integrity: sha512-LaQiP/Wf0zMVR0HNrLQAjz3rsNsr0d/RlnP6Ef4oi8VafOwnY1EoWdK4kssuUJGgNgDyHpomS50dm8CU3D7k7g==}
@@ -2475,6 +2494,13 @@ packages:
 
   /@js-joda/core/5.5.2:
     resolution: {integrity: sha512-retLUN4TwCJ0QJDi9OCJwYVaXAz93NeOkEtEQL98M2bykBOxmURlP0YlfsuE46kItOOVZIWRYC3KsSLhQ1R2Qw==}
+    dev: false
+
+  /@jsdoc/salty/0.2.5:
+    resolution: {integrity: sha512-TfRP53RqunNe2HBobVBJ0VLhK1HbfvBYeTC1ahnN64PWvyYyGebmMiPkuwvD9fpw2ZbkoPb8Q7mwy0aR8Z9rvw==}
+    engines: {node: '>=v12.0.0'}
+    dependencies:
+      lodash: 4.17.21
     dev: false
 
   /@mailchimp/mailchimp_marketing/3.0.80:
@@ -5208,8 +5234,8 @@ packages:
     dependencies:
       path-type: 4.0.0
 
-  /dmd/6.1.0:
-    resolution: {integrity: sha512-0zQIJ873gay1scCTFZvHPWM9mVJBnaylB2NQDI8O9u8O32m00Jb6uxDKexZm8hjTRM7RiWe0FJ32pExHoXdwoQ==}
+  /dmd/6.2.0:
+    resolution: {integrity: sha512-uXWxLF1H7TkUAuoHK59/h/ts5cKavm2LnhrIgJWisip4BVzPoXavlwyoprFFn2CzcahKYgvkfaebS6oxzgflkg==}
     engines: {node: '>=12'}
     dependencies:
       array-back: 6.2.2
@@ -5217,7 +5243,7 @@ packages:
       common-sequence: 2.0.2
       file-set: 4.0.2
       handlebars: 4.7.7
-      marked: 4.1.1
+      marked: 4.3.0
       object-get: 2.1.1
       reduce-flatten: 3.0.1
       reduce-unique: 2.0.1
@@ -6218,7 +6244,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       array-back: 5.0.0
-      glob: 7.2.0
+      glob: 7.2.3
     dev: false
 
   /file-uri-to-path/1.0.0:
@@ -6809,6 +6835,10 @@ packages:
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
 
+  /graceful-fs/4.2.11:
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+    dev: false
+
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
@@ -6835,7 +6865,7 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
     dependencies:
-      minimist: 1.2.7
+      minimist: 1.2.8
       neo-async: 2.6.2
       source-map: 0.6.1
       wordwrap: 1.0.0
@@ -7709,8 +7739,8 @@ packages:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
     dev: false
 
-  /jsdoc-api/7.1.1:
-    resolution: {integrity: sha512-0pkuPCzVXiqsDAsVrNFXCkHzlyNepBIDVtwwehry4RJAnZmXtlAz7rh8F9FRz53u3NeynGbex+bpYWwi8lE66A==}
+  /jsdoc-api/8.0.0:
+    resolution: {integrity: sha512-Rnhor0suB1Ds1abjmFkFfKeD+kSMRN9oHMTMZoJVUrmtCGDwXty+sWMA9sa4xbe4UyxuPjhC7tavZ40mDKK6QQ==}
     engines: {node: '>=12.17'}
     dependencies:
       array-back: 6.2.2
@@ -7718,14 +7748,14 @@ packages:
       collect-all: 1.0.4
       file-set: 4.0.2
       fs-then-native: 2.0.0
-      jsdoc: 3.6.11
+      jsdoc: 4.0.2
       object-to-spawn-args: 2.0.1
       temp-path: 1.0.0
       walk-back: 5.1.0
     dev: false
 
-  /jsdoc-parse/6.1.0:
-    resolution: {integrity: sha512-n/hDGQJa69IBun1yZAjqzV4gVR41+flZ3bIlm9fKvNe2Xjsd1/+zCo2+R9ls8LxtePgIWbpA1jU7xkB2lRdLLg==}
+  /jsdoc-parse/6.2.0:
+    resolution: {integrity: sha512-Afu1fQBEb7QHt6QWX/6eUWvYHJofB90Fjx7FuJYF7mnG9z5BkAIpms1wsnvYLytfmqpEENHs/fax9p8gvMj7dw==}
     engines: {node: '>=12'}
     dependencies:
       array-back: 6.2.2
@@ -7736,26 +7766,27 @@ packages:
       test-value: 3.0.0
     dev: false
 
-  /jsdoc-to-markdown/7.1.1:
-    resolution: {integrity: sha512-CI86d63xAVNO+ENumWwmJ034lYe5iGU5GwjtTA11EuphP9tpnoi4hrKgR/J8uME0D+o4KUpVfwX1fjZhc8dEtg==}
+  /jsdoc-to-markdown/8.0.0:
+    resolution: {integrity: sha512-2FQvYkg491+FP6s15eFlgSSWs69CvQrpbABGYBtvAvGWy/lWo8IKKToarT283w59rQFrpcjHl3YdhHCa3l7gXg==}
     engines: {node: '>=12.17'}
     hasBin: true
     dependencies:
       array-back: 6.2.2
       command-line-tool: 0.8.0
       config-master: 3.1.0
-      dmd: 6.1.0
-      jsdoc-api: 7.1.1
-      jsdoc-parse: 6.1.0
+      dmd: 6.2.0
+      jsdoc-api: 8.0.0
+      jsdoc-parse: 6.2.0
       walk-back: 5.1.0
     dev: false
 
-  /jsdoc/3.6.11:
-    resolution: {integrity: sha512-8UCU0TYeIYD9KeLzEcAu2q8N/mx9O3phAGl32nmHlE0LpaJL71mMkP4d+QE5zWfNt50qheHtOZ0qoxVrsX5TUg==}
+  /jsdoc/4.0.2:
+    resolution: {integrity: sha512-e8cIg2z62InH7azBBi3EsSEqrKx+nUtAS5bBcYTSpZFA+vhNPyhv8PTFZ0WsjOPDj04/dOLlm08EDcQJDqaGQg==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
-      '@babel/parser': 7.20.0
+      '@babel/parser': 7.21.4
+      '@jsdoc/salty': 0.2.5
       '@types/markdown-it': 12.2.3
       bluebird: 3.7.2
       catharsis: 0.9.0
@@ -7763,12 +7794,11 @@ packages:
       js2xmlparser: 4.0.2
       klaw: 3.0.0
       markdown-it: 12.3.2
-      markdown-it-anchor: 8.6.5_2zb4u3vubltivolgu556vv4aom
-      marked: 4.1.1
+      markdown-it-anchor: 8.6.7_2zb4u3vubltivolgu556vv4aom
+      marked: 4.3.0
       mkdirp: 1.0.4
-      requizzle: 0.2.3
+      requizzle: 0.2.4
       strip-json-comments: 3.1.1
-      taffydb: 2.6.2
       underscore: 1.13.6
     dev: false
 
@@ -8042,7 +8072,7 @@ packages:
   /klaw/3.0.0:
     resolution: {integrity: sha512-0Fo5oir+O9jnXu5EefYbVK+mHMBeEVEy2cmctR1O1NECcCkPRreJKrS6Qt/j3KC2C148Dfo9i3pCmCMsdqGr0g==}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: false
 
   /kleur/4.1.5:
@@ -8347,8 +8377,8 @@ packages:
     dev: true
     optional: true
 
-  /markdown-it-anchor/8.6.5_2zb4u3vubltivolgu556vv4aom:
-    resolution: {integrity: sha512-PI1qEHHkTNWT+X6Ip9w+paonfIQ+QZP9sCeMYi47oqhH+EsW8CrJ8J7CzV19QVOj6il8ATGbK2nTECj22ZHGvQ==}
+  /markdown-it-anchor/8.6.7_2zb4u3vubltivolgu556vv4aom:
+    resolution: {integrity: sha512-FlCHFwNnutLgVTflOYHPW2pPcl2AACqVzExlkGQNsi4CJgqOHN7YTgDd4LuhgN1BFO3TS0vLAruV1Td6dwWPJA==}
     peerDependencies:
       '@types/markdown-it': '*'
       markdown-it: '*'
@@ -8368,14 +8398,14 @@ packages:
       uc.micro: 1.0.6
     dev: false
 
-  /marked/4.1.1:
-    resolution: {integrity: sha512-0cNMnTcUJPxbA6uWmCmjWz4NJRe/0Xfk2NhXCUHjew9qJzFN20krFnsUe7QynwqOwa5m1fZ4UDg0ycKFVC0ccw==}
+  /marked/4.2.12:
+    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
     engines: {node: '>= 12'}
     hasBin: true
     dev: false
 
-  /marked/4.2.12:
-    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
+  /marked/4.3.0:
+    resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
     engines: {node: '>= 12'}
     hasBin: true
     dev: false
@@ -8596,6 +8626,10 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
+
+  /minimist/1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+    dev: false
 
   /mixin-deep/1.3.2:
     resolution: {integrity: sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==}
@@ -10188,8 +10222,8 @@ packages:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
     dev: false
 
-  /requizzle/0.2.3:
-    resolution: {integrity: sha512-YanoyJjykPxGHii0fZP0uUPEXpvqfBDxWV7s6GKAiiOsiqhX6vHNyW3Qzdmqp/iq/ExbhaGbVrjB4ruEVSM4GQ==}
+  /requizzle/0.2.4:
+    resolution: {integrity: sha512-JRrFk1D4OQ4SqovXOgdav+K8EAhSB/LJZqCz8tbX0KObcdeM15Ss59ozWMBWmmINMagCwmqn4ZNryUGpBsl6Jw==}
     dependencies:
       lodash: 4.17.21
     dev: false
@@ -11183,10 +11217,6 @@ packages:
       lodash.padend: 4.6.1
       typical: 2.6.1
       wordwrapjs: 3.0.0
-    dev: false
-
-  /taffydb/2.6.2:
-    resolution: {integrity: sha512-y3JaeRSplks6NYQuCOj3ZFMO3j60rTwbuKCvZxsAraGYH2epusatvZ0baZYA01WsGqJBq/Dl6vOrMUJqyMj8kA==}
     dev: false
 
   /tedious/15.1.0:

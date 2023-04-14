@@ -38,7 +38,7 @@ export default async (lang: string) => {
     data: templateData,
     separators: true,
     'name-format': false,
-    'no-gfm': true,
+    'no-gfm': false,
     'example-lang': 'js',
     'member-index-format': 'list',
   };
