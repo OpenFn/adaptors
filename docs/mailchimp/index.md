@@ -18,18 +18,10 @@
 Start a batch with a list of operations.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>operations batch job</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | operations batch job |
 
 **Example**  
 ```js
@@ -44,18 +36,10 @@ startBatch(params)
 Tag members with a particular tag
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>a tagId, members, and a list</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | a tagId, members, and a list |
 
 **Example**  
 ```js
@@ -70,18 +54,10 @@ tagMembers(params)
 Add members to a particular audience
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>a listId, users, and options</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | a listId, users, and options |
 
 **Example**  
 ```js

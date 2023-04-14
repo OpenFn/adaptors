@@ -19,21 +19,11 @@ Access the CouchDB Changes API
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Query parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Query parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -49,24 +39,12 @@ Access form submissions and post them as JSON.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>formId</td><td><code>string</code></td><td><p>Query parameters</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Starting sequence id</p>
-</td>
-    </tr><tr>
-    <td>postUrl</td><td><code>string</code></td><td><p>Inbox to post form data</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formId | <code>string</code> | Query parameters |
+| params | <code>object</code> | Starting sequence id |
+| postUrl | <code>string</code> | Inbox to post form data |
 
 **Example**  
 ```js
@@ -86,18 +64,10 @@ Select submissions for a specific form
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>formId</td><td><code>string</code></td><td><p>The form ID.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formId | <code>string</code> | The form ID. |
 
 **Example**  
 ```js

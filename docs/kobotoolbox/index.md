@@ -18,21 +18,11 @@
 Get deployment information for a specific form
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Form Id and data to make the fetch or filter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function to execute after fetching form deployment information</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Form Id and data to make the fetch or filter |
+| callback | <code>function</code> | (Optional) Callback function to execute after fetching form deployment information |
 
 **Example**  
 ```js
@@ -51,21 +41,11 @@ Make a request to get the list of forms
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Query, Headers and Authentication parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function to execute after fetching form list</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Query, Headers and Authentication parameters |
+| callback | <code>function</code> | (Optional) Callback function to execute after fetching form list |
 
 **Example**  
 ```js
@@ -83,21 +63,11 @@ getForms({}, state => {
 Get submissions for a specific form
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Form Id and data to make the fetch or filter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function to execute after fetching form submissions</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Form Id and data to make the fetch or filter |
+| callback | <code>function</code> | (Optional) Callback function to execute after fetching form submissions |
 
 **Example**  
 ```js

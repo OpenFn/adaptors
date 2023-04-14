@@ -4,18 +4,10 @@
 Create an event
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>eventData</td><td><code>object</code></td><td><p>Payload data for the event</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eventData | <code>object</code> | Payload data for the event |
 
 **Example**  
 ```js

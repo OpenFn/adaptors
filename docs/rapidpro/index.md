@@ -22,21 +22,11 @@ Adds a new contact to RapidPro
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data to create the new resource</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data to create the new resource |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -56,21 +46,11 @@ Sends a message to a list of contacts and/or URNs
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data to create the new resource</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data to create the new resource |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -90,21 +70,11 @@ Start a RapidPro flow for a number of contacts
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data to create the new resource</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data to create the new resource |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -124,21 +94,11 @@ Upserts a contact to RapidPro by URN
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data to upsert a contact</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data to upsert a contact |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js

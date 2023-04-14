@@ -30,17 +30,10 @@
 Removes unserializable or confidential keys from the state.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 **Example**  
 ```js
@@ -55,18 +48,10 @@ cleanupState(state)
 Creates an encounter
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>parameters of the encounter</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | parameters of the encounter |
 
 **Example**  
 ```js
@@ -82,18 +67,10 @@ execute(
 Gets patient matching a uuid
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>object with uuid for the patient</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | object with uuid for the patient |
 
 **Example**  
 ```js
@@ -110,21 +87,11 @@ execute(
 Gets patients matching criteria
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>criteria</td><td><code>object</code></td><td><p>Criteria object for the patient</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Options</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| criteria | <code>object</code> | Criteria object for the patient |
+| options | <code>object</code> | Options |
 
 **Example**  
 ```js
@@ -141,21 +108,11 @@ execute(
 Gets people matching criteria
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>criteria</td><td><code>object</code></td><td><p>Criteria object for the people</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Options object for the handling of responses</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| criteria | <code>object</code> | Criteria object for the people |
+| options | <code>object</code> | Options object for the handling of responses |
 
 **Example**  
 ```js
@@ -174,18 +131,10 @@ execute(
 Logs in to OpenMRS, gets a session token.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -200,21 +149,11 @@ login(state)
 Make a request to any OpenMRS endpoint and execute a callback
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>parameters for the request</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>a callback to execute on the next state</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | parameters for the request |
+| callback | <code>function</code> | a callback to execute on the next state |
 
 **Example**  
 ```js

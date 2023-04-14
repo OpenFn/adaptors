@@ -4,18 +4,10 @@
 Create an encounter
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>encounterData</td><td><code>object</code></td><td><p>Payload data for the encounter</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| encounterData | <code>object</code> | Payload data for the encounter |
 
 **Example**  
 ```js

@@ -4,18 +4,10 @@
 Send a message
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sendData</td><td><code>object</code></td><td><p>Payload data for the message</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sendData | <code>object</code> | Payload data for the message |
 
 **Example**  
 ```js

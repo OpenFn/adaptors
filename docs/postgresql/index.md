@@ -40,21 +40,11 @@ List the columns of a table in a database.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>tableName</td><td><code>string</code></td><td><p>The name of the table to describe</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tableName | <code>string</code> | The name of the table to describe |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -70,18 +60,10 @@ Fetch a uuid key given a condition
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>filter</td><td><code>object</code></td><td><p>A filter object with the lookup table, a uuid and the condition</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filter | <code>object</code> | A filter object with the lookup table, a uuid and the condition |
 
 **Example**  
 ```js
@@ -102,24 +84,12 @@ Insert a record
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>record</td><td><code>object</code></td><td><p>Payload data for the record as a JS object or function</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| record | <code>object</code> | Payload data for the record as a JS object or function |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -135,24 +105,12 @@ Insert many records, using the keys of the first as the column template
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>records</td><td><code>array</code></td><td><p>An array or a function that takes state and returns an array</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| records | <code>array</code> | An array or a function that takes state and returns an array |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -168,24 +126,12 @@ Create a table in database when given an array of columns and a table_name.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>tableName</td><td><code>string</code></td><td><p>The name of the table to create</p>
-</td>
-    </tr><tr>
-    <td>columns</td><td><code>array</code></td><td><p>An array of form columns</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tableName | <code>string</code> | The name of the table to create |
+| columns | <code>array</code> | An array of form columns |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -208,24 +154,12 @@ Alter an existing table in the database.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>tableName</td><td><code>string</code></td><td><p>The name of the table to alter</p>
-</td>
-    </tr><tr>
-    <td>columns</td><td><code>array</code></td><td><p>An array of form columns</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tableName | <code>string</code> | The name of the table to alter |
+| columns | <code>array</code> | An array of form columns |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -248,22 +182,11 @@ Execute an SQL statement
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sqlQuery</td><td><code>function</code></td><td><p>a function which takes state and returns a
-string of SQL.</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sqlQuery | <code>function</code> | a function which takes state and returns a string of SQL. |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -279,27 +202,13 @@ Insert or update a record using ON CONFLICT UPDATE
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>uuid</td><td><code>string</code></td><td><p>The uuid column to determine a matching/existing record</p>
-</td>
-    </tr><tr>
-    <td>record</td><td><code>object</code></td><td><p>Payload data for the record as a JS object or function</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| uuid | <code>string</code> | The uuid column to determine a matching/existing record |
+| record | <code>object</code> | Payload data for the record as a JS object or function |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -320,30 +229,14 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>logical</td><td><code>string</code></td><td><p>a data to check existing value for.</p>
-</td>
-    </tr><tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>uuid</td><td><code>string</code></td><td><p>The uuid column to determine a matching/existing record</p>
-</td>
-    </tr><tr>
-    <td>record</td><td><code>object</code></td><td><p>Payload data for the record as a JS object or function</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| logical | <code>string</code> | a data to check existing value for. |
+| table | <code>string</code> | The target table |
+| uuid | <code>string</code> | The uuid column to determine a matching/existing record |
+| record | <code>object</code> | Payload data for the record as a JS object or function |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js
@@ -365,27 +258,13 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>uuid</td><td><code>string</code></td><td><p>The uuid column to determine a matching/existing record</p>
-</td>
-    </tr><tr>
-    <td>data</td><td><code>array</code></td><td><p>An array of objects or a function that returns an array</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>Optional options argument</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| uuid | <code>string</code> | The uuid column to determine a matching/existing record |
+| data | <code>array</code> | An array of objects or a function that returns an array |
+| options | <code>object</code> | Optional options argument |
 
 **Example**  
 ```js

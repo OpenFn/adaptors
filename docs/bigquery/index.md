@@ -16,33 +16,15 @@ Load files to BigQuery
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>dirPath</td><td><code>string</code></td><td><p>the path to your local directory</p>
-</td>
-    </tr><tr>
-    <td>projectId</td><td><code>string</code></td><td><p>your bigquery project id</p>
-</td>
-    </tr><tr>
-    <td>datasetId</td><td><code>string</code></td><td><p>your bigquery dataset id</p>
-</td>
-    </tr><tr>
-    <td>tableId</td><td><code>string</code></td><td><p>the name of the table you&#39;d like to load</p>
-</td>
-    </tr><tr>
-    <td>loadOptions</td><td><code>object</code></td><td><p>options to pass to the bigquery.load() API</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>and optional callback</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dirPath | <code>string</code> | the path to your local directory |
+| projectId | <code>string</code> | your bigquery project id |
+| datasetId | <code>string</code> | your bigquery dataset id |
+| tableId | <code>string</code> | the name of the table you'd like to load |
+| loadOptions | <code>object</code> | options to pass to the bigquery.load() API |
+| callback | <code>function</code> | and optional callback |
 
 **Example**  
 ```js
@@ -70,21 +52,11 @@ CSV-Parse for CSV conversion to JSON
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>target</td><td><code>String</code></td><td><p>string or local file with CSV data</p>
-</td>
-    </tr><tr>
-    <td>config</td><td><code>Object</code></td><td><p>csv-parse config object</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| target | <code>String</code> | string or local file with CSV data |
+| config | <code>Object</code> | csv-parse config object |
 
 **Example**  
 ```js

@@ -28,18 +28,10 @@ Wraps <code>@openfn/language-common/execute</code>, and prepends initial state f
 Connects to a mongoDb instance
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -54,17 +46,10 @@ connect(state)
 Removes connection from the state.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 **Example**  
 ```js
@@ -80,18 +65,10 @@ Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>operations</td><td><code>Operations</code></td><td><p>Operations to be performed.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| operations | <code>Operations</code> | Operations to be performed. |
 
 **Example**  
 ```js
@@ -109,18 +86,10 @@ execute(
 Find documents in a mongoDb collection
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Configuration for mongo |
 
 **Example**  
 ```js
@@ -139,18 +108,10 @@ findDocuments({
 Inserts documents into a mongoDb collection
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Configuration for mongo |
 
 **Example**  
 ```js
@@ -169,18 +130,10 @@ insertDocuments({
 Updates document (optionally upserting) into a mongoDb collection
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Configuration for mongo</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Configuration for mongo |
 
 **Example**  
 ```js

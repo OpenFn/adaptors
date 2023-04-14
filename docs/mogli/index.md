@@ -18,17 +18,10 @@
 Removes unserializable keys from the state.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 
 * * *
@@ -39,24 +32,12 @@ Removes unserializable keys from the state.
 Adds a lookup or 'dome insert' to a record.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>relationshipName</td><td><code>string</code></td><td><p><code>__r</code> relationship field on the record.</p>
-</td>
-    </tr><tr>
-    <td>externalID</td><td><code>string</code></td><td><p>Salesforce ExternalID field.</p>
-</td>
-    </tr><tr>
-    <td>path</td><td><code>string</code></td><td><p>JSONPath to data source.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| relationshipName | <code>string</code> | `__r` relationship field on the record. |
+| externalID | <code>string</code> | Salesforce ExternalID field. |
+| path | <code>string</code> | JSONPath to data source. |
 
 **Example** *(Example)*  
 ```js
@@ -71,24 +52,12 @@ lookup("relationship_name__r", "externalID on related object", "$.path")
 Adds a lookup or 'dome insert' to a record.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>relationshipName</td><td><code>string</code></td><td><p><code>__r</code> relationship field on the record.</p>
-</td>
-    </tr><tr>
-    <td>externalID</td><td><code>string</code></td><td><p>Salesforce ExternalID field.</p>
-</td>
-    </tr><tr>
-    <td>dataSource</td><td><code>string</code></td><td><p>resolvable source.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| relationshipName | <code>string</code> | `__r` relationship field on the record. |
+| externalID | <code>string</code> | Salesforce ExternalID field. |
+| dataSource | <code>string</code> | resolvable source. |
 
 **Example** *(Data Sourced Value)*  
 ```js

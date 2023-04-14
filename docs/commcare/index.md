@@ -22,18 +22,10 @@ and POST the response to somewhere else.</p>
 Performs a post request
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>formData</td><td><code>Object</code></td><td><p>Form Data with auth params and body</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Form Data with auth params and body |
 
 **Example**  
 ```js
@@ -50,24 +42,12 @@ and POST the response to somewhere else.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>reportId</td><td><code>String</code></td><td><p>API name of the report.</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>Object</code></td><td><p>Query params, incl: limit, offset, and custom report filters.</p>
-</td>
-    </tr><tr>
-    <td>postUrl</td><td><code>String</code></td><td><p>Url to which the response object will be posted.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reportId | <code>String</code> | API name of the report. |
+| params | <code>Object</code> | Query params, incl: limit, offset, and custom report filters. |
+| postUrl | <code>String</code> | Url to which the response object will be posted. |
 
 **Example**  
 ```js
@@ -83,18 +63,10 @@ Submit form data
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>formData</td><td><code>Object</code></td><td><p>Object including form data.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Object including form data. |
 
 **Example**  
 ```js
@@ -120,21 +92,11 @@ Convert form data to xls then submit.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>formData</td><td><code>Object</code></td><td><p>Object including form data.</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>Object</code></td><td><p>Request params including case type and external id.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Object including form data. |
+| params | <code>Object</code> | Request params including case type and external id. |
 
 **Example**  
 ```js

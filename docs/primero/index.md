@@ -76,17 +76,10 @@ then we check if the case exist before choosing the right operation to do.</p>
 Removes unserializable keys from the state.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 **Example**  
 ```js
@@ -104,21 +97,11 @@ Use this function to create a new case in Primero based on a set of Data.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with some case data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | an object with some case data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Create a new case in Primero based on a set of Data)*  
 ```js
@@ -142,21 +125,11 @@ Use this function to bulk refer to one or multiple cases from Primero to a singl
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with referral data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | an object with referral data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Create referrals for multiple cases in Primero)*  
 ```js
@@ -180,17 +153,10 @@ createReferrals({
 Generate an auth string to support multiple types of auth credentials.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 **Example**  
 ```js
@@ -210,24 +176,12 @@ You can specify a `case_id` value to fetch a unique case and a query string to f
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>an object with a query param at minimum, option to getReferrals</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>object</code></td><td><p>(Optional) an object with a getReferrals key to fetch referrals</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | an object with a query param at minimum, option to getReferrals |
+| options | <code>object</code> | (Optional) an object with a getReferrals key to fetch referrals |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *( Get cases from Primero with query parameters)*  
 ```js
@@ -256,21 +210,11 @@ The user can filter the form list by record type and module.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>an object with a query param at minimum</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | an object with a query param at minimum |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Get the list of all forms)*  
 ```js
@@ -297,21 +241,11 @@ Another parameter is `hierarchy: true` (Defaults to false)
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>an object with a query param at minimum</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | an object with a query param at minimum |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Get loocations from Primero with query parameters)*  
 ```js
@@ -334,21 +268,11 @@ Also you can specify `page` value to fetch pagination (Defaults to 1)
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>an object with a query param at minimum</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | an object with a query param at minimum |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Get lookups from Primero with query parameters)*  
 ```js
@@ -370,21 +294,11 @@ The search can be done using either `record id` or `case id`.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Get referrals for a case in Primero by record id)*  
 ```js
@@ -408,18 +322,10 @@ getReferrals({
 Logs in to Primero.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -434,21 +340,12 @@ login(state)
 Execute custom query
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
+| params | <code>object</code> | 
+| callback | <code>function</code> | 
 
 
 * * *
@@ -467,24 +364,12 @@ keeping both the existing values and appending the new
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>A case ID to use for the update.</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with some case data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | A case ID to use for the update. |
+| params | <code>object</code> | an object with some case data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Update case for a specific case id)*  
 ```js
@@ -506,21 +391,11 @@ Update a single referral for a specific case in Primero
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with an caseExternalId value to use, the id and the referral id to update.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | an object with an caseExternalId value to use, the id and the referral id to update. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Update referral by record id)*  
 ```js
@@ -545,21 +420,11 @@ then we check if the case exist before choosing the right operation to do.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with an externalIds and some case data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | an object with an externalIds and some case data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example** *(Upsert case for a specific case id)*  
 ```js

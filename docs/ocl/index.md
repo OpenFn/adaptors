@@ -33,21 +33,11 @@ Replaces source keys(data elements) to destination keys(data elements) with out 
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>Object</code></td><td><p>Json object containing keys and data values;</p>
-</td>
-    </tr><tr>
-    <td>[params]</td><td><code>Object</code></td><td><p>E.g. `{users:&quot;haftamuk&quot;, sources: &quot;eCHIS-CODES&quot;, concepts: &quot;fp_new_at_10_to_14&quot; }</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>Object</code> | Json object containing keys and data values; |
+| [params] | <code>Object</code> | E.g. `{users:"haftamuk", sources: "eCHIS-CODES", concepts: "fp_new_at_10_to_14" } |
 
 **Example**  
 ```js

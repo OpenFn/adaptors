@@ -18,18 +18,10 @@
 Create a collection request
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>data</td><td><code>object</code></td><td><p>Payload data for the collection request</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | Payload data for the collection request |
 
 **Example**  
 ```js
@@ -46,18 +38,10 @@ execute(
 Create a contact
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>data</td><td><code>object</code></td><td><p>Payload data for the contact</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | Payload data for the contact |
 
 **Example**  
 ```js
@@ -74,18 +58,10 @@ execute(
 Create a payment
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>data</td><td><code>object</code></td><td><p>Payload data for the payment</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | Payload data for the payment |
 
 **Example**  
 ```js

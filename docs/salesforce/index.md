@@ -66,27 +66,13 @@ Create and execute a bulk job.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>operation</td><td><code>String</code></td><td><p>The bulk operation to be performed</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>Object</code></td><td><p>Options passed to the bulk api.</p>
-</td>
-    </tr><tr>
-    <td>fun</td><td><code>function</code></td><td><p>A function which takes state and returns an array.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
+| operation | <code>String</code> | The bulk operation to be performed |
+| options | <code>Object</code> | Options passed to the bulk api. |
+| fun | <code>function</code> | A function which takes state and returns an array. |
 
 **Example**  
 ```js
@@ -105,17 +91,10 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
 Removes unserializable keys from the state.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type |
+| --- | --- |
+| state | <code>State</code> | 
 
 **Example**  
 ```js
@@ -131,21 +110,11 @@ Create a new object.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Field attributes for the new object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
+| attrs | <code>Object</code> | Field attributes for the new object. |
 
 **Example**  
 ```js
@@ -163,18 +132,10 @@ create('obj_name', {
 Creates a connection.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -190,24 +151,12 @@ Create a new object if conditions are met.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>logical</td><td><code>boolean</code></td><td><p>a logical statement that will be evaluated.</p>
-</td>
-    </tr><tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Field attributes for the new object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| logical | <code>boolean</code> | a logical statement that will be evaluated. |
+| sObject | <code>String</code> | API name of the sObject. |
+| attrs | <code>Object</code> | Field attributes for the new object. |
 
 **Example**  
 ```js
@@ -226,18 +175,10 @@ Outputs basic information about an sObject to `STDOUT`.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
 
 **Example**  
 ```js
@@ -267,24 +208,12 @@ Delete records of an object.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Array of IDs of records to delete.</p>
-</td>
-    </tr><tr>
-    <td>options</td><td><code>Object</code></td><td><p>Options for the destroy delete operation.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
+| attrs | <code>Object</code> | Array of IDs of records to delete. |
+| options | <code>Object</code> | Options for the destroy delete operation. |
 
 **Example**  
 ```js
@@ -302,18 +231,10 @@ destroy('obj_name', [
 Executes an operation.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>operations</td><td><code>Operation</code></td><td><p>Operations</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| operations | <code>Operation</code> | Operations |
 
 
 * * *
@@ -324,18 +245,10 @@ Executes an operation.
 Performs a login.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -353,18 +266,10 @@ error logs will be printed but the operation will not throw the error.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>qs</td><td><code>String</code></td><td><p>A query string.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| qs | <code>String</code> | A query string. |
 
 **Example**  
 ```js
@@ -380,18 +285,10 @@ Get a reference ID by an index.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>position</td><td><code>number</code></td><td><p>Position for references array.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| position | <code>number</code> | Position for references array. |
 
 **Example**  
 ```js
@@ -407,24 +304,12 @@ Adds a lookup relation or 'dome insert' to a record.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>relationshipName</td><td><code>string</code></td><td><p><code>__r</code> relationship field on the record.</p>
-</td>
-    </tr><tr>
-    <td>externalId</td><td><code>string</code></td><td><p>Salesforce ExternalID field.</p>
-</td>
-    </tr><tr>
-    <td>dataSource</td><td><code>string</code></td><td><p>resolvable source.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| relationshipName | <code>string</code> | `__r` relationship field on the record. |
+| externalId | <code>string</code> | Salesforce ExternalID field. |
+| dataSource | <code>string</code> | resolvable source. |
 
 **Example**  
 ```js
@@ -443,24 +328,12 @@ Retrieves a Salesforce sObject(s).
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>The sObject to retrieve</p>
-</td>
-    </tr><tr>
-    <td>id</td><td><code>String</code></td><td><p>The id of the record</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>A callback to execute once the record is retrieved</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | The sObject to retrieve |
+| id | <code>String</code> | The id of the record |
+| callback | <code>function</code> | A callback to execute once the record is retrieved |
 
 **Example**  
 ```js
@@ -492,21 +365,11 @@ Update an object.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Field attributes for the new object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
+| attrs | <code>Object</code> | Field attributes for the new object. |
 
 **Example**  
 ```js
@@ -528,24 +391,12 @@ Upsert an object.
 **Magic**: sObject - $.children[?(!@.meta.system)].name  
 **Magic**: externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name  
 **Magic**: attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>externalId</td><td><code>String</code></td><td><p>ID.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Field attributes for the new object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>String</code> | API name of the sObject. |
+| externalId | <code>String</code> | ID. |
+| attrs | <code>Object</code> | Field attributes for the new object. |
 
 **Example**  
 ```js
@@ -564,27 +415,13 @@ Upsert if conditions are met.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>logical</td><td><code>boolean</code></td><td><p>a logical statement that will be evaluated.</p>
-</td>
-    </tr><tr>
-    <td>sObject</td><td><code>String</code></td><td><p>API name of the sObject.</p>
-</td>
-    </tr><tr>
-    <td>externalId</td><td><code>String</code></td><td><p>ID.</p>
-</td>
-    </tr><tr>
-    <td>attrs</td><td><code>Object</code></td><td><p>Field attributes for the new object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| logical | <code>boolean</code> | a logical statement that will be evaluated. |
+| sObject | <code>String</code> | API name of the sObject. |
+| externalId | <code>String</code> | ID. |
+| attrs | <code>Object</code> | Field attributes for the new object. |
 
 **Example**  
 ```js

@@ -25,21 +25,11 @@ Create a task.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Body parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Body parameters |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -59,24 +49,12 @@ Get a single task of a given project.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>task_gid</td><td><code>string</code></td><td><p>Globally unique identifier for the task</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Query params to include.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| task_gid | <code>string</code> | Globally unique identifier for the task |
+| params | <code>object</code> | Query params to include. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -95,24 +73,12 @@ Get the list of tasks for a given project.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>project_gid</td><td><code>string</code></td><td><p>Globally unique identifier for the project</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Query params to include.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| project_gid | <code>string</code> | Globally unique identifier for the project |
+| params | <code>object</code> | Query params to include. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -131,24 +97,12 @@ Update a specific task.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>task_gid</td><td><code>string</code></td><td><p>Globally unique identifier for the task</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Body parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| task_gid | <code>string</code> | Globally unique identifier for the task |
+| params | <code>object</code> | Body parameters |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -168,24 +122,12 @@ Update or create a task.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>project_gid</td><td><code>string</code></td><td><p>Globally unique identifier for the project</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>an object with an externalId and some task data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| project_gid | <code>string</code> | Globally unique identifier for the project |
+| params | <code>object</code> | an object with an externalId and some task data. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js

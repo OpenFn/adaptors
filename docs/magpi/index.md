@@ -16,18 +16,10 @@ Make a POST request to fetch Magpi data and POST it somewhere else
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data to make the fetch</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data to make the fetch |
 
 **Example**  
 ```js
@@ -47,18 +39,10 @@ Submit a record for a form/survey which already exists in a Magpi user account
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>jsonData</td><td><code>object</code></td><td><p>Payload data for the record</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| jsonData | <code>object</code> | Payload data for the record |
 
 **Example**  
 ```js

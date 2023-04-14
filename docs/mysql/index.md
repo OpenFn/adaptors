@@ -24,21 +24,11 @@
 Insert a record
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>fields</td><td><code>object</code></td><td><p>A fields object</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| fields | <code>object</code> | A fields object |
 
 **Example**  
 ```js
@@ -57,18 +47,10 @@ execute(
 Execute a SQL statement
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>options</td><td><code>object</code></td><td><p>Payload data for the message</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Payload data for the message |
 
 **Example**  
 ```js
@@ -85,18 +67,10 @@ execute(
 Execute a SQL statement
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>queryString</td><td><code>String</code></td><td><p>A query string (or function which takes state and returns a string)</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| queryString | <code>String</code> | A query string (or function which takes state and returns a string) |
 
 **Example**  
 ```js
@@ -113,21 +87,11 @@ execute(
 Insert or Update a record if matched
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>fields</td><td><code>object</code></td><td><p>A fields object</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| fields | <code>object</code> | A fields object |
 
 **Example**  
 ```js
@@ -147,21 +111,11 @@ Insert or update multiple records using ON DUPLICATE KEY
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>table</td><td><code>string</code></td><td><p>The target table</p>
-</td>
-    </tr><tr>
-    <td>data</td><td><code>array</code></td><td><p>An array of objects or a function that returns an array</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| table | <code>string</code> | The target table |
+| data | <code>array</code> | An array of objects or a function that returns an array |
 
 **Example**  
 ```js

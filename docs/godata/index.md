@@ -55,24 +55,12 @@ Get one or multiple cases within an outbreak from a query filter
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>query</td><td><code>object</code></td><td><p>An object with a query filter parameter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| query | <code>object</code> | An object with a query filter parameter |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -95,24 +83,12 @@ Get one or multiple contacts within an outbreak from a query filter
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>query</td><td><code>object</code></td><td><p>An object with a query filter parameter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| query | <code>object</code> | An object with a query filter parameter |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -131,21 +107,11 @@ Get one or multiple locations from a query filter
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>An object with a query filter parameter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | An object with a query filter parameter |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -164,21 +130,11 @@ Get one or multiple outbreaks from a query filter
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>An object with a query filter parameter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | An object with a query filter parameter |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -197,21 +153,11 @@ Get one or multiple reference data from a query filter
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>query</td><td><code>object</code></td><td><p>An object with a query filter parameter</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | An object with a query filter parameter |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -230,21 +176,11 @@ Fetch the list of cases within a particular outbreak using its ID.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -263,21 +199,11 @@ Fetch the list of contacts within a particular outbreak using its ID.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -297,18 +223,10 @@ Fetch the list of locations
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -327,18 +245,10 @@ Fetch the list of outbreaks
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -357,18 +267,10 @@ Fetch the list of reference data
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -387,27 +289,13 @@ Upsert case to godata using an external id to mach a specific record
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>externalId</td><td><code>string</code></td><td><p>External Id to match</p>
-</td>
-    </tr><tr>
-    <td>goDataCase</td><td><code>object</code></td><td><p>an object with some case data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| externalId | <code>string</code> | External Id to match |
+| goDataCase | <code>object</code> | an object with some case data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -433,27 +321,13 @@ Upsert contact to godata using an external id to match a specific record.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>id</td><td><code>string</code></td><td><p>Outbreak id</p>
-</td>
-    </tr><tr>
-    <td>externalId</td><td><code>string</code></td><td><p>External Id to match</p>
-</td>
-    </tr><tr>
-    <td>goDataContact</td><td><code>object</code></td><td><p>an object with some case data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Outbreak id |
+| externalId | <code>string</code> | External Id to match |
+| goDataContact | <code>object</code> | an object with some case data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -476,24 +350,12 @@ Upsert location to godata
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>externalId</td><td><code>string</code></td><td><p>External Id to match</p>
-</td>
-    </tr><tr>
-    <td>goDataLocation</td><td><code>object</code></td><td><p>an object with some location data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| externalId | <code>string</code> | External Id to match |
+| goDataLocation | <code>object</code> | an object with some location data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -509,21 +371,11 @@ Upsert outbreak to godata
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>outbreak</td><td><code>object</code></td><td><p>an object with an externalId and some outbreak data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| outbreak | <code>object</code> | an object with an externalId and some outbreak data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -539,24 +391,12 @@ Upsert reference data to godata
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>externalId</td><td><code>string</code></td><td><p>External Id to match</p>
-</td>
-    </tr><tr>
-    <td>goDataReferenceData</td><td><code>object</code></td><td><p>an object with some reference data.</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| externalId | <code>string</code> | External Id to match |
+| goDataReferenceData | <code>object</code> | an object with some reference data. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js

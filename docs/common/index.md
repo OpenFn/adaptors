@@ -147,18 +147,10 @@ Does not affect array objects.</p>
 alias for "fn()"
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>func</td><td><code>function</code></td><td><p>is the function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| func | <code>function</code> | is the function |
 
 
 * * *
@@ -170,21 +162,11 @@ Turns an array into a string, separated by X.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>arr</td><td><code>array</code></td><td><p>Array of toString&#39;able primatives.</p>
-</td>
-    </tr><tr>
-    <td>separator</td><td><code>string</code></td><td><p>Separator string.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arr | <code>array</code> | Array of toString'able primatives. |
+| separator | <code>string</code> | Separator string. |
 
 **Example**  
 ```js
@@ -206,20 +188,11 @@ object literals as a data source.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>data</td><td><code>String</code> | <code>object</code> | <code>function</code></td><td></td>
-    </tr><tr>
-    <td>state</td><td><code>object</code></td><td><p>The current state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>String</code> \| <code>object</code> \| <code>function</code> |  |
+| state | <code>object</code> | The current state. |
 
 **Example**  
 ```js
@@ -235,21 +208,11 @@ Chunks an array into an array of arrays, each with no more than a certain size.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>array</td><td><code>Object</code></td><td><p>Array to be chunked</p>
-</td>
-    </tr><tr>
-    <td>chunkSize</td><td><code>Integer</code></td><td><p>The maxiumum size of each chunks</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Object</code> | Array to be chunked |
+| chunkSize | <code>Integer</code> | The maxiumum size of each chunks |
 
 **Example**  
 ```js
@@ -265,18 +228,10 @@ Combines two operations into one
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>operations</td><td><code>Operations</code></td><td><p>Operations to be performed.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| operations | <code>Operations</code> | Operations to be performed. |
 
 **Example**  
 ```js
@@ -295,21 +250,11 @@ Prepares next state
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>state</td><td><code>State</code></td><td><p>state</p>
-</td>
-    </tr><tr>
-    <td>response</td><td><code>Object</code></td><td><p>Response to be added</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| state | <code>State</code> | state |
+| response | <code>Object</code> | Response to be added |
 
 **Example**  
 ```js
@@ -325,18 +270,10 @@ Ensures a path points at the data.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>JSONPath referencing a point in <code>data</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | JSONPath referencing a point in `data`. |
 
 **Example**  
 ```js
@@ -354,18 +291,10 @@ item will be returned.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>String</code></td><td><p>JSONPath referencing a point in <code>data</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | JSONPath referencing a point in `data`. |
 
 **Example**  
 ```js
@@ -382,18 +311,10 @@ Make a DELETE request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Deleting a record with data that comes from state)*  
 ```js
@@ -418,21 +339,11 @@ the state's references.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>dataSource</td><td><code>DataSource</code></td><td><p>JSONPath referencing a point in <code>state</code>.</p>
-</td>
-    </tr><tr>
-    <td>operation</td><td><code>Operation</code></td><td><p>The operation needed to be repeated.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
+| operation | <code>Operation</code> | The operation needed to be repeated. |
 
 **Example**  
 ```js
@@ -459,21 +370,11 @@ the state's references.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>dataSource</td><td><code>DataSource</code></td><td><p>JSONPath referencing a point in <code>state</code>.</p>
-</td>
-    </tr><tr>
-    <td>operation</td><td><code>Operation</code></td><td><p>The operation needed to be repeated.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
+| operation | <code>Operation</code> | The operation needed to be repeated. |
 
 **Example**  
 ```js
@@ -492,21 +393,11 @@ Recursively resolves objects that have resolvable values (functions).
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>value</td><td><code>object</code></td><td><p>data</p>
-</td>
-    </tr><tr>
-    <td>[skipFilter]</td><td><code>function</code></td><td><p>a function which returns true if a value should be skipped</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>object</code> | data |
+| [skipFilter] | <code>function</code> | a function which returns true if a value should be skipped |
 
 
 * * *
@@ -519,18 +410,10 @@ omits HTTP request specific modules like `FormData`.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>value</td><td><code>object</code></td><td><p>data</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>object</code> | data |
 
 
 * * *
@@ -542,21 +425,11 @@ Returns a key, value pair in an array.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>key</td><td><code>string</code></td><td><p>Name of the field</p>
-</td>
-    </tr><tr>
-    <td>value</td><td><code>Value</code></td><td><p>The value itself or a sourceable operation.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Name of the field |
+| value | <code>Value</code> | The value itself or a sourceable operation. |
 
 **Example**  
 ```js
@@ -572,18 +445,10 @@ Zips key value pairs into an object.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>fields</td><td><code>Fields</code></td><td><p>a list of fields</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fields | <code>Fields</code> | a list of fields |
 
 **Example**  
 ```js
@@ -599,18 +464,10 @@ Creates a custom step (or operation) for more flexible job writing.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>func</td><td><code>function</code></td><td><p>is the function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| func | <code>function</code> | is the function |
 
 **Example**  
 ```js
@@ -630,18 +487,10 @@ Make a GET request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Get an item with a specified id from state)*  
 ```js
@@ -661,18 +510,10 @@ Make a HEAD request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method)*  
 ```js
@@ -690,18 +531,10 @@ Substitutes underscores for spaces and proper-cases a string
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>str</td><td><code>string</code></td><td><p>String that needs converting</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| str | <code>string</code> | String that needs converting |
 
 **Example**  
 ```js
@@ -732,24 +565,12 @@ Adds data from a target object
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>targetPath</td><td><code>String</code></td><td><p>Target path</p>
-</td>
-    </tr><tr>
-    <td>sourcePath</td><td><code>String</code></td><td><p>Source path</p>
-</td>
-    </tr><tr>
-    <td>targetKey</td><td><code>String</code></td><td><p>Target Key</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| targetPath | <code>String</code> | Target path |
+| sourcePath | <code>String</code> | Source path |
+| targetKey | <code>String</code> | Target Key |
 
 **Example**  
 ```js
@@ -767,21 +588,11 @@ item will be returned.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>obj</td><td><code>object</code></td><td><p>A valid JSON object.</p>
-</td>
-    </tr><tr>
-    <td>path</td><td><code>String</code></td><td><p>JSONPath referencing a point in given JSON object.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>object</code> | A valid JSON object. |
+| path | <code>String</code> | JSONPath referencing a point in given JSON object. |
 
 **Example**  
 ```js
@@ -797,18 +608,10 @@ Picks out the last reference value from source data.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>String</code></td><td><p>JSONPath referencing a point in <code>references</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | JSONPath referencing a point in `references`. |
 
 **Example**  
 ```js
@@ -828,24 +631,12 @@ of the JSONPath provided.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>JSONPath referencing a point in <code>state.data</code>.</p>
-</td>
-    </tr><tr>
-    <td>operation</td><td><code>function</code></td><td><p>The operation needed to be repeated.</p>
-</td>
-    </tr><tr>
-    <td>state</td><td><code>State</code></td><td><p>Runtime state.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | JSONPath referencing a point in `state.data`. |
+| operation | <code>function</code> | The operation needed to be repeated. |
+| state | <code>State</code> | Runtime state. |
 
 **Example**  
 ```js
@@ -865,20 +656,11 @@ Merges fields into each item in an array.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>dataSource</td><td><code>DataSource</code></td><td></td>
-    </tr><tr>
-    <td>fields</td><td><code>Object</code></td><td><p>Group of fields to merge in.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataSource | <code>DataSource</code> |  |
+| fields | <code>Object</code> | Group of fields to merge in. |
 
 **Example**  
 ```js
@@ -900,18 +682,10 @@ Make a OPTIONS request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Requests permitted communication options for a given URL or server, with data from state.)*  
 ```js
@@ -930,18 +704,10 @@ Make a PATCH request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Applies partial modifications to a resource, with data from state.)*  
 ```js
@@ -961,18 +727,10 @@ Make a POST request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Sending a payload with data that comes from state)*  
 ```js
@@ -1003,18 +761,10 @@ Make a PUT request
 **Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>requestParams</td><td><code>object</code></td><td><p>Supports the exact parameters as Axios. See <a href="https://github.com/axios/axios#axios-api">here</a></p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
 **Example** *(Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.)*  
 ```js
@@ -1033,18 +783,10 @@ Ensures a path points at references.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>JSONPath referencing a point in <code>references</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | JSONPath referencing a point in `references`. |
 
 **Example**  
 ```js
@@ -1060,21 +802,11 @@ Replaces emojis in a string.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>text</td><td><code>string</code></td><td><p>String that needs to be cleaned</p>
-</td>
-    </tr><tr>
-    <td>replacementChars</td><td><code>string</code></td><td><p>Characters that replace the emojis</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | String that needs to be cleaned |
+| replacementChars | <code>string</code> | Characters that replace the emojis |
 
 **Example**  
 ```js
@@ -1092,18 +824,10 @@ If you need a single value use `sourceValue` instead.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>String</code></td><td><p>JSONPath referencing a point in <code>state</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | JSONPath referencing a point in `state`. |
 
 **Example**  
 ```js
@@ -1121,18 +845,10 @@ item will be returned.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>String</code></td><td><p>JSONPath referencing a point in <code>state</code>.</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | JSONPath referencing a point in `state`. |
 
 **Example**  
 ```js
@@ -1149,18 +865,10 @@ Does not affect array objects.
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>arg</td><td><code>any</code></td><td><p>Data required to be in an array</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arg | <code>any</code> | Data required to be in an array |
 
 **Example**  
 ```js
@@ -1177,18 +885,10 @@ each(function(state) {
 Creates an https agent for axios from the agentOptions key passed in params.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>data</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | data |
 
 
 * * *

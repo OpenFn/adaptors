@@ -34,24 +34,12 @@ Make a DELETE request
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Body, Query, Headers and Auth parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -69,24 +57,12 @@ Make a GET request
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Query, Headers and Authentication parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>object</code> | Query, Headers and Authentication parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -106,21 +82,11 @@ CSV-Parse for CSV conversion to JSON
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>target</td><td><code>String</code></td><td><p>string or local file with CSV data</p>
-</td>
-    </tr><tr>
-    <td>config</td><td><code>Object</code></td><td><p>csv-parse config object</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| target | <code>String</code> | string or local file with CSV data |
+| config | <code>Object</code> | csv-parse config object |
 
 **Example**  
 ```js
@@ -139,21 +105,11 @@ Parse XML with the Cheerio parser
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>body</td><td><code>String</code></td><td><p>data string to be parsed</p>
-</td>
-    </tr><tr>
-    <td>script</td><td><code>function</code></td><td><p>script for extracting data</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| body | <code>String</code> | data string to be parsed |
+| script | <code>function</code> | script for extracting data |
 
 **Example**  
 ```js
@@ -171,24 +127,12 @@ Make a PATCH request
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Body, Query, Headers and Auth parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -208,24 +152,12 @@ Make a POST request
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Body, Query, Headers and Authentication parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>object</code> | Body, Query, Headers and Authentication parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -245,24 +177,12 @@ Make a PUT request
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>path</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>params</td><td><code>object</code></td><td><p>Body, Query, Headers and Auth parameters</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>function</code></td><td><p>(Optional) Callback function</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -281,18 +201,10 @@ put('/myEndpoint', {
 Make a request using the 'request' node module. This module is deprecated.
 
 **Kind**: global function  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>params</td><td><code>object</code></td><td><p>Query, Headers and Authentication parameters</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Query, Headers and Authentication parameters |
 
 **Example**  
 ```js

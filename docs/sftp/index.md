@@ -25,18 +25,10 @@ Get a CSV and return a JSON array of strings for each item separated by the deli
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>filePath</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filePath | <code>string</code> | Path to resource |
 
 **Example**  
 ```js
@@ -54,21 +46,11 @@ Fetch a json file from an FTP server
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>filePath</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr><tr>
-    <td>encoding</td><td><code>string</code></td><td><p>Character encoding for the json</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filePath | <code>string</code> | Path to resource |
+| encoding | <code>string</code> | Character encoding for the json |
 
 **Example**  
 ```js
@@ -87,18 +69,10 @@ List files present in a directory
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>dirPath</td><td><code>string</code></td><td><p>Path to resource</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dirPath | <code>string</code> | Path to resource |
 
 **Example**  
 ```js
@@ -114,21 +88,11 @@ Convert JSON array of strings into a normalized object
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>options</td><td><code>options</code></td><td><p>Options passed to csvtojson parser</p>
-</td>
-    </tr><tr>
-    <td>callback</td><td><code>callback</code></td><td><p>Options passed to csvtojson parser</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>options</code> | Options passed to csvtojson parser |
+| callback | <code>callback</code> | Options passed to csvtojson parser |
 
 **Example**  
 ```js
@@ -144,24 +108,12 @@ Convert JSON to CSV and upload to an FTP server
 
 **Kind**: global function  
 **Access**: public  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>localFilePath</td><td><code>string</code></td><td><p>Data source for data to copy to the remote server.</p>
-</td>
-    </tr><tr>
-    <td>remoteFilePath</td><td><code>string</code></td><td><p>Path to the remote file to be created on the server.</p>
-</td>
-    </tr><tr>
-    <td>parsingOptions</td><td><code>object</code></td><td><p>Options which can be passed to adjust the read and write stream used in sending the data to the remote server</p>
-</td>
-    </tr>  </tbody>
-</table>
+
+| Param | Type | Description |
+| --- | --- | --- |
+| localFilePath | <code>string</code> | Data source for data to copy to the remote server. |
+| remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |
+| parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |
 
 **Example**  
 ```js
