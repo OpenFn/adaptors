@@ -1,6 +1,6 @@
-## postMessage
+<a name="postMessage"></a>
 
-postMessage(params) ⇒ <code>Operation</code>
+## postMessage(params) ⇒ <code>Operation</code>
 Post a message
 
 **Kind**: global function  

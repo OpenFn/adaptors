@@ -1,17 +1,20 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#createCollectionRequest">createCollectionRequest(data)</a></dt>
-<dt>
-    <a href="#createContact">createContact(data)</a></dt>
-<dt>
-    <a href="#createPayment">createPayment(data)</a></dt>
+<dt><a href="#createCollectionRequest">createCollectionRequest(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a collection request</p>
+</dd>
+<dt><a href="#createContact">createContact(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a contact</p>
+</dd>
+<dt><a href="#createPayment">createPayment(data)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a payment</p>
+</dd>
 </dl>
 
-## createCollectionRequest
+<a name="createCollectionRequest"></a>
 
-createCollectionRequest(data) ⇒ <code>Operation</code>
+## createCollectionRequest(data) ⇒ <code>Operation</code>
 Create a collection request
 
 **Kind**: global function  
@@ -37,9 +40,9 @@ execute(
 
 * * *
 
-## createContact
+<a name="createContact"></a>
 
-createContact(data) ⇒ <code>Operation</code>
+## createContact(data) ⇒ <code>Operation</code>
 Create a contact
 
 **Kind**: global function  
@@ -65,9 +68,9 @@ execute(
 
 * * *
 
-## createPayment
+<a name="createPayment"></a>
 
-createPayment(data) ⇒ <code>Operation</code>
+## createPayment(data) ⇒ <code>Operation</code>
 Create a payment
 
 **Kind**: global function  

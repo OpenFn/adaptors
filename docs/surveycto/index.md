@@ -1,6 +1,6 @@
-## fetchSubmissions
+<a name="fetchSubmissions"></a>
 
-fetchSubmissions(params) ⇒ <code>Operation</code>
+## fetchSubmissions(params) ⇒ <code>Operation</code>
 Make a GET request and POST it somewhere else
 
 **Kind**: global function  

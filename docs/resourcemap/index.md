@@ -1,6 +1,6 @@
-## submitSite
+<a name="submitSite"></a>
 
-submitSite(eventData) ⇒ <code>Operation</code>
+## submitSite(eventData) ⇒ <code>Operation</code>
 Create an event
 
 **Kind**: global function  

@@ -1,19 +1,24 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#clientPost">clientPost(formData)</a></dt>
-<dt>
-    <a href="#fetchReportData">fetchReportData(reportId, params, postUrl)</a></dt>
-<dt>
-    <a href="#submit">submit(formData)</a></dt>
-<dt>
-    <a href="#submitXls">submitXls(formData, params)</a></dt>
+<dt><a href="#clientPost">clientPost(formData)</a> ⇒ <code>State</code></dt>
+<dd><p>Performs a post request</p>
+</dd>
+<dt><a href="#fetchReportData">fetchReportData(reportId, params, postUrl)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a GET request to CommCare&#39;s Reports API
+and POST the response to somewhere else.</p>
+</dd>
+<dt><a href="#submit">submit(formData)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Submit form data</p>
+</dd>
+<dt><a href="#submitXls">submitXls(formData, params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Convert form data to xls then submit.</p>
+</dd>
 </dl>
 
-## clientPost
+<a name="clientPost"></a>
 
-clientPost(formData) ⇒ <code>State</code>
+## clientPost(formData) ⇒ <code>State</code>
 Performs a post request
 
 **Kind**: global function  
@@ -37,9 +42,9 @@ clientPost(formData)
 
 * * *
 
-## fetchReportData
+<a name="fetchReportData"></a>
 
-fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
+## fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
 Make a GET request to CommCare's Reports API
 and POST the response to somewhere else.
 
@@ -71,9 +76,9 @@ fetchReportData(reportId, params, postUrl)
 
 * * *
 
-## submit
+<a name="submit"></a>
 
-submit(formData) ⇒ <code>Operation</code>
+## submit(formData) ⇒ <code>Operation</code>
 Submit form data
 
 **Kind**: global function  
@@ -108,9 +113,9 @@ submit(
 
 * * *
 
-## submitXls
+<a name="submitXls"></a>
 
-submitXls(formData, params) ⇒ <code>Operation</code>
+## submitXls(formData, params) ⇒ <code>Operation</code>
 Convert form data to xls then submit.
 
 **Kind**: global function  

@@ -1,21 +1,26 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#createTask">createTask(params, callback)</a></dt>
-<dt>
-    <a href="#getTask">getTask(task_gid, params, callback)</a></dt>
-<dt>
-    <a href="#getTasks">getTasks(project_gid, params, callback)</a></dt>
-<dt>
-    <a href="#updateTask">updateTask(task_gid, params, callback)</a></dt>
-<dt>
-    <a href="#upsertTask">upsertTask(project_gid, params, callback)</a></dt>
+<dt><a href="#createTask">createTask(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a task.</p>
+</dd>
+<dt><a href="#getTask">getTask(task_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get a single task of a given project.</p>
+</dd>
+<dt><a href="#getTasks">getTasks(project_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get the list of tasks for a given project.</p>
+</dd>
+<dt><a href="#updateTask">updateTask(task_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update a specific task.</p>
+</dd>
+<dt><a href="#upsertTask">upsertTask(project_gid, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update or create a task.</p>
+</dd>
 </dl>
 
-## createTask
+<a name="createTask"></a>
 
-createTask(params, callback) ⇒ <code>Operation</code>
+## createTask(params, callback) ⇒ <code>Operation</code>
 Create a task.
 
 **Kind**: global function  
@@ -47,9 +52,9 @@ createTask(
 
 * * *
 
-## getTask
+<a name="getTask"></a>
 
-getTask(task_gid, params, callback) ⇒ <code>Operation</code>
+## getTask(task_gid, params, callback) ⇒ <code>Operation</code>
 Get a single task of a given project.
 
 **Kind**: global function  
@@ -83,9 +88,9 @@ getTask("task_gid",
 
 * * *
 
-## getTasks
+<a name="getTasks"></a>
 
-getTasks(project_gid, params, callback) ⇒ <code>Operation</code>
+## getTasks(project_gid, params, callback) ⇒ <code>Operation</code>
 Get the list of tasks for a given project.
 
 **Kind**: global function  
@@ -119,9 +124,9 @@ getTasks("project_gid",
 
 * * *
 
-## updateTask
+<a name="updateTask"></a>
 
-updateTask(task_gid, params, callback) ⇒ <code>Operation</code>
+## updateTask(task_gid, params, callback) ⇒ <code>Operation</code>
 Update a specific task.
 
 **Kind**: global function  
@@ -156,9 +161,9 @@ updateTask("task_gid",
 
 * * *
 
-## upsertTask
+<a name="upsertTask"></a>
 
-upsertTask(project_gid, params, callback) ⇒ <code>Operation</code>
+## upsertTask(project_gid, params, callback) ⇒ <code>Operation</code>
 Update or create a task.
 
 **Kind**: global function  

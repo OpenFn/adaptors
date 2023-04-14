@@ -1,6 +1,6 @@
-## fetch
+<a name="fetch"></a>
 
-fetch(params) ⇒ <code>Operation</code>
+## fetch(params) ⇒ <code>Operation</code>
 Fetch data from the Khan Academy API
 
 **Kind**: global function  

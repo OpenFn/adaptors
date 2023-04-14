@@ -1,6 +1,6 @@
-## request
+<a name="request"></a>
 
-request(options, callback) ⇒ <code>Operation</code>
+## request(options, callback) ⇒ <code>Operation</code>
 Make a POST request
 
 **Kind**: global function  

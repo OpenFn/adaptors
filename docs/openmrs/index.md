@@ -1,25 +1,32 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
-<dt>
-    <a href="#createEncounter">createEncounter(params)</a></dt>
-<dt>
-    <a href="#getPatient">getPatient(params)</a></dt>
-<dt>
-    <a href="#getPatients">getPatients(criteria, options)</a></dt>
-<dt>
-    <a href="#getPeople">getPeople(criteria, options)</a></dt>
-<dt>
-    <a href="#login">login(state)</a></dt>
-<dt>
-    <a href="#req">req(params, callback)</a></dt>
+<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Removes unserializable or confidential keys from the state.</p>
+</dd>
+<dt><a href="#createEncounter">createEncounter(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates an encounter</p>
+</dd>
+<dt><a href="#getPatient">getPatient(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Gets patient matching a uuid</p>
+</dd>
+<dt><a href="#getPatients">getPatients(criteria, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Gets patients matching criteria</p>
+</dd>
+<dt><a href="#getPeople">getPeople(criteria, options)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Gets people matching criteria</p>
+</dd>
+<dt><a href="#login">login(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Logs in to OpenMRS, gets a session token.</p>
+</dd>
+<dt><a href="#req">req(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a request to any OpenMRS endpoint and execute a callback</p>
+</dd>
 </dl>
 
-## cleanupState
+<a name="cleanupState"></a>
 
-cleanupState(state) ⇒ <code>State</code>
+## cleanupState(state) ⇒ <code>State</code>
 Removes unserializable or confidential keys from the state.
 
 **Kind**: global function  
@@ -42,9 +49,9 @@ cleanupState(state)
 
 * * *
 
-## createEncounter
+<a name="createEncounter"></a>
 
-createEncounter(params) ⇒ <code>Operation</code>
+## createEncounter(params) ⇒ <code>Operation</code>
 Creates an encounter
 
 **Kind**: global function  
@@ -69,9 +76,9 @@ execute(
 
 * * *
 
-## getPatient
+<a name="getPatient"></a>
 
-getPatient(params) ⇒ <code>Operation</code>
+## getPatient(params) ⇒ <code>Operation</code>
 Gets patient matching a uuid
 
 **Kind**: global function  
@@ -97,9 +104,9 @@ execute(
 
 * * *
 
-## getPatients
+<a name="getPatients"></a>
 
-getPatients(criteria, options) ⇒ <code>Operation</code>
+## getPatients(criteria, options) ⇒ <code>Operation</code>
 Gets patients matching criteria
 
 **Kind**: global function  
@@ -128,9 +135,9 @@ execute(
 
 * * *
 
-## getPeople
+<a name="getPeople"></a>
 
-getPeople(criteria, options) ⇒ <code>Operation</code>
+## getPeople(criteria, options) ⇒ <code>Operation</code>
 Gets people matching criteria
 
 **Kind**: global function  
@@ -161,9 +168,9 @@ execute(
 
 * * *
 
-## login
+<a name="login"></a>
 
-login(state) ⇒ <code>State</code>
+## login(state) ⇒ <code>State</code>
 Logs in to OpenMRS, gets a session token.
 
 **Kind**: global function  
@@ -187,9 +194,9 @@ login(state)
 
 * * *
 
-## req
+<a name="req"></a>
 
-req(params, callback) ⇒ <code>Operation</code>
+## req(params, callback) ⇒ <code>Operation</code>
 Make a request to any OpenMRS endpoint and execute a callback
 
 **Kind**: global function  

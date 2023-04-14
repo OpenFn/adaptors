@@ -1,15 +1,17 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#create">create(path, params, callback)</a></dt>
-<dt>
-    <a href="#createTransactionBundle">createTransactionBundle(params, callback)</a></dt>
+<dt><a href="#create">create(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates a resource in a destination system using a POST request</p>
+</dd>
+<dt><a href="#createTransactionBundle">createTransactionBundle(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates a transactionBundle for HAPI FHIR</p>
+</dd>
 </dl>
 
-## create
+<a name="create"></a>
 
-create(path, params, callback) ⇒ <code>Operation</code>
+## create(path, params, callback) ⇒ <code>Operation</code>
 Creates a resource in a destination system using a POST request
 
 **Kind**: global function  
@@ -40,9 +42,9 @@ create("/endpoint", {"foo": "bar"})
 
 * * *
 
-## createTransactionBundle
+<a name="createTransactionBundle"></a>
 
-createTransactionBundle(params, callback) ⇒ <code>Operation</code>
+## createTransactionBundle(params, callback) ⇒ <code>Operation</code>
 Creates a transactionBundle for HAPI FHIR
 
 **Kind**: global function  

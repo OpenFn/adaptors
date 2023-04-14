@@ -1,6 +1,6 @@
-## sendSMS
+<a name="sendSMS"></a>
 
-sendSMS(params) ⇒ <code>Operation</code>
+## sendSMS(params) ⇒ <code>Operation</code>
 Sends an SMS message to a specific phone number
 
 **Kind**: global function  

@@ -1,27 +1,35 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#del">del(path, params, callback)</a></dt>
-<dt>
-    <a href="#get">get(path, params, callback)</a></dt>
-<dt>
-    <a href="#parseCSV">parseCSV(target, config)</a></dt>
-<dt>
-    <a href="#parseXML">parseXML(body, script)</a></dt>
-<dt>
-    <a href="#patch">patch(path, params, callback)</a></dt>
-<dt>
-    <a href="#post">post(path, params, callback)</a></dt>
-<dt>
-    <a href="#put">put(path, params, callback)</a></dt>
-<dt>
-    <a href="#request">request(params)</a></dt>
+<dt><a href="#del">del(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a DELETE request</p>
+</dd>
+<dt><a href="#get">get(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a GET request</p>
+</dd>
+<dt><a href="#parseCSV">parseCSV(target, config)</a> ⇒ <code>Operation</code></dt>
+<dd><p>CSV-Parse for CSV conversion to JSON</p>
+</dd>
+<dt><a href="#parseXML">parseXML(body, script)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Parse XML with the Cheerio parser</p>
+</dd>
+<dt><a href="#patch">patch(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a PATCH request</p>
+</dd>
+<dt><a href="#post">post(path, params, callback)</a> ⇒ <code>operation</code></dt>
+<dd><p>Make a POST request</p>
+</dd>
+<dt><a href="#put">put(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a PUT request</p>
+</dd>
+<dt><a href="#request">request(params)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Make a request using the &#39;request&#39; node module. This module is deprecated.</p>
+</dd>
 </dl>
 
-## del
+<a name="del"></a>
 
-del(path, params, callback) ⇒ <code>Operation</code>
+## del(path, params, callback) ⇒ <code>Operation</code>
 Make a DELETE request
 
 **Kind**: global function  
@@ -54,9 +62,9 @@ del(`/myendpoint/${state => state.data.id}`, {
 
 * * *
 
-## get
+<a name="get"></a>
 
-get(path, params, callback) ⇒ <code>Operation</code>
+## get(path, params, callback) ⇒ <code>Operation</code>
 Make a GET request
 
 **Kind**: global function  
@@ -91,9 +99,9 @@ get('/myEndpoint', {
 
 * * *
 
-## parseCSV
+<a name="parseCSV"></a>
 
-parseCSV(target, config) ⇒ <code>Operation</code>
+## parseCSV(target, config) ⇒ <code>Operation</code>
 CSV-Parse for CSV conversion to JSON
 
 **Kind**: global function  
@@ -124,9 +132,9 @@ parseCSV("/home/user/someData.csv", {
 
 * * *
 
-## parseXML
+<a name="parseXML"></a>
 
-parseXML(body, script) ⇒ <code>Operation</code>
+## parseXML(body, script) ⇒ <code>Operation</code>
 Parse XML with the Cheerio parser
 
 **Kind**: global function  
@@ -156,9 +164,9 @@ parseXML(body, function($){
 
 * * *
 
-## patch
+<a name="patch"></a>
 
-patch(path, params, callback) ⇒ <code>Operation</code>
+## patch(path, params, callback) ⇒ <code>Operation</code>
 Make a PATCH request
 
 **Kind**: global function  
@@ -193,9 +201,9 @@ patch('/myEndpoint', {
 
 * * *
 
-## post
+<a name="post"></a>
 
-post(path, params, callback) ⇒ <code>operation</code>
+## post(path, params, callback) ⇒ <code>operation</code>
 Make a POST request
 
 **Kind**: global function  
@@ -230,9 +238,9 @@ post('/myEndpoint', {
 
 * * *
 
-## put
+<a name="put"></a>
 
-put(path, params, callback) ⇒ <code>Operation</code>
+## put(path, params, callback) ⇒ <code>Operation</code>
 Make a PUT request
 
 **Kind**: global function  
@@ -267,9 +275,9 @@ put('/myEndpoint', {
 
 * * *
 
-## request
+<a name="request"></a>
 
-request(params) ⇒ <code>Operation</code>
+## request(params) ⇒ <code>Operation</code>
 Make a request using the 'request' node module. This module is deprecated.
 
 **Kind**: global function  

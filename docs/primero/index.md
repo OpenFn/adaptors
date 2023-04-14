@@ -1,39 +1,78 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
-<dt>
-    <a href="#createCase">createCase(params, callback)</a></dt>
-<dt>
-    <a href="#createReferrals">createReferrals(params, callback)</a></dt>
-<dt>
-    <a href="#generateAuthString">generateAuthString(state)</a></dt>
-<dt>
-    <a href="#getCases">getCases(query, options, callback)</a></dt>
-<dt>
-    <a href="#getForms">getForms(query, callback)</a></dt>
-<dt>
-    <a href="#getLocations">getLocations(query, callback)</a></dt>
-<dt>
-    <a href="#getLookups">getLookups(query, callback)</a></dt>
-<dt>
-    <a href="#getReferrals">getReferrals(params, callback)</a></dt>
-<dt>
-    <a href="#login">login(state)</a></dt>
-<dt>
-    <a href="#queryHandler">queryHandler(state, params, callback)</a></dt>
-<dt>
-    <a href="#updateCase">updateCase(id, params, callback)</a></dt>
-<dt>
-    <a href="#updateReferral">updateReferral(params, callback)</a></dt>
-<dt>
-    <a href="#upsertCase">upsertCase(params, callback)</a></dt>
+<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Removes unserializable keys from the state.</p>
+</dd>
+<dt><a href="#createCase">createCase(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a new case in Primero</p>
+<p>Use this function to create a new case in Primero based on a set of Data.</p>
+</dd>
+<dt><a href="#createReferrals">createReferrals(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create referrals in Primero</p>
+<p>Use this function to bulk refer to one or multiple cases from Primero to a single user</p>
+</dd>
+<dt><a href="#generateAuthString">generateAuthString(state)</a> ⇒ <code>string</code></dt>
+<dd><p>Generate an auth string to support multiple types of auth credentials.</p>
+</dd>
+<dt><a href="#getCases">getCases(query, options, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get cases from Primero</p>
+<p>Use this function to get cases from Primero based on a set of query parameters.
+Note that in many implementations, the <code>remote</code> attribute should be set to <code>true</code> to ensure that only cases marked for remote access will be retrieved.
+You can specify a <code>case_id</code> value to fetch a unique case and a query string to filter result.</p>
+</dd>
+<dt><a href="#getForms">getForms(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get forms from Primero</p>
+<p>Use this function to get forms from Primero that are accessible to this user based on a set of query parameters.
+The user can filter the form list by record type and module.</p>
+</dd>
+<dt><a href="#getLocations">getLocations(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get locations from Primero</p>
+<p>Use this function to get a paginated list of all locations that are accessible to this user from Primero.
+Note: You can specify a <code>per</code> value to fetch records per page(Defaults to 20).
+Also you can specify <code>page</code> value to fetch pagination (Defaults to 1).
+Another parameter is <code>hierarchy: true</code> (Defaults to false)</p>
+</dd>
+<dt><a href="#getLookups">getLookups(query, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get lookups from Primero</p>
+<p>Use this function to get a paginated list of all lookups that are accessible to this user from Primero.
+Note: You can specify a <code>per</code> value to fetch records per page(Defaults to 20).
+Also you can specify <code>page</code> value to fetch pagination (Defaults to 1)</p>
+</dd>
+<dt><a href="#getReferrals">getReferrals(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Get referrals for a specific case in Primero</p>
+<p>Use this function to get the list of referrals of one case from Primero.
+The search can be done using either <code>record id</code> or <code>case id</code>.</p>
+</dd>
+<dt><a href="#login">login(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Logs in to Primero.</p>
+</dd>
+<dt><a href="#queryHandler">queryHandler(state, params, callback)</a> ⇒ <code>State</code></dt>
+<dd><p>Execute custom query</p>
+</dd>
+<dt><a href="#updateCase">updateCase(id, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update an existing case in Primero</p>
+<p>Use this function to update an existing case from Primero.
+In this implementation, the function uses a case ID to check for the case to update,
+Then merge the values submitted in this call into an existing case.
+Fields not specified in this request will not be modified.
+For nested subform fields, the subform arrays will be recursively merged,
+keeping both the existing values and appending the new</p>
+</dd>
+<dt><a href="#updateReferral">updateReferral(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Update a single referral for a specific case in Primero</p>
+</dd>
+<dt><a href="#upsertCase">upsertCase(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Upsert case to Primero</p>
+<p>Use this function to update an existing case from Primero or to create it otherwise.
+In this implementation, we first fetch the list of cases,
+then we check if the case exist before choosing the right operation to do.</p>
+</dd>
 </dl>
 
-## cleanupState
+<a name="cleanupState"></a>
 
-cleanupState(state) ⇒ <code>State</code>
+## cleanupState(state) ⇒ <code>State</code>
 Removes unserializable keys from the state.
 
 **Kind**: global function  
@@ -56,9 +95,9 @@ cleanupState(state)
 
 * * *
 
-## createCase
+<a name="createCase"></a>
 
-createCase(params, callback) ⇒ <code>Operation</code>
+## createCase(params, callback) ⇒ <code>Operation</code>
 Create a new case in Primero
 
 Use this function to create a new case in Primero based on a set of Data.
@@ -94,9 +133,9 @@ createCase({
 
 * * *
 
-## createReferrals
+<a name="createReferrals"></a>
 
-createReferrals(params, callback) ⇒ <code>Operation</code>
+## createReferrals(params, callback) ⇒ <code>Operation</code>
 Create referrals in Primero
 
 Use this function to bulk refer to one or multiple cases from Primero to a single user
@@ -135,9 +174,9 @@ createReferrals({
 
 * * *
 
-## generateAuthString
+<a name="generateAuthString"></a>
 
-generateAuthString(state) ⇒ <code>string</code>
+## generateAuthString(state) ⇒ <code>string</code>
 Generate an auth string to support multiple types of auth credentials.
 
 **Kind**: global function  
@@ -160,9 +199,9 @@ generateAuthString(state)
 
 * * *
 
-## getCases
+<a name="getCases"></a>
 
-getCases(query, options, callback) ⇒ <code>Operation</code>
+## getCases(query, options, callback) ⇒ <code>Operation</code>
 Get cases from Primero
 
 Use this function to get cases from Primero based on a set of query parameters.
@@ -207,9 +246,9 @@ getCases({
 
 * * *
 
-## getForms
+<a name="getForms"></a>
 
-getForms(query, callback) ⇒ <code>Operation</code>
+## getForms(query, callback) ⇒ <code>Operation</code>
 Get forms from Primero
 
 Use this function to get forms from Primero that are accessible to this user based on a set of query parameters.
@@ -246,9 +285,9 @@ getForms({
 
 * * *
 
-## getLocations
+<a name="getLocations"></a>
 
-getLocations(query, callback) ⇒ <code>Operation</code>
+## getLocations(query, callback) ⇒ <code>Operation</code>
 Get locations from Primero
 
 Use this function to get a paginated list of all locations that are accessible to this user from Primero.
@@ -284,9 +323,9 @@ getLocations({
 
 * * *
 
-## getLookups
+<a name="getLookups"></a>
 
-getLookups(query, callback) ⇒ <code>Operation</code>
+## getLookups(query, callback) ⇒ <code>Operation</code>
 Get lookups from Primero
 
 Use this function to get a paginated list of all lookups that are accessible to this user from Primero.
@@ -321,9 +360,9 @@ getLookups({
 
 * * *
 
-## getReferrals
+<a name="getReferrals"></a>
 
-getReferrals(params, callback) ⇒ <code>Operation</code>
+## getReferrals(params, callback) ⇒ <code>Operation</code>
 Get referrals for a specific case in Primero
 
 Use this function to get the list of referrals of one case from Primero.
@@ -363,9 +402,9 @@ getReferrals({
 
 * * *
 
-## login
+<a name="login"></a>
 
-login(state) ⇒ <code>State</code>
+## login(state) ⇒ <code>State</code>
 Logs in to Primero.
 
 **Kind**: global function  
@@ -389,9 +428,9 @@ login(state)
 
 * * *
 
-## queryHandler
+<a name="queryHandler"></a>
 
-queryHandler(state, params, callback) ⇒ <code>State</code>
+## queryHandler(state, params, callback) ⇒ <code>State</code>
 Execute custom query
 
 **Kind**: global function  
@@ -414,9 +453,9 @@ Execute custom query
 
 * * *
 
-## updateCase
+<a name="updateCase"></a>
 
-updateCase(id, params, callback) ⇒ <code>Operation</code>
+## updateCase(id, params, callback) ⇒ <code>Operation</code>
 Update an existing case in Primero
 
 Use this function to update an existing case from Primero.
@@ -460,9 +499,9 @@ updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
 
 * * *
 
-## updateReferral
+<a name="updateReferral"></a>
 
-updateReferral(params, callback) ⇒ <code>Operation</code>
+## updateReferral(params, callback) ⇒ <code>Operation</code>
 Update a single referral for a specific case in Primero
 
 **Kind**: global function  
@@ -495,9 +534,9 @@ updateReferral({
 
 * * *
 
-## upsertCase
+<a name="upsertCase"></a>
 
-upsertCase(params, callback) ⇒ <code>Operation</code>
+## upsertCase(params, callback) ⇒ <code>Operation</code>
 Upsert case to Primero
 
 Use this function to update an existing case from Primero or to create it otherwise.

@@ -1,15 +1,17 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#create">create(path, params, callback)</a></dt>
-<dt>
-    <a href="#createPatient">createPatient(params, callback)</a></dt>
+<dt><a href="#create">create(path, params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Creates a fictional resource in a fictional destination system using a POST request</p>
+</dd>
+<dt><a href="#createPatient">createPatient(params, callback)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Create a fictional patient in a fictional universe with a fictional REST api</p>
+</dd>
 </dl>
 
-## create
+<a name="create"></a>
 
-create(path, params, callback) ⇒ <code>Operation</code>
+## create(path, params, callback) ⇒ <code>Operation</code>
 Creates a fictional resource in a fictional destination system using a POST request
 
 **Kind**: global function  
@@ -40,9 +42,9 @@ create("/endpoint", {"foo": "bar"})
 
 * * *
 
-## createPatient
+<a name="createPatient"></a>
 
-createPatient(params, callback) ⇒ <code>Operation</code>
+## createPatient(params, callback) ⇒ <code>Operation</code>
 Create a fictional patient in a fictional universe with a fictional REST api
 
 **Kind**: global function  

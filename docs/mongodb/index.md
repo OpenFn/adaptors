@@ -1,23 +1,30 @@
 ## Functions
 
 <dl>
-<dt>
-    <a href="#connect">connect(state)</a></dt>
-<dt>
-    <a href="#disconnect">disconnect(state)</a></dt>
-<dt>
-    <a href="#execute">execute(operations)</a></dt>
-<dt>
-    <a href="#findDocuments">findDocuments(params)</a></dt>
-<dt>
-    <a href="#insertDocuments">insertDocuments(params)</a></dt>
-<dt>
-    <a href="#updateDocument">updateDocument(params)</a></dt>
+<dt><a href="#connect">connect(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Connects to a mongoDb instance</p>
+</dd>
+<dt><a href="#disconnect">disconnect(state)</a> ⇒ <code>State</code></dt>
+<dd><p>Removes connection from the state.</p>
+</dd>
+<dt><a href="#execute">execute(operations)</a> ⇒ <code>Operation</code></dt>
+<dd><p>Execute a sequence of operations.
+Wraps <code>@openfn/language-common/execute</code>, and prepends initial state for http.</p>
+</dd>
+<dt><a href="#findDocuments">findDocuments(params)</a> ⇒ <code>State</code></dt>
+<dd><p>Find documents in a mongoDb collection</p>
+</dd>
+<dt><a href="#insertDocuments">insertDocuments(params)</a> ⇒ <code>State</code></dt>
+<dd><p>Inserts documents into a mongoDb collection</p>
+</dd>
+<dt><a href="#updateDocument">updateDocument(params)</a> ⇒ <code>State</code></dt>
+<dd><p>Updates document (optionally upserting) into a mongoDb collection</p>
+</dd>
 </dl>
 
-## connect
+<a name="connect"></a>
 
-connect(state) ⇒ <code>State</code>
+## connect(state) ⇒ <code>State</code>
 Connects to a mongoDb instance
 
 **Kind**: global function  
@@ -41,9 +48,9 @@ connect(state)
 
 * * *
 
-## disconnect
+<a name="disconnect"></a>
 
-disconnect(state) ⇒ <code>State</code>
+## disconnect(state) ⇒ <code>State</code>
 Removes connection from the state.
 
 **Kind**: global function  
@@ -66,9 +73,9 @@ disconnect(state)
 
 * * *
 
-## execute
+<a name="execute"></a>
 
-execute(operations) ⇒ <code>Operation</code>
+## execute(operations) ⇒ <code>Operation</code>
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
@@ -96,9 +103,9 @@ execute(
 
 * * *
 
-## findDocuments
+<a name="findDocuments"></a>
 
-findDocuments(params) ⇒ <code>State</code>
+## findDocuments(params) ⇒ <code>State</code>
 Find documents in a mongoDb collection
 
 **Kind**: global function  
@@ -126,9 +133,9 @@ findDocuments({
 
 * * *
 
-## insertDocuments
+<a name="insertDocuments"></a>
 
-insertDocuments(params) ⇒ <code>State</code>
+## insertDocuments(params) ⇒ <code>State</code>
 Inserts documents into a mongoDb collection
 
 **Kind**: global function  
@@ -156,9 +163,9 @@ insertDocuments({
 
 * * *
 
-## updateDocument
+<a name="updateDocument"></a>
 
-updateDocument(params) ⇒ <code>State</code>
+## updateDocument(params) ⇒ <code>State</code>
 Updates document (optionally upserting) into a mongoDb collection
 
 **Kind**: global function  

@@ -1,6 +1,6 @@
-## addRow
+<a name="addRow"></a>
 
-addRow(db, table, rowData) ⇒ <code>Operation</code>
+## addRow(db, table, rowData) ⇒ <code>Operation</code>
 To add a row data to a database table
 
 **Kind**: global function  
