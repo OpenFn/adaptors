@@ -1,6 +1,6 @@
-<a name="appendValues"></a>
+## appendValues
 
-## appendValues(params) ⇒ <code>Operation</code>
+appendValues(params) ⇒ <code>Operation</code>
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
 

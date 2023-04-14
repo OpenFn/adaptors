@@ -1,23 +1,19 @@
 ## Functions
 
 <dl>
-<dt><a href="#addContact">addContact(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Adds a new contact to RapidPro</p>
-</dd>
-<dt><a href="#sendBroadcast">sendBroadcast(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Sends a message to a list of contacts and/or URNs</p>
-</dd>
-<dt><a href="#startFlow">startFlow(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Start a RapidPro flow for a number of contacts</p>
-</dd>
-<dt><a href="#upsertContact">upsertContact(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upserts a contact to RapidPro by URN</p>
-</dd>
+<dt>
+    <a href="#addContact">addContact(params, callback)</a></dt>
+<dt>
+    <a href="#sendBroadcast">sendBroadcast(params, callback)</a></dt>
+<dt>
+    <a href="#startFlow">startFlow(params, callback)</a></dt>
+<dt>
+    <a href="#upsertContact">upsertContact(params, callback)</a></dt>
 </dl>
 
-<a name="addContact"></a>
+## addContact
 
-## addContact(params, callback) ⇒ <code>Operation</code>
+addContact(params, callback) ⇒ <code>Operation</code>
 Adds a new contact to RapidPro
 
 **Kind**: global function  
@@ -39,9 +35,9 @@ addContact({
 
 * * *
 
-<a name="sendBroadcast"></a>
+## sendBroadcast
 
-## sendBroadcast(params, callback) ⇒ <code>Operation</code>
+sendBroadcast(params, callback) ⇒ <code>Operation</code>
 Sends a message to a list of contacts and/or URNs
 
 **Kind**: global function  
@@ -63,9 +59,9 @@ sendBroadcast({
 
 * * *
 
-<a name="startFlow"></a>
+## startFlow
 
-## startFlow(params, callback) ⇒ <code>Operation</code>
+startFlow(params, callback) ⇒ <code>Operation</code>
 Start a RapidPro flow for a number of contacts
 
 **Kind**: global function  
@@ -87,9 +83,9 @@ startFlow({
 
 * * *
 
-<a name="upsertContact"></a>
+## upsertContact
 
-## upsertContact(params, callback) ⇒ <code>Operation</code>
+upsertContact(params, callback) ⇒ <code>Operation</code>
 Upserts a contact to RapidPro by URN
 
 **Kind**: global function  

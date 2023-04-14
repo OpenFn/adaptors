@@ -1,17 +1,15 @@
 ## Functions
 
 <dl>
-<dt><a href="#load">load(dirPath, projectId, datasetId, tableId, loadOptions, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Load files to BigQuery</p>
-</dd>
-<dt><a href="#parseCSV">parseCSV(target, config)</a> ⇒ <code>Operation</code></dt>
-<dd><p>CSV-Parse for CSV conversion to JSON</p>
-</dd>
+<dt>
+    <a href="#load">load(dirPath, projectId, datasetId, tableId, loadOptions, callback)</a></dt>
+<dt>
+    <a href="#parseCSV">parseCSV(target, config)</a></dt>
 </dl>
 
-<a name="load"></a>
+## load
 
-## load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
+load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
 Load files to BigQuery
 
 **Kind**: global function  
@@ -45,9 +43,9 @@ load(
 
 * * *
 
-<a name="parseCSV"></a>
+## parseCSV
 
-## parseCSV(target, config) ⇒ <code>Operation</code>
+parseCSV(target, config) ⇒ <code>Operation</code>
 CSV-Parse for CSV conversion to JSON
 
 **Kind**: global function  

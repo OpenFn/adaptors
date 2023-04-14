@@ -1,20 +1,17 @@
 ## Functions
 
 <dl>
-<dt><a href="#changesApi">changesApi(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Access the CouchDB Changes API</p>
-</dd>
-<dt><a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Access form submissions and post them as JSON.</p>
-</dd>
-<dt><a href="#pickFormData">pickFormData(formId)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Select submissions for a specific form</p>
-</dd>
+<dt>
+    <a href="#changesApi">changesApi(params, callback)</a></dt>
+<dt>
+    <a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
+<dt>
+    <a href="#pickFormData">pickFormData(formId)</a></dt>
 </dl>
 
-<a name="changesApi"></a>
+## changesApi
 
-## changesApi(params, callback) ⇒ <code>Operation</code>
+changesApi(params, callback) ⇒ <code>Operation</code>
 Access the CouchDB Changes API
 
 **Kind**: global function  
@@ -32,9 +29,9 @@ changesApi(params, callback)
 
 * * *
 
-<a name="fetchSubmissions"></a>
+## fetchSubmissions
 
-## fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
+fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
 Access form submissions and post them as JSON.
 
 **Kind**: global function  
@@ -57,9 +54,9 @@ fetchSubmissions(
 
 * * *
 
-<a name="pickFormData"></a>
+## pickFormData
 
-## pickFormData(formId) ⇒ <code>Operation</code>
+pickFormData(formId) ⇒ <code>Operation</code>
 Select submissions for a specific form
 
 **Kind**: global function  

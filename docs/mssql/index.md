@@ -1,54 +1,39 @@
 ## Functions
 
 <dl>
-<dt><a href="#addRowsToRefs">addRowsToRefs(state, rows)</a> ⇒ <code>State</code></dt>
-<dd><p>Sets the returned rows from a query as the first item in the state.references
-array, leaving state.data unchanged between operations.</p>
-</dd>
-<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Removes unserializable keys from the state.</p>
-</dd>
-<dt><a href="#createConnection">createConnection(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Creates a connection.</p>
-</dd>
-<dt><a href="#describeTable">describeTable(tableName, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>List the columns of a table in a database.</p>
-</dd>
-<dt><a href="#findValue">findValue(filter)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch a uuid key given a condition</p>
-</dd>
-<dt><a href="#flattenRows">flattenRows(state, rows)</a> ⇒ <code>State</code></dt>
-<dd><p>Returns a flatten object of the rows (array of arrays) with rowCount.</p>
-</dd>
-<dt><a href="#insert">insert(table, record, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert a record</p>
-</dd>
-<dt><a href="#insertMany">insertMany(table, records, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert many records, using the keys of the first as the column template</p>
-</dd>
-<dt><a href="#insertTable">insertTable(tableName, columns, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Create a table in database when given an array of columns and a table_name.</p>
-</dd>
-<dt><a href="#modifyTable">modifyTable(tableName, columns, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Alter an existing table in the database.</p>
-</dd>
-<dt><a href="#sql">sql(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute an SQL statement</p>
-</dd>
-<dt><a href="#upsert">upsert(table, uuid, record, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert or update a record using SQL MERGE</p>
-</dd>
-<dt><a href="#upsertIf">upsertIf(logical, table, uuid, record, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert or update a record based on a logical condition using ON CONFLICT UPDATE</p>
-</dd>
-<dt><a href="#upsertMany">upsertMany(table, uuid, records, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert or update multiple records using ON CONFLICT UPDATE and excluded</p>
-</dd>
+<dt>
+    <a href="#addRowsToRefs">addRowsToRefs(state, rows)</a></dt>
+<dt>
+    <a href="#cleanupState">cleanupState(state)</a></dt>
+<dt>
+    <a href="#createConnection">createConnection(state)</a></dt>
+<dt>
+    <a href="#describeTable">describeTable(tableName, options)</a></dt>
+<dt>
+    <a href="#findValue">findValue(filter)</a></dt>
+<dt>
+    <a href="#flattenRows">flattenRows(state, rows)</a></dt>
+<dt>
+    <a href="#insert">insert(table, record, options)</a></dt>
+<dt>
+    <a href="#insertMany">insertMany(table, records, options)</a></dt>
+<dt>
+    <a href="#insertTable">insertTable(tableName, columns, options)</a></dt>
+<dt>
+    <a href="#modifyTable">modifyTable(tableName, columns, options)</a></dt>
+<dt>
+    <a href="#sql">sql(params)</a></dt>
+<dt>
+    <a href="#upsert">upsert(table, uuid, record, options)</a></dt>
+<dt>
+    <a href="#upsertIf">upsertIf(logical, table, uuid, record, options)</a></dt>
+<dt>
+    <a href="#upsertMany">upsertMany(table, uuid, records, options)</a></dt>
 </dl>
 
-<a name="addRowsToRefs"></a>
+## addRowsToRefs
 
-## addRowsToRefs(state, rows) ⇒ <code>State</code>
+addRowsToRefs(state, rows) ⇒ <code>State</code>
 Sets the returned rows from a query as the first item in the state.references
 array, leaving state.data unchanged between operations.
 
@@ -62,9 +47,9 @@ array, leaving state.data unchanged between operations.
 
 * * *
 
-<a name="cleanupState"></a>
+## cleanupState
 
-## cleanupState(state) ⇒ <code>State</code>
+cleanupState(state) ⇒ <code>State</code>
 Removes unserializable keys from the state.
 
 **Kind**: global function  
@@ -80,9 +65,9 @@ cleanupState(state)
 
 * * *
 
-<a name="createConnection"></a>
+## createConnection
 
-## createConnection(state) ⇒ <code>State</code>
+createConnection(state) ⇒ <code>State</code>
 Creates a connection.
 
 **Kind**: global function  
@@ -98,9 +83,9 @@ createConnection(state)
 
 * * *
 
-<a name="describeTable"></a>
+## describeTable
 
-## describeTable(tableName, options) ⇒ <code>Operation</code>
+describeTable(tableName, options) ⇒ <code>Operation</code>
 List the columns of a table in a database.
 
 **Kind**: global function  
@@ -118,9 +103,9 @@ describeTable('clinic_visits')
 
 * * *
 
-<a name="findValue"></a>
+## findValue
 
-## findValue(filter) ⇒ <code>Operation</code>
+findValue(filter) ⇒ <code>Operation</code>
 Fetch a uuid key given a condition
 
 **Kind**: global function  
@@ -142,9 +127,9 @@ findValue({
 
 * * *
 
-<a name="flattenRows"></a>
+## flattenRows
 
-## flattenRows(state, rows) ⇒ <code>State</code>
+flattenRows(state, rows) ⇒ <code>State</code>
 Returns a flatten object of the rows (array of arrays) with rowCount.
 
 **Kind**: global function  
@@ -157,9 +142,9 @@ Returns a flatten object of the rows (array of arrays) with rowCount.
 
 * * *
 
-<a name="insert"></a>
+## insert
 
-## insert(table, record, options) ⇒ <code>Operation</code>
+insert(table, record, options) ⇒ <code>Operation</code>
 Insert a record
 
 **Kind**: global function  
@@ -178,9 +163,9 @@ insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
 
 * * *
 
-<a name="insertMany"></a>
+## insertMany
 
-## insertMany(table, records, options) ⇒ <code>Operation</code>
+insertMany(table, records, options) ⇒ <code>Operation</code>
 Insert many records, using the keys of the first as the column template
 
 **Kind**: global function  
@@ -199,9 +184,9 @@ insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
 
 * * *
 
-<a name="insertTable"></a>
+## insertTable
 
-## insertTable(tableName, columns, options) ⇒ <code>Operation</code>
+insertTable(tableName, columns, options) ⇒ <code>Operation</code>
 Create a table in database when given an array of columns and a table_name.
 
 **Kind**: global function  
@@ -227,9 +212,9 @@ insertTable('table_name', state => state.data.map(
 
 * * *
 
-<a name="modifyTable"></a>
+## modifyTable
 
-## modifyTable(tableName, columns, options) ⇒ <code>Operation</code>
+modifyTable(tableName, columns, options) ⇒ <code>Operation</code>
 Alter an existing table in the database.
 
 **Kind**: global function  
@@ -255,9 +240,9 @@ modifyTable('table_name', state => state.data.map(
 
 * * *
 
-<a name="sql"></a>
+## sql
 
-## sql(params) ⇒ <code>Operation</code>
+sql(params) ⇒ <code>Operation</code>
 Execute an SQL statement
 
 **Kind**: global function  
@@ -274,9 +259,9 @@ sql({ query, options })
 
 * * *
 
-<a name="upsert"></a>
+## upsert
 
-## upsert(table, uuid, record, options) ⇒ <code>Operation</code>
+upsert(table, uuid, record, options) ⇒ <code>Operation</code>
 Insert or update a record using SQL MERGE
 
 **Kind**: global function  
@@ -297,9 +282,9 @@ upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false
 
 * * *
 
-<a name="upsertIf"></a>
+## upsertIf
 
-## upsertIf(logical, table, uuid, record, options) ⇒ <code>Operation</code>
+upsertIf(logical, table, uuid, record, options) ⇒ <code>Operation</code>
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
 **Kind**: global function  
@@ -326,9 +311,9 @@ upsertIf(
 
 * * *
 
-<a name="upsertMany"></a>
+## upsertMany
 
-## upsertMany(table, uuid, records, options) ⇒ <code>Operation</code>
+upsertMany(table, uuid, records, options) ⇒ <code>Operation</code>
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
 **Kind**: global function  

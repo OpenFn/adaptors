@@ -1,26 +1,21 @@
 ## Functions
 
 <dl>
-<dt><a href="#insert">insert(table, fields)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert a record</p>
-</dd>
-<dt><a href="#query">query(options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a SQL statement</p>
-</dd>
-<dt><a href="#sqlString">sqlString(queryString)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute a SQL statement</p>
-</dd>
-<dt><a href="#upsert">upsert(table, fields)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert or Update a record if matched</p>
-</dd>
-<dt><a href="#upsertMany">upsertMany(table, data)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Insert or update multiple records using ON DUPLICATE KEY</p>
-</dd>
+<dt>
+    <a href="#insert">insert(table, fields)</a></dt>
+<dt>
+    <a href="#query">query(options)</a></dt>
+<dt>
+    <a href="#sqlString">sqlString(queryString)</a></dt>
+<dt>
+    <a href="#upsert">upsert(table, fields)</a></dt>
+<dt>
+    <a href="#upsertMany">upsertMany(table, data)</a></dt>
 </dl>
 
-<a name="insert"></a>
+## insert
 
-## insert(table, fields) ⇒ <code>Operation</code>
+insert(table, fields) ⇒ <code>Operation</code>
 Insert a record
 
 **Kind**: global function  
@@ -41,9 +36,9 @@ execute(
 
 * * *
 
-<a name="query"></a>
+## query
 
-## query(options) ⇒ <code>Operation</code>
+query(options) ⇒ <code>Operation</code>
 Execute a SQL statement
 
 **Kind**: global function  
@@ -61,9 +56,9 @@ execute(
 
 * * *
 
-<a name="sqlString"></a>
+## sqlString
 
-## sqlString(queryString) ⇒ <code>Operation</code>
+sqlString(queryString) ⇒ <code>Operation</code>
 Execute a SQL statement
 
 **Kind**: global function  
@@ -81,9 +76,9 @@ execute(
 
 * * *
 
-<a name="upsert"></a>
+## upsert
 
-## upsert(table, fields) ⇒ <code>Operation</code>
+upsert(table, fields) ⇒ <code>Operation</code>
 Insert or Update a record if matched
 
 **Kind**: global function  
@@ -104,9 +99,9 @@ execute(
 
 * * *
 
-<a name="upsertMany"></a>
+## upsertMany
 
-## upsertMany(table, data) ⇒ <code>Operation</code>
+upsertMany(table, data) ⇒ <code>Operation</code>
 Insert or update multiple records using ON DUPLICATE KEY
 
 **Kind**: global function  

@@ -1,149 +1,81 @@
 ## Functions
 
 <dl>
-<dt><a href="#alterState">alterState(func)</a> ⇒ <code>Operation</code></dt>
-<dd><p>alias for &quot;fn()&quot;</p>
-</dd>
-<dt><a href="#arrayToString">arrayToString(arr, separator)</a> ⇒ <code>string</code></dt>
-<dd><p>Turns an array into a string, separated by X.</p>
-</dd>
-<dt><a href="#asData">asData(data, state)</a> ⇒ <code>array</code></dt>
-<dd><p>Simple switcher allowing other expressions to use either a JSONPath or
-object literals as a data source.</p>
-<ul>
-<li>JSONPath referencing a point in <code>state</code></li>
-<li>Object Literal of the data itself.</li>
-<li>Function to be called with state.</li>
-</ul>
-</dd>
-<dt><a href="#chunk">chunk(array, chunkSize)</a> ⇒ <code>Object</code></dt>
-<dd><p>Chunks an array into an array of arrays, each with no more than a certain size.</p>
-</dd>
-<dt><a href="#combine">combine(operations)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Combines two operations into one</p>
-</dd>
-<dt><a href="#composeNextState">composeNextState(state, response)</a> ⇒ <code>State</code></dt>
-<dd><p>Prepares next state</p>
-</dd>
-<dt><a href="#dataPath">dataPath(path)</a> ⇒ <code>string</code></dt>
-<dd><p>Ensures a path points at the data.</p>
-</dd>
-<dt><a href="#dataValue">dataValue(path)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Picks out a single value from the source data object—usually <code>state.data</code>.
-If a JSONPath returns more than one value for the reference, the first
-item will be returned.</p>
-</dd>
-<dt><a href="#del">del(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a DELETE request</p>
-</dd>
-<dt><a href="#each">each(dataSource, operation)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Scopes an array of data based on a JSONPath.
-Useful when the source data has <code>n</code> items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.</p>
-<p>It also ensures the results of an operation make their way back into
-the state&#39;s references.</p>
-</dd>
-<dt><a href="#each">each(dataSource, operation)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Scopes an array of data based on a JSONPath.
-Useful when the source data has <code>n</code> items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.</p>
-<p>It also ensures the results of an operation make their way back into
-the state&#39;s references.</p>
-</dd>
-<dt><a href="#expandReferences">expandReferences(value, [skipFilter])</a> ⇒ <code>Operation</code></dt>
-<dd><p>Recursively resolves objects that have resolvable values (functions).</p>
-</dd>
-<dt><a href="#expandRequestReferences">expandRequestReferences(value)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Recursively resolves objects that have resolvable values (functions), but
-omits HTTP request specific modules like <code>FormData</code>.</p>
-</dd>
-<dt><a href="#field">field(key, value)</a> ⇒ <code>Field</code></dt>
-<dd><p>Returns a key, value pair in an array.</p>
-</dd>
-<dt><a href="#fields">fields(fields)</a> ⇒ <code>Object</code></dt>
-<dd><p>Zips key value pairs into an object.</p>
-</dd>
-<dt><a href="#fn">fn(func)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Creates a custom step (or operation) for more flexible job writing.</p>
-</dd>
-<dt><a href="#get">get(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a GET request</p>
-</dd>
-<dt><a href="#head">head(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a HEAD request</p>
-</dd>
-<dt><a href="#humanProper">humanProper(str)</a> ⇒ <code>string</code></dt>
-<dd><p>Substitutes underscores for spaces and proper-cases a string</p>
-</dd>
-<dt><a href="#index">index()</a> ⇒ <code>DataSource</code></dt>
-<dd><p>Returns the index of the current array being iterated.
-To be used with <code>each</code> as a data source.</p>
-</dd>
-<dt><a href="#join">join(targetPath, sourcePath, targetKey)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Adds data from a target object</p>
-</dd>
-<dt><a href="#jsonValue">jsonValue(obj, path)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Picks out a single value from a JSON object.
-If a JSONPath returns more than one value for the reference, the first
-item will be returned.</p>
-</dd>
-<dt><a href="#lastReferenceValue">lastReferenceValue(path)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Picks out the last reference value from source data.</p>
-</dd>
-<dt><a href="#map">map(path, operation, state)</a> ⇒ <code>State</code></dt>
-<dd><p>Scopes an array of data based on a JSONPath.
-Useful when the source data has <code>n</code> items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.</p>
-</dd>
-<dt><a href="#merge">merge(dataSource, fields)</a> ⇒ <code>DataSource</code></dt>
-<dd><p>Merges fields into each item in an array.</p>
-</dd>
-<dt><a href="#options">options(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a OPTIONS request</p>
-</dd>
-<dt><a href="#patch">patch(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a PATCH request</p>
-</dd>
-<dt><a href="#post">post(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a POST request</p>
-</dd>
-<dt><a href="#put">put(requestParams)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a PUT request</p>
-</dd>
-<dt><a href="#referencePath">referencePath(path)</a> ⇒ <code>string</code></dt>
-<dd><p>Ensures a path points at references.</p>
-</dd>
-<dt><a href="#scrubEmojis">scrubEmojis(text, replacementChars)</a> ⇒ <code>string</code></dt>
-<dd><p>Replaces emojis in a string.</p>
-</dd>
-<dt><a href="#source">source(path)</a> ⇒ <code>Array.&lt;(String|Object)&gt;</code></dt>
-<dd><p>Picks out a value from source data.
-Will return whatever JSONPath returns, which will always be an array.
-If you need a single value use <code>sourceValue</code> instead.</p>
-</dd>
-<dt><a href="#sourceValue">sourceValue(path)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Picks out a single value from source data.
-If a JSONPath returns more than one value for the reference, the first
-item will be returned.</p>
-</dd>
-<dt><a href="#toArray">toArray(arg)</a> ⇒ <code>array</code></dt>
-<dd><p>Ensures primitive data types are wrapped in an array.
-Does not affect array objects.</p>
-</dd>
-<dt><a href="#withAgent">withAgent(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Creates an https agent for axios from the agentOptions key passed in params.</p>
-</dd>
+<dt>
+    <a href="#alterState">alterState(func)</a></dt>
+<dt>
+    <a href="#arrayToString">arrayToString(arr, separator)</a></dt>
+<dt>
+    <a href="#asData">asData(data, state)</a></dt>
+<dt>
+    <a href="#chunk">chunk(array, chunkSize)</a></dt>
+<dt>
+    <a href="#combine">combine(operations)</a></dt>
+<dt>
+    <a href="#composeNextState">composeNextState(state, response)</a></dt>
+<dt>
+    <a href="#dataPath">dataPath(path)</a></dt>
+<dt>
+    <a href="#dataValue">dataValue(path)</a></dt>
+<dt>
+    <a href="#del">del(requestParams)</a></dt>
+<dt>
+    <a href="#each">each(dataSource, operation)</a></dt>
+<dt>
+    <a href="#each">each(dataSource, operation)</a></dt>
+<dt>
+    <a href="#expandReferences">expandReferences(value, [skipFilter])</a></dt>
+<dt>
+    <a href="#expandRequestReferences">expandRequestReferences(value)</a></dt>
+<dt>
+    <a href="#field">field(key, value)</a></dt>
+<dt>
+    <a href="#fields">fields(fields)</a></dt>
+<dt>
+    <a href="#fn">fn(func)</a></dt>
+<dt>
+    <a href="#get">get(requestParams)</a></dt>
+<dt>
+    <a href="#head">head(requestParams)</a></dt>
+<dt>
+    <a href="#humanProper">humanProper(str)</a></dt>
+<dt>
+    <a href="#index">index()</a></dt>
+<dt>
+    <a href="#join">join(targetPath, sourcePath, targetKey)</a></dt>
+<dt>
+    <a href="#jsonValue">jsonValue(obj, path)</a></dt>
+<dt>
+    <a href="#lastReferenceValue">lastReferenceValue(path)</a></dt>
+<dt>
+    <a href="#map">map(path, operation, state)</a></dt>
+<dt>
+    <a href="#merge">merge(dataSource, fields)</a></dt>
+<dt>
+    <a href="#options">options(requestParams)</a></dt>
+<dt>
+    <a href="#patch">patch(requestParams)</a></dt>
+<dt>
+    <a href="#post">post(requestParams)</a></dt>
+<dt>
+    <a href="#put">put(requestParams)</a></dt>
+<dt>
+    <a href="#referencePath">referencePath(path)</a></dt>
+<dt>
+    <a href="#scrubEmojis">scrubEmojis(text, replacementChars)</a></dt>
+<dt>
+    <a href="#source">source(path)</a></dt>
+<dt>
+    <a href="#sourceValue">sourceValue(path)</a></dt>
+<dt>
+    <a href="#toArray">toArray(arg)</a></dt>
+<dt>
+    <a href="#withAgent">withAgent(params)</a></dt>
 </dl>
 
-<a name="alterState"></a>
+## alterState
 
-## alterState(func) ⇒ <code>Operation</code>
+alterState(func) ⇒ <code>Operation</code>
 alias for "fn()"
 
 **Kind**: global function  
@@ -155,9 +87,9 @@ alias for "fn()"
 
 * * *
 
-<a name="arrayToString"></a>
+## arrayToString
 
-## arrayToString(arr, separator) ⇒ <code>string</code>
+arrayToString(arr, separator) ⇒ <code>string</code>
 Turns an array into a string, separated by X.
 
 **Kind**: global function  
@@ -177,9 +109,9 @@ field("destination_string__c", function(state) {
 
 * * *
 
-<a name="asData"></a>
+## asData
 
-## asData(data, state) ⇒ <code>array</code>
+asData(data, state) ⇒ <code>array</code>
 Simple switcher allowing other expressions to use either a JSONPath or
 object literals as a data source.
 - JSONPath referencing a point in `state`
@@ -201,9 +133,9 @@ asData('$.key'| key | callback)
 
 * * *
 
-<a name="chunk"></a>
+## chunk
 
-## chunk(array, chunkSize) ⇒ <code>Object</code>
+chunk(array, chunkSize) ⇒ <code>Object</code>
 Chunks an array into an array of arrays, each with no more than a certain size.
 
 **Kind**: global function  
@@ -221,9 +153,9 @@ chunk([1,2,3,4,5], 2)
 
 * * *
 
-<a name="combine"></a>
+## combine
 
-## combine(operations) ⇒ <code>Operation</code>
+combine(operations) ⇒ <code>Operation</code>
 Combines two operations into one
 
 **Kind**: global function  
@@ -243,9 +175,9 @@ combine(
 
 * * *
 
-<a name="composeNextState"></a>
+## composeNextState
 
-## composeNextState(state, response) ⇒ <code>State</code>
+composeNextState(state, response) ⇒ <code>State</code>
 Prepares next state
 
 **Kind**: global function  
@@ -263,9 +195,9 @@ composeNextState(state, response)
 
 * * *
 
-<a name="dataPath"></a>
+## dataPath
 
-## dataPath(path) ⇒ <code>string</code>
+dataPath(path) ⇒ <code>string</code>
 Ensures a path points at the data.
 
 **Kind**: global function  
@@ -282,9 +214,9 @@ dataPath('key')
 
 * * *
 
-<a name="dataValue"></a>
+## dataValue
 
-## dataValue(path) ⇒ <code>Operation</code>
+dataValue(path) ⇒ <code>Operation</code>
 Picks out a single value from the source data object—usually `state.data`.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
@@ -303,9 +235,9 @@ dataValue('key')
 
 * * *
 
-<a name="del"></a>
+## del
 
-## del(requestParams) ⇒ <code>Operation</code>
+del(requestParams) ⇒ <code>Operation</code>
 Make a DELETE request
 
 **Kind**: global function  
@@ -325,9 +257,9 @@ delete({
 
 * * *
 
-<a name="each"></a>
+## each
 
-## each(dataSource, operation) ⇒ <code>Operation</code>
+each(dataSource, operation) ⇒ <code>Operation</code>
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
@@ -356,9 +288,9 @@ each("$.[*]",
 
 * * *
 
-<a name="each"></a>
+## each
 
-## each(dataSource, operation) ⇒ <code>Operation</code>
+each(dataSource, operation) ⇒ <code>Operation</code>
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
@@ -386,9 +318,9 @@ each("$.[*]",
 
 * * *
 
-<a name="expandReferences"></a>
+## expandReferences
 
-## expandReferences(value, [skipFilter]) ⇒ <code>Operation</code>
+expandReferences(value, [skipFilter]) ⇒ <code>Operation</code>
 Recursively resolves objects that have resolvable values (functions).
 
 **Kind**: global function  
@@ -402,9 +334,9 @@ Recursively resolves objects that have resolvable values (functions).
 
 * * *
 
-<a name="expandRequestReferences"></a>
+## expandRequestReferences
 
-## expandRequestReferences(value) ⇒ <code>Operation</code>
+expandRequestReferences(value) ⇒ <code>Operation</code>
 Recursively resolves objects that have resolvable values (functions), but
 omits HTTP request specific modules like `FormData`.
 
@@ -418,9 +350,9 @@ omits HTTP request specific modules like `FormData`.
 
 * * *
 
-<a name="field"></a>
+## field
 
-## field(key, value) ⇒ <code>Field</code>
+field(key, value) ⇒ <code>Field</code>
 Returns a key, value pair in an array.
 
 **Kind**: global function  
@@ -438,9 +370,9 @@ field('destination_field_name__c', 'value')
 
 * * *
 
-<a name="fields"></a>
+## fields
 
-## fields(fields) ⇒ <code>Object</code>
+fields(fields) ⇒ <code>Object</code>
 Zips key value pairs into an object.
 
 **Kind**: global function  
@@ -457,9 +389,9 @@ fields(list_of_fields)
 
 * * *
 
-<a name="fn"></a>
+## fn
 
-## fn(func) ⇒ <code>Operation</code>
+fn(func) ⇒ <code>Operation</code>
 Creates a custom step (or operation) for more flexible job writing.
 
 **Kind**: global function  
@@ -479,9 +411,9 @@ fn(state => {
 
 * * *
 
-<a name="get"></a>
+## get
 
-## get(requestParams) ⇒ <code>Operation</code>
+get(requestParams) ⇒ <code>Operation</code>
 Make a GET request
 
 **Kind**: global function  
@@ -502,9 +434,9 @@ Make a GET request
 
 * * *
 
-<a name="head"></a>
+## head
 
-## head(requestParams) ⇒ <code>Operation</code>
+head(requestParams) ⇒ <code>Operation</code>
 Make a HEAD request
 
 **Kind**: global function  
@@ -524,9 +456,9 @@ head({
 
 * * *
 
-<a name="humanProper"></a>
+## humanProper
 
-## humanProper(str) ⇒ <code>string</code>
+humanProper(str) ⇒ <code>string</code>
 Substitutes underscores for spaces and proper-cases a string
 
 **Kind**: global function  
@@ -543,9 +475,9 @@ field("destination_string__c", humanProper(state.data.path_to_string))
 
 * * *
 
-<a name="index"></a>
+## index
 
-## index() ⇒ <code>DataSource</code>
+index() ⇒ <code>DataSource</code>
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
 
@@ -558,9 +490,9 @@ index()
 
 * * *
 
-<a name="join"></a>
+## join
 
-## join(targetPath, sourcePath, targetKey) ⇒ <code>Operation</code>
+join(targetPath, sourcePath, targetKey) ⇒ <code>Operation</code>
 Adds data from a target object
 
 **Kind**: global function  
@@ -579,9 +511,9 @@ join('$.key','$.data','newKey')
 
 * * *
 
-<a name="jsonValue"></a>
+## jsonValue
 
-## jsonValue(obj, path) ⇒ <code>Operation</code>
+jsonValue(obj, path) ⇒ <code>Operation</code>
 Picks out a single value from a JSON object.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
@@ -601,9 +533,9 @@ jsonValue({ a:1 }, 'a')
 
 * * *
 
-<a name="lastReferenceValue"></a>
+## lastReferenceValue
 
-## lastReferenceValue(path) ⇒ <code>Operation</code>
+lastReferenceValue(path) ⇒ <code>Operation</code>
 Picks out the last reference value from source data.
 
 **Kind**: global function  
@@ -620,9 +552,9 @@ lastReferenceValue('key')
 
 * * *
 
-<a name="map"></a>
+## map
 
-## map(path, operation, state) ⇒ <code>State</code>
+map(path, operation, state) ⇒ <code>State</code>
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
@@ -649,9 +581,9 @@ map("$.[*]",
 
 * * *
 
-<a name="merge"></a>
+## merge
 
-## merge(dataSource, fields) ⇒ <code>DataSource</code>
+merge(dataSource, fields) ⇒ <code>DataSource</code>
 Merges fields into each item in an array.
 
 **Kind**: global function  
@@ -674,9 +606,9 @@ merge(
 
 * * *
 
-<a name="options"></a>
+## options
 
-## options(requestParams) ⇒ <code>Operation</code>
+options(requestParams) ⇒ <code>Operation</code>
 Make a OPTIONS request
 
 **Kind**: global function  
@@ -696,9 +628,9 @@ options({
 
 * * *
 
-<a name="patch"></a>
+## patch
 
-## patch(requestParams) ⇒ <code>Operation</code>
+patch(requestParams) ⇒ <code>Operation</code>
 Make a PATCH request
 
 **Kind**: global function  
@@ -719,9 +651,9 @@ patch({
 
 * * *
 
-<a name="post"></a>
+## post
 
-## post(requestParams) ⇒ <code>Operation</code>
+post(requestParams) ⇒ <code>Operation</code>
 Make a POST request
 
 **Kind**: global function  
@@ -753,9 +685,9 @@ alterState((state) => {
 
 * * *
 
-<a name="put"></a>
+## put
 
-## put(requestParams) ⇒ <code>Operation</code>
+put(requestParams) ⇒ <code>Operation</code>
 Make a PUT request
 
 **Kind**: global function  
@@ -776,9 +708,9 @@ put({
 
 * * *
 
-<a name="referencePath"></a>
+## referencePath
 
-## referencePath(path) ⇒ <code>string</code>
+referencePath(path) ⇒ <code>string</code>
 Ensures a path points at references.
 
 **Kind**: global function  
@@ -795,9 +727,9 @@ referencePath('key')
 
 * * *
 
-<a name="scrubEmojis"></a>
+## scrubEmojis
 
-## scrubEmojis(text, replacementChars) ⇒ <code>string</code>
+scrubEmojis(text, replacementChars) ⇒ <code>string</code>
 Replaces emojis in a string.
 
 **Kind**: global function  
@@ -815,9 +747,9 @@ scrubEmojis('Dove🕊️⭐ 29')
 
 * * *
 
-<a name="source"></a>
+## source
 
-## source(path) ⇒ <code>Array.&lt;(String\|Object)&gt;</code>
+source(path) ⇒ <code>Array.&lt;(String\|Object)&gt;</code>
 Picks out a value from source data.
 Will return whatever JSONPath returns, which will always be an array.
 If you need a single value use `sourceValue` instead.
@@ -836,9 +768,9 @@ source('$.key')
 
 * * *
 
-<a name="sourceValue"></a>
+## sourceValue
 
-## sourceValue(path) ⇒ <code>Operation</code>
+sourceValue(path) ⇒ <code>Operation</code>
 Picks out a single value from source data.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
@@ -857,9 +789,9 @@ sourceValue('$.key')
 
 * * *
 
-<a name="toArray"></a>
+## toArray
 
-## toArray(arg) ⇒ <code>array</code>
+toArray(arg) ⇒ <code>array</code>
 Ensures primitive data types are wrapped in an array.
 Does not affect array objects.
 
@@ -879,9 +811,9 @@ each(function(state) {
 
 * * *
 
-<a name="withAgent"></a>
+## withAgent
 
-## withAgent(params) ⇒ <code>Operation</code>
+withAgent(params) ⇒ <code>Operation</code>
 Creates an https agent for axios from the agentOptions key passed in params.
 
 **Kind**: global function  

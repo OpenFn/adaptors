@@ -1,56 +1,41 @@
 ## Functions
 
 <dl>
-<dt><a href="#getCase">getCase(id, query, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get one or multiple cases within an outbreak from a query filter</p>
-</dd>
-<dt><a href="#getContact">getContact(id, query, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get one or multiple contacts within an outbreak from a query filter</p>
-</dd>
-<dt><a href="#getLocation">getLocation(query, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get one or multiple locations from a query filter</p>
-</dd>
-<dt><a href="#getOutbreak">getOutbreak(query, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get one or multiple outbreaks from a query filter</p>
-</dd>
-<dt><a href="#getReferenceData">getReferenceData(query, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get one or multiple reference data from a query filter</p>
-</dd>
-<dt><a href="#listCases">listCases(id, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch the list of cases within a particular outbreak using its ID.</p>
-</dd>
-<dt><a href="#listContacts">listContacts(id, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch the list of contacts within a particular outbreak using its ID.</p>
-</dd>
-<dt><a href="#listLocations">listLocations(callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch the list of locations</p>
-</dd>
-<dt><a href="#listOutbreaks">listOutbreaks(callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch the list of outbreaks</p>
-</dd>
-<dt><a href="#listReferenceData">listReferenceData(callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch the list of reference data</p>
-</dd>
-<dt><a href="#upsertCase">upsertCase(id, externalId, goDataCase, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert case to godata using an external id to mach a specific record</p>
-</dd>
-<dt><a href="#upsertContact">upsertContact(id, externalId, goDataContact, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert contact to godata using an external id to match a specific record.</p>
-</dd>
-<dt><a href="#upsertLocation">upsertLocation(externalId, goDataLocation, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert location to godata</p>
-</dd>
-<dt><a href="#upsertOutbreak">upsertOutbreak(outbreak, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert outbreak to godata</p>
-</dd>
-<dt><a href="#upsertReferenceData">upsertReferenceData(externalId, goDataReferenceData, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert reference data to godata</p>
-</dd>
+<dt>
+    <a href="#getCase">getCase(id, query, callback)</a></dt>
+<dt>
+    <a href="#getContact">getContact(id, query, callback)</a></dt>
+<dt>
+    <a href="#getLocation">getLocation(query, callback)</a></dt>
+<dt>
+    <a href="#getOutbreak">getOutbreak(query, callback)</a></dt>
+<dt>
+    <a href="#getReferenceData">getReferenceData(query, callback)</a></dt>
+<dt>
+    <a href="#listCases">listCases(id, callback)</a></dt>
+<dt>
+    <a href="#listContacts">listContacts(id, callback)</a></dt>
+<dt>
+    <a href="#listLocations">listLocations(callback)</a></dt>
+<dt>
+    <a href="#listOutbreaks">listOutbreaks(callback)</a></dt>
+<dt>
+    <a href="#listReferenceData">listReferenceData(callback)</a></dt>
+<dt>
+    <a href="#upsertCase">upsertCase(id, externalId, goDataCase, callback)</a></dt>
+<dt>
+    <a href="#upsertContact">upsertContact(id, externalId, goDataContact, callback)</a></dt>
+<dt>
+    <a href="#upsertLocation">upsertLocation(externalId, goDataLocation, callback)</a></dt>
+<dt>
+    <a href="#upsertOutbreak">upsertOutbreak(outbreak, callback)</a></dt>
+<dt>
+    <a href="#upsertReferenceData">upsertReferenceData(externalId, goDataReferenceData, callback)</a></dt>
 </dl>
 
-<a name="getCase"></a>
+## getCase
 
-## getCase(id, query, callback) ⇒ <code>Operation</code>
+getCase(id, query, callback) ⇒ <code>Operation</code>
 Get one or multiple cases within an outbreak from a query filter
 
 **Kind**: global function  
@@ -76,9 +61,9 @@ getCase(
 
 * * *
 
-<a name="getContact"></a>
+## getContact
 
-## getContact(id, query, callback) ⇒ <code>Operation</code>
+getContact(id, query, callback) ⇒ <code>Operation</code>
 Get one or multiple contacts within an outbreak from a query filter
 
 **Kind**: global function  
@@ -100,9 +85,9 @@ getContact("343d-dc3e", {"where":{"firstName": "Luca"}}, state => {
 
 * * *
 
-<a name="getLocation"></a>
+## getLocation
 
-## getLocation(query, callback) ⇒ <code>Operation</code>
+getLocation(query, callback) ⇒ <code>Operation</code>
 Get one or multiple locations from a query filter
 
 **Kind**: global function  
@@ -123,9 +108,9 @@ getLocation({"where":{"name": "30 DE OCTUBRE"}}, state => {
 
 * * *
 
-<a name="getOutbreak"></a>
+## getOutbreak
 
-## getOutbreak(query, callback) ⇒ <code>Operation</code>
+getOutbreak(query, callback) ⇒ <code>Operation</code>
 Get one or multiple outbreaks from a query filter
 
 **Kind**: global function  
@@ -146,9 +131,9 @@ getOutbreak({"where":{"name": "Outbreak demo"}}, state => {
 
 * * *
 
-<a name="getReferenceData"></a>
+## getReferenceData
 
-## getReferenceData(query, callback) ⇒ <code>Operation</code>
+getReferenceData(query, callback) ⇒ <code>Operation</code>
 Get one or multiple reference data from a query filter
 
 **Kind**: global function  
@@ -169,9 +154,9 @@ getReferenceData({"where":{"categoryId": "LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAM
 
 * * *
 
-<a name="listCases"></a>
+## listCases
 
-## listCases(id, callback) ⇒ <code>Operation</code>
+listCases(id, callback) ⇒ <code>Operation</code>
 Fetch the list of cases within a particular outbreak using its ID.
 
 **Kind**: global function  
@@ -192,9 +177,9 @@ listCases("343d-dc3e", state => {
 
 * * *
 
-<a name="listContacts"></a>
+## listContacts
 
-## listContacts(id, callback) ⇒ <code>Operation</code>
+listContacts(id, callback) ⇒ <code>Operation</code>
 Fetch the list of contacts within a particular outbreak using its ID.
 
 **Kind**: global function  
@@ -216,9 +201,9 @@ listContacts("343d-dc3e", // Outbreak Id
 
 * * *
 
-<a name="listLocations"></a>
+## listLocations
 
-## listLocations(callback) ⇒ <code>Operation</code>
+listLocations(callback) ⇒ <code>Operation</code>
 Fetch the list of locations
 
 **Kind**: global function  
@@ -238,9 +223,9 @@ listLocations(state => {
 
 * * *
 
-<a name="listOutbreaks"></a>
+## listOutbreaks
 
-## listOutbreaks(callback) ⇒ <code>Operation</code>
+listOutbreaks(callback) ⇒ <code>Operation</code>
 Fetch the list of outbreaks
 
 **Kind**: global function  
@@ -260,9 +245,9 @@ listOutbreaks(state => {
 
 * * *
 
-<a name="listReferenceData"></a>
+## listReferenceData
 
-## listReferenceData(callback) ⇒ <code>Operation</code>
+listReferenceData(callback) ⇒ <code>Operation</code>
 Fetch the list of reference data
 
 **Kind**: global function  
@@ -282,9 +267,9 @@ listReferenceData(state => {
 
 * * *
 
-<a name="upsertCase"></a>
+## upsertCase
 
-## upsertCase(id, externalId, goDataCase, callback) ⇒ <code>Operation</code>
+upsertCase(id, externalId, goDataCase, callback) ⇒ <code>Operation</code>
 Upsert case to godata using an external id to mach a specific record
 
 **Kind**: global function  
@@ -314,9 +299,9 @@ upsertCase("4dce-3eedce3-rd33", 'visualId',
 
 * * *
 
-<a name="upsertContact"></a>
+## upsertContact
 
-## upsertContact(id, externalId, goDataContact, callback) ⇒ <code>Operation</code>
+upsertContact(id, externalId, goDataContact, callback) ⇒ <code>Operation</code>
 Upsert contact to godata using an external id to match a specific record.
 
 **Kind**: global function  
@@ -343,9 +328,9 @@ upsertContact("4dce-3eedce3-rd33", 'visualId',
 
 * * *
 
-<a name="upsertLocation"></a>
+## upsertLocation
 
-## upsertLocation(externalId, goDataLocation, callback) ⇒ <code>Operation</code>
+upsertLocation(externalId, goDataLocation, callback) ⇒ <code>Operation</code>
 Upsert location to godata
 
 **Kind**: global function  
@@ -364,9 +349,9 @@ upsertLocation('name', {...})
 
 * * *
 
-<a name="upsertOutbreak"></a>
+## upsertOutbreak
 
-## upsertOutbreak(outbreak, callback) ⇒ <code>Operation</code>
+upsertOutbreak(outbreak, callback) ⇒ <code>Operation</code>
 Upsert outbreak to godata
 
 **Kind**: global function  
@@ -384,9 +369,9 @@ upsertOutbreak({externalId: "3dec33-ede3", data: {...}})
 
 * * *
 
-<a name="upsertReferenceData"></a>
+## upsertReferenceData
 
-## upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ <code>Operation</code>
+upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ <code>Operation</code>
 Upsert reference data to godata
 
 **Kind**: global function  

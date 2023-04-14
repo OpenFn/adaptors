@@ -1,17 +1,15 @@
 ## Functions
 
 <dl>
-<dt><a href="#fetchSurveyData">fetchSurveyData(params)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a POST request to fetch Magpi data and POST it somewhere else</p>
-</dd>
-<dt><a href="#submitRecord">submitRecord(jsonData)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Submit a record for a form/survey which already exists in a Magpi user account</p>
-</dd>
+<dt>
+    <a href="#fetchSurveyData">fetchSurveyData(params)</a></dt>
+<dt>
+    <a href="#submitRecord">submitRecord(jsonData)</a></dt>
 </dl>
 
-<a name="fetchSurveyData"></a>
+## fetchSurveyData
 
-## fetchSurveyData(params) ⇒ <code>Operation</code>
+fetchSurveyData(params) ⇒ <code>Operation</code>
 Make a POST request to fetch Magpi data and POST it somewhere else
 
 **Kind**: global function  
@@ -32,9 +30,9 @@ fetchSurveyData({
 
 * * *
 
-<a name="submitRecord"></a>
+## submitRecord
 
-## submitRecord(jsonData) ⇒ <code>Operation</code>
+submitRecord(jsonData) ⇒ <code>Operation</code>
 Submit a record for a form/survey which already exists in a Magpi user account
 
 **Kind**: global function  

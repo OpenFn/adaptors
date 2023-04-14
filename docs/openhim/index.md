@@ -1,6 +1,6 @@
-<a name="encounter"></a>
+## encounter
 
-## encounter(encounterData) ⇒ <code>Operation</code>
+encounter(encounterData) ⇒ <code>Operation</code>
 Create an encounter
 
 **Kind**: global function  

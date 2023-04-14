@@ -1,6 +1,6 @@
-<a name="postData"></a>
+## postData
 
-## postData(params, callback) ⇒ <code>Operation</code>
+postData(params, callback) ⇒ <code>Operation</code>
 Make a POST request with a certificate
 
 **Kind**: global function  

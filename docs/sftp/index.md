@@ -1,26 +1,21 @@
 ## Functions
 
 <dl>
-<dt><a href="#getCSV">getCSV(filePath)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get a CSV and return a JSON array of strings for each item separated by the delimiter</p>
-</dd>
-<dt><a href="#getJSON">getJSON(filePath, encoding)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Fetch a json file from an FTP server</p>
-</dd>
-<dt><a href="#list">list(dirPath)</a> ⇒ <code>Operation</code></dt>
-<dd><p>List files present in a directory</p>
-</dd>
-<dt><a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Convert JSON array of strings into a normalized object</p>
-</dd>
-<dt><a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Convert JSON to CSV and upload to an FTP server</p>
-</dd>
+<dt>
+    <a href="#getCSV">getCSV(filePath)</a></dt>
+<dt>
+    <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
+<dt>
+    <a href="#list">list(dirPath)</a></dt>
+<dt>
+    <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
+<dt>
+    <a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
 </dl>
 
-<a name="getCSV"></a>
+## getCSV
 
-## getCSV(filePath) ⇒ <code>Operation</code>
+getCSV(filePath) ⇒ <code>Operation</code>
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
 **Kind**: global function  
@@ -39,9 +34,9 @@ getCSV(
 
 * * *
 
-<a name="getJSON"></a>
+## getJSON
 
-## getJSON(filePath, encoding) ⇒ <code>Operation</code>
+getJSON(filePath, encoding) ⇒ <code>Operation</code>
 Fetch a json file from an FTP server
 
 **Kind**: global function  
@@ -62,9 +57,9 @@ getJSON(
 
 * * *
 
-<a name="list"></a>
+## list
 
-## list(dirPath) ⇒ <code>Operation</code>
+list(dirPath) ⇒ <code>Operation</code>
 List files present in a directory
 
 **Kind**: global function  
@@ -81,9 +76,9 @@ list('/some/path/')
 
 * * *
 
-<a name="normalizeCSVarray"></a>
+## normalizeCSVarray
 
-## normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
+normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
 Convert JSON array of strings into a normalized object
 
 **Kind**: global function  
@@ -101,9 +96,9 @@ normalizeCSVarray({ delimiter: ';', noheader: true });
 
 * * *
 
-<a name="putCSV"></a>
+## putCSV
 
-## putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
+putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
 Convert JSON to CSV and upload to an FTP server
 
 **Kind**: global function  

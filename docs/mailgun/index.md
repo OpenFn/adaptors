@@ -1,6 +1,6 @@
-<a name="send"></a>
+## send
 
-## send(params)
+send(params)
 Create an event
 
 **Kind**: global function  

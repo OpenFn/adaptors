@@ -1,6 +1,6 @@
-<a name="send"></a>
+## send
 
-## send(sendData) ⇒ <code>Operation</code>
+send(sendData) ⇒ <code>Operation</code>
 Send a message
 
 **Kind**: global function  

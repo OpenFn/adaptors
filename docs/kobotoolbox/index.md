@@ -1,20 +1,17 @@
 ## Functions
 
 <dl>
-<dt><a href="#getDeploymentInfo">getDeploymentInfo(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get deployment information for a specific form</p>
-</dd>
-<dt><a href="#getForms">getForms(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Make a request to get the list of forms</p>
-</dd>
-<dt><a href="#getSubmissions">getSubmissions(params, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Get submissions for a specific form</p>
-</dd>
+<dt>
+    <a href="#getDeploymentInfo">getDeploymentInfo(params, callback)</a></dt>
+<dt>
+    <a href="#getForms">getForms(params, callback)</a></dt>
+<dt>
+    <a href="#getSubmissions">getSubmissions(params, callback)</a></dt>
 </dl>
 
-<a name="getDeploymentInfo"></a>
+## getDeploymentInfo
 
-## getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
+getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
 Get deployment information for a specific form
 
 **Kind**: global function  
@@ -34,9 +31,9 @@ getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
 
 * * *
 
-<a name="getForms"></a>
+## getForms
 
-## getForms(params, callback) ⇒ <code>Operation</code>
+getForms(params, callback) ⇒ <code>Operation</code>
 Make a request to get the list of forms
 
 **Kind**: global function  
@@ -57,9 +54,9 @@ getForms({}, state => {
 
 * * *
 
-<a name="getSubmissions"></a>
+## getSubmissions
 
-## getSubmissions(params, callback) ⇒ <code>Operation</code>
+getSubmissions(params, callback) ⇒ <code>Operation</code>
 Get submissions for a specific form
 
 **Kind**: global function  

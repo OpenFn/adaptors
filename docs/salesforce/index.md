@@ -1,67 +1,47 @@
 ## Functions
 
 <dl>
-<dt><a href="#bulk">bulk(sObject, operation, options, fun)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Create and execute a bulk job.</p>
-</dd>
-<dt><a href="#cleanupState">cleanupState(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Removes unserializable keys from the state.</p>
-</dd>
-<dt><a href="#create">create(sObject, attrs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Create a new object.</p>
-</dd>
-<dt><a href="#createConnection">createConnection(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Creates a connection.</p>
-</dd>
-<dt><a href="#createIf">createIf(logical, sObject, attrs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Create a new object if conditions are met.</p>
-</dd>
-<dt><a href="#describe">describe(sObject)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Outputs basic information about an sObject to <code>STDOUT</code>.</p>
-</dd>
-<dt><a href="#describeAll">describeAll()</a> ⇒ <code>Operation</code></dt>
-<dd><p>Outputs basic information about available sObjects.</p>
-</dd>
-<dt><a href="#destroy">destroy(sObject, attrs, options)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Delete records of an object.</p>
-</dd>
-<dt><a href="#execute">execute(operations)</a> ⇒ <code>State</code></dt>
-<dd><p>Executes an operation.</p>
-</dd>
-<dt><a href="#login">login(state)</a> ⇒ <code>State</code></dt>
-<dd><p>Performs a login.</p>
-</dd>
-<dt><a href="#query">query(qs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Execute an SOQL query.
-Note that in an event of a query error,
-error logs will be printed but the operation will not throw the error.</p>
-</dd>
-<dt><a href="#reference">reference(position)</a> ⇒ <code>State</code></dt>
-<dd><p>Get a reference ID by an index.</p>
-</dd>
-<dt><a href="#relationship">relationship(relationshipName, externalId, dataSource)</a> ⇒ <code>object</code></dt>
-<dd><p>Adds a lookup relation or &#39;dome insert&#39; to a record.</p>
-</dd>
-<dt><a href="#retrieve">retrieve(sObject, id, callback)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Retrieves a Salesforce sObject(s).</p>
-</dd>
-<dt><a href="#steps">steps()</a> ⇒ <code>Array</code></dt>
-<dd><p>Flattens an array of operations.</p>
-</dd>
-<dt><a href="#update">update(sObject, attrs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Update an object.</p>
-</dd>
-<dt><a href="#upsert">upsert(sObject, externalId, attrs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert an object.</p>
-</dd>
-<dt><a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs)</a> ⇒ <code>Operation</code></dt>
-<dd><p>Upsert if conditions are met.</p>
-</dd>
+<dt>
+    <a href="#bulk">bulk(sObject, operation, options, fun)</a></dt>
+<dt>
+    <a href="#cleanupState">cleanupState(state)</a></dt>
+<dt>
+    <a href="#create">create(sObject, attrs)</a></dt>
+<dt>
+    <a href="#createConnection">createConnection(state)</a></dt>
+<dt>
+    <a href="#createIf">createIf(logical, sObject, attrs)</a></dt>
+<dt>
+    <a href="#describe">describe(sObject)</a></dt>
+<dt>
+    <a href="#describeAll">describeAll()</a></dt>
+<dt>
+    <a href="#destroy">destroy(sObject, attrs, options)</a></dt>
+<dt>
+    <a href="#execute">execute(operations)</a></dt>
+<dt>
+    <a href="#login">login(state)</a></dt>
+<dt>
+    <a href="#query">query(qs)</a></dt>
+<dt>
+    <a href="#reference">reference(position)</a></dt>
+<dt>
+    <a href="#relationship">relationship(relationshipName, externalId, dataSource)</a></dt>
+<dt>
+    <a href="#retrieve">retrieve(sObject, id, callback)</a></dt>
+<dt>
+    <a href="#steps">steps()</a></dt>
+<dt>
+    <a href="#update">update(sObject, attrs)</a></dt>
+<dt>
+    <a href="#upsert">upsert(sObject, externalId, attrs)</a></dt>
+<dt>
+    <a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs)</a></dt>
 </dl>
 
-<a name="bulk"></a>
+## bulk
 
-## bulk(sObject, operation, options, fun) ⇒ <code>Operation</code>
+bulk(sObject, operation, options, fun) ⇒ <code>Operation</code>
 Create and execute a bulk job.
 
 **Kind**: global function  
@@ -85,9 +65,9 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
 
 * * *
 
-<a name="cleanupState"></a>
+## cleanupState
 
-## cleanupState(state) ⇒ <code>State</code>
+cleanupState(state) ⇒ <code>State</code>
 Removes unserializable keys from the state.
 
 **Kind**: global function  
@@ -103,9 +83,9 @@ cleanupState(state)
 
 * * *
 
-<a name="create"></a>
+## create
 
-## create(sObject, attrs) ⇒ <code>Operation</code>
+create(sObject, attrs) ⇒ <code>Operation</code>
 Create a new object.
 
 **Kind**: global function  
@@ -126,9 +106,9 @@ create('obj_name', {
 
 * * *
 
-<a name="createConnection"></a>
+## createConnection
 
-## createConnection(state) ⇒ <code>State</code>
+createConnection(state) ⇒ <code>State</code>
 Creates a connection.
 
 **Kind**: global function  
@@ -144,9 +124,9 @@ createConnection(state)
 
 * * *
 
-<a name="createIf"></a>
+## createIf
 
-## createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
+createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
 Create a new object if conditions are met.
 
 **Kind**: global function  
@@ -168,9 +148,9 @@ createIf(true, 'obj_name', {
 
 * * *
 
-<a name="describe"></a>
+## describe
 
-## describe(sObject) ⇒ <code>Operation</code>
+describe(sObject) ⇒ <code>Operation</code>
 Outputs basic information about an sObject to `STDOUT`.
 
 **Kind**: global function  
@@ -187,9 +167,9 @@ describe('obj_name')
 
 * * *
 
-<a name="describeAll"></a>
+## describeAll
 
-## describeAll() ⇒ <code>Operation</code>
+describeAll() ⇒ <code>Operation</code>
 Outputs basic information about available sObjects.
 
 **Kind**: global function  
@@ -201,9 +181,9 @@ describeAll()
 
 * * *
 
-<a name="destroy"></a>
+## destroy
 
-## destroy(sObject, attrs, options) ⇒ <code>Operation</code>
+destroy(sObject, attrs, options) ⇒ <code>Operation</code>
 Delete records of an object.
 
 **Kind**: global function  
@@ -225,9 +205,9 @@ destroy('obj_name', [
 
 * * *
 
-<a name="execute"></a>
+## execute
 
-## execute(operations) ⇒ <code>State</code>
+execute(operations) ⇒ <code>State</code>
 Executes an operation.
 
 **Kind**: global function  
@@ -239,9 +219,9 @@ Executes an operation.
 
 * * *
 
-<a name="login"></a>
+## login
 
-## login(state) ⇒ <code>State</code>
+login(state) ⇒ <code>State</code>
 Performs a login.
 
 **Kind**: global function  
@@ -257,9 +237,9 @@ login(state)
 
 * * *
 
-<a name="query"></a>
+## query
 
-## query(qs) ⇒ <code>Operation</code>
+query(qs) ⇒ <code>Operation</code>
 Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
@@ -278,9 +258,9 @@ query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 
 * * *
 
-<a name="reference"></a>
+## reference
 
-## reference(position) ⇒ <code>State</code>
+reference(position) ⇒ <code>State</code>
 Get a reference ID by an index.
 
 **Kind**: global function  
@@ -297,9 +277,9 @@ reference(0)
 
 * * *
 
-<a name="relationship"></a>
+## relationship
 
-## relationship(relationshipName, externalId, dataSource) ⇒ <code>object</code>
+relationship(relationshipName, externalId, dataSource) ⇒ <code>object</code>
 Adds a lookup relation or 'dome insert' to a record.
 
 **Kind**: global function  
@@ -321,9 +301,9 @@ Fixed Value:
 
 * * *
 
-<a name="retrieve"></a>
+## retrieve
 
-## retrieve(sObject, id, callback) ⇒ <code>Operation</code>
+retrieve(sObject, id, callback) ⇒ <code>Operation</code>
 Retrieves a Salesforce sObject(s).
 
 **Kind**: global function  
@@ -342,9 +322,9 @@ retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 
 * * *
 
-<a name="steps"></a>
+## steps
 
-## steps() ⇒ <code>Array</code>
+steps() ⇒ <code>Array</code>
 Flattens an array of operations.
 
 **Kind**: global function  
@@ -358,9 +338,9 @@ steps(
 
 * * *
 
-<a name="update"></a>
+## update
 
-## update(sObject, attrs) ⇒ <code>Operation</code>
+update(sObject, attrs) ⇒ <code>Operation</code>
 Update an object.
 
 **Kind**: global function  
@@ -381,9 +361,9 @@ update('obj_name', {
 
 * * *
 
-<a name="upsert"></a>
+## upsert
 
-## upsert(sObject, externalId, attrs) ⇒ <code>Operation</code>
+upsert(sObject, externalId, attrs) ⇒ <code>Operation</code>
 Upsert an object.
 
 **Kind**: global function  
@@ -408,9 +388,9 @@ upsert('obj_name', 'ext_id', {
 
 * * *
 
-<a name="upsertIf"></a>
+## upsertIf
 
-## upsertIf(logical, sObject, externalId, attrs) ⇒ <code>Operation</code>
+upsertIf(logical, sObject, externalId, attrs) ⇒ <code>Operation</code>
 Upsert if conditions are met.
 
 **Kind**: global function  
