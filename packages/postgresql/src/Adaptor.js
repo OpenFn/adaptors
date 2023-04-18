@@ -197,7 +197,7 @@ export function sql(sqlQuery, options, callback) {
  * @param {string} [filter.relation] - The name of the relation to search for the uuid value.
  * @param {object} [filter.where] - An object that contains key-value pairs to filter the search results.
  * @param {object} [filter.operator] - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
- * @returns {Operation}
+ * @returns {value}
  */
 export function findValue(filter) {
   return state => {
@@ -488,8 +488,8 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
  *   'users', // the DB table
  *   'email', // a DB column with a unique constraint OR a CONSTRAINT NAME
  *   [
- *     { name: 'one', email: 'one@openfn.org },
- *     { name: 'two', email: 'two@openfn.org },
+ *     { name: 'one', email: 'one@openfn.org' },
+ *     { name: 'two', email: 'two@openfn.org' },
  *   ]
  *  { logValues: true }
  * )

@@ -177,7 +177,7 @@
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "value"
             }
           }
         ]
@@ -729,7 +729,7 @@
           },
           {
             "title": "example",
-            "description": "upsertMany(\n  'users', // the DB table\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  [\n    { name: 'one', email: 'one@openfn.org },\n    { name: 'two', email: 'two@openfn.org },\n  ]\n { logValues: true }\n)"
+            "description": "upsertMany(\n  'users', // the DB table\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n { logValues: true }\n)"
           },
           {
             "title": "function",
