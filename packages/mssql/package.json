@@ -30,7 +30,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.7",
+    "@openfn/language-common": "workspace:1.7.7",
     "request": "2.88.2",
     "tedious": "15.1.0"
   },
