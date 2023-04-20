@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 3.0.7
+
+### Patch Changes
+
+- 7cc8efc: remove FakeAdaptor references
+
 ## 3.0.6
 
 ### Patch Changes
