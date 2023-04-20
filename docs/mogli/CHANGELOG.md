@@ -1,5 +1,11 @@
 v0.1.6
 
+## 0.3.4
+
+### Patch Changes
+
+- 7cc8efc: remove FakeAdaptor references
+
 ## 0.3.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 4.0.0
+
+### Major Changes
+
+- ecd0b53: add optional callback in sql and update response structure
+
 ## 3.4.6
 
 ### Patch Changes

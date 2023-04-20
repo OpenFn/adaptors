@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.0.5
+
+### Patch Changes
+
+- 86fb813: dependencies update
+
 ## 1.0.4
 
 ### Patch Changes
