@@ -51,10 +51,15 @@ If there isn't already an issue for the feature you would like to contribute, pl
 
 ### Working with adaptors
 
-Copy template folder 
-Rename it 
-Add authentication 
-Helper functions 
+1. Creating a new adaptor
+Create a copy of the adaptor [template](https://github.com/OpenFn/adaptors/tree/dab11c0845c1affb01e822ed44494906dde1fc09/packages/template), and rename it.  
+
+Add the required and optional properties for state.configuration. 
+
+2. Adding or updating operations in an existing adaptor
+Create your helper functions. 
+Write your tests. 
+Update the adaptor's README.md.
 
 ## Changesets
 
