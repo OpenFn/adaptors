@@ -1,30 +1,20 @@
 # OpenFn Adaptors ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg?branch=main) ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/docs.yaml/badge.svg?branch=main)
+ 
+The new home for all @openfn [language adaptors](https://docs.openfn.org/adaptors) - open-source Javascript or Typescript modules that provide helper functions to communicate with a specific external system.
 
-The new home for all @openfn language adaptors.
-
-This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
-on your machine.
+For a fully open source workflow automation platform that leverages these adaptors, see [OpenFn Lighnting](https://github.com/OpenFn/lightning).
 
 ## Getting Started
 
+_Note: This repo requires [pnpm](https://pnpm.io/installation) and [asdf](https://github.com/asdf-vm/asdf) to be installed globally
+on your machine._
+
 A few first time repo steps:
 
-Install tool versions with [asdf](https://github.com/asdf-vm/asdf)
-
 ```
-asdf install
-```
-
-Install pnpm:
-
-```
-npm install -g pnpm
-```
-
-And run the setup command:
-
-```
-pnpm run setup
+asdf install #Install tool versions
+npm install -g pnpm #Install pnpm
+pnpm run setup #Run the setup command
 ```
 
 ## Running scripts
@@ -40,6 +30,31 @@ For example:
 pnpm --filter "./packages/**" build
 pnpm --filter "./packages/**" test
 ```
+
+## Contributing
+
+### Assign yourself to an issue
+Read through the existing [issues](https://github.com/OpenFn/adaptors/issues) and assign yourself to the issue you have chosen. If you need clarification, don't hesitate leave a comment on the issue and we will get back to you as soon as possible. 
+
+If there isn't already an issue for the feature you would like to contribute, please make one and assign yourself.
+
+
+### Open a pull request
+
+1. Clone the adaptors repository, then [fork it](https://docs.github.com/en/get-started/quickstart/fork-a-repo). 
+
+2. Make your changes by following the [working with adaptors](#working-with-adaptors) section. 
+
+3. Open a draft PR, fill out the pull request template (this will be added automatically for you) then make sure to self-review your code and go through the 'Review checklist'. Leave any notes for the reviewer in the 'Details' section.
+
+4. Mark the PR as ready for review, and assign @stu or @taylor.
+
+### Working with adaptors
+
+Copy template folder 
+Rename it 
+Add authentication 
+Helper functions 
 
 ## Changesets
 
