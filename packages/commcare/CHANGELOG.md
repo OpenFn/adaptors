@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 1.5.6
+
+### Patch Changes
+
+- e0406fa: update dependencies
+
 ## 1.5.5
 
 ### Patch Changes
