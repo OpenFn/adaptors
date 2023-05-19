@@ -1,13 +1,9 @@
-/** @module Adaptor */
 import {
   execute as commonExecute,
   composeNextState,
-  chunk,
-  convertCSVToJSON,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
-import { stat } from 'fs';
 
 // import JSONStream from 'JSONStream';
 // import csv from 'csv-parser';
@@ -83,52 +79,34 @@ export function getCSV(filePath) {
 
     let results = [];
 
-    return (
-      sftp
-        .connect(state.configuration)
-        .then(() => {
-          process.stdout.write('Connected. ✓\n');
-          return sftp.get(filePath);
-        })
-        // TODO: @Taylor is there a good reason we don't want this ?
-        // The logic below convert the CSV to a JSON
-        // .then(chunk => {
-        //   return csv()
-        //     .fromStream(Readable.from(chunk))
-        //     .subscribe(json => {
-        //       results.push(json);
-        //     });
-        // })
-        // .then(json => {
-        //   const nextState = composeNextState(state, json);
-        //   return nextState;
-        // })
-        // .then(chunk => {
-        //   results.push(chunk);
-        // })
-        .then(chunk => {
-          results.push(chunk);
-        })
-        .then(() => {
-          process.stdout.write('Parsing rows to JSON.\n');
-          return new Promise((resolve, reject) => {
-            const content = Buffer.concat(results).toString('utf8');
-            resolve(content.split('\r\n'));
-          }).then(json => {
-            const nextState = composeNextState(state, json);
-            return nextState;
-          });
-        })
-        .then(state => {
-          console.log('Stream finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          sftp.end();
-          throw e;
-        })
-    );
+    return sftp
+      .connect(state.configuration)
+      .then(() => {
+        process.stdout.write('Connected. ✓\n');
+        return sftp.get(filePath);
+      })
+      .then(chunk => {
+        results.push(chunk);
+      })
+      .then(() => {
+        process.stdout.write('Parsing rows to JSON.\n');
+        return new Promise((resolve, reject) => {
+          const content = Buffer.concat(results).toString('utf8');
+          resolve(content.split('\r\n'));
+        }).then(json => {
+          const nextState = composeNextState(state, json);
+          return nextState;
+        });
+      })
+      .then(state => {
+        console.log('Stream finished.');
+        sftp.end();
+        return state;
+      })
+      .catch(e => {
+        sftp.end();
+        throw e;
+      });
   };
 }
 
@@ -266,6 +244,43 @@ export function normalizeCSVarray(options, callback) {
   };
 }
 
+export function csvToJsonArray(csvFilePath) {
+  // Async / await usage
+  return state => {
+    const sftp = new Client();
+
+    let results = [];
+
+    return sftp
+      .connect(state.configuration)
+      .then(() => {
+        process.stdout.write('Connected. ✓\n');
+        return sftp.createReadStream(csvFilePath);
+      })
+      .then(chunk => {
+        process.stdout.write('Parsing rows to JSON.\n');
+        return csv({ flatKeys: true })
+          .fromStream(chunk)
+          .subscribe(json => {
+            return results.push(json);
+          });
+      })
+      .then(json => {
+        const nextState = composeNextState(state, json);
+        return nextState;
+      })
+      .then(state => {
+        console.log('Stream finished.');
+        sftp.end();
+        return state;
+      })
+      .catch(e => {
+        sftp.end();
+        throw e;
+      });
+  };
+}
+
 export * from 'lodash/fp';
 
 export {
@@ -280,5 +295,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-  convertCSVToJSON,
+  csvToJson,
 } from '@openfn/language-common';

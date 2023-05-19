@@ -2,6 +2,7 @@ import _ from 'lodash/fp';
 const { curry, fromPairs } = _;
 
 import { JSONPath } from 'jsonpath-plus';
+import csv from 'csvtojson';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -542,37 +543,16 @@ export function chunk(array, chunkSize) {
  * Converts a CSV array data to a JSON Object
  * @public
  * @example
- * convertCSVToJSON(['a,b,c,d', '1,2,3,4'])
+ * csvToJson(['a,b,c,d', '1,2,3,4'])
  * @function
- * @param {Array} data - CSV array data
+ * @param {Array} csvStr - CSV array data
  * @returns {string}
  */
-export function convertCSVToJSON(data) {
-  const lines = data.map(d => (d = d.replace(/"/g, '')));
-  let headers = lines.shift().split(',');
-
-  // this char code gets hidden in some of the column names.
-  // We don't want it. We need to remove it
-  const charCodeToRemove = 65279;
-  headers = headers.map(h =>
-    h.charCodeAt() == charCodeToRemove ? h.slice(1) : h
-  );
-
-  const result = lines
-    .filter(line => line.length > 0)
-    .map(line => {
-      const lineObject = {};
-      const currentline = line.split(',');
-      for (let i = 0; i < headers.length; i++) {
-        lineObject[headers[i]] = currentline[i];
-      }
-      return lineObject;
-    });
-
-  return JSON.stringify(result);
+export function csvToJson(csvStr) {
+  csv({ output: 'json' }).fromString(csvStr);
 }
 
-// /**
+// /*
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
 //  * @example

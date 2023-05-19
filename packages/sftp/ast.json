@@ -681,9 +681,9 @@
       "valid": true
     },
     {
-      "name": "convertCSVToJSON",
+      "name": "csvToJson",
       "params": [
-        "data"
+        "csvStr"
       ],
       "docs": {
         "description": "Converts a CSV array data to a JSON Object",
@@ -695,7 +695,7 @@
           },
           {
             "title": "example",
-            "description": "convertCSVToJSON(['a,b,c,d', '1,2,3,4'])"
+            "description": "csvToJson(['a,b,c,d', '1,2,3,4'])"
           },
           {
             "title": "function",
@@ -709,7 +709,7 @@
               "type": "NameExpression",
               "name": "Array"
             },
-            "name": "data"
+            "name": "csvStr"
           },
           {
             "title": "returns",
