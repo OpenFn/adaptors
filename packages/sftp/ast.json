@@ -78,7 +78,7 @@
           },
           {
             "title": "param",
-            "description": "Options which can be passed to convert csv to json",
+            "description": "Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -200,6 +200,59 @@
               "name": "string"
             },
             "name": "encoding"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "normalizeCSVarray",
+      "params": [
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Convert JSON array of strings into a normalized object",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "normalizeCSVarray({ delimiter: ';', noheader: true });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Options passed to csvtojson parser",
+            "type": {
+              "type": "NameExpression",
+              "name": "options"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Options passed to csvtojson parser",
+            "type": {
+              "type": "NameExpression",
+              "name": "callback"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -627,6 +680,59 @@
             "type": {
               "type": "NameExpression",
               "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "chunk",
+      "params": [
+        "array",
+        "chunkSize"
+      ],
+      "docs": {
+        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array to be chunked",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "array"
+          },
+          {
+            "title": "param",
+            "description": "The maxiumum size of each chunks",
+            "type": {
+              "type": "NameExpression",
+              "name": "Integer"
+            },
+            "name": "chunkSize"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
             }
           }
         ]
