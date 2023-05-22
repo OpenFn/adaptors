@@ -66,7 +66,7 @@ export function list(dirPath) {
  * getCSV(
  *   '/some/path/to_file.csv'
  * );
- * @constructor
+ * @function
  * @param {string} filePath - Path to resource
  * @param {object} parsingOptions - Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
  * @returns {Operation}

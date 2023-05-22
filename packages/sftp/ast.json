@@ -62,9 +62,8 @@
             "description": "getCSV(\n  '/some/path/to_file.csv'\n);"
           },
           {
-            "title": "constructor",
+            "title": "function",
             "description": null,
-            "type": null,
             "name": null
           },
           {
