@@ -46,7 +46,8 @@
     {
       "name": "getCSV",
       "params": [
-        "filePath"
+        "filePath",
+        "parsingOptions"
       ],
       "docs": {
         "description": "Get a CSV and return a JSON array of strings for each item separated by the delimiter",
@@ -73,6 +74,15 @@
               "name": "string"
             },
             "name": "filePath"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "parsingOptions"
           },
           {
             "title": "returns",
@@ -669,6 +679,59 @@
             "type": {
               "type": "NameExpression",
               "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "chunk",
+      "params": [
+        "array",
+        "chunkSize"
+      ],
+      "docs": {
+        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array to be chunked",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "array"
+          },
+          {
+            "title": "param",
+            "description": "The maxiumum size of each chunks",
+            "type": {
+              "type": "NameExpression",
+              "name": "Integer"
+            },
+            "name": "chunkSize"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
             }
           }
         ]

@@ -1,15 +1,9 @@
-
 import {
   execute as commonExecute,
   composeNextState,
-  chunk,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
-import { stat } from 'fs';
-
-// import JSONStream from 'JSONStream';
-// import csv from 'csv-parser';
 
 /**
  * Execute a sequence of operations.
@@ -48,12 +42,12 @@ export function list(dirPath) {
     return sftp
       .connect(state.configuration)
       .then(() => {
-        process.stdout.write('Connected. ✓\n');
+        console.debug('Connected. ✓\n');
         return sftp.list(dirPath);
       })
       .then(files => {
         // TODO: should we remove this?
-        // process.stdout.write(`File list: ${JSON.stringify(files, null, 2)}\n`);
+        // console.debug(`File list: ${JSON.stringify(files, null, 2)}\n`);
         const nextState = composeNextState(state, files);
         sftp.end();
         return nextState;
@@ -74,42 +68,63 @@ export function list(dirPath) {
  * );
  * @function
  * @param {string} filePath - Path to resource
+ * @param {object} parsingOptions - Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
  * @returns {Operation}
  */
-export function getCSV(filePath) {
+export function getCSV(filePath, parsingOptions = {}) {
+  const defaultOptions = {
+    asObjects: false,
+    delimiter: ',',
+    noheader: false,
+    quote: '"',
+    trim: true,
+    flatKeys: false,
+  };
+
   return state => {
     const sftp = new Client();
 
     let results = [];
 
-    return (
-      sftp
+    if (parsingOptions.asObjects) {
+      return sftp
         .connect(state.configuration)
         .then(() => {
-          process.stdout.write('Connected. ✓\n');
+          console.debug('Connected. ✓\n');
+          return sftp.createReadStream(filePath);
+        })
+        .then(chunk => {
+          console.debug('Parsing rows to JSON.\n');
+
+          return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
+            chunk
+          );
+        })
+        .then(json => {
+          const nextState = composeNextState(state, json);
+          return nextState;
+        })
+        .then(state => {
+          console.log('Stream finished.');
+          sftp.end();
+          return state;
+        })
+        .catch(e => {
+          sftp.end();
+          throw e;
+        });
+    } else {
+      return sftp
+        .connect(state.configuration)
+        .then(() => {
+          console.debug('Connected. ✓\n');
           return sftp.get(filePath);
         })
-        // TODO: @Taylor is there a good reason we don't want this ?
-        // The logic below convert the CSV to a JSON
-        // .then(chunk => {
-        //   return csv()
-        //     .fromStream(Readable.from(chunk))
-        //     .subscribe(json => {
-        //       results.push(json);
-        //     });
-        // })
-        // .then(json => {
-        //   const nextState = composeNextState(state, json);
-        //   return nextState;
-        // })
-        // .then(chunk => {
-        //   results.push(chunk);
-        // })
         .then(chunk => {
           results.push(chunk);
         })
         .then(() => {
-          process.stdout.write('Parsing rows to JSON.\n');
+          console.debug('Parsing rows to JSON.\n');
           return new Promise((resolve, reject) => {
             const content = Buffer.concat(results).toString('utf8');
             resolve(content.split('\r\n'));
@@ -126,8 +141,8 @@ export function getCSV(filePath) {
         .catch(e => {
           sftp.end();
           throw e;
-        })
-    );
+        });
+    }
   };
 }
 
@@ -191,7 +206,7 @@ export function getJSON(filePath, encoding) {
     return sftp
       .connect(state.configuration)
       .then(() => {
-        process.stdout.write('Connected. ✓\n');
+        console.debug('Connected. ✓\n');
         return sftp.get(filePath);
       })
 
@@ -199,7 +214,7 @@ export function getJSON(filePath, encoding) {
         results.push(chunk);
       })
       .then(() => {
-        process.stdout.write('Receiving stream.\n');
+        console.debug('Receiving stream.\n');
 
         return new Promise((resolve, reject) => {
           const content = Buffer.concat(results).toString('utf8');
@@ -235,7 +250,7 @@ export function normalizeCSVarray(options, callback) {
     let results = [];
 
     state.data.map(data => {
-      const [keys, ...rest] = state.data
+      const [keys, ...rest] = data
         .shift()
         .split('\n')
         .map(h => (h = h.replace(/"/g, '')));
@@ -279,4 +294,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  chunk,
 } from '@openfn/language-common';
