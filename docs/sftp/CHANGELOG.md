@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.7.0
+
+### Minor Changes
+
+- fa58216: Add csvtojson convertion option
+
 ## 0.6.9
 
 ### Patch Changes
