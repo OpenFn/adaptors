@@ -1,13 +1,10 @@
-
 import {
   execute as commonExecute,
   composeNextState,
-  chunk,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
-import { stat } from 'fs';
-
+// import { stat } from 'fs';
 // import JSONStream from 'JSONStream';
 // import csv from 'csv-parser';
 
@@ -72,51 +69,31 @@ export function list(dirPath) {
  * getCSV(
  *   '/some/path/to_file.csv'
  * );
- * @function
+ * @constructor
  * @param {string} filePath - Path to resource
+ * @param {object} parsingOptions - Options which can be passed to convert csv to json
  * @returns {Operation}
  */
-export function getCSV(filePath) {
+export function getCSV(filePath, parsingOptions) {
   return state => {
     const sftp = new Client();
 
     let results = [];
 
-    return (
-      sftp
+    if (typeof parsingOptions === 'object') {
+      return sftp
         .connect(state.configuration)
         .then(() => {
           process.stdout.write('Connected. ✓\n');
-          return sftp.get(filePath);
+          return sftp.createReadStream(filePath);
         })
-        // TODO: @Taylor is there a good reason we don't want this ?
-        // The logic below convert the CSV to a JSON
-        // .then(chunk => {
-        //   return csv()
-        //     .fromStream(Readable.from(chunk))
-        //     .subscribe(json => {
-        //       results.push(json);
-        //     });
-        // })
-        // .then(json => {
-        //   const nextState = composeNextState(state, json);
-        //   return nextState;
-        // })
-        // .then(chunk => {
-        //   results.push(chunk);
-        // })
         .then(chunk => {
-          results.push(chunk);
-        })
-        .then(() => {
           process.stdout.write('Parsing rows to JSON.\n');
-          return new Promise((resolve, reject) => {
-            const content = Buffer.concat(results).toString('utf8');
-            resolve(content.split('\r\n'));
-          }).then(json => {
-            const nextState = composeNextState(state, json);
-            return nextState;
-          });
+          return csv(parsingOptions).fromStream(chunk);
+        })
+        .then(json => {
+          const nextState = composeNextState(state, json);
+          return nextState;
         })
         .then(state => {
           console.log('Stream finished.');
@@ -126,8 +103,37 @@ export function getCSV(filePath) {
         .catch(e => {
           sftp.end();
           throw e;
-        })
-    );
+        });
+    }
+
+    return sftp
+      .connect(state.configuration)
+      .then(() => {
+        process.stdout.write('Connected. ✓\n');
+        return sftp.get(filePath);
+      })
+      .then(chunk => {
+        results.push(chunk);
+      })
+      .then(() => {
+        process.stdout.write('Parsing rows to JSON.\n');
+        return new Promise((resolve, reject) => {
+          const content = Buffer.concat(results).toString('utf8');
+          resolve(content.split('\r\n'));
+        }).then(json => {
+          const nextState = composeNextState(state, json);
+          return nextState;
+        });
+      })
+      .then(state => {
+        console.log('Stream finished.');
+        sftp.end();
+        return state;
+      })
+      .catch(e => {
+        sftp.end();
+        throw e;
+      });
   };
 }
 
@@ -217,51 +223,6 @@ export function getJSON(filePath, encoding) {
       .catch(e => {
         throw e;
       });
-  };
-}
-
-/**
- * Convert JSON array of strings into a normalized object
- * @public
- * @example
- * normalizeCSVarray({ delimiter: ';', noheader: true });
- * @function
- * @param {options} options - Options passed to csvtojson parser
- * @param {callback} callback - Options passed to csvtojson parser
- * @returns {Operation}
- */
-export function normalizeCSVarray(options, callback) {
-  return state => {
-    let results = [];
-
-    state.data.map(data => {
-      const [keys, ...rest] = state.data
-        .shift()
-        .split('\n')
-        .map(h => (h = h.replace(/"/g, '')));
-
-      results.push(keys);
-    });
-
-    const headers = results[0]
-      .trim()
-      .split('\n')
-      .map(item => item.split(','))
-      .flat();
-
-    const values = results[1]
-      .trim()
-      .split('\n')
-      .map(item => item.split(','))
-      .flat();
-
-    const normalizedArray = values.map(item => {
-      const object = {};
-      headers.forEach((key, index) => (object[key] = item.at(index)));
-      return object;
-    });
-
-    return { ...state, normalizedArray };
   };
 }
 
