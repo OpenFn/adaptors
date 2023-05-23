@@ -1,6 +1,7 @@
 import {
   execute as commonExecute,
   composeNextState,
+  parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
@@ -96,9 +97,10 @@ export function getCSV(filePath, parsingOptions = {}) {
         .then(chunk => {
           console.debug('Parsing rows to JSON.\n');
 
-          return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
-            chunk
-          );
+          return parseCsv(chunk, { ...defaultOptions, ...parsingOptions });
+          // return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
+          //   chunk
+          // );
         })
         .then(json => {
           const nextState = composeNextState(state, json);
