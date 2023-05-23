@@ -108,8 +108,8 @@ export function getCSV(filePath, parsingOptions = {}) {
           return state;
         })
         .catch(e => {
+          console.log(e);
           sftp.end();
-          throw e;
         });
     } else {
       return sftp
@@ -137,8 +137,9 @@ export function getCSV(filePath, parsingOptions = {}) {
           return state;
         })
         .catch(e => {
+          // throw e;
+          console.log(e);
           sftp.end();
-          throw e;
         });
     }
   };
