@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.7.1
+
+### Patch Changes
+
+- 827c627: error handling
+
 ## 0.7.0
 
 ### Minor Changes
