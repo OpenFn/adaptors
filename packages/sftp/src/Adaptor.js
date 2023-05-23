@@ -95,7 +95,7 @@ export function getCSV(filePath, parsingOptions = {}) {
         })
         .then(chunk => {
           console.debug('Parsing rows to JSON.\n');
-
+          delete parsingOptions.asObjects;
           return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
             chunk
           );
