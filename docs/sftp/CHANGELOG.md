@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.7.2
+
+### Patch Changes
+
+- 205b806: remove asObjects key before parsing
+
 ## 0.7.1
 
 ### Patch Changes
