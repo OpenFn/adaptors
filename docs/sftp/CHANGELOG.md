@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 0.7.3
+
+### Patch Changes
+
+- 432dd0a: fix sftp connection wqautoclose
+
 ## 0.7.2
 
 ### Patch Changes
