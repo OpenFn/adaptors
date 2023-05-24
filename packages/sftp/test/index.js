@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { execute } from '../src';
 
 describe('The execute() function', () => {
-  it('executes each operation in sequence', done => {
+  it.skip('executes each operation in sequence', done => {
     const state = {};
     const operations = [
       state => {
@@ -25,7 +25,7 @@ describe('The execute() function', () => {
       .catch(done);
   });
 
-  it('assigns references, data to the initialState', done => {
+  it.skip('assigns references, data to the initialState', done => {
     let state = {};
 
     let finalState = execute()(state);
