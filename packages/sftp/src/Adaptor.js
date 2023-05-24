@@ -23,7 +23,29 @@ export function execute(...operations) {
     data: null,
   };
 
-  return state => commonExecute(...operations)({ ...initialState, ...state });
+  return state =>
+    commonExecute(
+      connect,
+      ...operations,
+      disconnect
+    )({ ...initialState, ...state });
+}
+
+function connect(state) {
+  const sftp = new Client();
+
+  return sftp.connect(state.configuration).then(() => {
+    console.log('Connected');
+    return { ...state, sftp };
+  });
+}
+
+function disconnect(state) {
+  let { sftp } = state;
+  console.log('Disconnected');
+  sftp.end();
+  delete state.sftp;
+  return state;
 }
 
 /**
@@ -37,23 +59,10 @@ export function execute(...operations) {
  */
 export function list(dirPath) {
   return state => {
-    const sftp = new Client();
-
-    return sftp
-      .connect(state.configuration)
-      .then(() => {
-        console.debug('Connected. ✓\n');
-        return sftp.list(dirPath);
-      })
-      .then(files => {
-        // TODO: should we remove this?
-        // console.debug(`File list: ${JSON.stringify(files, null, 2)}\n`);
-        const nextState = composeNextState(state, files);
-        sftp.end();
-        return nextState;
-      })
+    return state.sftp
+      .list(dirPath)
+      .then(files => composeNextState(state, files))
       .catch(e => {
-        sftp.end();
         console.log(e);
       });
   };
@@ -87,46 +96,27 @@ export function getCSV(filePath, parsingOptions = {}) {
   };
 
   return state => {
-    const sftp = new Client();
-
+    const { sftp } = state;
     let results = [];
 
     if (parsingOptions) {
-      return sftp
-        .connect(state.configuration)
-        .then(() => {
-          console.debug('Connected. ✓\n');
-          return sftp.createReadStream(filePath, {
-            ...defaultOptions.readStreamOptions,
-          });
-        })
-        .then(chunk => {
-          console.debug('Parsing rows to JSON.\n');
-
-          return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
-            chunk
-          );
-        })
-        .then(json => {
-          const nextState = composeNextState(state, json);
-          return nextState;
-        })
+      const stream = sftp.createReadStream(filePath, {
+        ...defaultOptions.readStreamOptions,
+      });
+      return csv({ ...defaultOptions, ...parsingOptions })
+        .fromStream(stream)
+        .then(json => composeNextState(state, json))
         .then(state => {
           console.log('Stream finished.');
-          sftp.end();
+          console.log(state)
           return state;
         })
         .catch(e => {
           console.log(e);
-          sftp.end();
         });
     } else {
       return sftp
-        .connect(state.configuration)
-        .then(() => {
-          console.debug('Connected. ✓\n');
-          return sftp.get(filePath);
-        })
+        .get(filePath)
         .then(chunk => {
           results.push(chunk);
         })
@@ -142,12 +132,10 @@ export function getCSV(filePath, parsingOptions = {}) {
         })
         .then(state => {
           console.log('Stream finished.');
-          sftp.end();
           return state;
         })
         .catch(e => {
           console.log(e);
-          sftp.end();
         });
     }
   };
@@ -170,24 +158,21 @@ export function getCSV(filePath, parsingOptions = {}) {
  */
 export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
-    const sftp = new Client();
+    const { sftp } = state;
 
-    return sftp.connect(state.configuration).then(() => {
-      return sftp
-        .put(localFilePath, remoteFilePath, parsingOptions)
-        .then(res => {
-          const nextState = composeNextState(state, res);
-          return nextState;
-        })
-        .then(state => {
-          console.log('Upload finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          throw e;
-        });
-    });
+    return sftp
+      .put(localFilePath, remoteFilePath, parsingOptions)
+      .then(res => {
+        const nextState = composeNextState(state, res);
+        return nextState;
+      })
+      .then(state => {
+        console.log('Upload finished.');
+        return state;
+      })
+      .catch(e => {
+        throw e;
+      });
   };
 }
 
@@ -206,17 +191,12 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
  */
 export function getJSON(filePath, encoding) {
   return state => {
-    const sftp = new Client();
+    const { sftp } = state;
 
     let results = [];
 
     return sftp
-      .connect(state.configuration)
-      .then(() => {
-        console.debug('Connected. ✓\n');
-        return sftp.get(filePath);
-      })
-
+      .get(filePath)
       .then(chunk => {
         results.push(chunk);
       })
@@ -233,7 +213,6 @@ export function getJSON(filePath, encoding) {
       })
       .then(state => {
         console.log('Stream finished.');
-        sftp.end();
         return state;
       })
       .catch(e => {
