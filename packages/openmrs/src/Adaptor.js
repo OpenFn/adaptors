@@ -7,8 +7,6 @@ import request from 'request';
 import { assembleError, tryJson } from './Utils';
 import { resolve as resolveUrl } from 'url';
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for OpenMRS.
@@ -55,15 +53,25 @@ function login(state) {
   };
 
   return new Promise((resolve, reject) => {
-    request(params, function (error, response, body) {
-      error = assembleError({ error, response, params });
-      if (error) {
-        reject(error);
-      } else {
-        const resp = tryJson(body);
+    fetch(params)
+      .then(response => response.text())
+      .then(result => {
+        const resp = tryJson(result);
         resolve({ ...state, auth: resp });
-      }
-    });
+      })
+      .catch(error => {
+        console.log('error', error);
+        reject(error);
+      });
+    // request(params, function (error, response, body) {
+    //   error = assembleError({ error, response, params });
+    //   if (error) {
+    //     reject(error);
+    //   } else {
+    //     const resp = tryJson(body);
+    //     resolve({ ...state, auth: resp });
+    //   }
+    // });
   });
 }
 
@@ -285,6 +293,58 @@ export function req(params, callback) {
           resolve(nextState);
         }
       });
+    });
+  };
+}
+
+/**
+ * Fetch all non-retired patients that match any specified parameters
+ * @example
+ * execute(
+ *   searchPatient({ query: Sarah })
+ * )(state)
+ * @function
+ * @param {object} params - object with query for the patient
+ * @returns {Operation}
+ */
+export function searchPatient(params) {
+  return state => {
+    const { query, limit } = expandReferences(params)(state);
+    console.log(`Searching for patient with name: ${query}`);
+
+    const { instanceUrl } = state.configuration;
+
+    const url = `${instanceUrl}/ws/rest/v1/patient?q=${query}&v=default&limit=${limit}`;
+
+    return new Promise((resolve, reject) => {
+      fetch({ url, method: 'GET', qs: { v: 'full' }, jar: true })
+        .then(response => response.text())
+        .then(result => {
+          console.log(`Success. Found patient.`);
+
+          const data = tryJson(result);
+          const nextState = composeNextState(state, data);
+          resolve(nextState);
+        })
+        .catch(error => {
+          console.log('error', error);
+          reject(error);
+        });
+      // request(
+      //   { url, method: 'GET', qs: { v: 'full' }, jar: true },
+      //   (error, response, body) => {
+      //     error = assembleError({ error, response });
+      //     if (error) {
+      //       reject(error);
+      //     } else {
+      //       console.log(`Success. Found patient.`);
+
+      //       const data = tryJson(body);
+      //       const nextState = composeNextState(state, data);
+      //       resolve(nextState);
+      //     }
+      //   }
+      // );
     });
   };
 }
