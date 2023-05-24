@@ -59,7 +59,7 @@
           },
           {
             "title": "example",
-            "description": "getCSV(\n  '/some/path/to_file.csv'\n);"
+            "description": "getCSV(\n  '/some/path/to_file.csv',\n  {delimiter: \";\", flatKeys: true }\n);"
           },
           {
             "title": "function",
@@ -77,10 +77,70 @@
           },
           {
             "title": "param",
-            "description": "Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}",
+            "description": "Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "RecordType",
+                "fields": [
+                  {
+                    "type": "FieldType",
+                    "key": "readStreamOptions",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "delimiter",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "noheader",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "quote",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "trim",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "flatKeys",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "output",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  }
+                ]
+              }
             },
             "name": "parsingOptions"
           },

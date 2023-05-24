@@ -64,21 +64,26 @@ export function list(dirPath) {
  * @public
  * @example
  * getCSV(
- *   '/some/path/to_file.csv'
+ *   '/some/path/to_file.csv',
+ *   {delimiter: ";", flatKeys: true }
  * );
  * @function
  * @param {string} filePath - Path to resource
- * @param {object} parsingOptions - Optional. Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
+ * @param {{readStreamOptions: object,delimiter: string,noheader: boolean, quote: string, trim: boolean, flatKeys: boolean, output: string}} [parsingOptions] - Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
  * @returns {Operation}
  */
 export function getCSV(filePath, parsingOptions = {}) {
   const defaultOptions = {
-    asObjects: false,
+    readStreamOptions: {
+      encoding: null,
+      autoClose: false,
+    },
     delimiter: ',',
     noheader: false,
     quote: '"',
     trim: true,
     flatKeys: false,
+    output: 'json',
   };
 
   return state => {
@@ -86,16 +91,18 @@ export function getCSV(filePath, parsingOptions = {}) {
 
     let results = [];
 
-    if (parsingOptions.asObjects) {
+    if (parsingOptions) {
       return sftp
         .connect(state.configuration)
         .then(() => {
           console.debug('Connected. ✓\n');
-          return sftp.createReadStream(filePath);
+          return sftp.createReadStream(filePath, {
+            ...defaultOptions.readStreamOptions,
+          });
         })
         .then(chunk => {
           console.debug('Parsing rows to JSON.\n');
-          delete parsingOptions.asObjects;
+
           return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
             chunk
           );
