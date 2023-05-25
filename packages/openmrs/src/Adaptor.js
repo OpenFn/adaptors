@@ -3,9 +3,10 @@ import {
   expandReferences,
   composeNextState,
 } from '@openfn/language-common';
-import request from 'request';
+import request from 'superagent';
 import { assembleError, tryJson } from './Utils';
 import { resolve as resolveUrl } from 'url';
+import { error } from 'console';
 
 /**
  * Execute a sequence of operations.
@@ -45,33 +46,14 @@ export function execute(...operations) {
 function login(state) {
   const { instanceUrl, username, password } = state.configuration;
 
-  const params = {
-    method: 'GET',
-    url: `${instanceUrl}/ws/rest/v1/session`,
-    auth: { username, password },
-    jar: true,
-  };
-
+  const agent = request.agent();
   return new Promise((resolve, reject) => {
-    fetch(params)
-      .then(response => response.text())
-      .then(result => {
-        const resp = tryJson(result);
-        resolve({ ...state, auth: resp });
-      })
-      .catch(error => {
-        console.log('error', error);
-        reject(error);
+    agent
+      .get(`${instanceUrl}/ws/rest/v1/session`)
+      .auth(username, password)
+      .then(() => {
+        resolve({ ...state, agent });
       });
-    // request(params, function (error, response, body) {
-    //   error = assembleError({ error, response, params });
-    //   if (error) {
-    //     reject(error);
-    //   } else {
-    //     const resp = tryJson(body);
-    //     resolve({ ...state, auth: resp });
-    //   }
-    // });
   });
 }
 
@@ -84,7 +66,7 @@ function login(state) {
  * @returns {State}
  */
 function cleanupState(state) {
-  delete state.auth;
+  delete state.agent;
   return state;
 }
 
@@ -92,37 +74,37 @@ function cleanupState(state) {
  * Gets patient matching a uuid
  * @example
  * execute(
- *   getPatient({ uuid: 123 })
+ *   getPatient("123")
  * )(state)
  * @function
  * @param {object} params - object with uuid for the patient
  * @returns {Operation}
  */
-export function getPatient(params) {
+export function getPatient(uuid, options) {
   return state => {
-    const { uuid } = expandReferences(params)(state);
     console.log(`Searching for patient with uuid: ${uuid}`);
-
+    const { agent } = state;
     const { instanceUrl } = state.configuration;
 
     const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
 
     return new Promise((resolve, reject) => {
-      request(
-        { url, method: 'GET', qs: { v: 'full' }, jar: true },
-        (error, response, body) => {
+      agent
+        .get(url)
+        .accept('json')
+        .query({ v: 'full' })
+        .end((error, response) => {
           error = assembleError({ error, response });
           if (error) {
             reject(error);
           } else {
             console.log(`Success. Found patient.`);
 
-            const data = tryJson(body);
+            const data = tryJson(response.text);
             const nextState = composeNextState(state, data);
             resolve(nextState);
           }
-        }
-      );
+        });
     });
   };
 }
@@ -301,7 +283,7 @@ export function req(params, callback) {
  * Fetch all non-retired patients that match any specified parameters
  * @example
  * execute(
- *   searchPatient({ query: Sarah })
+ *   searchPatient({ q: Sarah })
  * )(state)
  * @function
  * @param {object} params - object with query for the patient
@@ -309,46 +291,75 @@ export function req(params, callback) {
  */
 export function searchPatient(params) {
   return state => {
-    const { query, limit } = expandReferences(params)(state);
-    console.log(`Searching for patient with name: ${query}`);
+    const qs = expandReferences(params)(state);
+    console.log(`Searching for patient with name: ${qs.q}`);
+    const { agent } = state;
 
     const { instanceUrl } = state.configuration;
 
-    const url = `${instanceUrl}/ws/rest/v1/patient?q=${query}&v=default&limit=${limit}`;
+    const url = `${instanceUrl}/ws/rest/v1/patient`;
 
     return new Promise((resolve, reject) => {
-      fetch({ url, method: 'GET', qs: { v: 'full' }, jar: true })
-        .then(response => response.text())
-        .then(result => {
-          console.log(`Success. Found patient.`);
+      agent
+        .get(url)
+        .accept('json')
+        .query(qs)
+        .end((error, response) => {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+          } else {
+            console.log(`Success. Found patient.`);
 
-          const data = tryJson(result);
-          const nextState = composeNextState(state, data);
-          resolve(nextState);
-        })
-        .catch(error => {
-          console.log('error', error);
-          reject(error);
+            const data = tryJson(response.text);
+            const nextState = composeNextState(state, data);
+            resolve(nextState);
+          }
         });
-      // request(
-      //   { url, method: 'GET', qs: { v: 'full' }, jar: true },
-      //   (error, response, body) => {
-      //     error = assembleError({ error, response });
-      //     if (error) {
-      //       reject(error);
-      //     } else {
-      //       console.log(`Success. Found patient.`);
-
-      //       const data = tryJson(body);
-      //       const nextState = composeNextState(state, data);
-      //       resolve(nextState);
-      //     }
-      //   }
-      // );
     });
   };
 }
 
+/**
+ * Fetch all non-retired persons that match any specified parameters
+ * @example
+ * execute(
+ *   searchPerson({ q: Sarah })
+ * )(state)
+ * @function
+ * @param {object} params - object with query for the person
+ * @returns {Operation}
+ */
+export function searchPerson(params) {
+  return state => {
+    const qs = expandReferences(params)(state);
+    console.log(`Searching for person with name: ${qs.q}`);
+    const { agent } = state;
+
+    const { instanceUrl } = state.configuration;
+
+    const url = `${instanceUrl}/ws/rest/v1/person`;
+
+    return new Promise((resolve, reject) => {
+      agent
+        .get(url)
+        .accept('json')
+        .query(qs)
+        .end((error, response) => {
+          error = assembleError({ error, response });
+          if (error) {
+            reject(error);
+          } else {
+            console.log(`Success. Found person.`);
+
+            const data = tryJson(response.text);
+            const nextState = composeNextState(state, data);
+            resolve(nextState);
+          }
+        });
+    });
+  };
+}
 export {
   alterState,
   field,
