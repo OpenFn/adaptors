@@ -1255,7 +1255,6 @@ importers:
       '@openfn/language-common': ^1.7.6
       '@openfn/simple-ast': 0.4.1
       assertion-error: 2.0.0
-      axios: 0.26.1
       chai: 4.3.6
       deep-eql: 4.1.1
       esno: ^0.16.3
@@ -1264,7 +1263,6 @@ importers:
       rimraf: 3.0.2
     dependencies:
       '@openfn/language-common': link:../common
-      axios: 0.26.1
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
