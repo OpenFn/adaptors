@@ -5,8 +5,6 @@ import {
 } from '@openfn/language-common';
 import request from 'superagent';
 import { assembleError, tryJson } from './Utils';
-import { resolve as resolveUrl } from 'url';
-import { error } from 'console';
 
 /**
  * Execute a sequence of operations.
@@ -224,7 +222,8 @@ export function createEncounter(params) {
   return state => {
     const body = expandReferences(params)(state);
     const { instanceUrl } = state.configuration;
-    const url = resolveUrl(instanceUrl + '/', 'ws/rest/v1/encounter');
+    const url = `${instanceUrl}/ws/rest/v1/encounter`;
+
     console.log(`Creating an encounter.`);
     console.log(body);
     return new Promise((resolve, reject) => {
@@ -360,6 +359,83 @@ export function searchPerson(params) {
     });
   };
 }
+
+/**
+ * Creates a new patient
+ * @example
+ * execute(
+ *   createPatient(params)(state)
+ * @function
+ * @param {object} params - parameters of the patient
+ * @returns {Operation}
+ */
+export function createPatient(params) {
+  return state => {
+    const body = JSON.stringify(expandReferences(params)(state));
+    const { agent } = state;
+    const { instanceUrl } = state.configuration;
+    const url = `${instanceUrl}/ws/rest/v1/patient`;
+
+    console.log(`Creating a patient.`);
+
+    console.log(body);
+    return new Promise((resolve, reject) => {
+      agent
+        .post(url)
+        .send(body)
+        .then(response => {
+          console.log(`Successfull created a new patient.`);
+
+          const data = tryJson(response.text);
+          const nextState = composeNextState(state, data);
+          resolve(nextState);
+        })
+        .catch(({ status, response }) => {
+          const error = assembleError({ status, response });
+          reject(error);
+        });
+    });
+  };
+}
+
+/**
+ * Upsert a patient
+ * @example
+ * execute(
+ *   upsertPatient(params)(state)
+ * @function
+ * @param {object} params - parameters of the patient
+ * @returns {Operation}
+ */
+export function upsertPatient(params) {
+  return state => {
+    const body = JSON.stringify(expandReferences(params)(state));
+    const { agent } = state;
+    const { instanceUrl } = state.configuration;
+    const url = `${instanceUrl}/ws/rest/v1/patient`;
+
+    console.log(`Upserting a patient.`);
+
+    console.log(body);
+    return new Promise((resolve, reject) => {
+      agent
+        .post(url)
+        .send(body)
+        .then(response => {
+          console.log(`Successfull upsert a patient.`);
+
+          const data = tryJson(response.text);
+          const nextState = composeNextState(state, data);
+          resolve(nextState);
+        })
+        .catch((error, response) => {
+          error = assembleError({ error, response });
+          reject(error);
+        });
+    });
+  };
+}
+
 export {
   alterState,
   field,
