@@ -4,8 +4,8 @@ import { execute, create, dataValue } from '../src/Adaptor.js';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    let state = {};
-    let operations = [
+    const state = {};
+    const operations = [
       state => {
         return { counter: 1 };
       },
@@ -26,9 +26,7 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    let state = {};
-
-    let finalState = execute()(state);
+    const state = {};
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
