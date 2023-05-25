@@ -5,6 +5,8 @@ import {
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
 
+let sftp;
+
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
@@ -32,7 +34,7 @@ export function execute(...operations) {
 }
 
 function connect(state) {
-  const sftp = new Client();
+  sftp = new Client();
 
   return sftp.connect(state.configuration).then(() => {
     console.log('Connected');
@@ -41,7 +43,6 @@ function connect(state) {
 }
 
 function disconnect(state) {
-  let { sftp } = state;
   console.log('Disconnected');
   sftp.end();
   delete state.sftp;
@@ -96,7 +97,6 @@ export function getCSV(filePath, parsingOptions = {}) {
   };
 
   return state => {
-    const { sftp } = state;
     let results = [];
 
     if (parsingOptions) {
@@ -108,7 +108,7 @@ export function getCSV(filePath, parsingOptions = {}) {
         .then(json => composeNextState(state, json))
         .then(state => {
           console.log('Stream finished.');
-          console.log(state)
+          console.log(state);
           return state;
         })
         .catch(e => {
@@ -158,8 +158,6 @@ export function getCSV(filePath, parsingOptions = {}) {
  */
 export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
-    const { sftp } = state;
-
     return sftp
       .put(localFilePath, remoteFilePath, parsingOptions)
       .then(res => {
@@ -191,8 +189,6 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
  */
 export function getJSON(filePath, encoding) {
   return state => {
-    const { sftp } = state;
-
     let results = [];
 
     return sftp
