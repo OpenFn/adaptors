@@ -45,7 +45,7 @@ function connect(state) {
 function disconnect(state) {
   console.log('Disconnected');
   sftp.end();
-  delete state.sftp;
+  sftp = undefined;
   return state;
 }
 
