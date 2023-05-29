@@ -84,24 +84,22 @@ export function getPatient(uuid) {
 
     const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(url)
-        .accept('json')
-        .query({ v: 'full' })
-        .end((error, response) => {
-          error = assembleError({ error, response });
-          if (error) {
-            reject(error);
-          } else {
-            console.log(`Success. Found patient.`);
+    return agent
+      .get(url)
+      .accept('json')
+      .query({ v: 'full' })
+      .end((error, response) => {
+        error = assembleError({ error, response });
+        if (error) {
+          throw error;
+        } else {
+          console.log(`Success. Found patient.`);
 
-            const data = tryJson(response.text);
-            const nextState = composeNextState(state, data);
-            resolve(nextState);
-          }
-        });
-    });
+          const data = tryJson(response.text);
+          const nextState = composeNextState(state, data);
+          return nextState;
+        }
+      });
   };
 }
 
@@ -135,23 +133,20 @@ export function createEncounter(params) {
 
     console.log(`Creating an encounter.`);
 
-    return new Promise((resolve, reject) => {
-      agent
-        .post(url)
-        .type('json')
-        .send(body)
-        .then(response => {
-          console.log(`Successfull created an encounter.`);
+    return agent
+      .post(url)
+      .type('json')
+      .send(body)
+      .then(response => {
+        console.log(`Successfull created an encounter.`);
 
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
-          resolve(nextState);
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        const data = tryJson(response.text);
+        const nextState = composeNextState(state, data);
+        return nextState;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -178,21 +173,19 @@ export function get(params, callback) {
 
     const urlPath = `${instanceUrl}/ws/rest/v1/${url}`;
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(urlPath)
-        .query(qs)
-        .then(response => {
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
+    return agent
+      .get(urlPath)
+      .query(qs)
+      .then(response => {
+        const data = tryJson(response.text);
+        const nextState = composeNextState(state, data);
 
-          if (callback) resolve(callback(nextState));
-          resolve(nextState);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+        if (callback) return callback(nextState);
+        return nextState;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -213,34 +206,30 @@ export function searchPatient(params) {
 
     const url = `${instanceUrl}/ws/rest/v1/patient`;
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(url)
-        .accept('json')
-        .query(qs)
-        .then(response => {
-          const data = tryJson(response.text);
-          const count = data.results.length;
+    return agent
+      .get(url)
+      .accept('json')
+      .query(qs)
+      .then(response => {
+        const data = tryJson(response.text);
+        const count = data.results.length;
 
-          if (count > 0) {
-            console.log(
-              `Search successful. Returned ${count} patient${
-                count > 1 ? 's' : ''
-              }.`
-            );
-            const nextState = composeNextState(state, data);
-            resolve(nextState);
-          } else {
-            reject(
-              new Error(`Raising an error because ${count} records were found.`)
-            );
-          }
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        if (count > 0) {
+          console.log(
+            `Search successful. Returned ${count} patient${
+              count > 1 ? 's' : ''
+            }.`
+          );
+          return composeNextState(state, data);
+        } else {
+          throw new Error(
+            `Raising an error because ${count} records were found.`
+          );
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -262,34 +251,30 @@ export function searchPerson(params) {
 
     const url = `${instanceUrl}/ws/rest/v1/person`;
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(url)
-        .accept('json')
-        .query(qs)
-        .then(response => {
-          const data = tryJson(response.text);
-          const count = data.results.length;
+    return agent
+      .get(url)
+      .accept('json')
+      .query(qs)
+      .then(response => {
+        const data = tryJson(response.text);
+        const count = data.results.length;
 
-          if (count > 0) {
-            console.log(
-              `Search successful. Returned ${count} person${
-                count > 1 ? 's' : ''
-              }.`
-            );
-            const nextState = composeNextState(state, data);
-            resolve(nextState);
-          } else {
-            reject(
-              new Error(`Raising an error because ${count} records were found.`)
-            );
-          }
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        if (count > 0) {
+          console.log(
+            `Search successful. Returned ${count} person${
+              count > 1 ? 's' : ''
+            }.`
+          );
+          return composeNextState(state, data);
+        } else {
+          throw new Error(
+            `Raising an error because ${count} records were found.`
+          );
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -341,23 +326,20 @@ export function createPatient(params) {
 
     console.log(`Creating a patient.`);
 
-    return new Promise((resolve, reject) => {
-      agent
-        .post(url)
-        .type('json')
-        .send(body)
-        .then(response => {
-          console.log(`Successfull created a new patient.`);
+    return agent
+      .post(url)
+      .type('json')
+      .send(body)
+      .then(response => {
+        console.log(`Successfull created a new patient.`);
 
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
-          resolve(nextState);
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        const data = tryJson(response.text);
+        const nextState = composeNextState(state, data);
+        return nextState;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -377,22 +359,19 @@ export function getEncounter(uuid) {
 
     const url = `${instanceUrl}/ws/rest/v1/encounter/${uuid}`;
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(url)
-        .accept('json')
-        .then(response => {
-          console.log(`Successfull found an encounter.`);
+    return agent
+      .get(url)
+      .accept('json')
+      .then(response => {
+        console.log(`Successfull found an encounter.`);
 
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
-          resolve(nextState);
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        const data = tryJson(response.text);
+        const nextState = composeNextState(state, data);
+        return nextState;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -413,23 +392,20 @@ export function getEncounters(params) {
 
     console.log(`Searching for encounters: ${JSON.stringify(qs, null, 2)}`);
 
-    return new Promise((resolve, reject) => {
-      agent
-        .get(url)
-        .accept('json')
-        .query(qs)
-        .then(response => {
-          console.log(`Successfull found an encounter.`);
+    return agent
+      .get(url)
+      .accept('json')
+      .query(qs)
+      .then(response => {
+        console.log(`Successfull found an encounter.`);
 
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
-          resolve(nextState);
-        })
-        .catch(({ response }) => {
-          const { error } = response;
-          reject(error);
-        });
-    });
+        const data = tryJson(response.text);
+        const nextState = composeNextState(state, data);
+        return nextState;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
