@@ -62,13 +62,15 @@ please make one and assign yourself.
    the 'Review checklist'. Leave any notes for the reviewer in the 'Details'
    section.
 
-4. Mark the pull request as ready for review.
+4. Mark the pull request as ready for review, and assign @stuartc or
+   @taylordowns2000.
 
 ### Working with adaptors
 
 #### Create a new adaptor
 
-To create a new adaptor:
+- Create a copy of the adaptor [template](packages/template), and rename it.
+  `cp -R packages/template packages/newadaptorname`
 
 1. Fork the repo and follow the [Getting Started](#getting-started) steps.
 
