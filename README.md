@@ -1,32 +1,26 @@
 # OpenFn Adaptors ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg?branch=main) ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/docs.yaml/badge.svg?branch=main)
 
-The new home for all @openfn language adaptors.
+The new home for all @openfn
+[language adaptors](https://docs.openfn.org/adaptors) - open-source Javascript
+or Typescript modules that provide helper functions to communicate with a
+specific external system.
 
-**N.B.: We hope to migrate our 60+ adaptors here over the coming weeks.**
-
-This repo requires [pnpm](https://pnpm.io/installation) to be installed globally
-on your machine.
+For a fully open source workflow automation platform that leverages these
+adaptors, see [OpenFn Lighnting](https://github.com/OpenFn/lightning).
 
 ## Getting Started
 
+_Note: This repo requires [pnpm](https://pnpm.io/installation) and
+[asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
+machine._
+
 A few first time repo steps:
 
-Install tool versions with [asdf](https://github.com/asdf-vm/asdf)
-
 ```
-asdf install
-```
-
-Install pnpm:
-
-```
-npm install -g pnpm
-```
-
-And run the setup command:
-
-```
-pnpm run setup
+asdf install #Install tool versions
+pnpm install
+pnpm build
+pnpm run setup #Run the setup command
 ```
 
 ## Running scripts
@@ -42,6 +36,67 @@ For example:
 pnpm --filter "./packages/**" build
 pnpm --filter "./packages/**" test
 ```
+
+## Contributing
+
+### Assign yourself to an issue
+
+Read through the existing [issues](https://github.com/OpenFn/adaptors/issues)
+and assign yourself to the issue you have chosen. If anything needs
+clarification, don't hesitate to leave a comment on the issue and we will get
+back to you as soon as possible.
+
+If there isn't already an issue for the feature you would like to contribute,
+please make one and assign yourself.
+
+### Open a pull request
+
+1. Clone the adaptors repository, then
+   [fork it](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+2. Make your changes by following the
+   [working with adaptors](#working-with-adaptors) section.
+
+3. Open a draft PR, fill out the pull request template (this will be added
+   automatically for you) then make sure to self-review your code and go through
+   the 'Review checklist'. Leave any notes for the reviewer in the 'Details'
+   section.
+
+4. Mark the pull request as ready for review, and assign @stuartc or
+   @taylordowns2000 .
+
+### Working with adaptors
+
+To create a new adaptor follow the steps below
+
+- Create a copy of the adaptor [template](packages/template), and rename it.
+  `cp packages/template packages/newadaptorname`
+
+- Define the configuration schema
+
+  The configuration schema defines required parameters and their expected values
+  for configuring the adaptor's authentication and authorization settings.
+
+  1. Open the configuration file of the newly copied template,
+     `configuration-schema.json`, to define the schema.
+  2. Specify the required parameters and their data types. Include descriptions
+     that explain the purpose and usage of each parameter.
+  3. If certain parameters are optional, clearly indicate their optional status
+     and provide default values or instructions for their usage.
+  4. Validate the configuration against the schema to ensure that the provided
+     values match the expected structure and data types. This validation can be
+     done tools like
+     [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+
+  [Here's an example of a configuration schema](packages/template/configuration-schema.json)
+
+- To add or update functions to an existing adaptor:
+
+  - Create or update adaptor functions.
+  - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
+    comprehensive explanation of its purpose, parameters, return values, and
+    usage examples
+  - Update the adaptor's `README.md`.
 
 ## Changesets
 
