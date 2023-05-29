@@ -48,7 +48,7 @@ If there isn't already an issue for the feature you would like to contribute, pl
 
 3. Open a draft PR, fill out the pull request template (this will be added automatically for you) then make sure to self-review your code and go through the 'Review checklist'. Leave any notes for the reviewer in the 'Details' section.
 
-4. Mark the PR as ready for review, and assign @stu or @taylor.
+4. Mark the pull request as ready for review, and assign @stuartc or @taylordowns2000 .
 
 ### Working with adaptors
 
