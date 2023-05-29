@@ -1,23 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "username": {
-      "title": "Username",
-      "type": "string",
-      "description": "Username",
-      "examples": [
-        "test@openfn.org"
-      ]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": [
-        "@some(!)Str0ngp4ss0w0rd"
-      ]
-    },
     "baseUrl": {
       "title": "Base URL",
       "anyOf": [
@@ -31,9 +14,20 @@
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": [
-        "https://example.com"
-      ]
+      "examples": ["https://example.com"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": ["test@openfn.org"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
     }
   },
   "type": "object",

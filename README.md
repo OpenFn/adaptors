@@ -62,41 +62,86 @@ please make one and assign yourself.
    the 'Review checklist'. Leave any notes for the reviewer in the 'Details'
    section.
 
-4. Mark the pull request as ready for review, and assign @stuartc or
-   @taylordowns2000 .
+4. Mark the pull request as ready for review.
 
 ### Working with adaptors
 
-To create a new adaptor follow the steps below
+#### Create a new adaptor
 
-- Create a copy of the adaptor [template](packages/template), and rename it.
-  `cp packages/template packages/newadaptorname`
+To create a new adaptor:
 
-- Define the configuration schema
+1. Fork the repo and follow the [Getting Started](#getting-started) steps.
 
-  The configuration schema defines required parameters and their expected values
-  for configuring the adaptor's authentication and authorization settings.
+2. Familiarize yourself with the API documentation for the third party system.
+   Determine if you'll need any packages from NPMjs (e.g.,
+   [`jsforce`](https://www.npmjs.com/package/jsforce) for Salesforce,
+   [`pg`](https://www.npmjs.com/package/pg) for direct interaction with a
+   Postgres database.)
 
-  1. Open the configuration file of the newly copied template,
-     `configuration-schema.json`, to define the schema.
-  2. Specify the required parameters and their data types. Include descriptions
-     that explain the purpose and usage of each parameter.
-  3. If certain parameters are optional, clearly indicate their optional status
-     and provide default values or instructions for their usage.
-  4. Validate the configuration against the schema to ensure that the provided
-     values match the expected structure and data types. This validation can be
-     done tools like
-     [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+3. Create a copy of the adaptor [template](packages/template) directory and
+   rename it with `cp -R packages/template packages/<< NEW ADAPTOR NAME >>`
 
-  [Here's an example of a configuration schema](packages/template/configuration-schema.json)
+4. Set your new package `name`, `version`, `description`, and `build`
+   definitions in your new `package.json`.
 
-- To add or update functions to an existing adaptor:
+5. Run `git add package/<< NEW ADAPTOR NAME >>` to register the new directory
+   with PNPM.
 
-  - Create or update adaptor functions.
-  - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
-    comprehensive explanation of its purpose, parameters, return values, and
-    usage examples
-  - Update the adaptor's `README.md`.
+6. Add/remove packages from your `package.json` as required in step 1, then run
+   `pnpm install` to install the deps for the sample functions in your new
+   adaptor.
+
+7. Determine the best way to authenticate. Most adaptors _either_ provide some
+   sort of API token or basic auth header with each request, but some use a
+   "login" step which generates a JWT or some sort of short-lived token and then
+   use that token for all subsequent operations.
+
+8. Define the configuration schema
+
+   The configuration schema defines required parameters and their expected
+   values for configuring the adaptor's authentication and authorization
+   settings.
+
+   1. Open the configuration file of the newly copied template,
+      `configuration-schema.json`, to define the schema.
+   2. Specify the required parameters and their data types. Include descriptions
+      that explain the purpose and usage of each parameter.
+   3. If certain parameters are optional, clearly indicate their optional status
+      and provide default values or instructions for their usage.
+   4. Validate the configuration against the schema to ensure that the provided
+      values match the expected structure and data types. This validation can be
+      done tools like
+      [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+
+   [Here's an example of a configuration schema](packages/template/configuration-schema.json)
+
+9. Implement your authentication method in your first function. Run jobs with:
+
+   ```
+   openfn ./tmp/expression.js \
+   -a ~/adaptors/packages/<< NEW ADAPTOR >>/src/Adaptor.js \
+   -s ./tmp/state.json \
+   -o ./tmp/output.json
+   ```
+
+10. Consider how to handle "nextState" if what's returned by the API for a
+    particular function isn't particularly useful for your users.
+
+11. Lock in the state-handling behavior of your first function with tests.
+
+12. Use your adaptor locally, or submit a PR against @openfn/adaptors to gain
+    general adoption and have your adaptor available on NPM. (See #Changesets
+    below.)
+
+#### Add or update functions
+
+To add or update functions in an existing adaptor:
+
+- Create or update adaptor functions.
+- Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
+  comprehensive explanation of its purpose, parameters, return values, and usage
+  examples
+- Update the adaptor's `README.md`.
 
 ## Changesets
 
@@ -230,7 +275,7 @@ Then, from inside your new `packages/<name>`:
 - Remove `.prettierrc`
 - Remove any references to `babel` (ie, `.babelrc`) and `esdoc` (ie,
   `esdoc.json`)
-- Remove the `.gitignore` file (update the top level ignore if neccessary)
+- Remove the `.gitignore` file (update the top level ignore if necessary)
 - Remove the `Makefile`
 - Remove the `.devcontainer`
 - Remove the `.tool-versions`
