@@ -14,6 +14,7 @@ A few first time repo steps:
 ```
 asdf install #Install tool versions
 pnpm install
+pnpm build
 pnpm run setup #Run the setup command
 ```
 
@@ -52,13 +53,42 @@ If there isn't already an issue for the feature you would like to contribute, pl
 ### Working with adaptors
 
 1. Creating a new adaptor
-Create a copy of the adaptor [template](packages/template), and rename it.  
+- Create a copy of the adaptor [template](packages/template), and rename it.  
 
-Add the required and optional properties for state.configuration. 
+- Define the configuration schema
+
+The configuration schema defines required parameters and their expected values for configuring the adaptor's authentication and authorization settings.
+1. Create a separate configuration file, such as `configuration-schema.json`, to define the schema.
+2. Specify the required parameters and their data types. Include descriptions that explain the purpose and usage of each parameter.
+3. If certain parameters are optional, clearly indicate their optional status and provide default values or instructions for their usage.
+4. Validate the configuration against the schema to ensure that the provided values match the expected structure and data types. This validation can be done using libraries like [Joi](https://joi.dev/) or custom validation functions.
+
+Here's an example of a configuration schema for an authentication-enabled adaptor:
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "apiKey": {
+      "type": "string",
+      "description": "The API key used for authentication."
+    },
+    "username": {
+      "type": "string",
+      "description": "The username used for authentication."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password used for authentication."
+    }
+  },
+  "required": ["apiKey"]
+}
+```
 
 2. Adding or updating operations in an existing adaptor
-Create your helper functions. 
-Write your tests. 
+Create your helper functions.
+Write your tests.
 Update the adaptor's README.md.
 
 ## Changesets
