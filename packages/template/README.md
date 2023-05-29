@@ -5,14 +5,15 @@ API.
 
 ## Documentation
 
+View the [docs site](https://docs.openfn.org/adaptors/packages/template-docs)
+for full technical documentation.
+
 ### Configuration
 
 View all the required and optional properties for `state.configuration` in the
 official
 [configuration-schema](https://docs.openfn.org/adaptors/packages/template-configuration-schema/)
 definition.
-
-### post
 
 #### sample expression using operation
 
