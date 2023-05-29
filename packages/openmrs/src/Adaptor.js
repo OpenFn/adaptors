@@ -37,7 +37,7 @@ export function execute(...operations) {
  * Logs in to OpenMRS, gets a session token.
  * @example
  *  login(state)
- * @function
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
@@ -59,7 +59,7 @@ function login(state) {
  * Removes unserializable or confidential keys from the state.
  * @example
  *  cleanupState(state)
- * @function
+ * @private
  * @param {State} state
  * @returns {State}
  */
@@ -156,34 +156,42 @@ export function createEncounter(params) {
 }
 
 /**
- * Make a request to any OpenMRS endpoint and execute a callback
+ * Make a get request to any OpenMRS endpoint and execute a callback
  * @example
- * req({
- *   method: 'GET'
+ * get({
  *   url: 'encounterType'
+ *   qs: {
+ *     v: 'default',
+ *     limit: 1
+ *   }
  * })
  * @function
  * @param {object} params - parameters for the request
  * @param {function} callback - a callback to execute on the next state
  * @returns {Operation}
  */
-export function req(params, callback) {
+export function get(params, callback) {
   return state => {
+    const { agent } = state;
     const { instanceUrl } = state.configuration;
+    const { qs, url } = expandReferences(params)(state);
+
+    const urlPath = `${instanceUrl}/ws/rest/v1/${url}`;
+
     return new Promise((resolve, reject) => {
-      params.jar = true;
-      params.url = `${instanceUrl}${params.url}`;
-      request(params, (error, response, body) => {
-        error = assembleError({ error, response });
-        if (error) {
-          reject(error);
-        } else {
-          const data = tryJson(body);
+      agent
+        .get(urlPath)
+        .query(qs)
+        .then(response => {
+          const data = tryJson(response.text);
           const nextState = composeNextState(state, data);
+
           if (callback) resolve(callback(nextState));
           resolve(nextState);
-        }
-      });
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   };
 }
@@ -223,7 +231,9 @@ export function searchPatient(params) {
             const nextState = composeNextState(state, data);
             resolve(nextState);
           } else {
-            reject(`Raising an error because ${count} records were found.`);
+            reject(
+              new Error(`Raising an error because ${count} records were found.`)
+            );
           }
         })
         .catch(({ response }) => {
@@ -270,7 +280,9 @@ export function searchPerson(params) {
             const nextState = composeNextState(state, data);
             resolve(nextState);
           } else {
-            reject(`Raising an error because ${count} records were found.`);
+            reject(
+              new Error(`Raising an error because ${count} records were found.`)
+            );
           }
         })
         .catch(({ response }) => {
