@@ -13,7 +13,7 @@ A few first time repo steps:
 
 ```
 asdf install #Install tool versions
-npm install -g pnpm #Install pnpm
+pnpm install
 pnpm run setup #Run the setup command
 ```
 
@@ -34,7 +34,7 @@ pnpm --filter "./packages/**" test
 ## Contributing
 
 ### Assign yourself to an issue
-Read through the existing [issues](https://github.com/OpenFn/adaptors/issues) and assign yourself to the issue you have chosen. If you need clarification, don't hesitate leave a comment on the issue and we will get back to you as soon as possible. 
+Read through the existing [issues](https://github.com/OpenFn/adaptors/issues) and assign yourself to the issue you have chosen. If anything needs clarification, don't hesitate to leave a comment on the issue and we will get back to you as soon as possible. 
 
 If there isn't already an issue for the feature you would like to contribute, please make one and assign yourself.
 
@@ -52,7 +52,7 @@ If there isn't already an issue for the feature you would like to contribute, pl
 ### Working with adaptors
 
 1. Creating a new adaptor
-Create a copy of the adaptor [template](https://github.com/OpenFn/adaptors/tree/dab11c0845c1affb01e822ed44494906dde1fc09/packages/template), and rename it.  
+Create a copy of the adaptor [template](packages/template), and rename it.  
 
 Add the required and optional properties for state.configuration. 
 
