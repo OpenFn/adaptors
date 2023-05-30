@@ -1,5 +1,21 @@
 # @openfn/language-openmrs
 
+## 1.0.0
+
+### Major Changes
+
+- b6478c0: - Removed `request` in favour of `superagent`
+  - Improve error handling
+  - Moved `login` to execute function
+  - Added
+    - `createPatient`
+    - `searchPatient`
+    - `searchPerson`
+    - `getEncounters`
+    - `getEncounter`
+    - `get`
+    - `post`
+
 ## 0.10.5
 
 ### Patch Changes
