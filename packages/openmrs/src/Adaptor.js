@@ -4,7 +4,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import request from 'superagent';
-import { Log } from './Utils';
+import { Log, handleError } from './Utils';
 
 let agent = null;
 
@@ -75,29 +75,6 @@ export function getPatient(uuid) {
       })
       .catch(handleError);
   };
-}
-
-function handleError(error) {
-  if (error.response) {
-    const { method, path } = error.response.req;
-    const { status } = error.response;
-    if (Object.keys(error.response.body).length === 0) {
-      throw new Error(
-        `Server responded with:  \n${JSON.stringify(error.response, null, 2)}`
-      );
-    }
-
-    const errorString = [
-      `Request: ${method} ${path}`,
-      `Got: ${status}`,
-      'Body:',
-      JSON.stringify(error.response.body, null, 2),
-    ].join('\n');
-
-    throw new Error(errorString);
-  } else {
-    throw error;
-  }
 }
 
 /**
@@ -293,21 +270,10 @@ export function searchPerson(params) {
  *     age: 42,
  *     birthdate: '1970-01-01T00:00:00.000+0100',
  *     birthdateEstimated: false,
- *     dead: false,
- *     deathDate: null,
- *     causeOfDeath: null,
  *     names: [
  *       {
  *         givenName: 'Doe',
  *         familyName: 'John',
- *       },
- *     ],
- *     addresses: [
- *       {
- *         address1: '30, Vivekananda Layout, Munnekolal,Marathahalli',
- *         cityVillage: 'Bengaluru',
- *         country: 'India',
- *         postalCode: '560037',
  *       },
  *     ],
  *   },
