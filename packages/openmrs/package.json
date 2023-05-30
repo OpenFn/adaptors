@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openmrs",
-  "version": "0.10.5",
+  "version": "1.0.0",
   "description": "OpenMRS Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
