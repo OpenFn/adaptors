@@ -917,12 +917,12 @@ importers:
       esno: ^0.16.3
       mocha: ^10.1.0
       nock: ^12.0.3
-      request: ^2.72.0
       rimraf: ^3.0.2
       sinon: ^1.17.2
+      superagent: ^8.0.9
     dependencies:
       '@openfn/language-common': link:../common
-      request: 2.88.2
+      superagent: 8.0.9
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
