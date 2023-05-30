@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import nock from 'nock';
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { execute, getFHIR, dataValue } from '../src/Adaptor.js';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -34,7 +34,7 @@ describe('execute', () => {
   });
 });
 
-describe('create', () => {
+describe('getFHIR', () => {
   before(() => {
     nock('https://fake.server.com')
       .post('/api/patients')
@@ -55,7 +55,7 @@ describe('create', () => {
       });
   });
 
-  it('makes a post request to the right endpoint', async () => {
+  it('makes a get request to the right endpoint', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -69,15 +69,13 @@ describe('create', () => {
     };
 
     const finalState = await execute(
-      create('api/patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
+      getFHIR('Patients', {
+        family: dataValue('fullName')(state),
       })
     )(state);
 
     expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
+      family: 'Ba',
     });
   });
 
@@ -90,7 +88,7 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(create('api/noAccess', { name: 'taylor' }))(
+    const error = await execute(getFHIR('api/noAccess', { family: 'taylor' }))(
       state
     ).catch(error => {
       return error;
@@ -108,46 +106,10 @@ describe('create', () => {
     };
 
     const error = await execute(
-      create('api/differentError', { name: 'taylor' })
+      getFHIR('api/differentError', { family: 'taylor' })
     )(state).catch(error => {
       return error;
     });
     expect(error.message).to.eql('Request failed with status code 500');
-  });
-});
-
-describe('createPatient', () => {
-  before(() => {
-    nock('https://fakepatient.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
-  });
-
-  it('makes a post request to the patient endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fakepatient.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await execute(
-      create('api/patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-    });
   });
 });

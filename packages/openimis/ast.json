@@ -1,14 +1,14 @@
 {
   "operations": [
     {
-      "name": "create",
+      "name": "getFHIR",
       "params": [
         "path",
         "params",
         "callback"
       ],
       "docs": {
-        "description": "Creates a fictional resource in a fictional destination system using a POST request",
+        "description": "Get FHIR resources from OpenIMIS",
         "tags": [
           {
             "title": "public",
@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"/endpoint\", {\"foo\": \"bar\"})"
+            "description": "getFHIR(\"Patient\")"
           },
           {
             "title": "function",

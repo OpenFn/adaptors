@@ -65,13 +65,21 @@ function login(state) {
     });
 }
 
+/**
+ * Discards the auth token from state.
+ * @example
+ * cleanupState(state)
+ * @function
+ * @param {State} state - Runtime state.
+ * @returns {State} state - but with a "token" removed from the configuration key.
+ */
 function cleanupState(state) {
   delete state.configuration.auth;
   return state;
 }
 
 /**
- * Get a list of patients from OpenIMIS
+ * Get FHIR resources from OpenIMIS
  * @public
  * @example
  * getFHIR("Patient")
@@ -108,7 +116,6 @@ export function getFHIR(path, params, callback) {
 
 export { axios };
 
-// What functions do you want from the common adaptor?
 export {
   alterState,
   dataPath,
