@@ -4,7 +4,9 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import request from 'superagent';
-import { assembleError, tryJson } from './Utils';
+import { Log } from './Utils';
+
+let agent = null;
 
 /**
  * Execute a sequence of operations.
@@ -19,17 +21,15 @@ import { assembleError, tryJson } from './Utils';
  * @returns {Operation}
  */
 export function execute(...operations) {
+  agent = null;
+
   const initialState = {
     references: [],
     data: null,
   };
 
   return state => {
-    return commonExecute(
-      login,
-      ...operations,
-      cleanupState
-    )({ ...initialState, ...state });
+    return commonExecute(login, ...operations)({ ...initialState, ...state });
   };
 }
 
@@ -41,30 +41,11 @@ export function execute(...operations) {
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-function login(state) {
+async function login(state) {
   const { instanceUrl, username, password } = state.configuration;
+  agent = request.agent();
+  await agent.get(`${instanceUrl}/ws/rest/v1/session`).auth(username, password);
 
-  const agent = request.agent();
-  return new Promise((resolve, reject) => {
-    agent
-      .get(`${instanceUrl}/ws/rest/v1/session`)
-      .auth(username, password)
-      .then(() => {
-        resolve({ ...state, agent });
-      });
-  });
-}
-
-/**
- * Removes unserializable or confidential keys from the state.
- * @example
- *  cleanupState(state)
- * @private
- * @param {State} state
- * @returns {State}
- */
-function cleanupState(state) {
-  delete state.agent;
   return state;
 }
 
@@ -78,8 +59,7 @@ function cleanupState(state) {
  */
 export function getPatient(uuid) {
   return state => {
-    console.log(`Searching for patient with uuid: ${uuid}`);
-    const { agent } = state;
+    Log.info(`Searching for patient with uuid: ${uuid}`);
     const { instanceUrl } = state.configuration;
 
     const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
@@ -88,19 +68,36 @@ export function getPatient(uuid) {
       .get(url)
       .accept('json')
       .query({ v: 'full' })
-      .end((error, response) => {
-        error = assembleError({ error, response });
-        if (error) {
-          throw error;
-        } else {
-          console.log(`Success. Found patient.`);
+      .then(response => {
+        Log.success(`Found patient.`);
 
-          const data = tryJson(response.text);
-          const nextState = composeNextState(state, data);
-          return nextState;
-        }
-      });
+        return stateWithResponseData(state, response);
+      })
+      .catch(handleError);
   };
+}
+
+function handleError(error) {
+  if (error.response) {
+    const { method, path } = error.response.req;
+    const { status } = error.response;
+    if (Object.keys(error.response.body).length === 0) {
+      throw new Error(
+        `Server responded with:  \n${JSON.stringify(error.response, null, 2)}`
+      );
+    }
+
+    const errorString = [
+      `Request: ${method} ${path}`,
+      `Got: ${status}`,
+      'Body:',
+      JSON.stringify(error.response.body, null, 2),
+    ].join('\n');
+
+    throw new Error(errorString);
+  } else {
+    throw error;
+  }
 }
 
 /**
@@ -127,65 +124,74 @@ export function createEncounter(params) {
   return state => {
     const body = JSON.stringify(expandReferences(params)(state));
 
-    const { agent } = state;
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/encounter`;
 
-    console.log(`Creating an encounter.`);
+    Log.info(`Creating an encounter.`);
 
     return agent
       .post(url)
       .type('json')
       .send(body)
       .then(response => {
-        console.log(`Successfull created an encounter.`);
+        Log.success(`Created an encounter.`);
 
-        const data = tryJson(response.text);
-        const nextState = composeNextState(state, data);
-        return nextState;
+        return stateWithResponseData(state, response);
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
 }
 
 /**
- * Make a get request to any OpenMRS endpoint and execute a callback
+ * Make a get request to any OpenMRS endpoint
  * @example
- * get({
- *   url: 'encounterType'
- *   qs: {
- *     v: 'default',
- *     limit: 1
- *   }
- * })
+ * get("encounterType", {
+ *   v: "default",
+ *   limit: 1,
+ * });
  * @function
+ * @param {string} path - Path to resource
  * @param {object} params - parameters for the request
- * @param {function} callback - a callback to execute on the next state
  * @returns {Operation}
  */
-export function get(params, callback) {
+export function get(path, params) {
   return state => {
-    const { agent } = state;
     const { instanceUrl } = state.configuration;
-    const { qs, url } = expandReferences(params)(state);
 
-    const urlPath = `${instanceUrl}/ws/rest/v1/${url}`;
+    const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
 
     return agent
       .get(urlPath)
-      .query(qs)
-      .then(response => {
-        const data = tryJson(response.text);
-        const nextState = composeNextState(state, data);
+      .query(params)
+      .then(response => stateWithResponseData(state, response))
+      .catch(handleError);
+  };
+}
 
-        if (callback) return callback(nextState);
-        return nextState;
-      })
-      .catch(error => {
-        throw error;
-      });
+/**
+ * Make a post request to any OpenMRS endpoint
+ * @example
+ * post("encounterType", {
+ *   v: "default",
+ *   limit: 1,
+ * });
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} params - parameters for the request
+ * @returns {Operation}
+ */
+export function post(path, params) {
+  return state => {
+    const { instanceUrl } = state.configuration;
+
+    const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
+
+    return agent
+      .post(urlPath)
+      .type('json')
+      .send(params)
+      .then(response => stateWithResponseData(state, response))
+      .catch(handleError);
   };
 }
 
@@ -200,8 +206,7 @@ export function get(params, callback) {
 export function searchPatient(params) {
   return state => {
     const qs = expandReferences(params)(state);
-    console.log(`Searching for patient with name: ${qs.q}`);
-    const { agent } = state;
+    Log.info(`Searching for patient with name: ${qs.q}`);
     const { instanceUrl } = state.configuration;
 
     const url = `${instanceUrl}/ws/rest/v1/patient`;
@@ -211,25 +216,22 @@ export function searchPatient(params) {
       .accept('json')
       .query(qs)
       .then(response => {
-        const data = tryJson(response.text);
-        const count = data.results.length;
+        const count = response.body.length;
 
         if (count > 0) {
-          console.log(
+          Log.success(
             `Search successful. Returned ${count} patient${
               count > 1 ? 's' : ''
             }.`
           );
-          return composeNextState(state, data);
+          return stateWithResponseData(state, response);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
           );
         }
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
 }
 
@@ -244,8 +246,7 @@ export function searchPatient(params) {
 export function searchPerson(params) {
   return state => {
     const qs = expandReferences(params)(state);
-    console.log(`Searching for person with name: ${qs.q}`);
-    const { agent } = state;
+    Log.info(`Searching for person with name: ${qs.q}`);
 
     const { instanceUrl } = state.configuration;
 
@@ -256,25 +257,23 @@ export function searchPerson(params) {
       .accept('json')
       .query(qs)
       .then(response => {
-        const data = tryJson(response.text);
+        const data = response.body;
         const count = data.results.length;
 
         if (count > 0) {
-          console.log(
+          Log.success(
             `Search successful. Returned ${count} person${
               count > 1 ? 's' : ''
             }.`
           );
-          return composeNextState(state, data);
+          return stateWithResponseData(state, response);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
           );
         }
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
 }
 
@@ -320,26 +319,21 @@ export function searchPerson(params) {
 export function createPatient(params) {
   return state => {
     const body = JSON.stringify(expandReferences(params)(state));
-    const { agent } = state;
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/patient`;
 
-    console.log(`Creating a patient.`);
+    Log.info(`Creating a patient.`);
 
     return agent
       .post(url)
       .type('json')
       .send(body)
       .then(response => {
-        console.log(`Successfull created a new patient.`);
+        Log.success(`Created a new patient.`);
 
-        const data = tryJson(response.text);
-        const nextState = composeNextState(state, data);
-        return nextState;
+        return stateWithResponseData(state, response);
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
 }
 
@@ -353,8 +347,7 @@ export function createPatient(params) {
  */
 export function getEncounter(uuid) {
   return state => {
-    console.log(`Searching for encounter with uuid: ${uuid}`);
-    const { agent } = state;
+    Log.info(`Searching for encounter with uuid: ${uuid}`);
     const { instanceUrl } = state.configuration;
 
     const url = `${instanceUrl}/ws/rest/v1/encounter/${uuid}`;
@@ -363,15 +356,11 @@ export function getEncounter(uuid) {
       .get(url)
       .accept('json')
       .then(response => {
-        console.log(`Successfull found an encounter.`);
+        Log.success(`Found an encounter.`);
 
-        const data = tryJson(response.text);
-        const nextState = composeNextState(state, data);
-        return nextState;
+        return stateWithResponseData(state, response);
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
 }
 
@@ -386,31 +375,33 @@ export function getEncounter(uuid) {
 export function getEncounters(params) {
   return state => {
     const qs = expandReferences(params)(state);
-    const { agent } = state;
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/encounter`;
 
-    console.log(`Searching for encounters: ${JSON.stringify(qs, null, 2)}`);
+    Log.info(`Searching for encounters: ${JSON.stringify(qs, null, 2)}`);
 
     return agent
       .get(url)
       .accept('json')
       .query(qs)
       .then(response => {
-        console.log(`Successfull found an encounter.`);
+        Log.success(`Found an encounter.`);
 
-        const data = tryJson(response.text);
-        const nextState = composeNextState(state, data);
-        return nextState;
+        return stateWithResponseData(state, response);
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(handleError);
   };
+}
+
+function stateWithResponseData(state, response) {
+  const { body } = response;
+  const nextState = composeNextState(state, { body });
+  return nextState;
 }
 
 export {
   alterState,
+  fn,
   field,
   fields,
   sourceValue,
