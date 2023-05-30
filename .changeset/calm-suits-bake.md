@@ -2,4 +2,14 @@
 '@openfn/language-openmrs': major
 ---
 
-Add new helper functions
+- Removed `request` in favour of `superagent`
+- Improve error handling
+- Moved `login` to execute function
+- Added
+  - `createPatient`
+  - `searchPatient`
+  - `searchPerson`
+  - `getEncounters`
+  - `getEncounter`
+  - `get`
+  - `post`
