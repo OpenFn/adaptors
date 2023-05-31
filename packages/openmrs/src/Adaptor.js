@@ -193,7 +193,8 @@ export function searchPatient(params) {
       .accept('json')
       .query(qs)
       .then(response => {
-        const count = response.body.length;
+        const data = response.body;
+        const count = data.results.length;
 
         if (count > 0) {
           Log.success(
