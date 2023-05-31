@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 1.0.1
+
+### Patch Changes
+
+- 97cc7ce: - Fix checking for empty response
+  - Style logs output
+
 ## 1.0.0
 
 ### Major Changes

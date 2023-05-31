@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 3.2.12
+
+### Patch Changes
+
+- 57742d1: improve logs output
+
 ## 3.2.11
 
 ### Patch Changes

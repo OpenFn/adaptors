@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 4.0.8
+
+### Patch Changes
+
+- 57742d1: remove request dependency
+
 ## 4.0.7
 
 ### Patch Changes
