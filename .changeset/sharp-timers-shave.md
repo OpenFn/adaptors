@@ -2,4 +2,5 @@
 '@openfn/language-openmrs': patch
 ---
 
-Fix checking for empty response
+- Fix checking for empty response
+- Style logs output
