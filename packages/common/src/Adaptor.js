@@ -2,6 +2,7 @@ import curry from 'lodash/fp/curry.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
+import csv from 'csvtojson';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -542,6 +543,32 @@ export function chunk(array, chunkSize) {
   return output;
 }
 
+/**
+ * The function `parseCsv` takes a file stream and parsing options as input, and returns a promise that
+ * resolves to the parsed CSV data.
+ * @param stream - The stream parameter is the input data in CSV format that needs to be
+ * parsed. It can be a string or a readable stream.
+ * @param [parsingOptions] - An object containing options for parsing the CSV file. These options will
+ * override the default options if provided.
+ * @returns The `parseCsv` function is returning a Promise that resolves to the result of parsing a CSV
+ * file. The CSV file is read from a file stream and parsed using the `csv` library with the parsing
+ * options provided as an argument to the function. The default parsing options are defined in the
+ * `defaultOptions` object and can be overridden by passing an object with the desired options as the
+ * second argument to
+ */
+export function parseCsv(stream, parsingOptions = {}) {
+  const defaultOptions = {
+    asObjects: false,
+    output: 'json',
+    delimiter: ',',
+    noheader: false,
+    quote: '"',
+    trim: true,
+    flatKeys: false,
+  };
+
+  return csv({ ...defaultOptions, ...parsingOptions }).fromStream(stream);
+}
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
