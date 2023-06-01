@@ -5,7 +5,7 @@ import {
 import Client from 'ssh2-sftp-client';
 import csv from 'csvtojson';
 
-let sftp;
+let sftp = null;
 
 /**
  * Execute a sequence of operations.
@@ -60,7 +60,7 @@ function disconnect(state) {
  */
 export function list(dirPath) {
   return state => {
-    return state.sftp
+    return sftp
       .list(dirPath)
       .then(files => composeNextState(state, files))
       .catch(e => {
