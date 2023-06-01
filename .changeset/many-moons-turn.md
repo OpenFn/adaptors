@@ -1,5 +1,5 @@
 ---
-'@openfn/language-common': patch
+'@openfn/language-common': minor
 ---
 
 Add support for `parseCsv` in common
