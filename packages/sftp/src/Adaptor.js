@@ -1,9 +1,9 @@
 import {
   execute as commonExecute,
   composeNextState,
+  parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import csv from 'csvtojson';
 
 let sftp = null;
 
@@ -103,8 +103,7 @@ export function getCSV(filePath, parsingOptions = {}) {
       const stream = sftp.createReadStream(filePath, {
         ...defaultOptions.readStreamOptions,
       });
-      return csv({ ...defaultOptions, ...parsingOptions })
-        .fromStream(stream)
+      return parseCsv(stream, { ...defaultOptions, ...parsingOptions })
         .then(json => composeNextState(state, json))
         .then(state => {
           console.log('Stream finished.');

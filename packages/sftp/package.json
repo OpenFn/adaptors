@@ -33,7 +33,6 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.8.1",
-    "csvtojson": "^2.0.10",
     "lodash": "^4.17.19",
     "ssh2-sftp-client": "9.0.4"
   },
