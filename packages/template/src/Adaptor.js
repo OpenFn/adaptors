@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   composeNextState,
