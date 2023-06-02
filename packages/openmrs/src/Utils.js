@@ -1,3 +1,5 @@
+import { composeNextState } from '@openfn/language-common';
+
 export class Log {
   static info(message) {
     return console.info(`ℹ `, message);
@@ -37,4 +39,17 @@ export function handleError(error) {
   } else {
     throw error;
   }
+}
+
+export function handleResponse(response, state, callback) {
+  const { body } = response;
+  const nextState = composeNextState(state, { body });
+  if (callback) return callback(nextState);
+  return nextState;
+}
+
+const isArray = variable => !!variable && variable.constructor === Array;
+
+export function nestArray(data, key) {
+  return isArray(data) ? { [key]: data } : data;
 }

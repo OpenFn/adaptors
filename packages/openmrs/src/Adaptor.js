@@ -1,10 +1,9 @@
 import {
   execute as commonExecute,
   expandReferences,
-  composeNextState,
 } from '@openfn/language-common';
 import request from 'superagent';
-import { Log, handleError } from './Utils';
+import { Log, handleError, handleResponse } from './Utils';
 
 let agent = null;
 
@@ -71,7 +70,7 @@ export function getPatient(uuid) {
       .then(response => {
         Log.success(`Found patient.`);
 
-        return stateWithResponseData(state, response);
+        return handleResponse(response, state);
       })
       .catch(handleError);
   };
@@ -113,7 +112,7 @@ export function createEncounter(params) {
       .then(response => {
         Log.success(`Created an encounter.`);
 
-        return stateWithResponseData(state, response);
+        return handleResponse(response, state);
       })
       .catch(handleError);
   };
@@ -128,19 +127,20 @@ export function createEncounter(params) {
  * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - parameters for the request
+ * @param {object} query - parameters for the request
  * @returns {Operation}
  */
-export function get(path, params) {
+export function get(path, query, callback = false) {
   return state => {
     const { instanceUrl } = state.configuration;
-
+    path = expandReferences(path)(state);
+    query = expandReferences(query)(state);
     const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
 
     return agent
       .get(urlPath)
-      .query(params)
-      .then(response => stateWithResponseData(state, response))
+      .query(query)
+      .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
 }
@@ -154,11 +154,13 @@ export function get(path, params) {
  * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - parameters for the request
+ * @param {object} data - Object which defines data that will be used to create a given instance of resource
  * @returns {Operation}
  */
-export function post(path, params) {
+export function post(path, data, callback = false) {
   return state => {
+    path = expandReferences(path)(state);
+    data = expandReferences(data)(state);
     const { instanceUrl } = state.configuration;
 
     const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
@@ -166,8 +168,8 @@ export function post(path, params) {
     return agent
       .post(urlPath)
       .type('json')
-      .send(params)
-      .then(response => stateWithResponseData(state, response))
+      .send(data)
+      .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
 }
@@ -202,7 +204,7 @@ export function searchPatient(params) {
               count > 1 ? 's' : ''
             }.`
           );
-          return stateWithResponseData(state, response);
+          return handleResponse(response, state);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
@@ -244,7 +246,7 @@ export function searchPerson(params) {
               count > 1 ? 's' : ''
             }.`
           );
-          return stateWithResponseData(state, response);
+          return handleResponse(response, state);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
@@ -298,7 +300,7 @@ export function createPatient(params) {
       .then(response => {
         Log.success(`Created a new patient.`);
 
-        return stateWithResponseData(state, response);
+        return handleResponse(response, state);
       })
       .catch(handleError);
   };
@@ -325,7 +327,7 @@ export function getEncounter(uuid) {
       .then(response => {
         Log.success(`Found an encounter.`);
 
-        return stateWithResponseData(state, response);
+        return handleResponse(response, state);
       })
       .catch(handleError);
   };
@@ -354,16 +356,163 @@ export function getEncounters(params) {
       .then(response => {
         Log.success(`Found an encounter.`);
 
-        return stateWithResponseData(state, response);
+        return handleResponse(response, state);
       })
       .catch(handleError);
   };
 }
 
-function stateWithResponseData(state, response) {
-  const { body } = response;
-  const nextState = composeNextState(state, { body });
-  return nextState;
+/**
+ * Create a record
+ * @public
+ * @function
+ * @param {string} resourceType - Type of resource to create. E.g. `person`, `patient`, `encounter`, ...
+ * @param {OpenMRSData} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ * @example <caption>a person</caption>
+ * create("person", {
+ *   names: [
+ *     {
+ *       givenName: "Mohit",
+ *       familyName: "Kumar",
+ *     },
+ *   ],
+ *   gender: "M",
+ *   birthdate: "1997-09-02",
+ *   addresses: [
+ *     {
+ *       address1: "30, Vivekananda Layout, Munnekolal,Marathahalli",
+ *       cityVillage: "Bengaluru",
+ *       country: "India",
+ *       postalCode: "560037",
+ *     },
+ *   ],
+ * });
+ */
+export function create(resourceType, data, callback = false) {
+  return state => {
+    const { instanceUrl } = state.configuration;
+    console.log(`Preparing create operation...`);
+
+    resourceType = expandReferences(resourceType)(state);
+    data = expandReferences(data)(state);
+
+    const url = `${instanceUrl}/ws/rest/v1/${resourceType}`;
+
+    return agent
+      .post(url)
+      .type('json')
+      .send(data)
+      .then(response => {
+        const details = `with response ${JSON.stringify(
+          response.body,
+          null,
+          2
+        )}`;
+
+        Log.success(`Created ${resourceType} ${details}`);
+
+        return handleResponse(response, state, callback);
+      })
+      .catch(handleError);
+  };
+}
+
+/**
+ * Update data. A generic helper function to update a resource object of any type.
+ * Updating an object requires to send `all required fields` or the `full body`
+ * @public
+ * @function
+ * @param {string} resourceType - The type of resource to be updated. E.g. `person`, `patient`, etc.
+ * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}`
+ * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
+ * @param {function} [callback]  - Optional callback to handle the response
+ * @returns {Operation}
+ * @example <caption>a person</caption>
+ * update("person", {"gender":"M","birthdate":"1997-01-13"})
+ */
+export function update(resourceType, path, data, callback = false) {
+  return state => {
+    const { instanceUrl } = state.configuration;
+    console.log(`Preparing update operation...`);
+    resourceType = expandReferences(resourceType)(state);
+    path = expandReferences(path)(state);
+    data = expandReferences(data)(state);
+    const url = `${instanceUrl}/ws/rest/v1/${resourceType}/${path}`;
+
+    return agent
+      .post(url)
+      .type('json')
+      .send(data)
+      .then(response => {
+        Log.success(`Updated ${resourceType} at ${path}`);
+
+        return handleResponse(response, state, callback);
+      })
+      .catch(handleError);
+  };
+}
+
+/**
+ * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
+ * @public
+ * @function
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntityInstances`
+ * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
+ * @param {Object} data - The data to use for update or create depending on the result of the query.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @throws {RangeError} - Throws range error
+ * @returns {Operation}
+ * @example <caption>Example `expression.js` of upsert</caption>
+ * upsert('trackedEntityInstances', {
+ *  ou: 'TSyzvBiovKh',
+ *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
+ * }, {
+ *  orgUnit: 'TSyzvBiovKh',
+ *  trackedEntityType: 'nEenWmSyUEp',
+ *  attributes: [
+ *    {
+ *      attribute: 'w75KJ2mc4zz',
+ *      value: 'Qassim',
+ *    },
+ *  ],
+ * });
+ */
+export function upsert(
+  resourceType, // resourceType supplied to both the `get` and the `create/update`
+  query, // query supplied to the `get`
+  data, // data supplied to the `create/update`
+  callback = false // callback for the upsert itself.
+) {
+  return state => {
+    console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+
+    return get(
+      resourceType,
+      query
+    )(state)
+      .then(resp => {
+        const resources = resp.data[resourceType];
+        if (resources.length > 1) {
+          throw new RangeError(
+            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+          );
+        } else if (resources.length <= 0) {
+          return create(resourceType, data)(state);
+        } else {
+          // Pick out the first (and only) resource in the array and grab its
+          // ID to be used in the subsequent `update` by the path determined
+          // by the `selectId(...)` function.
+          const path = resources[0][selectId(resourceType)];
+          return update(resourceType, path, data)(state);
+        }
+      })
+      .then(result => {
+        Log.success(`Performed a "composed upsert" on ${resourceType}`);
+        return handleResponse(result, state, callback);
+      });
+  };
 }
 
 export {
