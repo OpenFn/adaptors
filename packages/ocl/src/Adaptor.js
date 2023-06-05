@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -39,7 +38,7 @@ export function execute(...operations) {
  * Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure
  * @public
  * @example
- * mapp(state, state)
+ * map(state, state)
  * @function
  * @param {Object}  state - Json object containing keys and data values;
  * @param {Object} [params] - E.g. `{users:"haftamuk", sources: "eCHIS-CODES", concepts: "fp_new_at_10_to_14" }
@@ -186,6 +185,37 @@ function getMappingInfo(params) {
 //       })
 //   }
 // }
+
+/**
+ * Get a resource in OCL
+ * @public
+ * @example
+ * get("/endpoint", {"foo": "bar"})
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} query - data to get the new resource
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function get(path, query, callback = false) {
+  return state => {
+    path = expandReferences(path)(state);
+    query = expandReferences(query)(state);
+
+    const { baseUrl, apiPath } = state.configuration;
+    const url = `${baseUrl}/${apiPath}/${path}`;
+
+    const config = {
+      url,
+      query: query,
+    };
+
+    return http
+      .get(config)(state)
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
+  };
+}
 
 // What functions do you want from the common adaptor?
 export {
