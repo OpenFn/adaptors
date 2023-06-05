@@ -53,24 +53,27 @@ async function login(state) {
  * @example
  * getPatient("123")
  * @function
- * @param {object} params - object with uuid for the patient
+ * @param {string} uuid - A uuid for the patient
+ * @param {function} [callback] - Optional callback to handle the response
+ * @example <caption>Get a patient by uuid</caption>
+ * getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
  * @returns {Operation}
  */
-export function getPatient(uuid) {
+export function getPatient(uuid, callback = false) {
   return state => {
     Log.info(`Searching for patient with uuid: ${uuid}`);
     const { instanceUrl } = state.configuration;
-
+    const defaultQuery = { v: 'full', limit: 1 };
     const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
 
     return agent
       .get(url)
       .accept('json')
-      .query({ v: 'full' })
+      .query(defaultQuery)
       .then(response => {
         Log.success(`Found patient.`);
 
-        return handleResponse(response, state);
+        return handleResponse(response, state, callback);
       })
       .catch(handleError);
   };
@@ -78,7 +81,7 @@ export function getPatient(uuid) {
 
 /**
  * Creates an encounter
- * @example
+ * @example <caption>Create an encounter</caption>
  * createEncounter({
  *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
  *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
@@ -93,14 +96,14 @@ export function getPatient(uuid) {
  *   },
  * })
  * @function
- * @param {object} params - parameters of the encounter
+ * @param {object} data - Data parameters of the encounter
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function createEncounter(params) {
+export function createEncounter(data, callback = false) {
   return state => {
-    const body = JSON.stringify(expandReferences(params)(state));
-
     const { instanceUrl } = state.configuration;
+    const body = expandReferences(data)(state);
     const url = `${instanceUrl}/ws/rest/v1/encounter`;
 
     Log.info(`Creating an encounter.`);
@@ -112,7 +115,7 @@ export function createEncounter(params) {
       .then(response => {
         Log.success(`Created an encounter.`);
 
-        return handleResponse(response, state);
+        return handleResponse(response, state, callback);
       })
       .catch(handleError);
   };
@@ -121,13 +124,14 @@ export function createEncounter(params) {
 /**
  * Make a get request to any OpenMRS endpoint
  * @example
- * get("encounterType", {
- *   v: "default",
+ * get("patient", {
+ *   q: "Patient",
  *   limit: 1,
  * });
  * @function
  * @param {string} path - Path to resource
  * @param {object} query - parameters for the request
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
 export function get(path, query, callback = false) {
@@ -148,13 +152,14 @@ export function get(path, query, callback = false) {
 /**
  * Make a post request to any OpenMRS endpoint
  * @example
- * post("encounterType", {
- *   v: "default",
- *   limit: 1,
- * });
+ * post(
+ *   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
+ *   {}
+ * );
  * @function
  * @param {string} path - Path to resource
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
 export function post(path, data, callback = false) {
@@ -179,12 +184,13 @@ export function post(path, data, callback = false) {
  * @example
  * searchPatient({ q: Sarah })
  * @function
- * @param {object} params - object with query for the patient
+ * @param {object} query - Object with query for the patient
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPatient(params) {
+export function searchPatient(query, callback = false) {
   return state => {
-    const qs = expandReferences(params)(state);
+    const qs = expandReferences(query)(state);
     Log.info(`Searching for patient with name: ${qs.q}`);
     const { instanceUrl } = state.configuration;
 
@@ -204,7 +210,7 @@ export function searchPatient(params) {
               count > 1 ? 's' : ''
             }.`
           );
-          return handleResponse(response, state);
+          return handleResponse(response, state, callback);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
@@ -220,12 +226,13 @@ export function searchPatient(params) {
  * @example
  * searchPerson({ q: Sarah })
  * @function
- * @param {object} params - object with query for the person
+ * @param {object} query - object with query for the person
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPerson(params) {
+export function searchPerson(query, callback = false) {
   return state => {
-    const qs = expandReferences(params)(state);
+    const qs = expandReferences(query)(state);
     Log.info(`Searching for person with name: ${qs.q}`);
 
     const { instanceUrl } = state.configuration;
@@ -246,7 +253,7 @@ export function searchPerson(params) {
               count > 1 ? 's' : ''
             }.`
           );
-          return handleResponse(response, state);
+          return handleResponse(response, state, callback);
         } else {
           throw new Error(
             `Raising an error because ${count} records were found.`
@@ -282,12 +289,13 @@ export function searchPerson(params) {
  *   },
  * })
  * @function
- * @param {object} params - parameters of the patient
+ * @param {object} data - Object parameters of the patient
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function createPatient(params) {
+export function createPatient(data, callback = false) {
   return state => {
-    const body = JSON.stringify(expandReferences(params)(state));
+    const body = expandReferences(data)(state);
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/patient`;
 
@@ -300,7 +308,7 @@ export function createPatient(params) {
       .then(response => {
         Log.success(`Created a new patient.`);
 
-        return handleResponse(response, state);
+        return handleResponse(response, state, callback);
       })
       .catch(handleError);
   };
@@ -311,10 +319,11 @@ export function createPatient(params) {
  * @example
  * getEncounter("123")
  * @function
- * @param {object} uuid - object with uuid for the encounter
+ * @param {object} uuid - A uuid for the encounter
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounter(uuid) {
+export function getEncounter(uuid, callback = false) {
   return state => {
     Log.info(`Searching for encounter with uuid: ${uuid}`);
     const { instanceUrl } = state.configuration;
@@ -327,7 +336,7 @@ export function getEncounter(uuid) {
       .then(response => {
         Log.success(`Found an encounter.`);
 
-        return handleResponse(response, state);
+        return handleResponse(response, state, callback);
       })
       .catch(handleError);
   };
@@ -338,12 +347,13 @@ export function getEncounter(uuid) {
  * @example
  * getEncounters({patient: "123", fromdate: "2023-05-18"})
  * @function
- * @param {object} params - Criteria object for the patient
+ * @param {object} query - Object for the patient
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounters(params) {
+export function getEncounters(query, callback = false) {
   return state => {
-    const qs = expandReferences(params)(state);
+    const qs = expandReferences(query)(state);
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/encounter`;
 
@@ -356,7 +366,7 @@ export function getEncounters(params) {
       .then(response => {
         Log.success(`Found an encounter.`);
 
-        return handleResponse(response, state);
+        return handleResponse(response, state, callback);
       })
       .catch(handleError);
   };
@@ -370,7 +380,7 @@ export function getEncounters(params) {
  * @param {OpenMRSData} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>a person</caption>
+ * @example <caption>Create a person</caption>
  * create("person", {
  *   names: [
  *     {
@@ -392,13 +402,13 @@ export function getEncounters(params) {
  */
 export function create(resourceType, data, callback = false) {
   return state => {
-    const { instanceUrl } = state.configuration;
     console.log(`Preparing create operation...`);
 
-    resourceType = expandReferences(resourceType)(state);
-    data = expandReferences(data)(state);
-
+    const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/${resourceType}`;
+
+    data = expandReferences(data)(state);
+    resourceType = expandReferences(resourceType)(state);
 
     return agent
       .post(url)

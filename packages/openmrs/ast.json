@@ -61,7 +61,7 @@
           {
             "title": "example",
             "description": "create(\"person\", {\n  names: [\n    {\n      givenName: \"Mohit\",\n      familyName: \"Kumar\",\n    },\n  ],\n  gender: \"M\",\n  birthdate: \"1997-09-02\",\n  addresses: [\n    {\n      address1: \"30, Vivekananda Layout, Munnekolal,Marathahalli\",\n      cityVillage: \"Bengaluru\",\n      country: \"India\",\n      postalCode: \"560037\",\n    },\n  ],\n});",
-            "caption": "a person"
+            "caption": "Create a person"
           }
         ]
       },
