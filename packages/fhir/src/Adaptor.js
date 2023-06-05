@@ -1,10 +1,9 @@
-
 import {
   execute as commonExecute,
-  composeNextState,
   expandReferences,
   http,
 } from '@openfn/language-common';
+import { handleError, handleResponse } from './Utils';
 
 const { axios } = http;
 export { axios };
@@ -51,26 +50,23 @@ export function create(path, params, callback) {
     path = expandReferences(path)(state);
     params = expandReferences(params)(state);
 
-    const { baseUrl, username, password } = state.configuration;
+    const { baseUrl, apiPath } = state.configuration;
 
-    const url = `${baseUrl}/${path}`;
-    const auth = { username, password };
+    const url = `${baseUrl}/${apiPath}/${path}`;
 
     const config = {
       url,
-      body: params,
+      headers: {
+        accept: 'application/fhir+json',
+        'Content-Type': 'application/fhir+json',
+      },
+      data: params,
     };
 
     return http
       .post(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
   };
 }
 
@@ -88,9 +84,9 @@ export function createTransactionBundle(params, callback) {
   return state => {
     params = expandReferences(params)(state);
 
-    const { resource, authType, token } = state.configuration;
+    const { baseUrl, apiPath, authType, token } = state.configuration;
 
-    const url = resource;
+    const url = `${baseUrl}/${apiPath}`;
     const auth = `${authType} ${token}`;
 
     const config = {
@@ -105,14 +101,39 @@ export function createTransactionBundle(params, callback) {
 
     return http
       .post(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
+  };
+}
+
+/**
+ * Get a resource in a FHIR system using a POST request
+ * @public
+ * @example
+ * get("/endpoint", {"foo": "bar"})
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} query - data to get the new resource
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function get(path, query, callback = false) {
+  return state => {
+    path = expandReferences(path)(state);
+    query = expandReferences(query)(state);
+
+    const { baseUrl, apiPath } = state.configuration;
+    const url = `${baseUrl}/${apiPath}/${path}`;
+
+    const config = {
+      url,
+      query: query,
+    };
+
+    return http
+      .get(config)(state)
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
   };
 }
 
