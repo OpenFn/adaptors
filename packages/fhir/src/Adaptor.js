@@ -107,7 +107,7 @@ export function createTransactionBundle(params, callback) {
 }
 
 /**
- * Get a resource in a FHIR system using a POST request
+ * Get a resource in a FHIR system
  * @public
  * @example
  * get("/endpoint", {"foo": "bar"})

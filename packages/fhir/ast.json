@@ -124,7 +124,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get a resource in a FHIR system using a POST request",
+        "description": "Get a resource in a FHIR system",
         "tags": [
           {
             "title": "public",
