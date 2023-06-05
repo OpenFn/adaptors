@@ -137,7 +137,7 @@
           },
           {
             "title": "example",
-            "description": "update(\"person\", {\"gender\":\"M\",\"birthdate\":\"1997-01-13\"})",
+            "description": "update(\"person\", '3cad37ad-984d-4c65-a019-3eb120c9c373',{\"gender\":\"M\",\"birthdate\":\"1997-01-13\"})",
             "caption": "a person"
           }
         ]
@@ -222,8 +222,13 @@
           },
           {
             "title": "example",
-            "description": "upsert('trackedEntityInstances', {\n ou: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
-            "caption": "Example `expression.js` of upsert"
+            "description": "upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });",
+            "caption": "For an existing patient using upsert"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\n  \"patient\",\n  { q: \"1000EHE\" },\n  {\n    identifiers: [\n      {\n        identifier: \"1000EHE\",\n        identifierType: \"05a29f94-c0ed-11e2-94be-8c13b969e334\",\n        location: \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\n        preferred: true,\n      },\n    ],\n    person: {\n      gender: \"M\",\n      age: 42,\n    },\n  }\n);",
+            "caption": "For non existing patient creating a patient record using upsert"
           }
         ]
       },

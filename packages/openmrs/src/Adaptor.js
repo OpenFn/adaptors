@@ -430,7 +430,7 @@ export function create(resourceType, data, callback = false) {
  * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>a person</caption>
- * update("person", {"gender":"M","birthdate":"1997-01-13"})
+ * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
 export function update(resourceType, path, data, callback = false) {
   return state => {
@@ -464,20 +464,27 @@ export function update(resourceType, path, data, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
- * @example <caption>Example `expression.js` of upsert</caption>
- * upsert('trackedEntityInstances', {
- *  ou: 'TSyzvBiovKh',
- *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
- * }, {
- *  orgUnit: 'TSyzvBiovKh',
- *  trackedEntityType: 'nEenWmSyUEp',
- *  attributes: [
- *    {
- *      attribute: 'w75KJ2mc4zz',
- *      value: 'Qassim',
- *    },
- *  ],
- * });
+ * @example <caption>For an existing patient using upsert</caption>
+ * upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
+ * @example <caption>For non existing patient creating a patient record using upsert </caption>
+ * upsert(
+ *   "patient",
+ *   { q: "1000EHE" },
+ *   {
+ *     identifiers: [
+ *       {
+ *         identifier: "1000EHE",
+ *         identifierType: "05a29f94-c0ed-11e2-94be-8c13b969e334",
+ *         location: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
+ *         preferred: true,
+ *       },
+ *     ],
+ *     person: {
+ *       gender: "M",
+ *       age: 42,
+ *     },
+ *   }
+ * );
  */
 export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
@@ -493,7 +500,7 @@ export function upsert(
       query
     )(state)
       .then(resp => {
-        const resources = resp.data[resourceType];
+        const resources = resp.data.body.results;
         if (resources.length > 1) {
           throw new RangeError(
             `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
@@ -503,8 +510,7 @@ export function upsert(
         } else {
           // Pick out the first (and only) resource in the array and grab its
           // ID to be used in the subsequent `update` by the path determined
-          // by the `selectId(...)` function.
-          const path = resources[0][selectId(resourceType)];
+          const path = resources[0]['uuid'];
           return update(resourceType, path, data)(state);
         }
       })
