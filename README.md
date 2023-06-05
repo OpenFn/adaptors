@@ -67,12 +67,79 @@ please make one and assign yourself.
 
 ### Working with adaptors
 
-#### Create a new adaptor
+#### 1. Setup
 
 - Create a copy of the adaptor [template](packages/template), and rename it.
-  `cp -R packages/template packages/newadaptorname`
+  `cp -R packages/template packages/adaptorname`
 
-1. Fork the repo and follow the [Getting Started](#getting-started) steps.
+- Open package.json, and update the `name`, `description` and `build` from
+  `template` to your `newadaptorname`. Update the version.
+
+- Update the changelog heading `# @openfn/language-template` to your adaptor
+  name and delete the example content. Delete ast.json, then run `pnpm clean`
+  (this will get rid of the dist, types and docs folders).
+
+- Update your adaptor's README.md to use your new adaptor name (we'll come back
+  to this later to update the sample operation)
+
+#### 2. Create a job with the operation you'd like to add, and run it so it fails
+
+- Create a _temporary_ folder where you can test your operation manually by
+  running a job: `mkdir tmp`
+- Create a job file `touch tmp/job.js` and add an operation which calls your
+  adaptor: **\_\_**
+- Run your job with `openfn tmp/job.js -O -ma adaptorname`
+
+  `-O` will output to console (kinda useful in dev)
+
+  `-m` will run from the monorepo (this is important!! And the monorepo  
+   path must be set OPENFN_ADAPTORS_REPO=...)
+
+  `-a` adaptorname will use your new adaptor to run the job with
+
+- The job should fail - we haven't build the adaptor yet! Let's go do that
+
+#### 3. Create your adaptor function
+
+- Head to `lib/Adaptor.js`, and define your first function.
+
+An adaptor function must be invoked with several of arguments, and return a
+function which accepts and returns state.
+
+It's going to look something like this:
+
+```js
+export function yourFunctionName(arguments) {
+  return state => {
+    // logic
+    return state;
+  };
+}
+```
+
+The logic is where you will prepare the API request. Build the URL, passing in
+any arguments if needed. Then return the fetch request, making sure you set the
+Authorization and get any secrets from `state.comnfiguration`.
+
+```js
+export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
+  return state => {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`;
+
+    return (
+      fetch(url, {
+        headers: {
+          Authorization: `${state.configuration.username}:${state.configuration.password}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => ({ ...state, data }));
+    );
+  };
+}
+```
+
+- Define the configuration schema in `configuration-schema.json`
 
 2. Familiarize yourself with the API documentation for the third party system.
    Determine if you'll need any packages from NPMjs (e.g.,
@@ -80,70 +147,38 @@ please make one and assign yourself.
    [`pg`](https://www.npmjs.com/package/pg) for direct interaction with a
    Postgres database.)
 
-3. Create a copy of the adaptor [template](packages/template) directory and
-   rename it with `cp -R packages/template packages/<< NEW ADAPTOR NAME >>`
+1. Open the configuration file of the newly copied template,
+   `configuration-schema.json`, to define the schema.
+1. Specify the required parameters and their data types (these will be any
+   values in state.configuration you are using in your adaptor function).
+   Include descriptions that explain the purpose and usage of each parameter.
+1. If certain parameters are optional, clearly indicate their optional status
+   and provide default values or instructions for their usage.
+1. Validate the configuration against the schema to ensure that the provided
+   values match the expected structure and data types. This validation can be
+   done tools like [JSON Schema Validator](https://www.jsonschemavalidator.net/)
 
-4. Set your new package `name`, `version`, `description`, and `build`
+1. Set your new package `name`, `version`, `description`, and `build`
    definitions in your new `package.json`.
 
-5. Run `git add package/<< NEW ADAPTOR NAME >>` to register the new directory
-   with PNPM.
+#### 4. Test it manually
 
-6. Add/remove packages from your `package.json` as required in step 1, then run
-   `pnpm install` to install the deps for the sample functions in your new
-   adaptor.
+- Make sure to run build again
+- Run your job `openfn tmp/job.js -O -ma adaptorname`
+- Make sure it returns what you expect
 
-7. Determine the best way to authenticate. Most adaptors _either_ provide some
-   sort of API token or basic auth header with each request, but some use a
-   "login" step which generates a JWT or some sort of short-lived token and then
-   use that token for all subsequent operations.
+#### 5. Write your unit tests
 
-8. Define the configuration schema
+Import your newly defined function Define state and call your function with it
+Check you get data returned using chai assertion Make sure to test with
+different arguments and values Run `pnpm test`
 
-   The configuration schema defines required parameters and their expected
-   values for configuring the adaptor's authentication and authorization
-   settings.
+#### 6. Add docs and write the tests
 
-   1. Open the configuration file of the newly copied template,
-      `configuration-schema.json`, to define the schema.
-   2. Specify the required parameters and their data types. Include descriptions
-      that explain the purpose and usage of each parameter.
-   3. If certain parameters are optional, clearly indicate their optional status
-      and provide default values or instructions for their usage.
-   4. Validate the configuration against the schema to ensure that the provided
-      values match the expected structure and data types. This validation can be
-      done tools like
-      [JSON Schema Validator](https://www.jsonschemavalidator.net/)
-
-   [Here's an example of a configuration schema](packages/template/configuration-schema.json)
-
-9. Implement your authentication method in your first function. Run jobs with:
-
-   ```
-   openfn ./tmp/expression.js \
-   -a ~/adaptors/packages/<< NEW ADAPTOR >>/src/Adaptor.js \
-   -s ./tmp/state.json \
-   -o ./tmp/output.json
-   ```
-
-10. Consider how to handle "nextState" if what's returned by the API for a
-    particular function isn't particularly useful for your users.
-
-11. Lock in the state-handling behavior of your first function with tests.
-
-12. Use your adaptor locally, or submit a PR against @openfn/adaptors to gain
-    general adoption and have your adaptor available on NPM. (See #Changesets
-    below.)
-
-#### Add or update functions
-
-To add or update functions in an existing adaptor:
-
-- Create or update adaptor functions.
 - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
-  comprehensive explanation of its purpose, parameters, return values, and usage
-  examples
-- Update the adaptor's `README.md`.
+  comprehensive explanation of the adaptor function's purpose, parameters,
+  return values, and usage examples
+- Update the adaptor's `README.md` to include a sample operation
 
 ## Changesets
 
