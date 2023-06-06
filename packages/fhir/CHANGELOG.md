@@ -1,5 +1,16 @@
 # @openfn/language-fhir
 
+## 2.0.0
+
+### Major Changes
+
+- d4b4094: - Update configuration schema,
+  - Add `get()` function
+  - Fix `create()` axios config
+  - Remove unused code
+  - Improve error handling
+  - Improve response handling
+
 ## 1.1.5
 
 ### Patch Changes
