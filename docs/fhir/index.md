@@ -5,6 +5,8 @@
     <a href="#create">create(path, params, callback)</a></dt>
 <dt>
     <a href="#createTransactionBundle">createTransactionBundle(params, callback)</a></dt>
+<dt>
+    <a href="#get">get(path, query, callback)</a></dt>
 </dl>
 
 ## create
@@ -44,6 +46,27 @@ Creates a transactionBundle for HAPI FHIR
 **Example**  
 ```js
 createTransactionBundle( {"entry": [{...},, {...}]})
+```
+
+* * *
+
+## get
+
+get(path, query, callback) ⇒ <code>Operation</code>
+Get a resource in a FHIR system
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| query | <code>object</code> | data to get the new resource |
+| callback | <code>function</code> | (Optional) callback function |
+
+**Example**  
+```js
+get("/endpoint", {"foo": "bar"})
 ```
 
 * * *
