@@ -1,12 +1,12 @@
 import {
   execute as commonExecute,
-  composeNextState,
   expandReferences,
   http,
 } from '@openfn/language-common';
+import { Log, buildUrl, handleResponse, handleError } from './Util';
 
-const { axios } = http;
-export { axios };
+// const { axios } = http;
+// export { axios };
 
 /**
  * Execute a sequence of operations.
@@ -109,109 +109,115 @@ function getMappingInfo(params) {
     });
 }
 
-// /**
-//  * Creates a fictional resource in a fictional destination system using a POST request
-//  * @public
-//  * @example
-//  * create("/endpoint", {"foo": "bar"})
-//  * @function
-//  * @param {string} path - Path to resource
-//  * @param {object} params - data to create the new resource
-//  * @param {function} callback - (Optional) callback function
-//  * @returns {Operation}
-//  */
-// export function create (path, params, callback) {
-//   return state => {
-//     path = expandReferences(path)(state)
-//     params = expandReferences(params)(state)
+/**
+ * Get a source repository in OCL
+ * @public
+ * @example
+ * getMappings(
+ *   "MSFOCG",
+ *   "lime-demo",
+ *   { page: 1, exact_match: "off", verbose: false },
+ *   (state) => {
+ *     // Add state oclMappings
+ *     const oclMappings = state.data;
+ *     return { ...state, data: {}, references: [], response: {}, oclMappings };
+ *   }
+ * );
+ * @function
+ * @param {string} owner - An OCL user or organization
+ * @param {string} repositoryId - An OCL collection id or source id
+ * @param {{owner_type: string,repository: string,version: string, page: string }} [options] - Optional. `options`  which can be passed to  See more {@link https://api.openconceptlab.org/swagger/ on OCL swagger docs}
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function getMappings(owner, repositoryId, options, callback = false) {
+  return state => {
+    const defaultOptions = {
+      owner: owner,
+      repositoryId: repositoryId,
+      owner_type: 'orgs', // Default to orgs | orgs or users
+      repository: 'collections', // Default to collections, collections or sources
+      version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
+      content: 'mappings',
+    };
 
-//     const { baseUrl, username, password } = state.configuration
+    owner = expandReferences(owner)(state);
+    repositoryId = expandReferences(repositoryId)(state);
+    options = expandReferences(options)(state);
 
-//     const url = `${baseUrl}/${path}`
-//     const auth = { username, password }
+    const optionsMerge = { ...defaultOptions, ...options };
+    const urlConfig = buildUrl(state.configuration, optionsMerge);
 
-//     const config = {
-//       url,
-//       body: params
-//     }
-
-//     return http
-//       .post(config)(state)
-//       .then(response => {
-//         const nextState = {
-//           ...composeNextState(state, response.data),
-//           response
-//         }
-//         if (callback) return callback(nextState)
-//         return nextState
-//       })
-//   }
-// }
-
-// /**
-//  * Create a fictional patient in a fictional universe with a fictional REST api
-//  * @public
-//  * @example
-//  * createPatient({"foo": "bar"})
-//  * @function
-//  * @param {object} params - data to create the new resource
-//  * @param {function} callback - (Optional) callback function
-//  * @returns {Operation}
-//  */
-// export function createPatient (params, callback) {
-//   return state => {
-//     params = expandReferences(params)(state)
-
-//     const { baseUrl, username, password } = state.configuration
-
-//     const url = `${baseUrl}/patient`
-//     const auth = { username, password }
-
-//     const config = {
-//       url,
-//       body: params,
-//       auth
-//     }
-
-//     return http
-//       .post(config)(state)
-//       .then(response => {
-//         const nextState = {
-//           ...composeNextState(state, response.data),
-//           response
-//         }
-//         if (callback) return callback(nextState)
-//         return nextState
-//       })
-//   }
-// }
+    return http
+      .get(urlConfig)(state)
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
+  };
+}
 
 /**
  * Get a resource in OCL
  * @public
  * @example
- * get("/endpoint", {"foo": "bar"})
+ * get(
+ *   "mappings",
+ *   {
+ *     owner: "MSFOCG",
+ *     repository: "collections",
+ *     repositoryId: "lime-demo",
+ *     version: "HEAD",
+ *     query: {
+ *       page: 1,
+ *       exact_match: "off",
+ *       limit: 200,
+ *       verbose: false,
+ *       sortDesc: "_score",
+ *     },
+ *   },
+ *   (state) => {
+ *     // Add state oclMappings
+ *     const oclMappings = state.data;
+ *     return { ...state, data: {}, references: [], response: {}, oclMappings };
+ *   }
+ * );
+ * @example
+ *  get(
+ *   "MSFOCG/collections/lime-demo/HEAD/mappings",
+ *   {
+ *     // owner_type: "users",
+ *     page: 1,
+ *     exact_match: "off",
+ *     limit: 200,
+ *     verbose: false,
+ *     sortDesc: "_score",
+ *   },
+ *   (state) => {
+ *     // Add state oclMappings
+ *     const oclMappings = state.data;
+ *     return { ...state, data: {}, references: [], response: {}, oclMappings };
+ *   }
+ * );
  * @function
  * @param {string} path - Path to resource
- * @param {object} query - data to get the new resource
+ * @param {object} options - data to get the new resource
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function get(path, query, callback = false) {
+export function get(path, options, callback = false) {
   return state => {
-    path = expandReferences(path)(state);
-    query = expandReferences(query)(state);
-
-    const { baseUrl, apiPath } = state.configuration;
-    const url = `${baseUrl}/${apiPath}/${path}`;
-
-    const config = {
-      url,
-      query: query,
+    const defaultOptions = {
+      owner_type: 'orgs', // Default to orgs | orgs or users
+      content: path,
     };
 
+    path = expandReferences(path)(state);
+    options = expandReferences(options)(state);
+
+    const optionsMerge = { ...defaultOptions, ...options };
+    const urlConfig = buildUrl(state.configuration, optionsMerge);
+
     return http
-      .get(config)(state)
+      .get(urlConfig)(state)
       .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
