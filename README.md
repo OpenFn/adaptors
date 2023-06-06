@@ -169,9 +169,35 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
 
 #### 5. Write your unit tests
 
-Import your newly defined function Define state and call your function with it
-Check you get data returned using chai assertion Make sure to test with
-different arguments and values Run `pnpm test`
+Import your newly defined function
+
+```
+import { functionName } from '../src/Adaptor.js';
+```
+
+Describe your test, define state, call your operation (follow the example below
+to see how state should be passed to it).
+
+Make an assertion to check the result.
+
+```
+it('should xyz', async () => {
+const state = {
+  configuration: {},
+  data: {},
+};
+
+const result = await getTodaysWeather()(state);
+
+expect(result.data).to.exist;
+});
+```
+
+Run `pnpm test` to check your test is passing.
+
+Make sure to test your function with different arguments and values.
+
+#### 6. Add docs and write the tests
 
 #### 6. Add docs and write the tests
 
