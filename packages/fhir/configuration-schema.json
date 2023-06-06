@@ -2,12 +2,31 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
-        "resource": {
-            "title": "Resource Url",
+        "baseUrl": {
+            "title": "Base Url",
             "type": "string",
-            "description": "The resource url to post transactionBundle in to the destination system",
+            "description": "The baseUrl",
             "examples": [
-                "resource_url"
+                "https://hapi.fhir.org/baseR4"
+            ]
+        },
+        "apiPath": {
+            "title": "API Path",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "placeholder": "R4",
+            "description": "FHIR api path",
+            "minLength": 1,
+            "examples": [
+                "baseR4",
+                "R3",
+                "R4"
             ]
         },
         "authType": {
