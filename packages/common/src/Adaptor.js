@@ -2,7 +2,8 @@ import curry from 'lodash/fp/curry.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
-import csv from 'csvtojson';
+import { parse } from 'csv-parse';
+import { finished } from 'stream/promises';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -557,17 +558,51 @@ export function chunk(array, chunkSize) {
  * second argument to
  */
 export function parseCsv(stream, parsingOptions = {}) {
+  stream = expandReferences(stream)(state);
+  parsingOptions = expandReferences(parsingOptions)(state);
+
   const defaultOptions = {
-    asObjects: false,
-    output: 'json',
     delimiter: ',',
-    noheader: false,
     quote: '"',
+    escape: '"',
+    bom: true,
     trim: true,
-    flatKeys: false,
+    ltrim: true,
+    rtrim: true,
   };
 
-  return csv({ ...defaultOptions, ...parsingOptions }).fromStream(stream);
+  // Read and process the CSV file
+  const processFile = async () => {
+    const records = [];
+    const parser =
+      typeof stream === 'string'
+        ? parse(stream, { ...defaultOptions, ...parsingOptions })
+        : stream.pipe(parse({ ...defaultOptions, ...parsingOptions }));
+    parser.on('readable', function () {
+      let record;
+      while ((record = parser.read()) !== null) {
+        // Work with each record
+        records.push(record);
+        // Also return a stream
+        // record.push(record.parse);
+      }
+    });
+
+    // Catch any error
+    parser.on('error', function (err) {
+      // console.error(err.message);
+      throw new Error(err);
+    });
+    // Test that the parsed records matched the expected records
+    parser.on('end', function () {
+      console.log(records);
+    });
+    await finished(parser);
+    return records;
+  };
+  // Parse the CSV content
+  // return composeNextState(state, processFile());
+  return processFile();
 }
 // /**
 //  * Returns a unique array of objects by an attribute in those objects

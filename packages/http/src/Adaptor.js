@@ -11,6 +11,7 @@ import {
   expandReferences,
   composeNextState,
   http,
+  parseCsv,
 } from '@openfn/language-common';
 
 import nodeRequest from 'request';

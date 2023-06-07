@@ -38,7 +38,7 @@ function connect(state) {
 
   return sftp.connect(state.configuration).then(() => {
     console.log('Connected');
-    return { ...state, sftp };
+    return state;
   });
 }
 
@@ -87,27 +87,23 @@ export function getCSV(filePath, parsingOptions = {}) {
       encoding: null,
       autoClose: false,
     },
-    delimiter: ',',
-    noheader: false,
-    quote: '"',
-    trim: true,
-    flatKeys: false,
-    output: 'json',
+    columns: true,
   };
 
   return state => {
     let results = [];
 
+    const { readStreamOptions, ...csvDefaultOptions } = defaultOptions;
     const useParser = !isObjectEmpty(parsingOptions);
 
     if (useParser) {
-      const stream = sftp.createReadStream(filePath, {
-        ...defaultOptions.readStreamOptions,
-      });
-      return parseCsv(stream, { ...defaultOptions, ...parsingOptions })
-        .then(json => handleResponse(json, state))
-        .then(state => handleLog('Stream finished.', state))
-        .catch(handleError);
+      const stream = sftp.createReadStream(filePath, readStreamOptions);
+      return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
+        state
+      );
+      // .then(json => handleResponse(json, state))
+      // .then(state => handleLog('Stream finished.', state))
+      // .catch(handleError);
     } else {
       return sftp
         .get(filePath)
@@ -253,4 +249,5 @@ export {
   merge,
   sourceValue,
   chunk,
+  parseCsv,
 } from '@openfn/language-common';
