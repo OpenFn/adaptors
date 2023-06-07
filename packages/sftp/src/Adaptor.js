@@ -4,7 +4,7 @@ import {
   parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-
+import { isObjectEmpty, handleResponse, handleError, handleLog } from './Utils';
 let sftp = null;
 
 /**
@@ -56,16 +56,15 @@ function disconnect(state) {
  * list('/some/path/')
  * @function
  * @param {string} dirPath - Path to resource
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath) {
+export function list(dirPath, callback = false) {
   return state => {
     return sftp
       .list(dirPath)
-      .then(files => composeNextState(state, files))
-      .catch(e => {
-        console.log(e);
-      });
+      .then(files => handleResponse(files, state, callback))
+      .catch(handleError);
   };
 }
 
@@ -99,20 +98,16 @@ export function getCSV(filePath, parsingOptions = {}) {
   return state => {
     let results = [];
 
-    if (parsingOptions) {
+    const useParser = !isObjectEmpty(parsingOptions);
+
+    if (useParser) {
       const stream = sftp.createReadStream(filePath, {
         ...defaultOptions.readStreamOptions,
       });
       return parseCsv(stream, { ...defaultOptions, ...parsingOptions })
-        .then(json => composeNextState(state, json))
-        .then(state => {
-          console.log('Stream finished.');
-          console.log(state);
-          return state;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        .then(json => handleResponse(json, state))
+        .then(state => handleLog('Stream finished.', state))
+        .catch(handleError);
     } else {
       return sftp
         .get(filePath)
@@ -129,13 +124,8 @@ export function getCSV(filePath, parsingOptions = {}) {
             return nextState;
           });
         })
-        .then(state => {
-          console.log('Stream finished.');
-          return state;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        .then(state => handleLog('Stream finished.', state))
+        .catch(handleError);
     }
   };
 }
@@ -159,17 +149,9 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
     return sftp
       .put(localFilePath, remoteFilePath, parsingOptions)
-      .then(res => {
-        const nextState = composeNextState(state, res);
-        return nextState;
-      })
-      .then(state => {
-        console.log('Upload finished.');
-        return state;
-      })
-      .catch(e => {
-        throw e;
-      });
+      .then(response => handleResponse(response, state))
+      .then(state => handleLog('Upload finished.', state))
+      .catch(e => handleError(e, true));
   };
 }
 
@@ -206,13 +188,8 @@ export function getJSON(filePath, encoding) {
           return nextState;
         });
       })
-      .then(state => {
-        console.log('Stream finished.');
-        return state;
-      })
-      .catch(e => {
-        throw e;
-      });
+      .then(state => handleLog('Stream finished.', state))
+      .catch(e => handleError(e, true));
   };
 }
 
