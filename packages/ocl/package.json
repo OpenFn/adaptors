@@ -19,8 +19,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.7",
-    "axios": "0.21.2"
+    "@openfn/language-common": "1.7.7"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

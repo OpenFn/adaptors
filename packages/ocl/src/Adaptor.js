@@ -3,10 +3,7 @@ import {
   expandReferences,
   http,
 } from '@openfn/language-common';
-import { Log, buildUrl, handleResponse, handleError } from './Util';
-
-// const { axios } = http;
-// export { axios };
+import { buildUrl, handleResponse, handleError } from './Util';
 
 /**
  * Execute a sequence of operations.
@@ -39,7 +36,7 @@ export function execute(...operations) {
  * @public
  * @example
  * map(state, state)
- * @function
+ * @private
  * @param {Object}  state - Json object containing keys and data values;
  * @param {Object} [params] - E.g. `{users:"haftamuk", sources: "eCHIS-CODES", concepts: "fp_new_at_10_to_14" }
  * @returns {Operation}
@@ -73,6 +70,9 @@ export function map(state, params) {
   });
 }
 
+/**
+ * @private
+ */
 function getMappingInfo(params) {
   const headers = {
     'Content-Type': 'application/json',
@@ -223,7 +223,6 @@ export function get(path, options, callback = false) {
   };
 }
 
-// What functions do you want from the common adaptor?
 export {
   alterState,
   dataPath,

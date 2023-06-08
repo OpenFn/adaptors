@@ -2,4 +2,4 @@
 '@openfn/language-ocl': minor
 ---
 
-Add get and getMappings functionwq
+Add `get()` and `getMappings()` function

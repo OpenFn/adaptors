@@ -19,9 +19,9 @@
             "description": "map(state, state)"
           },
           {
-            "title": "function",
+            "title": "private",
             "description": null,
-            "name": null
+            "type": null
           },
           {
             "title": "param",

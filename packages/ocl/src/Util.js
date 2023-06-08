@@ -1,45 +1,5 @@
 import { composeNextState } from '@openfn/language-common';
 
-export const Log = (() => {
-  const timestamp = new Date();
-
-  const log = (type, message) => {
-    let logType = '';
-    switch (type) {
-      case 'success':
-        logType = '✓ Success';
-        break;
-      case 'warn':
-        logType = '⚠ Warning';
-        break;
-      case 'error':
-        logType = '✗ Error';
-        break;
-      default:
-        logType = 'ℹ Info';
-    }
-
-    console.log(`${logType} at ${timestamp}:\n∟`, message);
-  };
-
-  const logMessage = message => log('default', message);
-
-  const logWrapper = (...args) => {
-    if (args.length === 1) {
-      logMessage(args[0]);
-    } else {
-      log(...args);
-    }
-  };
-
-  return Object.assign(logWrapper, {
-    info: message => log('info', message),
-    success: message => log('success', message),
-    warn: message => log('warn', message),
-    error: message => log('error', message),
-  });
-})();
-
 export function buildUrl(configuration, options) {
   const {
     owner,
@@ -77,7 +37,7 @@ export function handleResponse(response, state, callback) {
     `Retrieved "${data.length}" data`,
   ].join('\n∟ ');
 
-  Log.success(responseString);
+  console.log(`✓ Success at ${new Date()}: ${responseString}`);
 
   const nextState = {
     ...composeNextState(state, response.data),
