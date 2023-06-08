@@ -124,26 +124,26 @@ function getMappingInfo(params) {
  *   }
  * );
  * @function
- * @param {string} owner - An OCL user or organization
+ * @param {string} ownerId - An OCL user or organization
  * @param {string} repositoryId - An OCL collection id or source id
- * @param {{owner_type: string,repository: string,version: string, page: string }} [options] - Optional. `options`  which can be passed to  See more {@link https://api.openconceptlab.org/swagger/ on OCL swagger docs}
+ * @param {{ownerType: string,repository: string,version: string, page: string }} [options] - Optional. `options`  which can be passed to  See more {@link https://api.openconceptlab.org/swagger/ on OCL swagger docs}
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getMappings(owner, repositoryId, options, callback = false) {
+export function getMappings(ownerId, repositoryId, options, callback = false) {
   return state => {
+    ownerId = expandReferences(ownerId)(state);
+    repositoryId = expandReferences(repositoryId)(state);
+    options = expandReferences(options)(state);
+
     const defaultOptions = {
-      owner: owner,
+      ownerId: ownerId,
       repositoryId: repositoryId,
-      owner_type: 'orgs', // Default to orgs | orgs or users
+      ownerType: 'orgs', // Default to orgs | orgs or users
       repository: 'collections', // Default to collections, collections or sources
       version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
       content: 'mappings',
     };
-
-    owner = expandReferences(owner)(state);
-    repositoryId = expandReferences(repositoryId)(state);
-    options = expandReferences(options)(state);
 
     const optionsMerge = { ...defaultOptions, ...options };
     const urlConfig = buildUrl(state.configuration, optionsMerge);
@@ -162,17 +162,16 @@ export function getMappings(owner, repositoryId, options, callback = false) {
  * get(
  *   "mappings",
  *   {
- *     owner: "MSFOCG",
+ *     ownerId: "MSFOCG",
+ *     ownerType: "users", // Default to orgs
  *     repository: "collections",
  *     repositoryId: "lime-demo",
  *     version: "HEAD",
- *     query: {
- *       page: 1,
- *       exact_match: "off",
- *       limit: 200,
- *       verbose: false,
- *       sortDesc: "_score",
- *     },
+ *     page: 1,
+ *     exact_match: "off",
+ *     limit: 200,
+ *     verbose: false,
+ *     sortDesc: "_score",
  *   },
  *   (state) => {
  *     // Add state oclMappings
@@ -182,9 +181,8 @@ export function getMappings(owner, repositoryId, options, callback = false) {
  * );
  * @example
  *  get(
- *   "MSFOCG/collections/lime-demo/HEAD/mappings",
+ *   "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
  *   {
- *     // owner_type: "users",
  *     page: 1,
  *     exact_match: "off",
  *     limit: 200,
@@ -206,7 +204,7 @@ export function getMappings(owner, repositoryId, options, callback = false) {
 export function get(path, options, callback = false) {
   return state => {
     const defaultOptions = {
-      owner_type: 'orgs', // Default to orgs | orgs or users
+      ownerType: 'orgs', // Default to orgs | orgs or users
       content: path,
     };
 

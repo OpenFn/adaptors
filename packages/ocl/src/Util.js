@@ -2,8 +2,8 @@ import { composeNextState } from '@openfn/language-common';
 
 export function buildUrl(configuration, options) {
   const {
-    owner,
-    owner_type,
+    ownerId,
+    ownerType,
     repository,
     repositoryId,
     version,
@@ -15,8 +15,8 @@ export function buildUrl(configuration, options) {
 
   const urlParts = [
     baseUrl,
-    owner_type,
-    owner,
+    ownerType,
+    ownerId,
     repository,
     repositoryId,
     version,

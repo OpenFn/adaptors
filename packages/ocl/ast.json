@@ -59,7 +59,7 @@
     {
       "name": "getMappings",
       "params": [
-        "owner",
+        "ownerId",
         "repositoryId",
         "options",
         "callback"
@@ -88,7 +88,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "owner"
+            "name": "ownerId"
           },
           {
             "title": "param",
@@ -109,7 +109,7 @@
                 "fields": [
                   {
                     "type": "FieldType",
-                    "key": "owner_type",
+                    "key": "ownerType",
                     "value": {
                       "type": "NameExpression",
                       "name": "string"
@@ -182,11 +182,11 @@
           },
           {
             "title": "example",
-            "description": "get(\n  \"mappings\",\n  {\n    owner: \"MSFOCG\",\n    repository: \"collections\",\n    repositoryId: \"lime-demo\",\n    version: \"HEAD\",\n    query: {\n      page: 1,\n      exact_match: \"off\",\n      limit: 200,\n      verbose: false,\n      sortDesc: \"_score\",\n    },\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
+            "description": "get(\n  \"mappings\",\n  {\n    ownerId: \"MSFOCG\",\n    ownerType: \"users\", // Default to orgs\n    repository: \"collections\",\n    repositoryId: \"lime-demo\",\n    version: \"HEAD\",\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
           },
           {
             "title": "example",
-            "description": "get(\n  \"MSFOCG/collections/lime-demo/HEAD/mappings\",\n  {\n    // owner_type: \"users\",\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
+            "description": "get(\n  \"orgs/MSFOCG/collections/lime-demo/HEAD/mappings\",\n  {\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
           },
           {
             "title": "function",
