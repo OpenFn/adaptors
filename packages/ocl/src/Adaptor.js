@@ -3,7 +3,7 @@ import {
   expandReferences,
   http,
 } from '@openfn/language-common';
-import { buildUrl, handleResponse, handleError } from './Util';
+import { buildUrl, handleResponse, handleError, request } from './Util';
 
 /**
  * Execute a sequence of operations.
@@ -142,14 +142,15 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
       ownerType: 'orgs', // Default to orgs | orgs or users
       repository: 'collections', // Default to collections, collections or sources
       version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
+      expansions: 'expansions',
+      expansionId: 'autoexpand-HEAD',
       content: 'mappings',
     };
 
     const optionsMerge = { ...defaultOptions, ...options };
-    const urlConfig = buildUrl(state.configuration, optionsMerge);
+    const { url, query } = buildUrl(state.configuration, optionsMerge);
 
-    return http
-      .get(urlConfig)(state)
+    return request(url, query)
       .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
@@ -204,7 +205,6 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
 export function get(path, options, callback = false) {
   return state => {
     const defaultOptions = {
-      ownerType: 'orgs', // Default to orgs | orgs or users
       content: path,
     };
 
@@ -212,10 +212,9 @@ export function get(path, options, callback = false) {
     options = expandReferences(options)(state);
 
     const optionsMerge = { ...defaultOptions, ...options };
-    const urlConfig = buildUrl(state.configuration, optionsMerge);
+    const { url, query } = buildUrl(state.configuration, optionsMerge);
 
-    return http
-      .get(urlConfig)(state)
+    return request(url, query)
       .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };

@@ -7,8 +7,11 @@ export function buildUrl(configuration, options) {
     repository,
     repositoryId,
     version,
+    expansions,
+    expansionId,
     content,
-    ...query
+    query,
+    ...rest
   } = options;
 
   const { baseUrl } = configuration;
@@ -20,27 +23,26 @@ export function buildUrl(configuration, options) {
     repository,
     repositoryId,
     version,
+    expansions,
+    expansionId,
     content,
   ].filter(urlPart => urlPart);
   const url = urlParts.join('/');
 
-  return { url, query: query };
+  return { url, query: { ...query, ...rest } };
+}
+
+export function isObjectEmpty(objectName) {
+  return (
+    objectName &&
+    Object.keys(objectName).length === 0 &&
+    objectName.constructor === Object
+  );
 }
 
 export function handleResponse(response, state, callback) {
-  const { status, request, data } = response;
-  const { method, path } = request;
-
-  const responseString = [
-    `Request: ${method} "${path}"`,
-    `Got: ${status}`,
-    `Retrieved "${data.length}" data`,
-  ].join('\n∟ ');
-
-  console.log(`✓ Success at ${new Date()}: ${responseString}`);
-
   const nextState = {
-    ...composeNextState(state, response.data),
+    ...composeNextState(state, response),
     response,
   };
   if (callback) return callback(nextState);
@@ -48,26 +50,57 @@ export function handleResponse(response, state, callback) {
 }
 
 export function handleError(error) {
-  if (error.response) {
-    const { method, path } = error.response.request;
-    const { status } = error.response;
-    if (Object.keys(error.response.data).length === 0) {
-      throw new Error(
-        `Server responded with:  \n${JSON.stringify(error.response, null, 2)}`
-      );
-    }
+  throw error;
+}
+
+export function handleEmptyResponse(response) {
+  const { method, url, status, data } = response;
+  const responseString = [
+    `Request: ${method} "${url}"`,
+    `Status: ${status}`,
+    `Retrieved "${data.length}" data`,
+  ].join('\n∟ ');
+
+  throw new Error(`at ${new Date()} \n ${responseString}`);
+}
+
+export function handleResponseError(response, method) {
+  if (!response.ok) {
+    const { status, statusText, body, url } = response;
 
     const errorString = [
-      `Request: ${method} ${path}`,
-      `Got: ${status}`,
-      `Body: ${JSON.stringify(error.response.data, null, 2).replace(
-        /\n/g,
-        '\n\t  '
-      )}`,
+      `Message: ${statusText}`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+      `Body: ${JSON.stringify(body, null, 2).replace(/\n/g, '\n\t  ')}`,
     ].join('\n\t∟ ');
 
     throw new Error(errorString);
-  } else {
-    throw error;
   }
 }
+
+export const request = async (url, params = {}, method = 'GET') => {
+  let options = {
+    method,
+    headers: { 'Content-Type': 'application/json' }, // Add nonce for WP REST API
+  };
+
+  if ('GET' === method) {
+    url += '?' + new URLSearchParams(params).toString();
+  } else {
+    options.body = JSON.stringify(params);
+  }
+
+  try {
+    const response = await fetch(url, options);
+    console.log(url);
+    handleResponseError(response, method);
+    const data = await response.json();
+
+    if (data.length === 0)
+      handleEmptyResponse({ method, url, data, status: response.status });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
