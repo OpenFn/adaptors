@@ -70,14 +70,14 @@ please make one and assign yourself.
 #### 1. Setup
 
 - Create a copy of the adaptor [template](packages/template), and rename it.
-  `cp -R packages/template packages/adaptorname`
+  `cp -R packages/template packages/youradaptorname`
 
 - Open package.json, and update the `name`, `description` and `build` from
-  `template` to your `newadaptorname`. Update the version.
+  `template` to your `youradaptorname`. Update the version.
 
-- Update the changelog heading `# @openfn/language-template` to your adaptor
-  name and delete the example content. Delete ast.json, then run `pnpm clean`
-  (this will get rid of the dist, types and docs folders).
+- Update the top-level changelog comment `# @openfn/language-template` to your
+  adaptor name and delete the example content. Delete ast.json, then run
+  `pnpm clean` (this will remove the dist, types and docs folders).
 
 - Update your adaptor's README.md to use your new adaptor name (we'll come back
   to this later to update the sample operation)
@@ -86,27 +86,31 @@ please make one and assign yourself.
 
 - Create a _temporary_ folder where you can test your operation manually by
   running a job: `mkdir tmp`
-- Create a job file `touch tmp/job.js` and add an operation which calls your
-  adaptor: **\_\_**
-- Run your job with `openfn tmp/job.js -O -ma adaptorname`
+- Create a job file `touch tmp/job.js` which calls the operation you would like
+  to add. For example, if you were adding an operation which gets the weather
+  forecast, it might look something like this:
 
-  `-O` will output to console (kinda useful in dev)
+```
+getTodaysWeather(25.52, 13.41);
+```
 
-  `-m` will run from the monorepo (this is important!! And the monorepo  
-   path must be set OPENFN_ADAPTORS_REPO=...)
+- Run your job with `openfn tmp/job.js -O -ma youradaptorname`
 
-  `-a` adaptorname will use your new adaptor to run the job with
+  `-O` will output to your console
+
+  `-m` will run the job from the monorepo (make sure your monorepo  
+   path is set OPENFN_ADAPTORS_REPO=...)
+
+  `-a` this will specify the adaptor to run your job with
 
 - The job should fail - we haven't build the adaptor yet! Let's go do that
 
 #### 3. Create your adaptor function
 
-- Head to `lib/Adaptor.js`, and define your first function.
+Adaptor functions are invoked with several arguments, and return a function
+which accepts and returns state.
 
-An adaptor function must be invoked with several of arguments, and return a
-function which accepts and returns state.
-
-It's going to look something like this:
+They should look something like this:
 
 ```js
 export function yourFunctionName(arguments) {
@@ -117,9 +121,9 @@ export function yourFunctionName(arguments) {
 }
 ```
 
-The logic is where you will prepare the API request. Build the URL, passing in
-any arguments if needed. Then return the fetch request, making sure you set the
-Authorization and get any secrets from `state.comnfiguration`.
+The logic is where you will prepare your API request. Build the URL, passing in
+any arguments if needed. Next, return the fetch request, making sure you set the
+Authorization, passing in any secrets from `state.configuration`.
 
 ```js
 export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
@@ -141,31 +145,32 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
 
 - Define the configuration schema in `configuration-schema.json`
 
-2. Familiarize yourself with the API documentation for the third party system.
-   Determine if you'll need any packages from NPMjs (e.g.,
-   [`jsforce`](https://www.npmjs.com/package/jsforce) for Salesforce,
-   [`pg`](https://www.npmjs.com/package/pg) for direct interaction with a
-   Postgres database.)
+  This defines required parameters and their expected values for configuring the
+  adaptor's authentication and authorization settings.
 
-1. Open the configuration file of the newly copied template,
-   `configuration-schema.json`, to define the schema.
-1. Specify the required parameters and their data types (these will be any
-   values in state.configuration you are using in your adaptor function).
-   Include descriptions that explain the purpose and usage of each parameter.
-1. If certain parameters are optional, clearly indicate their optional status
-   and provide default values or instructions for their usage.
-1. Validate the configuration against the schema to ensure that the provided
-   values match the expected structure and data types. This validation can be
-   done tools like [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+  1. Open the configuration file of the newly copied template,
+     `configuration-schema.json`.
+  2. Specify the required parameters and their data types (these will be any
+     values in state.configuration you are using in your adaptor function).
+     Include descriptions that explain the purpose and usage of each parameter.
+  3. If certain parameters are optional, clearly indicate their optional status
+     and provide default values or instructions for their usage.
+  4. Validate the configuration against the schema to ensure that the provided
+     values match the expected structure and data types. This validation can be
+     done tools like
+     [JSON Schema Validator](https://www.jsonschemavalidator.net/)
 
 1. Set your new package `name`, `version`, `description`, and `build`
    definitions in your new `package.json`.
 
 #### 4. Test it manually
 
+#### 4. Test it manually
+
 - Make sure to run build again
-- Run your job `openfn tmp/job.js -O -ma adaptorname`
+- Run your job `openfn tmp/job.js -O -ma youradaptorname`
 - Make sure it returns what you expect
+- You can delete this folder once you have finished testing your job manually
 
 #### 5. Write your unit tests
 
@@ -196,8 +201,6 @@ expect(result.data).to.exist;
 Run `pnpm test` to check your test is passing.
 
 Make sure to test your function with different arguments and values.
-
-#### 6. Add docs and write the tests
 
 #### 6. Add docs and write the tests
 
