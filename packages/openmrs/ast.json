@@ -1,5 +1,240 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "create",
+      "params": [
+        "resourceType",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Create a record",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Type of resource to create. E.g. `person`, `patient`, `encounter`, ...",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "type": {
+              "type": "NameExpression",
+              "name": "OpenMRSData"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "create(\"person\", {\n  names: [\n    {\n      givenName: \"Mohit\",\n      familyName: \"Kumar\",\n    },\n  ],\n  gender: \"M\",\n  birthdate: \"1997-09-02\",\n  addresses: [\n    {\n      address1: \"30, Vivekananda Layout, Munnekolal,Marathahalli\",\n      cityVillage: \"Bengaluru\",\n      country: \"India\",\n      postalCode: \"560037\",\n    },\n  ],\n});",
+            "caption": "Create a person"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "update",
+      "params": [
+        "resourceType",
+        "path",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The type of resource to be updated. E.g. `person`, `patient`, etc.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "update(\"person\", '3cad37ad-984d-4c65-a019-3eb120c9c373',{\"gender\":\"M\",\"birthdate\":\"1997-01-13\"})",
+            "caption": "a person"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsert",
+      "params": [
+        "resourceType",
+        "query",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The type of a resource to `upsert`. E.g. `trackedEntityInstances`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "The data to use for update or create depending on the result of the query.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "throws",
+            "description": "Throws range error",
+            "type": {
+              "type": "NameExpression",
+              "name": "RangeError"
+            }
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });",
+            "caption": "For an existing patient using upsert"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\n  \"patient\",\n  { q: \"1000EHE\" },\n  {\n    identifiers: [\n      {\n        identifier: \"1000EHE\",\n        identifierType: \"05a29f94-c0ed-11e2-94be-8c13b969e334\",\n        location: \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\n        preferred: true,\n      },\n    ],\n    person: {\n      gender: \"M\",\n      age: 42,\n    },\n  }\n);",
+            "caption": "For non existing patient creating a patient record using upsert"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
