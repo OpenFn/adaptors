@@ -1,7 +1,6 @@
 import {
   execute as commonExecute,
   expandReferences,
-  http,
 } from '@openfn/language-common';
 import { buildUrl, handleResponse, handleError, request } from './Util';
 
@@ -227,7 +226,6 @@ export {
   each,
   field,
   fields,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
