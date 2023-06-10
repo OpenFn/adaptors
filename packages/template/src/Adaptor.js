@@ -2,14 +2,13 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-  http,
 } from '@openfn/language-common';
 
-const { axios } = http;
+import { request } from './Utils';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Wraps `language-common/execute` to make working with this API easier.
  * @example
  * execute(
  *   create('foo'),
@@ -25,6 +24,7 @@ export function execute(...operations) {
     data: null,
   };
 
+  // TODO: Add session-based authentication here if your API needs it.
   return state => {
     return commonExecute(...operations)({
       ...initialState,
@@ -34,49 +34,47 @@ export function execute(...operations) {
 }
 
 /**
- * Creates a fictional resource in a fictional destination system using a POST request
+ * Create some resource in some system
  * @public
  * @example
- * create("patient", {"foo": "bar"})
+ * create("patient", {"name": "Bukayo"})
  * @function
- * @param {string} path - Path to resource
- * @param {object} params - data to create the new resource
- * @param {function} callback - (Optional) callback function
+ * @param {string} resource - The type of entity that will be created
+ * @param {object} data - The data to create the new resource
+ * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function create(path, params, callback) {
+export function create(path, data, callback) {
   return state => {
     path = expandReferences(path)(state);
-    params = expandReferences(params)(state);
+    data = expandReferences(data)(state);
 
     const { baseUrl, username, password } = state.configuration;
 
     const url = `${baseUrl}/${path}`;
     const auth = { username, password };
 
-    const config = {
-      url,
-      body: params,
+    const options = {
+      auth,
+      body: data,
+      method: 'POST',
     };
 
-    return http
-      .post(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    return request(url, options).then(response => {
+      const nextState = {
+        ...composeNextState(state, response.data),
+        response,
+      };
+      if (callback) return callback(nextState);
+      return nextState;
+    });
   };
 }
 
-export { axios };
+export { request } from './Utils';
 
-// What functions do you want from the common adaptor?
+// TODO: Decide which functions to publish from @openfn/language-common
 export {
-  alterState,
   dataPath,
   dataValue,
   dateFns,

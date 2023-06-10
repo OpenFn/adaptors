@@ -4,11 +4,11 @@
       "name": "create",
       "params": [
         "path",
-        "params",
+        "data",
         "callback"
       ],
       "docs": {
-        "description": "Creates a fictional resource in a fictional destination system using a POST request",
+        "description": "Create some resource in some system",
         "tags": [
           {
             "title": "public",
@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"patient\", {\"foo\": \"bar\"})"
+            "description": "create(\"patient\", {\"name\": \"Bukayo\"})"
           },
           {
             "title": "function",
@@ -26,25 +26,25 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "The type of entity that will be created",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "path"
+            "name": "resource"
           },
           {
             "title": "param",
-            "description": "data to create the new resource",
+            "description": "The data to create the new resource",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",
-            "description": "(Optional) callback function",
+            "description": "An optional callback function",
             "type": {
               "type": "NameExpression",
               "name": "function"
@@ -61,7 +61,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],

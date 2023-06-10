@@ -1,6 +1,10 @@
 import { expect } from 'chai';
-import nock from 'nock';
 import { execute, create, dataValue } from '../src/Adaptor.js';
+
+import MockAgent from './mockAgent.js';
+import { setGlobalDispatcher } from 'undici';
+
+setGlobalDispatcher(MockAgent);
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -35,26 +39,6 @@ describe('execute', () => {
 });
 
 describe('create', () => {
-  before(() => {
-    nock('https://fake.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
-
-    nock('https://fake.server.com')
-      .post('/api/noAccess')
-      .reply(404, (uri, requestBody) => {
-        return { detail: 'Not found.' };
-      });
-
-    nock('https://fake.server.com')
-      .post('/api/differentError')
-      .reply(500, (uri, requestBody) => {
-        return { body: 'Other error.' };
-      });
-  });
-
   it('makes a post request to the right endpoint', async () => {
     const state = {
       configuration: {
@@ -78,6 +62,7 @@ describe('create', () => {
     expect(finalState.data).to.eql({
       fullName: 'Mamadou',
       gender: 'M',
+      id: 7,
     });
   });
 
@@ -95,7 +80,8 @@ describe('create', () => {
     ).catch(error => {
       return error;
     });
-    expect(error.message).to.eql('Request failed with status code 404');
+
+    expect(error.message).to.eql('Page not found');
   });
 
   it('handles and throws different kinds of errors', async () => {
@@ -112,42 +98,7 @@ describe('create', () => {
     )(state).catch(error => {
       return error;
     });
-    expect(error.message).to.eql('Request failed with status code 500');
-  });
-});
-
-describe('createPatient', () => {
-  before(() => {
-    nock('https://fakepatient.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
-  });
-
-  it('makes a post request to the patient endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fakepatient.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await execute(
-      create('api/patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-    });
+    
+    expect(error.message).to.eql('Server error');
   });
 });
