@@ -3,7 +3,7 @@
     {
       "name": "create",
       "params": [
-        "path",
+        "resource",
         "data",
         "callback"
       ],
@@ -61,7 +61,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

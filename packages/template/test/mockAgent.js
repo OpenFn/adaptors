@@ -31,7 +31,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/api/differentError',
+    path: '/api/!@#$%^&*',
     method: 'POST',
   })
   .reply(500, {

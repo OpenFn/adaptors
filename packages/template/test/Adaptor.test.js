@@ -53,7 +53,7 @@ describe('create', () => {
     };
 
     const finalState = await execute(
-      create('api/patients', {
+      create('patients', {
         name: dataValue('fullName')(state),
         gender: dataValue('gender')(state),
       })
@@ -75,7 +75,7 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(create('api/noAccess', { name: 'taylor' }))(
+    const error = await execute(create('noAccess', { name: 'taylor' }))(
       state
     ).catch(error => {
       return error;
@@ -94,7 +94,7 @@ describe('create', () => {
     };
 
     const error = await execute(
-      create('api/differentError', { name: 'taylor' })
+      create('!@#$%^&*', { name: 'taylor' })
     )(state).catch(error => {
       return error;
     });

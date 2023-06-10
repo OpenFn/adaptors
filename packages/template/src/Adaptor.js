@@ -44,14 +44,14 @@ export function execute(...operations) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function create(path, data, callback) {
+export function create(resource, data, callback) {
   return state => {
-    path = expandReferences(path)(state);
+    resource = expandReferences(resource)(state);
     data = expandReferences(data)(state);
 
     const { baseUrl, username, password } = state.configuration;
 
-    const url = `${baseUrl}/${path}`;
+    const url = `${baseUrl}/api/${resource}`;
     const auth = { username, password };
 
     const options = {
