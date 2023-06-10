@@ -1,5 +1,11 @@
 # @openfn/language-openfn
 
+## 1.2.6
+
+### Patch Changes
+
+- 779596f: Use native fetch (undici) in template and add icons in openfn
+
 ## 1.2.5
 
 ### Patch Changes

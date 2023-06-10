@@ -1,5 +1,15 @@
 # @openfn/language-template
 
+## 2.0.0
+
+### Major Changes
+
+- 779596f: Use native fetch (undici) in template and add icons in openfn
+
+### Minor Changes
+
+- 1af9cd5: Better docs and resource names
+
 ## 1.7.8
 
 ### Patch Changes
