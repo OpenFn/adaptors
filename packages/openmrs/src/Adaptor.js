@@ -212,9 +212,7 @@ export function searchPatient(query, callback = false) {
           );
           return handleResponse(response, state, callback);
         } else {
-          throw new Error(
-            `Raising an error because ${count} records were found.`
-          );
+          console.log(`${count} records were found.`);
         }
       })
       .catch(handleError);
@@ -255,9 +253,7 @@ export function searchPerson(query, callback = false) {
           );
           return handleResponse(response, state, callback);
         } else {
-          throw new Error(
-            `Raising an error because ${count} records were found.`
-          );
+          console.log(`${count} records were found.`);
         }
       })
       .catch(handleError);
