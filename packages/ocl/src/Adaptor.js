@@ -149,11 +149,9 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
     const optionsMerge = { ...defaultOptions, ...options };
     const { url, query } = buildUrl(state.configuration, optionsMerge);
 
-    return request(url, query)
-      .then(response => handleResponse(response, state, callback))
-      .catch(error => {
-        throw error;
-      });
+    return request(url, query).then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 
@@ -215,11 +213,9 @@ export function get(path, options, callback = false) {
     const optionsMerge = { ...defaultOptions, ...options };
     const { url, query } = buildUrl(state.configuration, optionsMerge);
 
-    return request(url, query)
-      .then(response => handleResponse(response, state, callback))
-      .catch(error => {
-        throw error;
-      });
+    return request(url, query).then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 

@@ -91,14 +91,10 @@ export const request = async (url, params = {}, method = 'GET') => {
     options.body = JSON.stringify(params);
   }
 
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
+  const response = await fetch(url, options);
+  const data = await response.json();
 
-    handleResponseError(response, data, method);
+  handleResponseError(response, data, method);
 
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  return data;
 };
