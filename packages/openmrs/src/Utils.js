@@ -1,22 +1,11 @@
 import { composeNextState } from '@openfn/language-common';
 
-export class Log {
-  static info(message) {
-    return console.info(`ℹ `, message);
-  }
-
-  static success(message) {
-    return console.info(`✓ Success at ${new Date()}:\n∟`, message);
-  }
-
-  static warn(message) {
-    return console.warn(`⚠ Warning at ${new Date()}:\n∟`, message);
-  }
-
-  static error(message) {
-    return console.error(`✗ Error at ${new Date()}:\n∟`, message);
-  }
-}
+export const Log = {
+  success: message => console.log(`✓ Success at ${new Date()}:\n∟ ${message}`),
+  warn: message => console.log(`⚠ Warning at ${new Date()}:\n∟ ${message}`),
+  error: message => console.log(`✗ Error at ${new Date()}:\n∟ ${message}`),
+  info: message => console.log(`ℹ Info at ${new Date()}:\n∟ ${message}`),
+};
 
 export function handleError(error) {
   if (error.response) {
