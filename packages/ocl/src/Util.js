@@ -56,17 +56,25 @@ export function handleResponse(response, state, callback) {
   return nextState;
 }
 
-export function handleResponseError(response, method) {
-  if (!response.ok) {
-    const { status, statusText, body, url } = response;
+export function handleResponseError(response, data, method) {
+  const { status, statusText, url } = response;
 
+  if (isEmpty(data)) {
+    const responseString = [
+      `Message: 0 results returned`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+    ].join('\n\t∟ ');
+
+    console.log(`Info at ${new Date()}\n${responseString}`);
+  }
+  if (!response.ok) {
     const errorString = [
       `Message: ${statusText}`,
       `Request: ${method} ${url}`,
       `Status: ${status}`,
-      `Body: ${JSON.stringify(body, null, 2).replace(/\n/g, '\n\t  ')}`,
+      `Body: ${JSON.stringify(data, null, 2).replace(/\n/g, '\n\t  ')}`,
     ].join('\n\t∟ ');
-
     throw new Error(errorString);
   }
 }
@@ -85,9 +93,9 @@ export const request = async (url, params = {}, method = 'GET') => {
 
   try {
     const response = await fetch(url, options);
-
-    handleResponseError(response, method);
     const data = await response.json();
+
+    handleResponseError(response, data, method);
 
     return data;
   } catch (error) {
