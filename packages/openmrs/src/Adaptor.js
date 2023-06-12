@@ -212,7 +212,7 @@ export function searchPatient(query, callback = false) {
           );
           return handleResponse(response, state, callback);
         } else {
-          console.log(`${count} records were found.`);
+          Log.warn(`${count} records were found.`);
         }
       })
       .catch(handleError);
@@ -253,7 +253,7 @@ export function searchPerson(query, callback = false) {
           );
           return handleResponse(response, state, callback);
         } else {
-          console.log(`${count} records were found.`);
+          Log.warn(`${count} records were found.`);
         }
       })
       .catch(handleError);
@@ -398,7 +398,7 @@ export function getEncounters(query, callback = false) {
  */
 export function create(resourceType, data, callback = false) {
   return state => {
-    console.log(`Preparing create operation...`);
+    Log.info(`Preparing create operation...`);
 
     const { instanceUrl } = state.configuration;
     const url = `${instanceUrl}/ws/rest/v1/${resourceType}`;
@@ -441,7 +441,7 @@ export function create(resourceType, data, callback = false) {
 export function update(resourceType, path, data, callback = false) {
   return state => {
     const { instanceUrl } = state.configuration;
-    console.log(`Preparing update operation...`);
+    Log.info(`Preparing update operation...`);
     resourceType = expandReferences(resourceType)(state);
     path = expandReferences(path)(state);
     data = expandReferences(data)(state);
@@ -499,7 +499,7 @@ export function upsert(
   callback = false // callback for the upsert itself.
 ) {
   return state => {
-    console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+    Log.info(`Preparing upsert via 'get' then 'create' OR 'update'...`);
 
     return get(
       resourceType,
