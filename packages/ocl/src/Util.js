@@ -1,7 +1,8 @@
 import { composeNextState } from '@openfn/language-common';
 
-export function buildUrl(configuration, options) {
+export function buildMappingsUrl(urlParams) {
   const {
+    baseUrl,
     ownerId,
     ownerType,
     repository,
@@ -12,9 +13,7 @@ export function buildUrl(configuration, options) {
     content,
     query,
     ...rest
-  } = options;
-
-  const { baseUrl } = configuration;
+  } = urlParams;
 
   const urlParts = [
     baseUrl,
@@ -26,7 +25,7 @@ export function buildUrl(configuration, options) {
     expansions,
     expansionId,
     content,
-  ].filter(urlPart => urlPart);
+  ];
   const url = urlParts.join('/');
 
   return { url, query: { ...query, ...rest } };

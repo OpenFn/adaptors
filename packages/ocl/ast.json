@@ -182,10 +182,6 @@
           },
           {
             "title": "example",
-            "description": "get(\n  \"mappings\",\n  {\n    ownerId: \"MSFOCG\",\n    ownerType: \"users\", // Default to orgs\n    repository: \"collections\",\n    repositoryId: \"lime-demo\",\n    version: \"HEAD\",\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
-          },
-          {
-            "title": "example",
             "description": "get(\n  \"orgs/MSFOCG/collections/lime-demo/HEAD/mappings\",\n  {\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
           },
           {

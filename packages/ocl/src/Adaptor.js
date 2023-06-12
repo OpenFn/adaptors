@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
-import { buildUrl, handleResponse, request } from './Util';
+import { buildMappingsUrl, handleResponse, request } from './Util';
 
 /**
  * Execute a sequence of operations.
@@ -135,6 +135,8 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
     repositoryId = expandReferences(repositoryId)(state);
     options = expandReferences(options)(state);
 
+    const { baseUrl } = state.configuration;
+
     const defaultOptions = {
       ownerId: ownerId,
       repositoryId: repositoryId,
@@ -146,8 +148,11 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
       content: 'mappings',
     };
 
-    const optionsMerge = { ...defaultOptions, ...options };
-    const { url, query } = buildUrl(state.configuration, optionsMerge);
+    const urlParams = { ...defaultOptions, ...options };
+    const { url, query } = buildMappingsUrl({
+      baseUrl: baseUrl,
+      ...urlParams,
+    });
 
     return request(url, query).then(response =>
       handleResponse(response, state, callback)
@@ -158,27 +163,6 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
 /**
  * Get a resource in OCL
  * @public
- * @example
- * get(
- *   "mappings",
- *   {
- *     ownerId: "MSFOCG",
- *     ownerType: "users", // Default to orgs
- *     repository: "collections",
- *     repositoryId: "lime-demo",
- *     version: "HEAD",
- *     page: 1,
- *     exact_match: "off",
- *     limit: 200,
- *     verbose: false,
- *     sortDesc: "_score",
- *   },
- *   (state) => {
- *     // Add state oclMappings
- *     const oclMappings = state.data;
- *     return { ...state, data: {}, references: [], response: {}, oclMappings };
- *   }
- * );
  * @example
  *  get(
  *   "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
@@ -203,17 +187,13 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
  */
 export function get(path, options, callback = false) {
   return state => {
-    const defaultOptions = {
-      content: path,
-    };
-
     path = expandReferences(path)(state);
     options = expandReferences(options)(state);
+    const { baseUrl } = state.configuration;
 
-    const optionsMerge = { ...defaultOptions, ...options };
-    const { url, query } = buildUrl(state.configuration, optionsMerge);
+    const url = `${baseUrl}/${path}`;
 
-    return request(url, query).then(response =>
+    return request(url, options).then(response =>
       handleResponse(response, state, callback)
     );
   };
