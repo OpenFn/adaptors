@@ -32,12 +32,19 @@ export function buildUrl(configuration, options) {
   return { url, query: { ...query, ...rest } };
 }
 
-export function isObjectEmpty(objectName) {
-  return (
-    objectName &&
-    Object.keys(objectName).length === 0 &&
-    objectName.constructor === Object
-  );
+export function isEmpty(obj) {
+  // Check if it's an array
+  if (Array.isArray(obj)) {
+    return obj.length === 0;
+  }
+
+  // Check if it's an object
+  if (typeof obj === 'object' && obj !== null) {
+    return Object.keys(obj).length === 0;
+  }
+
+  // Not an array or object
+  return false;
 }
 
 export function handleResponse(response, state, callback) {
@@ -47,21 +54,6 @@ export function handleResponse(response, state, callback) {
   };
   if (callback) return callback(nextState);
   return nextState;
-}
-
-export function handleError(error) {
-  throw error;
-}
-
-export function handleEmptyResponse(response) {
-  const { method, url, status, data } = response;
-  const responseString = [
-    `Request: ${method} "${url}"`,
-    `Status: ${status}`,
-    `Retrieved "${data.length}" data`,
-  ].join('\n∟ ');
-
-  throw new Error(`at ${new Date()} \n ${responseString}`);
 }
 
 export function handleResponseError(response, method) {
@@ -93,12 +85,10 @@ export const request = async (url, params = {}, method = 'GET') => {
 
   try {
     const response = await fetch(url, options);
-    console.log(url);
+
     handleResponseError(response, method);
     const data = await response.json();
 
-    if (data.length === 0)
-      handleEmptyResponse({ method, url, data, status: response.status });
     return data;
   } catch (error) {
     throw error;

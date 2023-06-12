@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
-import { buildUrl, handleResponse, handleError, request } from './Util';
+import { buildUrl, handleResponse, isEmpty, request } from './Util';
 
 /**
  * Execute a sequence of operations.
@@ -150,8 +150,20 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
     const { url, query } = buildUrl(state.configuration, optionsMerge);
 
     return request(url, query)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+      .then(response => {
+        if (isEmpty(response)) {
+          const responseString = [
+            `0 results returned`,
+            `Request: "GET" "${url}"`,
+          ].join('\n∟ ');
+          console.log(`Info at ${new Date()}\n${responseString}`);
+        }
+
+        return handleResponse(response, state, callback);
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
@@ -214,8 +226,20 @@ export function get(path, options, callback = false) {
     const { url, query } = buildUrl(state.configuration, optionsMerge);
 
     return request(url, query)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+      .then(response => {
+        if (isEmpty(response)) {
+          const responseString = [
+            `0 results returned`,
+            `Request: "GET" "${url}"`,
+          ].join(' \n∟ ');
+          console.log(`Info at ${new Date()}\n${responseString}`);
+        }
+
+        return handleResponse(response, state, callback);
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 }
 
