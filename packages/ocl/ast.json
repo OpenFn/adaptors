@@ -169,7 +169,7 @@
       "name": "get",
       "params": [
         "path",
-        "options",
+        "query",
         "callback"
       ],
       "docs": {
@@ -200,12 +200,12 @@
           },
           {
             "title": "param",
-            "description": "data to get the new resource",
+            "description": "A query object that will limit what resources are retrieved when converted into request params.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "options"
+            "name": "query"
           },
           {
             "title": "param",

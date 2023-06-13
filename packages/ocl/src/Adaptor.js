@@ -181,19 +181,19 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
  * );
  * @function
  * @param {string} path - Path to resource
- * @param {object} options - data to get the new resource
+ * @param {object} query - A query object that will limit what resources are retrieved when converted into request params.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function get(path, options, callback = false) {
+export function get(path, query, callback = false) {
   return state => {
     path = expandReferences(path)(state);
-    options = expandReferences(options)(state);
+    query = expandReferences(query)(state);
     const { baseUrl } = state.configuration;
 
     const url = `${baseUrl}/${path}`;
 
-    return request(url, options).then(response =>
+    return request(url, query).then(response =>
       handleResponse(response, state, callback)
     );
   };
