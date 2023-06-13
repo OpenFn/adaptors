@@ -571,27 +571,34 @@ export function parseCsv(stream, parsingOptions = {}) {
     rtrim: true,
   };
 
+  const options = { ...defaultOptions, ...parsingOptions };
   // Read and process the CSV file
   const processFile = async () => {
     const records = [];
+
     const parser =
       typeof stream === 'string'
-        ? parse(stream, { ...defaultOptions, ...parsingOptions })
-        : stream.pipe(parse({ ...defaultOptions, ...parsingOptions }));
+        ? parse(stream, options)
+        : stream.pipe(parse(options));
+
     parser.on('readable', function () {
-      let record;
-      while ((record = parser.read()) !== null) {
-        // Work with each record
-        records.push(record);
-        // Also return a stream
-        // record.push(record.parse);
+      let chunk;
+      const chunkSize = options.chunkSize ? options.chunkSize : null;
+
+      while ((chunk = parser.read(chunkSize)) !== null) {
+        const recordsInChunk = chunk.toString().split('\n');
+        for (const record of recordsInChunk) {
+          records.push(record);
+          // Also return a stream
+          // record.push(record.parse);
+        }
       }
     });
 
     // Catch any error
     parser.on('error', function (err) {
-      // console.error(err.message);
-      throw new Error(err);
+      console.error(err.message);
+      // throw new Error(err);
     });
     // Test that the parsed records matched the expected records
     parser.on('end', function () {
