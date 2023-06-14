@@ -138,13 +138,11 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
     const { baseUrl } = state.configuration;
 
     const defaultOptions = {
-      ownerId: ownerId,
-      repositoryId: repositoryId,
       ownerType: 'orgs', // Default to orgs | orgs or users
+      ownerId: ownerId,
       repository: 'collections', // Default to collections, collections or sources
+      repositoryId: repositoryId,
       version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
-      expansions: 'expansions',
-      expansionId: 'autoexpand-HEAD',
       content: 'mappings',
     };
 

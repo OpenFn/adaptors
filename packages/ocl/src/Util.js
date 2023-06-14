@@ -8,25 +8,23 @@ export function buildMappingsUrl(urlParams) {
     repository,
     repositoryId,
     version,
-    expansions,
     expansionId,
     content,
     query,
     ...rest
   } = urlParams;
 
-  const urlParts = [
+  const expansions = expansionId && `expansions/${expansionId}`;
+  const suffix = expansions ? `${expansions}/${content}` : content;
+  const url = [
     baseUrl,
     ownerType,
     ownerId,
     repository,
     repositoryId,
     version,
-    expansions,
-    expansionId,
-    content,
-  ];
-  const url = urlParts.join('/');
+    suffix,
+  ].join('/');
 
   return { url, query: { ...query, ...rest } };
 }
