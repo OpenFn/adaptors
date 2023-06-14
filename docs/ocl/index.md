@@ -2,7 +2,9 @@
 
 <dl>
 <dt>
-    <a href="#map">map(state, [params])</a></dt>
+    <a href="#get">get(path, query, callback)</a></dt>
+<dt>
+    <a href="#getMappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
 </dl>
 
 ## auth
@@ -14,34 +16,69 @@ Do we have a mechanism to retrieve those from configuration
 
 * * *
 
-## map
+## get
 
-map(state, [params]) ⇒ <code>Operation</code>
-Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure
+get(path, query, callback) ⇒ <code>Operation</code>
+Get a resource in OCL
 
 **Kind**: global function  
 **Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| state | <code>Object</code> | Json object containing keys and data values; |
-| [params] | <code>Object</code> | E.g. `{users:"haftamuk", sources: "eCHIS-CODES", concepts: "fp_new_at_10_to_14" } |
+| path | <code>string</code> | Path to resource |
+| query | <code>object</code> | A query object that will limit what resources are retrieved when converted into request params. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
-mapp(state, state)
+get(
+  "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
+  {
+    page: 1,
+    exact_match: "off",
+    limit: 200,
+    verbose: false,
+    sortDesc: "_score",
+  },
+  (state) => {
+    // Add state oclMappings
+    const oclMappings = state.data;
+    return { ...state, data: {}, references: [], response: {}, oclMappings };
+  }
+);
 ```
 
 * * *
 
-<a name="map..retrievedMapping"></a>
+## getMappings
 
-### map~retrievedMapping
-In order to minimize web trafic, already accessed mapping
-information is put into this variable to
-reuse values for the consucutive keys.
+getMappings(ownerId, repositoryId, [options], callback) ⇒ <code>Operation</code>
+Get a source repository in OCL
 
-**Kind**: inner constant of [<code>map</code>](#map)  
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ownerId | <code>string</code> | An OCL user or organization |
+| repositoryId | <code>string</code> | An OCL collection id or source id |
+| [options] | <code>Object</code> | Optional. `options`  which can be passed to  See more [on OCL swagger docs](https://api.openconceptlab.org/swagger/) |
+| callback | <code>function</code> | (Optional) callback function |
+
+**Example**  
+```js
+getMappings(
+  "MSFOCG",
+  "lime-demo",
+  { page: 1, exact_match: "off", verbose: false },
+  (state) => {
+    // Add state oclMappings
+    const oclMappings = state.data;
+    return { ...state, data: {}, references: [], response: {}, oclMappings };
+  }
+);
+```
 
 * * *
 
