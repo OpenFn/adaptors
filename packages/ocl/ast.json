@@ -16,12 +16,12 @@
           },
           {
             "title": "example",
-            "description": "mapp(state, state)"
+            "description": "map(state, state)"
           },
           {
-            "title": "function",
+            "title": "private",
             "description": null,
-            "name": null
+            "type": null
           },
           {
             "title": "param",
@@ -43,6 +43,178 @@
               }
             },
             "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getMappings",
+      "params": [
+        "ownerId",
+        "repositoryId",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get a source repository in OCL",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getMappings(\n  \"MSFOCG\",\n  \"lime-demo\",\n  { page: 1, exact_match: \"off\", verbose: false },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "An OCL user or organization",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "ownerId"
+          },
+          {
+            "title": "param",
+            "description": "An OCL collection id or source id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "repositoryId"
+          },
+          {
+            "title": "param",
+            "description": "Optional. `options`  which can be passed to  See more {@link https://api.openconceptlab.org/swagger/ on OCL swagger docs}",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "RecordType",
+                "fields": [
+                  {
+                    "type": "FieldType",
+                    "key": "ownerType",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "repository",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "version",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "FieldType",
+                    "key": "page",
+                    "value": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  }
+                ]
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get a resource in OCL",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get(\n  \"orgs/MSFOCG/collections/lime-demo/HEAD/mappings\",\n  {\n    page: 1,\n    exact_match: \"off\",\n    limit: 200,\n    verbose: false,\n    sortDesc: \"_score\",\n  },\n  (state) => {\n    // Add state oclMappings\n    const oclMappings = state.data;\n    return { ...state, data: {}, references: [], response: {}, oclMappings };\n  }\n);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "A query object that will limit what resources are retrieved when converted into request params.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
