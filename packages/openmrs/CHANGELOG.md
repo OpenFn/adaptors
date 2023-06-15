@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 1.1.1
+
+### Patch Changes
+
+- 2390129: - replace throw new Error with console.log
+  - improve Log function
+
 ## 1.1.0
 
 ### Minor Changes
