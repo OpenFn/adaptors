@@ -650,6 +650,35 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
 
+  packages/microsoftgraph:
+    specifiers:
+      '@microsoft/microsoft-graph-client': ^3.0.5
+      '@microsoft/microsoft-graph-types': ^2.33.0
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.7
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: ^0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: ^5.22.1
+    dependencies:
+      '@microsoft/microsoft-graph-client': 3.0.5
+      '@openfn/language-common': link:../common
+    devDependencies:
+      '@microsoft/microsoft-graph-types': 2.33.0
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: 5.22.1
+
   packages/mogli:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -1895,8 +1924,7 @@ packages:
     resolution: {integrity: sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      regenerator-runtime: 0.13.9
-    dev: true
+      regenerator-runtime: 0.13.11
 
   /@babel/template/7.18.10:
     resolution: {integrity: sha512-TI+rCtooWHr3QJ27kJxfjutghu44DLnasDMwpDqCXVTal9RLp3RSYNh4NdBrRP2cQAoG9A8juOQl6P6oZG4JxA==}
@@ -2579,6 +2607,32 @@ packages:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
+    dev: true
+
+  /@microsoft/microsoft-graph-client/3.0.5:
+    resolution: {integrity: sha512-xQADFNLUhE78RzYadFZtOmy/5wBZenSZhVK193m40MTDC5hl1aYMQO1QOJApnKga8WcvMCDCU10taRhuXTOz5w==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@azure/identity': '*'
+      '@azure/msal-browser': '*'
+      buffer: '*'
+      stream-browserify: '*'
+    peerDependenciesMeta:
+      '@azure/identity':
+        optional: true
+      '@azure/msal-browser':
+        optional: true
+      buffer:
+        optional: true
+      stream-browserify:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.19.4
+      tslib: 2.5.0
+    dev: false
+
+  /@microsoft/microsoft-graph-types/2.33.0:
+    resolution: {integrity: sha512-gl1HjBJAojfaDJPbd0r5k8mBdnEjG4D4m0BBy5VEdIBCinBshL4OYmlUeESxSc4Mb78meiQzqBY3V2xXkvm36A==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -10212,11 +10266,6 @@ packages:
 
   /regenerator-runtime/0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
-    dev: true
-
-  /regenerator-runtime/0.13.9:
-    resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: true
 
   /regenerator-transform/0.10.1:
     resolution: {integrity: sha512-PJepbvDbuK1xgIgnau7Y90cwaAmO/LCLMI2mPvaXq2heGMR3aWW5/BQvYrhJ8jgmQjXewXvBjzfqKcVOmhjZ6Q==}
