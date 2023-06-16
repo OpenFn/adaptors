@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   expandReferences,
@@ -79,8 +78,8 @@ export function postMessage(params) {
           headers,
           json: body,
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ err, response });
           if (error) {
             reject(error);
             console.log(response);
