@@ -4,7 +4,6 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import request from 'request';
-import { resolve as resolveUrl } from 'url';
 
 /**
  * Execute a sequence of operations.
