@@ -137,13 +137,13 @@ export function createEncounter(data, callback = false) {
 export function get(path, query, callback = false) {
   return state => {
     const { instanceUrl } = state.configuration;
-    path = expandReferences(path)(state);
-    query = expandReferences(query)(state);
-    const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedQuery = expandReferences(query)(state);
+    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
 
     return agent
       .get(urlPath)
-      .query(query)
+      .query(resolvedQuery)
       .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
@@ -164,16 +164,16 @@ export function get(path, query, callback = false) {
  */
 export function post(path, data, callback = false) {
   return state => {
-    path = expandReferences(path)(state);
-    data = expandReferences(data)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedData = expandReferences(data)(state);
     const { instanceUrl } = state.configuration;
 
-    const urlPath = `${instanceUrl}/ws/rest/v1/${path}`;
+    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
 
     return agent
       .post(urlPath)
       .type('json')
-      .send(data)
+      .send(resolvedData)
       .then(response => handleResponse(response, state, callback))
       .catch(handleError);
   };
@@ -400,16 +400,16 @@ export function create(resourceType, data, callback = false) {
   return state => {
     Log.info(`Preparing create operation...`);
 
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/${resourceType}`;
+    const resolvedData = expandReferences(data)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
 
-    data = expandReferences(data)(state);
-    resourceType = expandReferences(resourceType)(state);
+    const { instanceUrl } = state.configuration;
+    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}`;
 
     return agent
       .post(url)
       .type('json')
-      .send(data)
+      .send(resolvedData)
       .then(response => {
         const details = `with response ${JSON.stringify(
           response.body,
@@ -417,7 +417,7 @@ export function create(resourceType, data, callback = false) {
           2
         )}`;
 
-        Log.success(`Created ${resourceType} ${details}`);
+        Log.success(`Created ${resolvedResourceType} ${details}`);
 
         return handleResponse(response, state, callback);
       })
@@ -440,19 +440,22 @@ export function create(resourceType, data, callback = false) {
  */
 export function update(resourceType, path, data, callback = false) {
   return state => {
-    const { instanceUrl } = state.configuration;
     Log.info(`Preparing update operation...`);
-    resourceType = expandReferences(resourceType)(state);
-    path = expandReferences(path)(state);
-    data = expandReferences(data)(state);
-    const url = `${instanceUrl}/ws/rest/v1/${resourceType}/${path}`;
+
+    const { instanceUrl } = state.configuration;
+
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedData = expandReferences(data)(state);
+
+    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}/${resolvedPath}`;
 
     return agent
       .post(url)
       .type('json')
-      .send(data)
+      .send(resolvedData)
       .then(response => {
-        Log.success(`Updated ${resourceType} at ${path}`);
+        Log.success(`Updated ${resolvedResourceType} at ${resolvedPath}`);
 
         return handleResponse(response, state, callback);
       })
