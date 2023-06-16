@@ -1,10 +1,9 @@
 import {
   execute as commonExecute,
-  composeNextState,
   expandReferences,
 } from '@openfn/language-common';
 
-import { request } from './Utils';
+import { request, setAuth, setUrl, handleResponse } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -34,10 +33,10 @@ export function execute(...operations) {
 }
 
 /**
- * Create some resource in some system
+ * Create some resource in msgraph
  * @public
  * @example
- * create("patient", {"name": "Bukayo"})
+ * create("applications", {"displayName": "My App"})
  * @function
  * @param {string} resource - The type of entity that will be created
  * @param {object} data - The data to create the new resource
@@ -46,28 +45,47 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    resource = expandReferences(resource)(state);
-    data = expandReferences(data)(state);
+    const resolveResource = expandReferences(resource)(state);
+    const resolveData = expandReferences(data)(state);
+    const { accessToken, apiVersion } = state.configuration;
 
-    const { baseUrl, username, password } = state.configuration;
-
-    const url = `${baseUrl}/api/${resource}`;
-    const auth = { username, password };
+    const url = setUrl({ apiVersion, resolveResource });
+    const auth = setAuth(accessToken);
 
     const options = {
       auth,
-      body: data,
-      method: 'POST',
+      ...resolveData,
     };
 
-    return request(url, options).then(response => {
-      const nextState = {
-        ...composeNextState(state, response.data),
-        response,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
-    });
+    return request(url, options, 'POST').then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
+/**
+ * Make a GET request to msgraph resource
+ * @public
+ * @example
+ *  get('sites/root/lists')
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} query - Query, Headers and Authentication parameters
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ */
+export function get(path, query, callback = false) {
+  return state => {
+    const resolvePath = expandReferences(path)(state);
+    const resolveQuery = expandReferences(query)(state);
+    const { accessToken, apiVersion } = state.configuration;
+
+    const url = setUrl({ apiVersion, resolvePath });
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...resolveQuery, ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 
@@ -82,7 +100,6 @@ export {
   field,
   fields,
   fn,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

@@ -650,35 +650,6 @@ importers:
       nock: 13.2.9
       rimraf: 3.0.2
 
-  packages/microsoftgraph:
-    specifiers:
-      '@microsoft/microsoft-graph-client': ^3.0.5
-      '@microsoft/microsoft-graph-types': ^2.33.0
-      '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': ^1.7.7
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: ^0.16.3
-      mocha: 9.2.2
-      rimraf: 3.0.2
-      undici: ^5.22.1
-    dependencies:
-      '@microsoft/microsoft-graph-client': 3.0.5
-      '@openfn/language-common': link:../common
-    devDependencies:
-      '@microsoft/microsoft-graph-types': 2.33.0
-      '@openfn/buildtools': link:../../tools/build
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: 0.16.3
-      mocha: 9.2.2
-      rimraf: 3.0.2
-      undici: 5.22.1
-
   packages/mogli:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
@@ -744,6 +715,31 @@ importers:
       mocha: 10.1.0
       nock: 12.0.3
       rimraf: 3.0.2
+
+  packages/msgraph:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.7
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: ^0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: ^5.22.1
+    dependencies:
+      '@openfn/language-common': link:../common
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: 5.22.1
 
   packages/mssql:
     specifiers:
@@ -1925,6 +1921,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: true
 
   /@babel/template/7.18.10:
     resolution: {integrity: sha512-TI+rCtooWHr3QJ27kJxfjutghu44DLnasDMwpDqCXVTal9RLp3RSYNh4NdBrRP2cQAoG9A8juOQl6P6oZG4JxA==}
@@ -2609,32 +2606,6 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@microsoft/microsoft-graph-client/3.0.5:
-    resolution: {integrity: sha512-xQADFNLUhE78RzYadFZtOmy/5wBZenSZhVK193m40MTDC5hl1aYMQO1QOJApnKga8WcvMCDCU10taRhuXTOz5w==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@azure/identity': '*'
-      '@azure/msal-browser': '*'
-      buffer: '*'
-      stream-browserify: '*'
-    peerDependenciesMeta:
-      '@azure/identity':
-        optional: true
-      '@azure/msal-browser':
-        optional: true
-      buffer:
-        optional: true
-      stream-browserify:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.19.4
-      tslib: 2.5.0
-    dev: false
-
-  /@microsoft/microsoft-graph-types/2.33.0:
-    resolution: {integrity: sha512-gl1HjBJAojfaDJPbd0r5k8mBdnEjG4D4m0BBy5VEdIBCinBshL4OYmlUeESxSc4Mb78meiQzqBY3V2xXkvm36A==}
-    dev: true
-
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -3214,7 +3185,7 @@ packages:
     resolution: {integrity: sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==}
     engines: {node: '>=4'}
     dependencies:
-      tslib: 2.4.0
+      tslib: 2.5.0
     dev: false
 
   /async-each/1.0.3:
@@ -10266,6 +10237,7 @@ packages:
 
   /regenerator-runtime/0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: true
 
   /regenerator-transform/0.10.1:
     resolution: {integrity: sha512-PJepbvDbuK1xgIgnau7Y90cwaAmO/LCLMI2mPvaXq2heGMR3aWW5/BQvYrhJ8jgmQjXewXvBjzfqKcVOmhjZ6Q==}
@@ -11723,10 +11695,6 @@ packages:
       minimist: 1.2.7
       strip-bom: 3.0.0
     dev: true
-
-  /tslib/2.4.0:
-    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: false
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
