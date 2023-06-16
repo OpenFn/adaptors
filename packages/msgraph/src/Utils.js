@@ -3,10 +3,24 @@ import { composeNextState } from '@openfn/language-common';
 export function setUrl(urlParams) {
   const { apiVersion, resolvePath } = urlParams;
 
+  if (isValidHttpUrl(resolvePath)) return resolvePath;
+
   const pathSuffix = apiVersion
     ? `${apiVersion}/${resolvePath}`
     : `v1.0/${resolvePath}`;
   return `https://graph.microsoft.com/${pathSuffix}`;
+}
+
+function isValidHttpUrl(string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
 export function setAuth(token) {
@@ -68,7 +82,11 @@ export const request = async (url, params = {}, method = 'GET') => {
   }
 
   const response = await fetch(url, options);
-  const data = await response.json();
+  const contentType = response.headers.get('Content-Type');
+  const data =
+    contentType && contentType.includes('application/json')
+      ? await response.json()
+      : await response.text();
 
   handleResponseError(response, data, method);
 

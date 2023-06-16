@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Create some resource in some system",
+        "description": "Create some resource in msgraph",
         "tags": [
           {
             "title": "public",
@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"patient\", {\"name\": \"Bukayo\"})"
+            "description": "create(\"applications\", {\"displayName\": \"My App\"})"
           },
           {
             "title": "function",
@@ -45,6 +45,69 @@
           {
             "title": "param",
             "description": "An optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a GET request to msgraph resource",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('sites/root/lists')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
             "type": {
               "type": "NameExpression",
               "name": "function"
