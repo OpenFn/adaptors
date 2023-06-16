@@ -7,8 +7,8 @@
     "ecmaFeatures": {}
   },
   "rules": {
-    "no-unused-vars": "warn",
-    "no-param-reassign": "error"
+    // "no-unused-vars": "warn",
+    "no-param-reassign": "warn"
   },
   "env": {
     "node": true

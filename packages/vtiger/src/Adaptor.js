@@ -56,9 +56,8 @@ function challenge(state) {
           reject(error);
         } else {
           console.log('Challenge succeeded.');
-          // console.log(body)
-          body = JSON.parse(body);
-          resolve(body.result.token);
+          const parsedBody = JSON.parse(body);
+          resolve(parsedBody.result.token);
         }
       }
     );
@@ -91,9 +90,8 @@ export function login(state) {
           reject(error);
         } else {
           console.log('Login succeeded.');
-          // console.log(body)
-          body = JSON.parse(body);
-          resolve(body);
+          const parsedBody = JSON.parse(body);
+          resolve(parsedBody);
         }
       }
     );
