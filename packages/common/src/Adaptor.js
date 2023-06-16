@@ -507,18 +507,22 @@ export function splitKeys(obj, keys) {
  */
 export function scrubEmojis(text, replacementChars) {
   if (!text) return text;
+
   if (replacementChars == '') {
     console.warn(
       'Removing characters from a string may create injection vulnerabilities;',
       "It's better to replace than remove.",
       'See https://www.unicode.org/reports/tr36/#Deletion_of_Noncharacters'
     );
-  } else if (!replacementChars) replacementChars = '\uFFFD';
+  }
+
+  const newChars =
+    replacementChars || replacementChars == '' ? replacementChars : '\uFFFD';
 
   const emojisPattern =
     /(\uFE0F|\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
 
-  return text.replace(emojisPattern, replacementChars);
+  return text.replace(emojisPattern, newChars);
 }
 
 /**
