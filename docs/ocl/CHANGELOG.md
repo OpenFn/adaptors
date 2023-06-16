@@ -1,5 +1,11 @@
 # @openfn/language-ocl
 
+## 0.3.0
+
+### Minor Changes
+
+- 63232eb: Add `get()` and `getMappings()` function
+
 ## 0.2.6
 
 ### Patch Changes
