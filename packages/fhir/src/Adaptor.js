@@ -47,12 +47,12 @@ export function execute(...operations) {
  */
 export function create(path, params, callback) {
   return state => {
-    path = expandReferences(path)(state);
-    params = expandReferences(params)(state);
+    const resolvedpath = expandReferences(path)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { baseUrl, apiPath } = state.configuration;
 
-    const url = `${baseUrl}/${apiPath}/${path}`;
+    const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
 
     const config = {
       url,
@@ -60,7 +60,7 @@ export function create(path, params, callback) {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
       },
-      data: params,
+      data: resolvedParams,
     };
 
     return http
@@ -82,7 +82,7 @@ export function create(path, params, callback) {
  */
 export function createTransactionBundle(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { baseUrl, apiPath, authType, token } = state.configuration;
 
@@ -94,7 +94,7 @@ export function createTransactionBundle(params, callback) {
       body: {
         resourceType: 'Bundle',
         type: 'transaction',
-        entry: params,
+        entry: resolvedParams,
       },
       auth,
     };
@@ -119,15 +119,15 @@ export function createTransactionBundle(params, callback) {
  */
 export function get(path, query, callback = false) {
   return state => {
-    path = expandReferences(path)(state);
-    query = expandReferences(query)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedQuery = expandReferences(query)(state);
 
     const { baseUrl, apiPath } = state.configuration;
-    const url = `${baseUrl}/${apiPath}/${path}`;
+    const url = `${baseUrl}/${apiPath}/${resolvedPath}`;
 
     const config = {
       url,
-      query: query,
+      query: resolvedQuery,
     };
 
     return http
