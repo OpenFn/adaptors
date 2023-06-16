@@ -146,10 +146,10 @@ export function retrieve(sObject, id, callback) {
 export function query(qs) {
   return state => {
     const { connection } = state;
-    qs = expandReferences(qs)(state);
-    console.log(`Executing query: ${qs}`);
+    const resolvedQs = expandReferences(qs)(state);
+    console.log(`Executing query: ${resolvedQs}`);
 
-    return connection.query(qs, function (err, result) {
+    return connection.query(resolvedQs, function (err, result) {
       if (err) {
         return console.error(err);
       }
@@ -356,9 +356,9 @@ export function create(sObject, attrs) {
  */
 export function createIf(logical, sObject, attrs) {
   return state => {
-    logical = expandReferences(logical)(state);
+    const resolvedLogical = expandReferences(logical)(state);
 
-    if (logical) {
+    if (resolvedLogical) {
       const { connection } = state;
       const finalAttrs = expandReferences(attrs)(state);
       console.info(`Creating ${sObject}`, finalAttrs);
@@ -437,9 +437,9 @@ export function upsert(sObject, externalId, attrs) {
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
-    logical = expandReferences(logical)(state);
+    const resolvedLogical = expandReferences(logical)(state);
 
-    if (logical) {
+    if (resolvedLogical) {
       const { connection } = state;
       const finalAttrs = expandReferences(attrs)(state);
       console.info(

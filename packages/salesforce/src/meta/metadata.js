@@ -3,6 +3,7 @@ import { createEntity } from '@openfn/language-common/metadata';
 
 const metadata = async (configuration = {}, helper) => {
   if (!helper) {
+    // eslint-disable-next-line no-param-reassign
     helper = await salesforceHelper(configuration);
   }
 
