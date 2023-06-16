@@ -718,6 +718,31 @@ importers:
       nock: 12.0.3
       rimraf: 3.0.2
 
+  packages/msgraph:
+    specifiers:
+      '@openfn/buildtools': workspace:^1.0.2
+      '@openfn/language-common': ^1.7.7
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: ^0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: ^5.22.1
+    dependencies:
+      '@openfn/language-common': link:../common
+    devDependencies:
+      '@openfn/buildtools': link:../../tools/build
+      '@openfn/simple-ast': 0.4.1
+      assertion-error: 2.0.0
+      chai: 4.3.6
+      deep-eql: 4.1.1
+      esno: 0.16.3
+      mocha: 9.2.2
+      rimraf: 3.0.2
+      undici: 5.22.1
+
   packages/mssql:
     specifiers:
       '@openfn/buildtools': workspace:^1.0.2
