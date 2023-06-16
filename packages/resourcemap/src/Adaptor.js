@@ -79,8 +79,8 @@ export function submitSite(collection_id, submissionData) {
             'content-disposition': 'form-data; name=\\"site\\"',
           },
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {

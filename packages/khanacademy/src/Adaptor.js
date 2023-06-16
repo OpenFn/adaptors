@@ -6,8 +6,6 @@ import { resolve as resolveUrl } from 'url';
 import request from 'request';
 import qs from 'qs';
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for khanacademy.
@@ -80,8 +78,8 @@ export function fetch(params) {
             url: getTokenURL,
             oauth: nativeOAuthOptions,
           },
-          function (error, response, body) {
-            error = assembleError({ error, response });
+          function (err, response, body) {
+            const error = assembleError({ error: err, response });
             if (error) {
               console.error('Token request failed.... KHAAAAAAN!');
               reject(error);
@@ -115,8 +113,8 @@ export function fetch(params) {
                 url: authorizeURL,
                 form: bodyParams,
               },
-              function (error, response, body) {
-                error = assembleError({ error, response });
+              function (err, response, body) {
+                const error = assembleError({ error: err, response });
                 if (error) {
                   console.error('Token authorization failed... KHAAAAAAN!');
                   reject(error);
@@ -145,8 +143,8 @@ export function fetch(params) {
                 url: accessTokenUrl,
                 oauth: hasToken,
               },
-              function (error, response, body) {
-                error = assembleError({ error, response });
+              function (err, response, body) {
+                const error = assembleError({ error: err, response });
                 if (error) {
                   console.error('Token exchange failed.... KHAAAAAAN!');
                   reject(error);
@@ -175,8 +173,8 @@ export function fetch(params) {
                 url: getUrl,
                 oauth: hasAccess,
               },
-              function (error, response, body) {
-                error = assembleError({ error, response });
+              function (err, response, body) {
+                const error = assembleError({ error: err, response });
                 if (error) {
                   console.error('GET failed.... KHAAAAAAN!');
                   reject(error);
@@ -198,8 +196,8 @@ export function fetch(params) {
                 url: postUrl,
                 json: JSON.parse(body),
               },
-              function (error, response, body) {
-                error = assembleError({ error, response });
+              function (err, response, body) {
+                const error = assembleError({ error: err, response });
                 if (error) {
                   console.error('POST failed.... KHAAAAAAN!');
                   reject(error);

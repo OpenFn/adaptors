@@ -60,7 +60,7 @@ export function createEntity(params) {
           headers,
         },
         function (err, response) {
-          const error = assembleError({ response, err });
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {
@@ -133,7 +133,7 @@ export function query(params) {
           headers,
         },
         function (err, response, body) {
-          const error = assembleError({ response, err });
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {
@@ -186,7 +186,7 @@ export function updateEntity(params) {
           headers,
         },
         function (err, response) {
-          const error = assembleError({ response, err });
+          const error = assembleError({ response, error: err });
           if (error) {
             reject(error);
           } else {
@@ -236,7 +236,7 @@ export function deleteEntity(params) {
           headers,
         },
         function (err, response) {
-          const error = assembleError({ response, err });
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {

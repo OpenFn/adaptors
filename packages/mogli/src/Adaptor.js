@@ -5,7 +5,6 @@ import request from 'request';
 import pkg from 'lodash-fp';
 const { curry, mapValues, flatten } = pkg;
 
-
 /**
  * @typedef {Object} State
  * @property {object} data JSON Data.
@@ -56,8 +55,8 @@ export const createSMS = curry(function (params, state) {
         },
         json: body,
       },
-      function (error, response, postResponseBody) {
-        error = assembleError({ error, response });
+      function (err, response, postResponseBody) {
+        const error = assembleError({ error: err, response });
         if (error) {
           console.error('POST failed.');
           // console.error(response);
@@ -110,8 +109,8 @@ export const updateSMS = curry(function (params, state) {
         },
         json: body,
       },
-      function (error, response, postResponseBody) {
-        error = assembleError({ error, response });
+      function (err, response, postResponseBody) {
+        const error = assembleError({ error: err, response });
         if (error) {
           console.error('POST failed.');
           // console.error(response);

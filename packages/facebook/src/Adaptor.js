@@ -78,7 +78,7 @@ export function postMessage(params) {
           json: body,
         },
         function (err, response, body) {
-          const error = assembleError({ err, response });
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
             console.log(response);
