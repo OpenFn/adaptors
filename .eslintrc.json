@@ -8,7 +8,7 @@
   },
   "rules": {
     // "no-unused-vars": "warn",
-    "no-param-reassign": "warn"
+    "no-param-reassign": "error"
   },
   "env": {
     "node": true

@@ -43,7 +43,7 @@ export function execute(...operations) {
 }
 
 function challenge(state) {
-  const { hostUrl, username, accessToken } = state.configuration;
+  const { hostUrl, username } = state.configuration;
 
   console.info(`Challenging as ${username}...`);
 
