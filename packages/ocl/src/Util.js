@@ -76,20 +76,17 @@ export function handleResponseError(response, data, method) {
   }
 }
 
-export const request = async (urlString, params = {}, method = 'GET') => {
-  let url = urlString;
-  let options = {
+export const request = async (url, params = {}, method = 'GET') => {
+  const options = {
     method,
+    body: JSON.stringify(params),
     headers: { 'Content-Type': 'application/json' }, // Add nonce for WP REST API
   };
 
-  if ('GET' === method) {
-    url = `${url}?${new URLSearchParams(params).toString()}`;
-  } else {
-    options.body = JSON.stringify(params);
-  }
+  const resolvedUrl =
+    method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
 
-  const response = await fetch(url, options);
+  const response = await fetch(resolvedUrl, options);
   const data = await response.json();
 
   handleResponseError(response, data, method);
