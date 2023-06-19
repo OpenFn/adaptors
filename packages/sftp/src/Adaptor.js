@@ -260,7 +260,7 @@ export function normalizeCSVarray(options, callback) {
       const [keys, ...rest] = data
         .shift()
         .split('\n')
-        .map(h => (h = h.replace(/"/g, '')));
+        .map(h => h.replace(/"/g, ''));
 
       results.push(keys);
     });

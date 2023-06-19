@@ -76,14 +76,15 @@ export function handleResponseError(response, data, method) {
   }
 }
 
-export const request = async (url, params = {}, method = 'GET') => {
+export const request = async (urlString, params = {}, method = 'GET') => {
+  let url = urlString;
   let options = {
     method,
     headers: { 'Content-Type': 'application/json' }, // Add nonce for WP REST API
   };
 
   if ('GET' === method) {
-    url += '?' + new URLSearchParams(params).toString();
+    url = `${url}?${new URLSearchParams(params).toString()}`;
   } else {
     options.body = JSON.stringify(params);
   }

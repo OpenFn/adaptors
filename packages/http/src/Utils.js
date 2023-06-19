@@ -67,9 +67,10 @@ export function tryJson(data) {
   return data;
 }
 
-export function mapToAxiosConfig(requestConfig) {
+export function mapToAxiosConfig(reqConfig) {
   let form = null;
 
+  let requestConfig = reqConfig;
   const formData = requestConfig?.formData || requestConfig?.form;
 
   let headers = requestConfig?.headers;
