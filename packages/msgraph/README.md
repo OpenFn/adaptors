@@ -1,13 +1,12 @@
-# language-msgraph <img src='assets/ms.png' width="30" height="auto"/>
+# language-msgraph <img src='assets/sq-256x256.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
-API.
+An OpenFn **_adaptor_** for building integration jobs for use with the
+[Microsoft Graph API](https://learn.microsoft.com/en-us/graph/use-the-api).
 
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/msgraph-docs) for
-full technical documentation.For the API documentation view
-[Microsoft Graph API](https://learn.microsoft.com/en-us/graph/use-the-api)
+full technical documentation.
 
 ### Configuration
 
