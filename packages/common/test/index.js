@@ -17,6 +17,7 @@ import {
   lastReferenceValue,
   map,
   merge,
+  parseCsv,
   referencePath,
   scrubEmojis,
   source,
@@ -351,5 +352,52 @@ describe('chunk', function () {
     const desired = [[1, 2], [3, 4], [5]];
 
     assert.deepEqual(chunk(original, 2), desired);
+  });
+});
+
+describe('parseCsv', function () {
+  it('should parse a csv string and invoke the callback with the parsed data', async function () {
+    const csv = 'a,b,c\n1,2,3\n4,5,6';
+    const expected = [
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+    ];
+
+    const state = { data: [] };
+
+    const resultingState = await parseCsv(csv, {}, (state, row, i) => {
+      assert.deepEqual(row, expected[i]);
+
+      state.data.push(row);
+      return state;
+    })(state);
+
+    assert.deepEqual(resultingState.data, expected);
+  });
+
+  it('should throw an exception when a CSV is invalid', async function () {
+    const csv = 'a,b,c\n1,2,3,4\n4,5,6';
+
+    let error;
+      try {
+      await parseCsv(csv, {}, (state, row, i) => {
+        console.log(row, i);
+        return state;
+      })({});
+      } catch (e) {
+        error = e
+      }
+
+    assert.equal(error.message, 'Uncaught Error: Invalid Record Length: columns length is 3, got 4 on line 2');
+
+    // const resultingState = await parseCsv(csv, {}, (state, row, i) => {
+    //   console.log(row, i);
+    //   assert.deepEqual(row, expected[i]);
+
+    //   state.data.push(row);
+    //   return state;
+    // })(state);
+
+    // assert.deepEqual(resultingState.data, expected);
   });
 });

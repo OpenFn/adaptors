@@ -557,60 +557,158 @@ export function chunk(array, chunkSize) {
  * `defaultOptions` object and can be overridden by passing an object with the desired options as the
  * second argument to
  */
-export function parseCsv(stream, parsingOptions = {}) {
-  stream = expandReferences(stream)(state);
-  parsingOptions = expandReferences(parsingOptions)(state);
-
+export function parseCsv(streamOrString, parsingOptions = {}, callback) {
   const defaultOptions = {
     delimiter: ',',
     quote: '"',
     escape: '"',
+    columns: true,
     bom: true,
     trim: true,
+    skip_empty_lines: true,
     ltrim: true,
     rtrim: true,
   };
 
-  const options = { ...defaultOptions, ...parsingOptions };
-  // Read and process the CSV file
-  const processFile = async () => {
-    const records = [];
+  const filteredOptions = Object.fromEntries(
+    Object.entries(parsingOptions).filter(
+      ([key, _value]) => key in defaultOptions
+    )
+  );
 
-    const parser =
-      typeof stream === 'string'
-        ? parse(stream, options)
-        : stream.pipe(parse(options));
+  const options = { ...defaultOptions, ...filteredOptions };
 
-    parser.on('readable', function () {
-      let chunk;
-      const chunkSize = options.chunkSize ? options.chunkSize : null;
+  return state => {
+    return new Promise((resolve, reject) => {
+      const parser =
+        typeof streamOrString === 'string'
+          ? parse(streamOrString, options)
+          : streamOrString.pipe(parse(options));
 
-      while ((chunk = parser.read(chunkSize)) !== null) {
-        const recordsInChunk = chunk.toString().split('\n');
-        for (const record of recordsInChunk) {
-          records.push(record);
-          // Also return a stream
-          // record.push(record.parse);
+      parser.on('readable', function () {
+        let chunk;
+        let i = 0;
+        // const chunkSize = options.chunkSize ? options.chunkSize : null;
+
+        while ((chunk = parser.read()) !== null) {
+          // [{a: 0, b: 2}, {c: 3, d: 4}]
+          // [{a: 1, b: 2}]
+          // const recordsInChunk = chunk.toString().split('\n');
+          // for (const record of chunk) {
+          state = callback(state, chunk, i);
+          i++;
+          // }
         }
-      }
-    });
+      });
 
-    // Catch any error
-    parser.on('error', function (err) {
-      console.error(err.message);
-      // throw new Error(err);
+      parser.on('end', function () {
+        resolve(state);
+      });
     });
-    // Test that the parsed records matched the expected records
-    parser.on('end', function () {
-      console.log(records);
-    });
-    await finished(parser);
-    return records;
   };
-  // Parse the CSV content
-  // return composeNextState(state, processFile());
-  return processFile();
 }
+// export function parseCsv(stream, parsingOptions = {}) {
+//   stream = expandReferences(stream)(state);
+//   parsingOptions = expandReferences(parsingOptions)(state);
+
+//   const defaultOptions = {
+//     delimiter: ',',
+//     quote: '"',
+//     escape: '"',
+//     bom: true,
+//     trim: true,
+//     ltrim: true,
+//     rtrim: true,
+//   };
+
+//   const options = { ...defaultOptions, ...parsingOptions };
+//   // Read and process the CSV file
+//   const processFile = async () => {
+//     const records = [];
+
+//     const parser =
+//       typeof stream === 'string'
+//         ? parse(stream, options)
+//         : stream.pipe(parse(options));
+
+//     parser.on('readable', function () {
+//       let chunk;
+//       const chunkSize = options.chunkSize ? options.chunkSize : null;
+
+//       while ((chunk = parser.read(chunkSize)) !== null) {
+//         const recordsInChunk = chunk.toString().split('\n');
+//         for (const record of recordsInChunk) {
+//           records.push(record);
+//           // Also return a stream
+//           // record.push(record.parse);
+//         }
+//       }
+//     });
+
+//     // Catch any error
+//     parser.on('error', function (err) {
+//       console.error(err.message);
+//       // throw new Error(err);
+//     });
+//     // Test that the parsed records matched the expected records
+//     parser.on('end', function () {
+//       console.log(records);
+//     });
+//     await finished(parser);
+//     return records;
+//   };
+//   // Parse the CSV content
+//   // return composeNextState(state, processFile());
+//   return processFile();
+// }
+
+// state = { data: { avgAge: 0, numSeen: 0, ageTotal: 0}}
+// // age, sex
+// // 10, M
+// // 15, M
+
+// parseCsv(fileHandle, { chunkSize: 1000, delimiter: ',', quote: '"', escape: '"' }, (state, rows) => {
+//   for (const row of state.rows) {
+//     state.data.numSeen += 1;
+//     state.data.ageTotal += row.age;
+//     state.avgAge = state.ageTotal / state.numSeen;
+//   }
+
+//   return state
+// });
+
+// fetchWholeCsv(url, parseSettings) {
+//   return (state) {
+//     parseCsv(fileHandle, { chunkSize: 1000, ...otherSettings }, (state, rows) => {
+//       for (const row of state.rows) {
+//         state.data.push(row);
+//       }
+
+//       return state
+//     });
+
+//   }
+
+//   return fetch(url)
+// }
+
+// parseCsv(fileHandle, { chunkSize: 1000, ...otherSettings }, (state, rows) => {
+//   for (const row of state.rows) {
+//     state.data.push(row);
+//   }
+
+//   return state
+// });
+
+// // state.avgAge = 45
+
+// // state.row[0]
+// // returns state
+// (state) => {
+//   state.data.items.push(state.row);
+// }
+
+// parseCSV(myCSV, { chunkSize: 1000 }, post('a/b/c', (state) => state.data))
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
