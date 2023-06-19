@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-nexmo",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "An Language Package for Nexmo",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.6",
+    "@openfn/language-common": "^1.8.0",
     "nexmo": "2.1.1",
     "request": "^2.88.2"
   },

@@ -1,5 +1,24 @@
 # @openfn/language-zoho
 
+## 0.3.0
+
+### Minor Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
 ## 0.2.3
 
 ### Patch Changes
