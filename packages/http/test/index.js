@@ -624,7 +624,7 @@ describe('post', () => {
     ]);
   });
 
-  it.only('can be called inside an each with old "json" request config', async () => {
+  it('can be called inside an each with old "json" request config', async () => {
     nock('https://www.repeat.com')
       .post('/api/fake-json')
       .times(3)
