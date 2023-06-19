@@ -63,7 +63,8 @@ export function handleResponseError(response, data, method) {
  * request made to the specified `url` with the given `params` and `method`. If there is an error in
  * the response, the function will throw an error.
  */
-export const request = async (url, params = {}, method = 'GET') => {
+export const request = async (urlString, params = {}, method = 'GET') => {
+  let url;
   const defaultHeaders = { 'Content-Type': 'application/json' };
   const { headers } = params;
   const setHeaders = { ...headers, ...defaultHeaders };
@@ -76,17 +77,16 @@ export const request = async (url, params = {}, method = 'GET') => {
   };
 
   if ('GET' === method) {
-    url += '?' + new URLSearchParams(params).toString();
+    url = `${urlString}?${new URLSearchParams(params).toString()}`;
   } else {
     options.body = JSON.stringify(params);
   }
 
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
-  const data =
-    contentType && contentType.includes('application/json')
-      ? await response.json()
-      : await response.text();
+  const data = contentType?.includes('application/json')
+    ? await response.json()
+    : await response.text();
 
   handleResponseError(response, data, method);
 
