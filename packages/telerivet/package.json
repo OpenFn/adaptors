@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-telerivet",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "telerivet Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.0",
+    "@openfn/language-common": "^1.8.1",
     "JSONPath": "^0.10.0",
     "lodash-fp": "^0.10.4",
     "superagent": "^3.7.0"

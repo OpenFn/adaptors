@@ -1,5 +1,13 @@
 # @openfn/language-http
 
+## 4.3.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
 ## 4.3.0
 
 ### Minor Changes

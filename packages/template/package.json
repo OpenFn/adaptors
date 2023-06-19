@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-template",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "The standard template for building OpenFn adaptors",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.0"
+    "@openfn/language-common": "^1.8.1"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

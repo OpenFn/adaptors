@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mogli",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A Mogli SMS Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.0",
+    "@openfn/language-common": "^1.8.1",
     "JSONPath": "^0.10.0",
     "jsforce": "1.5.1",
     "lodash-fp": "^0.10.4",

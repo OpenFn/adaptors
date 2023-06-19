@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-smpp",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "An SMPP client API Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.0",
+    "@openfn/language-common": "^1.8.1",
     "request": "^2.88.2"
   },
   "devDependencies": {

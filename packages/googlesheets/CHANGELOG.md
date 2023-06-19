@@ -1,5 +1,13 @@
 # @openfn/language-googlesheets
 
+## 2.2.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
 ## 2.2.0
 
 ### Minor Changes

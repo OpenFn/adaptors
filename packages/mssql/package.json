@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mssql",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "A Microsoft SQL language pack for OpenFn",
   "exports": {
     ".": {
@@ -31,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.8.0",
+    "@openfn/language-common": "workspace:1.8.1",
     "tedious": "15.1.0"
   },
   "devDependencies": {

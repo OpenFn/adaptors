@@ -1,5 +1,13 @@
 # @openfn/language-mysql
 
+## 1.4.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.8.1
+
+### Patch Changes
+
+- Update lock files
+
 ## 1.8.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @openfn/language-postgresql
 
+## 4.1.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
 ## 4.1.0
 
 ### Minor Changes
