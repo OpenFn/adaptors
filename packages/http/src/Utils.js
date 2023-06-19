@@ -67,6 +67,7 @@ export function tryJson(data) {
   return data;
 }
 
+// TODO: drop this function in the next version of http
 export function mapToAxiosConfig(requestConfig) {
   let form = null;
 
@@ -91,6 +92,7 @@ export function mapToAxiosConfig(requestConfig) {
   if (requestConfig?.json) {
     headers = { ...headers, 'Content-type': 'application/json' };
     if (typeof requestConfig?.json === 'object') {
+      // eslint-disable-next-line no-param-reassign
       requestConfig = { ...requestConfig, body: requestConfig?.json };
     }
   }

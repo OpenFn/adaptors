@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-googlesheets",
-  "version": "2.1.6",
+  "version": "2.2.1",
   "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -19,7 +19,8 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist"
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -30,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^1.7.6",
+    "@openfn/language-common": "workspace:^1.8.1",
     "googleapis": "100.0.0"
   },
   "devDependencies": {

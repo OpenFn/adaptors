@@ -12,7 +12,8 @@
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
     "test:imports": "cd tools/import-tests && pnpm test",
-    "test": "pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "lint": "pnpm --filter \"./packages/**\" lint",
     "metadata": "pnpm -C tools/metadata cli"
   },
   "author": "Open Function Group",
@@ -22,6 +23,7 @@
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
-    "@openfn/simple-ast": "0.4.1"
+    "@openfn/simple-ast": "0.4.1",
+    "eslint": "8.26.0"
   }
 }

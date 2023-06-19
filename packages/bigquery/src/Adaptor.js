@@ -1,4 +1,3 @@
-
 import 'regenerator-runtime/runtime.js';
 import {
   execute as commonExecute,
@@ -8,7 +7,6 @@ import {
 import fs from 'fs';
 import parse from 'csv-parse';
 import { BigQuery } from '@google-cloud/bigquery';
-import { resolve } from 'path';
 
 /**
  * Execute a sequence of operations.
@@ -105,7 +103,7 @@ export function load(
       return state;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       console.log('Google Big Query: loading files');
       return fs.readdir(dirPath, function (err, files) {
         //handling error
@@ -116,6 +114,7 @@ export function load(
       });
     }).then(() => {
       console.log('all done');
+      if (callback) return callback(state);
       return state;
     });
   };
@@ -136,7 +135,7 @@ export function load(
  */
 export function parseCSV(target, config) {
   return state => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       var csvData = [];
 
       try {

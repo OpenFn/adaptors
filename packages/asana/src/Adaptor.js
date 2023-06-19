@@ -35,24 +35,24 @@ export function execute(...operations) {
  * Get a single task of a given project.
  * @public
  * @example
- * getTask("task_gid",
+ * getTask("taskGid",
  *  {
  *    opt_fields: "name,notes,assignee"
  *  })
  * @function
- * @param {string} task_gid - Globally unique identifier for the task
+ * @param {string} taskGid - Globally unique identifier for the task
  * @param {object} params - Query params to include.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getTask(task_gid, params, callback) {
+export function getTask(taskGid, params, callback) {
   return state => {
-    task_gid = expandReferences(task_gid)(state);
+    const resolvedTaskGid = expandReferences(taskGid)(state);
     const { opt_fields } = expandReferences(params)(state);
 
     const { apiVersion, token } = state.configuration;
 
-    const url = `https://app.asana.com/api/${apiVersion}/tasks/${task_gid}`;
+    const url = `https://app.asana.com/api/${apiVersion}/tasks/${resolvedTaskGid}`;
 
     const config = {
       url,
@@ -79,24 +79,24 @@ export function getTask(task_gid, params, callback) {
  * Get the list of tasks for a given project.
  * @public
  * @example
- * getTasks("project_gid",
+ * getTasks("projectGid",
  *  {
  *    opt_fields: "name,notes,assignee"
  *  })
  * @function
- * @param {string} project_gid - Globally unique identifier for the project
+ * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - Query params to include.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getTasks(project_gid, params, callback) {
+export function getTasks(projectGid, params, callback) {
   return state => {
-    project_gid = expandReferences(project_gid)(state);
+    const resolvedProjectGid = expandReferences(projectGid)(state);
     const { opt_fields } = expandReferences(params)(state);
 
     const { apiVersion, token } = state.configuration;
 
-    const url = `https://app.asana.com/api/${apiVersion}/projects/${project_gid}/tasks`;
+    const url = `https://app.asana.com/api/${apiVersion}/projects/${resolvedProjectGid}/tasks`;
 
     const config = {
       url,
@@ -123,29 +123,29 @@ export function getTasks(project_gid, params, callback) {
  * Update a specific task.
  * @public
  * @example
- * updateTask("task_gid",
+ * updateTask("taskGid",
  *  {
  *    name: 'test', "approval_status": "pending", "assignee": "12345"
  *  }
  * )
  * @function
- * @param {string} task_gid - Globally unique identifier for the task
+ * @param {string} taskGid - Globally unique identifier for the task
  * @param {object} params - Body parameters
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function updateTask(task_gid, params, callback) {
+export function updateTask(taskGid, params, callback) {
   return state => {
-    task_gid = expandReferences(task_gid)(state);
-    params = expandReferences(params)(state);
+    const resolvedTaskGid = expandReferences(taskGid)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { apiVersion, token } = state.configuration;
 
-    const url = `https://app.asana.com/api/${apiVersion}/tasks/${task_gid}/`;
+    const url = `https://app.asana.com/api/${apiVersion}/tasks/${resolvedTaskGid}/`;
 
     const config = {
       url,
-      data: { data: params },
+      data: { data: resolvedParams },
       headers: { Authorization: `Bearer ${token}` },
     };
 
@@ -182,7 +182,7 @@ export function updateTask(task_gid, params, callback) {
  */
 export function createTask(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { apiVersion, token } = state.configuration;
 
@@ -190,7 +190,7 @@ export function createTask(params, callback) {
 
     const config = {
       url,
-      data: { data: params },
+      data: { data: resolvedParams },
       headers: { Authorization: `Bearer ${token}` },
     };
 
@@ -226,19 +226,19 @@ export function createTask(params, callback) {
  *  }
  * )
  * @function
- * @param {string} project_gid - Globally unique identifier for the project
+ * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - an object with an externalId and some task data.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function upsertTask(project_gid, params, callback) {
+export function upsertTask(projectGid, params, callback) {
   return state => {
-    project_gid = expandReferences(project_gid)(state);
+    const resolvedProjectGid = expandReferences(projectGid)(state);
     const { externalId, data } = expandReferences(params)(state);
 
     const { apiVersion, token } = state.configuration;
 
-    const url = `https://app.asana.com/api/${apiVersion}/projects/${project_gid}/tasks`;
+    const url = `https://app.asana.com/api/${apiVersion}/projects/${resolvedProjectGid}/tasks`;
 
     const config = {
       url,

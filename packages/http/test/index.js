@@ -1,4 +1,13 @@
-import { execute, get, post, put, patch, del, alterState, request } from '../src';
+import {
+  execute,
+  get,
+  post,
+  put,
+  patch,
+  del,
+  alterState,
+  request,
+} from '../src';
 import { each } from '@openfn/language-common';
 import { expect } from 'chai';
 import nock from 'nock';
@@ -608,7 +617,46 @@ describe('post', () => {
       )
     )(state);
 
-    console.log(finalState.replies);
+    expect(finalState.replies).to.eql([
+      '{"name":"a","age":42}',
+      '{"name":"b","age":83}',
+      '{"name":"c","age":112}',
+    ]);
+  });
+
+  it('can be called inside an each with old "json" request config', async () => {
+    nock('https://www.repeat.com')
+      .post('/api/fake-json')
+      .times(3)
+      .reply(200, function (url, body) {
+        return body;
+      });
+
+    const state = {
+      configuration: {},
+      things: [
+        { name: 'a', age: 42 },
+        { name: 'b', age: 83 },
+        { name: 'c', age: 112 },
+      ],
+      replies: [],
+    };
+
+    const finalState = await execute(
+      each(
+        '$.things[*]',
+        post(
+          'https://www.repeat.com/api/fake-json',
+          {
+            json: state => state.data,
+          },
+          next => {
+            next.replies.push(next.response.config.data);
+            return next;
+          }
+        )
+      )
+    )(state);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',

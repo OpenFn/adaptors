@@ -16,6 +16,7 @@ export function expandRequestReferences(params) {
   const [toKeep, toExpand] = splitKeys(params || {}, [
     'agentOptions',
     'body',
+    'json',
     'data',
     'form',
     'formData',

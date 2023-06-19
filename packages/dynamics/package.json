@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dynamics",
-  "version": "0.3.5",
+  "version": "0.4.1",
   "description": "A Microsoft Dynamics Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist"
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -19,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.7.7",
+    "@openfn/language-common": "1.8.1",
     "request": "^2.72.0"
   },
   "devDependencies": {

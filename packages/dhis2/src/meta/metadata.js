@@ -3,6 +3,7 @@ import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, helper) => {
   if (!helper) {
+    // eslint-disable-next-line no-param-reassign
     helper = dhis2helper(configuration);
   }
 

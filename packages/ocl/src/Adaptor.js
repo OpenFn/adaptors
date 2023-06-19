@@ -131,22 +131,22 @@ function getMappingInfo(params) {
  */
 export function getMappings(ownerId, repositoryId, options, callback = false) {
   return state => {
-    ownerId = expandReferences(ownerId)(state);
-    repositoryId = expandReferences(repositoryId)(state);
-    options = expandReferences(options)(state);
+    const resolvedOwnerId = expandReferences(ownerId)(state);
+    const resolvedRepositoryId = expandReferences(repositoryId)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
     const { baseUrl } = state.configuration;
 
     const defaultOptions = {
       ownerType: 'orgs', // Default to orgs | orgs or users
-      ownerId: ownerId,
+      ownerId: resolvedOwnerId,
       repository: 'collections', // Default to collections, collections or sources
-      repositoryId: repositoryId,
+      repositoryId: resolvedRepositoryId,
       version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
       content: 'mappings',
     };
 
-    const urlParams = { ...defaultOptions, ...options };
+    const urlParams = { ...defaultOptions, ...resolvedOptions };
     const { url, query } = buildMappingsUrl({
       baseUrl: baseUrl,
       ...urlParams,
@@ -185,13 +185,13 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
  */
 export function get(path, query, callback = false) {
   return state => {
-    path = expandReferences(path)(state);
-    query = expandReferences(query)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedQuery = expandReferences(query)(state);
     const { baseUrl } = state.configuration;
 
-    const url = `${baseUrl}/${path}`;
+    const url = `${baseUrl}/${resolvedPath}`;
 
-    return request(url, query).then(response =>
+    return request(url, resolvedQuery).then(response =>
       handleResponse(response, state, callback)
     );
   };

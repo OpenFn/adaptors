@@ -18,8 +18,8 @@ export function req(method, params) {
         options,
         ...rest,
       },
-      function(error, response, body) {
-        error = assembleError({ error, response, params });
+      function (err, response, body) {
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {

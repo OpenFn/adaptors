@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "4.2.8",
+  "version": "4.3.1",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -21,7 +21,8 @@
     "build": "pnpm clean && build-adaptor http",
     "pack": "pnpm pack --pack-destination ../../dist",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w"
+    "test:watch": "mocha -w",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -32,7 +33,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.7.7",
+    "@openfn/language-common": "workspace:1.8.1",
     "cheerio": "^1.0.0-rc.10",
     "cheerio-tableparser": "^1.0.1",
     "csv-parse": "^4.10.1",

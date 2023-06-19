@@ -1,0 +1,16 @@
+{
+  // TODO: turn this on (and pick styles) after the param-reassign bug is fixed
+  // "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {}
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-param-reassign": "error"
+  },
+  "env": {
+    "node": true
+  }
+}

@@ -46,17 +46,17 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    resource = expandReferences(resource)(state);
-    data = expandReferences(data)(state);
+    const resolvedResource = expandReferences(resource)(state);
+    const resolvedData = expandReferences(data)(state);
 
     const { baseUrl, username, password } = state.configuration;
 
-    const url = `${baseUrl}/api/${resource}`;
+    const url = `${baseUrl}/api/${resolvedResource}`;
     const auth = { username, password };
 
     const options = {
       auth,
-      body: data,
+      body: resolvedData,
       method: 'POST',
     };
 

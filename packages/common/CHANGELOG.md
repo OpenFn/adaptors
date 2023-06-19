@@ -1,5 +1,25 @@
 v0.4.0
 
+## 1.8.1
+
+### Patch Changes
+
+- Update lock files
+
+## 1.8.0
+
+### Minor Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
 ## 1.7.7
 
 ### Patch Changes

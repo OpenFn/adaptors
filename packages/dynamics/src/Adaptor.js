@@ -3,9 +3,6 @@ import {
   expandReferences,
 } from '@openfn/language-common';
 import request from 'request';
-import { resolve as resolveUrl } from 'url';
-
-
 
 /**
  * Execute a sequence of operations.
@@ -62,8 +59,8 @@ export function createEntity(params) {
           json: body,
           headers,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {
@@ -135,8 +132,8 @@ export function query(params) {
           url: fullUrl,
           headers,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {
@@ -188,8 +185,8 @@ export function updateEntity(params) {
           json: body,
           headers,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response) {
+          const error = assembleError({ response, error: err });
           if (error) {
             reject(error);
           } else {
@@ -238,8 +235,8 @@ export function deleteEntity(params) {
           url: url,
           headers,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {

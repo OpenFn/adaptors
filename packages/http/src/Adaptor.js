@@ -1,4 +1,3 @@
-
 import {
   setAuth,
   setUrl,
@@ -387,8 +386,8 @@ export function request(params) {
     const resolvedParams = http.expandRequestReferences(params)(state);
 
     return new Promise((resolve, reject) => {
-      nodeRequest(resolvedParams, (error, response, body) => {
-        error = assembleError({ error, response, resolvedParams });
+      nodeRequest(resolvedParams, (err, response, body) => {
+        const error = assembleError({ error: err, response, resolvedParams });
         error && reject(error);
 
         console.log(

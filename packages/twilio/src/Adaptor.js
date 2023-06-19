@@ -1,7 +1,6 @@
 import {
   execute as commonExecute,
   expandReferences,
-  composeNextState,
 } from '@openfn/language-common';
 
 /**

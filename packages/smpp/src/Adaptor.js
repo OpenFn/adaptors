@@ -59,8 +59,8 @@ export function send(params) {
           json: body,
           auth,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {

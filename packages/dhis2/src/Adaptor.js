@@ -93,6 +93,7 @@ axios.interceptors.response.use(
       contentType === CONTENT_TYPES?.json
     ) {
       try {
+        // eslint-disable-next-line no-param-reassign
         response = { ...response, data: JSON.parse(response.data) };
       } catch (error) {
         Log.warn('Non-JSON response detected, unable to parse.');
@@ -223,22 +224,22 @@ export function create(resourceType, data, options = {}, callback = false) {
   return state => {
     console.log(`Preparing create operation...`);
 
-    resourceType = expandReferences(resourceType)(state);
-    data = expandReferences(data)(state);
-    options = expandReferences(options)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedData = expandReferences(data)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-    const { params, requestConfig } = options;
+    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'post',
-      url: generateUrl(configuration, options, resourceType),
+      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
       params,
-      data: nestArray(data, resourceType),
+      data: nestArray(resolvedData, resolvedResourceType),
       ...requestConfig,
     }).then(result => {
       const details = `with response ${JSON.stringify(result.data, null, 2)}`;
-      Log.success(`Created ${resourceType} ${details}`);
+      Log.success(`Created ${resolvedResourceType} ${details}`);
 
       const { location } = result.headers;
       if (location) console.log(`Record available @ ${location}`);
@@ -391,22 +392,27 @@ export function update(
   return state => {
     console.log(`Preparing update operation...`);
 
-    resourceType = expandReferences(resourceType)(state);
-    path = expandReferences(path)(state);
-    data = expandReferences(data)(state);
-    options = expandReferences(options)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedData = expandReferences(data)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-    const { params, requestConfig } = options;
+    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'put',
-      url: generateUrl(configuration, options, resourceType, path),
+      url: generateUrl(
+        configuration,
+        resolvedOptions,
+        resolvedResourceType,
+        path
+      ),
       params,
-      data,
+      data: resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Updated ${resourceType} at ${path}`);
+      Log.success(`Updated ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -441,21 +447,21 @@ export function get(resourceType, query, options = {}, callback = false) {
   return state => {
     console.log('Preparing get operation...');
 
-    resourceType = expandReferences(resourceType)(state);
-    query = expandReferences(query)(state);
-    options = expandReferences(options)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedQuery = expandReferences(query)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-    const { params, requestConfig } = options;
+    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'get',
-      url: generateUrl(configuration, options, resourceType),
-      params: { ...query, ...params },
+      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
+      params: { ...resolvedQuery, ...params },
       responseType: 'json',
       ...requestConfig,
     }).then(result => {
-      Log.success(`Retrieved ${resourceType}`);
+      Log.success(`Retrieved ${resolvedResourceType}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -496,6 +502,9 @@ export function upsert(
 ) {
   return state => {
     console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+
+    // NOTE: that these parameters are all expanded by the `get`, `create`, and
+    // `update` functions used inside this composed "upsert" function.
 
     return get(
       resourceType,
@@ -646,22 +655,27 @@ export function patch(
   return state => {
     console.log('Preparing patch operation...');
 
-    resourceType = expandReferences(resourceType)(state);
-    path = expandReferences(path)(state);
-    data = expandReferences(data)(state);
-    options = expandReferences(options)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedData = expandReferences(data)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-    const { params, requestConfig } = options;
+    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'patch',
-      url: generateUrl(configuration, options, resourceType, path),
+      url: generateUrl(
+        configuration,
+        resolvedOptions,
+        resolvedResourceType,
+        resolvedPath
+      ),
       params,
-      data,
+      data: resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Patched ${resourceType} at ${path}`);
+      Log.success(`Patched ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -690,22 +704,27 @@ export function destroy(
   return state => {
     console.log('Preparing destroy operation...');
 
-    resourceType = expandReferences(resourceType)(state);
-    path = expandReferences(path)(state);
-    data = expandReferences(data)(state);
-    options = expandReferences(options)(state);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedData = expandReferences(data)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-    const { params, requestConfig } = options;
+    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     return request({
       method: 'delete',
-      url: generateUrl(configuration, options, resourceType, path),
+      url: generateUrl(
+        configuration,
+        resolvedOptions,
+        resolvedResourceType,
+        resolvedPath
+      ),
       params,
-      data,
+      resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Deleted ${resourceType} at ${path}`);
+      Log.success(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };

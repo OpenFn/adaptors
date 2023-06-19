@@ -74,9 +74,9 @@ function generateAuthString(state) {
  */
 function queryHandler(state, params, callback) {
   return new Promise((resolve, reject) => {
-    request(params, function (error, response, body) {
-      response = scrubResponse(response);
-      error = assembleError({ error, response, params });
+    request(params, function (err, resp, body) {
+      const response = scrubResponse(resp);
+      const error = assembleError({ error: err, response, params });
       if (error) {
         reject(error);
       } else {
@@ -132,9 +132,9 @@ function login(state) {
   };
 
   return new Promise((resolve, reject) => {
-    request(params, function (error, response, body) {
-      response = scrubResponse(response);
-      error = assembleError({ error, response, params });
+    request(params, function (err, resp, body) {
+      const response = scrubResponse(resp);
+      const error = assembleError({ error: err, response, params });
       if (error) {
         reject(error);
       } else {
@@ -201,9 +201,9 @@ export function getCases(query, options, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(params, async function (error, response, body) {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params });
+      request(params, async function (err, resp, body) {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -232,7 +232,7 @@ export function getCases(query, options, callback) {
                 },
               };
 
-              const referrals = await new Promise((resolve, reject) => {
+              const referrals = await new Promise(resolve => {
                 request(requestParams, (e, r, b) => {
                   // console.log('🚨 🚨 🚨 referrals response', b);
                   resolve(tryJson(b).data);
@@ -291,9 +291,9 @@ export function createCase(params, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(requestParams, (error, response, body) => {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params: requestParams });
+      request(requestParams, (err, resp, body) => {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -351,9 +351,9 @@ export function updateCase(id, params, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(requestParams, (error, response, body) => {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params: {} });
+      request(requestParams, (err, resp, body) => {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -429,9 +429,9 @@ export function upsertCase(params, callback) {
     // -------------------------------------------------------------------------
 
     return new Promise((resolve, reject) => {
-      request(requestParams, (error, response, body) => {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params: {} });
+      request(requestParams, (err, resp, body) => {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -504,9 +504,9 @@ export function getReferrals(params, callback) {
         qs,
       };
       return new Promise((resolve, reject) => {
-        request(requestParams, (error, response, body) => {
-          response = scrubResponse(response);
-          error = assembleError({ error, response, params: {} });
+        request(requestParams, (err, resp, body) => {
+          const response = scrubResponse(resp);
+          const error = assembleError({ error: err, response, params });
           if (error) {
             reject(error);
           } else {
@@ -580,9 +580,9 @@ export function createReferrals(params, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(requestParams, (error, response, body) => {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params: requestParams });
+      request(requestParams, (err, resp, body) => {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -661,9 +661,9 @@ export function updateReferral(params, callback) {
         qs,
       };
       return new Promise((resolve, reject) => {
-        request(requestParams, (error, response, body) => {
-          response = scrubResponse(response);
-          error = assembleError({ error, response, params: {} });
+        request(requestParams, (err, resp, body) => {
+          const response = scrubResponse(resp);
+          const error = assembleError({ error: err, response, params });
           if (error) {
             reject(error);
           } else {
@@ -735,9 +735,9 @@ export function getForms(query, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(params, async function (error, response, body) {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params });
+      request(params, async function (err, resp, body) {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -798,9 +798,9 @@ export function getLookups(query, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(params, async function (error, response, body) {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params });
+      request(params, async function (err, resp, body) {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
@@ -862,9 +862,9 @@ export function getLocations(query, callback) {
     };
 
     return new Promise((resolve, reject) => {
-      request(params, async function (error, response, body) {
-        response = scrubResponse(response);
-        error = assembleError({ error, response, params });
+      request(params, async function (err, resp, body) {
+        const response = scrubResponse(resp);
+        const error = assembleError({ error: err, response, params });
         if (error) {
           reject(error);
         } else {
