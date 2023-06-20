@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/common/util'
+import { expandReferences } from '@openfn/language-common/util'
 import { request } from './Utils';
 
 /**
