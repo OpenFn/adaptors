@@ -1,5 +1,5 @@
 ---
-'@openfn/language-msgraph': patch
+'@openfn/language-msgraph': minor
 ---
 
 Add msgraph adaptor with get() and create() functions
