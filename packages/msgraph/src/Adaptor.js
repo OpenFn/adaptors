@@ -91,7 +91,7 @@ export function get(path, query, callback = false) {
 
 export { request } from './Utils';
 
-export * from '/Sharepoint';
+// export * from '/Sharepoint';
 
 // TODO: Decide which functions to publish from @openfn/language-common
 export {
