@@ -30,6 +30,7 @@ export default async (lang: string) => {
   const defaultBuildConfig = {
     entry: [`${p}/src/index.js`],
     outDir: `${p}/dist`,
+    external: ['@openfn/common'],
     ...config,
   };
 
