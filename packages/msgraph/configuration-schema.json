@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiVersion": {
+      "title": "API Version",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "placeholder": "v1.0",
+      "description": "Microsoft Graph api version",
+      "minLength": 1,
+      "examples": [
+        "v1.0",
+        "beta"
+      ]
+    },
+    "accessToken": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Microsoft Graph access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "accessToken"
+  ]
+}
