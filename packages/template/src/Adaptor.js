@@ -45,16 +45,16 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    const [_resource, _data] = expandReferences(state, resource, data); 
+    const [resolvedResource, resolvedData] = expandReferences(state, resource, data); 
 
     const { baseUrl, username, password } = state.configuration;
 
-    const url = `${baseUrl}/api/${_resource}`;
+    const url = `${baseUrl}/api/${resolvedResource}`;
     const auth = { username, password };
 
     const options = {
       auth,
-      body: _data,
+      body: resolvedData,
       method: 'POST',
     };
 
