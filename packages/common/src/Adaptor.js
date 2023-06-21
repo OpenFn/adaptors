@@ -4,6 +4,7 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { finished } from 'stream/promises';
+import { error } from 'console';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -566,6 +567,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
     bom: true,
     trim: true,
     skip_empty_lines: true,
+    chunkSize: 0,
     ltrim: true,
     rtrim: true,
   };
@@ -580,6 +582,8 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
 
   return state => {
     return new Promise((resolve, reject) => {
+      let buffer = [];
+
       const parser =
         typeof streamOrString === 'string'
           ? parse(streamOrString, options)
@@ -588,20 +592,53 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
       parser.on('readable', function () {
         let chunk;
         let i = 0;
-        // const chunkSize = options.chunkSize ? options.chunkSize : null;
+        // push chunk into array
+        // if array length is chunkSize, callback
+        //   set array to empty
+        // repeat
 
         while ((chunk = parser.read()) !== null) {
-          // [{a: 0, b: 2}, {c: 3, d: 4}]
-          // [{a: 1, b: 2}]
-          // const recordsInChunk = chunk.toString().split('\n');
-          // for (const record of chunk) {
-          state = callback(state, chunk, i);
           i++;
-          // }
+          buffer.push(chunk);
+
+          // console.log(buffer.length, 'buffer length before');
+          // console.log(buffer.length >= options.chunkSize);
+
+          // should we 'emit/clear' the buffer
+          if (options.chunkSize && buffer.length >= options.chunkSize) {
+            console.log('On Chunking');
+            const nextState = composeNextState(state, buffer);
+            if (callback) resolve(callback(nextState));
+            resolve(nextState);
+
+            // buffer.length == options.chunkSize ? buffer : (buffer = []);
+            buffer = [];
+          }
+
+          // console.log(buffer.length, 'buffer length after');
         }
+      });
+      parser.on('error', function (error) {
+        // something to consider, if we blow up with 500 items in the buffer,
+        // we might want to call the callback with the buffer
+        state = callback(state, buffer);
+        reject(error);
       });
 
       parser.on('end', function () {
+        console.log('On End');
+        console.log(buffer, 'buffer');
+        console.log(state, 'final state');
+
+        console.log(options.chunkSize, 'chunkSize');
+        if (!options.chunkSize || buffer.length >= options.chunkSize) {
+          console.log('Is this true');
+          const nextState = composeNextState(state, buffer);
+          if (callback) resolve(callback(nextState));
+
+          resolve(nextState);
+        }
+
         resolve(state);
       });
     });

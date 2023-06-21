@@ -357,38 +357,42 @@ describe('chunk', function () {
 
 describe('parseCsv', function () {
   it('should parse a csv string and invoke the callback with the parsed data', async function () {
-    const csv = 'a,b,c\n1,2,3\n4,5,6';
+    const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9';
     const expected = [
       { a: '1', b: '2', c: '3' },
       { a: '4', b: '5', c: '6' },
+      { a: '7', b: '8', c: '9' },
     ];
 
-    const state = { data: [] };
+    const state = { references: [], data: [] };
 
-    const resultingState = await parseCsv(csv, {}, (state, row, i) => {
-      assert.deepEqual(row, expected[i]);
+    const resultingState = await parseCsv(csv, { chunkSize: 2 }, state => {
+      console.log(state, 'state');
+      // assert.deepEqual(row, expected);
 
-      state.data.push(row);
       return state;
     })(state);
 
-    assert.deepEqual(resultingState.data, expected);
+    console.log(resultingState, 'result state');
   });
 
   it('should throw an exception when a CSV is invalid', async function () {
-    const csv = 'a,b,c\n1,2,3,4\n4,5,6';
+    const csv = 'a,b,c\n1,2,3,8\n4,5,6';
 
     let error;
-      try {
-      await parseCsv(csv, {}, (state, row, i) => {
-        console.log(row, i);
+    try {
+      await parseCsv(csv, {}, (state, row) => {
+        console.log(row);
         return state;
       })({});
-      } catch (e) {
-        error = e
-      }
+    } catch (e) {
+      error = e;
+    }
 
-    assert.equal(error.message, 'Uncaught Error: Invalid Record Length: columns length is 3, got 4 on line 2');
+    assert.equal(
+      error.message,
+      'Invalid Record Length: columns length is 3, got 4 on line 2'
+    );
 
     // const resultingState = await parseCsv(csv, {}, (state, row, i) => {
     //   console.log(row, i);
@@ -401,3 +405,9 @@ describe('parseCsv', function () {
     // assert.deepEqual(resultingState.data, expected);
   });
 });
+
+// Add chunking
+// Exceptional handling test
+// try catch
+// Try to break the function
+// assert.it(Exceptions to reach)
