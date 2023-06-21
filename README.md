@@ -75,17 +75,19 @@ please make one and assign yourself.
 - Open package.json, and update the `name`, `description` and `build` from
   `template` to your `youradaptorname`. Update the version.
 
-- Update the top-level changelog comment `# @openfn/language-template` to your
-  adaptor name and delete the example content. Delete ast.json, then run
-  `pnpm clean` (this will remove the dist, types and docs folders).
+- Update the top-level changelog comment `# @openfn/language-template` to
+  `# @openfn/language-youradaptorname` and delete the remaining example content.
+  Delete ast.json, then run `pnpm clean` (this will remove the dist, types and
+  docs folders).
 
 - Update your adaptor's README.md to use your new adaptor name (we'll come back
   to this later to update the sample operation)
 
 #### 2. Create a job with the operation you'd like to add, and run it so it fails
 
-- Create a _temporary_ folder where you can test your operation manually by
-  running a job: `mkdir tmp`
+- Create a tmp folder where you can test your operation manually by running a
+  job: `mkdir tmp`. Note: this tmp folder is included in .gitignore, so it will
+  not be pushed to github.
 - Create a job file `touch tmp/job.js` which calls the operation you would like
   to add. For example, if you were adding an operation which gets the weather
   forecast, it might look something like this:
