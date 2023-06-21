@@ -24,7 +24,11 @@
     "./metadata": {
       "import": "./dist/metadata.js",
       "require": "./dist/metadata.cjs"
-    }
+    },
+    "./util": {
+      "import": "./dist/util.js",
+      "require": "./dist/util.cjs"
+    } 
   },
   "author": "Open Function Group",
   "license": "LGPL-3.0-or-later",

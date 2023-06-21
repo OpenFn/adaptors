@@ -1,9 +1,8 @@
 import {
   execute as commonExecute,
   composeNextState,
-  expandReferences,
 } from '@openfn/language-common';
-
+import { expandReferences } from '@openfn/language-common/util'
 import { request } from './Utils';
 
 /**
@@ -46,8 +45,7 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    const resolvedResource = expandReferences(resource)(state);
-    const resolvedData = expandReferences(data)(state);
+    const [resolvedResource, resolvedData] = expandReferences(state, resource, data); 
 
     const { baseUrl, username, password } = state.configuration;
 
