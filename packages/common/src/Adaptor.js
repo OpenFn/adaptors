@@ -544,17 +544,22 @@ export function chunk(array, chunkSize) {
 }
 
 /**
- * The function `parseCsv` takes a file stream and parsing options as input, and returns a promise that
+ * The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
  * resolves to the parsed CSV data.
- * @param stream - The stream parameter is the input data in CSV format that needs to be
- * parsed. It can be a string or a readable stream.
- * @param [parsingOptions] - An object containing options for parsing the CSV file. These options will
- * override the default options if provided.
- * @returns The `parseCsv` function is returning a Promise that resolves to the result of parsing a CSV
- * file. The CSV file is read from a file stream and parsed using the `csv` library with the parsing
- * options provided as an argument to the function. The default parsing options are defined in the
- * `defaultOptions` object and can be overridden by passing an object with the desired options as the
- * second argument to
+ * @param {String | Stream} streamOrString - A CSV string or a readable stream
+ * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON.
+ *     Possible options:
+ *     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`
+ *     - `quote` {string|Buffer|[string|Buffer]} - Defines the characters used to surround a field. Default: `'"'`
+ *     - `escape` {Buffer|string|null|boolean} - Set the escape character as one character/byte only. Default: `"`
+ *     - `columns` {boolean | array | function} - Generates record in the form of object literals. Default: `true`
+ *     - `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`
+ *     - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
+ *     - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
+ *     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
+ *     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
+ *     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`
+ * @returns {Promise} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
  */
 export function parseCsv(streamOrString, parsingOptions = {}, callback) {
   const defaultOptions = {
@@ -564,10 +569,10 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
     columns: true,
     bom: true,
     trim: true,
-    skip_empty_lines: true,
-    chunkSize: Infinity,
     ltrim: true,
     rtrim: true,
+    chunkSize: Infinity,
+    skip_empty_lines: true,
   };
 
   const filteredOptions = Object.fromEntries(
