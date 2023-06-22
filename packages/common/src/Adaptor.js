@@ -3,8 +3,6 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
-import { finished } from 'stream/promises';
-import { error } from 'console';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -573,9 +571,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
   };
 
   const filteredOptions = Object.fromEntries(
-    Object.entries(parsingOptions).filter(
-      ([key, _value]) => key in defaultOptions
-    )
+    Object.entries(parsingOptions).filter(([key]) => key in defaultOptions)
   );
 
   const options = { ...defaultOptions, ...filteredOptions };
@@ -584,8 +580,9 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
     throw new Error('chunkSize must be at least 1');
   }
 
-  return state => {
+  return stateObj => {
     return new Promise((resolve, reject) => {
+      let state = stateObj;
       let buffer = [];
 
       const parser =
@@ -593,16 +590,16 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
           ? parse(streamOrString, options)
           : streamOrString.pipe(parse(options));
 
-      const flushBuffer = (state, buffer) => {
-        if (callback) {
-          state = callback(state, buffer);
-        } else {
-          state = composeNextState(state, buffer);
-        }
+      const clearBuffer = () => (buffer = []);
 
-        buffer = [];
+      const buildResponse = state => {
+        const nextState = callback
+          ? callback(state, buffer)
+          : composeNextState(state, buffer);
 
-        return [state, buffer];
+        clearBuffer();
+
+        return [nextState, buffer];
       };
 
       parser.on('readable', function () {
@@ -612,7 +609,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
           buffer.push(chunk);
 
           if (buffer.length >= options.chunkSize) {
-            [state, buffer] = flushBuffer(state, buffer);
+            [state, buffer] = buildResponse(state);
           }
         }
       });
@@ -621,7 +618,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
       });
 
       parser.on('end', function () {
-        [state, buffer] = flushBuffer(state, buffer);
+        [state, buffer] = buildResponse(state);
         resolve(state);
       });
     });
