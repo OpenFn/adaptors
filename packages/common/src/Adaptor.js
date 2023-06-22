@@ -559,6 +559,7 @@ export function chunk(array, chunkSize) {
  *     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
  *     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
  *     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`
+ * @param {function} callback - (Optional) callback function
  * @returns {Promise} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
  */
 export function parseCsv(streamOrString, parsingOptions = {}, callback) {
