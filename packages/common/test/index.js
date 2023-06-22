@@ -356,6 +356,7 @@ describe('chunk', function () {
 });
 
 describe('parseCsv', function () {
+  it('should parse a csv string', function () {});
   it('should parse a csv string and invoke the callback with the parsed data', async function () {
     const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9';
     const expected = [
@@ -372,6 +373,19 @@ describe('parseCsv', function () {
 
       return state;
     })(state);
+
+    // execute(op1, op2, op3)(state);
+    // var state;
+    // state = await op1(state);
+    // state = await op2(state);
+    // state = await op3(state);
+
+    // parseCsv("$.data.path", {chunkSize: 10}, (state, rows) => {
+
+    //   return http.post('https://example.com', rows)(state)
+
+    //   return state;
+    // })(state)   // (State) => Promise<State> | State
 
     console.log(resultingState, 'result state');
   });
@@ -393,21 +407,76 @@ describe('parseCsv', function () {
       error.message,
       'Invalid Record Length: columns length is 3, got 4 on line 2'
     );
+  });
 
-    // const resultingState = await parseCsv(csv, {}, (state, row, i) => {
-    //   console.log(row, i);
-    //   assert.deepEqual(row, expected[i]);
+  it('should return state with modifications from the callback');
+  it('should await promises returned from the callback');
+  it('should bubble up errors from the callback to the caller');
+  it('should throw an error when chunkSize is not a number or < 1');
+  // it('should without chunkSize')
+  it('should append rows to references when not given a callback', async function () {
+    const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9';
+    // const expected = [
+    //   { a: '1', b: '2', c: '3' },
+    //   { a: '4', b: '5', c: '6' },
+    //   { a: '7', b: '8', c: '9' },
+    // ];
+    const expectedWithoutChunk = {
+      data: [
+        { a: '1', b: '2', c: '3' },
+        { a: '4', b: '5', c: '6' },
+        { a: '7', b: '8', c: '9' },
+      ],
+      references: [
+        [
+          { a: '1', b: '2', c: '3' },
+          { a: '4', b: '5', c: '6' },
+        ],
+        [{ a: '7', b: '8', c: '9' }],
+      ],
+    };
+    const expected = {
+      data: [{ a: '7', b: '8', c: '9' }],
+      references: [
+        [
+          { a: '1', b: '2', c: '3' },
+          { a: '4', b: '5', c: '6' },
+        ],
+        [{ a: '7', b: '8', c: '9' }],
+      ],
+    };
 
-    //   state.data.push(row);
-    //   return state;
-    // })(state);
+    const state = { data: [], references: [] };
 
-    // assert.deepEqual(resultingState.data, expected);
+    const resultingState = await parseCsv(csv, { chunkSize: 2 })(state);
+
+    // console.log(resultingState, 'result state');
+    const resultingStateWithoutChunk = await parseCsv(csv, {})(state);
+
+    assert.deepEqual(resultingState, {
+      data: [{ a: '7', b: '8', c: '9' }],
+      references: [
+        [
+          { a: '1', b: '2', c: '3' },
+          { a: '4', b: '5', c: '6' },
+        ],
+        [{ a: '7', b: '8', c: '9' }],
+      ],
+    });
+
+    assert.deepEqual(resultingStateWithoutChunk, {
+      data: [
+        { a: '1', b: '2', c: '3' },
+        { a: '4', b: '5', c: '6' },
+        { a: '7', b: '8', c: '9' },
+      ],
+      references: [
+        [
+          { a: '1', b: '2', c: '3' },
+          { a: '4', b: '5', c: '6' },
+        ],
+        [{ a: '7', b: '8', c: '9' }],
+      ],
+    });
   });
 });
-
-// Add chunking
-// Exceptional handling test
-// try catch
-// Try to break the function
-// assert.it(Exceptions to reach)

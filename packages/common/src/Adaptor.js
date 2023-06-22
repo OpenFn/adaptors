@@ -567,7 +567,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
     bom: true,
     trim: true,
     skip_empty_lines: true,
-    chunkSize: 0,
+    chunkSize: Infinity,
     ltrim: true,
     rtrim: true,
   };
@@ -580,6 +580,10 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
 
   const options = { ...defaultOptions, ...filteredOptions };
 
+  if (options.chunkSize < 1) {
+    throw new Error('chunkSize must be at least 1');
+  }
+
   return state => {
     return new Promise((resolve, reject) => {
       let buffer = [];
@@ -589,30 +593,42 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
           ? parse(streamOrString, options)
           : streamOrString.pipe(parse(options));
 
+      const flushBuffer = (state, buffer) => {
+        if (callback) {
+          state = callback(state, buffer);
+        } else {
+          // state = {
+          //   ...state,
+          //   references: [...state.references, ...state.data],
+          //   data: buffer,
+          // };
+          state = composeNextState(state, buffer);
+        }
+
+        buffer = [];
+
+        return [state, buffer];
+      };
+
       parser.on('readable', function () {
         let chunk;
-        let i = 0;
+
         // push chunk into array
         // if array length is chunkSize, callback
         //   set array to empty
         // repeat
 
         while ((chunk = parser.read()) !== null) {
-          i++;
           buffer.push(chunk);
 
           // console.log(buffer.length, 'buffer length before');
           // console.log(buffer.length >= options.chunkSize);
 
           // should we 'emit/clear' the buffer
-          if (options.chunkSize && buffer.length >= options.chunkSize) {
+          if (buffer.length >= options.chunkSize) {
             console.log('On Chunking');
-            const nextState = composeNextState(state, buffer);
-            if (callback) resolve(callback(nextState));
-            resolve(nextState);
 
-            // buffer.length == options.chunkSize ? buffer : (buffer = []);
-            buffer = [];
+            [state, buffer] = flushBuffer(state, buffer);
           }
 
           // console.log(buffer.length, 'buffer length after');
@@ -621,7 +637,7 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
       parser.on('error', function (error) {
         // something to consider, if we blow up with 500 items in the buffer,
         // we might want to call the callback with the buffer
-        state = callback(state, buffer);
+        // state = callback(state, buffer);
         reject(error);
       });
 
@@ -629,123 +645,15 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
         console.log('On End');
         console.log(buffer, 'buffer');
         console.log(state, 'final state');
-
         console.log(options.chunkSize, 'chunkSize');
-        if (!options.chunkSize || buffer.length >= options.chunkSize) {
-          console.log('Is this true');
-          const nextState = composeNextState(state, buffer);
-          if (callback) resolve(callback(nextState));
 
-          resolve(nextState);
-        }
+        [state] = flushBuffer(state, buffer);
 
         resolve(state);
       });
     });
   };
 }
-// export function parseCsv(stream, parsingOptions = {}) {
-//   stream = expandReferences(stream)(state);
-//   parsingOptions = expandReferences(parsingOptions)(state);
-
-//   const defaultOptions = {
-//     delimiter: ',',
-//     quote: '"',
-//     escape: '"',
-//     bom: true,
-//     trim: true,
-//     ltrim: true,
-//     rtrim: true,
-//   };
-
-//   const options = { ...defaultOptions, ...parsingOptions };
-//   // Read and process the CSV file
-//   const processFile = async () => {
-//     const records = [];
-
-//     const parser =
-//       typeof stream === 'string'
-//         ? parse(stream, options)
-//         : stream.pipe(parse(options));
-
-//     parser.on('readable', function () {
-//       let chunk;
-//       const chunkSize = options.chunkSize ? options.chunkSize : null;
-
-//       while ((chunk = parser.read(chunkSize)) !== null) {
-//         const recordsInChunk = chunk.toString().split('\n');
-//         for (const record of recordsInChunk) {
-//           records.push(record);
-//           // Also return a stream
-//           // record.push(record.parse);
-//         }
-//       }
-//     });
-
-//     // Catch any error
-//     parser.on('error', function (err) {
-//       console.error(err.message);
-//       // throw new Error(err);
-//     });
-//     // Test that the parsed records matched the expected records
-//     parser.on('end', function () {
-//       console.log(records);
-//     });
-//     await finished(parser);
-//     return records;
-//   };
-//   // Parse the CSV content
-//   // return composeNextState(state, processFile());
-//   return processFile();
-// }
-
-// state = { data: { avgAge: 0, numSeen: 0, ageTotal: 0}}
-// // age, sex
-// // 10, M
-// // 15, M
-
-// parseCsv(fileHandle, { chunkSize: 1000, delimiter: ',', quote: '"', escape: '"' }, (state, rows) => {
-//   for (const row of state.rows) {
-//     state.data.numSeen += 1;
-//     state.data.ageTotal += row.age;
-//     state.avgAge = state.ageTotal / state.numSeen;
-//   }
-
-//   return state
-// });
-
-// fetchWholeCsv(url, parseSettings) {
-//   return (state) {
-//     parseCsv(fileHandle, { chunkSize: 1000, ...otherSettings }, (state, rows) => {
-//       for (const row of state.rows) {
-//         state.data.push(row);
-//       }
-
-//       return state
-//     });
-
-//   }
-
-//   return fetch(url)
-// }
-
-// parseCsv(fileHandle, { chunkSize: 1000, ...otherSettings }, (state, rows) => {
-//   for (const row of state.rows) {
-//     state.data.push(row);
-//   }
-
-//   return state
-// });
-
-// // state.avgAge = 45
-
-// // state.row[0]
-// // returns state
-// (state) => {
-//   state.data.items.push(state.row);
-// }
-
-// parseCSV(myCSV, { chunkSize: 1000 }, post('a/b/c', (state) => state.data))
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
