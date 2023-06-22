@@ -329,52 +329,6 @@ export function parseXML(body, script) {
 }
 
 /**
- * CSV-Parse for CSV conversion to JSON
- * @public
- * @example
- *  parseCSV("/home/user/someData.csv", {
- * 	  quoteChar: '"',
- * 	  header: false,
- * 	});
- * @function
- * @param {String} target - string or local file with CSV data
- * @param {Object} config - csv-parse config object
- * @returns {Operation}
- */
-export function parseCSV(target, config) {
-  return state => {
-    return new Promise((resolve, reject) => {
-      var csvData = [];
-
-      try {
-        fs.readFileSync(target);
-        fs.createReadStream(target)
-          .pipe(parse(config))
-          .on('data', csvrow => {
-            console.log(csvrow);
-            csvData.push(csvrow);
-          })
-          .on('end', () => {
-            console.log(csvData);
-            resolve(composeNextState(state, csvData));
-          });
-      } catch (err) {
-        var csvString;
-        if (typeof target === 'string') {
-          csvString = target;
-        } else {
-          csvString = expandReferences(target)(state);
-        }
-        csvData = parse(csvString, config, (err, output) => {
-          console.log(output);
-          resolve(composeNextState(state, output));
-        });
-      }
-    });
-  };
-}
-
-/**
  * Make a request using the 'request' node module. This module is deprecated.
  * @example
  *  request(params);
@@ -422,4 +376,5 @@ export {
   sourceValue,
   splitKeys,
   toArray,
+  parseCsv,
 } from '@openfn/language-common';
