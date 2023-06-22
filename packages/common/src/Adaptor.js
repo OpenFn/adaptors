@@ -597,11 +597,6 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
         if (callback) {
           state = callback(state, buffer);
         } else {
-          // state = {
-          //   ...state,
-          //   references: [...state.references, ...state.data],
-          //   data: buffer,
-          // };
           state = composeNextState(state, buffer);
         }
 
@@ -613,42 +608,20 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
       parser.on('readable', function () {
         let chunk;
 
-        // push chunk into array
-        // if array length is chunkSize, callback
-        //   set array to empty
-        // repeat
-
         while ((chunk = parser.read()) !== null) {
           buffer.push(chunk);
 
-          // console.log(buffer.length, 'buffer length before');
-          // console.log(buffer.length >= options.chunkSize);
-
-          // should we 'emit/clear' the buffer
           if (buffer.length >= options.chunkSize) {
-            console.log('On Chunking');
-
             [state, buffer] = flushBuffer(state, buffer);
           }
-
-          // console.log(buffer.length, 'buffer length after');
         }
       });
       parser.on('error', function (error) {
-        // something to consider, if we blow up with 500 items in the buffer,
-        // we might want to call the callback with the buffer
-        // state = callback(state, buffer);
         reject(error);
       });
 
       parser.on('end', function () {
-        console.log('On End');
-        console.log(buffer, 'buffer');
-        console.log(state, 'final state');
-        console.log(options.chunkSize, 'chunkSize');
-
-        [state] = flushBuffer(state, buffer);
-
+        [state, buffer] = flushBuffer(state, buffer);
         resolve(state);
       });
     });
