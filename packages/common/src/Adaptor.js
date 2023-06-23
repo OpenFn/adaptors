@@ -546,7 +546,7 @@ export function chunk(array, chunkSize) {
 /**
  * The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
  * resolves to the parsed CSV data.
- * @param {String | Stream} streamOrString - A CSV string or a readable stream
+ * @param {String | Stream} csvData - A CSV string or a readable stream
  * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON.
  *     Possible options:
  *     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`
@@ -562,7 +562,7 @@ export function chunk(array, chunkSize) {
  * @param {function} callback - (Optional) callback function
  * @returns {Promise} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
  */
-export function parseCsv(streamOrString, parsingOptions = {}, callback) {
+export function parseCsv(csvData, parsingOptions = {}, callback) {
   const defaultOptions = {
     delimiter: ',',
     quote: '"',
@@ -592,9 +592,9 @@ export function parseCsv(streamOrString, parsingOptions = {}, callback) {
       let buffer = [];
 
       const parser =
-        typeof streamOrString === 'string'
-          ? parse(streamOrString, options)
-          : streamOrString.pipe(parse(options));
+        typeof csvData === 'string'
+          ? parse(csvData, options)
+          : csvData.pipe(parse(options));
 
       const clearBuffer = () => (buffer = []);
 

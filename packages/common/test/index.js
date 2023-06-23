@@ -362,18 +362,18 @@ describe('parseCsv', function () {
     const state = { references: [], data: [] };
 
     // Create a mock function to track the callback invocation
-    let isCallbackCalled = false;
+    let callBackInvocations = 0;
 
     // Mock function that sets a flag when called
     const callback = (state, rows) => {
-      isCallbackCalled = true;
+      callBackInvocations++;
       return { ...state, data: rows };
     };
 
     await parseCsv(csv, { chunkSize: 2 }, callback)(state);
 
     // Assertion to check if the callback was called
-    expect(isCallbackCalled).to.be.true;
+    expect(callBackInvocations).to.eq(2);
   });
 
   it('should throw an exception when a CSV is invalid', async function () {
@@ -396,25 +396,34 @@ describe('parseCsv', function () {
 
   it('should return state with modifications from the callback', async function () {
     const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9\n10,11,12\n13,14,15';
-    const state = { references: [], data: [] };
+    const state = { references: [], data: [], items: [] };
 
     const resultingState = await parseCsv(
       csv,
       { chunkSize: 2 },
       (state, rows) => {
-        return { ...state, data: rows };
+        const { items } = state;
+        return { ...state, data: rows, items: [...items, ...rows] };
       }
     )(state);
 
+    // Notice how the user has decided to discard all but the final chunk
     assert.deepEqual(resultingState, {
       references: [],
       data: [{ a: '13', b: '14', c: '15' }],
+      items: [
+        { a: '1', b: '2', c: '3' },
+        { a: '4', b: '5', c: '6' },
+        { a: '7', b: '8', c: '9' },
+        { a: '10', b: '11', c: '12' },
+        { a: '13', b: '14', c: '15' },
+      ],
     });
   });
 
   it('should await promises returned from the callback', async function () {
     const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9\n10,11,12\n13,14,15';
-    const state = { references: [], data: [] };
+    const state = { references: [], data: [], items: [] };
 
     const resultingState = await parseCsv(
       csv,
@@ -458,33 +467,41 @@ describe('parseCsv', function () {
     assert.equal(error.message, 'chunkSize must be at least 1');
   });
 
-  it('should append rows to references when not given a callback', async function () {
+  it('should put the whole array of rows into `data` and shift previous `data` to references when not given a callback or chunkSize', async function () {
     const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9';
 
-    const state = { data: [], references: [] };
+    const state = { data: { something: 'came before' }, references: [] };
 
-    const resultingState = await parseCsv(csv, { chunkSize: 2 })(state);
-
-    const resultingStateWithoutChunk = await parseCsv(csv, {})(state);
+    const resultingState = await parseCsv(csv, {})(state);
 
     assert.deepEqual(resultingState, {
-      data: [{ a: '7', b: '8', c: '9' }],
-      references: [
-        [],
-        [
-          { a: '1', b: '2', c: '3' },
-          { a: '4', b: '5', c: '6' },
-        ],
-      ],
-    });
-
-    assert.deepEqual(resultingStateWithoutChunk, {
       data: [
         { a: '1', b: '2', c: '3' },
         { a: '4', b: '5', c: '6' },
         { a: '7', b: '8', c: '9' },
       ],
-      references: [[]],
+      references: [{ something: 'came before' }],
+    });
+  });
+
+  it('should put each chunk into data, then into references, sequentially when not given a callback but given chunkSize', async function () {
+    const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9';
+
+    const state = { data: { something: 'came before' }, references: [] };
+
+    const resultingStateWithChunk = await parseCsv(csv, { chunkSize: 2 })(
+      state
+    );
+
+    assert.deepEqual(resultingStateWithChunk, {
+      data: [{ a: '7', b: '8', c: '9' }],
+      references: [
+        { something: 'came before' },
+        [
+          { a: '1', b: '2', c: '3' },
+          { a: '4', b: '5', c: '6' },
+        ],
+      ],
     });
   });
 });
