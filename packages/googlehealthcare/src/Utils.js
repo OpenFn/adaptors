@@ -1,7 +1,15 @@
-// TODO: Determine how to authenticate for the target API
-function makeAuthHeader(auth) {
-  const { accessToken } = auth;
-  return { Authorization: `Bearer ${accessToken}` };
+export function buildUrl({
+  apiVersion,
+  projectId,
+  cloudRegion,
+  datasetId,
+  fhirStoreId,
+  resourceType,
+}) {
+  const setApiVersion = apiVersion ? apiVersion : 'v1';
+  const baseUrl = `https://healthcare.googleapis.com/${setApiVersion}`;
+
+  return `${baseUrl}/projects/${projectId}/locations/${cloudRegion}/datasets/${datasetId}/fhirStores/${fhirStoreId}/fhir/${resourceType}`;
 }
 
 export const request = async (url, params = {}, method = 'GET') => {
@@ -13,7 +21,7 @@ export const request = async (url, params = {}, method = 'GET') => {
     body: JSON.stringify(params),
     headers: {
       'Content-Type': 'application/fhir+json',
-      ...makeAuthHeader(auth),
+      Authorization: `Bearer ${auth.accessToken}`,
     },
   };
 

@@ -3,9 +3,8 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import google from '@googleapis/healthcare';
 
-import { request } from './Utils';
+import { buildUrl, request } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -25,7 +24,6 @@ export function execute(...operations) {
     data: null,
   };
 
-  // TODO: Add session-based authentication here if your API needs it.
   return state => {
     return commonExecute(...operations)({
       ...initialState,
@@ -38,19 +36,36 @@ export function execute(...operations) {
  * Create some resource in Google Cloud Healthcare
  * @public
  * @example
- * createFhirResource("Patient", {
+ * createFhirResource({
  *   name: [{ use: "official", family: "Smith", given: ["Darcy"] }],
  *   gender: "female",
  *   birthDate: "1970-01-01",
  *   resourceType: "Patient",
  * });
+ * @example
+ * createFhirResource(state => ({
+ *  resourceType: 'Encounter',
+ *  status: 'finished',
+ *  class: {
+ *    system: 'http://hl7.org/fhir/v3/ActCode',
+ *    code: 'IMP',
+ *    display: 'inpatient encounter',
+ *  },
+ *  reasonCode: [
+ *    {
+ *      text: 'The patient had an abnormal heart rate. She was concerned about this.',
+ *    },
+ *  ],
+ *  subject: {
+ *    reference: `Patient/${state.data.id}`,
+ *  },
+ * }));
  * @function
- * @param {string} resourceType - The type of entity that will be created
- * @param {object} body - The data to create the new resource
+ * @param {object} resource - The data to create the new resource
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function createFhirResource(resourceType, body, callback) {
+export function createFhirResource(resource, callback) {
   return async state => {
     const {
       cloudRegion,
@@ -61,29 +76,29 @@ export function createFhirResource(resourceType, body, callback) {
       accessToken,
     } = state.configuration;
 
-    const [resolvedResourceType, resolvedBody] = expandReferences(
-      state,
-      resourceType,
-      body
-    );
-    const setApiVersion = apiVersion ? apiVersion : 'v1';
-    const baseUrl = `https://healthcare.googleapis.com/${setApiVersion}`;
-    const parent = `${baseUrl}/projects/${projectId}/locations/${cloudRegion}/datasets/${datasetId}/fhirStores/${fhirStoreId}/fhir/${resolvedResourceType}`;
+    const [resolvedResource] = expandReferences(state, resource);
+    const { resourceType } = resolvedResource;
 
-    // const request = {
-    //   parent,
-    //   type: resolvedResourceType,
-    //   requestBody: resolvedBody,
-    // };
-    const config = {
+    const url = buildUrl({
+      apiVersion,
+      projectId,
+      cloudRegion,
+      datasetId,
+      fhirStoreId,
+      resourceType,
+    });
+
+    const payload = {
       auth: {
         accessToken: accessToken,
       },
-      ...resolvedBody,
+      ...resolvedResource,
     };
 
-    return request(parent, config, 'POST').then(response => {
-      console.log(`Created FHIR resource with ID ${response.id}`);
+    return request(url, payload, 'POST').then(response => {
+      console.log(
+        `Created FHIR ${resourceType} resource with ID ${response.id}`
+      );
       const nextState = {
         ...composeNextState(state, response),
         response,
@@ -91,23 +106,11 @@ export function createFhirResource(resourceType, body, callback) {
       if (callback) return callback(nextState);
       return nextState;
     });
-    // const resource =
-    //   await healthcare.projects.locations.datasets.fhirStores.fhir.create(
-    //     request
-    //   );
-    // console.log(`Created FHIR resource with ID ${resource.data.id}`);
-    // const nextState = {
-    //   ...composeNextState(state, resource.data),
-    //   resource,
-    // };
-    // if (callback) return callback(nextState);
-    // return nextState;
   };
 }
 
 export { request } from './Utils';
 
-// TODO: Decide which functions to publish from @openfn/language-common
 export {
   dataPath,
   dataValue,
