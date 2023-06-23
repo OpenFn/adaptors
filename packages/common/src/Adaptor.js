@@ -586,9 +586,8 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     throw new Error('chunkSize must be at least 1');
   }
 
-  return initialState => {
+  return state => {
     return new Promise((resolve, reject) => {
-      let state = initialState;
       let buffer = [];
 
       const parser =
@@ -613,7 +612,10 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
           buffer.push(chunk);
 
           if (buffer.length >= options.chunkSize) {
-            [state, buffer] = flushBuffer(state);
+            const [nextState, nextBuffer] = flushBuffer(state);
+            // eslint-disable-next-line no-param-reassign
+            state = nextState;
+            buffer = nextBuffer;
           }
         }
       });
