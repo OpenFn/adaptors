@@ -3,7 +3,8 @@
     {
       "name": "list",
       "params": [
-        "dirPath"
+        "dirPath",
+        "callback"
       ],
       "docs": {
         "description": "List files present in a directory",
@@ -30,6 +31,18 @@
               "name": "string"
             },
             "name": "dirPath"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
           },
           {
             "title": "returns",

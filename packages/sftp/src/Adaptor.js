@@ -1,9 +1,12 @@
 import {
   execute as commonExecute,
   composeNextState,
+  parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import csv from 'csvtojson';
+import { isObjectEmpty, handleResponse, handleError, handleLog } from './Utils';
+
+let sftp = null;
 
 /**
  * Execute a sequence of operations.
@@ -23,7 +26,28 @@ export function execute(...operations) {
     data: null,
   };
 
-  return state => commonExecute(...operations)({ ...initialState, ...state });
+  return state =>
+    commonExecute(
+      connect,
+      ...operations,
+      disconnect
+    )({ ...initialState, ...state });
+}
+
+function connect(state) {
+  sftp = new Client();
+
+  return sftp.connect(state.configuration).then(() => {
+    console.log('Connected');
+    return state;
+  });
+}
+
+function disconnect(state) {
+  console.log('Disconnected');
+  sftp.end();
+  sftp = undefined;
+  return state;
 }
 
 /**
@@ -33,29 +57,15 @@ export function execute(...operations) {
  * list('/some/path/')
  * @function
  * @param {string} dirPath - Path to resource
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath) {
+export function list(dirPath, callback = x => x) {
   return state => {
-    const sftp = new Client();
-
     return sftp
-      .connect(state.configuration)
-      .then(() => {
-        console.debug('Connected. ✓\n');
-        return sftp.list(dirPath);
-      })
-      .then(files => {
-        // TODO: should we remove this?
-        // console.debug(`File list: ${JSON.stringify(files, null, 2)}\n`);
-        const nextState = composeNextState(state, files);
-        sftp.end();
-        return nextState;
-      })
-      .catch(e => {
-        sftp.end();
-        console.log(e);
-      });
+      .list(dirPath)
+      .then(files => handleResponse(files, state, callback))
+      .catch(handleError);
   };
 }
 
@@ -78,55 +88,23 @@ export function getCSV(filePath, parsingOptions = {}) {
       encoding: null,
       autoClose: false,
     },
-    delimiter: ',',
-    noheader: false,
-    quote: '"',
-    trim: true,
-    flatKeys: false,
-    output: 'json',
+    columns: true,
   };
 
   return state => {
-    const sftp = new Client();
-
     let results = [];
 
-    if (parsingOptions) {
-      return sftp
-        .connect(state.configuration)
-        .then(() => {
-          console.debug('Connected. ✓\n');
-          return sftp.createReadStream(filePath, {
-            ...defaultOptions.readStreamOptions,
-          });
-        })
-        .then(chunk => {
-          console.debug('Parsing rows to JSON.\n');
+    const { readStreamOptions, ...csvDefaultOptions } = defaultOptions;
+    const useParser = !isObjectEmpty(parsingOptions);
 
-          return csv({ ...defaultOptions, ...parsingOptions }).fromStream(
-            chunk
-          );
-        })
-        .then(json => {
-          const nextState = composeNextState(state, json);
-          return nextState;
-        })
-        .then(state => {
-          console.log('Stream finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          console.log(e);
-          sftp.end();
-        });
+    if (useParser) {
+      const stream = sftp.createReadStream(filePath, readStreamOptions);
+      return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
+        state
+      );
     } else {
       return sftp
-        .connect(state.configuration)
-        .then(() => {
-          console.debug('Connected. ✓\n');
-          return sftp.get(filePath);
-        })
+        .get(filePath)
         .then(chunk => {
           results.push(chunk);
         })
@@ -140,15 +118,8 @@ export function getCSV(filePath, parsingOptions = {}) {
             return nextState;
           });
         })
-        .then(state => {
-          console.log('Stream finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          console.log(e);
-          sftp.end();
-        });
+        .then(state => handleLog('Stream finished.', state))
+        .catch(handleError);
     }
   };
 }
@@ -170,24 +141,11 @@ export function getCSV(filePath, parsingOptions = {}) {
  */
 export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
-    const sftp = new Client();
-
-    return sftp.connect(state.configuration).then(() => {
-      return sftp
-        .put(localFilePath, remoteFilePath, parsingOptions)
-        .then(res => {
-          const nextState = composeNextState(state, res);
-          return nextState;
-        })
-        .then(state => {
-          console.log('Upload finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          throw e;
-        });
-    });
+    return sftp
+      .put(localFilePath, remoteFilePath, parsingOptions)
+      .then(response => handleResponse(response, state))
+      .then(state => handleLog('Upload finished.', state))
+      .catch(e => handleError(e, true));
   };
 }
 
@@ -206,17 +164,10 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
  */
 export function getJSON(filePath, encoding) {
   return state => {
-    const sftp = new Client();
-
     let results = [];
 
     return sftp
-      .connect(state.configuration)
-      .then(() => {
-        console.debug('Connected. ✓\n');
-        return sftp.get(filePath);
-      })
-
+      .get(filePath)
       .then(chunk => {
         results.push(chunk);
       })
@@ -231,14 +182,8 @@ export function getJSON(filePath, encoding) {
           return nextState;
         });
       })
-      .then(state => {
-        console.log('Stream finished.');
-        sftp.end();
-        return state;
-      })
-      .catch(e => {
-        throw e;
-      });
+      .then(state => handleLog('Stream finished.', state))
+      .catch(e => handleError(e, true));
   };
 }
 
@@ -302,4 +247,5 @@ export {
   merge,
   sourceValue,
   chunk,
+  parseCsv,
 } from '@openfn/language-common';

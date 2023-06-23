@@ -2,6 +2,7 @@ import curry from 'lodash/fp/curry.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
+import { parse } from 'csv-parse';
 
 export * as beta from './beta';
 export * as http from './http';
@@ -542,6 +543,93 @@ export function chunk(array, chunkSize) {
   return output;
 }
 
+/**
+ * The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
+ * resolves to the parsed CSV data.
+ * @param {String | Stream} csvData - A CSV string or a readable stream
+ * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON.
+ *     Possible options:
+ *     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`
+ *     - `quote` {string|Buffer|[string|Buffer]} - Defines the characters used to surround a field. Default: `'"'`
+ *     - `escape` {Buffer|string|null|boolean} - Set the escape character as one character/byte only. Default: `"`
+ *     - `columns` {boolean | array | function} - Generates record in the form of object literals. Default: `true`
+ *     - `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`
+ *     - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
+ *     - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
+ *     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
+ *     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
+ *     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`
+ * @param {function} callback - (Optional) callback function. If used it will take state and csvRows
+ * @returns {Promise} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
+ */
+export function parseCsv(csvData, parsingOptions = {}, callback) {
+  const defaultOptions = {
+    delimiter: ',',
+    quote: '"',
+    escape: '"',
+    columns: true,
+    bom: true,
+    trim: true,
+    ltrim: true,
+    rtrim: true,
+    chunkSize: Infinity,
+    skip_empty_lines: true,
+  };
+
+  const filteredOptions = Object.fromEntries(
+    Object.entries(parsingOptions).filter(([key]) => key in defaultOptions)
+  );
+
+  const options = { ...defaultOptions, ...filteredOptions };
+
+  if (options.chunkSize < 1) {
+    throw new Error('chunkSize must be at least 1');
+  }
+
+  return state => {
+    return new Promise((resolve, reject) => {
+      let buffer = [];
+
+      const parser =
+        typeof csvData === 'string'
+          ? parse(csvData, options)
+          : csvData.pipe(parse(options));
+
+      const flushBuffer = currentState => {
+        const nextState = callback
+          ? callback(currentState, buffer)
+          : composeNextState(currentState, buffer);
+
+        buffer = [];
+
+        return [nextState, buffer];
+      };
+
+      parser.on('readable', function () {
+        let chunk;
+
+        while ((chunk = parser.read()) !== null) {
+          buffer.push(chunk);
+
+          if (buffer.length >= options.chunkSize) {
+            const [nextState, nextBuffer] = flushBuffer(state);
+            // eslint-disable-next-line no-param-reassign
+            state = nextState;
+            buffer = nextBuffer;
+          }
+        }
+      });
+      parser.on('error', function (error) {
+        reject(error);
+      });
+
+      parser.on('end', function () {
+        const [finalState] = flushBuffer(state);
+        resolve(finalState);
+      });
+    });
+  };
+}
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public
