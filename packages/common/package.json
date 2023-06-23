@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-common",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -28,7 +28,7 @@
     "./util": {
       "import": "./dist/util.js",
       "require": "./dist/util.cjs"
-    } 
+    }
   },
   "author": "Open Function Group",
   "license": "LGPL-3.0-or-later",

@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.9.0
+
+### Minor Changes
+
+- 111807f: Add support for `parseCsv` in common
+
 ## 1.8.1
 
 ### Patch Changes

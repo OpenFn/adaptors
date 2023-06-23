@@ -1,5 +1,14 @@
 # @openfn/language-sftp
 
+## 0.8.2
+
+### Patch Changes
+
+- d2c980e: Use `parseCsv` from language-common
+- c5d3ce1: improve connection handling
+- Updated dependencies [111807f]
+  - @openfn/language-common@1.9.0
+
 ## 0.8.1
 
 ### Patch Changes
