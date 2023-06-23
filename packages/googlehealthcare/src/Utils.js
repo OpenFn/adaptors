@@ -1,33 +1,66 @@
 // TODO: Determine how to authenticate for the target API
 function makeAuthHeader(auth) {
-  const { username, password } = auth;
-  const buff = Buffer.from(`${username}:${password}`);
-  const credentials = buff.toString('base64');
-  return { Authorization: `Basic ${credentials}` };
+  const { accessToken } = auth;
+  return { Authorization: `Bearer ${accessToken}` };
 }
 
-export async function request(url, options) {
-  const { auth } = options;
-  delete options.auth;
+export const request = async (url, params = {}, method = 'GET') => {
+  const { auth } = params;
+  delete params.auth;
 
-  const response = await fetch(url, {
-    ...options,
+  const options = {
+    method,
+    body: JSON.stringify(params),
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/fhir+json',
       ...makeAuthHeader(auth),
     },
-  });
+  };
 
-  // TODO: Handle errors based on the behavior of the target API
-  if (response.status === 404) {
-    throw new Error('Page not found');
-  } else if (response.status === 500) {
-    throw new Error('Server error');
-  } else if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+  if (method == 'GET') delete options.body;
+
+  const resolvedUrl =
+    method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
+
+  const response = await fetch(resolvedUrl, options);
+  const data = await response.json();
+
+  handleResponseError(response, data, method);
+
+  return data;
+};
+
+export function handleResponseError(response, data, method) {
+  const { status, statusText, url } = response;
+
+  if (isEmpty(data)) {
+    const responseString = [
+      `Message: 0 results returned`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+    ].join('\n\t∟ ');
+
+    console.log(`Info at ${new Date()}\n${responseString}`);
+  }
+  if (!response.ok) {
+    const errorString = [
+      `Message: ${statusText}`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+      `Body: ${JSON.stringify(data, null, 2).replace(/\n/g, '\n\t  ')}`,
+    ].join('\n\t∟ ');
+    throw new Error(errorString);
+  }
+}
+
+export function isEmpty(obj) {
+  if (Array.isArray(obj)) {
+    return obj.length === 0;
   }
 
-  // TODO: Extract data from response based on the target API
-  const data = await response.json();
-  return data;
+  if (typeof obj === 'object' && obj !== null) {
+    return Object.keys(obj).length === 0;
+  }
+
+  return false;
 }

@@ -5,13 +5,7 @@ import {
 import { expandReferences } from '@openfn/language-common/util';
 import google from '@googleapis/healthcare';
 
-const healthcare = google.healthcare({
-  version: 'v1',
-  auth: new google.auth.GoogleAuth({
-    scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-  }),
-  headers: { 'Content-Type': 'application/fhir+json' },
-});
+import { request } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -58,35 +52,56 @@ export function execute(...operations) {
  */
 export function createFhirResource(resourceType, body, callback) {
   return async state => {
-    const { cloudRegion, projectId, datasetId, fhirStoreId } =
-      state.configuration;
+    const {
+      cloudRegion,
+      projectId,
+      datasetId,
+      fhirStoreId,
+      apiVersion,
+      accessToken,
+    } = state.configuration;
 
     const [resolvedResourceType, resolvedBody] = expandReferences(
       state,
       resourceType,
       body
     );
-    const parent = `projects/${projectId}/locations/${cloudRegion}/datasets/${datasetId}/fhirStores/${fhirStoreId}`;
+    const setApiVersion = apiVersion ? apiVersion : 'v1';
+    const baseUrl = `https://healthcare.googleapis.com/${setApiVersion}`;
+    const parent = `${baseUrl}/projects/${projectId}/locations/${cloudRegion}/datasets/${datasetId}/fhirStores/${fhirStoreId}/fhir/${resolvedResourceType}`;
 
-    const request = {
-      parent,
-      type: resolvedResourceType,
-      requestBody: resolvedBody,
+    // const request = {
+    //   parent,
+    //   type: resolvedResourceType,
+    //   requestBody: resolvedBody,
+    // };
+    const config = {
+      auth: {
+        accessToken: accessToken,
+      },
+      ...resolvedBody,
     };
 
-    const resource =
-      await healthcare.projects.locations.datasets.fhirStores.fhir.create(
-        request
-      );
-
-    console.log(`Created FHIR resource with ID ${resource.data.id}`);
-
-    const nextState = {
-      ...composeNextState(state, resource.data),
-      resource,
-    };
-    if (callback) return callback(nextState);
-    return nextState;
+    return request(parent, config, 'POST').then(response => {
+      console.log(`Created FHIR resource with ID ${response.id}`);
+      const nextState = {
+        ...composeNextState(state, response),
+        response,
+      };
+      if (callback) return callback(nextState);
+      return nextState;
+    });
+    // const resource =
+    //   await healthcare.projects.locations.datasets.fhirStores.fhir.create(
+    //     request
+    //   );
+    // console.log(`Created FHIR resource with ID ${resource.data.id}`);
+    // const nextState = {
+    //   ...composeNextState(state, resource.data),
+    //   resource,
+    // };
+    // if (callback) return callback(nextState);
+    // return nextState;
   };
 }
 
