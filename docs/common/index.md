@@ -54,6 +54,8 @@
 <dt>
     <a href="#options">options(requestParams)</a></dt>
 <dt>
+    <a href="#parseCsv">parseCsv(csvData, [parsingOptions], callback)</a></dt>
+<dt>
     <a href="#patch">patch(requestParams)</a></dt>
 <dt>
     <a href="#post">post(requestParams)</a></dt>
@@ -625,6 +627,24 @@ options({
   url: 'https://www.example.com/api/items',
 });
 ```
+
+* * *
+
+## parseCsv
+
+parseCsv(csvData, [parsingOptions], callback) ⇒ <code>Promise</code>
+The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
+resolves to the parsed CSV data.
+
+**Kind**: global function  
+**Returns**: <code>Promise</code> - The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csvData | <code>String</code> \| <code>Stream</code> | A CSV string or a readable stream |
+| [parsingOptions] | <code>Object</code> | Optional. Parsing options for converting CSV to JSON.     Possible options:     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`     - `quote` {string|Buffer|[string|Buffer]} - Defines the characters used to surround a field. Default: `'"'`     - `escape` {Buffer|string|null|boolean} - Set the escape character as one character/byte only. Default: `"`     - `columns` {boolean | array | function} - Generates record in the form of object literals. Default: `true`     - `bom` {boolean} - Strips the [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark) from the input string or buffer. Default: `true`     - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`     - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true` |
+| callback | <code>function</code> | (Optional) callback function. If used it will take state and csvRows |
+
 
 * * *
 

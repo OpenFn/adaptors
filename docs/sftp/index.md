@@ -6,7 +6,7 @@
 <dt>
     <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
 <dt>
-    <a href="#list">list(dirPath)</a></dt>
+    <a href="#list">list(dirPath, [callback])</a></dt>
 <dt>
     <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
 <dt>
@@ -61,7 +61,7 @@ getJSON(
 
 ## list
 
-list(dirPath) ⇒ <code>Operation</code>
+list(dirPath, [callback]) ⇒ <code>Operation</code>
 List files present in a directory
 
 **Kind**: global function  
@@ -70,6 +70,7 @@ List files present in a directory
 | Param | Type | Description |
 | --- | --- | --- |
 | dirPath | <code>string</code> | Path to resource |
+| [callback] | <code>function</code> | Optional callback to handle the response |
 
 **Example**  
 ```js
