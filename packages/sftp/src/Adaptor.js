@@ -60,7 +60,7 @@ function disconnect(state) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath, callback = state => state) {
+export function list(dirPath, callback = x => x) {
   return state => {
     return sftp
       .list(dirPath)
