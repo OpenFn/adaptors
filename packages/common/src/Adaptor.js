@@ -586,9 +586,9 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     throw new Error('chunkSize must be at least 1');
   }
 
-  return stateObj => {
+  return initialState => {
     return new Promise((resolve, reject) => {
-      let state = stateObj;
+      let state = initialState;
       let buffer = [];
 
       const parser =
@@ -596,14 +596,12 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
           ? parse(csvData, options)
           : csvData.pipe(parse(options));
 
-      const clearBuffer = () => (buffer = []);
-
-      const buildResponse = state => {
+      const flushBuffer = currentState => {
         const nextState = callback
-          ? callback(state, buffer)
-          : composeNextState(state, buffer);
+          ? callback(currentState, buffer)
+          : composeNextState(currentState, buffer);
 
-        clearBuffer();
+        buffer = [];
 
         return [nextState, buffer];
       };
@@ -615,7 +613,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
           buffer.push(chunk);
 
           if (buffer.length >= options.chunkSize) {
-            [state, buffer] = buildResponse(state);
+            [state, buffer] = flushBuffer(state);
           }
         }
       });
@@ -624,8 +622,8 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
       });
 
       parser.on('end', function () {
-        [state, buffer] = buildResponse(state);
-        resolve(state);
+        const [finalState] = flushBuffer(state);
+        resolve(finalState);
       });
     });
   };
