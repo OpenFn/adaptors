@@ -102,9 +102,6 @@ export function getCSV(filePath, parsingOptions = {}) {
       return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
         state
       );
-      // .then(json => handleResponse(json, state))
-      // .then(state => handleLog('Stream finished.', state))
-      // .catch(handleError);
     } else {
       return sftp
         .get(filePath)
