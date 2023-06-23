@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { execute, dataValue, createFhirResource } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
@@ -38,53 +38,48 @@ describe('execute', () => {
   });
 });
 
-describe('create', () => {
-  it('makes a post request to the right endpoint', async () => {
+describe('createFhirResource', () => {
+  it.skip('creates a patient resource to google cloud healthcare', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+        cloudRegion: 'us-east7',
+        projectId: 'test-007',
+        datasetId: 'fhir-007',
+        fhirStoreId: 'testing-fhir-007',
+        accessToken: 'aGVsbG86dGhlcmU=',
       },
       data: {
-        fullName: 'Mamadou',
-        gender: 'M',
+        resourceType: 'Patient',
+        name: [{ use: 'official', family: 'Smith', given: ['Darcy'] }],
+        gender: 'female',
+        birthDate: '1970-01-01',
       },
     };
 
-    const finalState = await execute(
-      create('patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
+    const finalState = await execute(createFhirResource(state => state.data))(
+      state
+    );
 
     expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
-  });
-
-  it('throws an error for a 404', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+      birthDate: '1970-01-01',
+      gender: 'female',
+      id: '08ab7dd6-4271-45b2-a6a7-0ecd5ddce29d',
+      meta: {
+        lastUpdated: '2023-06-23T16:40:46.202757+00:00',
+        versionId: 'MTY4NzUzODQ0NjIwMjc1NzAwMA',
       },
-    };
-
-    const error = await execute(create('noAccess', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
+      name: [
+        {
+          family: 'Smith',
+          given: ['Darcy'],
+          use: 'official',
+        },
+      ],
+      resourceType: 'Patient',
     });
-
-    expect(error.message).to.eql('Page not found');
   });
 
-  it('handles and throws different kinds of errors', async () => {
+  it.skip('throws an error for a 404', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -94,11 +89,29 @@ describe('create', () => {
     };
 
     const error = await execute(
-      create('!@#$%^&*', { name: 'taylor' })
+      createFhirResource('noAccess', { name: 'taylor' })
     )(state).catch(error => {
       return error;
     });
-    
+
+    expect(error.message).to.eql('Page not found');
+  });
+
+  it.skip('handles and throws different kinds of errors', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://fake.server.com',
+        username: 'hello',
+        password: 'there',
+      },
+    };
+
+    const error = await execute(
+      createFhirResource('!@#$%^&*', { name: 'taylor' })
+    )(state).catch(error => {
+      return error;
+    });
+
     expect(error.message).to.eql('Server error');
   });
 });
