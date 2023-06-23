@@ -8,7 +8,7 @@ import {
   alterState,
   request,
 } from '../src';
-import { each } from '@openfn/language-common';
+import { each, parseCsv } from '@openfn/language-common';
 import { expect } from 'chai';
 import nock from 'nock';
 import { setUrl } from '../src/Utils';
@@ -510,10 +510,51 @@ describe('post', () => {
     });
 
     testServer
+      .post('/api/csv-reader')
+      .times(3)
+      .reply(200, function (url, body) {
+        console.log('thanks for the message!', body);
+        return body;
+      });
+
+    testServer
       .post('/api/fake-custom-success-codes')
       .reply(302, function (url, body) {
         return { ...body, statusCode: 302 };
       });
+  });
+
+  it('should make an http request from inside the parseCSV callback', async function () {
+    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
+    const state = { references: [], data: [], apiResponses: [] };
+
+    const resultingState = await parseCsv(
+      csv,
+      { chunkSize: 2 },
+      async (state, rows) => {
+        // TODO: how do we write these in the real world? Like this?
+        if (rows.length > 0)
+          await post(
+            'https://www.example.com/api/csv-reader',
+            {
+              body: rows,
+            },
+            state => {
+              console.log("I'm a regular callback");
+              return state;
+            }
+          )(state);
+        return state;
+      }
+    )(state);
+
+    // TODO, is it be possible to write a callback above that puts the
+    // response of each http request into an "apiResponses" array?
+    console.log('resultingState', resultingState);
+
+    expect(resultingState).to.eql({
+      data: { references: [], data: [], apiResponses: [1, 2, 3] },
+    });
   });
 
   it('can set JSON on the request body', async () => {
