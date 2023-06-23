@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "cloudRegion": {
+      "type": "string",
+      "examples": [
+        "us-central1"
+      ]
+    },
+    "projectId": {
+      "type": "string",
+      "examples": [
+        "adjective-noun-123"
+      ]
+    },
+    "datasetId": {
+      "type": "string",
+      "examples": [
+        "my-dataset"
+      ]
+    },
+    "fhirStoreId": {
+      "type": "string",
+      "examples": [
+        "my-fhir-store"
+      ]
+    }
+  },
+  "required": [
+    "cloudRegion",
+    "projectId",
+    "datasetId",
+    "fhirStoreId"
+  ]
+}
