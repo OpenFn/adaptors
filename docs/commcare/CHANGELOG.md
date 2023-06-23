@@ -1,5 +1,13 @@
 # @openfn/language-commcare
 
+## 1.6.2
+
+### Patch Changes
+
+- Updated dependencies [111807f]
+  - @openfn/language-common@1.9.0
+  - @openfn/language-http@4.3.2
+
 ## 1.6.1
 
 ### Patch Changes
