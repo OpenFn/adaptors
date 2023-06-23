@@ -5,6 +5,7 @@ import {
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
 import { isObjectEmpty, handleResponse, handleError, handleLog } from './Utils';
+
 let sftp = null;
 
 /**
@@ -59,7 +60,7 @@ function disconnect(state) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath, callback = false) {
+export function list(dirPath, callback = state => state) {
   return state => {
     return sftp
       .list(dirPath)

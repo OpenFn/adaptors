@@ -4,7 +4,14 @@ import { execute } from '../src';
 
 describe('The execute() function', () => {
   it.skip('executes each operation in sequence', done => {
-    const state = {};
+    const state = {
+      configuration: {
+        host: 'localhost',
+        port: '22',
+        username: 'openfn',
+        password: 'somePassword(!)',
+      },
+    };
     const operations = [
       state => {
         return { counter: 1 };
