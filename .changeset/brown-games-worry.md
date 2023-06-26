@@ -2,4 +2,4 @@
 '@openfn/language-googlehealthcare': minor
 ---
 
-add createFhirResource functionwq
+add createFhirResource function
