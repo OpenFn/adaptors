@@ -844,24 +844,24 @@ importers:
       '@openfn/language-common': 1.9.0
       '@openfn/simple-ast': ^0.4.1
       assertion-error: ^1.0.1
-      chai: ^3.4.0
+      chai: ^4.3.6
       deep-eql: ^0.1.3
       esno: ^0.16.3
       mocha: ^7.1.1
-      nock: ^12.0.3
       rimraf: ^3.0.2
+      undici: ^5.22.1
     dependencies:
       '@openfn/language-common': link:../common
     devDependencies:
       '@openfn/buildtools': link:../../tools/build
       '@openfn/simple-ast': 0.4.1
       assertion-error: 1.1.0
-      chai: 3.5.0
+      chai: 4.3.7
       deep-eql: 0.1.3
       esno: 0.16.3
       mocha: 7.2.0
-      nock: 12.0.3
       rimraf: 3.0.2
+      undici: 5.22.1
 
   packages/openfn:
     specifiers:
