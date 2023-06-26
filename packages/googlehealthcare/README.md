@@ -1,24 +1,19 @@
 # language-googlehealthcare <img src='assets/sq-256x256.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
-API.
+An OpenFn **_adaptor_** for building integration jobs for use with the
+[Google Cloud Healthcare API](https://cloud.google.com/healthcare-api/docs/how-tos/fhir-resources#healthcare-create-patient-nodejs).
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/template-docs)
-for full technical documentation.
+View the
+[docs site](https://docs.openfn.org/adaptors/packages/googlehealthcare-docs) for
+full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/template-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/googlehealthcare-configuration-schema/)
 for required and optional `configuration` properties.
-
-### A example expression using the `create` function
-
-```js
-create('patient', { name: 'Bukayo' });
-```
 
 ## Development
 
