@@ -1,5 +1,11 @@
 # @openfn/language-ocl
 
+## 1.1.0
+
+### Minor Changes
+
+- 29e335d: remove body in get request
+
 ## 1.0.2
 
 ### Patch Changes
