@@ -80,10 +80,8 @@ export const request = async (url, params = {}, method = 'GET') => {
   const options = {
     method,
     body: JSON.stringify(params),
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' }, // Add nonce for WP REST API
   };
-
-  if (method == 'GET') delete options.body;
 
   const resolvedUrl =
     method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
