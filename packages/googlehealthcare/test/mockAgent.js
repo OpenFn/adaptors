@@ -6,7 +6,7 @@ const mockPool = mockAgent.get('https://fake.server.com');
 
 mockPool
   .intercept({
-    path: '/fhir/Patient',
+    path: '/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/Patient',
     method: 'POST',
     headers: {
       'content-type': 'application/fhir+json',

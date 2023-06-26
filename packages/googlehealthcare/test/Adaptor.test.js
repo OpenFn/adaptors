@@ -39,7 +39,7 @@ describe('execute', () => {
 });
 
 describe('createFhirResource', () => {
-  it.skip('creates a patient resource to google cloud healthcare', async () => {
+  it('creates a patient resource to google cloud healthcare', async () => {
     const state = {
       configuration: {
         cloudRegion: 'us-east7',
