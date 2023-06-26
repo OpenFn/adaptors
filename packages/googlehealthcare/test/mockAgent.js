@@ -2,11 +2,11 @@ import { MockAgent } from 'undici';
 
 const mockAgent = new MockAgent();
 
-const mockPool = mockAgent.get('https://fake.server.com');
+const mockPool = mockAgent.get('https://healthcare.googleapis.com');
 
 mockPool
   .intercept({
-    path: '/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/Patient',
+    path: '/v1/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/Patient',
     method: 'POST',
     headers: {
       'content-type': 'application/fhir+json',
@@ -31,29 +31,32 @@ mockPool
       ],
       resourceType: 'Patient',
     },
-    status: 'success',
   });
 
 mockPool
   .intercept({
-    path: '/fhir/noAccess',
+    path: '/v1/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/noAccess',
     method: 'POST',
   })
-  .reply(404, {
-    message: 'Not found',
+  .reply(400, {
+    message: 'unsupported resource type: noAccess',
     status: 'error',
-    code: 404,
+    code: 400,
   });
 
 mockPool
   .intercept({
-    path: '/fhir/!@#$%^&*',
+    path: '/v1/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/Patient',
     method: 'POST',
+    headers: {
+      'content-type': 'application/fhir+json',
+      Authorization: 'Bearer aGVsbG86dGhlcmU=a',
+    },
   })
-  .reply(500, {
-    message: 'Server error',
+  .reply(401, {
+    message: 'Unauthorized',
     status: 'error',
-    code: 500,
+    code: 401,
   });
 
 export default mockAgent;

@@ -61,57 +61,63 @@ describe('createFhirResource', () => {
     );
 
     expect(finalState.data).to.eql({
-      birthDate: '1970-01-01',
-      gender: 'female',
-      id: '08ab7dd6-4271-45b2-a6a7-0ecd5ddce29d',
-      meta: {
-        lastUpdated: '2023-06-23T16:40:46.202757+00:00',
-        versionId: 'MTY4NzUzODQ0NjIwMjc1NzAwMA',
-      },
-      name: [
-        {
-          family: 'Smith',
-          given: ['Darcy'],
-          use: 'official',
+      data: {
+        birthDate: '1970-01-01',
+        gender: 'female',
+        id: '08ab7dd6-4271-45b2-a6a7-0ecd5ddce29d',
+        meta: {
+          lastUpdated: '2023-06-23T16:40:46.202757+00:00',
+          versionId: 'MTY4NzUzODQ0NjIwMjc1NzAwMA',
         },
-      ],
-      resourceType: 'Patient',
+        name: [
+          {
+            family: 'Smith',
+            given: ['Darcy'],
+            use: 'official',
+          },
+        ],
+        resourceType: 'Patient',
+      },
     });
   });
 
-  it.skip('throws an error for a 404', async () => {
+  it('throws an error for a 400', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+        cloudRegion: 'us-east7',
+        projectId: 'test-007',
+        datasetId: 'fhir-007',
+        fhirStoreId: 'testing-fhir-007',
+        accessToken: 'aGVsbG86dGhlcmU=',
       },
     };
 
     const error = await execute(
-      createFhirResource('noAccess', { name: 'taylor' })
+      createFhirResource({ name: 'taylor', resourceType: 'noAccess' })
     )(state).catch(error => {
       return error;
     });
 
-    expect(error.message).to.eql('Page not found');
+    expect(error.message).to.contains('unsupported resource type: noAccess');
   });
 
-  it.skip('handles and throws different kinds of errors', async () => {
+  it('throws an error for a 401', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+        cloudRegion: 'us-east7',
+        projectId: 'test-007',
+        datasetId: 'fhir-007',
+        fhirStoreId: 'testing-fhir-007',
+        accessToken: 'aGVsbG86dGhlcmU=a',
       },
     };
 
     const error = await execute(
-      createFhirResource('!@#$%^&*', { name: 'taylor' })
+      createFhirResource({ name: 'taylor', resourceType: 'Patient' })
     )(state).catch(error => {
       return error;
     });
 
-    expect(error.message).to.eql('Server error');
+    expect(error.message).to.contains('Unauthorized');
   });
 });
