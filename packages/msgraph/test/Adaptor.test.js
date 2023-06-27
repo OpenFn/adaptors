@@ -3,7 +3,6 @@ import { execute, create, getSites, getDrives } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
-import { it } from 'date-fns/locale';
 
 setGlobalDispatcher(MockAgent);
 
@@ -120,17 +119,3 @@ describe('getDrives', () => {
     expect(JSON.parse(finalState.data)).to.eql({});
   });
 });
-
-getDrives('sites', 'openfn.sharepoint.com');
-getDrives('groups', 'groupId');
-getDrives('drives','driveId');
-
-getDrives({ resource, resourceId });
-getDrives({
-  resource: 'sites',
-  resourceId: 'openfn.sharepoint.com',
-});
-
-getDrives({ siteId: 'openfn.sharepoint.com' });
-getDrives({ driveId: 'ibasdasa' });
-getDrives({ groupId: 'somegroupid' });

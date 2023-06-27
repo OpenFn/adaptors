@@ -189,7 +189,7 @@
               }
             },
             "name": "callback",
-            "default": "state=>state"
+            "default": "s=>s"
           },
           {
             "title": "return",

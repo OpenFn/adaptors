@@ -1,7 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 import { request, setAuth, setUrl, handleResponse } from './Utils';
 
@@ -45,8 +43,11 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    const resolveResource = expandReferences(resource)(state);
-    const resolveData = expandReferences(data)(state);
+    const [resolveResource, resolveData] = expandReferences(
+      state,
+      resource,
+      data
+    );
 
     const { accessToken, apiVersion } = state.configuration;
 
@@ -77,9 +78,8 @@ export function create(resource, data, callback) {
  */
 export function get(path, query, callback = false) {
   return state => {
-    const resolvePath = expandReferences(path)(state);
-    const resolveQuery = expandReferences(query)(state);
     const { accessToken, apiVersion } = state.configuration;
+    const [resolvePath, resolveQuery] = expandReferences(state, path, query);
 
     const url = setUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
@@ -103,7 +103,7 @@ export function get(path, query, callback = false) {
  * @example <caption>Get a drive by ID</caption>
  * getDrives({driveId: "YXzpkoLwR06bxC8tNdg71m"})
  * @param {string} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }]
- * @param {function} [callback = state => state] (Optional) Callback function
+ * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
 export function getDrives(

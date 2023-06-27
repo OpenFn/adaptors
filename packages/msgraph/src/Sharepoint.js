@@ -84,13 +84,3 @@ export function getItems(
     );
   };
 }
-
-// sharepoint.listItems({siteId: blah, driveId: blah})
-
-// Alterantaive style to consider after the above is working.
-// export const list = {
-//   items: params => {
-//     return state => {};
-//   },
-//   drive: () => {},
-// };
