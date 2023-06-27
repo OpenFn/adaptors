@@ -1,62 +1,6 @@
 {
   "operations": [
     {
-      "name": "map",
-      "params": [
-        "state",
-        "params"
-      ],
-      "docs": {
-        "description": "Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "map(state, state)"
-          },
-          {
-            "title": "private",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Json object containing keys and data values;",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "state"
-          },
-          {
-            "title": "param",
-            "description": "E.g. `{users:\"haftamuk\", sources: \"eCHIS-CODES\", concepts: \"fp_new_at_10_to_14\" }",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "getMappings",
       "params": [
         "ownerId",
