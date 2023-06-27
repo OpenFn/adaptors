@@ -45,13 +45,9 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    // const resolveResource = expandReferences(resource)(state);
-    // const resolveData = expandReferences(data)(state);
-    const [resolveResource, resolveData] = expandReferences(
-      state,
-      resource,
-      data
-    );
+    const resolveResource = expandReferences(resource)(state);
+    const resolveData = expandReferences(data)(state);
+
     const { accessToken, apiVersion } = state.configuration;
 
     const url = setUrl({ apiVersion, resolveResource });

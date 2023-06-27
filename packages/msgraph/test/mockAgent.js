@@ -4,65 +4,60 @@ const mockAgent = new MockAgent();
 
 const mockPool = mockAgent.get('https://graph.microsoft.com');
 
+const accessToken = 'aGVsbG86dGhlcmU=';
 mockPool
   .intercept({
-    path: '/sites/openfn.sharepoint.com',
+    path: '/v1.0/sites/openfn.sharepoint.com',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: 'Bearer aGVsbG86dGhlcmU=',
+      Authorization: `Bearer ${accessToken}`,
     },
   })
   .reply(200, {
-    data: {
-      '@odata.context':
-        'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
-      createdDateTime: '2022-11-21T07:08:13.55Z',
-      description: '',
-      id: 'openfnorg.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
-      lastModifiedDateTime: '2023-06-27T11:46:47Z',
-      name: '',
-      webUrl: 'https://openfnorg.sharepoint.com',
-      displayName: 'Communication site',
-      root: {},
-      siteCollection: {
-        hostname: 'openfnorg.sharepoint.com',
-      },
+    '@odata.context':
+      'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
+    createdDateTime: '2022-11-21T07:08:13.55Z',
+    description: '',
+    id: 'openfn.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
+    lastModifiedDateTime: '2023-06-27T11:46:47Z',
+    name: '',
+    webUrl: 'https://openfn.sharepoint.com',
+    displayName: 'Communication site',
+    root: {},
+    siteCollection: {
+      hostname: 'openfn.sharepoint.com',
     },
-    status: 'success',
   });
 
 mockPool
   .intercept({
-    path: '/sites/root',
+    path: '/v1.0/sites/root',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: 'Bearer aGVsbG86dGhlcmU=',
+      Authorization: `Bearer ${accessToken}`,
     },
   })
   .reply(200, {
-    data: {
-      '@odata.context':
-        'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
-      createdDateTime: '2022-11-21T07:08:13.55Z',
-      description: '',
-      id: 'openfnorg.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
-      lastModifiedDateTime: '2023-06-27T11:46:47Z',
-      name: '',
-      webUrl: 'https://openfnorg.sharepoint.com',
-      displayName: 'Communication site',
-      root: {},
-      siteCollection: {
-        hostname: 'openfnorg.sharepoint.com',
-      },
+    '@odata.context':
+      'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
+    createdDateTime: '2022-11-21T07:08:13.55Z',
+    description: '',
+    id: 'openfn.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
+    lastModifiedDateTime: '2023-06-27T11:46:47Z',
+    name: '',
+    webUrl: 'https://openfn.sharepoint.com',
+    displayName: 'Communication site',
+    root: {},
+    siteCollection: {
+      hostname: 'openfn.sharepoint.com',
     },
-    status: 'success',
   });
 
 mockPool
   .intercept({
-    path: '/sites/openfn.sharepoint.com/drives',
+    path: '/v1.0/sites/openfn.sharepoint.com/drives',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -78,7 +73,7 @@ mockPool
       id: 'b!AbCdEfGhIjKlMnOpQrStUvWxYz0123456789',
       lastModifiedDateTime: '2023-06-16T09:19:53Z',
       name: 'Documents',
-      webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+      webUrl: 'https://openfn.sharepoint.com/Shared%20Documents',
       driveType: 'documentLibrary',
       createdBy: {
         user: {
@@ -105,7 +100,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/api/noAccess',
+    path: '/v1.0/api/noAccess',
     method: 'POST',
   })
   .reply(404, {

@@ -1,6 +1,19 @@
-import { expandReferences } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+
 import { request, setAuth, setUrl, handleResponse } from './Utils';
 
+/**
+ * Get a SharePoint site in msgraph
+ * @public
+ * @example <caption>Access the root SharePoint site within a tenant.</caption>
+ * getSites()
+ * @example <caption>Access a SharePoint site using the siteId.</caption>
+ * getSites("openfn.sharepoint.com")
+ * @function
+ * @param {string} sharepointSite -A SharePoint siteId
+ * @param {function} [callback = state => state] - An optional callback function
+ * @return {Operation}
+ */
 export function getSites(sharepointSite, callback = s => s) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
@@ -10,6 +23,7 @@ export function getSites(sharepointSite, callback = s => s) {
       ? `sites/${resolvedRootSite}`
       : 'sites/root';
     const url = setUrl({ apiVersion, resolvePath });
+
     const auth = setAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>

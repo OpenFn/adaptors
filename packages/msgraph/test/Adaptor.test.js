@@ -48,41 +48,47 @@ describe('getSites', () => {
 
     const finalState = await execute(getSites())(state);
 
-    expect(finalState.data).to.eql({
-      data: {
-        '@odata.context':
-          'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
-        createdDateTime: '2022-11-21T07:08:13.55Z',
-        description: '',
-        id: 'openfnorg.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
-        lastModifiedDateTime: '2023-06-27T11:46:47Z',
-        name: '',
-        webUrl: 'https://openfnorg.sharepoint.com',
-        displayName: 'Communication site',
-        root: {},
-        siteCollection: {
-          hostname: 'openfnorg.sharepoint.com',
-        },
+    expect(JSON.parse(finalState.data)).to.eql({
+      '@odata.context':
+        'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
+      createdDateTime: '2022-11-21T07:08:13.55Z',
+      description: '',
+      id: 'openfn.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
+      lastModifiedDateTime: '2023-06-27T11:46:47Z',
+      name: '',
+      webUrl: 'https://openfn.sharepoint.com',
+      displayName: 'Communication site',
+      root: {},
+      siteCollection: {
+        hostname: 'openfn.sharepoint.com',
       },
     });
   });
 
-  it.skip('Access a sharePoint site using the siteId.', async () => {
+  it('Access a sharePoint site using the siteId.', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+        accessToken: 'aGVsbG86dGhlcmU=',
       },
     };
 
-    const error = await execute(create('noAccess', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
+    const finalState = await execute(getSites('openfn.sharepoint.com'))(state);
 
-    expect(error.message).to.eql('Page not found');
+    expect(JSON.parse(finalState.data)).to.eql({
+      '@odata.context':
+        'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
+      createdDateTime: '2022-11-21T07:08:13.55Z',
+      description: '',
+      id: 'openfn.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
+      lastModifiedDateTime: '2023-06-27T11:46:47Z',
+      name: '',
+      webUrl: 'https://openfn.sharepoint.com',
+      displayName: 'Communication site',
+      root: {},
+      siteCollection: {
+        hostname: 'openfn.sharepoint.com',
+      },
+    });
   });
 
   it.skip('handles and throws different kinds of errors', async () => {
