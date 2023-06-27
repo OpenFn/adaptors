@@ -91,21 +91,17 @@ describe('getSites', () => {
     });
   });
 
-  it.skip('handles and throws different kinds of errors', async () => {
+  it('throws 400 error', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+        accessToken: 'aGVsbG86dGhlcmU=',
       },
     };
 
-    const error = await execute(create('!@#$%^&*', { name: 'taylor' }))(
-      state
-    ).catch(error => {
+    const error = await execute(getSites('noAccess'))(state).catch(error => {
       return error;
     });
 
-    expect(error.message).to.eql('Server error');
+    expect(error.message).to.contain('Invalid hostname for this tenancy');
   });
 });

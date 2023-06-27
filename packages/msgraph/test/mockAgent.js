@@ -61,52 +61,58 @@ mockPool
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: 'Bearer aGVsbG86dGhlcmU=',
+      Authorization: `Bearer ${accessToken}`,
     },
   })
   .reply(200, {
-    data: {
-      '@odata.context':
-        'https://graph.microsoft.com/v1.0/$metadata#drives/$entity',
-      createdDateTime: '2022-10-23T05:09:11Z',
-      description: '',
-      id: 'b!AbCdEfGhIjKlMnOpQrStUvWxYz0123456789',
-      lastModifiedDateTime: '2023-06-16T09:19:53Z',
-      name: 'Documents',
-      webUrl: 'https://openfn.sharepoint.com/Shared%20Documents',
-      driveType: 'documentLibrary',
-      createdBy: {
-        user: {
-          displayName: 'System Account',
+    '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives',
+    value: [
+      {
+        createdDateTime: '2022-10-23T05:09:11Z',
+        description: '',
+        id: 'b!AbCdEfGhIjKlMnOpQrStUvWxYz0123456789',
+        lastModifiedDateTime: '2023-06-16T09:19:53Z',
+        name: 'Documents',
+        webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+        driveType: 'documentLibrary',
+        createdBy: {
+          user: {
+            displayName: 'System Account',
+          },
         },
-      },
-      lastModifiedBy: {
-        user: {
-          email: 'aleksa@openfn.org',
-          id: '9eae7d21-9c5e-4d42-915b-6c79df32e4d3',
-          displayName: 'aleksakrolls',
+        lastModifiedBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: '9eae7d21-9c5e-4d42-915b-6c79df32e4d3',
+            displayName: 'adaptors',
+          },
         },
-      },
-      owner: {
-        group: {
-          id: 'a3d13c02-90e8-4a6d-b9fa-5d951f2d0d7b',
-          displayName: 'Company Administrator',
+        owner: {
+          group: {
+            id: 'a3d13c02-90e8-4a6d-b9fa-5d951f2d0d7b',
+            displayName: 'Company Administrator',
+          },
         },
+        quota: {},
       },
-      quota: {},
-    },
-    status: 'success',
+    ],
   });
 
 mockPool
   .intercept({
-    path: '/v1.0/api/noAccess',
-    method: 'POST',
+    path: '/v1.0/sites/noAccess',
+    method: 'GET',
   })
-  .reply(404, {
-    message: 'Not found',
-    status: 'error',
-    code: 404,
+  .reply(400, {
+    error: {
+      code: 'invalidRequest',
+      message: 'Invalid hostname for this tenancy',
+      innerError: {
+        date: '2023-06-27T15:38:19',
+        'request-id': '18d9a4da-c897-4c07-b203-4d06f0490a65',
+        'client-request-id': '672385d5-3ea8-f201-a4cb-a087f11d90e1',
+      },
+    },
   });
 
 mockPool
