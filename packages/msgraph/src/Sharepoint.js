@@ -1,25 +1,60 @@
-// export function listSites() {
+import { expandReferences } from '@openfn/language-common';
+import { request, setAuth, setUrl, handleResponse } from './Utils';
+
+export function getSites(sharepointSite, callback = s => s) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolvedRootSite] = expandReferences(state, sharepointSite);
+
+    const resolvePath = resolvedRootSite
+      ? `sites/${resolvedRootSite}`
+      : 'sites/root';
+    const url = setUrl({ apiVersion, resolvePath });
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
+export function getDrives(siteId, driveId, callback = s => s) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolvedSiteId, resolvedDriveId] = expandReferences(
+      state,
+      siteId,
+      driveId
+    );
+
+    const siteDrivePath = resolvedSiteId
+      ? `sites/${resolvedSiteId}/drives`
+      : 'me/drives';
+
+    const resolvePath = resolvedDriveId
+      ? `${siteDrivePath}/${resolvedDriveId}`
+      : siteDrivePath;
+
+    const url = setUrl({ apiVersion, resolvePath });
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
+// export function getLists({ siteId, driveId, listId }, callback = s => s) {
 //   return state => {
 //     const { accessToken, apiVersion } = state.configuration;
-//     // TODO: paste in the code snippet for listing sharepoint sites
+
+//     return request(url, { ...auth }).then(response =>
+//       handleResponse(response, state, callback)
+//     );
 //   };
 // }
 
-// export function listDrives(siteId) {
-//   return state => {
-//     const { accessToken, apiVersion } = state.configuration;
-//     // TODO: paste in the code snippet for listing sharepoint drives
-//   };
-// }
-
-// export function listLists(siteId) {
-//   return state => {
-//     const { accessToken, apiVersion } = state.configuration;
-//     // TODO: paste in the code snippet for listing sharepoint lists
-//   };
-// }
-
-// export function listItems({ siteId, driveId, listId }) {
+// export function getItems({ siteId, driveId, listId }) {
 //   return state => {
 //     const { accessToken, apiVersion } = state.configuration;
 //     // TODO: paste in the code snippet for listing sharepoint items

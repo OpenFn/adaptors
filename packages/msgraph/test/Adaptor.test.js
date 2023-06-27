@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { execute, create, getSites, getDrives } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
@@ -38,35 +38,36 @@ describe('execute', () => {
   });
 });
 
-describe('create', () => {
-  it.skip('makes a post request to the right endpoint', async () => {
+describe('getSites', () => {
+  it('Access the root SharePoint site within a tenant.', async () => {
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
+        accessToken: 'aGVsbG86dGhlcmU=',
       },
     };
 
-    const finalState = await execute(
-      create('patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
+    const finalState = await execute(getSites())(state);
 
     expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
+      data: {
+        '@odata.context':
+          'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
+        createdDateTime: '2022-11-21T07:08:13.55Z',
+        description: '',
+        id: 'openfnorg.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
+        lastModifiedDateTime: '2023-06-27T11:46:47Z',
+        name: '',
+        webUrl: 'https://openfnorg.sharepoint.com',
+        displayName: 'Communication site',
+        root: {},
+        siteCollection: {
+          hostname: 'openfnorg.sharepoint.com',
+        },
+      },
     });
   });
 
-  it.skip('throws an error for a 404', async () => {
+  it.skip('Access a sharePoint site using the siteId.', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -93,12 +94,12 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(
-      create('!@#$%^&*', { name: 'taylor' })
-    )(state).catch(error => {
+    const error = await execute(create('!@#$%^&*', { name: 'taylor' }))(
+      state
+    ).catch(error => {
       return error;
     });
-    
+
     expect(error.message).to.eql('Server error');
   });
 });
