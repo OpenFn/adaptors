@@ -1,10 +1,9 @@
 import { expect } from 'chai';
-// import { execute, create, dataValue } from '../src/Adaptor.js';
-import * as Adaptor from '../src/Adaptor.js';
 import execute from '@openfn/test-execute';
-
-import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
+
+import * as Adaptor from '../src/Adaptor.js';
+import MockAgent from './mockAgent.js';
 
 setGlobalDispatcher(MockAgent);
 
