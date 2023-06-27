@@ -2,4 +2,4 @@
 '@openfn/language-ocl': patch
 ---
 
-update testswq
+update tests
