@@ -89,7 +89,53 @@ export function get(path, query, callback = false) {
     );
   };
 }
+/**
+ * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
+ * @public
+ * @example <caption>Get drives associated with a group</caption>
+ * getDrives({groupId: "b!YXzpkoLwR06bxC8tNdg71m"})
+ * @example <caption>Get a drive associated with a group</caption>
+ * getDrives({groupId: "b!YXzpkoLwR06bxC8tNdg71m", defaultDrive: true})
+ * @example <caption>Get drives for a site</caption>
+ * getDrives({siteId: "openfn.sharepoint.com"})
+ * @example <caption>Get a drive for a site</caption>
+ * getDrives({siteId: "openfn.sharepoint.com", defaultDrive: true})
+ * @example <caption>Get a drive by ID</caption>
+ * getDrives({driveId: "YXzpkoLwR06bxC8tNdg71m"})
+ * @param {string} [driveParams={ driveId: '', siteId: '', groupId: '', defaultDrive: false }]
+ * @param {function} [callback = state => state] (Optional) Callback function
+ * @return {Operation}
+ */
+export function getDrives(
+  driveParams = { driveId: '', siteId: '', groupId: '', defaultDrive: false },
+  callback = s => s
+) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolveDriveParams] = expandReferences(state, driveParams);
 
+    const { siteId, driveId, groupId, defaultDrive } = resolveDriveParams;
+
+    let resolvePath = 'me/drives';
+
+    if (driveId) resolvePath = `drives/${driveId}`;
+    if (siteId)
+      resolvePath = defaultDrive
+        ? `sites/${siteId}/drive`
+        : `sites/${siteId}/drives`;
+    if (groupId)
+      resolvePath = defaultDrive
+        ? `groups/${groupId}/drive`
+        : `groups/${groupId}/drives`;
+
+    const url = setUrl({ apiVersion, resolvePath });
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
 export { request } from './Utils';
 
 export * from './Sharepoint';

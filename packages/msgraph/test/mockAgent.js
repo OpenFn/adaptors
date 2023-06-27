@@ -117,8 +117,8 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/api/!@#$%^&*',
-    method: 'POST',
+    path: '/v1.0/me/drives',
+    method: 'GET',
   })
   .reply(500, {
     message: 'Server error',

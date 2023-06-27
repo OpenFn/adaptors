@@ -3,6 +3,7 @@ import { execute, create, getSites, getDrives } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
+import { it } from 'date-fns/locale';
 
 setGlobalDispatcher(MockAgent);
 
@@ -105,3 +106,31 @@ describe('getSites', () => {
     expect(error.message).to.contain('Invalid hostname for this tenancy');
   });
 });
+
+describe('getDrives', () => {
+  it("Access a Site's default document library", async () => {
+    const state = {
+      configuration: {
+        accessToken: 'aGVsbG86dGhlcmU=',
+      },
+    };
+
+    const finalState = await execute(getDrives('openfn.sharepoint.com'))(state);
+
+    expect(JSON.parse(finalState.data)).to.eql({});
+  });
+});
+
+getDrives('sites', 'openfn.sharepoint.com');
+getDrives('groups', 'groupId');
+getDrives('drives','driveId');
+
+getDrives({ resource, resourceId });
+getDrives({
+  resource: 'sites',
+  resourceId: 'openfn.sharepoint.com',
+});
+
+getDrives({ siteId: 'openfn.sharepoint.com' });
+getDrives({ driveId: 'ibasdasa' });
+getDrives({ groupId: 'somegroupid' });

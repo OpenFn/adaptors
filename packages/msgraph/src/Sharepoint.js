@@ -32,32 +32,6 @@ export function getSites(sharepointSite, callback = s => s) {
   };
 }
 
-export function getDrives(siteId, driveId, callback = s => s) {
-  return state => {
-    const { accessToken, apiVersion } = state.configuration;
-    const [resolvedSiteId, resolvedDriveId] = expandReferences(
-      state,
-      siteId,
-      driveId
-    );
-
-    const siteDrivePath = resolvedSiteId
-      ? `sites/${resolvedSiteId}/drives`
-      : 'me/drives';
-
-    const resolvePath = resolvedDriveId
-      ? `${siteDrivePath}/${resolvedDriveId}`
-      : siteDrivePath;
-
-    const url = setUrl({ apiVersion, resolvePath });
-    const auth = setAuth(accessToken);
-
-    return request(url, { ...auth }).then(response =>
-      handleResponse(response, state, callback)
-    );
-  };
-}
-
 // export function getLists({ siteId, driveId, listId }, callback = s => s) {
 //   return state => {
 //     const { accessToken, apiVersion } = state.configuration;

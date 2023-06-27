@@ -125,6 +125,83 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "getDrives",
+      "params": [
+        "driveParams",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get Drive in msgraph such as OneDrive or SharePoint document libraries.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getDrives({groupId: \"b!YXzpkoLwR06bxC8tNdg71m\"})",
+            "caption": "Get drives associated with a group"
+          },
+          {
+            "title": "example",
+            "description": "getDrives({groupId: \"b!YXzpkoLwR06bxC8tNdg71m\", defaultDrive: true})",
+            "caption": "Get a drive associated with a group"
+          },
+          {
+            "title": "example",
+            "description": "getDrives({siteId: \"openfn.sharepoint.com\"})",
+            "caption": "Get drives for a site"
+          },
+          {
+            "title": "example",
+            "description": "getDrives({siteId: \"openfn.sharepoint.com\", defaultDrive: true})",
+            "caption": "Get a drive for a site"
+          },
+          {
+            "title": "example",
+            "description": "getDrives({driveId: \"YXzpkoLwR06bxC8tNdg71m\"})",
+            "caption": "Get a drive by ID"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "driveParams",
+            "default": "{driveId:'',siteId:'',groupId:'',defaultDrive:false}"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback",
+            "default": "state=>state"
+          },
+          {
+            "title": "return",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
