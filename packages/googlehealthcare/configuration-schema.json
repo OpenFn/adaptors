@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "accessToken": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Google Cloud Healthcare access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "The API version",
+      "default": "v1",
+      "examples": [
+        "v1",
+        "v1beta1"
+      ]
+    },
+    "cloudRegion": {
+      "type": "string",
+      "examples": [
+        "us-central1"
+      ]
+    },
+    "projectId": {
+      "type": "string",
+      "examples": [
+        "adjective-noun-123"
+      ]
+    },
+    "datasetId": {
+      "type": "string",
+      "examples": [
+        "my-dataset"
+      ]
+    },
+    "fhirStoreId": {
+      "type": "string",
+      "examples": [
+        "my-fhir-store"
+      ]
+    }
+  },
+  "required": [
+    "cloudRegion",
+    "projectId",
+    "datasetId",
+    "fhirStoreId",
+    "accessToken"
+  ]
+}
