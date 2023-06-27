@@ -7,15 +7,6 @@
     <a href="#getMappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
 </dl>
 
-## auth
-
-auth
-Do we have a mechanism to retrieve those from configuration
-
-**Kind**: global variable  
-
-* * *
-
 ## get
 
 get(path, query, callback) ⇒ <code>Operation</code>
@@ -79,15 +70,6 @@ getMappings(
   }
 );
 ```
-
-* * *
-
-## params
-
-params
-Specify query parameters that may include OCL Data Source, MappingType, includion and exclusion values
-
-**Kind**: global variable  
 
 * * *
 
