@@ -102,19 +102,19 @@ export function get(path, query, callback = false) {
  * getDrives({siteId: "openfn.sharepoint.com", defaultDrive: true})
  * @example <caption>Get a drive by ID</caption>
  * getDrives({driveId: "YXzpkoLwR06bxC8tNdg71m"})
- * @param {string} [driveParams={ driveId: '', siteId: '', groupId: '', defaultDrive: false }]
+ * @param {string} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }]
  * @param {function} [callback = state => state] (Optional) Callback function
  * @return {Operation}
  */
 export function getDrives(
-  driveParams = { driveId: '', siteId: '', groupId: '', defaultDrive: false },
+  resource = { driveId: '', siteId: '', groupId: '', defaultDrive: false },
   callback = s => s
 ) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolveDriveParams] = expandReferences(state, driveParams);
+    const [resolveResource] = expandReferences(state, resource);
 
-    const { siteId, driveId, groupId, defaultDrive } = resolveDriveParams;
+    const { siteId, driveId, groupId, defaultDrive } = resolveResource;
 
     let resolvePath = 'me/drives';
 

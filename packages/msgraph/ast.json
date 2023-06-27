@@ -129,7 +129,7 @@
     {
       "name": "getDrives",
       "params": [
-        "driveParams",
+        "resource",
         "callback"
       ],
       "docs": {
@@ -175,7 +175,7 @@
                 "name": "string"
               }
             },
-            "name": "driveParams",
+            "name": "resource",
             "default": "{driveId:'',siteId:'',groupId:'',defaultDrive:false}"
           },
           {

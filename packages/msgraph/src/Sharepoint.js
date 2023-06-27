@@ -32,31 +32,58 @@ export function getSites(sharepointSite, callback = s => s) {
   };
 }
 
-// export function getLists({ siteId, driveId, listId }, callback = s => s) {
-//   return state => {
-//     const { accessToken, apiVersion } = state.configuration;
+export function getLists(resource = { siteId, listId }, callback = s => s) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolveResource] = expandReferences(state, resource);
 
-//     return request(url, { ...auth }).then(response =>
-//       handleResponse(response, state, callback)
-//     );
-//   };
-// }
+    const { siteId, listId } = resolveResource;
 
-// export function getItems({ siteId, driveId, listId }) {
-//   return state => {
-//     const { accessToken, apiVersion } = state.configuration;
-//     // TODO: paste in the code snippet for listing sharepoint items
-//     if (driveId) {
-//       // return /sites/siteId/drives/driveId/items
-//     }
+    if (!siteId) throw 'You must provide a siteId';
 
-//     if (listId) {
-//       // return /sites/siteId/lists/listId/items
-//     }
+    const resolvePath = listId
+      ? `sites/${siteId}/lists/${listId}`
+      : `sites/${siteId}/lists`;
 
-//     throw 'You must provide either a siteId or a driveId to list items';
-//   };
-// }
+    const url = setUrl({ apiVersion, resolvePath });
+
+    const auth = setAuth(accessToken);
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
+export function getItems(
+  resource = { siteId, listId, itemId },
+  options = { expand: fields },
+  callback = s => s
+) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolveResource, resolveOptions] = expandReferences(
+      state,
+      resource,
+      options
+    );
+
+    const { siteId, listId, itemId } = resolveResource;
+
+    if (!siteId || !listId) throw 'You must provide both siteId and listId';
+
+    const resolvePath = itemId
+      ? `sites/${siteId}/lists/${listId}/items/${itemId}`
+      : `sites/${siteId}/lists/${listId}/items`;
+
+    const url = setUrl({ apiVersion, resolvePath });
+
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...resolveOptions, ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
 
 // sharepoint.listItems({siteId: blah, driveId: blah})
 
