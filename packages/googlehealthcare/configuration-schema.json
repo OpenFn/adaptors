@@ -1,8 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "OAuth2",
   "type": "object",
   "properties": {
-    "accessToken": {
+    "access_token": {
       "title": "Access Token",
       "type": "string",
       "description": "Your Google Cloud Healthcare access token",
@@ -17,34 +18,23 @@
       "type": "string",
       "description": "The API version",
       "default": "v1",
-      "examples": [
-        "v1",
-        "v1beta1"
-      ]
+      "examples": ["v1", "v1beta1"]
     },
     "cloudRegion": {
       "type": "string",
-      "examples": [
-        "us-central1"
-      ]
+      "examples": ["us-central1"]
     },
     "projectId": {
       "type": "string",
-      "examples": [
-        "adjective-noun-123"
-      ]
+      "examples": ["adjective-noun-123"]
     },
     "datasetId": {
       "type": "string",
-      "examples": [
-        "my-dataset"
-      ]
+      "examples": ["my-dataset"]
     },
     "fhirStoreId": {
       "type": "string",
-      "examples": [
-        "my-fhir-store"
-      ]
+      "examples": ["my-fhir-store"]
     }
   },
   "required": [
@@ -52,6 +42,6 @@
     "projectId",
     "datasetId",
     "fhirStoreId",
-    "accessToken"
+    "access_token"
   ]
 }

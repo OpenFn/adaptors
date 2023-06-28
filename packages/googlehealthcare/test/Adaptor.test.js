@@ -46,7 +46,7 @@ describe('createFhirResource', () => {
         projectId: 'test-007',
         datasetId: 'fhir-007',
         fhirStoreId: 'testing-fhir-007',
-        accessToken: 'aGVsbG86dGhlcmU=',
+        access_token: 'aGVsbG86dGhlcmU=',
       },
       data: {
         resourceType: 'Patient',

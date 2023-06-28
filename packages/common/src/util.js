@@ -1,15 +1,15 @@
 /**
  * General-purpose utility functions
- * 
+ *
  * These are designed more for use in adaptor code than job code
  * (but we could choose to export util from common)
- * 
+ *
  * None of these functions are operation factories
  */
 
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
-  return args.map((value) => expandReference(state, value));
+  return args.map(value => expandReference(state, value));
 }
 
 function expandReference(state, value) {
@@ -27,4 +27,25 @@ function expandReference(state, value) {
     return expandReference(state, value(state));
   }
   return value;
+}
+
+export function normalizeOauthConfig(configuration) {
+  const { access_token, accessToken } = configuration;
+
+  if (access_token && accessToken)
+    throw new Error(
+      'Both "accessToken" & "access_token" keys found in configuration; ' +
+        'please use only "access_token" for OAuth2 credentials.'
+    );
+
+  if (access_token) return { ...configuration, accessToken: access_token };
+
+  console.log(
+    'Key "access_token" not found in state.configuration;',
+    'is this a standard OAuth 2.0 JSON credential?'
+  );
+
+  if (accessToken) console.log('Using "accessToken" from state.configuration');
+
+  return configuration;
 }

@@ -1,42 +1,35 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "properties": {
-        "resource": {
-            "title": "Resource",
-            "type": "string",
-            "description": "Dynamics resource URL",
-            "format": "uri",
-            "minLength": 1,
-            "examples": [
-                "https://openfn.crm2.dynamics.com"
-            ]
-        },
-        "apiVersion": {
-            "title": "API Version",
-            "type": "string",
-            "default": "8.2.0",
-            "description": "Dynamics API version to use",
-            "minLength": 1,
-            "examples": [
-                "8.2.0"
-            ]
-        },
-        "accessToken": {
-            "title": "Access Token",
-            "type": "string",
-            "description": "Dynamics API access token",
-            "writeOnly": true,
-            "minLength": 1,
-            "examples": [
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
-            ]
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "OAuth2",
+  "properties": {
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "Dynamics resource URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://openfn.crm2.dynamics.com"]
     },
-    "type": "object",
-    "additionalProperties": true,
-    "required": [
-        "resource",
-        "apiVersion",
-        "accessToken"
-    ]
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "default": "8.2.0",
+      "description": "Dynamics API version to use",
+      "minLength": 1,
+      "examples": ["8.2.0"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Dynamics API access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["resource", "apiVersion", "access_token"]
 }

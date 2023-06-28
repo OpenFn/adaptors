@@ -2,6 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
+import { normalizeOauthConfig } from '@openfn/language-common/src/util';
 import request from 'request';
 
 /**
@@ -23,7 +24,11 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({ ...initialState, ...state });
+    return commonExecute(...operations)({
+      ...initialState,
+      ...state,
+      configuration: normalizeOauthConfig(state.configuration),
+    });
   };
 }
 
