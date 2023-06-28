@@ -3,7 +3,7 @@ import {
   expandReferences,
   composeNextState,
 } from '@openfn/language-common';
-import { normalizeOauthConfig } from '@openfn/language-common/src/util';
+import { normalizeOauthConfig } from '@openfn/language-common/util';
 import request from 'request';
 
 /**
