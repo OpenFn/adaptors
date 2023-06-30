@@ -1,5 +1,12 @@
 v0.4.0
 
+## 1.10.0
+
+### Minor Changes
+
+- aad9549: Ensure that standard OAuth2 credentials with snake-cased
+  "access_token" keys can be used for OAuth2-reliant adaptors
+
 ## 1.9.0
 
 ### Minor Changes
