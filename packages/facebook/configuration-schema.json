@@ -1,17 +1,16 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "properties": {
-        "accessToken": {
-            "title": "Access Token",
-            "type": "string",
-            "description": "Your Facebook API access token",
-            "writeOnly": true,
-            "minLength": 1
-        }
-    },
-    "type": "object",
-    "additionalProperties": true,
-    "required": [
-        "accessToken"
-    ]
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "OAuth2",
+  "properties": {
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Facebook API access token",
+      "writeOnly": true,
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["access_token"]
 }

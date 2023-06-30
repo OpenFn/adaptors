@@ -8,7 +8,7 @@ setGlobalDispatcher(MockAgent);
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    const state = {};
+    const state = { configuration: {}, data: {} };
     const operations = [
       state => {
         return { counter: 1 };
@@ -30,7 +30,7 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    const state = {};
+    const state = { configuration: {}, data: {} };
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
@@ -46,7 +46,7 @@ describe('createFhirResource', () => {
         projectId: 'test-007',
         datasetId: 'fhir-007',
         fhirStoreId: 'testing-fhir-007',
-        accessToken: 'aGVsbG86dGhlcmU=',
+        access_token: 'aGVsbG86dGhlcmU=',
       },
       data: {
         resourceType: 'Patient',

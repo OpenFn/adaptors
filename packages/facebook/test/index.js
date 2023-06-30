@@ -8,7 +8,7 @@ const { execute, post } = Adaptor;
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    let state = {};
+    let state = { configuration: {}, data: {} };
     let operations = [
       state => {
         return { counter: 1 };
@@ -30,7 +30,7 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    let state = {};
+    let state = { configuration: {}, data: {} };
 
     let finalState = execute()(state);
 

@@ -2,7 +2,10 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  expandReferences,
+  normalizeOauthConfig,
+} from '@openfn/language-common/util';
 
 import { buildUrl, request } from './Utils';
 
@@ -28,6 +31,7 @@ export function execute(...operations) {
     return commonExecute(...operations)({
       ...initialState,
       ...state,
+      configuration: normalizeOauthConfig(state.configuration),
     });
   };
 }
@@ -89,9 +93,7 @@ export function createFhirResource(resource, callback) {
     });
 
     const payload = {
-      auth: {
-        accessToken: accessToken,
-      },
+      auth: { accessToken },
       ...resolvedResource,
     };
 
