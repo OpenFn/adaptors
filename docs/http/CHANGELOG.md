@@ -1,5 +1,12 @@
 # @openfn/language-http
 
+## 4.3.3
+
+### Patch Changes
+
+- Updated dependencies [aad9549]
+  - @openfn/language-common@1.10.0
+
 ## 4.3.2
 
 ### Patch Changes
