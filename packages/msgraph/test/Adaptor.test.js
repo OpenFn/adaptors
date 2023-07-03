@@ -1,5 +1,11 @@
 import { expect } from 'chai';
-import { execute, create, getSites, getDrives } from '../src/Adaptor.js';
+import {
+  execute,
+  getLists,
+  getSites,
+  getDrives,
+  getItems,
+} from '../src/Adaptor.js';
 
 import MockAgent, { fixtures } from './mockAgent.js';
 
@@ -125,6 +131,124 @@ describe('getDrives', () => {
 
     const finalState = await execute(
       getDrives({ siteId: 'openfn.sharepoint.com', defaultDrive: true })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);
+  });
+
+  it("Get current user's drives", async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(getDrives())(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.userDrives);
+  });
+
+  it('Get drive by driveId', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getDrives({ driveId: 'b!YXzpkoLwR06bxC8tNdg71m_' })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);
+  });
+
+  it("Get a site's drives", async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getDrives({ siteId: 'openfn.sharepoint.com' })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.drivesResponse);
+  });
+});
+
+describe('getLists', () => {
+  it('throws an error if siteId is not provided', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const error = await execute(getLists())(state).catch(error => {
+      return error;
+    });
+
+    expect(error.message).to.contain('You must provide a siteId');
+  });
+  it('Get a collection of lists for a site', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getLists({ siteId: 'openfn.sharepoint.com' })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.listsResponse);
+  });
+
+  it('Returns metadata for a list using list ID', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getLists({
+        siteId: 'openfn.sharepoint.com',
+        listId: 'e0cb85e7-6497-4ffb-80b0-49e864bea1cd',
+      })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.sharedDocumentList);
+  });
+  it('Returns metadata for a list using list title', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getLists({
+        siteId: 'openfn.sharepoint.com',
+        listId: 'Documents',
+      })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.sharedDocumentList);
+  });
+});
+
+describe('getItems', () => {
+  it.skip('Get a drive items for a site', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getItems({ siteId: 'openfn.sharepoint.com', defaultDrive: true })
     )(state);
 
     expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);

@@ -4,6 +4,67 @@ const mockAgent = new MockAgent();
 
 const mockPool = mockAgent.get('https://graph.microsoft.com');
 
+const driveResponse = {
+  '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives/$entity',
+  createdDateTime: '2022-10-23T05:09:11Z',
+  description: '',
+  id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+  lastModifiedDateTime: '2023-06-16T09:19:53Z',
+  name: 'Documents',
+  webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+  driveType: 'documentLibrary',
+  createdBy: {
+    user: {
+      displayName: 'System Account',
+    },
+  },
+  lastModifiedBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  owner: {
+    group: {
+      id: '528c63a4-0690-4a57-9d80-bf847dfde47f',
+      displayName: 'Company Administrator',
+    },
+  },
+  quota: {},
+};
+
+const sharedDocumentList = {
+  '@odata.etag': '"e0cb85e7-6497-4ffb-80b0-49e864bea1cd,4"',
+  createdDateTime: '2022-10-23T05:09:11Z',
+  description: '',
+  eTag: '"e0cb85e7-6497-4ffb-80b0-49e864bea1cd,4"',
+  id: 'e0cb85e7-6497-4ffb-80b0-49e864bea1cd',
+  lastModifiedDateTime: '2023-06-16T09:19:53Z',
+  name: 'Shared Documents',
+  webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+  displayName: 'Documents',
+  createdBy: {
+    user: {
+      displayName: 'System Account',
+    },
+  },
+  lastModifiedBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  parentReference: {
+    siteId: 'openfn.sharepoint.com, 92e97c61-f082, 916ced6f-69d1',
+  },
+  list: {
+    contentTypesEnabled: false,
+    hidden: false,
+    template: 'documentLibrary',
+  },
+};
 const fixtures = {
   accessToken: 'validAccessToken=',
   expiredToken: 'expiredAccessToken',
@@ -23,35 +84,58 @@ const fixtures = {
       hostname: 'openfn.sharepoint.com',
     },
   },
-  driveResponse: {
-    '@odata.context':
-      'https://graph.microsoft.com/v1.0/$metadata#drives/$entity',
-    createdDateTime: '2022-10-23T05:09:11Z',
-    description: '',
-    id: 'b!YXzpkoLwR06bxC8tNdg71m_tbJHRabRCidsOal0ceoPnhcvgl2T7T4CwSehkvqHN',
-    lastModifiedDateTime: '2023-06-16T09:19:53Z',
-    name: 'Documents',
-    webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
-    driveType: 'documentLibrary',
-    createdBy: {
-      user: {
-        displayName: 'System Account',
+  driveResponse: driveResponse,
+  drivesResponse: {
+    '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives',
+    value: [driveResponse],
+  },
+  userDrives: {
+    '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives',
+    value: [
+      {
+        createdDateTime: '2022-10-23T05:06:55Z',
+        description: 'Profile Pictures for all users will be stored here.',
+        id: 'b!_sTvrBlmSYBUErg35Bye',
+        lastModifiedDateTime: '2023-06-15T09:19:24Z',
+        name: 'User Photos',
+        webUrl: 'https://openfnorg-my.sharepoint.com/User%20Photos',
+        driveType: 'documentLibrary',
+        createdBy: {
+          user: {
+            displayName: 'System Account',
+          },
+        },
+        owner: {
+          group: {
+            id: '528c63a4-0690-4a57-9d80-bf847dfde47f',
+            displayName: 'Company Administrator',
+          },
+        },
+        quota: {},
       },
-    },
-    lastModifiedBy: {
-      user: {
-        email: 'aleksa@openfn.org',
-        id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
-        displayName: 'aleksakrolls',
+      {
+        createdDateTime: '2022-10-23T05:06:55Z',
+        description:
+          'Use this Picture Library to store logos for Organizations.',
+        id: 'asb!McSqXeNJR0eVUAisYAoR8nOT_t',
+        lastModifiedDateTime: '2022-10-23T05:06:55Z',
+        name: 'Organization Logos',
+        webUrl: 'https://openfnorg-my.sharepoint.com/Organization%20Logos',
+        driveType: 'documentLibrary',
+        createdBy: {
+          user: {
+            displayName: 'System Account',
+          },
+        },
+        owner: {
+          group: {
+            id: '528c63a4-0690-4a57-9d80-bf847dfde47f',
+            displayName: 'Company Administrator',
+          },
+        },
+        quota: {},
       },
-    },
-    owner: {
-      group: {
-        id: '528c63a4-0690-4a57-9d80-bf847dfde47f',
-        displayName: 'Company Administrator',
-      },
-    },
-    quota: {},
+    ],
   },
   invalidRequestResponse: {
     // 400
@@ -87,6 +171,69 @@ const fixtures = {
         'client-request-id': '93fa1d83-8450-4fc4-a94f-e9d14991462d',
       },
     },
+  },
+  sharedDocumentList: sharedDocumentList,
+  listsResponse: {
+    '@odata.context':
+      "https://graph.microsoft.com/v1.0/$metadata#sites('openfnorg.sharepoint.com')/lists",
+    value: [
+      sharedDocumentList,
+      {
+        '@odata.etag': '"48843b4f-cb5e-482b-800a-d1d59a572467,5"',
+        createdDateTime: '2023-06-15T09:25:25Z',
+        description: 'SharePointHome OrgLinks List',
+        eTag: '"48843b4f-cb5e-482b-800a-d1d59a572467,5"',
+        id: '48843b4f-cb5e-482b-800a-d1d59a572467',
+        lastModifiedDateTime: '2023-06-16T08:09:14Z',
+        name: 'SharePointHomeOrgLinks',
+        webUrl: 'https://openfn.sharepoint.com/Lists/SharePointHomeOrgLinks',
+        displayName: 'SharePointHomeOrgLinks',
+        createdBy: {
+          user: {
+            displayName: 'System Account',
+          },
+        },
+        lastModifiedBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+            displayName: 'adaptors',
+          },
+        },
+        parentReference: {
+          siteId: 'openfn.sharepoint.com, 92e97c61-f082, 916ced6f-69d1',
+        },
+        list: {
+          contentTypesEnabled: false,
+          hidden: true,
+          template: 'genericList',
+        },
+      },
+      {
+        '@odata.etag': '"f1c7150a-9a8e-41ff-9e94-e84820c16a30,0"',
+        createdDateTime: '2022-10-23T05:09:12Z',
+        description: '',
+        eTag: '"f1c7150a-9a8e-41ff-9e94-e84820c16a30,0"',
+        id: 'f1c7150a-9a8e-41ff-9e94-e84820c16a30',
+        lastModifiedDateTime: '2023-06-16T06:42:05Z',
+        name: 'Events',
+        webUrl: 'https://openfnorg.sharepoint.com/Lists/Events',
+        displayName: 'Events',
+        createdBy: {
+          user: {
+            displayName: 'System Account',
+          },
+        },
+        parentReference: {
+          siteId: 'openfn.sharepoint.com, 92e97c61-f082, 916ced6f-69d1',
+        },
+        list: {
+          contentTypesEnabled: true,
+          hidden: false,
+          template: 'events',
+        },
+      },
+    ],
   },
 };
 
@@ -157,13 +304,50 @@ mockPool
 
 mockPool
   .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.driveResponse);
+
+mockPool
+  .intercept({
+    path: '/v1.0/me/drives',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.userDrives);
+
+mockPool
+  .intercept({
     path: '/v1.0/sites/openfn.sharepoint.com/drives',
     method: 'GET',
     headers: headers,
   })
-  .reply(200, {
-    '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives',
-    value: [fixtures.driveResponse],
-  });
+  .reply(200, fixtures.drivesResponse);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/lists',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.listsResponse);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/lists/e0cb85e7-6497-4ffb-80b0-49e864bea1cd',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.sharedDocumentList);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/lists/Documents',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.sharedDocumentList);
 
 export default mockAgent;

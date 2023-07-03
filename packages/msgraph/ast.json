@@ -167,12 +167,12 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "A resource object containing resource ids and options",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "object"
               }
             },
             "name": "resource",

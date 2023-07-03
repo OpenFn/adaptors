@@ -3,7 +3,7 @@ import { expandReferences } from '@openfn/language-common/util';
 import { request, setAuth, setUrl, handleResponse } from './Utils';
 
 /**
- * Get a SharePoint site in msgraph
+ * Get a SharePoint site using msgraph API
  * @public
  * @example <caption>Access the root SharePoint site within a tenant.</caption>
  * getSites()
@@ -32,14 +32,31 @@ export function getSites(sharepointSite, callback = s => s) {
   };
 }
 
-export function getLists(resource = { siteId, listId }, callback = s => s) {
+/**
+ * Get a SharePoint site lists using msgraph API
+ * @public
+ * @example <caption>Get a collection of lists for a site.</caption>
+ * getLists({siteId: "openfn.sharepoint.com"})
+ * @example <caption>Returns metadata for a list using list ID.</caption>
+ * getLists({siteId: "openfn.sharepoint.com", listId: "someId"})
+ * @example <caption>Returns metadata for a list using list title.</caption>
+ * getLists({siteId: "openfn.sharepoint.com", listId: "test folder"})
+ * @function
+ * @param {object} [resource={ siteId: '', listId: '' }] - A resource object containing resource ids
+ * @param {function} [callback = state => state] - An optional callback function
+ * @return {Operation}
+ */
+export function getLists(
+  resource = { siteId: '', listId: '' },
+  callback = s => s
+) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
     const [resolveResource] = expandReferences(state, resource);
 
     const { siteId, listId } = resolveResource;
 
-    if (!siteId) throw 'You must provide a siteId';
+    if (!siteId) throw new Error('You must provide a siteId');
 
     const resolvePath = listId
       ? `sites/${siteId}/lists/${listId}`
@@ -69,7 +86,8 @@ export function getItems(
 
     const { siteId, listId, itemId } = resolveResource;
 
-    if (!siteId || !listId) throw 'You must provide both siteId and listId';
+    if (!siteId || !listId)
+      throw new Error('You must provide both siteId and listId');
 
     const resolvePath = itemId
       ? `sites/${siteId}/lists/${listId}/items/${itemId}`

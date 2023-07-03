@@ -102,7 +102,7 @@ export function get(path, query, callback = false) {
  * getDrives({siteId: "openfn.sharepoint.com", defaultDrive: true})
  * @example <caption>Get a drive by ID</caption>
  * getDrives({driveId: "YXzpkoLwR06bxC8tNdg71m"})
- * @param {string} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }]
+ * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
