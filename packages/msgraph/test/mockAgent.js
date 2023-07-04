@@ -11,7 +11,7 @@ const driveResponse = {
   id: 'b!YXzpkoLwR06bxC8tNdg71m_',
   lastModifiedDateTime: '2023-06-16T09:19:53Z',
   name: 'Documents',
-  webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+  webUrl: 'https://openfn.sharepoint.com/Shared%20Documents',
   driveType: 'documentLibrary',
   createdBy: {
     user: {
@@ -42,7 +42,7 @@ const sharedDocumentList = {
   id: 'e0cb85e7-6497-4ffb-80b0-49e864bea1cd',
   lastModifiedDateTime: '2023-06-16T09:19:53Z',
   name: 'Shared Documents',
-  webUrl: 'https://openfnorg.sharepoint.com/Shared%20Documents',
+  webUrl: 'https://openfn.sharepoint.com/Shared%20Documents',
   displayName: 'Documents',
   createdBy: {
     user: {
@@ -63,6 +63,38 @@ const sharedDocumentList = {
     contentTypesEnabled: false,
     hidden: false,
     template: 'documentLibrary',
+  },
+};
+const firstItem = {
+  '@odata.etag': '"d97073d1-5ee7-4218-97cd-bd4167078516,2"',
+  createdDateTime: '2023-06-15T08:58:44Z',
+  eTag: '"d97073d1-5ee7-4218-97cd-bd4167078516,2"',
+  id: '1',
+  lastModifiedDateTime: '2023-06-16T07:53:31Z',
+  webUrl:
+    'https://openfn.sharepoint.com/Shared%20Documents/test_csv_data/test.csv',
+  createdBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  lastModifiedBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  parentReference: {
+    id: 'a8f21c4a-e00b-4bae-aab0-e4d236ef3b1b',
+    siteId:
+      'openfn.sharepoint.com,92e97c61-f082-4e47-9bc4-2f2d35d83bd6,916ced6f-69d1-42b4-89db-0e6a5d1c7a83',
+  },
+  contentType: {
+    id: '0x010100517725BFCABB814FB696A80EE2A7FA51',
+    name: 'Document',
   },
 };
 const fixtures = {
@@ -175,7 +207,7 @@ const fixtures = {
   sharedDocumentList: sharedDocumentList,
   listsResponse: {
     '@odata.context':
-      "https://graph.microsoft.com/v1.0/$metadata#sites('openfnorg.sharepoint.com')/lists",
+      "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/lists",
     value: [
       sharedDocumentList,
       {
@@ -217,7 +249,7 @@ const fixtures = {
         id: 'f1c7150a-9a8e-41ff-9e94-e84820c16a30',
         lastModifiedDateTime: '2023-06-16T06:42:05Z',
         name: 'Events',
-        webUrl: 'https://openfnorg.sharepoint.com/Lists/Events',
+        webUrl: 'https://openfn.sharepoint.com/Lists/Events',
         displayName: 'Events',
         createdBy: {
           user: {
@@ -231,6 +263,78 @@ const fixtures = {
           contentTypesEnabled: true,
           hidden: false,
           template: 'events',
+        },
+      },
+    ],
+  },
+  itemResponse: firstItem,
+  itemsResponse: {
+    '@odata.context':
+      "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/lists('Documents')/items",
+    value: [
+      {
+        '@odata.etag': '"a8f21c4a-e00b-4bae-aab0-e4d236ef3b1b,1"',
+        createdDateTime: '2023-06-15T09:34:36Z',
+        eTag: '"a8f21c4a-e00b-4bae-aab0-e4d236ef3b1b,1"',
+        id: '2',
+        lastModifiedDateTime: '2023-06-15T09:34:36Z',
+        webUrl:
+          'https://openfn.sharepoint.com/Shared%20Documents/test_csv_data',
+        createdBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+            displayName: 'adaptors',
+          },
+        },
+        lastModifiedBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+            displayName: 'adaptors',
+          },
+        },
+        parentReference: {
+          id: '9c199edf-bdb3-42b0-a992-2802d86d4d18',
+          siteId:
+            'openfn.sharepoint.com,92e97c61-f082-4e47-9bc4-2f2d35d83bd6,916ced6f-69d1-42b4-89db-0e6a5d1c7a83',
+        },
+        contentType: {
+          id: '0x0120006762BC4583376542ACBB009AF1B80536',
+          name: 'Folder',
+        },
+      },
+      firstItem,
+      {
+        '@odata.etag': '"a7ee19c6-ff80-4dbb-a16c-786e8584db83,0"',
+        createdDateTime: '2023-06-16T08:59:38Z',
+        eTag: '"a7ee19c6-ff80-4dbb-a16c-786e8584db83,0"',
+        id: '3',
+        lastModifiedDateTime: '2023-06-16T08:59:38Z',
+        webUrl:
+          'https://openfn.sharepoint.com/Shared%20Documents/test_csv_data/test1.csv',
+        createdBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+            displayName: 'adaptors',
+          },
+        },
+        lastModifiedBy: {
+          user: {
+            email: 'adaptors@openfn.org',
+            id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+            displayName: 'adaptors',
+          },
+        },
+        parentReference: {
+          id: 'a8f21c4a-e00b-4bae-aab0-e4d236ef3b1b',
+          siteId:
+            'openfn.sharepoint.com,92e97c61-f082-4e47-9bc4-2f2d35d83bd6,916ced6f-69d1-42b4-89db-0e6a5d1c7a83',
+        },
+        contentType: {
+          id: '0x010100517725BFCABB814FB696A80EE2A7FA51',
+          name: 'Document',
         },
       },
     ],
@@ -349,5 +453,20 @@ mockPool
     headers: headers,
   })
   .reply(200, fixtures.sharedDocumentList);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/lists/Documents/items',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemsResponse);
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/lists/Documents/items/1',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemResponse);
 
 export default mockAgent;

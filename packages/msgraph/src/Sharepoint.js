@@ -72,8 +72,8 @@ export function getLists(
 }
 
 export function getItems(
-  resource = { siteId, listId, itemId },
-  options = { expand: fields },
+  resource = { siteId: '', listId: '', itemId: '' },
+  options = {},
   callback = s => s
 ) {
   return state => {

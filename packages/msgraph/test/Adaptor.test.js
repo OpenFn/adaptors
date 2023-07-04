@@ -240,7 +240,21 @@ describe('getLists', () => {
 });
 
 describe('getItems', () => {
-  it.skip('Get a drive items for a site', async () => {
+  it('throws an error if siteId or listId is not provided', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const error = await execute(getItems())(state).catch(error => {
+      return error;
+    });
+
+    expect(error.message).to.contain('You must provide both siteId and listId');
+  });
+
+  it('Get the collection of items in a list for a site', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
@@ -248,9 +262,27 @@ describe('getItems', () => {
     };
 
     const finalState = await execute(
-      getItems({ siteId: 'openfn.sharepoint.com', defaultDrive: true })
+      getItems({ siteId: 'openfn.sharepoint.com', listId: 'Documents' })
     )(state);
 
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.itemsResponse);
+  });
+
+  it('Returns the metadata for an item in a list', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getItems({
+        siteId: 'openfn.sharepoint.com',
+        listId: 'Documents',
+        itemId: 1,
+      })
+    )(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.itemResponse);
   });
 });
