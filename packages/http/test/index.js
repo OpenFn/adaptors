@@ -531,21 +531,33 @@ describe('post', () => {
     const resultingState = await parseCsv(
       csv,
       { chunkSize: 2 },
-      async (state, rows) => {
-        // TODO: how do we write these in the real world? Like this?
-        if (rows.length > 0)
-          await post(
-            'https://www.example.com/api/csv-reader',
-            {
-              body: rows,
-            },
-            state => {
-              console.log("I'm a regular callback");
-              return state;
-            }
-          )(state);
-        return state;
-      }
+      (state, rows) =>
+        rows.length > 0 &&
+        post(
+          'https://www.example.com/api/csv-reader',
+          {
+            body: rows,
+          },
+          state => {
+            console.log("I'm a regular callback");
+            return state;
+          }
+        )(state)
+      // async (state, rows) => {
+      //   // TODO: how do we write these in the real world? Like this?
+      //   if (rows.length > 0)
+      //     await post(
+      //       'https://www.example.com/api/csv-reader',
+      //       {
+      //         body: rows,
+      //       },
+      //       state => {
+      //         console.log("I'm a regular callback");
+      //         return state;
+      //       }
+      //     )(state);
+      //   return state;
+      // }
     )(state);
 
     // TODO, is it be possible to write a callback above that puts the
