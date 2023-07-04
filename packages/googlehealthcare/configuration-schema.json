@@ -18,23 +18,42 @@
       "type": "string",
       "description": "The API version",
       "default": "v1",
-      "examples": ["v1", "v1beta1"]
+      "examples": [
+        "v1",
+        "v1beta1"
+      ]
     },
     "cloudRegion": {
       "type": "string",
-      "examples": ["us-central1"]
+      "title": "cloudRegion",
+      "description": " The dataset location",
+      "examples": [
+        "us-central1"
+      ]
     },
     "projectId": {
       "type": "string",
-      "examples": ["adjective-noun-123"]
+      "title": "projectId",
+      "description": "The ID of your Google Cloud project",
+      "examples": [
+        "adjective-noun-123"
+      ]
     },
     "datasetId": {
       "type": "string",
-      "examples": ["my-dataset"]
+      "title": "datasetId",
+      "description": "The FHIR store's parent dataset",
+      "examples": [
+        "my-dataset"
+      ]
     },
     "fhirStoreId": {
       "type": "string",
-      "examples": ["my-fhir-store"]
+      "title": "fhirStoreId",
+      "description": "An identifier for the FHIR store",
+      "examples": [
+        "my-fhir-store"
+      ]
     }
   },
   "required": [
