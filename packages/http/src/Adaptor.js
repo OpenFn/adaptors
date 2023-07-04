@@ -16,8 +16,6 @@ import {
 import nodeRequest from 'request';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
-import fs from 'fs';
-import parse from 'csv-parse';
 import tough from 'tough-cookie';
 
 const { axios } = http;

@@ -5,7 +5,6 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import fs from 'fs';
-import parse from 'csv-parse';
 import { BigQuery } from '@google-cloud/bigquery';
 
 /**
