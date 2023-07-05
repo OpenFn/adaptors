@@ -71,6 +71,20 @@ export function getLists(
   };
 }
 
+/**
+ * Get sharePoint site items using msgraph API
+ * @public
+ * @example <caption>Get the collection of items in a list for a site.</caption>
+ * getItems({siteId: "openfn.sharepoint.com", listId: "Documents"})
+ * @example <caption>Returns the metadata for an item with downloadUrl</caption>
+ * getItems({siteId: "openfn.sharepoint.com", listId: "Documents", itemId: "d97073d1-5ee7-4218-97cd-bd4167078516"})
+ * @example <caption>Returns an item content.</caption>
+ * getItems({siteId: "openfn.sharepoint.com", listId: "Documents", itemId: "d97073d1-5ee7-4218-97cd-bd4167078516"}, itemContent: true)
+ * @function
+ * @param {object} [resource={ siteId: '', listId: '', itemId: '', itemContent: false }] - A resource object containing resource ids
+ * @param {function} [callback = state => state] - An optional callback function
+ * @return {Operation}
+ */
 export function getItems(
   resource = { siteId: '', listId: '', itemId: '', itemContent: false },
   options = {},

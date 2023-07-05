@@ -65,6 +65,7 @@ const sharedDocumentList = {
     template: 'documentLibrary',
   },
 };
+
 const itemWithDownloadUrl = {
   '@odata.context':
     "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/drive/items/$entity",
@@ -114,6 +115,7 @@ const itemWithDownloadUrl = {
     scope: 'users',
   },
 };
+
 const firstItem = {
   '@odata.etag': '"d97073d1-5ee7-4218-97cd-bd4167078516,2"',
   createdDateTime: '2023-06-15T08:58:44Z',
@@ -317,6 +319,7 @@ const fixtures = {
     ],
   },
   itemResponse: itemWithDownloadUrl,
+  itemContent: 'a,b,c\n1,2,3\n4,5,6\n7,8,9',
   itemsResponse: {
     '@odata.context':
       "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/lists('Documents')/items",
@@ -518,5 +521,13 @@ mockPool
     headers: headers,
   })
   .reply(200, fixtures.itemResponse);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/drive/items/d97073d1-5ee7-4218-97cd-bd4167078516/content',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemContent);
 
 export default mockAgent;

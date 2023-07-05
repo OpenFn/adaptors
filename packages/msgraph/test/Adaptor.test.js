@@ -285,4 +285,23 @@ describe('getItems', () => {
 
     expect(JSON.parse(finalState.data)).to.eql(fixtures.itemResponse);
   });
+
+  it('Returns an item content', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(
+      getItems({
+        siteId: 'openfn.sharepoint.com',
+        listId: 'Documents',
+        itemId: 'd97073d1-5ee7-4218-97cd-bd4167078516',
+        itemContent: true,
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemContent);
+  });
 });
