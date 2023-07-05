@@ -268,7 +268,7 @@ describe('getItems', () => {
     expect(JSON.parse(finalState.data)).to.eql(fixtures.itemsResponse);
   });
 
-  it('Returns the metadata for an item in a list', async () => {
+  it('Returns the metadata for an item with downloadUrl', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
@@ -279,7 +279,7 @@ describe('getItems', () => {
       getItems({
         siteId: 'openfn.sharepoint.com',
         listId: 'Documents',
-        itemId: 1,
+        itemId: 'd97073d1-5ee7-4218-97cd-bd4167078516',
       })
     )(state);
 

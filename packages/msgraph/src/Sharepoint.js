@@ -72,7 +72,7 @@ export function getLists(
 }
 
 export function getItems(
-  resource = { siteId: '', listId: '', itemId: '' },
+  resource = { siteId: '', listId: '', itemId: '', itemContent: false },
   options = {},
   callback = s => s
 ) {
@@ -84,13 +84,14 @@ export function getItems(
       options
     );
 
-    const { siteId, listId, itemId } = resolveResource;
+    const { siteId, listId, itemId, itemContent } = resolveResource;
+    const content = itemContent ? '/content' : '';
 
     if (!siteId || !listId)
       throw new Error('You must provide both siteId and listId');
 
     const resolvePath = itemId
-      ? `sites/${siteId}/lists/${listId}/items/${itemId}`
+      ? `sites/${siteId}/drive/items/${itemId}${content}`
       : `sites/${siteId}/lists/${listId}/items`;
 
     const url = setUrl({ apiVersion, resolvePath });

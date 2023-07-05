@@ -65,6 +65,55 @@ const sharedDocumentList = {
     template: 'documentLibrary',
   },
 };
+const itemWithDownloadUrl = {
+  '@odata.context':
+    "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/drive/items/$entity",
+  '@microsoft.graph.downloadUrl':
+    'https://openfn.sharepoint.com/_layouts/15/download.aspx?UniqueId=d97073d1-5ee7-4218-97cd-bd4167078516&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvb3BlbmZub3JnLnNoYXJlcG9pbnQuY29tQDNiMjRlYWRiLTczNmUtNDhkYi1iMTQzLTIzYjM5OGQwYmJkMSIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2ODg1NDM1MzkiLCJleHAiOiIxNjg4NTQ3MTM5IiwiZW5kcG9pbnR1cmwiOiIyUWJ3dmlKbmFvYkFtOHBrTHdlNlJ4NmZzaXZwVXhjbzBqUDNvTjJFWlNFPSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTIwIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiIwajROcFJyQ2xrcVBqNGlVZ2l6VERBPT0iLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiT1RKbE9UZGpOakV0WmpBNE1pMDBaVFEzTFRsaVl6UXRNbVl5WkRNMVpEZ3pZbVEyIiwiYXBwX2Rpc3BsYXluYW1lIjoiR3JhcGggRXhwbG9yZXIiLCJzaWduaW5fc3RhdGUiOiJbXCJrbXNpXCJdIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJ0aWQiOiIzYjI0ZWFkYi03MzZlLTQ4ZGItYjE0My0yM2IzOThkMGJiZDEiLCJ1cG4iOiJhbGVrc2FAb3BlbmZuLm9yZyIsInB1aWQiOiIxMDAzMjAwMTFDQzU1QUYyIiwiY2FjaGVrZXkiOiIwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDExY2M1NWFmMkBsaXZlLmNvbSIsInNjcCI6Im15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIGFsbGZpbGVzLndyaXRlIGFsbHNpdGVzLnJlYWQgYWxsc2l0ZXMud3JpdGUgYWxscHJvZmlsZXMucmVhZCIsInR0IjoiMiIsImlwYWRkciI6IjIwLjE5MC4xOTAuMzIifQ.GW9275WR6EoqF-PRwDq0VpOr1toRYRMHXzO4o8pPm8o&ApiVersion=2.0',
+  createdDateTime: '2023-06-15T08:58:44Z',
+  eTag: '"{D97073D1-5EE7-4218-97CD-BD4167078516},4"',
+  id: '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
+  lastModifiedDateTime: '2023-06-16T07:53:31Z',
+  name: 'test.csv',
+  webUrl:
+    'https://openfn.sharepoint.com/_layouts/15/Doc.aspx?sourcedoc=%7BD97073D1-5EE7-4218-97CD-BD4167078516%7D&file=test.csv&action=default&mobileredirect=true',
+  cTag: '"c:{D97073D1-5EE7-4218-97CD-BD4167078516},1"',
+  size: 10974,
+  createdBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  lastModifiedBy: {
+    user: {
+      email: 'adaptors@openfn.org',
+      id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+      displayName: 'adaptors',
+    },
+  },
+  parentReference: {
+    driveType: 'documentLibrary',
+    driveId: 'b!YXzpkoLwR06bxC8tNdg71m_',
+    id: '7AVZF2VMHE2I3O6OY301LUM6XOCKDTZKQC',
+    path: '/drive/root:/test_csv_data',
+    siteId: '92e97c61-f082-4e47-9bc4-2f2d35d83bd6',
+  },
+  file: {
+    mimeType: 'application/vnd.ms-excel',
+    hashes: {
+      quickXorHash: 'WYHPQx/2bFNFU3A8v4yKEWinMqU=',
+    },
+  },
+  fileSystemInfo: {
+    createdDateTime: '2023-06-15T08:58:44Z',
+    lastModifiedDateTime: '2023-06-16T07:53:31Z',
+  },
+  shared: {
+    scope: 'users',
+  },
+};
 const firstItem = {
   '@odata.etag': '"d97073d1-5ee7-4218-97cd-bd4167078516,2"',
   createdDateTime: '2023-06-15T08:58:44Z',
@@ -267,7 +316,7 @@ const fixtures = {
       },
     ],
   },
-  itemResponse: firstItem,
+  itemResponse: itemWithDownloadUrl,
   itemsResponse: {
     '@odata.context':
       "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/lists('Documents')/items",
@@ -461,9 +510,10 @@ mockPool
     headers: headers,
   })
   .reply(200, fixtures.itemsResponse);
+
 mockPool
   .intercept({
-    path: '/v1.0/sites/openfn.sharepoint.com/lists/Documents/items/1',
+    path: '/v1.0/sites/openfn.sharepoint.com/drive/items/d97073d1-5ee7-4218-97cd-bd4167078516',
     method: 'GET',
     headers: headers,
   })
