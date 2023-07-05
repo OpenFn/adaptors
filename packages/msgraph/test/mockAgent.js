@@ -391,6 +391,13 @@ const fixtures = {
       },
     ],
   },
+  itemWithOptions: {
+    '@odata.context':
+      "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/drive/items/$entity",
+    '@microsoft.graph.downloadUrl':
+      'https://openfn.sharepoint.com/_layouts/15/download.aspx?UniqueId=d97073d1-5ee7-4218-97cd-bd4167078516&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvb3BlbmZub3JnLnNoYXJlcG9pbnQuY29tQDNiMjRlYWRiLTczNmUtNDhkYi1iMTQzLTIzYjM5OGQwYmJkMSIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2ODg1NDgyMTgiLCJleHAiOiIxNjg4NTUxODE4IiwiZW5kcG9pbnR1cmwiOiIyUWJ3dmlKbmFvYkFtOHBrTHdlNlJ4NmZzaXZwVXhjbzBqUDNvTjJFWlNFPSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTIwIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiI2MW1tK0FKc0NFU2R5ZWVTRm9CaVlRPT0iLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiT1RKbE9UZGpOakV0WmpBNE1pMDBaVFEzTFRsaVl6UXRNbVl5WkRNMVpEZ3pZbVEyIiwiYXBwX2Rpc3BsYXluYW1lIjoiR3JhcGggRXhwbG9yZXIiLCJzaWduaW5fc3RhdGUiOiJbXCJrbXNpXCJdIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJ0aWQiOiIzYjI0ZWFkYi03MzZlLTQ4ZGItYjE0My0yM2IzOThkMGJiZDEiLCJ1cG4iOiJhbGVrc2FAb3BlbmZuLm9yZyIsInB1aWQiOiIxMDAzMjAwMTFDQzU1QUYyIiwiY2FjaGVrZXkiOiIwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDExY2M1NWFmMkBsaXZlLmNvbSIsInNjcCI6Im15ZmlsZXMucmVhZCBhbGxmaWxlcy5yZWFkIGFsbGZpbGVzLndyaXRlIGFsbHNpdGVzLnJlYWQgYWxsc2l0ZXMud3JpdGUgYWxscHJvZmlsZXMucmVhZCIsInR0IjoiMiIsImlwYWRkciI6IjIwLjE5MC4xOTAuMzUifQ.T-o2ieNljC7o8C5FzgAR2hFCvq99HBYszbHjbC4Pqis&ApiVersion=2.0',
+    id: '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
+  },
 };
 
 const headers = {
@@ -529,5 +536,13 @@ mockPool
     headers: headers,
   })
   .reply(200, fixtures.itemContent);
+
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/drive/items/d97073d1-5ee7-4218-97cd-bd4167078516?select=id,@microsoft.graph.downloadUrl',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemWithOptions);
 
 export default mockAgent;
