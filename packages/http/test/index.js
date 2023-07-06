@@ -532,41 +532,25 @@ describe('post', () => {
       csv,
       { chunkSize: 2 },
       (state, rows) =>
-        rows.length > 0 &&
         post(
           'https://www.example.com/api/csv-reader',
           {
             body: rows,
           },
           state => {
-            console.log("I'm a regular callback");
+            state.apiResponses.push(...state.response.data);
             return state;
           }
         )(state)
-      // async (state, rows) => {
-      //   // TODO: how do we write these in the real world? Like this?
-      //   if (rows.length > 0)
-      //     await post(
-      //       'https://www.example.com/api/csv-reader',
-      //       {
-      //         body: rows,
-      //       },
-      //       state => {
-      //         console.log("I'm a regular callback");
-      //         return state;
-      //       }
-      //     )(state);
-      //   return state;
-      // }
     )(state);
 
-    // TODO, is it be possible to write a callback above that puts the
-    // response of each http request into an "apiResponses" array?
-    console.log('resultingState', resultingState);
-
-    expect(resultingState).to.eql({
-      data: { references: [], data: [], apiResponses: [1, 2, 3] },
-    });
+    expect(resultingState.apiResponses).to.eql([
+      { id: '1', name: 'taylor' },
+      { id: '2', name: 'mtuchi' },
+      { id: '3', name: 'joe' },
+      { id: '4', name: 'stu' },
+      { id: '5', name: 'elias' },
+    ]);
   });
 
   it('can set JSON on the request body', async () => {
