@@ -9,16 +9,6 @@ export * as http from './http';
 export * as dateFns from './dateFns';
 
 /**
- * @typedef State
- * @type {Object}
- */
-
-/**
- * @typedef Operation
- * @type {Function}
- */
-
-/**
  * Execute a sequence of operations.
  * Main outer API for executing expressions.
  * @public
@@ -491,6 +481,16 @@ export function humanProper(str) {
   }
 }
 
+/**
+ * Splits an object into two objects based on a list of keys.
+ * The first object contains the keys that are not in the list,
+ * and the second contains the keys that are.
+ * @public
+ * @function
+ * @param {Object} obj - The object to split.
+ * @param {string[]} keys - List of keys to split on.
+ * @returns {Object[]} - Tuple of objects, first object contains keys not in list, second contains keys that are.
+ */
 export function splitKeys(obj, keys) {
   return Object.keys(obj).reduce(
     ([keep, split], key) => {
@@ -554,30 +554,24 @@ export function chunk(array, chunkSize) {
 }
 
 /**
- * This callback is displayed as part of the Requester class.
- * @callback parseCsvCallback
- * @param {} responseCode
- * @param {string} responseMessage
- */
-
-/**
  * The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
  * resolves to the parsed CSV data.
+ * Options for `parsingOptions` include:
+ * - `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`
+ * - `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'"'`
+ * - `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `"`
+ * - `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`
+ * - `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`
+ * - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
+ * - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
+ * - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
+ * - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
+ * - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`
+ * @public
+ * @function
  * @param {String | Stream} csvData - A CSV string or a readable stream
- * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON.
- *     Possible options:<ul>
- *     <li>`delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`</li>
- *     <li>`quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'"'`</li>
- *     <li>`escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `"`</li>
- *     <li>`columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`</li>
- *     <li>`bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`</li>
- *     <li>`trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`</li>
- *     <li>`ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`</li>
- *     <li>`rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`</li>
- *     <li>`chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`</li>
- *     <li>`skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`</li>
- * </ul>
- * @param {parseCsvCallback} callback - (Optional) callback function. If used it will take state and csvRows
+ * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON. \n
+ * @param {function} [callback] - (Optional) callback function. If used it will be called state and an array of rows.
  * @returns {Operation} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
  */
 export function parseCsv(csvData, parsingOptions = {}, callback) {
@@ -635,18 +629,3 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     return finalState;
   };
 }
-// /**
-//  * Returns a unique array of objects by an attribute in those objects
-//  * @public
-//  * @example
-//  * uniqBy([{a:1}, {b:2}, {a:1, b:2}], 'a')
-//  * @function
-//  * @param {Object} array - Array of objects to be deduplicated
-//  * @param {Integer} uid - The attribute name on which to deduplicate
-//  * @returns {Object}
-//  */
-// export function uniqBy(array, uid) {
-//   return Array.from(new Set(array.map(a => a[uid]))).map(id => {
-//     return array.find(a => a[uid] === id);
-//   });
-// }
