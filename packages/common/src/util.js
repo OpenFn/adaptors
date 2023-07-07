@@ -49,3 +49,50 @@ export function normalizeOauthConfig(configuration) {
 
   return configuration;
 }
+
+export function handleResponseError(response, data, method) {
+  const { status, statusText, url } = response;
+
+  if (isEmpty(data)) {
+    const responseString = [
+      `Message: 0 results returned`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+    ].join('\n\t∟ ');
+
+    console.log(`Info at ${new Date()}\n${responseString}`);
+  }
+  if (!response.ok) {
+    const errorString = [
+      `Message: ${statusText}`,
+      `Request: ${method} ${url}`,
+      `Status: ${status}`,
+      `Body: ${JSON.stringify(data, null, 2).replace(/\n/g, '\n\t  ')}`,
+    ].join('\n\t∟ ');
+    throw new Error(errorString);
+  }
+}
+
+export const request = async (url, params = { method: 'GET' }) => {
+  const { method, data, headers, ...rest } = params;
+
+  const options = {
+    method,
+    headers,
+    body: JSON.stringify(data),
+    ...rest,
+  };
+
+  console.log(JSON.stringify(options, null, 2));
+  if (method == 'GET') delete options.body;
+
+  const resolvedUrl =
+    method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
+
+  const response = await fetch(resolvedUrl, options);
+  const results = await response.json();
+
+  handleResponseError(response, results, method);
+
+  return results;
+};

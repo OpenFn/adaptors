@@ -2,6 +2,7 @@ import { expandReferences, splitKeys } from './Adaptor';
 import axios from 'axios';
 import https from 'https';
 
+import { request } from './util';
 export { axios };
 
 /**
@@ -68,8 +69,10 @@ function withAgent(params) {
 export function get(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'get', ...withAgent(params) });
+    return request(url, { method: 'GET', ...withAgent(params) });
   };
 }
 
@@ -97,8 +100,10 @@ export function get(requestParams) {
 export function post(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'post', ...withAgent(params) });
+    return request(url, { method: 'POST', ...withAgent(params) });
   };
 }
 
@@ -116,8 +121,10 @@ export function post(requestParams) {
 function del(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'delete', ...withAgent(params) });
+    return request(url, { method: 'DELETE', ...withAgent(params) });
   };
 }
 
@@ -137,8 +144,10 @@ export { del as delete };
 export function head(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'head', ...withAgent(params) });
+    return request(url, { method: 'HEAD', ...withAgent(params) });
   };
 }
 
@@ -157,8 +166,10 @@ export function head(requestParams) {
 export function put(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'put', ...withAgent(params) });
+    return request(url, { method: 'PUT', ...withAgent(params) });
   };
 }
 
@@ -177,8 +188,10 @@ export function put(requestParams) {
 export function patch(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'patch', ...withAgent(params) });
+    return request(url, { method: 'PATCH', ...withAgent(params) });
   };
 }
 
@@ -196,7 +209,9 @@ export function patch(requestParams) {
 export function options(requestParams) {
   return state => {
     const params = expandRequestReferences(requestParams)(state);
+    const url = params.url;
+    delete params.url;
 
-    return axios({ method: 'options', ...withAgent(params) });
+    return request(url, { method: 'OPTIONS', ...withAgent(params) });
   };
 }
