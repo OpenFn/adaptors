@@ -73,7 +73,37 @@ export function handleResponseError(response, data, method) {
   }
 }
 
-export const request = async (url, params = { method: 'GET' }) => {
+function buildUrl(url, queryParams) {
+  return `${url}?${new URLSearchParams(queryParams).toString()}`;
+}
+
+function buildRequest(url, method, queryParams, data, headers) {
+  const initialOptions = {
+    method,
+    headers,
+    dispatcher: new https.Agent({ keepAlive: true }),
+  };
+
+  switch (method) {
+    case 'GET':
+      return new Request(
+        buildUrl(url, queryParams),
+        initialOptions
+      );
+    case 'POST':
+      return new Request(buildUrl(url, queryParams), {
+        ...initialOptions,
+        body: data ? JSON.stringify(data) : undefined,
+      });
+    default:
+      return new Request(url, options);
+  }
+}
+
+import { fetch } from 'undici';
+
+// Wrapper for all requests, handles errors and logs
+export async function request(url, params = { method: 'GET' }) {
   const { method, data, headers, ...rest } = params;
 
   const options = {
@@ -89,10 +119,13 @@ export const request = async (url, params = { method: 'GET' }) => {
   const resolvedUrl =
     method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
 
-  const response = await fetch(resolvedUrl, options);
+  const request = buildRequest(url, method, params, data, headers);
+
+  const response = await fetch(request);
+  // const response = await fetch(resolvedUrl, options);
   const results = await response.json();
 
   handleResponseError(response, results, method);
 
   return results;
-};
+}
