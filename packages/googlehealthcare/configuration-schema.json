@@ -26,7 +26,7 @@
     "cloudRegion": {
       "type": "string",
       "title": "cloudRegion",
-      "description": " The dataset location",
+      "description": "The region Google Cloud region of your dataset",
       "examples": [
         "us-central1"
       ]
