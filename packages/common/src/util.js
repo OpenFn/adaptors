@@ -7,6 +7,8 @@
  * None of these functions are operation factories
  */
 
+import { fetch } from 'undici';
+
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
   return args.map(value => expandReference(state, value));
@@ -86,10 +88,7 @@ function buildRequest(url, method, queryParams, data, headers) {
 
   switch (method) {
     case 'GET':
-      return new Request(
-        buildUrl(url, queryParams),
-        initialOptions
-      );
+      return new Request(buildUrl(url, queryParams), initialOptions);
     case 'POST':
       return new Request(buildUrl(url, queryParams), {
         ...initialOptions,
@@ -100,26 +99,21 @@ function buildRequest(url, method, queryParams, data, headers) {
   }
 }
 
-import { fetch } from 'undici';
-
 // Wrapper for all requests, handles errors and logs
 export async function request(url, params = { method: 'GET' }) {
-  const { method, data, headers, ...rest } = params;
-
+  const { method, data, headers, ...otherOptions } = params;
   const options = {
-    method,
-    headers,
-    body: JSON.stringify(data),
-    ...rest,
+    method: 'GET',
+    headers: {},
+    body: '', //Blob, ArrayBuffer, TypedArray, Dataview, URLSearchParms, ReadableStream >> GET or HEAD method cannot have body,
+    mode: '', // cors, no-cors, same-origin
+    credentials: '', // omit, same-origin, include
+    cache: '', // default, no-store, reload, no-cache, force-cache and only-if-cached
+    redirect: '', // follow, error, manual
+    referrer: ''
   };
 
-  console.log(JSON.stringify(options, null, 2));
-  if (method == 'GET') delete options.body;
-
-  const resolvedUrl =
-    method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
-
-  const request = buildRequest(url, method, params, data, headers);
+  const request = buildRequest(url, method, otherOptions, data, headers);
 
   const response = await fetch(request);
   // const response = await fetch(resolvedUrl, options);
