@@ -41,13 +41,21 @@ export function execute(...operations) {
  * @public
  * @example
  * createFhirResource({
+ *   cloudRegion: 'us-central1',
+ *   projectId: 'adjective-noun-123',
+ *   datasetId: 'my-dataset',
+ *   fhirStoreId: 'my-fhir-store',
+ *   resourceType: "Patient",
  *   name: [{ use: "official", family: "Smith", given: ["Darcy"] }],
  *   gender: "female",
  *   birthDate: "1970-01-01",
- *   resourceType: "Patient",
  * });
  * @example
  * createFhirResource(state => ({
+ *  cloudRegion: 'us-central1',
+ *  projectId: 'adjective-noun-123',
+ *  datasetId: 'my-dataset',
+ *  fhirStoreId: 'my-fhir-store',
  *  resourceType: 'Encounter',
  *  status: 'finished',
  *  class: {
@@ -71,17 +79,11 @@ export function execute(...operations) {
  */
 export function createFhirResource(resource, callback) {
   return async state => {
-    const {
-      cloudRegion,
-      projectId,
-      datasetId,
-      fhirStoreId,
-      apiVersion,
-      accessToken,
-    } = state.configuration;
+    const { apiVersion, access_token } = state.configuration;
 
     const [resolvedResource] = expandReferences(state, resource);
-    const { resourceType } = resolvedResource;
+    const { cloudRegion, projectId, datasetId, fhirStoreId, resourceType } =
+      resolvedResource;
 
     const url = buildUrl({
       apiVersion,
@@ -93,7 +95,7 @@ export function createFhirResource(resource, callback) {
     });
 
     const payload = {
-      auth: { accessToken },
+      auth: { access_token },
       ...resolvedResource,
     };
 

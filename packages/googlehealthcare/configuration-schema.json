@@ -22,45 +22,9 @@
         "v1",
         "v1beta1"
       ]
-    },
-    "cloudRegion": {
-      "type": "string",
-      "title": "cloudRegion",
-      "description": "The region Google Cloud region of your dataset",
-      "examples": [
-        "us-central1"
-      ]
-    },
-    "projectId": {
-      "type": "string",
-      "title": "projectId",
-      "description": "The ID of your Google Cloud project",
-      "examples": [
-        "adjective-noun-123"
-      ]
-    },
-    "datasetId": {
-      "type": "string",
-      "title": "datasetId",
-      "description": "The FHIR store's parent dataset",
-      "examples": [
-        "my-dataset"
-      ]
-    },
-    "fhirStoreId": {
-      "type": "string",
-      "title": "fhirStoreId",
-      "description": "An identifier for the FHIR store",
-      "examples": [
-        "my-fhir-store"
-      ]
     }
   },
   "required": [
-    "cloudRegion",
-    "projectId",
-    "datasetId",
-    "fhirStoreId",
     "access_token"
   ]
 }

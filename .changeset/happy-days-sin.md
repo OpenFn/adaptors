@@ -1,5 +1,5 @@
 ---
-'@openfn/language-googlehealthcare': patch
+'@openfn/language-googlehealthcare': major
 ---
 
-Add title and description for properties in configuration-schema
+remove projectId, dataSetId, cloudRegion, and fhirStoreId out of configuration

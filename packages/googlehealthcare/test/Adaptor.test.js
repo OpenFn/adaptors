@@ -42,13 +42,13 @@ describe('createFhirResource', () => {
   it('creates a patient resource to google cloud healthcare', async () => {
     const state = {
       configuration: {
+        access_token: 'aGVsbG86dGhlcmU=',
+      },
+      data: {
         cloudRegion: 'us-east7',
         projectId: 'test-007',
         datasetId: 'fhir-007',
         fhirStoreId: 'testing-fhir-007',
-        access_token: 'aGVsbG86dGhlcmU=',
-      },
-      data: {
         resourceType: 'Patient',
         name: [{ use: 'official', family: 'Smith', given: ['Darcy'] }],
         gender: 'female',
@@ -84,16 +84,19 @@ describe('createFhirResource', () => {
   it('throws an error for a 400', async () => {
     const state = {
       configuration: {
-        cloudRegion: 'us-east7',
-        projectId: 'test-007',
-        datasetId: 'fhir-007',
-        fhirStoreId: 'testing-fhir-007',
-        accessToken: 'aGVsbG86dGhlcmU=',
+        access_token: 'aGVsbG86dGhlcmU=',
       },
     };
 
     const error = await execute(
-      createFhirResource({ name: 'taylor', resourceType: 'noAccess' })
+      createFhirResource({
+        name: 'taylor',
+        cloudRegion: 'us-east7',
+        projectId: 'test-007',
+        datasetId: 'fhir-007',
+        fhirStoreId: 'testing-fhir-007',
+        resourceType: 'noAccess',
+      })
     )(state).catch(error => {
       return error;
     });
@@ -104,16 +107,19 @@ describe('createFhirResource', () => {
   it('throws an error for a 401', async () => {
     const state = {
       configuration: {
-        cloudRegion: 'us-east7',
-        projectId: 'test-007',
-        datasetId: 'fhir-007',
-        fhirStoreId: 'testing-fhir-007',
-        accessToken: 'aGVsbG86dGhlcmU=a',
+        access_token: 'aGVsbG86dGhlcmU=a',
       },
     };
 
     const error = await execute(
-      createFhirResource({ name: 'taylor', resourceType: 'Patient' })
+      createFhirResource({
+        name: 'taylor',
+        cloudRegion: 'us-east7',
+        projectId: 'test-007',
+        datasetId: 'fhir-007',
+        fhirStoreId: 'testing-fhir-007',
+        resourceType: 'Patient',
+      })
     )(state).catch(error => {
       return error;
     });
