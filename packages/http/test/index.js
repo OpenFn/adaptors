@@ -513,7 +513,6 @@ describe('post', () => {
       .post('/api/csv-reader')
       .times(3)
       .reply(200, function (url, body) {
-        console.log('thanks for the message!', body);
         return body;
       });
 
