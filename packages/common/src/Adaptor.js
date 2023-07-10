@@ -629,3 +629,19 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     return finalState;
   };
 }
+
+// /**
+//  * Returns a unique array of objects by an attribute in those objects
+//  * @public
+//  * @example
+//  * uniqBy([{a:1}, {b:2}, {a:1, b:2}], 'a')
+//  * @function
+//  * @param {Object} array - Array of objects to be deduplicated
+//  * @param {Integer} uid - The attribute name on which to deduplicate
+//  * @returns {Object}
+//  */
+// export function uniqBy(array, uid) {
+//   return Array.from(new Set(array.map(a => a[uid]))).map(id => {
+//     return array.find(a => a[uid] === id);
+//   });
+// }
