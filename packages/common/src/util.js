@@ -103,14 +103,23 @@ function buildRequest(url, method, queryParams, data, headers) {
 export async function request(url, params = { method: 'GET' }) {
   const { method, data, headers, ...otherOptions } = params;
   const options = {
-    method: 'GET',
-    headers: {},
-    body: '', //Blob, ArrayBuffer, TypedArray, Dataview, URLSearchParms, ReadableStream >> GET or HEAD method cannot have body,
-    mode: '', // cors, no-cors, same-origin
-    credentials: '', // omit, same-origin, include
-    cache: '', // default, no-store, reload, no-cache, force-cache and only-if-cached
-    redirect: '', // follow, error, manual
-    referrer: ''
+    method: 'GET', // POST, PUT, DELETE, HEAD, etc.
+    headers: {
+      // the content type header value is usually auto-set
+      // depending on the request body
+    },
+    body: undefined, //Blob, ArrayBuffer, TypedArray, Dataview, URLSearchParms, ReadableStream >> GET or HEAD method cannot have body,
+    mode: 'cors', // cors, no-cors, same-origin
+    credentials: 'same-origin', // omit, same-origin, include
+    cache: 'default', // default, no-store, reload, no-cache, force-cache and only-if-cached
+    redirect: 'follow', // follow, error, manual
+    referrer: 'about:client', // A string specifying the referrer of the request. This can be a same-origin URL, about:client, or an empty string.,
+    referrerPolicy: 'strict-origin-when-cross-origin', // no-referrer-when-downgrade, no-referrer, origin, same-origin...
+    integrity: '', //a hash, like "sha256-abcdef1234567890"
+    keepAlive: true,
+    signal: undefined, // AbortController to abort request
+    priority: 'auto', //Specifies the priority of the fetch request relative to other requests of the same. Must be one of the following strings: high, low, auto
+    params: {}, // An object implementing `URLSearchParams.string()` which returns a string containing a query string suitable for use in a URL.
   };
 
   const request = buildRequest(url, method, otherOptions, data, headers);
