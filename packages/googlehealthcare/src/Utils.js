@@ -21,7 +21,7 @@ export const request = async (url, params = {}, method = 'GET') => {
     body: JSON.stringify(params),
     headers: {
       'Content-Type': 'application/fhir+json',
-      Authorization: `Bearer ${auth.access_token}`,
+      Authorization: `Bearer ${auth.accessToken}`,
     },
   };
 
