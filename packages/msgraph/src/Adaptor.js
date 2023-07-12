@@ -106,32 +106,76 @@ export function get(path, query, callback = false) {
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
+/**
+ * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
+ * @public
+ * @example <caption>Get drives associated with a group</caption>
+ * getDrives('group', "b!YXzpkoLwR06bxC8tNdg71m")
+ * @example <caption>Get a drive associated with a group</caption>
+ * getDrives(groupId, "b!YXzpkoLwR06bxC8tNdg71m", { driveId: 'drive' })
+ * @example <caption>Get drives for a site</caption>
+ * getDrives('site', 'openfn.sharepoint.com')
+ * @example <caption>Get a drive for a site</caption>
+ * getDrives('site', 'openfn.sharepoint.com, { driveId: 'drive' })
+ * @example <caption>Get a drive by ID</caption>
+ * getDrives('drive', 'YXzpkoLwR06bxC8tNdg71m'}) ????
+ * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
 export function getDrives(
-  resource = { driveId: '', siteId: '', groupId: '', defaultDrive: false },
+  resourceType, //drives or groups or sites or users
+  resourceId,
+  options = {},
   callback = s => s
 ) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolveResource] = expandReferences(state, resource);
+    const [resolvedResourceType, resolveResourceId, resolvedOptions] =
+      expandReferences(state, resourceType, resourceId, options);
 
-    const { siteId, driveId, groupId, defaultDrive } = resolveResource;
+    const { driveId, ...otherOptions } = resolvedOptions;
 
-    let resolvePath = 'me/drives';
+    const resolvePath = `${resolvedResourceType}/${resourceId}/${
+      driveId ? `drives/{driveId}` : 'drives'
+    }`;
 
-    if (driveId) resolvePath = `drives/${driveId}`;
-    if (siteId)
-      resolvePath = defaultDrive
-        ? `sites/${siteId}/drive`
-        : `sites/${siteId}/drives`;
-    if (groupId)
-      resolvePath = defaultDrive
-        ? `groups/${groupId}/drive`
-        : `groups/${groupId}/drives`;
+    const parts = [resolvedResourceType, resolveResourceId, driveId];
+    if (!driveId) {
+      parts.push('drives'); // list all
+    } else if (driveId === 'drive') {
+      parts.push(driveId); // default
+    } else {
+      parts.push('drives', driveId);
+    }
+
+    // const path =
+    //   parts.join('/') /
+    //   sites /
+    //   openfnorg.sharepoint.com /
+    //   drives /
+    //   driveId /
+    //   sites /
+    //   openfnorg.sharepoint.com /
+    //   drive /
+    //   sites /
+    //   openfnorg.sharepoint.com /
+    //   drives;
+
+    // if (driveId) resolvePath = `drives/${driveId}`;
+    // if (siteId)
+    //   resolvePath = defaultDrive
+    //     ? `sites/${siteId}/drive`
+    //     : `sites/${siteId}/drives/`;
+    // if (groupId)
+    //   resolvePath = defaultDrive
+    //     ? `groups/${groupId}/drive`
+    //     : `groups/${groupId}/drives`;
 
     const url = setUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
 
-    return request(url, { ...auth }).then(response =>
+    return request(url, { ...auth, ...otherOptions }).then(response =>
       handleResponse(response, state, callback)
     );
   };

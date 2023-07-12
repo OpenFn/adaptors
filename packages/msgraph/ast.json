@@ -129,7 +129,8 @@
     {
       "name": "getDrives",
       "params": [
-        "resource",
+        "resourceType",
+        "query",
         "callback"
       ],
       "docs": {
@@ -201,7 +202,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
