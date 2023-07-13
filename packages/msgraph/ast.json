@@ -130,7 +130,8 @@
       "name": "getDrives",
       "params": [
         "resourceType",
-        "query",
+        "resourceId",
+        "options",
         "callback"
       ],
       "docs": {

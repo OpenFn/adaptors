@@ -110,15 +110,15 @@ export function get(path, query, callback = false) {
  * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
  * @public
  * @example <caption>Get drives associated with a group</caption>
- * getDrives('group', "b!YXzpkoLwR06bxC8tNdg71m")
+ * getDrives('groups', "b!YXzpkoLwR06bxC8tNdg71m")
  * @example <caption>Get a drive associated with a group</caption>
  * getDrives(groupId, "b!YXzpkoLwR06bxC8tNdg71m", { driveId: 'drive' })
  * @example <caption>Get drives for a site</caption>
- * getDrives('site', 'openfn.sharepoint.com')
+ * getDrives('sites', 'openfn.sharepoint.com')
  * @example <caption>Get a drive for a site</caption>
- * getDrives('site', 'openfn.sharepoint.com, { driveId: 'drive' })
+ * getDrives('sites', 'openfn.sharepoint.com', { driveId: 'drive' })
  * @example <caption>Get a drive by ID</caption>
- * getDrives('drive', 'YXzpkoLwR06bxC8tNdg71m'}) ????
+ * getDrives('drives', {driveId:'YXzpkoLwR06bxC8tNdg71m'})
  * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
@@ -136,11 +136,8 @@ export function getDrives(
 
     const { driveId, ...otherOptions } = resolvedOptions;
 
-    const resolvePath = `${resolvedResourceType}/${resourceId}/${
-      driveId ? `drives/{driveId}` : 'drives'
-    }`;
-
     const parts = [resolvedResourceType, resolveResourceId, driveId];
+
     if (!driveId) {
       parts.push('drives'); // list all
     } else if (driveId === 'drive') {
@@ -148,6 +145,7 @@ export function getDrives(
     } else {
       parts.push('drives', driveId);
     }
+    const resolvePath = parts.join('/');
 
     // const path =
     //   parts.join('/') /
