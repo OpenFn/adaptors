@@ -93,15 +93,15 @@ export function get(path, query, callback = false) {
  * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
  * @public
  * @example <caption>Get drives associated with a group</caption>
- * getDrives({groupId: "b!YXzpkoLwR06bxC8tNdg71m"})
+ * getDrive({groupId: "b!YXzpkoLwR06bxC8tNdg71m"})
  * @example <caption>Get a drive associated with a group</caption>
- * getDrives({groupId: "b!YXzpkoLwR06bxC8tNdg71m", defaultDrive: true})
+ * getDrive({groupId: "b!YXzpkoLwR06bxC8tNdg71m", defaultDrive: true})
  * @example <caption>Get drives for a site</caption>
- * getDrives({siteId: "openfn.sharepoint.com"})
+ * getDrive({siteId: "openfn.sharepoint.com"})
  * @example <caption>Get a drive for a site</caption>
- * getDrives({siteId: "openfn.sharepoint.com", defaultDrive: true})
+ * getDrive({siteId: "openfn.sharepoint.com", defaultDrive: true})
  * @example <caption>Get a drive by ID</caption>
- * getDrives({driveId: "YXzpkoLwR06bxC8tNdg71m"})
+ * getDrive({driveId: "YXzpkoLwR06bxC8tNdg71m"})
  * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
@@ -110,42 +110,50 @@ export function get(path, query, callback = false) {
  * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
  * @public
  * @example <caption>Get drives associated with a group</caption>
- * getDrives('groups', "b!YXzpkoLwR06bxC8tNdg71m")
+ * getDrive('groups', "b!YXzpkoLwR06bxC8tNdg71m")
  * @example <caption>Get a drive associated with a group</caption>
- * getDrives(groupId, "b!YXzpkoLwR06bxC8tNdg71m", { driveId: 'drive' })
- * @example <caption>Get drives for a site</caption>
- * getDrives('sites', 'openfn.sharepoint.com')
+ * getDrive({ resource: 'groups', resourceId: 'b!YXzpkoLwR06bxC8tNdg71m' })
  * @example <caption>Get a drive for a site</caption>
- * getDrives('sites', 'openfn.sharepoint.com', { driveId: 'drive' })
+ * getDrive({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
  * @example <caption>Get a drive by ID</caption>
- * getDrives('drives', {driveId:'YXzpkoLwR06bxC8tNdg71m'})
- * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
+ * getDrive('YXzpkoLwR06bxC8tNdg71m')
+ * @param drive {string} - (Optional) the id of the drive to get
+ * @param drive {object} - an object describing the drive location (site/group/user). Takes a resource and resourceId
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-export function getDrives(
-  resourceType, //drives or groups or sites or users
-  resourceId,
-  options = {},
-  callback = s => s
-) {
+
+export function getDrive(drive, callback) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolvedResourceType, resolveResourceId, resolvedOptions] =
-      expandReferences(state, resourceType, resourceId, options);
+    const [resolvedDrive] = expandReferences(state, drive);
 
-    const { driveId, ...otherOptions } = resolvedOptions;
+    let resolvePath = 'me/drive';
 
-    const parts = [resolvedResourceType, resolveResourceId, driveId];
+    if (typeof resolvedDrive === 'string') {
+      resolvePath = `drives/${resolvedDrive}`;
+    } else if (typeof resolvedDrive === 'object') {
+      const { resourceId, resource } = resolvedDrive;
 
-    if (!driveId) {
-      parts.push('drives'); // list all
-    } else if (driveId === 'drive') {
-      parts.push(driveId); // default
-    } else {
-      parts.push('drives', driveId);
+      if (!resourceId || !resource) {
+        throw new Error('You must provide both resourceId and resource');
+      }
+
+      resolvePath = `${resource}/${resourceId}/drive`;
     }
-    const resolvePath = parts.join('/');
+
+    // const { driveId, ...otherOptions } = resolvedOptions;
+
+    // const parts = [resolvedResourceType, resolveResourceId, driveId];
+
+    // if (!driveId) {
+    //   parts.push('drives'); // list all
+    // } else if (driveId === 'drive') {
+    //   parts.push(driveId); // default
+    // } else {
+    //   parts.push('drives', driveId);
+    // }
+    // const resolvePath = parts.join('/');
 
     // const path =
     //   parts.join('/') /
