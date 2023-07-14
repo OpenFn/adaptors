@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.10.2
+
+### Patch Changes
+
+- 26a303e: add expandReferences for csvData and parsingOptions
+
 ## 1.10.1
 
 ### Patch Changes
