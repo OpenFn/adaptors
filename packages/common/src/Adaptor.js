@@ -481,6 +481,16 @@ export function humanProper(str) {
   }
 }
 
+/**
+ * Splits an object into two objects based on a list of keys.
+ * The first object contains the keys that are not in the list,
+ * and the second contains the keys that are.
+ * @public
+ * @function
+ * @param {Object} obj - The object to split.
+ * @param {string[]} keys - List of keys to split on.
+ * @returns {Object[]} - Tuple of objects, first object contains keys not in list, second contains keys that are.
+ */
 export function splitKeys(obj, keys) {
   return Object.keys(obj).reduce(
     ([keep, split], key) => {
@@ -544,23 +554,25 @@ export function chunk(array, chunkSize) {
 }
 
 /**
- * The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
- * resolves to the parsed CSV data.
+ * Takes a CSV file string or stream and parsing options as input, and returns a promise that
+ * resolves to the parsed CSV data as an array of objects.
+ * Options for `parsingOptions` include:
+ * - `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`
+ * - `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'"'`
+ * - `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `"`
+ * - `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`
+ * - `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`
+ * - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
+ * - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
+ * - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
+ * - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
+ * - `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`
+ * @public
+ * @function
  * @param {String | Stream} csvData - A CSV string or a readable stream
  * @param {Object} [parsingOptions] - Optional. Parsing options for converting CSV to JSON.
- *     Possible options:
- *     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`
- *     - `quote` {string|Buffer|[string|Buffer]} - Defines the characters used to surround a field. Default: `'"'`
- *     - `escape` {Buffer|string|null|boolean} - Set the escape character as one character/byte only. Default: `"`
- *     - `columns` {boolean | array | function} - Generates record in the form of object literals. Default: `true`
- *     - `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`
- *     - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
- *     - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
- *     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
- *     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
- *     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`
- * @param {function} callback - (Optional) callback function. If used it will take state and csvRows
- * @returns {Promise} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
+ * @param {function} [callback] - (Optional) callback function. If used it will be called state and an array of rows.
+ * @returns {Operation} The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.
  */
 export function parseCsv(csvData, parsingOptions = {}, callback) {
   const defaultOptions = {
@@ -586,50 +598,38 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     throw new Error('chunkSize must be at least 1');
   }
 
-  return state => {
-    return new Promise((resolve, reject) => {
-      let buffer = [];
+  return async state => {
+    let buffer = [];
 
-      const parser =
-        typeof csvData === 'string'
-          ? parse(csvData, options)
-          : csvData.pipe(parse(options));
+    const parser =
+      typeof csvData === 'string'
+        ? parse(csvData, options)
+        : csvData.pipe(parse(options));
 
-      const flushBuffer = currentState => {
-        const nextState = callback
-          ? callback(currentState, buffer)
-          : composeNextState(currentState, buffer);
+    const flushBuffer = async currentState => {
+      const nextState = callback
+        ? await callback(currentState, buffer)
+        : composeNextState(currentState, buffer);
 
-        buffer = [];
+      buffer = [];
 
-        return [nextState, buffer];
-      };
+      return [nextState, buffer];
+    };
 
-      parser.on('readable', function () {
-        let chunk;
-
-        while ((chunk = parser.read()) !== null) {
-          buffer.push(chunk);
-
-          if (buffer.length >= options.chunkSize) {
-            const [nextState, nextBuffer] = flushBuffer(state);
-            // eslint-disable-next-line no-param-reassign
-            state = nextState;
-            buffer = nextBuffer;
-          }
-        }
-      });
-      parser.on('error', function (error) {
-        reject(error);
-      });
-
-      parser.on('end', function () {
-        const [finalState] = flushBuffer(state);
-        resolve(finalState);
-      });
-    });
+    for await (const record of parser) {
+      buffer.push(record);
+      if (buffer.length === options.chunkSize) {
+        const [nextState, nextBuffer] = await flushBuffer(state);
+        // eslint-disable-next-line no-param-reassign
+        state = nextState;
+        buffer = nextBuffer;
+      }
+    }
+    const [finalState] = await flushBuffer(state);
+    return finalState;
   };
 }
+
 // /**
 //  * Returns a unique array of objects by an attribute in those objects
 //  * @public

@@ -1066,6 +1066,73 @@
       "valid": true
     },
     {
+      "name": "splitKeys",
+      "params": [
+        "obj",
+        "keys"
+      ],
+      "docs": {
+        "description": "Splits an object into two objects based on a list of keys.\nThe first object contains the keys that are not in the list,\nand the second contains the keys that are.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The object to split.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "obj"
+          },
+          {
+            "title": "param",
+            "description": "List of keys to split on.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "keys"
+          },
+          {
+            "title": "returns",
+            "description": "Tuple of objects, first object contains keys not in list, second contains keys that are.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "scrubEmojis",
       "params": [
         "text",
@@ -1165,6 +1232,80 @@
             "type": {
               "type": "NameExpression",
               "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "parseCsv",
+      "params": [
+        "csvData",
+        "parsingOptions",
+        "callback"
+      ],
+      "docs": {
+        "description": "The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A CSV string or a readable stream",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "String"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Stream"
+                }
+              ]
+            },
+            "name": "csvData"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options for converting CSV to JSON. \\n",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "parsingOptions"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

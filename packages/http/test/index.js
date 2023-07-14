@@ -8,7 +8,7 @@ import {
   alterState,
   request,
 } from '../src';
-import { each } from '@openfn/language-common';
+import { each, parseCsv } from '@openfn/language-common';
 import { expect } from 'chai';
 import nock from 'nock';
 import { setUrl } from '../src/Utils';
@@ -510,10 +510,46 @@ describe('post', () => {
     });
 
     testServer
+      .post('/api/csv-reader')
+      .times(3)
+      .reply(200, function (url, body) {
+        return body;
+      });
+
+    testServer
       .post('/api/fake-custom-success-codes')
       .reply(302, function (url, body) {
         return { ...body, statusCode: 302 };
       });
+  });
+
+  it('should make an http request from inside the parseCSV callback', async function () {
+    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
+    const state = { references: [], data: [], apiResponses: [] };
+
+    const resultingState = await parseCsv(
+      csv,
+      { chunkSize: 2 },
+      (state, rows) =>
+        post(
+          'https://www.example.com/api/csv-reader',
+          {
+            body: rows,
+          },
+          state => {
+            state.apiResponses.push(...state.response.data);
+            return state;
+          }
+        )(state)
+    )(state);
+
+    expect(resultingState.apiResponses).to.eql([
+      { id: '1', name: 'taylor' },
+      { id: '2', name: 'mtuchi' },
+      { id: '3', name: 'joe' },
+      { id: '4', name: 'stu' },
+      { id: '5', name: 'elias' },
+    ]);
   });
 
   it('can set JSON on the request body', async () => {

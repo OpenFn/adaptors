@@ -423,18 +423,45 @@ describe('parseCsv', function () {
 
   it('should await promises returned from the callback', async function () {
     const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9\n10,11,12\n13,14,15';
-    const state = { references: [], data: [], items: [] };
+    const state = { data: 0 };
 
     const resultingState = await parseCsv(
       csv,
       { chunkSize: 2 },
-      async (state, rows) => {
-        return await { ...state, data: rows };
+      (state, rows) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              ...state,
+              data: rows.reduce((sum, row) => sum + Number(row.b), state.data),
+            });
+          }, 1);
+        });
       }
     )(state);
 
     assert.deepEqual(resultingState, {
-      data: [{ a: '13', b: '14', c: '15' }],
+      data: 40,
+    });
+  });
+
+  it('should set state to the result of a non-promise callback', async function () {
+    const csv = 'a,b,c\n1,2,3\n4,5,6\n7,8,9\n10,11,12\n13,14,15';
+    const state = { data: 0 };
+
+    const resultingState = await parseCsv(
+      csv,
+      { chunkSize: 1 },
+      (state, rows) => {
+        return {
+          ...state,
+          data: rows.reduce((sum, row) => sum + Number(row.b), state.data),
+        };
+      }
+    )(state);
+
+    assert.deepEqual(resultingState, {
+      data: 40,
     });
   });
 
