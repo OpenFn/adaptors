@@ -591,14 +591,14 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
   };
 
   return async state => {
-    const [resolevedCsvData, resolevedParsingOptions] = newExpandReferences(
+    const [resolvedCsvData, resolvedParsingOptions] = newExpandReferences(
       state,
       csvData,
       parsingOptions
     );
 
     const filteredOptions = Object.fromEntries(
-      Object.entries(resolevedParsingOptions).filter(
+      Object.entries(resolvedParsingOptions).filter(
         ([key]) => key in defaultOptions
       )
     );
@@ -612,9 +612,9 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     let buffer = [];
 
     const parser =
-      typeof resolevedCsvData === 'string'
-        ? parse(resolevedCsvData, options)
-        : resolevedCsvData.pipe(parse(options));
+      typeof resolvedCsvData === 'string'
+        ? parse(resolvedCsvData, options)
+        : resolvedCsvData.pipe(parse(options));
 
     const flushBuffer = async currentState => {
       const nextState = callback
