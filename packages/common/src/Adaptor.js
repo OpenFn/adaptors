@@ -4,6 +4,8 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 
+import { expandReferences as newExpandReferences } from './util';
+
 export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
@@ -588,23 +590,31 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     skip_empty_lines: true,
   };
 
-  const filteredOptions = Object.fromEntries(
-    Object.entries(parsingOptions).filter(([key]) => key in defaultOptions)
-  );
-
-  const options = { ...defaultOptions, ...filteredOptions };
-
-  if (options.chunkSize < 1) {
-    throw new Error('chunkSize must be at least 1');
-  }
-
   return async state => {
+    const [resolevedCsvData, resolevedParsingOptions] = newExpandReferences(
+      state,
+      csvData,
+      parsingOptions
+    );
+
+    const filteredOptions = Object.fromEntries(
+      Object.entries(resolevedParsingOptions).filter(
+        ([key]) => key in defaultOptions
+      )
+    );
+
+    const options = { ...defaultOptions, ...filteredOptions };
+
+    if (options.chunkSize < 1) {
+      throw new Error('chunkSize must be at least 1');
+    }
+
     let buffer = [];
 
     const parser =
-      typeof csvData === 'string'
-        ? parse(csvData, options)
-        : csvData.pipe(parse(options));
+      typeof resolevedCsvData === 'string'
+        ? parse(resolevedCsvData, options)
+        : resolevedCsvData.pipe(parse(options));
 
     const flushBuffer = async currentState => {
       const nextState = callback
