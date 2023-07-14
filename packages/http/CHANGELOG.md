@@ -1,5 +1,16 @@
 # @openfn/language-http
 
+## 5.0.0
+
+### Major Changes
+
+- 0b6f20b: use parseCsv from common
+
+### Patch Changes
+
+- Updated dependencies [8c32eb3]
+  - @openfn/language-common@1.10.1
+
 ## 4.3.3
 
 ### Patch Changes

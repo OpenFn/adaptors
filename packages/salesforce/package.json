@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -31,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.10.0",
+    "@openfn/language-common": "1.10.1",
     "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
