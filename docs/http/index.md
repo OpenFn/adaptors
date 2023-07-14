@@ -6,8 +6,6 @@
 <dt>
     <a href="#get">get(path, params, callback)</a></dt>
 <dt>
-    <a href="#parseCSV">parseCSV(target, config)</a></dt>
-<dt>
     <a href="#parseXML">parseXML(body, script)</a></dt>
 <dt>
     <a href="#patch">patch(path, params, callback)</a></dt>
@@ -63,29 +61,6 @@ get('/myEndpoint', {
    headers: {'content-type': 'application/json'},
    authentication: {username: 'user', password: 'pass'}
  })
-```
-
-* * *
-
-## parseCSV
-
-parseCSV(target, config) ⇒ <code>Operation</code>
-CSV-Parse for CSV conversion to JSON
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| target | <code>String</code> | string or local file with CSV data |
-| config | <code>Object</code> | csv-parse config object |
-
-**Example**  
-```js
-parseCSV("/home/user/someData.csv", {
-	  quoteChar: '"',
-	  header: false,
-	});
 ```
 
 * * *

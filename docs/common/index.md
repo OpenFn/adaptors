@@ -54,7 +54,7 @@
 <dt>
     <a href="#options">options(requestParams)</a></dt>
 <dt>
-    <a href="#parseCsv">parseCsv(csvData, [parsingOptions], callback)</a></dt>
+    <a href="#parseCsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
 <dt>
     <a href="#patch">patch(requestParams)</a></dt>
 <dt>
@@ -69,6 +69,8 @@
     <a href="#source">source(path)</a></dt>
 <dt>
     <a href="#sourceValue">sourceValue(path)</a></dt>
+<dt>
+    <a href="#splitKeys">splitKeys(obj, keys)</a></dt>
 <dt>
     <a href="#toArray">toArray(arg)</a></dt>
 <dt>
@@ -632,18 +634,30 @@ options({
 
 ## parseCsv
 
-parseCsv(csvData, [parsingOptions], callback) ⇒ <code>Promise</code>
-The function `parseCsv` takes a CSV file string or stream and parsing options as input, and returns a promise that
-resolves to the parsed CSV data.
+parseCsv(csvData, [parsingOptions], [callback]) ⇒ <code>Operation</code>
+Takes a CSV file string or stream and parsing options as input, and returns a promise that
+resolves to the parsed CSV data as an array of objects.
+Options for `parsingOptions` include:
+- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`
+- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'"'`
+- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `"`
+- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`
+- `bom` {boolean} - Strips the [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark) from the input string or buffer. Default: `true`
+- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`
+- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`
+- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`
+- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
+- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`
 
 **Kind**: global function  
-**Returns**: <code>Promise</code> - The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.  
+**Returns**: <code>Operation</code> - The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | csvData | <code>String</code> \| <code>Stream</code> | A CSV string or a readable stream |
-| [parsingOptions] | <code>Object</code> | Optional. Parsing options for converting CSV to JSON.     Possible options:     - `delimiter` {string|Buffer|[string|Buffer]} - Defines the character(s) used to delimitate the fields inside a record. Default: `','`     - `quote` {string|Buffer|[string|Buffer]} - Defines the characters used to surround a field. Default: `'"'`     - `escape` {Buffer|string|null|boolean} - Set the escape character as one character/byte only. Default: `"`     - `columns` {boolean | array | function} - Generates record in the form of object literals. Default: `true`     - `bom` {boolean} - Strips the [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark) from the input string or buffer. Default: `true`     - `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`     - `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`     - `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`     - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`     - `skip_empty_lines` {boolean} - The `skip_empty_lines` skips any line which is empty. Default: `true` |
-| callback | <code>function</code> | (Optional) callback function. If used it will take state and csvRows |
+| [parsingOptions] | <code>Object</code> | Optional. Parsing options for converting CSV to JSON. |
+| [callback] | <code>function</code> | (Optional) callback function. If used it will be called state and an array of rows. |
 
 
 * * *
@@ -806,6 +820,25 @@ item will be returned.
 ```js
 sourceValue('$.key')
 ```
+
+* * *
+
+## splitKeys
+
+splitKeys(obj, keys) ⇒ <code>Array.&lt;Object&gt;</code>
+Splits an object into two objects based on a list of keys.
+The first object contains the keys that are not in the list,
+and the second contains the keys that are.
+
+**Kind**: global function  
+**Returns**: <code>Array.&lt;Object&gt;</code> - - Tuple of objects, first object contains keys not in list, second contains keys that are.  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | The object to split. |
+| keys | <code>Array.&lt;string&gt;</code> | List of keys to split on. |
+
 
 * * *
 
