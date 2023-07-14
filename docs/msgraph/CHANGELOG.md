@@ -1,5 +1,16 @@
 # @openfn/language-msgraph
 
+## 0.2.0
+
+### Minor Changes
+
+- d33c0ee: export parseCsv from common
+
+### Patch Changes
+
+- Updated dependencies [8c32eb3]
+  - @openfn/language-common@1.10.1
+
 ## 0.1.1
 
 ### Patch Changes

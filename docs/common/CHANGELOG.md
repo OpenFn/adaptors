@@ -1,5 +1,12 @@
 v0.4.0
 
+## 1.10.1
+
+### Patch Changes
+
+- 8c32eb3: - update parseCsv to await callback
+  - Added documentation for splitKeys
+
 ## 1.10.0
 
 ### Minor Changes
