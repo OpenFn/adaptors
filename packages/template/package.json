@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor template",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --experimental-vm-modules --no-warnings",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --experimental-vm-modules --no-warnings",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
@@ -30,8 +30,6 @@
     "@openfn/language-common": "^1.8.1"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

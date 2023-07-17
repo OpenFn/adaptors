@@ -18,6 +18,7 @@ import { request } from './Utils';
  * @returns {Operation}
  */
 export function execute(...operations) {
+  console.log('CUSTOM EXECUTE')
   const initialState = {
     references: [],
     data: null,

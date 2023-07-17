@@ -1,0 +1,18 @@
+{
+  "name": "@openfn/test-execute",
+  "version": "1.0.0",
+  "description": "Unit test helper to run jobs from source",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openfn/compiler": "^0.0.32",
+    "@openfn/runtime": "file:/home/joe/repo/openfn/kit/dist/openfn-runtime-0.0.25.tgz"
+  }
+}

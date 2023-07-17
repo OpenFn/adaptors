@@ -20,10 +20,11 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "2.25.0",
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/metadata": "workspace:^1.0.1",
-    "@openfn/parse-jsdoc": "workspace:^1.0.0",
+    "@openfn/buildtools": "workspace:*",
+    "@openfn/metadata": "workspace:*",
+    "@openfn/parse-jsdoc": "workspace:*",
     "@openfn/simple-ast": "0.4.1",
+    "@openfn/test-execute": "workspace:*",
     "eslint": "8.26.0"
   }
 }
