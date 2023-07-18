@@ -8,7 +8,8 @@ import {
   getItems,
 } from '../src/Adaptor.js';
 
-import MockAgent, { fixtures } from './mockAgent.js';
+import MockAgent from './mockAgent.js';
+import { fixtures } from './fixtures.js';
 
 import { setGlobalDispatcher } from 'undici';
 
