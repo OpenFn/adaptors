@@ -1,7 +1,7 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, setAuth, setUrl, handleResponse } from './Utils';
+import { request, setAuth, getUrl, handleResponse } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -51,7 +51,7 @@ export function create(resource, data, callback) {
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = setUrl({ apiVersion, resolveResource });
+    const url = getUrl({ apiVersion, resolveResource });
     const auth = setAuth(accessToken);
 
     const options = {
@@ -81,7 +81,7 @@ export function get(path, query, callback = false) {
     const { accessToken, apiVersion } = state.configuration;
     const [resolvePath, resolveQuery] = expandReferences(state, path, query);
 
-    const url = setUrl({ apiVersion, resolvePath });
+    const url = getUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
 
     return request(url, { ...resolveQuery, ...auth }).then(response =>
@@ -128,7 +128,7 @@ export function getDrive(drive, callback) {
       resolvePath = `${resource}/${resourceId}/drive`;
     }
 
-    const url = setUrl({ apiVersion, resolvePath });
+    const url = getUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
@@ -170,7 +170,7 @@ export function listDrives(resource, callback) {
       resolvePath = `${resource}/${resourceId}/drives`;
     }
 
-    const url = setUrl({ apiVersion, resolvePath });
+    const url = getUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>

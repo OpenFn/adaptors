@@ -1,6 +1,7 @@
+import { fetch } from 'undici';
 import { composeNextState } from '@openfn/language-common';
 
-export function setUrl(urlParams) {
+export function getUrl(urlParams) {
   const { apiVersion, resolvePath } = urlParams;
 
   if (isValidHttpUrl(resolvePath)) return resolvePath;
