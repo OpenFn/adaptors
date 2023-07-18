@@ -5,6 +5,7 @@
 Added the following `sharepoint` functions
 
 - `getSites()`
-- `getDrives()`
+- `getDrive()`
+- `listDrives()`
 - `getLists()`
 - `getItems()`
