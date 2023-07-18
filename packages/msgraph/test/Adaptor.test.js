@@ -3,7 +3,8 @@ import {
   execute,
   getLists,
   getSites,
-  getDrives,
+  getDrive,
+  listDrives,
   getItems,
 } from '../src/Adaptor.js';
 
@@ -121,7 +122,7 @@ describe('getSites', () => {
   });
 });
 
-describe('getDrives', () => {
+describe('getDrive', () => {
   it('Get a drive for a site', async () => {
     const state = {
       configuration: {
@@ -130,22 +131,10 @@ describe('getDrives', () => {
     };
 
     const finalState = await execute(
-      getDrives({ siteId: 'openfn.sharepoint.com', defaultDrive: true })
+      getDrive({ resourceId: 'openfn.sharepoint.com', resource: 'sites' })
     )(state);
 
     expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);
-  });
-
-  it("Get current user's drives", async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(getDrives())(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.userDrives);
   });
 
   it('Get drive by driveId', async () => {
@@ -155,11 +144,41 @@ describe('getDrives', () => {
       },
     };
 
-    const finalState = await execute(
-      getDrives({ driveId: 'b!YXzpkoLwR06bxC8tNdg71m_' })
-    )(state);
+    const finalState = await execute(getDrive('b!YXzpkoLwR06bxC8tNdg71m_'))(
+      state
+    );
 
     expect(JSON.parse(finalState.data)).to.eql(fixtures.driveResponse);
+  });
+
+  it('throws an error if resourceId or resource is not provided', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const error = await execute(listDrives({}))(state).catch(error => {
+      return error;
+    });
+
+    expect(error.message).to.contain(
+      'You must provide both resourceId and resource'
+    );
+  });
+});
+
+describe('listDrives', () => {
+  it("Get current user's drives", async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const finalState = await execute(listDrives())(state);
+
+    expect(JSON.parse(finalState.data)).to.eql(fixtures.userDrives);
   });
 
   it("Get a site's drives", async () => {
@@ -170,10 +189,26 @@ describe('getDrives', () => {
     };
 
     const finalState = await execute(
-      getDrives({ siteId: 'openfn.sharepoint.com' })
+      listDrives({ resourceId: 'openfn.sharepoint.com', resource: 'sites' })
     )(state);
 
     expect(JSON.parse(finalState.data)).to.eql(fixtures.drivesResponse);
+  });
+
+  it('throws an error if resourceId or resource is not provided', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    const error = await execute(listDrives({}))(state).catch(error => {
+      return error;
+    });
+
+    expect(error.message).to.contain(
+      'You must provide both resourceId and resource'
+    );
   });
 });
 

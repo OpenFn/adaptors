@@ -89,40 +89,26 @@ export function get(path, query, callback = false) {
     );
   };
 }
+
 /**
  * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
  * @public
- * @example <caption>Get drives associated with a group</caption>
- * getDrive({groupId: "b!YXzpkoLwR06bxC8tNdg71m"})
- * @example <caption>Get a drive associated with a group</caption>
- * getDrive({groupId: "b!YXzpkoLwR06bxC8tNdg71m", defaultDrive: true})
- * @example <caption>Get drives for a site</caption>
- * getDrive({siteId: "openfn.sharepoint.com"})
- * @example <caption>Get a drive for a site</caption>
- * getDrive({siteId: "openfn.sharepoint.com", defaultDrive: true})
- * @example <caption>Get a drive by ID</caption>
- * getDrive({driveId: "YXzpkoLwR06bxC8tNdg71m"})
- * @param {object} [resource={ driveId: '', siteId: '', groupId: '', defaultDrive: false }] - A resource object containing resource ids and options
- * @param {function} [callback = s => s] (Optional) Callback function
- * @return {Operation}
- */
-/**
- * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
- * @public
- * @example <caption>Get drives associated with a group</caption>
- * getDrive('groups', "b!YXzpkoLwR06bxC8tNdg71m")
- * @example <caption>Get a drive associated with a group</caption>
- * getDrive({ resource: 'groups', resourceId: 'b!YXzpkoLwR06bxC8tNdg71m' })
- * @example <caption>Get a drive for a site</caption>
- * getDrive({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
+ * @example <caption>Get a current user drive</caption>
+ * getDrive()
  * @example <caption>Get a drive by ID</caption>
  * getDrive('YXzpkoLwR06bxC8tNdg71m')
- * @param drive {string} - (Optional) the id of the drive to get
- * @param drive {object} - an object describing the drive location (site/group/user). Takes a resource and resourceId
+ * @example <caption>Get a drive for a site</caption>
+ * getDrive({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
+ * @example <caption>Get a drive associated with a group</caption>
+ * getDrive({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
+ * @param drive {string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).
+ *    - If drive is a string, it represents the drive ID.
+ *    - If drive is an object, it should have the following properties:
+ *        - resource {string} - The type of resource (e.g. sites, groups).
+ *        - resourceId {string} - The ID of the resource.
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-
 export function getDrive(drive, callback) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
@@ -142,50 +128,57 @@ export function getDrive(drive, callback) {
       resolvePath = `${resource}/${resourceId}/drive`;
     }
 
-    // const { driveId, ...otherOptions } = resolvedOptions;
-
-    // const parts = [resolvedResourceType, resolveResourceId, driveId];
-
-    // if (!driveId) {
-    //   parts.push('drives'); // list all
-    // } else if (driveId === 'drive') {
-    //   parts.push(driveId); // default
-    // } else {
-    //   parts.push('drives', driveId);
-    // }
-    // const resolvePath = parts.join('/');
-
-    // const path =
-    //   parts.join('/') /
-    //   sites /
-    //   openfnorg.sharepoint.com /
-    //   drives /
-    //   driveId /
-    //   sites /
-    //   openfnorg.sharepoint.com /
-    //   drive /
-    //   sites /
-    //   openfnorg.sharepoint.com /
-    //   drives;
-
-    // if (driveId) resolvePath = `drives/${driveId}`;
-    // if (siteId)
-    //   resolvePath = defaultDrive
-    //     ? `sites/${siteId}/drive`
-    //     : `sites/${siteId}/drives/`;
-    // if (groupId)
-    //   resolvePath = defaultDrive
-    //     ? `groups/${groupId}/drive`
-    //     : `groups/${groupId}/drives`;
-
     const url = setUrl({ apiVersion, resolvePath });
     const auth = setAuth(accessToken);
 
-    return request(url, { ...auth, ...otherOptions }).then(response =>
+    return request(url, { ...auth }).then(response =>
       handleResponse(response, state, callback)
     );
   };
 }
+
+/**
+ * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
+ * @public
+ * @example <caption>Get a current user drives</caption>
+ * listDrives()
+ * @example <caption>Get site drives </caption>
+ * listDrives({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
+ * @example <caption>Get a drive associated with a group</caption>
+ * listDrives({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
+ * @param resource {Object} - An object describing the drive location (site/group/user).
+ *  It should have the following properties:
+ *   - resource {string} - The type of resource (e.g. sites, groups).
+ *   - resourceId {string} - The ID of the resource.
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
+export function listDrives(resource, callback) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolvedResource] = expandReferences(state, resource);
+
+    let resolvePath = 'me/drives';
+
+    if (typeof resolvedResource === 'object') {
+      const { resourceId, resource } = resolvedResource;
+
+      if (!resourceId || !resource) {
+        throw new Error('You must provide both resourceId and resource');
+      }
+
+      resolvePath = `${resource}/${resourceId}/drives`;
+    }
+
+    const url = setUrl({ apiVersion, resolvePath });
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
 export { request } from './Utils';
 
 export * from './Sharepoint';

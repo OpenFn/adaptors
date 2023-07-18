@@ -127,11 +127,9 @@
       "valid": true
     },
     {
-      "name": "getDrives",
+      "name": "getDrive",
       "params": [
-        "resourceType",
-        "resourceId",
-        "options",
+        "drive",
         "callback"
       ],
       "docs": {
@@ -144,41 +142,29 @@
           },
           {
             "title": "example",
-            "description": "getDrives({groupId: \"b!YXzpkoLwR06bxC8tNdg71m\"})",
-            "caption": "Get drives associated with a group"
+            "description": "getDrive()",
+            "caption": "Get a current user drive"
           },
           {
             "title": "example",
-            "description": "getDrives({groupId: \"b!YXzpkoLwR06bxC8tNdg71m\", defaultDrive: true})",
-            "caption": "Get a drive associated with a group"
+            "description": "getDrive('YXzpkoLwR06bxC8tNdg71m')",
+            "caption": "Get a drive by ID"
           },
           {
             "title": "example",
-            "description": "getDrives({siteId: \"openfn.sharepoint.com\"})",
-            "caption": "Get drives for a site"
-          },
-          {
-            "title": "example",
-            "description": "getDrives({siteId: \"openfn.sharepoint.com\", defaultDrive: true})",
+            "description": "getDrive({ resourceId: \"openfn.sharepoint.com\", resource: 'sites' })",
             "caption": "Get a drive for a site"
           },
           {
             "title": "example",
-            "description": "getDrives({driveId: \"YXzpkoLwR06bxC8tNdg71m\"})",
-            "caption": "Get a drive by ID"
+            "description": "getDrive({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })",
+            "caption": "Get a drive associated with a group"
           },
           {
             "title": "param",
-            "description": "A resource object containing resource ids and options",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "resource",
-            "default": "{driveId:'',siteId:'',groupId:'',defaultDrive:false}"
+            "description": "{string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).\n   - If drive is a string, it represents the drive ID.\n   - If drive is an object, it should have the following properties:\n       - resource {string} - The type of resource (e.g. sites, groups).\n       - resourceId {string} - The ID of the resource.",
+            "type": null,
+            "name": "drive"
           },
           {
             "title": "param",
@@ -203,7 +189,67 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
+    },
+    {
+      "name": "listDrives",
+      "params": [
+        "resource",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get Drive in msgraph such as OneDrive or SharePoint document libraries.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listDrives()",
+            "caption": "Get a current user drives"
+          },
+          {
+            "title": "example",
+            "description": "listDrives({ resourceId: \"openfn.sharepoint.com\", resource: 'sites' })",
+            "caption": "Get site drives"
+          },
+          {
+            "title": "example",
+            "description": "listDrives({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })",
+            "caption": "Get a drive associated with a group"
+          },
+          {
+            "title": "param",
+            "description": "{Object} - An object describing the drive location (site/group/user).\n It should have the following properties:\n  - resource {string} - The type of resource (e.g. sites, groups).\n  - resourceId {string} - The ID of the resource.",
+            "type": null,
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback",
+            "default": "s=>s"
+          },
+          {
+            "title": "return",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
