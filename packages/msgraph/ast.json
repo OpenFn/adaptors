@@ -129,7 +129,7 @@
     {
       "name": "getDrive",
       "params": [
-        "drive",
+        "driveResource",
         "callback"
       ],
       "docs": {
@@ -164,7 +164,7 @@
             "title": "param",
             "description": "{string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).\n   - If drive is a string, it represents the drive ID.\n   - If drive is an object, it should have the following properties:\n       - resource {string} - The type of resource (e.g. sites, groups).\n       - resourceId {string} - The ID of the resource.",
             "type": null,
-            "name": "drive"
+            "name": "driveResource"
           },
           {
             "title": "param",

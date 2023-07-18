@@ -43,7 +43,7 @@ export function execute(...operations) {
  */
 export function create(resource, data, callback) {
   return state => {
-    const [resolveResource, resolveData] = expandReferences(
+    const [resolvedResource, resolvedData] = expandReferences(
       state,
       resource,
       data
@@ -51,12 +51,12 @@ export function create(resource, data, callback) {
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = getUrl({ apiVersion, resolveResource });
+    const url = getUrl({ apiVersion, resolvedResource });
     const auth = setAuth(accessToken);
 
     const options = {
       auth,
-      ...resolveData,
+      ...resolvedData,
     };
 
     return request(url, options, 'POST').then(response =>
@@ -79,12 +79,12 @@ export function create(resource, data, callback) {
 export function get(path, query, callback = false) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolvePath, resolveQuery] = expandReferences(state, path, query);
+    const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
-    const url = getUrl({ apiVersion, resolvePath });
+    const url = getUrl(resolvedPath, apiVersion);
     const auth = setAuth(accessToken);
 
-    return request(url, { ...resolveQuery, ...auth }).then(response =>
+    return request(url, { ...resolvedQuery, ...auth }).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -101,7 +101,7 @@ export function get(path, query, callback = false) {
  * getDrive({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
  * @example <caption>Get a drive associated with a group</caption>
  * getDrive({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
- * @param drive {string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).
+ * @param driveResource {string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).
  *    - If drive is a string, it represents the drive ID.
  *    - If drive is an object, it should have the following properties:
  *        - resource {string} - The type of resource (e.g. sites, groups).
@@ -109,26 +109,26 @@ export function get(path, query, callback = false) {
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-export function getDrive(drive, callback) {
+export function getDrive(driveResource, callback) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolvedDrive] = expandReferences(state, drive);
+    const [resolvedDriveResource] = expandReferences(state, driveResource);
 
-    let resolvePath = 'me/drive';
+    let urlPath = 'me/drive';
 
-    if (typeof resolvedDrive === 'string') {
-      resolvePath = `drives/${resolvedDrive}`;
-    } else if (typeof resolvedDrive === 'object') {
-      const { resourceId, resource } = resolvedDrive;
+    if (typeof resolvedDriveResource === 'string') {
+      urlPath = `drives/${resolvedDriveResource}`;
+    } else if (typeof resolvedDriveResource === 'object') {
+      const { resourceId, resource } = resolvedDriveResource;
 
       if (!resourceId || !resource) {
         throw new Error('You must provide both resourceId and resource');
       }
 
-      resolvePath = `${resource}/${resourceId}/drive`;
+      urlPath = `${resource}/${resourceId}/drive`;
     }
 
-    const url = getUrl({ apiVersion, resolvePath });
+    const url = getUrl(urlPath, apiVersion);
     const auth = setAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
@@ -158,7 +158,7 @@ export function listDrives(resource, callback) {
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedResource] = expandReferences(state, resource);
 
-    let resolvePath = 'me/drives';
+    let urlPath = 'me/drives';
 
     if (typeof resolvedResource === 'object') {
       const { resourceId, resource } = resolvedResource;
@@ -167,10 +167,10 @@ export function listDrives(resource, callback) {
         throw new Error('You must provide both resourceId and resource');
       }
 
-      resolvePath = `${resource}/${resourceId}/drives`;
+      urlPath = `${resource}/${resourceId}/drives`;
     }
 
-    const url = getUrl({ apiVersion, resolvePath });
+    const url = getUrl(urlPath, apiVersion);
     const auth = setAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>

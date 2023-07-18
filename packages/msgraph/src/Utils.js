@@ -1,14 +1,12 @@
 import { fetch } from 'undici';
 import { composeNextState } from '@openfn/language-common';
 
-export function getUrl(urlParams) {
-  const { apiVersion, resolvePath } = urlParams;
-
-  if (isValidHttpUrl(resolvePath)) return resolvePath;
+export function getUrl(urlPath, apiVersion) {
+  if (isValidHttpUrl(urlPath)) return urlPath;
 
   const pathSuffix = apiVersion
-    ? `${apiVersion}/${resolvePath}`
-    : `v1.0/${resolvePath}`;
+    ? `${apiVersion}/${urlPath}`
+    : `v1.0/${urlPath}`;
   return `https://graph.microsoft.com/${pathSuffix}`;
 }
 
