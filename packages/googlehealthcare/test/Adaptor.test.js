@@ -165,7 +165,6 @@ describe('createFhirResource', () => {
       return error;
     });
 
-    console.log(error.message);
     expect(error.message).to.contains(
       'Missing key(s) in fhirStore: cloudRegion, projectId, datasetId, fhirStoreId'
     );
