@@ -118,3 +118,76 @@ export function getItems(
     );
   };
 }
+
+// Gets a drive reference and writes to state.drives.default
+// @param specifier: specify the drive to get. default 'me'.
+//         If an id/owner pair, will return the default drive for the specified owner
+// @param name: optional name for the drive. Will be written to state.drives[name].
+getDrive(specifier, name, callback);
+
+getDrive({}, 'joe'); // get my drive and name it joe
+getDrive('me', 'joe'); // get my drive and name it joe
+getDrive({ id: 'driveId' }, 'joe'); // Get a drive by Id
+getDrive({ id: '<siteId>', owner: 'sites' }, 'joe'); // get default drive for a site
+getDrive({ id: '<userId>', owner: 'users' }); // get default drive for a user
+
+// loose spec for getFile/writeFiles
+const options = {
+  driveName: 'string', // drive of the file to use (optional)
+  metadata: false, // return metadata, not content
+  $filter: 'string', // filter on the query. Needs to be URI encoded
+};
+
+// return an array of folder contents
+// We should safely URI encode the path
+// Path must start with /, else will be treated as an id
+// writes to state.data
+// uses default drive
+getFolder(pathOrId, { options }, (callback = s => s));
+
+// return a single file's content (pass { metadata: true } to get metadata only)
+// return an array of folder contents
+// We should safely URI encode the path
+// Path must start with /, else will be treated as an id
+// writes to state.data
+// uses default drive
+getFile(pathOrId, { options }, (callback = s => s));
+
+// writes one or more files to the path provided
+writeFiles(pathOrId, { options }, data, (callback = s => s));
+
+// examples
+
+each(
+  'state.data',
+  getFile('/BC Actuals Export/bc_actuals_export_11072023.csv')
+);
+
+each('state.data', getFile(`/BC Actuals Export/${state.data.name}`));
+each('state.data', getFile(state.data.id));
+
+// Path must internally be encoded like this
+// path: ".../root:/<content%20path>:/content", // path of content to get
+
+// Job code
+// getDrive('openfnorg.sharepoint.com');
+
+// getFolder('/BC Actuals Export', {
+//   $filter: "file/mimeType eq 'application/vnd.ms-excel'",
+// });
+
+// each(
+//   '$.data',
+//   getFile(() => state.data.id),
+//   {},
+//   state => {
+//     state.groupOfActuals.push(state.data);
+
+//     return {
+//       ...state,
+//       references: [],
+//       data: {},
+//       response: {},
+//     };
+//   }
+// );

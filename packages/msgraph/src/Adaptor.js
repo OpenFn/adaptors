@@ -179,6 +179,15 @@ export function listDrives(resource, callback) {
   };
 }
 
+// export function getFiles(options, callback) {
+//   const url = getUrl(urlPath, apiVersion);
+//   const auth = setAuth(accessToken);
+
+//   return request(url, { ...auth }).then(response =>
+//     handleResponse(response, state, callback)
+//   );
+// }
+
 export { request } from './Utils';
 
 export * from './Sharepoint';
