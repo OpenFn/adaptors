@@ -175,7 +175,7 @@ const fixtures = {
         id: 'b!_sTvrBlmSYBUErg35Bye',
         lastModifiedDateTime: '2023-06-15T09:19:24Z',
         name: 'User Photos',
-        webUrl: 'https://openfnorg-my.sharepoint.com/User%20Photos',
+        webUrl: 'https://openfn-my.sharepoint.com/User%20Photos',
         driveType: 'documentLibrary',
         createdBy: {
           user: {
@@ -197,7 +197,7 @@ const fixtures = {
         id: 'asb!McSqXeNJR0eVUAisYAoR8nOT_t',
         lastModifiedDateTime: '2022-10-23T05:06:55Z',
         name: 'Organization Logos',
-        webUrl: 'https://openfnorg-my.sharepoint.com/Organization%20Logos',
+        webUrl: 'https://openfn-my.sharepoint.com/Organization%20Logos',
         driveType: 'documentLibrary',
         createdBy: {
           user: {
@@ -312,7 +312,52 @@ const fixtures = {
       },
     ],
   },
-  itemResponse: itemWithDownloadUrl,
+  itemWithDownloadUrl: itemWithDownloadUrl,
+  itemResponse: {
+    '@odata.context':
+      "https://graph.microsoft.com/v1.0/$metadata#drives('b%21YXzpkoLwR06bxC8tNdg71m_tbJHRabRCidsOal0ceoPnhcvgl2T7T4CwSehkvqHN')/items/$entity",
+    createdDateTime: '2023-06-15T09:34:36Z',
+    eTag: '"{A8F21C4A-E00B-4BAE-AAB0-E4D236EF3B1B},3"',
+    id: '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+    lastModifiedDateTime: '2023-07-13T07:33:29Z',
+    name: 'BC Actuals Export',
+    webUrl:
+      'https://openfn.sharepoint.com/Shared%20Documents/BC%20Actuals%20Export',
+    cTag: '"c:{A8F21C4A-E00B-4BAE-AAB0-E4D236EF3B1B},0"',
+    size: 70245,
+    createdBy: {
+      user: {
+        email: 'aleksa@openfn.org',
+        id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+        displayName: 'aleksakrolls',
+      },
+    },
+    lastModifiedBy: {
+      user: {
+        email: 'aleksa@openfn.org',
+        id: 'dcebd58e-c28c-449d-b02c-ba2ce7f1ae2a',
+        displayName: 'aleksakrolls',
+      },
+    },
+    parentReference: {
+      driveType: 'documentLibrary',
+      driveId:
+        'b!YXzpkoLwR06bxC8tNdg71m_tbJHRabRCidsOal0ceoPnhcvgl2T7T4CwSehkvqHN',
+      id: '01LUM6XOF6Y2GOVW7725BZO354PWSELRRZ',
+      path: '/drives/b!YXzpkoLwR06bxC8tNdg71m_tbJHRabRCidsOal0ceoPnhcvgl2T7T4CwSehkvqHN/root:',
+      siteId: '92e97c61-f082-4e47-9bc4-2f2d35d83bd6',
+    },
+    fileSystemInfo: {
+      createdDateTime: '2023-06-15T09:34:36Z',
+      lastModifiedDateTime: '2023-07-13T07:33:29Z',
+    },
+    folder: {
+      childCount: 3,
+    },
+    shared: {
+      scope: 'users',
+    },
+  },
   itemContent: 'a,b,c\n1,2,3\n4,5,6\n7,8,9',
   itemsResponse: {
     '@odata.context':

@@ -83,6 +83,7 @@ export const request = async (urlString, params = {}, method = 'GET') => {
 
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
+
   const data = contentType?.includes('application/json')
     ? await response.json()
     : await response.text();

@@ -19,14 +19,21 @@ export function execute(...operations) {
   const initialState = {
     references: [],
     data: null,
+    drives: {},
   };
 
-  // TODO: Add session-based authentication here if your API needs it.
+  const cleanup = finalState => {
+    const { drives, ...rest } = finalState;
+    return rest;
+  };
+
   return state => {
     return commonExecute(...operations)({
       ...initialState,
       ...state,
-    });
+    })
+      .then(cleanup)
+      .catch(cleanup);
   };
 }
 
@@ -91,41 +98,81 @@ export function get(path, query, callback = false) {
 }
 
 /**
- * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
+ * Get a Drive or SharePoint document library. The drive metadata will be written
+ * to state.drives, where it can be used by other adaptor functions.
+ * Pass { id } to get a drive by id or { id, owner } to get default drive for
+ * some parent resource, like a group
  * @public
- * @example <caption>Get a current user drive</caption>
- * getDrive()
  * @example <caption>Get a drive by ID</caption>
- * getDrive('YXzpkoLwR06bxC8tNdg71m')
- * @example <caption>Get a drive for a site</caption>
- * getDrive({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
- * @example <caption>Get a drive associated with a group</caption>
- * getDrive({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
- * @param driveResource {string|Object} - The ID of the drive to get or an object describing the drive location (site/group/user).
- *    - If drive is a string, it represents the drive ID.
- *    - If drive is an object, it should have the following properties:
- *        - resource {string} - The type of resource (e.g. sites, groups).
- *        - resourceId {string} - The ID of the resource.
+ * getDrive({ id: 'YXzpkoLwR06bxC8tNdg71m' })
+ * @example <caption>Get the default drive for a site</caption>
+ * getDrive({ id: "openfn.sharepoint.com", owner: 'sites' })
+ * @param specifier {Object} - A definition of the drive to retrieve
+ *    - id {string} - The ID of the resource or owner.
+ *    - owner {string} - The type of drive owner (e.g. sites, groups).
+ * @param {string} name - The local name of the drive used to write to state.drives, ie, state.drives[name]
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-export function getDrive(driveResource, callback) {
+// TODO: pass a string drive id as the specifier
+// TODO: how will we get a list of drives?
+// TODO: can we use /me/drive to get the user's default drive?
+export function getDrive(specifier, name = 'default', callback = s => s) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolvedDriveResource] = expandReferences(state, driveResource);
+    const [resolvedSpecifier, resolvedName] = expandReferences(
+      state,
+      specifier,
+      name
+    );
 
-    let urlPath = 'me/drive';
+    const { id, owner = 'drive' } = resolvedSpecifier;
+    // TODO maybe error if no id
 
-    if (typeof resolvedDriveResource === 'string') {
-      urlPath = `drives/${resolvedDriveResource}`;
-    } else if (typeof resolvedDriveResource === 'object') {
-      const { resourceId, resource } = resolvedDriveResource;
+    let urlPath;
+    if (owner === 'drive') {
+      urlPath = `drives/${id}`;
+    } else {
+      urlPath = `${owner}/${id}/drive`;
+    }
 
-      if (!resourceId || !resource) {
-        throw new Error('You must provide both resourceId and resource');
-      }
+    const url = getUrl(urlPath, apiVersion);
+    const auth = setAuth(accessToken);
 
-      urlPath = `${resource}/${resourceId}/drive`;
+    return request(url, { ...auth })
+      .then(response => {
+        state.drives[resolvedName] = response;
+        return callback(state);
+      })
+      .catch(console.log);
+  };
+}
+
+// return an array of folder contents
+// We should safely URI encode the path
+// Path must start with /, else will be treated as an id
+// writes to state.data
+// uses default drive
+export function getFolder(pathOrId, options, callback = s => s) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolvedPathOrId, resolvedOptions] = expandReferences(
+      state,
+      pathOrId,
+      options
+    );
+
+    const { name = 'default' } = resolvedOptions;
+    const { id: driveId } = state.drives[name];
+
+    let urlPath;
+
+    if (resolvedPathOrId.startsWith('/')) {
+      urlPath = `drives/${driveId}/root:/${encodeURIComponent(
+        resolvedPathOrId
+      )}`;
+    } else {
+      urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
     }
 
     const url = getUrl(urlPath, apiVersion);
@@ -137,56 +184,42 @@ export function getDrive(driveResource, callback) {
   };
 }
 
-/**
- * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
- * @public
- * @example <caption>Get a current user drives</caption>
- * listDrives()
- * @example <caption>Get site drives </caption>
- * listDrives({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
- * @example <caption>Get a drive associated with a group</caption>
- * listDrives({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
- * @param resource {Object} - An object describing the drive location (site/group/user).
- *  It should have the following properties:
- *   - resource {string} - The type of resource (e.g. sites, groups).
- *   - resourceId {string} - The ID of the resource.
- * @param {function} [callback = s => s] (Optional) Callback function
- * @return {Operation}
- */
-export function listDrives(resource, callback) {
+export function getFiles(pathOrId, options = {}, callback = s => s) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
-    const [resolvedResource] = expandReferences(state, resource);
+    const [resolvedPathOrId, resolvedOptions] = expandReferences(
+      state,
+      pathOrId,
+      options
+    );
 
-    let urlPath = 'me/drives';
+    // TODO implement metadata (don't get file content, just metadata)
+    // TODO implement filter (maps to $filter, must be URI encoded)
+    const { name = 'default', metadata, filter } = resolvedOptions;
+    const { id: driveId } = state.drives[name];
 
-    if (typeof resolvedResource === 'object') {
-      const { resourceId, resource } = resolvedResource;
-
-      if (!resourceId || !resource) {
-        throw new Error('You must provide both resourceId and resource');
-      }
-
-      urlPath = `${resource}/${resourceId}/drives`;
+    let urlPath;
+    if (resolvedPathOrId.startsWith('/')) {
+      urlPath = `drives/${driveId}/root:/${encodeURIComponent(
+        resolvedPathOrId
+      )}`;
+    } else {
+      urlPath = `drives/${driveId}/items/${resolvedPathOrId}/content`;
     }
 
     const url = getUrl(urlPath, apiVersion);
+
+    // TODO rename setAuth to getAuth
     const auth = setAuth(accessToken);
 
-    return request(url, { ...auth }).then(response =>
-      handleResponse(response, state, callback)
-    );
+    return request(url, { ...auth })
+      .then(response =>
+        // TODO if response is a single file, it needs to be nested in an array
+        handleResponse(response, state, callback)
+      )
+      .catch(console.log);
   };
 }
-
-// export function getFiles(options, callback) {
-//   const url = getUrl(urlPath, apiVersion);
-//   const auth = setAuth(accessToken);
-
-//   return request(url, { ...auth }).then(response =>
-//     handleResponse(response, state, callback)
-//   );
-// }
 
 export { request } from './Utils';
 

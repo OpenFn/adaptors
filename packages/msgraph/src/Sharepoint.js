@@ -119,53 +119,94 @@ export function getItems(
   };
 }
 
-// Gets a drive reference and writes to state.drives.default
-// @param specifier: specify the drive to get. default 'me'.
-//         If an id/owner pair, will return the default drive for the specified owner
-// @param name: optional name for the drive. Will be written to state.drives[name].
-getDrive(specifier, name, callback);
+// // Gets a drive reference and writes to state.drives.default
+// // @param specifier: specify the drive to get. default 'me'.
+// //         If an id/owner pair, will return the default drive for the specified owner
+// // @param name: optional name for the drive. Will be written to state.drives[name].
+// getDrive(specifier, name, callback);
 
-getDrive({}, 'joe'); // get my drive and name it joe
-getDrive('me', 'joe'); // get my drive and name it joe
-getDrive({ id: 'driveId' }, 'joe'); // Get a drive by Id
-getDrive({ id: '<siteId>', owner: 'sites' }, 'joe'); // get default drive for a site
-getDrive({ id: '<userId>', owner: 'users' }); // get default drive for a user
+// getDrive({}, 'joe'); // get my drive and name it joe
+// getDrive('me', 'joe'); // get my drive and name it joe
+// getDrive({ id: 'driveId' }, 'joe'); // Get a drive by Id
+// getDrive({ id: '<siteId>', owner: 'sites' }, 'joe'); // get default drive for a site
+// getDrive({ id: '<userId>', owner: 'users' }); // get default drive for a user
 
-// loose spec for getFile/writeFiles
-const options = {
-  driveName: 'string', // drive of the file to use (optional)
-  metadata: false, // return metadata, not content
-  $filter: 'string', // filter on the query. Needs to be URI encoded
-};
+// // loose spec for getFile/writeFiles
+// const options = {
+//   driveName: 'string', // drive of the file to use (optional)
+//   metadata: false, // return metadata, not content
+//   $filter: 'string', // filter on the query. Needs to be URI encoded
+// };
 
-// return an array of folder contents
-// We should safely URI encode the path
-// Path must start with /, else will be treated as an id
-// writes to state.data
-// uses default drive
-getFolder(pathOrId, { options }, (callback = s => s));
+// // return an array of folder contents
+// // We should safely URI encode the path
+// // Path must start with /, else will be treated as an id
+// // writes to state.data
+// // uses default drive
+// getFolder(pathOrId, { options }, (callback = s => s));
 
-// return a single file's content (pass { metadata: true } to get metadata only)
-// return an array of folder contents
-// We should safely URI encode the path
-// Path must start with /, else will be treated as an id
-// writes to state.data
-// uses default drive
-getFile(pathOrId, { options }, (callback = s => s));
+// // return a single file's content (pass { metadata: true } to get metadata only)
+// // return an array of folder contents
+// // We should safely URI encode the path
+// // Path must start with /, else will be treated as an id
+// // writes to state.data
+// // uses default drive
+// getFile(pathOrId, { options }, (callback = s => s));
 
-// writes one or more files to the path provided
-writeFiles(pathOrId, { options }, data, (callback = s => s));
+// // writes one or more files to the path provided
+// writeFiles(pathOrId, { options }, data, (callback = s => s));
 
-// examples
+// // examples
 
-each(
-  'state.data',
-  getFile('/BC Actuals Export/bc_actuals_export_11072023.csv')
-);
+// each(
+//   'state.data',
+//   getFile('/BC Actuals Export/bc_actuals_export_11072023.csv')
+// );
 
-each('state.data', getFile(`/BC Actuals Export/${state.data.name}`));
-each('state.data', getFile(state.data.id));
+// each('state.data', getFile(`/BC Actuals Export/${state.data.name}`));
+// each('state.data', getFile(state.data.id));
 
+/**
+ * Get Drive in msgraph such as OneDrive or SharePoint document libraries.
+ * @public
+ * @example <caption>Get a current user drives</caption>
+ * listDrives()
+ * @example <caption>Get site drives </caption>
+ * listDrives({ resourceId: "openfn.sharepoint.com", resource: 'sites' })
+ * @example <caption>Get a drive associated with a group</caption>
+ * listDrives({ resourceId: 'b!YXzpkoLwR06bxC8tNdg71m', resource: 'groups' })
+ * @param resource {Object} - An object describing the drive location (site/group/user).
+ *  It should have the following properties:
+ *   - resource {string} - The type of resource (e.g. sites, groups).
+ *   - resourceId {string} - The ID of the resource.
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
+export function listDrives(resource, callback) {
+  return state => {
+    const { accessToken, apiVersion } = state.configuration;
+    const [resolvedResource] = expandReferences(state, resource);
+
+    let urlPath = 'me/drives';
+
+    if (typeof resolvedResource === 'object') {
+      const { resourceId, resource } = resolvedResource;
+
+      if (!resourceId || !resource) {
+        throw new Error('You must provide both resourceId and resource');
+      }
+
+      urlPath = `${resource}/${resourceId}/drives`;
+    }
+
+    const url = getUrl(urlPath, apiVersion);
+    const auth = setAuth(accessToken);
+
+    return request(url, { ...auth }).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
 // Path must internally be encoded like this
 // path: ".../root:/<content%20path>:/content", // path of content to get
 

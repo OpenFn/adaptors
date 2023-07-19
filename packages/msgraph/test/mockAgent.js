@@ -5,18 +5,24 @@ const mockAgent = new MockAgent();
 
 const mockPool = mockAgent.get('https://graph.microsoft.com');
 
+const jsonResponse = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 const headers = {
-  'content-type': 'application/json',
+  'Content-Type': 'application/json',
   Authorization: `Bearer ${fixtures.accessToken}`,
 };
 
 const headersWithInvalidToken = {
-  'content-type': 'application/json',
+  'Content-Type': 'application/json',
   Authorization: `Bearer ${fixtures.invalidToken}`,
 };
 
 const headersWithExpiredToken = {
-  'content-type': 'application/json',
+  'Content-Type': 'application/json',
   Authorization: `Bearer ${fixtures.expiredToken}`,
 };
 
@@ -66,7 +72,8 @@ mockPool
     method: 'GET',
     headers: headers,
   })
-  .reply(200, fixtures.driveResponse);
+  .reply(200, fixtures.driveResponse, jsonResponse)
+  .persist();
 
 mockPool
   .intercept({
@@ -74,7 +81,44 @@ mockPool
     method: 'GET',
     headers: headers,
   })
-  .reply(200, fixtures.driveResponse);
+  .reply(200, fixtures.driveResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/BC%20Actuals%20Export',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/BC%20Actuals%20Export/test.csv',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemWithDownloadUrl, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3/content',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemContent)
+  .persist();
 
 mockPool
   .intercept({
