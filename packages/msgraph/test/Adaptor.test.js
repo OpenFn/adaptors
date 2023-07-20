@@ -1,11 +1,5 @@
 import { expect } from 'chai';
-import {
-  execute,
-  getLists,
-  getSites,
-  listDrives,
-  getItems,
-} from '../src/Adaptor.js';
+import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
@@ -14,6 +8,8 @@ import { setGlobalDispatcher } from 'undici';
 
 setGlobalDispatcher(MockAgent);
 
+// TODO test references, compose state
+// TODO error handling if drive id invalid
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     const state = {};
@@ -45,53 +41,8 @@ describe('execute', () => {
     });
   });
 });
-
-describe('getSites', () => {
-  it('Access a sharePoint site using the siteId.', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(getSites('openfn.sharepoint.com'))(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.sitesResponse);
-  });
-});
-
 describe('getDrive', () => {
-  it.skip('throws an error if resourceId or resource is not provided', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const error = await execute(listDrives({}))(state).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.contain(
-      'You must provide both resourceId and resource'
-    );
-  });
-});
-
-describe('listDrives', () => {
-  it("Get current user's drives", async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(listDrives())(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.userDrives);
-  });
-
-  it("Get a site's drives", async () => {
+  it('should get a drive by id and set it to state', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
@@ -99,74 +50,17 @@ describe('listDrives', () => {
     };
 
     const finalState = await execute(
-      listDrives({ resourceId: 'openfn.sharepoint.com', resource: 'sites' })
-    )(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.drivesResponse);
-  });
-
-  it('throws an error if resourceId or resource is not provided', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const error = await execute(listDrives({}))(state).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.contain(
-      'You must provide both resourceId and resource'
-    );
-  });
-});
-
-describe('getLists', () => {
-  it('throws an error if siteId is not provided', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const error = await execute(getLists())(state).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.contain('You must provide a siteId');
-  });
-  it('Get a collection of lists for a site', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(
-      getLists({ siteId: 'openfn.sharepoint.com' })
-    )(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.listsResponse);
-  });
-
-  it('Returns metadata for a list using list ID', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(
-      getLists({
-        siteId: 'openfn.sharepoint.com',
-        listId: 'e0cb85e7-6497-4ffb-80b0-49e864bea1cd',
+      getDrive({ id: 'b!YXzpkoLwR06bxC8tNdg71m_' }, undefined, state => {
+        // write the drives object back to state before it gets cleaned up
+        state.result = state.drives;
+        return state;
       })
     )(state);
 
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.sharedDocumentList);
+    expect(finalState.result.default).to.eql(fixtures.driveResponse);
   });
-  it('Returns metadata for a list using list title', async () => {
+
+  it('should get a named drive by id and set it to state', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
@@ -174,32 +68,17 @@ describe('getLists', () => {
     };
 
     const finalState = await execute(
-      getLists({
-        siteId: 'openfn.sharepoint.com',
-        listId: 'Documents',
+      getDrive({ id: 'b!YXzpkoLwR06bxC8tNdg71m_' }, 'mydrive', state => {
+        // write the drives object back to state before it gets cleaned up
+        state.result = state.drives;
+        return state;
       })
     )(state);
 
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.sharedDocumentList);
-  });
-});
-
-describe('getItems', () => {
-  it('throws an error if siteId or listId is not provided', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const error = await execute(getItems())(state).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.contain('You must provide both siteId and listId');
+    expect(finalState.result.mydrive).to.eql(fixtures.driveResponse);
   });
 
-  it('Get the collection of items in a list for a site', async () => {
+  it('should get the default drive for a site', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
@@ -207,69 +86,394 @@ describe('getItems', () => {
     };
 
     const finalState = await execute(
-      getItems({ siteId: 'openfn.sharepoint.com', listId: 'Documents' })
-    )(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.itemsResponse);
-  });
-
-  it('Returns the metadata for an item with downloadUrl', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(
-      getItems({
-        siteId: 'openfn.sharepoint.com',
-        listId: 'Documents',
-        itemId: 'd97073d1-5ee7-4218-97cd-bd4167078516',
-      })
-    )(state);
-
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.itemResponse);
-  });
-
-  it('Returns id and downloadUrl for an item', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-    };
-
-    const finalState = await execute(
-      getItems(
-        {
-          siteId: 'openfn.sharepoint.com',
-          listId: 'Documents',
-          itemId: 'd97073d1-5ee7-4218-97cd-bd4167078516',
-        },
-        {
-          select: 'id,@microsoft.graph.downloadUrl',
+      getDrive(
+        { id: 'openfn.sharepoint.com', owner: 'sites' },
+        undefined,
+        state => {
+          // write the drives object back to state before it gets cleaned up
+          state.result = state.drives;
+          return state;
         }
       )
     )(state);
 
-    expect(JSON.parse(finalState.data)).to.eql(fixtures.itemWithOptions);
+    expect(finalState.result.default).to.eql(fixtures.driveResponse);
   });
-
-  it('Returns an item content', async () => {
+  it('should throws 400 error', async () => {
     const state = {
       configuration: {
         accessToken: fixtures.accessToken,
       },
     };
 
+    await execute(
+      getDrive({ id: 'noAccess', owner: 'sites' })(state).catch(e => {
+        expect(e.message).to.contain(
+          fixtures.invalidRequestResponse.error.message
+        );
+      })
+    )(state);
+  });
+
+  it('throws 401 error with invalidToken message', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.invalidToken,
+      },
+    };
+
+    await execute(
+      getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
+        e => {
+          expect(e.message).to.contain(
+            fixtures.invalidTokenResponse.error.message
+          );
+        }
+      )
+    )(state);
+  });
+
+  it('should throws 401 error with expiredToken message', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.expiredToken,
+      },
+    };
+
+    await execute(
+      getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
+        e => {
+          expect(e.message).to.contain(
+            fixtures.expiredTokenResponse.error.message
+          );
+        }
+      )
+    )(state);
+  });
+});
+
+describe('getFolder', () => {
+  it('should get a folder metadata by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
     const finalState = await execute(
-      getItems({
-        siteId: 'openfn.sharepoint.com',
-        listId: 'Documents',
-        itemId: 'd97073d1-5ee7-4218-97cd-bd4167078516',
-        itemContent: true,
+      getFolder(
+        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+        { metadata: true },
+        state => {
+          state.result = state.data;
+          return state;
+        }
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemResponse);
+  });
+
+  it('should get a folder items by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', state => {
+        state.result = state.data;
+        return state;
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemsResponse);
+  });
+
+  it('should get a folder metadata for a named drive by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        mydrive: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFolder(
+        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+        { drive: 'mydrive', metadata: true },
+        state => {
+          state.result = state.data;
+          return state;
+        }
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemResponse);
+  });
+
+  it('should get a folder items for a named drive by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        mydrive: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFolder(
+        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+        { drive: 'mydrive' },
+        state => {
+          state.result = state.data;
+          return state;
+        }
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemsResponse);
+  });
+
+  it('should get a folder metadata by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFolder('/Sample Data', { metadata: true }, state => {
+        state.result = state.data;
+        return state;
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemResponse);
+  });
+
+  it('should get a folder items by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFolder('/Sample Data', {}, state => {
+        state.result = state.data;
+        return state;
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemsResponse);
+  });
+
+  it('should get a folder metadata for a named drive by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        mydrive: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+    const finalState = await execute(
+      getFolder('/Sample Data', { drive: 'mydrive', metadata: true })
+    )(state);
+    expect(finalState.data).to.eql(fixtures.itemResponse);
+  });
+
+  it('should get a folder items for a named drive by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        mydrive: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+    const finalState = await execute(
+      getFolder('/Sample Data', { drive: 'mydrive' })
+    )(state);
+    expect(finalState.data).to.eql(fixtures.itemsResponse);
+  });
+
+  it('should throw a helpful error if drive is not defined', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {},
+    };
+
+    await getFolder('/Sample Data')(state).catch(e => {
+      expect(e.message).to.contain('Drive is not defined');
+    });
+  });
+});
+
+describe('getFile', () => {
+  it('should get a file by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {}, state => {
+        state.result = state.data;
+        return state;
       })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
+  });
+
+  it('should get a file metadata by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFile(
+        '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
+        { metadata: true },
+        state => {
+          state.result = state.data;
+          return state;
+        }
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
+  });
+
+  it('should get a file for a named drive by id', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        mydrive: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFile(
+        '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
+        { drive: 'mydrive' },
+        state => {
+          state.result = state.data;
+          return state;
+        }
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemContent);
+  });
+
+  it('should get a file by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFile('/Sample Data/test.csv', {}, state => {
+        state.result = state.data;
+        return state;
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemContent);
+  });
+
+  it('should get a file metadata by path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      getFile('/Sample Data/test.csv', { metadata: true }, state => {
+        state.result = state.data;
+        return state;
+      })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
+  });
+
+  it('should throw a helpful error if drive is not defined', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      drives: {},
+    };
+
+    await getFile('/Sample Data/test.csv')(state).catch(e => {
+      expect(e.message).to.contain('Drive is not defined');
+    });
   });
 });
