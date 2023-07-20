@@ -162,9 +162,9 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
 export function getFolder(pathOrId, options, callback = s => s) {
   return async state => {
     const defaultOptions = {
-      drive: 'default', // named drive in state.drives
+      driveName: 'default', // named drive in state.drives
       metadata: false, // TODO if false return folder files if true return folder metadata
-      filter: '', // TODO support for $filter
+      $filter: '', // TODO support for $filter
     };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -173,9 +173,9 @@ export function getFolder(pathOrId, options, callback = s => s) {
       options
     );
 
-    const { drive, metadata } = { ...defaultOptions, ...resolvedOptions };
+    const { driveName, metadata } = { ...defaultOptions, ...resolvedOptions };
 
-    if (!state.drives[drive]) {
+    if (!state.drives[driveName]) {
       const egJobCode = [
         'Eg: Get a site drive then get "/Sample Data" folder',
         'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
@@ -191,7 +191,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
       throw new Error(errorString);
     }
 
-    const { id: driveId } = state.drives[drive];
+    const { id: driveId } = state.drives[driveName];
 
     let urlPath;
 
@@ -217,9 +217,9 @@ export function getFolder(pathOrId, options, callback = s => s) {
 export function getFile(pathOrId, options, callback = s => s) {
   return async state => {
     const defaultOptions = {
-      drive: 'default', // named drive in state.drives
+      driveName: 'default', // named drive in state.drives
       metadata: false, // Returns file msgraph metadata
-      filter: '', // TODO support for $filter
+      $filter: '', // TODO support for $filter
       select: '', // TODO Eg: id,@microsoft.graph.downloadUrl
     };
     const { accessToken, apiVersion } = state.configuration;
@@ -231,12 +231,12 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     // TODO implement metadata (don't get file content, just metadata)
     // TODO implement filter (maps to $filter, must be URI encoded)
-    const { drive, metadata, select } = {
+    const { driveName, metadata, select } = {
       ...defaultOptions,
       ...resolvedOptions,
     };
 
-    if (!state.drives[drive]) {
+    if (!state.drives[driveName]) {
       const egJobCode = [
         'Eg: Get a site drive then get "/Sample Data" folder',
         'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
@@ -251,7 +251,7 @@ export function getFile(pathOrId, options, callback = s => s) {
 
       throw new Error(errorString);
     }
-    const { id: driveId } = state.drives[drive];
+    const { id: driveId } = state.drives[driveName];
 
     let urlPath;
     if (resolvedPathOrId.startsWith('/')) {
@@ -268,12 +268,10 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     const auth = getAuth(accessToken);
 
-    return request(url, { ...auth })
-      .then(response =>
-        // TODO if response is a single file, it needs to be nested in an array
-        handleResponse(response, state, callback)
-      )
-      .catch(console.log);
+    return request(url, { ...auth }).then(response =>
+      // TODO if response is a single file, it needs to be nested in an array
+      handleResponse(response, state, callback)
+    );
   };
 }
 

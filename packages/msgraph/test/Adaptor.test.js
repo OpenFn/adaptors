@@ -216,7 +216,7 @@ describe('getFolder', () => {
     const finalState = await execute(
       getFolder(
         '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
-        { drive: 'mydrive', metadata: true },
+        { driveName: 'mydrive', metadata: true },
         state => {
           state.result = state.data;
           return state;
@@ -242,7 +242,7 @@ describe('getFolder', () => {
     const finalState = await execute(
       getFolder(
         '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
-        { drive: 'mydrive' },
+        { driveName: 'mydrive' },
         state => {
           state.result = state.data;
           return state;
@@ -309,7 +309,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { drive: 'mydrive', metadata: true })
+      getFolder('/Sample Data', { driveName: 'mydrive', metadata: true })
     )(state);
     expect(finalState.data).to.eql(fixtures.itemResponse);
   });
@@ -326,7 +326,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { drive: 'mydrive' })
+      getFolder('/Sample Data', { driveName: 'mydrive' })
     )(state);
     expect(finalState.data).to.eql(fixtures.itemsResponse);
   });
@@ -409,7 +409,7 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile(
         '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
-        { drive: 'mydrive' },
+        { driveName: 'mydrive' },
         state => {
           state.result = state.data;
           return state;
