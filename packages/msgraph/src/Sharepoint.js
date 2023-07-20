@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, setAuth, getUrl, handleResponse } from './Utils';
+import { request, getAuth, getUrl, handleResponse } from './Utils';
 
 /**
  * Get a SharePoint site using msgraph API
@@ -24,7 +24,7 @@ export function getSites(sharepointSite, callback = s => s) {
       : 'sites/root';
     const url = getUrl(resolvePath, apiVersion);
 
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
       handleResponse(response, state, callback)
@@ -64,7 +64,7 @@ export function getLists(
 
     const url = getUrl(resolvePath, apiVersion);
 
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
     return request(url, { ...auth }).then(response =>
       handleResponse(response, state, callback)
     );
@@ -111,7 +111,7 @@ export function getItems(
 
     const url = getUrl(resolvePath, apiVersion);
 
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...resolveOptions, ...auth }).then(response =>
       handleResponse(response, state, callback)
@@ -200,7 +200,7 @@ export function listDrives(resource, callback) {
     }
 
     const url = getUrl(urlPath, apiVersion);
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
       handleResponse(response, state, callback)

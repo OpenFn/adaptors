@@ -22,7 +22,7 @@ function isValidHttpUrl(string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-export function setAuth(token) {
+export function getAuth(token) {
   return token ? { headers: { Authorization: `Bearer ${token}` } } : null;
 }
 

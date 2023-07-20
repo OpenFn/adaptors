@@ -1,7 +1,7 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, setAuth, getUrl, handleResponse } from './Utils';
+import { request, getAuth, getUrl, handleResponse } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -59,7 +59,7 @@ export function create(resource, data, callback) {
     const { accessToken, apiVersion } = state.configuration;
 
     const url = getUrl({ apiVersion, resolvedResource });
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     const options = {
       auth,
@@ -89,7 +89,7 @@ export function get(path, query, callback = false) {
     const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
     const url = getUrl(resolvedPath, apiVersion);
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...resolvedQuery, ...auth }).then(response =>
       handleResponse(response, state, callback)
@@ -137,7 +137,7 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
     }
 
     const url = getUrl(urlPath, apiVersion);
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...auth })
       .then(response => {
@@ -176,7 +176,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     }
 
     const url = getUrl(urlPath, apiVersion);
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
       handleResponse(response, state, callback)
@@ -184,7 +184,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
   };
 }
 
-export function getFiles(pathOrId, options = {}, callback = s => s) {
+export function getFile(pathOrId, options = {}, callback = s => s) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -209,8 +209,7 @@ export function getFiles(pathOrId, options = {}, callback = s => s) {
 
     const url = getUrl(urlPath, apiVersion);
 
-    // TODO rename setAuth to getAuth
-    const auth = setAuth(accessToken);
+    const auth = getAuth(accessToken);
 
     return request(url, { ...auth })
       .then(response =>

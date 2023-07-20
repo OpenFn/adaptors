@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, getDrive, getFolder, getFiles } from '../src/Adaptor.js';
+import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
@@ -123,7 +123,7 @@ describe('getFolder', () => {
   // TODO test references, composestate
 });
 
-describe('getFiles', () => {
+describe('getFile', () => {
   it('should get a file by id', async () => {
     const state = {
       configuration: {
@@ -137,7 +137,7 @@ describe('getFiles', () => {
     };
 
     const finalState = await execute(
-      getFiles('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', {}, state => {
+      getFile('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', {}, state => {
         state.result = state.data;
         return state;
       })
@@ -161,7 +161,7 @@ describe('getFiles', () => {
     };
 
     const finalState = await execute(
-      getFiles(
+      getFile(
         '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
         { name: 'mydrive' },
         state => {
