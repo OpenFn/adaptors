@@ -8,8 +8,6 @@ import { setGlobalDispatcher } from 'undici';
 
 setGlobalDispatcher(MockAgent);
 
-// TODO test references, compose state
-// TODO error handling if drive id invalid
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     const state = {};

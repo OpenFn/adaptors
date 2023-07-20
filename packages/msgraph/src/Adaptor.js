@@ -114,9 +114,6 @@ export function get(path, query, callback = false) {
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-// TODO: pass a string drive id as the specifier
-// TODO: how will we get a list of drives?
-// TODO: can we use /me/drive to get the user's default drive?
 export function getDrive(specifier, name = 'default', callback = s => s) {
   return state => {
     const { accessToken, apiVersion } = state.configuration;
@@ -127,7 +124,6 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
     );
 
     const { id, owner = 'drive' } = resolvedSpecifier;
-    // TODO maybe error if no id
 
     let urlPath;
     if (owner === 'drive') {
@@ -162,9 +158,9 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
 export function getFolder(pathOrId, options, callback = s => s) {
   return async state => {
     const defaultOptions = {
-      driveName: 'default', // named drive in state.drives
-      metadata: false, // TODO if false return folder files if true return folder metadata
-      $filter: '', // TODO support for $filter
+      driveName: 'default', // Named drive in state.drives
+      metadata: false, // If false return folder files if true return folder metadata
+      $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
     };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -219,8 +215,8 @@ export function getFile(pathOrId, options, callback = s => s) {
     const defaultOptions = {
       driveName: 'default', // named drive in state.drives
       metadata: false, // Returns file msgraph metadata
-      $filter: '', // TODO support for $filter
-      select: '', // TODO Eg: id,@microsoft.graph.downloadUrl
+      $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
+      select: '', // Eg: id,@microsoft.graph.downloadUrl
     };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -229,8 +225,6 @@ export function getFile(pathOrId, options, callback = s => s) {
       options
     );
 
-    // TODO implement metadata (don't get file content, just metadata)
-    // TODO implement filter (maps to $filter, must be URI encoded)
     const { driveName, metadata, select } = {
       ...defaultOptions,
       ...resolvedOptions,
@@ -269,7 +263,6 @@ export function getFile(pathOrId, options, callback = s => s) {
     const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
-      // TODO if response is a single file, it needs to be nested in an array
       handleResponse(response, state, callback)
     );
   };
