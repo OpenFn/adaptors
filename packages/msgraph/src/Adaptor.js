@@ -148,13 +148,12 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
  * @example <caption>Get a folder by ID</caption>
  * getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
  * @example <caption>Get a folder for a named drive by id</caption>
- * getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ name: "mydrive"})
+ * getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
  * @param {string} pathOrId - A path to a folder or folder id
- * @param {object} options - Options object
+ * @param {object} options - (Optional) Query parametes
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-
 export function getFolder(pathOrId, options, callback = s => s) {
   return async state => {
     const defaultOptions = {
@@ -210,6 +209,18 @@ export function getFolder(pathOrId, options, callback = s => s) {
   };
 }
 
+/**
+ * Get file metadata or file content.
+ * @public
+ * @example <caption>Get a file by ID</caption>
+ * getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
+ * @example <caption>Get a file for a named drive by id</caption>
+ * getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
+ * @param {string} pathOrId - A path to a file or file id
+ * @param {object} options - (Optional) Query parametes
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
 export function getFile(pathOrId, options, callback = s => s) {
   return async state => {
     const defaultOptions = {
