@@ -146,21 +146,6 @@ const fixtures = {
   accessToken: 'validAccessToken=',
   expiredToken: 'expiredAccessToken',
   invalidToken: 'invalidAccessToken',
-  sitesResponse: {
-    '@odata.context':
-      'https://graph.microsoft.com/v1.0/$metadata#sites/$entity',
-    createdDateTime: '2022-11-21T07:08:13.55Z',
-    description: '',
-    id: 'openfn.sharepoint.com,f47ac10b-58cc-4372-a567-0e02b2c3d479,df35c8e4-7e9e-4f5d-af19-4918c6412a94',
-    lastModifiedDateTime: '2023-06-27T11:46:47Z',
-    name: '',
-    webUrl: 'https://openfn.sharepoint.com',
-    displayName: 'Communication site',
-    root: {},
-    siteCollection: {
-      hostname: 'openfn.sharepoint.com',
-    },
-  },
   driveResponse: driveResponse,
   drivesResponse: {
     '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata#drives',

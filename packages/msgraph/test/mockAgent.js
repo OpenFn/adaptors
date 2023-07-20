@@ -28,15 +28,7 @@ const headersWithExpiredToken = {
 
 mockPool
   .intercept({
-    path: '/v1.0/sites/openfn.sharepoint.com',
-    method: 'GET',
-    headers: headers,
-  })
-  .reply(200, fixtures.sitesResponse);
-
-mockPool
-  .intercept({
-    path: '/v1.0/sites/openfn.sharepoint.com',
+    path: '/v1.0/sites/openfn.sharepoint.com/drive',
     method: 'GET',
     headers: headersWithExpiredToken,
   })
@@ -44,23 +36,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/v1.0/sites/openfn.sharepoint.com',
-    method: 'GET',
-    headers: headersWithInvalidToken,
-  })
-  .reply(401, fixtures.invalidTokenResponse);
-
-mockPool
-  .intercept({
-    path: '/v1.0/sites/root',
-    method: 'GET',
-    headers: headers,
-  })
-  .reply(200, fixtures.sitesResponse);
-
-mockPool
-  .intercept({
-    path: '/v1.0/sites/noAccess',
+    path: '/v1.0/sites/noAccess/drive',
     method: 'GET',
     headers: headers,
   })

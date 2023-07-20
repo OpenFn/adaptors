@@ -139,12 +139,10 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
     const url = getUrl(urlPath, apiVersion);
     const auth = getAuth(accessToken);
 
-    return request(url, { ...auth })
-      .then(response => {
-        state.drives[resolvedName] = response;
-        return callback(state);
-      })
-      .catch(console.log);
+    return request(url, { ...auth }).then(response => {
+      state.drives[resolvedName] = response;
+      return callback(state);
+    });
   };
 }
 

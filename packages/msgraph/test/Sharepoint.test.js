@@ -66,6 +66,57 @@ describe('getDrive', () => {
 
     expect(finalState.result.default).to.eql(fixtures.driveResponse);
   });
+  it('should throws 400 error', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+    };
+
+    await execute(
+      getDrive({ id: 'noAccess', owner: 'sites' })(state).catch(e => {
+        expect(e.message).to.contain(
+          fixtures.invalidRequestResponse.error.message
+        );
+      })
+    )(state);
+  });
+
+  it('throws 401 error with invalidToken message', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.invalidToken,
+      },
+    };
+
+    await execute(
+      getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
+        e => {
+          expect(e.message).to.contain(
+            fixtures.invalidTokenResponse.error.message
+          );
+        }
+      )
+    )(state);
+  });
+
+  it('should throws 401 error with expiredToken message', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.expiredToken,
+      },
+    };
+
+    await execute(
+      getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
+        e => {
+          expect(e.message).to.contain(
+            fixtures.expiredTokenResponse.error.message
+          );
+        }
+      )
+    )(state);
+  });
 });
 
 describe('getFolder', () => {
@@ -142,8 +193,6 @@ describe('getFile', () => {
         return state;
       })
     )(state);
-
-    console.log(finalState);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
   });
