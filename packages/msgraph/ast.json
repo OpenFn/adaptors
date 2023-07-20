@@ -143,12 +143,12 @@
           },
           {
             "title": "example",
-            "description": "getDrive({ id: 'YXzpkoLwR06bxC8tNdg71m' })",
+            "description": "getDrive({ id: \"YXzpkoLwR06bxC8tNdg71m\" })",
             "caption": "Get a drive by ID"
           },
           {
             "title": "example",
-            "description": "getDrive({ id: \"openfn.sharepoint.com\", owner: 'sites' })",
+            "description": "getDrive({ id: \"openfn.sharepoint.com\", owner: \"sites\" })",
             "caption": "Get the default drive for a site"
           },
           {
@@ -165,6 +165,74 @@
               "name": "string"
             },
             "name": "name"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback",
+            "default": "s=>s"
+          },
+          {
+            "title": "return",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getFolder",
+      "params": [
+        "pathOrId",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get folder metadata or an array of folder contents.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')",
+            "caption": "Get a folder by ID"
+          },
+          {
+            "title": "example",
+            "description": "getFolder(\"01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3\",{ name: \"mydrive\"})",
+            "caption": "Get a folder for a named drive by id"
+          },
+          {
+            "title": "param",
+            "description": "A path to a folder or folder id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "pathOrId"
+          },
+          {
+            "title": "param",
+            "description": "Options object",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
           },
           {
             "title": "param",
