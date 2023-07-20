@@ -104,9 +104,9 @@ export function get(path, query, callback = false) {
  * some parent resource, like a group
  * @public
  * @example <caption>Get a drive by ID</caption>
- * getDrive({ id: 'YXzpkoLwR06bxC8tNdg71m' })
+ * getDrive({ id: "YXzpkoLwR06bxC8tNdg71m" })
  * @example <caption>Get the default drive for a site</caption>
- * getDrive({ id: "openfn.sharepoint.com", owner: 'sites' })
+ * getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
  * @param specifier {Object} - A definition of the drive to retrieve
  *    - id {string} - The ID of the resource or owner.
  *    - owner {string} - The type of drive owner (e.g. sites, groups).
@@ -146,13 +146,26 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
   };
 }
 
-// return an array of folder contents
-// We should safely URI encode the path
-// Path must start with /, else will be treated as an id
-// writes to state.data
-// uses default drive
+/**
+ * Get folder metadata or an array of folder contents.
+ * @public
+ * @example <caption>Get a folder by ID</caption>
+ * getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
+ * @example <caption>Get a folder for a named drive by id</caption>
+ * getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ name: "mydrive"})
+ * @param {string} pathOrId - A path to a folder or folder id
+ * @param {object} options - Options object
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
+
 export function getFolder(pathOrId, options, callback = s => s) {
-  return state => {
+  return async state => {
+    const defaultOptions = {
+      drive: 'default', // named drive in state.drives
+      metadata: false, // TODO if false return folder files if true return folder metadata
+      filter: '', // TODO support for $filter
+    };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
@@ -160,8 +173,25 @@ export function getFolder(pathOrId, options, callback = s => s) {
       options
     );
 
-    const { name = 'default' } = resolvedOptions;
-    const { id: driveId } = state.drives[name];
+    const { drive, metadata } = { ...defaultOptions, ...resolvedOptions };
+
+    if (!state.drives[drive]) {
+      const egJobCode = [
+        'Eg: Get a site drive then get "/Sample Data" folder',
+        'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
+        'getFolder("/Sample Data")',
+      ].join('\n\t  ');
+
+      const errorString = [
+        `Message: Drive is not defined`,
+        `Quick Fix: Add getDrive() operation before getFolder()`,
+        `${egJobCode}`,
+      ].join('\n\t∟ ');
+
+      throw new Error(errorString);
+    }
+
+    const { id: driveId } = state.drives[drive];
 
     let urlPath;
 
@@ -169,8 +199,10 @@ export function getFolder(pathOrId, options, callback = s => s) {
       urlPath = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
+      metadata ? urlPath : (urlPath = `${urlPath}:/children`);
     } else {
       urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
+      metadata ? urlPath : (urlPath = `${urlPath}/children`);
     }
 
     const url = getUrl(urlPath, apiVersion);
@@ -182,8 +214,14 @@ export function getFolder(pathOrId, options, callback = s => s) {
   };
 }
 
-export function getFile(pathOrId, options = {}, callback = s => s) {
-  return state => {
+export function getFile(pathOrId, options, callback = s => s) {
+  return async state => {
+    const defaultOptions = {
+      drive: 'default', // named drive in state.drives
+      metadata: false, // Returns file msgraph metadata
+      filter: '', // TODO support for $filter
+      select: '', // TODO Eg: id,@microsoft.graph.downloadUrl
+    };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
@@ -193,16 +231,37 @@ export function getFile(pathOrId, options = {}, callback = s => s) {
 
     // TODO implement metadata (don't get file content, just metadata)
     // TODO implement filter (maps to $filter, must be URI encoded)
-    const { name = 'default', metadata, filter } = resolvedOptions;
-    const { id: driveId } = state.drives[name];
+    const { drive, metadata, select } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
+
+    if (!state.drives[drive]) {
+      const egJobCode = [
+        'Eg: Get a site drive then get "/Sample Data" folder',
+        'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
+        'getFile("/Sample Data/test.csv")',
+      ].join('\n\t  ');
+
+      const errorString = [
+        `Message: Drive is not defined`,
+        `Quick Fix: Add getDrive() operation before getFile()`,
+        `${egJobCode}`,
+      ].join('\n\t∟ ');
+
+      throw new Error(errorString);
+    }
+    const { id: driveId } = state.drives[drive];
 
     let urlPath;
     if (resolvedPathOrId.startsWith('/')) {
       urlPath = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
+      metadata ? urlPath : (urlPath = `${urlPath}:/content`);
     } else {
-      urlPath = `drives/${driveId}/items/${resolvedPathOrId}/content`;
+      urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
+      metadata ? urlPath : (urlPath = `${urlPath}/content`);
     }
 
     const url = getUrl(urlPath, apiVersion);
@@ -219,8 +278,6 @@ export function getFile(pathOrId, options = {}, callback = s => s) {
 }
 
 export { request } from './Utils';
-
-export * from './Sharepoint';
 
 export {
   dataPath,
