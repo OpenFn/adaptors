@@ -113,7 +113,7 @@ axios.interceptors.response.use(
 
     return Promise.reject({
       request: error.config,
-      error: error.message,
+      message: error.message,
       response: error.response?.data,
     });
   }

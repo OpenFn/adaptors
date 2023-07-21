@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 1.6.6
+
+### Patch Changes
+
+- 8205673: update superagent
+
 ## 1.6.5
 
 ### Patch Changes

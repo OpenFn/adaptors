@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 4.0.2
+
+### Patch Changes
+
+- 1bd612e: improve error logs response
+
 ## 4.0.1
 
 ### Patch Changes
