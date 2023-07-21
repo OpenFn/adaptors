@@ -181,21 +181,13 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
 - Make sure it returns what you expect
 - You can delete this folder once you have finished testing your job manually
 
-- Make sure to run build again
-- Run your job `openfn tmp/job.js -O -ma youradaptorname`
-- Make sure it returns what you expect
-- You can delete this folder once you have finished testing your job manually
+#### 5. Write your unit tests
 
-  Import your newly defined function
+Import your newly defined function
 
-  ```
-  import { functionName } from '../src/Adaptor.js';
-  ```
-
-  Describe your test, define state, call your operation (follow the example
-  below to see how state should be passed to it).
-
-  Make an assertion to check the result.
+```
+import { functionName } from '../src/Adaptor.js';
+```
 
 Describe your test, define state, call your operation (follow the example below
 to see how state should be passed to it).
@@ -210,15 +202,18 @@ const state = {
 };
 
 const result = await getTodaysWeather()(state);
+```
 
-  Make sure to test your function with different arguments and values.
+Run `pnpm test` to check your test is passing.
 
-  #### 6. Add docs and write the tests
+Make sure to test your function with different arguments and values.
 
-  - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
-    comprehensive explanation of the adaptor function's purpose, parameters,
-    return values, and usage examples
-  - Update the adaptor's `README.md` to include a sample operation
+#### 6. Add docs and write the tests
+
+- Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
+  comprehensive explanation of the adaptor function's purpose, parameters,
+  return values, and usage examples
+- Update the adaptor's `README.md` to include a sample operation
 
 ## Changesets
 
@@ -234,9 +229,7 @@ Adding a changeset is really easy thanks to a very friendly CLI.
 To create a changeset, run this from the repo root:
 
 ```
-
 pnpm changeset
-
 ```
 
 Look in the `.changesets` folder to see your change.
@@ -248,9 +241,7 @@ Commit the changeset to the repo when you're ready.
 To release, run this from the root:
 
 ```
-
 pnpm changeset version
-
 ```
 
 This will bump all changed packages and update their release notes.
@@ -258,34 +249,26 @@ This will bump all changed packages and update their release notes.
 Then install packages and commit changes with:
 
 ```
-
 pnpm install
-
 ```
 
 Build the adaptors with:
 
 ```
-
 pnpm -r run build
-
 ```
 
 To publish the release, run:
 
 ```
-
 pnpm changeset publish
-
 ```
 
 And finally, push the tags to Github so that the source code can be browsed for
 each new release with:
 
 ```
-
 git push --follow-tags
-
 ```
 
 ## Build tooling
@@ -313,10 +296,8 @@ Use `populate-mock` to execute the `populate-mock-data.js` file and save the
 results into the meta/data dir. Unit tests will use this mock data.
 
 ```
-
 pnpm metadata generate <adaptorName> <path/to/config> pnpm metadata
 populate-mock <adaptorName> <path/to/config>
-
 ```
 
 Config paths can point to JSON or JS files with a default export. They are
@@ -326,8 +307,8 @@ You can run these from the repo root or from the adaptor folder.
 
 ## Migration Guide
 
-Adaptors should be copied/cloned into this repo, with all build, lint and git
-artefacts removed and the package.json updated.
+Any old adaptors should be copied/cloned into this repo, with all build, lint
+and git artefacts removed and the package.json updated.
 
 This checklist walks you through the process.
 
@@ -337,9 +318,7 @@ pull-requests are merged or closed (maybe discuss with authors / responsibles)
 First, create a new branch for your work:
 
 ```
-
 git checkout -b migrate\_<name>
-
 ```
 
 Then, copy the adaptor into `packages/<name>` (ignoring the `language-` prefix,
@@ -349,9 +328,7 @@ straight from github if you like.
 Next, from the `adaptors` root folder, run the migration script:
 
 ```
-
 pnpm migrate <name>
-
 ```
 
 For example, `pnpm migrate http`.
@@ -397,14 +374,12 @@ Then, from inside your new `packages/<name>`:
   adaptors repo. See example below
 
 ```
-
 # _⚠️ MOVED TO [OpenFn/adaptors](https://github.com/OpenFn/adaptors)! ⚠️_
 
 **N.B.: New versions are available at:
 https://github.com/OpenFn/adaptors/tree/main/packages/<name>**
 
 # Language <name> (Archived)
-
 ```
 
 ### index.js
@@ -432,7 +407,6 @@ The readme probably has a section called "Development".
 Replace this section with:
 
 ```
-
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
@@ -456,4 +430,3 @@ Instead of importing test files from `lib`, import directly from `src`.
 
 Ie, replace `import Adaptor from '../lib/Adaptor'` becomes
 `import Adaptor from '../src/Adaptor'`
-```
