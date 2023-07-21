@@ -18,30 +18,13 @@
       "type": "string",
       "description": "The API version",
       "default": "v1",
-      "examples": ["v1", "v1beta1"]
-    },
-    "cloudRegion": {
-      "type": "string",
-      "examples": ["us-central1"]
-    },
-    "projectId": {
-      "type": "string",
-      "examples": ["adjective-noun-123"]
-    },
-    "datasetId": {
-      "type": "string",
-      "examples": ["my-dataset"]
-    },
-    "fhirStoreId": {
-      "type": "string",
-      "examples": ["my-fhir-store"]
+      "examples": [
+        "v1",
+        "v1beta1"
+      ]
     }
   },
   "required": [
-    "cloudRegion",
-    "projectId",
-    "datasetId",
-    "fhirStoreId",
     "access_token"
   ]
 }
