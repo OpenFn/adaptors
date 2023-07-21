@@ -8,6 +8,7 @@
  */
 
 import { fetch } from 'undici';
+import https from 'https';
 
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
@@ -74,35 +75,55 @@ export function handleResponseError(response, data, method) {
     throw new Error(errorString);
   }
 }
-
-function buildUrl(url, queryParams) {
-  return `${url}?${new URLSearchParams(queryParams).toString()}`;
+/**
+ * Creates an https agent for fetch from the agentOptions key passed in params.
+ * @function
+ * @param {object} params - data
+ * @returns {Operation}
+ */
+function withAgent(params) {
+  const { agentOptions } = params;
+  return {
+    ...params,
+    httpsAgent: agentOptions && new https.Agent(agentOptions),
+  };
 }
 
-function buildRequest(url, method, queryParams, data, headers) {
+function buildUrl(url, queryParams) {
+  return queryParams
+    ? `${url}?${new URLSearchParams(queryParams).toString()}`
+    : url;
+}
+
+function buildRequest(url, params) {
+  const { method, headers, body, query, ...otherParams } = params;
+
   const initialOptions = {
     method,
     headers,
     dispatcher: new https.Agent({ keepAlive: true }),
+    otherParams,
   };
 
   switch (method) {
     case 'GET':
-      return new Request(buildUrl(url, queryParams), initialOptions);
-    case 'POST':
-      return new Request(buildUrl(url, queryParams), {
-        ...initialOptions,
-        body: data ? JSON.stringify(data) : undefined,
-      });
+      return new Request(
+        `${url}?${new URLSearchParams(query).toString()}`,
+        ...withAgent(initialOptions)
+      );
+    case 'HEAD':
+      return new Request(url, ...withAgent(initialOptions));
     default:
-      return new Request(url, options);
+      return new Request(url, {
+        ...withAgent(initialOptions),
+        body: body ? JSON.stringify(body) : body,
+      });
   }
 }
 
 // Wrapper for all requests, handles errors and logs
 export async function request(url, params = { method: 'GET' }) {
-  const { method, data, headers, ...otherOptions } = params;
-  const options = {
+  const defaultOptions = {
     method: 'GET', // POST, PUT, DELETE, HEAD, etc.
     headers: {
       // the content type header value is usually auto-set
@@ -119,7 +140,12 @@ export async function request(url, params = { method: 'GET' }) {
     keepAlive: true,
     signal: undefined, // AbortController to abort request
     priority: 'auto', //Specifies the priority of the fetch request relative to other requests of the same. Must be one of the following strings: high, low, auto
-    params: {}, // An object implementing `URLSearchParams.string()` which returns a string containing a query string suitable for use in a URL.
+    query: {}, // An object implementing `URLSearchParams.string()` which returns a string containing a query string suitable for use in a URL.
+  };
+
+  const { method, data, headers, ...otherOptions } = {
+    ...defaultOptions,
+    ...params,
   };
 
   const request = buildRequest(url, method, otherOptions, data, headers);

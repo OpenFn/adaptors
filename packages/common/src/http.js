@@ -61,9 +61,9 @@ function withAgent(params) {
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @returns {Operation} - Function which takes state and returns a Promise
  * @example <caption>Get an item with a specified id from state</caption>
- *  get({
- *      url: state => `https://www.example.com/api/items/${state.id},
- *      headers: {"content-type": "application/json"}
+ * get({
+ *    url: state => `https://www.example.com/api/items/${state.id}`,
+ *    headers: {"content-type": "application/json"}
  * });
  */
 export function get(requestParams) {
