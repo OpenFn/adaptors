@@ -105,7 +105,7 @@ axios.interceptors.response.use(
     if (error.config?.auth) error.config.auth = '--REDACTED--';
     if (error.config?.data) error.config.data = '--REDACTED--';
 
-    const details = error.response?.data?.response;
+    const details = error.response?.data;
 
     Log.error(error.message || "That didn't work.");
 
