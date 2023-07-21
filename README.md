@@ -17,10 +17,10 @@ machine._
 A few first time repo steps:
 
 ```
-asdf install #Install tool versions
+asdf install # Install tool versions
 pnpm install
 pnpm build
-pnpm run setup #Run the setup command
+pnpm run setup
 ```
 
 ## Running scripts
@@ -69,6 +69,14 @@ please make one and assign yourself.
 
 #### 1. Setup
 
+- Make sure you have the OpenFn CLI tool installed
+  (`npm install -g @openfn/cli`). You'll need this to use and test your adaptor.
+
+- Tell the OpenFn CLI where this repo is by setting the `OPENFN_ADAPTORS_REPO`
+  environment variable to the local path. For example, if you've cloned this
+  repo into `/repo/openfn/adaptors`, then in your `.bashrc` file, add
+  `export OPENFN_ADAPTORS_REPO=/repo/openfn/adaptors`.
+
 - Create a copy of the adaptor [template](packages/template), and rename it.
   `cp -R packages/template packages/youradaptorname`
 
@@ -100,12 +108,11 @@ getTodaysWeather(25.52, 13.41);
 
   `-O` will output to your console
 
-  `-m` will run the job from the monorepo (make sure your monorepo  
-   path is set OPENFN_ADAPTORS_REPO=...)
+  `-m` will run the job from the monorepo (see the setup notes in 1.)
 
   `-a` this will specify the adaptor to run your job with
 
-- The job should fail - we haven't build the adaptor yet! Let's go do that
+- The job should fail - we haven't build the adaptor yet! Let's go do that.
 
 #### 3. Create your adaptor function
 
