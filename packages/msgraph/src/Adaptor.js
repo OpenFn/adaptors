@@ -159,7 +159,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     const defaultOptions = {
       driveName: 'default', // Named drive in state.drives
       metadata: false, // If false return folder files if true return folder metadata
-      $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
+      // $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
     };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -194,10 +194,12 @@ export function getFolder(pathOrId, options, callback = s => s) {
       urlPath = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
-      metadata ? urlPath : (urlPath = `${urlPath}:/children`);
     } else {
       urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
-      metadata ? urlPath : (urlPath = `${urlPath}/children`);
+    }
+
+    if (!metadata) {
+      urlPath += resolvedPathOrId.startsWith('/') ? ':/children' : '/children';
     }
 
     const url = getUrl(urlPath, apiVersion);
@@ -226,8 +228,8 @@ export function getFile(pathOrId, options, callback = s => s) {
     const defaultOptions = {
       driveName: 'default', // named drive in state.drives
       metadata: false, // Returns file msgraph metadata
-      $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
-      select: '', // Eg: id,@microsoft.graph.downloadUrl
+      // $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
+      // select: '', // Eg: id,@microsoft.graph.downloadUrl
     };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
@@ -236,7 +238,7 @@ export function getFile(pathOrId, options, callback = s => s) {
       options
     );
 
-    const { driveName, metadata, select } = {
+    const { driveName, metadata } = {
       ...defaultOptions,
       ...resolvedOptions,
     };
@@ -259,14 +261,17 @@ export function getFile(pathOrId, options, callback = s => s) {
     const { id: driveId } = state.drives[driveName];
 
     let urlPath;
+
     if (resolvedPathOrId.startsWith('/')) {
       urlPath = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
-      metadata ? urlPath : (urlPath = `${urlPath}:/content`);
     } else {
       urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
-      metadata ? urlPath : (urlPath = `${urlPath}/content`);
+    }
+
+    if (!metadata) {
+      urlPath += resolvedPathOrId.startsWith('/') ? ':/content' : '/content';
     }
 
     const url = getUrl(urlPath, apiVersion);
