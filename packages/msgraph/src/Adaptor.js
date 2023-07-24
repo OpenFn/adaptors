@@ -1,7 +1,13 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, getAuth, getUrl, handleResponse } from './Utils';
+import {
+  request,
+  getAuth,
+  getUrl,
+  handleResponse,
+  ensureDriveExistsOrFail,
+} from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -170,21 +176,24 @@ export function getFolder(pathOrId, options, callback = s => s) {
 
     const { driveName, metadata } = { ...defaultOptions, ...resolvedOptions };
 
-    if (!state.drives[driveName]) {
-      const egJobCode = [
-        'Eg: Get a site drive then get "/Sample Data" folder',
-        'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
-        'getFolder("/Sample Data")',
-      ].join('\n\t  ');
+    ensureDriveExistsOrFail(state.drives[driveName], 'folder');
 
-      const errorString = [
-        `Message: Drive is not defined`,
-        `Quick Fix: Add getDrive() operation before getFolder()`,
-        `${egJobCode}`,
-      ].join('\n\t∟ ');
+    // if (!state.drives[driveName]) {
+    //   console.log('is this true');
+    //   const egJobCode = [
+    //     'Eg: Get a site drive then get "/Sample Data" folder',
+    //     'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
+    //     'getFolder("/Sample Data")',
+    //   ].join('\n\t  ');
 
-      throw new Error(errorString);
-    }
+    //   const errorString = [
+    //     `Message: Drive is not defined`,
+    //     `Quick Fix: Add getDrive() operation before getFolder()`,
+    //     `${egJobCode}`,
+    //   ].join('\n\t∟ ');
+
+    //   throw new Error(errorString);
+    // }
 
     const { id: driveId } = state.drives[driveName];
 
@@ -243,21 +252,23 @@ export function getFile(pathOrId, options, callback = s => s) {
       ...resolvedOptions,
     };
 
-    if (!state.drives[driveName]) {
-      const egJobCode = [
-        'Eg: Get a site drive then get "/Sample Data" folder',
-        'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
-        'getFile("/Sample Data/test.csv")',
-      ].join('\n\t  ');
+    ensureDriveExistsOrFail(state.drives[driveName], 'file');
+    // if (!state.drives[driveName]) {
+    //   const egJobCode = [
+    //     'Eg: Get a site drive then get "/Sample Data" folder',
+    //     'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
+    //     'getFile("/Sample Data/test.csv")',
+    //   ].join('\n\t  ');
 
-      const errorString = [
-        `Message: Drive is not defined`,
-        `Quick Fix: Add getDrive() operation before getFile()`,
-        `${egJobCode}`,
-      ].join('\n\t∟ ');
+    //   const errorString = [
+    //     `Message: Drive is not defined`,
+    //     `Quick Fix: Add getDrive() operation before getFile()`,
+    //     `${egJobCode}`,
+    //   ].join('\n\t∟ ');
 
-      throw new Error(errorString);
-    }
+    //   throw new Error(errorString);
+    // }
+
     const { id: driveId } = state.drives[driveName];
 
     let resource;
