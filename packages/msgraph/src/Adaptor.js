@@ -125,14 +125,14 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
 
     const { id, owner = 'drive' } = resolvedSpecifier;
 
-    let urlPath;
+    let resource;
     if (owner === 'drive') {
-      urlPath = `drives/${id}`;
+      resource = `drives/${id}`;
     } else {
-      urlPath = `${owner}/${id}/drive`;
+      resource = `${owner}/${id}/drive`;
     }
 
-    const url = getUrl(urlPath, apiVersion);
+    const url = getUrl(resource, apiVersion);
     const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response => {
@@ -188,21 +188,21 @@ export function getFolder(pathOrId, options, callback = s => s) {
 
     const { id: driveId } = state.drives[driveName];
 
-    let urlPath;
+    let resource;
 
     if (resolvedPathOrId.startsWith('/')) {
-      urlPath = `drives/${driveId}/root:/${encodeURIComponent(
+      resource = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
     } else {
-      urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
+      resource = `drives/${driveId}/items/${resolvedPathOrId}`;
     }
 
     if (!metadata) {
-      urlPath += resolvedPathOrId.startsWith('/') ? ':/children' : '/children';
+      resource += resolvedPathOrId.startsWith('/') ? ':/children' : '/children';
     }
 
-    const url = getUrl(urlPath, apiVersion);
+    const url = getUrl(resource, apiVersion);
     const auth = getAuth(accessToken);
 
     return request(url, { ...auth }).then(response =>
@@ -260,21 +260,21 @@ export function getFile(pathOrId, options, callback = s => s) {
     }
     const { id: driveId } = state.drives[driveName];
 
-    let urlPath;
+    let resource;
 
     if (resolvedPathOrId.startsWith('/')) {
-      urlPath = `drives/${driveId}/root:/${encodeURIComponent(
+      resource = `drives/${driveId}/root:/${encodeURIComponent(
         resolvedPathOrId
       )}`;
     } else {
-      urlPath = `drives/${driveId}/items/${resolvedPathOrId}`;
+      resource = `drives/${driveId}/items/${resolvedPathOrId}`;
     }
 
     if (!metadata) {
-      urlPath += resolvedPathOrId.startsWith('/') ? ':/content' : '/content';
+      resource += resolvedPathOrId.startsWith('/') ? ':/content' : '/content';
     }
 
-    const url = getUrl(urlPath, apiVersion);
+    const url = getUrl(resource, apiVersion);
 
     const auth = getAuth(accessToken);
 
