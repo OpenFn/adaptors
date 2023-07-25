@@ -1,13 +1,7 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import {
-  request,
-  getAuth,
-  getUrl,
-  handleResponse,
-  ensureDriveExistsOrFail,
-} from './Utils';
+import { request, getAuth, getUrl, handleResponse, assertDrive } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -149,14 +143,14 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
 }
 
 /**
- * Get folder metadata or an array of folder contents.
+ * Get the contents or metadata of a folder.
  * @public
  * @example <caption>Get a folder by ID</caption>
  * getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
  * @example <caption>Get a folder for a named drive by id</caption>
  * getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
  * @param {string} pathOrId - A path to a folder or folder id
- * @param {object} options - (Optional) Query parametes
+ * @param {object} options - (Optional) Query parameters
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
@@ -176,24 +170,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
 
     const { driveName, metadata } = { ...defaultOptions, ...resolvedOptions };
 
-    ensureDriveExistsOrFail(state.drives[driveName], 'folder');
-
-    // if (!state.drives[driveName]) {
-    //   console.log('is this true');
-    //   const egJobCode = [
-    //     'Eg: Get a site drive then get "/Sample Data" folder',
-    //     'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
-    //     'getFolder("/Sample Data")',
-    //   ].join('\n\t  ');
-
-    //   const errorString = [
-    //     `Message: Drive is not defined`,
-    //     `Quick Fix: Add getDrive() operation before getFolder()`,
-    //     `${egJobCode}`,
-    //   ].join('\n\t∟ ');
-
-    //   throw new Error(errorString);
-    // }
+    assertDrive(state, driveName);
 
     const { id: driveId } = state.drives[driveName];
 
@@ -228,7 +205,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
  * @example <caption>Get a file for a named drive by id</caption>
  * getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
  * @param {string} pathOrId - A path to a file or file id
- * @param {object} options - (Optional) Query parametes
+ * @param {object} options - (Optional) Query parameters
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
@@ -252,22 +229,7 @@ export function getFile(pathOrId, options, callback = s => s) {
       ...resolvedOptions,
     };
 
-    ensureDriveExistsOrFail(state.drives[driveName], 'file');
-    // if (!state.drives[driveName]) {
-    //   const egJobCode = [
-    //     'Eg: Get a site drive then get "/Sample Data" folder',
-    //     'getDrive({ id: "openfn.sharepoint.com", owner: "sites"})',
-    //     'getFile("/Sample Data/test.csv")',
-    //   ].join('\n\t  ');
-
-    //   const errorString = [
-    //     `Message: Drive is not defined`,
-    //     `Quick Fix: Add getDrive() operation before getFile()`,
-    //     `${egJobCode}`,
-    //   ].join('\n\t∟ ');
-
-    //   throw new Error(errorString);
-    // }
+    assertDrive(state, driveName);
 
     const { id: driveId } = state.drives[driveName];
 

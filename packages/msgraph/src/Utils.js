@@ -1,19 +1,12 @@
 import { fetch } from 'undici';
 import { composeNextState } from '@openfn/language-common';
 
-export function ensureDriveExistsOrFail(drive, fileType) {
-  if (!drive) {
-    const operation = fileType === 'folder' ? 'getFolder' : 'getFile';
-    const egJobCode = [
-      `Eg: Get a site drive then get "/Sample Data" ${fileType}`,
-      `getDrive({ id: "openfn.sharepoint.com", owner: "sites"})`,
-      `${operation}("/Sample Data/${fileType === 'folder' ? '' : 'test.csv'})`,
-    ].join('\n\t  ');
-
+export function assertDrive(state, driveName) {
+  if (!state.drives[driveName]) {
     const errorString = [
-      `Message: Drive is not defined`,
-      `Quick Fix: Add getDrive() operation before ${operation}()`,
-      `${egJobCode}`,
+      `Drive is not defined.`,
+      `At the top of your job you should define all the drives you want to us.`,
+      `eg: getDrive({ id: "openfn.sharepoint.com", owner: "sites"})`,
     ].join('\n\t∟ ');
 
     throw new Error(errorString);
