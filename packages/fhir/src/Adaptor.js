@@ -110,14 +110,14 @@ export function createTransactionBundle(params, callback) {
  * Get a resource in a FHIR system
  * @public
  * @example
- * get("/endpoint", {"foo": "bar"})
+ * get("/Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
  * @function
  * @param {string} path - Path to resource
  * @param {object} query - data to get the new resource
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function get(path, query, callback = false) {
+export function get(path, query, callback = s => s) {
   return state => {
     const resolvedPath = expandReferences(path)(state);
     const resolvedQuery = expandReferences(query)(state);
@@ -127,7 +127,36 @@ export function get(path, query, callback = false) {
 
     const config = {
       url,
-      query: resolvedQuery,
+      params: resolvedQuery,
+    };
+
+    return http
+      .get(config)(state)
+      .then(response => handleResponse(response, state, callback))
+      .catch(handleError);
+  };
+}
+
+/**
+ * Get Claim in a FHIR system
+ * @public
+ * @example
+ * getClaim({ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
+ * @function
+ * @param {object} query - (optinal) query parameters
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function getClaim(query, callback = s => s) {
+  return state => {
+    const resolvedQuery = expandReferences(query)(state);
+
+    const { baseUrl, apiPath } = state.configuration;
+    const url = `${baseUrl}/${apiPath}/Claim`;
+
+    const config = {
+      url,
+      params: resolvedQuery,
     };
 
     return http

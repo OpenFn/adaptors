@@ -133,7 +133,7 @@
           },
           {
             "title": "example",
-            "description": "get(\"/endpoint\", {\"foo\": \"bar\"})"
+            "description": "get(\"/Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })"
           },
           {
             "title": "function",
@@ -152,6 +152,59 @@
           {
             "title": "param",
             "description": "data to get the new resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getClaim",
+      "params": [
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get Claim in a FHIR system",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getClaim({ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "(optinal) query parameters",
             "type": {
               "type": "NameExpression",
               "name": "object"
