@@ -164,14 +164,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder(
-        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
-        { metadata: true },
-        state => {
-          state.result = state.data;
-          return state;
-        }
-      )
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { metadata: true })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -190,10 +183,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', state => {
-        state.result = state.data;
-        return state;
-      })
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
