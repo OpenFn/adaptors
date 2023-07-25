@@ -202,14 +202,10 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder(
-        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
-        { driveName: 'mydrive', metadata: true },
-        state => {
-          state.result = state.data;
-          return state;
-        }
-      )
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', {
+        driveName: 'mydrive',
+        metadata: true,
+      })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -228,14 +224,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder(
-        '01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
-        { driveName: 'mydrive' },
-        state => {
-          state.result = state.data;
-          return state;
-        }
-      )
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { driveName: 'mydrive' })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
@@ -254,10 +243,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('/Sample Data', { metadata: true }, state => {
-        state.result = state.data;
-        return state;
-      })
+      getFolder('/Sample Data', { metadata: true })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -275,12 +261,7 @@ describe('getFolder', () => {
       },
     };
 
-    const finalState = await execute(
-      getFolder('/Sample Data', {}, state => {
-        state.result = state.data;
-        return state;
-      })
-    )(state);
+    const finalState = await execute(getFolder('/Sample Data'))(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
   });
@@ -347,10 +328,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {}, state => {
-        state.result = state.data;
-        return state;
-      })
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -369,14 +347,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile(
-        '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
-        { metadata: true },
-        state => {
-          state.result = state.data;
-          return state;
-        }
-      )
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { metadata: true })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -395,14 +366,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile(
-        '01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
-        { driveName: 'mydrive' },
-        state => {
-          state.result = state.data;
-          return state;
-        }
-      )
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { driveName: 'mydrive' })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -420,12 +384,9 @@ describe('getFile', () => {
       },
     };
 
-    const finalState = await execute(
-      getFile('/Sample Data/test.csv', {}, state => {
-        state.result = state.data;
-        return state;
-      })
-    )(state);
+    const finalState = await execute(getFile('/Sample Data/test.csv', {}))(
+      state
+    );
 
     expect(finalState.data).to.eql(fixtures.itemContent);
   });
@@ -443,10 +404,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('/Sample Data/test.csv', { metadata: true }, state => {
-        state.result = state.data;
-        return state;
-      })
+      getFile('/Sample Data/test.csv', { metadata: true })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
