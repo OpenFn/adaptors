@@ -1,13 +1,24 @@
+import { fetch } from 'undici';
 import { composeNextState } from '@openfn/language-common';
 
-export function setUrl(urlParams) {
-  const { apiVersion, resolvePath } = urlParams;
+export function assertDrive(state, driveName) {
+  if (!state.drives[driveName]) {
+    const errorString = [
+      `Drive is not defined.`,
+      `At the top of your job you should define all the drives you want to use.`,
+      `eg: getDrive({ id: "openfn.sharepoint.com", owner: "sites"})`,
+    ].join('\n\t∟ ');
 
-  if (isValidHttpUrl(resolvePath)) return resolvePath;
+    throw new Error(errorString);
+  }
+}
+
+export function getUrl(resource, apiVersion) {
+  if (isValidHttpUrl(resource)) return resource;
 
   const pathSuffix = apiVersion
-    ? `${apiVersion}/${resolvePath}`
-    : `v1.0/${resolvePath}`;
+    ? `${apiVersion}/${resource}`
+    : `v1.0/${resource}`;
   return `https://graph.microsoft.com/${pathSuffix}`;
 }
 
@@ -23,7 +34,7 @@ function isValidHttpUrl(string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-export function setAuth(token) {
+export function getAuth(token) {
   return token ? { headers: { Authorization: `Bearer ${token}` } } : null;
 }
 
@@ -84,6 +95,7 @@ export const request = async (urlString, params = {}, method = 'GET') => {
 
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
+
   const data = contentType?.includes('application/json')
     ? await response.json()
     : await response.text();

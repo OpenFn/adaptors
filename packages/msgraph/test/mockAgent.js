@@ -1,43 +1,146 @@
 import { MockAgent } from 'undici';
+import { fixtures } from './fixtures';
 
 const mockAgent = new MockAgent();
 
-const mockPool = mockAgent.get('https://fake.server.com');
+const mockPool = mockAgent.get('https://graph.microsoft.com');
+
+const jsonResponse = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${fixtures.accessToken}`,
+};
+
+const headersWithInvalidToken = {
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${fixtures.invalidToken}`,
+};
+
+const headersWithExpiredToken = {
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${fixtures.expiredToken}`,
+};
+
+// MockPool for getDrive()
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/drive',
+    method: 'GET',
+    headers: headersWithExpiredToken,
+  })
+  .reply(401, fixtures.expiredTokenResponse);
 
 mockPool
   .intercept({
-    path: '/api/patients',
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: 'Basic aGVsbG86dGhlcmU=',
-    },
+    path: '/v1.0/sites/noAccess/drive',
+    method: 'GET',
+    headers: headers,
   })
-  .reply(200, {
-    data: { id: 7, fullName: 'Mamadou', gender: 'M' },
-    status: 'success',
-  });
+  .reply(400, fixtures.invalidRequestResponse);
 
 mockPool
   .intercept({
-    path: '/api/noAccess',
-    method: 'POST',
+    path: '/v1.0/sites/openfn.sharepoint.com/drive',
+    method: 'GET',
+    headers: headers,
   })
-  .reply(404, {
-    message: 'Not found',
-    status: 'error',
-    code: 404,
-  });
+  .reply(200, fixtures.driveResponse, jsonResponse)
+  .persist();
 
 mockPool
   .intercept({
-    path: '/api/!@#$%^&*',
-    method: 'POST',
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_',
+    method: 'GET',
+    headers: headers,
   })
-  .reply(500, {
-    message: 'Server error',
-    status: 'error',
-    code: 500,
-  });
+  .reply(200, fixtures.driveResponse, jsonResponse)
+  .persist();
+
+// MockPool for getFolder()
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/%2FSample%20Data',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/%2FSample%20Data:/children',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemsResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemResponse, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3/children',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemsResponse, jsonResponse)
+  .persist();
+
+//MockPool for getFile()
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/%2FSample%20Data%2Ftest.csv',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemWithDownloadUrl, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/root:/%2FSample%20Data%2Ftest.csv:/content',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemContent)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemWithDownloadUrl, jsonResponse)
+  .persist();
+
+mockPool
+  .intercept({
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW/content',
+    method: 'GET',
+    headers: headers,
+  })
+  .reply(200, fixtures.itemContent)
+  .persist();
+
+// mockPool
+//   .intercept({
+//     path: '/v1.0/sites/openfn.sharepoint.com/drive/items/d97073d1-5ee7-4218-97cd-bd4167078516?select=id,@microsoft.graph.downloadUrl',
+//     method: 'GET',
+//     headers: headers,
+//   })
+//   .reply(200, fixtures.itemWithOptions);
 
 export default mockAgent;
