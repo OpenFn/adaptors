@@ -199,7 +199,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get folder metadata or an array of folder contents.",
+        "description": "Get the contents or metadata of a folder.",
         "tags": [
           {
             "title": "public",
@@ -227,7 +227,7 @@
           },
           {
             "title": "param",
-            "description": "(Optional) Query parametes",
+            "description": "(Optional) Query parameters",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -295,7 +295,7 @@
           },
           {
             "title": "param",
-            "description": "(Optional) Query parametes",
+            "description": "(Optional) Query parameters",
             "type": {
               "type": "NameExpression",
               "name": "object"
