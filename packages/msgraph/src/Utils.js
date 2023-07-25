@@ -5,7 +5,7 @@ export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {
     const errorString = [
       `Drive is not defined.`,
-      `At the top of your job you should define all the drives you want to us.`,
+      `At the top of your job you should define all the drives you want to use.`,
       `eg: getDrive({ id: "openfn.sharepoint.com", owner: "sites"})`,
     ].join('\n\t∟ ');
 
