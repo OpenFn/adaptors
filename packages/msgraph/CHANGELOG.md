@@ -1,5 +1,15 @@
 # @openfn/language-msgraph
 
+## 0.3.0
+
+### Minor Changes
+
+- 9366e53: - Switch from `nodejs` default `fetch` to `undici` `fetch`
+  - Added the following `sharepoint` functions
+    - `getDrive()`
+    - `getFolder()`
+    - `getFile()`
+
 ## 0.2.0
 
 ### Minor Changes
