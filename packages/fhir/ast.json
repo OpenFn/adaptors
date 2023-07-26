@@ -133,7 +133,13 @@
           },
           {
             "title": "example",
-            "description": "get(\"/Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })"
+            "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
+            "caption": "Get Claim from FHIR with optional query"
+          },
+          {
+            "title": "example",
+            "description": "get('Patient');",
+            "caption": "Get Patient from FHIR"
           },
           {
             "title": "function",

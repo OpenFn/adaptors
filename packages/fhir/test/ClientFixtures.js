@@ -1,44 +1,309 @@
 const fixtures = {
-  post: {
-    requestBody: {
-      "A": 1
+  claim: {
+    resourceType: 'Claim',
+    id: '49023',
+    meta: {
+      versionId: '1',
+      lastUpdated: '2019-10-18T20:20:56.872+00:00',
+      source: '#ML8v9Ku1pGuXAhZr',
     },
-    responseBody: {
-      "httpStatus": "OK",
-      "httpStatusCode": 200,
-      "status": "OK",
-      "message": "Import was successful.",
-      "response": {
-        "responseType": "ImportSummaries",
-        "imported": 1,
-        "updated": 0,
-        "deleted": 0,
-        "ignored": 0
-      }
-    }
-  }
-}
-
-export {fixtures};
-
-export default [
-  {
-    pattern : 'https://fake.server.com/api(.*)',
-
-    fixtures(match, params, headers) {
-      if (match[1] === '/api') {
-        return {body: fixtures.post.responseBody, params, headers}
-      }
-
-      throw new Error(`No Fixture Match\ngot: ${JSON.stringify(match, 2, null)}`)
+    status: 'active',
+    type: {
+      coding: [
+        {
+          system: 'http://terminology.hl7.org/CodeSystem/claim-type',
+          code: 'pharmacy',
+        },
+      ],
     },
+    use: 'claim',
+    patient: {
+      reference: 'Patient/49006',
+    },
+    billablePeriod: {
+      start: '1992-10-04T20:27:01-04:00',
+      end: '1992-10-04T21:06:01-04:00',
+    },
+    created: '1992-10-04T21:06:01-04:00',
+    provider: {
+      reference: 'Organization/49007',
+      display: 'NASHOBA VALLEY MEDICAL CENTER',
+    },
+    priority: {
+      coding: [
+        {
+          system: 'http://terminology.hl7.org/CodeSystem/processpriority',
+          code: 'normal',
+        },
+      ],
+    },
+    prescription: {
+      reference: 'MedicationRequest/49022',
+    },
+    insurance: [
+      {
+        sequence: 1,
+        focal: true,
+        coverage: {
+          display: 'UnitedHealthcare',
+        },
+      },
+    ],
+    item: [
+      {
+        sequence: 1,
+        productOrService: {
+          coding: [
+            {
+              system: 'http://snomed.info/sct',
+              code: '185347001',
+              display: 'Encounter for problem',
+            },
+          ],
+          text: 'Encounter for problem',
+        },
+        encounter: [
+          {
+            reference: 'Encounter/49014',
+          },
+        ],
+      },
+    ],
+    total: {
+      value: 388.55,
+      currency: 'USD',
+    },
+  },
+  claimBundle: {
+    resourceType: 'Bundle',
+    id: '462a2358-3960-4195-bcc9-8777d3232df7',
+    meta: {
+      lastUpdated: '2023-07-26T10:43:22.471+00:00',
+    },
+    type: 'searchset',
+    link: [
+      {
+        relation: 'self',
+        url: 'https://hapi.fhir.org/baseR4/Claim/',
+      },
+      {
+        relation: 'next',
+        url: 'https://hapi.fhir.org/baseR4?_getpages=462a2358-3960-4195-bcc9-8777d3232df7&_getpagesoffset=20&_count=20&_pretty=true&_bundletype=searchset',
+      },
+    ],
+    entry: [
+      {
+        fullUrl: 'https://hapi.fhir.org/baseR4/Claim/49023',
+        resource: {
+          resourceType: 'Claim',
+          id: '49023',
+          meta: {
+            versionId: '1',
+            lastUpdated: '2019-10-18T20:20:56.872+00:00',
+            source: '#ML8v9Ku1pGuXAhZr',
+          },
+          status: 'active',
+          type: {
+            coding: [
+              {
+                system: 'http://terminology.hl7.org/CodeSystem/claim-type',
+                code: 'pharmacy',
+              },
+            ],
+          },
+          use: 'claim',
+          patient: {
+            reference: 'Patient/49006',
+          },
+          billablePeriod: {
+            start: '1992-10-04T20:27:01-04:00',
+            end: '1992-10-04T21:06:01-04:00',
+          },
+          created: '1992-10-04T21:06:01-04:00',
+          provider: {
+            reference: 'Organization/49007',
+            display: 'NASHOBA VALLEY MEDICAL CENTER',
+          },
+          priority: {
+            coding: [
+              {
+                system: 'http://terminology.hl7.org/CodeSystem/processpriority',
+                code: 'normal',
+              },
+            ],
+          },
+          prescription: {
+            reference: 'MedicationRequest/49022',
+          },
+          insurance: [
+            {
+              sequence: 1,
+              focal: true,
+              coverage: {
+                display: 'UnitedHealthcare',
+              },
+            },
+          ],
+          item: [
+            {
+              sequence: 1,
+              productOrService: {
+                coding: [
+                  {
+                    system: 'http://snomed.info/sct',
+                    code: '185347001',
+                    display: 'Encounter for problem',
+                  },
+                ],
+                text: 'Encounter for problem',
+              },
+              encounter: [
+                {
+                  reference: 'Encounter/49014',
+                },
+              ],
+            },
+          ],
+          total: {
+            value: 388.55,
+            currency: 'USD',
+          },
+        },
+        search: {
+          mode: 'match',
+        },
+      },
+    ],
+  },
+  patient: {
+    resourceType: 'Patient',
+    id: '592442',
+    meta: {
+      versionId: '1',
+      lastUpdated: '2020-01-25T05:29:57.490+00:00',
+      source: '#mmW7q6afclmP48Vr',
+    },
+    text: {
+      status: 'generated',
+      div: '<div xmlns="http://www.w3.org/1999/xhtml"><div class="hapiHeaderText">Caleb <b>CUSHING </b></div><table class="hapiPropertyTable"><tbody><tr><td>Identifier</td><td>5b6f0fc3-c98e-46a6-8435-896340edf860</td></tr></tbody></table></div>',
+    },
+    identifier: [
+      {
+        type: {
+          coding: [
+            {
+              system: 'http://hl7.org/fhir/v2/0203',
+              code: 'MR',
+            },
+          ],
+        },
+        value: '5b6f0fc3-c98e-46a6-8435-896340edf860',
+      },
+    ],
+    name: [
+      {
+        family: 'Cushing',
+        given: ['Caleb'],
+      },
+    ],
+  },
+  invalidPatient: {
+    resourceType: 'OperationOutcome',
+    text: {
+      status: 'generated',
+      div: '<div xmlns="http://www.w3.org/1999/xhtml"><h1>Operation Outcome</h1><table border="0"><tr><td style="font-weight: bold;">ERROR</td><td>[]</td><td>HAPI-2001: Resource Patient/592442asd is not known</td></tr></table></div>',
+    },
+    issue: [
+      {
+        severity: 'error',
+        code: 'processing',
+        diagnostics:
+          'HAPI-2001: Resource Patient/invalid-patient-id is not known',
+      },
+    ],
+  },
+  patientBundle: {
+    resourceType: 'Bundle',
+    id: '73318f50-171e-403c-a3a7-06b1c0d55f87',
+    meta: {
+      lastUpdated: '2023-07-26T10:35:11.335+00:00',
+    },
+    type: 'searchset',
+    link: [
+      {
+        relation: 'self',
+        url: 'https://hapi.fhir.org/baseR4/Patient',
+      },
+      {
+        relation: 'next',
+        url: 'https://hapi.fhir.org/baseR4?_getpages=73318f50-171e-403c-a3a7-06b1c0d55f87&_getpagesoffset=20&_count=20&_pretty=true&_bundletype=searchset',
+      },
+    ],
+    entry: [
+      {
+        fullUrl: 'https://hapi.fhir.org/baseR4/Patient/592442',
+        resource: {
+          resourceType: 'Patient',
+          id: '592442',
+          meta: {
+            versionId: '1',
+            lastUpdated: '2020-01-25T05:29:57.490+00:00',
+            source: '#mmW7q6afclmP48Vr',
+          },
+          text: {
+            status: 'generated',
+            div: '<div xmlns="http://www.w3.org/1999/xhtml"><div class="hapiHeaderText">Caleb <b>CUSHING </b></div><table class="hapiPropertyTable"><tbody><tr><td>Identifier</td><td>5b6f0fc3-c98e-46a6-8435-896340edf860</td></tr></tbody></table></div>',
+          },
+          identifier: [
+            {
+              type: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/v2/0203',
+                    code: 'MR',
+                  },
+                ],
+              },
+              value: '5b6f0fc3-c98e-46a6-8435-896340edf860',
+            },
+          ],
+          name: [
+            {
+              family: 'Cushing',
+              given: ['Caleb'],
+            },
+          ],
+        },
+        search: {
+          mode: 'match',
+        },
+      },
+    ],
+  },
+};
 
-    post(match, data) {
-      return {
-        ok: true,
-        match,
-        ...data
-      }
-    }
-  }
-]
+export { fixtures };
+
+// export default [
+//   {
+//     pattern: 'https://fake.server.com/api(.*)',
+
+//     fixtures(match, params, headers) {
+//       if (match[1] === '/api') {
+//         return { body: fixtures.post.responseBody, params, headers };
+//       }
+
+//       throw new Error(
+//         `No Fixture Match\ngot: ${JSON.stringify(match, 2, null)}`
+//       );
+//     },
+
+//     post(match, data) {
+//       return {
+//         ok: true,
+//         match,
+//         ...data,
+//       };
+//     },
+//   },
+// ];
