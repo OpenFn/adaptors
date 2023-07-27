@@ -3,11 +3,11 @@ import { fixtures } from './ClientFixtures';
 
 const mockAgent = new MockAgent();
 
-const mockPool = mockAgent.get('http://hapi.fhir.org/baseR4');
+const mockPool = mockAgent.get('https://hapi.fhir.org');
 
 mockPool
   .intercept({
-    path: '/Patient',
+    path: '/baseR4/Patient?_count=1&_pretty=true',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -17,7 +17,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/Patient/592442',
+    path: '/baseR4/Patient/592442',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -27,7 +27,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/Patient/invalid-patient-id',
+    path: '/baseR4/Patient/invalid-patient-id',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -37,7 +37,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/Claim',
+    path: '/baseR4/Claim',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -47,7 +47,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/Claim/49023',
+    path: '/baseR4/Claim/49023',
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -57,7 +57,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/api/noAccess',
+    path: '/baseR4/noAccess',
     method: 'POST',
   })
   .reply(404, {
@@ -68,7 +68,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/api/!@#$%^&*',
+    path: '/baseR4/!@#$%^&*',
     method: 'POST',
   })
   .reply(500, {

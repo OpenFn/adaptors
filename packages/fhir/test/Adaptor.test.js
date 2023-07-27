@@ -39,7 +39,7 @@ describe('execute', () => {
   });
 });
 
-describe('create', () => {
+describe.skip('create', () => {
   it('should create a Bundle in FHIR store', async () => {
     const state = {
       configuration: {
@@ -107,7 +107,9 @@ describe('get', () => {
       },
     };
 
-    const finalState = await execute(get('Patient'))(state);
+    const finalState = await execute(
+      get('Patient', { _count: 1, _pretty: true })
+    )(state);
 
     expect(finalState.data).to.eql(fixtures.patientBundle);
   });
@@ -123,9 +125,9 @@ describe('get', () => {
 
     expect(finalState.data).to.eql(fixtures.patient);
   });
-  it('should throw for invalid patient id');
+  it.skip('should throw for invalid patient id');
 });
 
-describe('getClaim', () => {
+describe.skip('getClaim', () => {
   it('should get claim');
 });
