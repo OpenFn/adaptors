@@ -57,9 +57,12 @@ describe('execute', () => {
       },
     ];
 
-    const finalState = await execute(...operations)(state).catch(e => {
-      expect(e.message).to.contain('Failed operation');
+    let e;
+    const finalState = await execute(...operations)(state).catch(err => {
+      e = err;
     });
+
+    expect(e.message).to.contain('Failed operation');
 
     expect(finalState).to.eql(undefined);
   });
