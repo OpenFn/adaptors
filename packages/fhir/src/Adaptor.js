@@ -126,6 +126,7 @@ export function get(path, query, callback = s => s) {
 
     const { baseUrl, apiPath } = state.configuration;
     const url = `${baseUrl}/${apiPath}/${resolvedPath}`;
+    console.log(url);
 
     const config = {
       url,

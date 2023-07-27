@@ -5,6 +5,22 @@ const mockAgent = new MockAgent();
 
 const mockPool = mockAgent.get('https://hapi.fhir.org');
 
+const jsonResponse = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+mockPool
+  .intercept({
+    path: '/baseR4/Patient',
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+  .reply(200, fixtures.patientBundle, jsonResponse);
+
 mockPool
   .intercept({
     path: '/baseR4/Patient?_count=1&_pretty=true',
@@ -13,7 +29,7 @@ mockPool
       'content-type': 'application/json',
     },
   })
-  .reply(200, fixtures.patientBundle);
+  .reply(200, fixtures.patientBundle, jsonResponse);
 
 mockPool
   .intercept({
@@ -23,7 +39,7 @@ mockPool
       'content-type': 'application/json',
     },
   })
-  .reply(200, fixtures.patient);
+  .reply(200, fixtures.patient, jsonResponse);
 
 mockPool
   .intercept({
@@ -33,7 +49,7 @@ mockPool
       'content-type': 'application/json',
     },
   })
-  .reply(200, fixtures.invalidPatient);
+  .reply(200, fixtures.invalidPatient, jsonResponse);
 
 mockPool
   .intercept({

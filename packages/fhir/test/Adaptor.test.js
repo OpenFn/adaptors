@@ -107,9 +107,7 @@ describe('get', () => {
       },
     };
 
-    const finalState = await execute(
-      get('Patient', { _count: 1, _pretty: true })
-    )(state);
+    const finalState = await execute(get('Patient'))(state);
 
     expect(finalState.data).to.eql(fixtures.patientBundle);
   });
