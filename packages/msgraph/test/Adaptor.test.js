@@ -38,6 +38,31 @@ describe('execute', () => {
       expect(finalState).to.eql({ references: [], data: null });
     });
   });
+
+  it('should stop operation on error', async () => {
+    const state = {
+      drives: {
+        default: {
+          id: 'b!YXzpkoLwR06bxC8tNdg71m_',
+        },
+      },
+    };
+    const operations = [
+      state => {
+        state.counter++;
+        throw new Error('Failed operation');
+      },
+      state => {
+        return { ...state, counter: 1 };
+      },
+    ];
+
+    const finalState = await execute(...operations)(state).catch(e => {
+      expect(e.message).to.contain('Failed operation');
+    });
+
+    expect(finalState).to.eql(undefined);
+  });
 });
 describe('getDrive', () => {
   it('should get a drive by id and set it to state', async () => {
