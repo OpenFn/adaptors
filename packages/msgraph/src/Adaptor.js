@@ -33,7 +33,10 @@ export function execute(...operations) {
       ...state,
     })
       .then(cleanup)
-      .catch(cleanup);
+      .catch(error => {
+        cleanup(state);
+        throw error;
+      });
   };
 }
 
