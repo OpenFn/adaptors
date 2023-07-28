@@ -1,12 +1,7 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-  http,
-} from '@openfn/language-common';
-import { handleError, handleResponse } from './Utils';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
-const { axios } = http;
-export { axios };
+import { handleResponse, request } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -38,7 +33,7 @@ export function execute(...operations) {
  * Creates a resource in a destination system using a POST request
  * @public
  * @example
- * create("/endpoint", {"foo": "bar"})
+ * create("Bundle", {...state.data: type: "collection"})
  * @function
  * @param {string} path - Path to resource
  * @param {object} params - data to create the new resource
@@ -47,26 +42,27 @@ export function execute(...operations) {
  */
 export function create(path, params, callback) {
   return state => {
-    const resolvedpath = expandReferences(path)(state);
-    const resolvedParams = expandReferences(params)(state);
+    const [resolvedpath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const { baseUrl, apiPath } = state.configuration;
 
     const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
 
-    const config = {
-      url,
+    const options = {
       headers: {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
       },
-      data: resolvedParams,
+      ...resolvedParams,
     };
 
-    return http
-      .post(config)(state)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    return request(url, options, 'POST').then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 
@@ -82,15 +78,14 @@ export function create(path, params, callback) {
  */
 export function createTransactionBundle(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
 
     const { baseUrl, apiPath, authType, token } = state.configuration;
 
     const url = `${baseUrl}/${apiPath}`;
     const auth = `${authType} ${token}`;
 
-    const config = {
-      url,
+    const options = {
       body: {
         resourceType: 'Bundle',
         type: 'transaction',
@@ -99,10 +94,9 @@ export function createTransactionBundle(params, callback) {
       auth,
     };
 
-    return http
-      .post(config)(state)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    return request(url, options, 'POST').then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 
@@ -121,22 +115,14 @@ export function createTransactionBundle(params, callback) {
  */
 export function get(path, query, callback = s => s) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedQuery = expandReferences(query)(state);
+    const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
     const { baseUrl, apiPath } = state.configuration;
     const url = `${baseUrl}/${apiPath}/${resolvedPath}`;
-    console.log(url);
 
-    const config = {
-      url,
-      params: resolvedQuery,
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    return request(url, { ...resolvedQuery }).then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
 
@@ -146,29 +132,30 @@ export function get(path, query, callback = s => s) {
  * @example
  * getClaim({ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
  * @function
+ * @param {string} claimId - (optional) claim id
  * @param {object} query - (optinal) query parameters
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getClaim(query, callback = s => s) {
+export function getClaim(claimId, query, callback = s => s) {
   return state => {
-    const resolvedQuery = expandReferences(query)(state);
+    const [resourcedclaimId, resolvedQuery] = expandReferences(
+      state,
+      claimId,
+      query
+    );
 
     const { baseUrl, apiPath } = state.configuration;
-    const url = `${baseUrl}/${apiPath}/Claim`;
+    const url = resourcedclaimId
+      ? `${baseUrl}/${apiPath}/Claim/${resourcedclaimId}`
+      : `${baseUrl}/${apiPath}/Claim`;
 
-    const config = {
-      url,
-      params: resolvedQuery,
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    return request(url, { ...resolvedQuery }).then(response =>
+      handleResponse(response, state, callback)
+    );
   };
 }
-
+export { request } from './Utils';
 // What functions do you want from the common adaptor?
 export {
   alterState,
@@ -179,7 +166,6 @@ export {
   field,
   fields,
   fn,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

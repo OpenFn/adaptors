@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:^1.8.1",
-    "axios": "0.21.4"
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
@@ -31,8 +31,7 @@
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "mocha": "9.2.2",
-    "rimraf": "^3.0.2",
-    "undici": "^5.22.1"
+    "rimraf": "^3.0.2"
   },
   "repository": {
     "type": "git",

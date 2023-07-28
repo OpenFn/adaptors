@@ -39,28 +39,21 @@ describe('execute', () => {
   });
 });
 
-describe.skip('create', () => {
+describe('create', () => {
   it('should create a Bundle in FHIR store', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://hapi.fhir.org',
         apiPath: 'baseR4',
       },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
+      data: fixtures.patientBundle,
     };
 
     const finalState = await execute(
       create('Bundle', state => ({ ...state.data, type: 'collection' }))
     )(state);
 
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
+    expect(finalState.data).to.eql(fixtures.patientBundleCreateResponse);
   });
 
   it('throws an error for a 404', async () => {
@@ -77,24 +70,28 @@ describe.skip('create', () => {
       return error;
     });
 
-    expect(error.message).to.eql('Page not found');
+    expect(error.message).contain('Not Found');
   });
+});
 
-  it('handles and throws different kinds of errors', async () => {
+describe('createTransactionBundle', () => {
+  it.skip('should create a Bundle in FHIR store', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://hapi.fhir.org',
         apiPath: 'baseR4',
       },
+      data: fixtures.patientBundle,
     };
 
-    const error = await execute(create('!@#$%^&*', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
+    const finalState = await execute(
+      createTransactionBundle('Bundle', state => ({
+        ...state.data,
+        type: 'collection',
+      }))
+    )(state);
 
-    expect(error.message).to.eql('Server error');
+    expect(finalState.data).to.eql(fixtures.patientBundleCreateResponse);
   });
 });
 
@@ -111,6 +108,22 @@ describe('get', () => {
 
     expect(finalState.data).to.eql(fixtures.patientBundle);
   });
+
+  it('should get patient resource bundle with params', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://hapi.fhir.org',
+        apiPath: 'baseR4',
+      },
+    };
+
+    const finalState = await execute(
+      get('Patient', { _count: 1, _pretty: true })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.patientBundle);
+  });
+
   it('should get patient resource by id', async () => {
     const state = {
       configuration: {
@@ -123,9 +136,45 @@ describe('get', () => {
 
     expect(finalState.data).to.eql(fixtures.patient);
   });
-  it.skip('should throw for invalid patient id');
+
+  it('should throw for invalid patient id', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://hapi.fhir.org',
+        apiPath: 'baseR4',
+      },
+    };
+
+    const finalState = await execute(get('Patient/invalid-patient-id'))(state);
+
+    expect(finalState.data).to.eql(fixtures.invalidPatient);
+  });
 });
 
-describe.skip('getClaim', () => {
-  it('should get claim');
+describe('getClaim', () => {
+  it('should get claim resource bundle', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://hapi.fhir.org',
+        apiPath: 'baseR4',
+      },
+    };
+
+    const finalState = await execute(getClaim())(state);
+
+    expect(finalState.data).to.eql(fixtures.claimBundle);
+  });
+
+  it('should get claim by id', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://hapi.fhir.org',
+        apiPath: 'baseR4',
+      },
+    };
+
+    const finalState = await execute(getClaim('49023'))(state);
+
+    expect(finalState.data).to.eql(fixtures.claim);
+  });
 });

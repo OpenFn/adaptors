@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"/endpoint\", {\"foo\": \"bar\"})"
+            "description": "create(\"Bundle\", {...state.data: type: \"collection\"})"
           },
           {
             "title": "function",
@@ -188,6 +188,7 @@
     {
       "name": "getClaim",
       "params": [
+        "claimId",
         "query",
         "callback"
       ],
@@ -207,6 +208,15 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "param",
+            "description": "(optional) claim id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "claimId"
           },
           {
             "title": "param",
