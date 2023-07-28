@@ -1,5 +1,11 @@
 # @openfn/language-fhir
 
+## 3.1.0
+
+### Minor Changes
+
+- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
+
 ## 3.0.1
 
 ### Patch Changes
