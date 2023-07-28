@@ -340,21 +340,118 @@ const fixtures = {
       },
     ],
   },
-  noAccessResponse: {
-    resourceType: 'OperationOutcome',
-    text: {
-      status: 'generated',
-      div: '<div xmlns="http://www.w3.org/1999/xhtml"><h1>Operation Outcome</h1><table border="0"><tr><td style="font-weight: bold;">ERROR</td><td>[]</td><td>HAPI-0302: Unknown resource type \'noAccess\' - Server knows how to handle: [Account, ActivityDefinition, AdverseEvent, AllergyIntolerance, Appointment, AppointmentResponse, AuditEvent, Basic, Binary, BiologicallyDerivedProduct, BodyStructure, Bundle, CapabilityStatement, CarePlan, CareTeam, CatalogEntry, ChargeItem, ChargeItemDefinition, Claim, ClaimResponse, ClinicalImpression, CodeSystem, Communication, CommunicationRequest, CompartmentDefinition, Composition, ConceptMap, Condition, Consent, Contract, Coverage, CoverageEligibilityRequest, CoverageEligibilityResponse, DetectedIssue, Device, DeviceDefinition, DeviceMetric, DeviceRequest, DeviceUseStatement, DiagnosticReport, DocumentManifest, DocumentReference, EffectEvidenceSynthesis, Encounter, Endpoint, EnrollmentRequest, EnrollmentResponse, EpisodeOfCare, EventDefinition, Evidence, EvidenceVariable, ExampleScenario, ExplanationOfBenefit, FamilyMemberHistory, Flag, Goal, GraphDefinition, Group, GuidanceResponse, HealthcareService, ImagingStudy, Immunization, ImmunizationEvaluation, ImmunizationRecommendation, ImplementationGuide, InsurancePlan, Invoice, Library, Linkage, ListResource, Location, Measure, MeasureReport, Media, Medication, MedicationAdministration, MedicationDispense, MedicationKnowledge, MedicationRequest, MedicationStatement, MedicinalProduct, MedicinalProductAuthorization, MedicinalProductContraindication, MedicinalProductIndication, MedicinalProductIngredient, MedicinalProductInteraction, MedicinalProductManufactured, MedicinalProductPackaged, MedicinalProductPharmaceutical, MedicinalProductUndesirableEffect, MessageDefinition, MessageHeader, MolecularSequence, NamingSystem, NutritionOrder, Observation, ObservationDefinition, OperationDefinition, OperationOutcome, Organization, OrganizationAffiliation, Parameters, Patient, PaymentNotice, PaymentReconciliation, Person, PlanDefinition, Practitioner, PractitionerRole, Procedure, Provenance, Questionnaire, QuestionnaireResponse, RelatedPerson, RequestGroup, ResearchDefinition, ResearchElementDefinition, ResearchStudy, ResearchSubject, RiskAssessment, RiskEvidenceSynthesis, Schedule, SearchParameter, ServiceRequest, Slot, Specimen, SpecimenDefinition, StructureDefinition, StructureMap, Subscription, Substance, SubstanceNucleicAcid, SubstancePolymer, SubstanceProtein, SubstanceReferenceInformation, SubstanceSourceMaterial, SubstanceSpecification, SupplyDelivery, SupplyRequest, Task, TerminologyCapabilities, TestReport, TestScript, ValueSet, VerificationResult, VisionPrescription]</td></tr></table></div>',
-    },
-    issue: [
+  patientTransactionBundle: {
+    resourceType: 'Bundle',
+    type: 'transaction',
+    entry: [
       {
-        severity: 'error',
-        code: 'processing',
-        diagnostics:
-          "HAPI-0302: Unknown resource type 'noAccess' - Server knows how to handle: [Account, ActivityDefinition, AdverseEvent, AllergyIntolerance, Appointment, AppointmentResponse, AuditEvent, Basic, Binary, BiologicallyDerivedProduct, BodyStructure, Bundle, CapabilityStatement, CarePlan, CareTeam, CatalogEntry, ChargeItem, ChargeItemDefinition, Claim, ClaimResponse, ClinicalImpression, CodeSystem, Communication, CommunicationRequest, CompartmentDefinition, Composition, ConceptMap, Condition, Consent, Contract, Coverage, CoverageEligibilityRequest, CoverageEligibilityResponse, DetectedIssue, Device, DeviceDefinition, DeviceMetric, DeviceRequest, DeviceUseStatement, DiagnosticReport, DocumentManifest, DocumentReference, EffectEvidenceSynthesis, Encounter, Endpoint, EnrollmentRequest, EnrollmentResponse, EpisodeOfCare, EventDefinition, Evidence, EvidenceVariable, ExampleScenario, ExplanationOfBenefit, FamilyMemberHistory, Flag, Goal, GraphDefinition, Group, GuidanceResponse, HealthcareService, ImagingStudy, Immunization, ImmunizationEvaluation, ImmunizationRecommendation, ImplementationGuide, InsurancePlan, Invoice, Library, Linkage, ListResource, Location, Measure, MeasureReport, Media, Medication, MedicationAdministration, MedicationDispense, MedicationKnowledge, MedicationRequest, MedicationStatement, MedicinalProduct, MedicinalProductAuthorization, MedicinalProductContraindication, MedicinalProductIndication, MedicinalProductIngredient, MedicinalProductInteraction, MedicinalProductManufactured, MedicinalProductPackaged, MedicinalProductPharmaceutical, MedicinalProductUndesirableEffect, MessageDefinition, MessageHeader, MolecularSequence, NamingSystem, NutritionOrder, Observation, ObservationDefinition, OperationDefinition, OperationOutcome, Organization, OrganizationAffiliation, Parameters, Patient, PaymentNotice, PaymentReconciliation, Person, PlanDefinition, Practitioner, PractitionerRole, Procedure, Provenance, Questionnaire, QuestionnaireResponse, RelatedPerson, RequestGroup, ResearchDefinition, ResearchElementDefinition, ResearchStudy, ResearchSubject, RiskAssessment, RiskEvidenceSynthesis, Schedule, SearchParameter, ServiceRequest, Slot, Specimen, SpecimenDefinition, StructureDefinition, StructureMap, Subscription, Substance, SubstanceNucleicAcid, SubstancePolymer, SubstanceProtein, SubstanceReferenceInformation, SubstanceSourceMaterial, SubstanceSpecification, SupplyDelivery, SupplyRequest, Task, TerminologyCapabilities, TestReport, TestScript, ValueSet, VerificationResult, VisionPrescription]",
+        fullUrl: 'https://hapi.fhir.org/baseR4/Patient/592442',
+        resource: {
+          resourceType: 'Patient',
+          id: '592442',
+          name: [{ given: 'Caleb', family: 'Cushing' }],
+        },
+        request: {
+          method: 'POST',
+          url: 'Patient',
+        },
+      },
+      {
+        fullUrl: 'https://hapi.fhir.org/baseR4/Observation/2435947',
+        resource: {
+          resourceType: 'Observation',
+          status: 'final',
+          code: { text: 'Tobacco smoking status NHIS' },
+          subject: { reference: 'Patient/592442' },
+        },
+        request: {
+          method: 'POST',
+          url: 'Observation',
+        },
       },
     ],
   },
+  patientTransactionBundleResponse: {
+    resourceType: 'Bundle',
+    id: '113c6bdf-949b-4b82-9f30-05d936b47848',
+    type: 'transaction-response',
+    link: [
+      {
+        relation: 'self',
+        url: 'https://hapi.fhir.org/baseR4',
+      },
+    ],
+    entry: [
+      {
+        response: {
+          status: '201 Created',
+          location: 'Patient/10990981/_history/1',
+          etag: '1',
+          lastModified: '2023-07-28T09:43:14.921+00:00',
+          outcome: {
+            resourceType: 'OperationOutcome',
+            text: {
+              status: 'generated',
+              div: '<div xmlns="http://www.w3.org/1999/xhtml"><h1>Operation Outcome</h1><table border="0"><tr><td style="font-weight: bold;">INFORMATION</td><td>[]</td><td>Successfully created resource &quot;Patient/10990981/_history/1&quot;. Took 29ms.</td></tr></table></div>',
+            },
+            issue: [
+              {
+                severity: 'information',
+                code: 'informational',
+                details: {
+                  coding: [
+                    {
+                      system:
+                        'https://hapifhir.io/fhir/CodeSystem/hapi-fhir-storage-response-code',
+                      code: 'SUCCESSFUL_CREATE',
+                      display: 'Create succeeded.',
+                    },
+                  ],
+                },
+                diagnostics:
+                  'Successfully created resource "Patient/10990981/_history/1". Took 29ms.',
+              },
+            ],
+          },
+        },
+      },
+      {
+        response: {
+          status: '201 Created',
+          location: 'Observation/10990982/_history/1',
+          etag: '1',
+          lastModified: '2023-07-28T09:43:14.921+00:00',
+          outcome: {
+            resourceType: 'OperationOutcome',
+            text: {
+              status: 'generated',
+              div: '<div xmlns="http://www.w3.org/1999/xhtml"><h1>Operation Outcome</h1><table border="0"><tr><td style="font-weight: bold;">INFORMATION</td><td>[]</td><td>Successfully created resource &quot;Observation/10990982/_history/1&quot;. Took 5ms.</td></tr></table></div>',
+            },
+            issue: [
+              {
+                severity: 'information',
+                code: 'informational',
+                details: {
+                  coding: [
+                    {
+                      system:
+                        'https://hapifhir.io/fhir/CodeSystem/hapi-fhir-storage-response-code',
+                      code: 'SUCCESSFUL_CREATE',
+                      display: 'Create succeeded.',
+                    },
+                  ],
+                },
+                diagnostics:
+                  'Successfully created resource "Observation/10990982/_history/1". Took 5ms.',
+              },
+            ],
+          },
+        },
+      },
+    ],
+  },
+  noAccessResponse:
+    'Message: Not Found\n  ∟ Request: POST https://hapi.fhir.org/baseR4/noAccess\n  ∟ Status: 404\n',
 };
 
 export { fixtures };

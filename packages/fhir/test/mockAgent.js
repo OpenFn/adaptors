@@ -13,6 +13,16 @@ const jsonResponse = {
 
 mockPool
   .intercept({
+    path: '/baseR4/noAccess',
+    method: 'POST',
+    headers: {
+      'content-type': 'application/fhir+json',
+    },
+  })
+  .reply(404, fixtures.noAccessResponse);
+
+mockPool
+  .intercept({
     path: '/baseR4/Patient',
     method: 'GET',
     headers: {
@@ -77,5 +87,12 @@ mockPool
     method: 'POST',
   })
   .reply(200, fixtures.patientBundleCreateResponse, jsonResponse);
+
+mockPool
+  .intercept({
+    path: '/baseR4',
+    method: 'POST',
+  })
+  .reply(200, fixtures.patientTransactionBundleResponse, jsonResponse);
 
 export default mockAgent;

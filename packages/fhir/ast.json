@@ -79,7 +79,7 @@
           },
           {
             "title": "example",
-            "description": "createTransactionBundle( {\"entry\": [{...},, {...}]})"
+            "description": "createTransactionBundle({\n  resourceType: \"Bundle\",\n  type: \"transaction\",\n  entry: [\n    {\n      fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n      resource: {\n        resourceType: \"Patient\",\n        id: \"592442\",\n        name: [{ given: \"Caleb\", family: \"Cushing\" }],\n      },\n      request: {\n        method: \"POST\",\n        url: \"Patient\",\n      },\n    },\n  ],\n});"
           },
           {
             "title": "function",

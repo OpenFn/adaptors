@@ -1,5 +1,11 @@
 import { expect } from 'chai';
-import { execute, create, get, getClaim } from '../src/Adaptor.js';
+import {
+  execute,
+  create,
+  get,
+  getClaim,
+  createTransactionBundle,
+} from '../src/Adaptor.js';
 import { fixtures } from './ClientFixtures';
 
 import MockAgent from './mockAgent.js';
@@ -64,34 +70,33 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(create('noAccess', { name: 'taylor' }))(
+    let e;
+    const finalState = await execute(create('noAccess', { name: 'taylor' }))(
       state
-    ).catch(error => {
-      return error;
+    ).catch(err => {
+      e = err;
     });
 
-    expect(error.message).contain('Not Found');
+    expect(e.message).to.contain('Message: Not Found');
+    expect(finalState).to.eql(undefined);
   });
 });
 
 describe('createTransactionBundle', () => {
-  it.skip('should create a Bundle in FHIR store', async () => {
+  it('should create a Bundle in FHIR store', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://hapi.fhir.org',
         apiPath: 'baseR4',
       },
-      data: fixtures.patientBundle,
+      data: fixtures.patientTransactionBundle,
     };
 
     const finalState = await execute(
-      createTransactionBundle('Bundle', state => ({
-        ...state.data,
-        type: 'collection',
-      }))
+      createTransactionBundle(state => state.data)
     )(state);
 
-    expect(finalState.data).to.eql(fixtures.patientBundleCreateResponse);
+    expect(finalState.data).to.eql(fixtures.patientTransactionBundleResponse);
   });
 });
 
