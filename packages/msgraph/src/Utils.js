@@ -75,7 +75,7 @@ export function handleResponseError(response, data, method) {
  * the response, the function will throw an error.
  */
 export const request = async (urlString, params = {}, method = 'GET') => {
-  let url;
+  let url = urlString;
   const defaultHeaders = { 'Content-Type': 'application/json' };
   const { headers } = params;
   const setHeaders = { ...headers, ...defaultHeaders };
