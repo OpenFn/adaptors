@@ -2,4 +2,4 @@
 '@openfn/language-fhir': minor
 ---
 
-Migrate from axios and add tests
+Migrate from axios to using `fetch` from `undici` and add uniti tests
