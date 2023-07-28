@@ -1,5 +1,11 @@
 # @openfn/language-msgraph
 
+## 0.3.2
+
+### Patch Changes
+
+- 9cc4952: fix url in request util
+
 ## 0.3.1
 
 ### Patch Changes
