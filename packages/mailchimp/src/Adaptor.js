@@ -1,13 +1,10 @@
-
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-} from '@openfn/language-common';
+import md5 from 'md5';
 import axios from 'axios';
 import client from '@mailchimp/mailchimp_marketing';
-import md5 from 'md5';
-import { resolve } from 'path';
+import { expandReferences } from '@openfn/language-common/util';
+import { execute as commonExecute } from '@openfn/language-common';
+
+import { handleResponse } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -28,13 +25,28 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({
+    return commonExecute(
+      createClient,
+      ...operations,
+      cleanupState
+    )({
       ...initialState,
       ...state,
     });
   };
 }
 
+function createClient(state) {
+  const { apiKey, server } = state.configuration;
+  // TODO: throws an error if apiKey not specified in configuration
+  client.setConfig({ apiKey, server });
+  return { ...state, client: client };
+}
+
+function cleanupState(state) {
+  delete state.client;
+  return state;
+}
 /**
  * Add members to a particular audience
  * @example
@@ -45,14 +57,15 @@ export function execute(...operations) {
  */
 export function upsertMembers(params) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { listId, users, options } = expandReferences(params)(state);
+    // const { apiKey, server } = state.configuration;
+    const [resolvedParams] = expandReferences(state, params);
+    const { listId, users, options } = resolvedParams;
 
-    client.setConfig({ apiKey, server });
+    // client.setConfig({ apiKey, server });
 
     return Promise.all(
       users.map(user =>
-        client.lists
+        state.client.lists
           .setListMember(listId, md5(user.email), {
             email_address: user.email,
             status_if_new: user.status,
@@ -76,19 +89,16 @@ export function upsertMembers(params) {
  * @param {object} params - a tagId, members, and a list
  * @returns {Operation}
  */
-export function tagMembers(params) {
+export function tagMembers(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { listId, tagId, members } = expandReferences(params)(state);
+    // const { apiKey, server } = state.configuration;
+    const [resolvedParams] = expandReferences(state, params);
+    const { listId, tagId, members } = resolvedParams;
+    // client.setConfig({ apiKey, server });
 
-    client.setConfig({ apiKey, server });
-
-    return client.lists
+    return state.client.lists
       .batchSegmentMembers({ members_to_add: members }, listId, tagId)
-      .then(response => {
-        const nextState = composeNextState(state, response);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
@@ -100,34 +110,28 @@ export function tagMembers(params) {
  * @param {object} params - operations batch job
  * @returns {Operation}
  */
-export function startBatch(params) {
+export function startBatch(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { operations } = expandReferences(params)(state);
+    // const { apiKey, server } = state.configuration;
+    const [resolvedParams] = expandReferences(state, params);
+    const { operations } = resolvedParams;
+    // client.setConfig({ apiKey, server });
 
-    client.setConfig({ apiKey, server });
-
-    return client.batches
+    return state.client.batches
       .start({ operations: [...operations] })
-      .then(response => {
-        console.log(response);
-        const nextState = composeNextState(state, response);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
-export function listBatches(params) {
+export function listBatches(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
+    // const { apiKey, server } = state.configuration;
+    // client.setConfig({ apiKey, server });
+    const [resolvedParams] = expandReferences(state, params);
 
-    client.setConfig({ apiKey, server });
-
-    return client.batches.list().then(response => {
-      console.log(response);
-      const nextState = composeNextState(state, response);
-      return nextState;
-    });
+    return state.client.batches
+      .list()
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
