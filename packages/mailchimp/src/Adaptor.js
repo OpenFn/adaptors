@@ -39,6 +39,7 @@ export function execute(...operations) {
 function createClient(state) {
   const { apiKey, server } = state.configuration;
   // TODO: throws an error if apiKey not specified in configuration
+  // TODO: should we set a default server if server not defined?
   client.setConfig({ apiKey, server });
   return { ...state, client: client };
 }
@@ -48,53 +49,90 @@ function cleanupState(state) {
   return state;
 }
 /**
- * Add members to a particular audience
+ * Add or update a list members
  * @example
- * upsertMembers(params)
+ * upsertMembers((state) => ({
+ *   listId: "someId",
+ *   users: state.response.body.rows.map((u) => ({
+ *     email: u.email,
+ *     status: u.allow_other_emails ? "subscribed" : "unsubscribed",
+ *     mergeFields: { FNAME: u.first_name, LNAME: u.last_name },
+ *   })),
+ * }));
  * @function
  * @param {object} params - a listId, users, and options
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function upsertMembers(params) {
+// TODO: Add jsdoc for params ={ path, query, body}
+// TODO: Add examples
+export function upsertMembers(params, callback = s => s) {
   return state => {
-    // const { apiKey, server } = state.configuration;
     const [resolvedParams] = expandReferences(state, params);
+    // TODO: Add support for options
+    // TODO: rename users to members
     const { listId, users, options } = resolvedParams;
 
-    // client.setConfig({ apiKey, server });
-
-    return Promise.all(
-      users.map(user =>
-        state.client.lists
-          .setListMember(listId, md5(user.email), {
-            email_address: user.email,
-            status_if_new: user.status,
-            merge_fields: user.mergeFields,
-          })
-          .then(response => {
-            state.references.push(response);
-          })
-      )
-    ).then(() => {
-      return state;
+    const membersList = [];
+    users.forEach(member => {
+      const memberDetails = {
+        email_address: member.email,
+        status: member.status,
+        merge_fields: member.mergeFields,
+      };
+      membersList.push(memberDetails);
     });
+
+    return state.client.lists
+      .batchListMembers(listId, {
+        members: membersList,
+        update_existing: true,
+      })
+      .then(response => handleResponse(response, state, callback));
+
+    // return Promise.all(
+    //   users.map(user =>
+    //     state.client.lists
+    //       .setListMember(listId, md5(user.email), {
+    //         email_address: user.email,
+    //         status_if_new: user.status,
+    //         merge_fields: user.mergeFields,
+    //       })
+    //       .then(response => {
+    //         state.references.push(response);
+    //       })
+    //   )
+    // ).then(() => {
+    //   return state;
+    // });
   };
 }
 
 /**
  * Tag members with a particular tag
  * @example
- * tagMembers(params)
+ * tagMembers((state) => ({
+ *   listId: "someId", // All Subscribers
+ *   tagId: "someTag", // User
+ *   members: state.response.body.rows.map((u) => u.email),
+ * }));
+ * @example
+ * tagMembers((state) => ({
+ *   listId: "someId", // All Subscribers
+ *   tagId: "someTag", // Other Emails Allowed
+ *   members: state.response.body.rows
+ *     .filter((u) => u.allow_other_emails)
+ *     .map((u) => u.email),
+ * }));
  * @function
  * @param {object} params - a tagId, members, and a list
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
 export function tagMembers(params, callback = s => s) {
   return state => {
-    // const { apiKey, server } = state.configuration;
     const [resolvedParams] = expandReferences(state, params);
     const { listId, tagId, members } = resolvedParams;
-    // client.setConfig({ apiKey, server });
 
     return state.client.lists
       .batchSegmentMembers({ members_to_add: members }, listId, tagId)
@@ -108,6 +146,7 @@ export function tagMembers(params, callback = s => s) {
  * startBatch(params)
  * @function
  * @param {object} params - operations batch job
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
 export function startBatch(params, callback = s => s) {
@@ -123,6 +162,13 @@ export function startBatch(params, callback = s => s) {
   };
 }
 
+/**
+ * listBatches
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
 export function listBatches(params, callback = s => s) {
   return state => {
     // const { apiKey, server } = state.configuration;
@@ -131,6 +177,96 @@ export function listBatches(params, callback = s => s) {
 
     return state.client.batches
       .list()
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * listMembers
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listMembers(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId } = resolvedParams;
+    return state.client.getListMembersInfo
+      .list(listId)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * addMember to a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function addMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, member } = resolvedParams;
+    return state.client.addListMember
+      .list(listId, ...member)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * updateMemberTags
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function updateMemberTags(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash, tags } = resolvedParams;
+    return state.client.updateListMemberTags
+      .list(listId, subscriberHash, { tags: tags })
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * archiveMember in a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function archiveMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash } = resolvedParams;
+    return state.client.deleteListMember
+      .list(listId, subscriberHash)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Permanently delete a member from a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function deleteMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash } = resolvedParams;
+    return state.client.deleteListMemberPermanent
+      .list(listId, subscriberHash)
       .then(response => handleResponse(response, state, callback));
   };
 }
