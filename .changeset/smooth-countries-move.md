@@ -8,6 +8,6 @@ Add new functions
 - listMembers()
 - deleteMember()
 - listAudiences()
-- archiveMembers()
+- archiveMember()
 - updateMemberTags()
 - listAudienceInfo()
