@@ -78,16 +78,12 @@ export function upsertMembers(params, callback = s => s) {
     const { listId, users, options } = resolvedParams;
     const opts = { ...defaultOptions, ...options };
 
-    const membersList = [];
-    users.forEach(member => {
-      const memberDetails = {
-        email_address: member.email,
-        status: member.status,
-        merge_fields: member.mergeFields,
-        tags: member.tags,
-      };
-      membersList.push(memberDetails);
-    });
+    const membersList = users.map(member => ({
+      email_address: member.email,
+      status: member.status,
+      merge_fields: member.mergeFields,
+      tags: member.tags,
+    }));
 
     return state.client.lists
       .batchListMembers(listId, {
@@ -102,14 +98,14 @@ export function upsertMembers(params, callback = s => s) {
  * Tag members with a particular tag
  * @example
  * tagMembers((state) => ({
- *   listId: "someId", // All Subscribers
- *   tagId: "someTag", // User
+ *   listId: "someId", // All Subscribers list
+ *   tagId: "someTag", // User tag
  *   members: state.response.body.rows.map((u) => u.email),
  * }));
  * @example
  * tagMembers((state) => ({
- *   listId: "someId", // All Subscribers
- *   tagId: "someTag", // Other Emails Allowed
+ *   listId: "someId",
+ *   tagId: "someTag",
  *   members: state.response.body.rows
  *     .filter((u) => u.allow_other_emails)
  *     .map((u) => u.email),
@@ -141,10 +137,8 @@ export function tagMembers(params, callback = s => s) {
  */
 export function startBatch(params, callback = s => s) {
   return state => {
-    // const { apiKey, server } = state.configuration;
     const [resolvedParams] = expandReferences(state, params);
     const { operations } = resolvedParams;
-    // client.setConfig({ apiKey, server });
 
     return state.client.batches
       .start({ operations: [...operations] })
@@ -161,12 +155,10 @@ export function startBatch(params, callback = s => s) {
  */
 export function listBatches(params, callback = s => s) {
   return state => {
-    // const { apiKey, server } = state.configuration;
-    // client.setConfig({ apiKey, server });
     const [resolvedParams] = expandReferences(state, params);
 
     return state.client.batches
-      .list()
+      .list(resolvedParams)
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -190,42 +182,6 @@ export function listMembers(params, callback = s => s) {
 }
 
 /**
- * Get information about all avaliable segments for a specific list
- * @function
- * @param {object} params - a listId, and options
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function listSegments(params, callback = s => s) {
-  return state => {
-    const [resolvedParams] = expandReferences(state, params);
-
-    const { listId, ...otherParams } = resolvedParams;
-    return state.client.lists
-      .listSegments(listId, otherParams)
-      .then(response => handleResponse(response, state, callback));
-  };
-}
-
-/**
- * Get information about members in saved segment.
- * @function
- * @param {object} params - a listId,segmentId and options
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function getSegmentMembers(params, callback = s => s) {
-  return state => {
-    const [resolvedParams] = expandReferences(state, params);
-
-    const { listId, segmentId, ...otherParams } = resolvedParams;
-    return state.client.lists
-      .getSegmentMembersList(listId, segmentId, otherParams)
-      .then(response => handleResponse(response, state, callback));
-  };
-}
-
-/**
  * addMember to a list
  * @function
  * @param {object} params - a listId, and options
@@ -239,6 +195,30 @@ export function addMember(params, callback = s => s) {
     const { listId, member } = resolvedParams;
     return state.client.lists
       .addListMember(listId, ...member)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * updateMember
+ * @function
+ * @param {object} params - a listId,subscriberHash and member
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function updateMember(
+  params = { listId, subscriberHash, member },
+  callback = s => s
+) {
+  return state => {
+    const requiredParams = ['listId', 'subscriberHash'];
+    const [resolvedParams] = expandReferences(state, params);
+    assertKeys(resolvedParams, requiredParams);
+
+    const { listId, subscriberHash, member } = resolvedParams;
+
+    return state.client.lists
+      .updateListMember(listId, subscriberHash, member)
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -304,7 +284,7 @@ export function deleteMember(params, callback = s => s) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getAllLists(query, callback = s => s) {
+export function listAudiences(query, callback = s => s) {
   return state => {
     const [resolvedQuery] = expandReferences(state, query);
 
@@ -315,19 +295,19 @@ export function getAllLists(query, callback = s => s) {
 }
 
 /**
- * Search for tags on a list by name
+ * Get information about a specific list in your Mailchimp account.
+ * Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
  * @function
- * @param {object} query - Query parameters
+ * @param {object} query - listId and query parameters
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchTag(query, callback = s => s) {
+export function listAudienceInfo(query, callback = s => s) {
   return state => {
     const [resolvedQuery] = expandReferences(state, query);
-    const { listId, name } = resolvedQuery;
-
+    const { listId, ...queries } = resolvedQuery;
     return state.client.lists
-      .tagSearch(listId, { name: name })
+      .getList(listId, queries)
       .then(response => handleResponse(response, state, callback));
   };
 }
