@@ -4,12 +4,10 @@
 
 Add new functions
 
-- listMembers()
-- listSegments()
-- getSegmentMembers()
 - addMember()
-- updateMemberTags()
-- archiveMembers()
+- listMembers()
 - deleteMember()
-- getAllList()
-- searchTag()
+- listAudiences()
+- archiveMembers()
+- updateMemberTags()
+- listAudienceInfo()
