@@ -1,5 +1,19 @@
 # @openfn/language-mailchimp
 
+## 0.5.0
+
+### Minor Changes
+
+- 8e39ee1: Add new functions
+
+  - addMember()
+  - listMembers()
+  - deleteMember()
+  - listAudiences()
+  - archiveMember()
+  - updateMemberTags()
+  - listAudienceInfo()
+
 ## 0.4.1
 
 ### Patch Changes
