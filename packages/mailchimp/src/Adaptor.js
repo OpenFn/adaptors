@@ -71,7 +71,12 @@ export function upsertMembers(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
     // TODO: Add support for options
     // TODO: rename users to members
+    const defaultOptions = {
+      update_existing: true,
+      sync_tags: false,
+    };
     const { listId, users, options } = resolvedParams;
+    const opts = { ...defaultOptions, ...options };
 
     const membersList = [];
     users.forEach(member => {
@@ -79,32 +84,17 @@ export function upsertMembers(params, callback = s => s) {
         email_address: member.email,
         status: member.status,
         merge_fields: member.mergeFields,
+        tags: member.tags,
       };
       membersList.push(memberDetails);
     });
 
     return state.client.lists
       .batchListMembers(listId, {
+        ...opts,
         members: membersList,
-        update_existing: true,
       })
       .then(response => handleResponse(response, state, callback));
-
-    // return Promise.all(
-    //   users.map(user =>
-    //     state.client.lists
-    //       .setListMember(listId, md5(user.email), {
-    //         email_address: user.email,
-    //         status_if_new: user.status,
-    //         merge_fields: user.mergeFields,
-    //       })
-    //       .then(response => {
-    //         state.references.push(response);
-    //       })
-    //   )
-    // ).then(() => {
-    //   return state;
-    // });
   };
 }
 
@@ -192,9 +182,45 @@ export function listMembers(params, callback = s => s) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
 
-    const { listId } = resolvedParams;
-    return state.client.getListMembersInfo
-      .list(listId)
+    const { listId, ...otherParams } = resolvedParams;
+    return state.client.lists
+      .getListMembersInfo(listId, otherParams)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Get information about all avaliable segments for a specific list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listSegments(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, ...otherParams } = resolvedParams;
+    return state.client.lists
+      .listSegments(listId, otherParams)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Get information about members in saved segment.
+ * @function
+ * @param {object} params - a listId,segmentId and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function getSegmentMembers(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, segmentId, ...otherParams } = resolvedParams;
+    return state.client.lists
+      .getSegmentMembersList(listId, segmentId, otherParams)
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -211,8 +237,8 @@ export function addMember(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
 
     const { listId, member } = resolvedParams;
-    return state.client.addListMember
-      .list(listId, ...member)
+    return state.client.lists
+      .addListMember(listId, ...member)
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -229,8 +255,8 @@ export function updateMemberTags(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
 
     const { listId, subscriberHash, tags } = resolvedParams;
-    return state.client.updateListMemberTags
-      .list(listId, subscriberHash, { tags: tags })
+    return state.client.lists
+      .updateListMemberTags(listId, subscriberHash, { tags: tags })
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -247,8 +273,8 @@ export function archiveMember(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
 
     const { listId, subscriberHash } = resolvedParams;
-    return state.client.deleteListMember
-      .list(listId, subscriberHash)
+    return state.client.lists
+      .deleteListMember(listId, subscriberHash)
       .then(response => handleResponse(response, state, callback));
   };
 }
@@ -265,8 +291,43 @@ export function deleteMember(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
 
     const { listId, subscriberHash } = resolvedParams;
-    return state.client.deleteListMemberPermanent
-      .list(listId, subscriberHash)
+    return state.client.lists
+      .deleteListMemberPermanent(listId, subscriberHash)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Get information about all lists in the account.
+ * @function
+ * @param {object} query - Query parameters
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function getAllLists(query, callback = s => s) {
+  return state => {
+    const [resolvedQuery] = expandReferences(state, query);
+
+    return state.client.lists
+      .getAllLists(resolvedQuery)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Search for tags on a list by name
+ * @function
+ * @param {object} query - Query parameters
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function searchTag(query, callback = s => s) {
+  return state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    const { listId, name } = resolvedQuery;
+
+    return state.client.lists
+      .tagSearch(listId, { name: name })
       .then(response => handleResponse(response, state, callback));
   };
 }
