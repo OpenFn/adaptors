@@ -9,7 +9,12 @@ const { execute, post } = Adaptor;
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    let state = {};
+    let state = {
+      configuration: {
+        apiKey: 'somEThINGkeyish',
+        server: 'https://mailchimp.com/api',
+      },
+    };
     let operations = [
       state => {
         return { counter: 1 };
@@ -31,12 +36,17 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    let state = {};
+    let state = {
+      configuration: {
+        apiKey: 'somEThINGkeyish',
+        server: 'https://mailchimp.com/api',
+      },
+    };
 
     let finalState = execute()(state);
 
     execute()(state).then(finalState => {
-      expect(finalState).to.eql({ references: [], data: null });
+      expect(finalState).to.eql({ ...state, references: [], data: null });
     });
   });
 });
