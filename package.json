@@ -25,5 +25,10 @@
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "eslint": "8.26.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "optionator": "0.9.3"
+    }
   }
 }
