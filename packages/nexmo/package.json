@@ -20,9 +20,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.1",
-    "nexmo": "2.1.1",
-    "request": "^2.88.2"
+    "@openfn/language-common": "workspace:^",
+    "nexmo": "2.9.1"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",
@@ -33,7 +32,6 @@
     "esdoc-es7-plugin": "0.0.3",
     "esno": "^0.16.3",
     "mocha": "^10.1.0",
-    "nock": "^13.2.9",
     "rimraf": "^3.0.2"
   },
   "repository": {
