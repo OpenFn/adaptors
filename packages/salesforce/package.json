@@ -32,11 +32,11 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.10.2",
+    "JSONPath": "^0.10.0",
     "axios": "^0.21.1",
     "jsforce": "^1.11.0",
     "lodash": "^4.17.21",
-    "mustache": "^2.2.0",
-    "yargs": "^3.30.0"
+    "mustache": "^2.2.0"
   },
   "devDependencies": {
     "assertion-error": "1.1.0",
