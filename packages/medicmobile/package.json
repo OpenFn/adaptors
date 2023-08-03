@@ -22,7 +22,7 @@
   "dependencies": {
     "@openfn/language-common": "^1.8.1",
     "lodash": "^4.17.21",
-    "query-string": "^5.1.1",
+    "query-string": "^8.1.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
@@ -48,8 +48,5 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "types/index.d.ts",
-  "overrides": {
-    "decode-uri-component": "0.2.1"
-  }
+  "types": "types/index.d.ts"
 }
