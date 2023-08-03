@@ -48,5 +48,8 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "types/index.d.ts"
+  "types": "types/index.d.ts",
+  "overrides": {
+    "optionator": "0.9.3"
+  }
 }
