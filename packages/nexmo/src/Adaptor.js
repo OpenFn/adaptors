@@ -1,9 +1,10 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
-import Nexmo from 'nexmo';
+import { expandReferences } from '@openfn/language-common/util';
+import { Auth } from '@vonage/auth';
+import { Vonage } from '@vonage/server-sdk';
 
 /**
  * Execute a sequence of operations.
@@ -24,13 +25,36 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({
+    return commonExecute(
+      createClient,
+      ...operations,
+      cleanupState
+    )({
       ...initialState,
       ...state,
     });
   };
 }
 
+function createClient(state) {
+  const { apiKey, apiSecret } = state.configuration;
+  // TODO: throws an error if apiKey not specified in configuration
+  // TODO: should we set a default server if server not defined?
+  const options = {};
+  const credentials = new Auth({
+    apiKey: apiKey,
+    apiSecret: apiSecret,
+  });
+
+  const vonage = new Vonage(credentials, options);
+
+  return { ...state, client: vonage };
+}
+
+function cleanupState(state) {
+  delete state.client;
+  return state;
+}
 /**
  * Sends an SMS message to a specific phone number
  * @public
@@ -44,31 +68,24 @@ export function execute(...operations) {
  */
 export function sendSMS(from, toNumber, message) {
   return state => {
-    const { apiKey, apiSecret } = state.configuration;
+    const [resolvedFrom, resolvedToNumber, resolvedMessage] = expandReferences(
+      state,
+      from,
+      toNumber,
+      message
+    );
 
-    const nexmo = new Nexmo({
-      apiKey: apiKey,
-      apiSecret: apiSecret,
-    });
-
-    return new Promise((resolve, reject) => {
-      nexmo.message.sendSms(from, toNumber, message, (error, response) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else if (response.messages[0].status != '0') {
-          console.error('Nexmo Error:');
-          console.error(response);
-          reject(response);
-        } else {
-          console.log(response);
-          resolve(response);
-        }
+    return state.client.sms
+      .send({ resolvedToNumber, resolvedFrom, resolvedMessage })
+      .then(resp => {
+        console.log('Message sent successfully');
+        const nextState = composeNextState(state, resp);
+        return nextState;
+      })
+      .catch(err => {
+        console.log('There was an error sending the messages.');
+        console.error(err);
       });
-    }).then(response => {
-      const nextState = composeNextState(state, response);
-      return nextState;
-    });
   };
 }
 
