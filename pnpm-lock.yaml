@@ -233,7 +233,7 @@ importers:
         version: 8.0.9
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz
-        version: 0.18.5
+        version: '@cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz'
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1157,14 +1157,11 @@ importers:
   packages/nexmo:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^
         version: link:../common
       nexmo:
-        specifier: 2.1.1
-        version: 2.1.1
-      request:
-        specifier: ^2.88.2
-        version: 2.88.2
+        specifier: 2.9.1
+        version: 2.9.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1190,9 +1187,6 @@ importers:
       mocha:
         specifier: ^10.1.0
         version: 10.1.0
-      nock:
-        specifier: ^13.2.9
-        version: 13.2.9
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -3491,11 +3485,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  /adler-32@1.3.1:
-    resolution: {integrity: sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==}
-    engines: {node: '>=0.8'}
-    dev: false
-
   /agent-base@4.2.1:
     resolution: {integrity: sha512-JVwXMr9nHYTUXsBFKUqhJwvlcYU/blreOEUkhNR2eXZIvwd+c+o5V4MgDPKWnMS/56awN3TRzIP+KoPn+roQtg==}
     engines: {node: '>= 4.0.0'}
@@ -5024,14 +5013,6 @@ packages:
       nofilter: 3.1.0
     dev: false
 
-  /cfb@1.2.2:
-    resolution: {integrity: sha512-KfdUZsSOw19/ObEWasvBP/Ac4reZvAGauZhs6S/gqNhXhI7cKwvlH7ulj+dOEYnca4bm4SGo8C1bTAQvnTjgQA==}
-    engines: {node: '>=0.8'}
-    dependencies:
-      adler-32: 1.3.1
-      crc-32: 1.2.2
-    dev: false
-
   /chai-http@4.3.0:
     resolution: {integrity: sha512-zFTxlN7HLMv+7+SPXZdkd5wUlK+KxH6Q7bIEMiEx0FK3zuuMqL7cwICAQ0V1+yYRozBburYuxN1qZstgHpFZQg==}
     engines: {node: '>=4'}
@@ -5322,11 +5303,6 @@ packages:
     resolution: {integrity: sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==}
     engines: {node: '>=0.10.0'}
 
-  /codepage@1.15.0:
-    resolution: {integrity: sha512-3g6NUTPd/YtuuGrhMnOMRjFc+LJw/bnMp3+0r/Wcz3IXUuCosKRJvMphm5+Q+bvTVGcJJuRvVLuYba+WojaFaA==}
-    engines: {node: '>=0.8'}
-    dev: false
-
   /coffee-script@1.12.7:
     resolution: {integrity: sha512-fLeEhqwymYat/MpTPUjSKHVYYl0ec2mOyALEMLmzr5i1isuG+6jfI2j2d5oBO3VIzgUXgBVIcOT9uH1TFxBckw==}
     engines: {node: '>=0.8.0'}
@@ -5540,12 +5516,6 @@ packages:
       nan: 2.17.0
     dev: false
     optional: true
-
-  /crc-32@1.2.2:
-    resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
-    engines: {node: '>=0.8'}
-    hasBin: true
-    dev: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -7201,11 +7171,6 @@ packages:
       once: 1.4.0
       qs: 6.11.2
 
-  /frac@1.1.2:
-    resolution: {integrity: sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==}
-    engines: {node: '>=0.8'}
-    dev: false
-
   /fragment-cache@0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
     engines: {node: '>=0.10.0'}
@@ -7747,12 +7712,6 @@ packages:
   /hexoid@1.0.0:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
     engines: {node: '>=8'}
-
-  /hoek@2.16.3:
-    resolution: {integrity: sha512-V6Yw1rIcYV/4JsnggjBU0l4Kr+EXhpwqXRusENU1Xx6ro00IHPHYNynCuBTOZAPlr3AAmLvchH9I7N/VUdvOwQ==}
-    engines: {node: '>=0.10.40'}
-    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
-    dev: false
 
   /home-or-tmp@2.0.0:
     resolution: {integrity: sha512-ycURW7oUxE2sNiPVw1HVEFsW+ecOpJ5zaj7eC0RlwhibhRBod20muUN8qu/gzx956YrLolVvs1MTXwKgC2rVEg==}
@@ -8425,11 +8384,6 @@ packages:
     resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
     dev: true
 
-  /isemail@1.2.0:
-    resolution: {integrity: sha512-pZMb1rDrWRAPtVY92VCxWtF+1gExWrCnao+GL1EKHx6z19ovW+xNcnC1iNB7WkbSYWlyl3uwlaH5eaBx2s2crw==}
-    engines: {node: '>=0.10'}
-    dev: false
-
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
@@ -8451,17 +8405,6 @@ packages:
 
   /isstream@0.1.2:
     resolution: {integrity: sha512-Yljz7ffyPbrLpLngrMtZ7NduUgVvi6wG9RJ9IUcyCd59YQ911PBJphODUcbOVbqYfxe1wuYf/LJ8PauMRwsM/g==}
-    dev: false
-
-  /joi@6.10.1:
-    resolution: {integrity: sha512-K6+OwGaWM1sBEu+XMbgC4zDmg6hnddS2DWiCVtjnhkcrzv+ejSfh7HGUsoxmWQkv6kHEsVFAywttfkpmIE2QwQ==}
-    engines: {node: '>=0.10.40', npm: '>=2.0.0'}
-    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
-    dependencies:
-      hoek: 2.16.3
-      isemail: 1.2.0
-      moment: 2.29.4
-      topo: 1.1.0
     dev: false
 
   /joycon@3.1.1:
@@ -8724,7 +8667,7 @@ packages:
   /jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
     optionalDependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.10
     dev: true
 
   /jsonparse@1.3.1:
@@ -8745,17 +8688,6 @@ packages:
       underscore: 1.12.1
     dev: true
 
-  /jsonwebtoken@7.4.3:
-    resolution: {integrity: sha512-7WWGEZ+/xedHUHLDvSwvN7LbmLIEgOuBNQOBKvfX5zpLok5q6873aCR2zOuJ/DrORp/DlyYImz06nlNoRCWugw==}
-    engines: {node: '>=0.12', npm: '>=1.4.28'}
-    dependencies:
-      joi: 6.10.1
-      jws: 3.2.2
-      lodash.once: 4.1.1
-      ms: 2.1.3
-      xtend: 4.0.2
-    dev: false
-
   /jsonwebtoken@8.5.1:
     resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
     engines: {node: '>=4', npm: '>=1.4.28'}
@@ -8769,7 +8701,7 @@ packages:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 5.7.1
+      semver: 5.7.2
     dev: false
 
   /jsonwebtoken@9.0.0:
@@ -9578,10 +9510,6 @@ packages:
       yargs-unparser: 2.0.0
     dev: true
 
-  /moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
-    dev: false
-
   /mongodb@3.7.3:
     resolution: {integrity: sha512-Psm+g3/wHXhjBEktkxXsFMZvd3nemI0r3IPsE0bU+4//PnvNWKkzhZcEsbPcYiWqe8XqXJJEg4Tgtr7Raw67Yw==}
     engines: {node: '>=4'}
@@ -9713,10 +9641,11 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /nexmo@2.1.1:
-    resolution: {integrity: sha512-Mz5TPVzHXEsDBxEihylFidBujfs9CMSOHWG/b29faxJP3i8V4dIECJtyc2BCP/wR5Ia1/dP2fYAAZadnl8r3tg==}
+  /nexmo@2.9.1:
+    resolution: {integrity: sha512-FxmJ2Ou5qi4BH6hSo24OiFwPVYPl08uyXv13KybmkAbjh9W+kpaPK2wwsg1Dz39rrgIyAhWAq+4cqMvmk1UjrQ==}
     dependencies:
-      jsonwebtoken: 7.4.3
+      jsonwebtoken: 8.5.1
+      request: 2.88.2
       uuid: 2.0.3
     dev: false
 
@@ -11257,15 +11186,9 @@ packages:
     resolution: {integrity: sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==}
     dev: false
 
-  /semver@5.7.1:
-    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
-    hasBin: true
-    dev: false
-
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
-    dev: true
 
   /semver@6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
@@ -11635,13 +11558,6 @@ packages:
     resolution: {integrity: sha512-Fzd8zqbuqNwzodO3yO6MkX8qiDoVBuwqAaa3eKNz4idhBf24IQHbatBhLUiHAGGl962eGvPVRxzRuFWZlSf49w==}
     engines: {node: '>= 0.12.0'}
     deprecated: No longer maintained
-    dev: false
-
-  /ssf@0.11.2:
-    resolution: {integrity: sha512-+idbmIXoYET47hH+d7dfm2epdOMUDjqcB4648sTZ+t2JwoyBFL/insLfB/racrDmsKB3diwsDA696pZMieAC5g==}
-    engines: {node: '>=0.8'}
-    dependencies:
-      frac: 1.1.2
     dev: false
 
   /ssh2-sftp-client@9.0.4:
@@ -12307,14 +12223,6 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
-  /topo@1.1.0:
-    resolution: {integrity: sha512-vpmONxdZoD0R3hzH0lovwv8QmsqZmGCDE1wXW9YGD/reiDOAbPKEgRDlBCAt8u8nJhav/s/I+r+1gvdpA11x7Q==}
-    engines: {node: '>=0.10.40'}
-    deprecated: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
-    dependencies:
-      hoek: 2.16.3
-    dev: false
-
   /tough-cookie@2.5.0:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
     engines: {node: '>=0.8'}
@@ -12943,19 +12851,9 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /wmf@1.0.2:
-    resolution: {integrity: sha512-/p9K7bEh0Dj6WbXg4JG0xvLQmIadrner1bi45VMJTfnbVHsc7yIajZyoSoK60/dtVBs12Fm6WkUI5/3WAVsNMw==}
-    engines: {node: '>=0.8'}
-    dev: false
-
   /word-wrap@1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
     engines: {node: '>=0.10.0'}
-
-  /word@0.3.0:
-    resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==}
-    engines: {node: '>=0.8'}
-    dev: false
 
   /wordwrap@0.0.3:
     resolution: {integrity: sha512-1tMA907+V4QmxV7dbRvb4/8MaRALK6q9Abid3ndMYnbyo8piisCmeONVqVSXqQA3KaP4SLt5b7ud6E2sqP8TFw==}
@@ -13023,20 +12921,6 @@ packages:
     dependencies:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
-    dev: false
-
-  /xlsx@0.18.5:
-    resolution: {integrity: sha512-dmg3LCjBPHZnQp5/F/+nnTa+miPJxUXB6vtk42YjBBKayDNagxGEeIdWApkYPOf3Z3pm3k62Knjzp7lMeTEtFQ==}
-    engines: {node: '>=0.8'}
-    hasBin: true
-    dependencies:
-      adler-32: 1.3.1
-      cfb: 1.2.2
-      codepage: 1.15.0
-      crc-32: 1.2.2
-      ssf: 0.11.2
-      wmf: 1.0.2
-      word: 0.3.0
     dev: false
 
   /xml2js@0.4.23:
@@ -13278,6 +13162,14 @@ packages:
   /yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
+    dev: false
+
+  '@cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz':
+    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz}
+    name: xlsx
+    version: 0.19.3
+    engines: {node: '>=0.8'}
+    hasBin: true
     dev: false
 
   github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
