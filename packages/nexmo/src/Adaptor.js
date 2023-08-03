@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import Nexmo from 'nexmo';
 
 /**
@@ -45,6 +45,12 @@ export function execute(...operations) {
 export function sendSMS(from, toNumber, message) {
   return state => {
     const { apiKey, apiSecret } = state.configuration;
+    const [resolvedFrom, resolvedToNumber, resolvedMessage] = expandReferences(
+      state,
+      from,
+      toNumber,
+      message
+    );
 
     const nexmo = new Nexmo({
       apiKey: apiKey,
@@ -52,19 +58,24 @@ export function sendSMS(from, toNumber, message) {
     });
 
     return new Promise((resolve, reject) => {
-      nexmo.message.sendSms(from, toNumber, message, (error, response) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else if (response.messages[0].status != '0') {
-          console.error('Nexmo Error:');
-          console.error(response);
-          reject(response);
-        } else {
-          console.log(response);
-          resolve(response);
+      nexmo.message.sendSms(
+        resolvedFrom,
+        resolvedToNumber,
+        resolvedMessage,
+        (error, response) => {
+          if (error) {
+            console.error(error);
+            reject(error);
+          } else if (response.messages[0].status != '0') {
+            console.error('Nexmo Error:');
+            console.error(response);
+            reject(response);
+          } else {
+            console.log(response);
+            resolve(response);
+          }
         }
-      });
+      );
     }).then(response => {
       const nextState = composeNextState(state, response);
       return nextState;
