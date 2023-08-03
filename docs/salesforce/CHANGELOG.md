@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.0.6
+
+### Patch Changes
+
+- aceedd2: update jsforce and remove unused packages
+
 ## 4.0.5
 
 ### Patch Changes
