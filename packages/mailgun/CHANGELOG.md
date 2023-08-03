@@ -1,5 +1,11 @@
 # @openfn/language-mailgun
 
+## 0.4.2
+
+### Patch Changes
+
+- 4620079: Bump opinionator version
+
 ## 0.4.1
 
 ### Patch Changes

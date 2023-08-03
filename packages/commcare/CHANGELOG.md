@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 1.6.7
+
+### Patch Changes
+
+- 52c02c8: update xlsx package
+
 ## 1.6.6
 
 ### Patch Changes

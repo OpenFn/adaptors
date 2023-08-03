@@ -1,5 +1,12 @@
 # @openfn/language-nexmo
 
+## 0.4.0
+
+### Minor Changes
+
+- 8591b67: - update nexmo to `v2.9.1``
+  - expandReferences on sendSMS
+
 ## 0.3.1
 
 ### Patch Changes

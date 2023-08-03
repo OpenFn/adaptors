@@ -1,5 +1,11 @@
 # @openfn/language-medicmobile
 
+## 0.4.2
+
+### Patch Changes
+
+- 421fad3: Bump query-string
+
 ## 0.4.1
 
 ### Patch Changes
