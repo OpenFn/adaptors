@@ -1,202 +1,193 @@
-import { expandReferences, splitKeys } from './Adaptor';
-import axios from 'axios';
-import https from 'https';
-
-export { axios };
-
 /**
- * Recursively resolves objects that have resolvable values (functions), but
- * omits HTTP request specific modules like `FormData`.
- * @public
- * @function
- * @param {object} value - data
- * @returns {Operation}
+ * General-purpose utility functions
+ *
+ * These are designed more for use in adaptor code than job code
+ * (but we could choose to export util from common)
+ *
+ * None of these functions are operation factories
  */
-export function expandRequestReferences(params) {
-  const [toKeep, toExpand] = splitKeys(params || {}, [
-    'agentOptions',
-    'body',
-    'json',
-    'data',
-    'form',
-    'formData',
-    'headers',
-    'options',
-    'params',
-    'url',
-  ]);
 
-  const skipFormData = value => {
-    // NOTE: no expansion is possible on a `FormData` module w/ streams.
-    if (typeof value == 'object' && value?.data?._streams) return true;
-  };
+// import { fetch } from 'undici';
+// import https from 'https';
 
-  return state => {
-    const expandedParams = expandReferences(toExpand, skipFormData)(state);
-    const safelyExpandedParams = { ...toKeep, ...expandedParams };
+// export function handleResponseError(response, data, method) {
+//   const { status, statusText, url } = response;
 
-    return safelyExpandedParams;
-  };
-}
+//   if (isEmpty(data)) {
+//     const responseString = [
+//       `Message: 0 results returned`,
+//       `Request: ${method} ${url}`,
+//       `Status: ${status}`,
+//     ].join('\n\t∟ ');
 
-/**
- * Creates an https agent for axios from the agentOptions key passed in params.
- * @function
- * @param {object} params - data
- * @returns {Operation}
- */
-function withAgent(params) {
-  const { agentOptions } = params;
+//     console.log(`Info at ${new Date()}\n${responseString}`);
+//   }
+//   if (!response.ok) {
+//     const errorString = [
+//       `Message: ${statusText}`,
+//       `Request: ${method} ${url}`,
+//       `Status: ${status}`,
+//       `Body: ${JSON.stringify(data, null, 2).replace(/\n/g, '\n\t  ')}`,
+//     ].join('\n\t∟ ');
+//     throw new Error(errorString);
+//   }
+// }
+// /**
+//  * Creates an https agent for fetch from the agentOptions key passed in params.
+//  * @function
+//  * @param {object} params - data
+//  * @returns {Operation}
+//  */
+// function withAgent(params) {
+//   const { agentOptions } = params;
+//   return {
+//     ...params,
+//     httpsAgent: agentOptions && new https.Agent(agentOptions),
+//   };
+// }
+
+// function buildRequest(url, params) {
+//   const { method, headers, body, query, ...otherParams } = params;
+
+//   const initialOptions = {
+//     method,
+//     headers,
+//     dispatcher: new https.Agent({ keepAlive: true }),
+//     otherParams,
+//   };
+
+//   switch (method) {
+//     case 'GET':
+//       return new Request(
+//         `${url}?${new URLSearchParams(query).toString()}`,
+//         ...withAgent(initialOptions)
+//       );
+//     case 'HEAD':
+//       return new Request(url, ...withAgent(initialOptions));
+//     default:
+//       return new Request(url, {
+//         ...withAgent(initialOptions),
+//         body: body ? JSON.stringify(body) : body,
+//       });
+//   }
+// }
+
+// // Wrapper for all requests, handles errors and logs
+// export async function request(method, url, options) {
+//   // method: 'GET', // POST, PUT, DELETE, HEAD, etc.
+//   const defaultOptions = {
+//     headers: {
+//       // the content type header value is usually auto-set
+//       // depending on the request body
+//     },
+//     body: undefined, //Blob, ArrayBuffer, TypedArray, Dataview, URLSearchParms, ReadableStream >> GET or HEAD method cannot have body,
+//     mode: 'cors', // cors, no-cors, same-origin
+//     credentials: 'same-origin', // omit, same-origin, include
+//     cache: 'default', // default, no-store, reload, no-cache, force-cache and only-if-cached
+//     redirect: 'follow', // follow, error, manual
+//     referrer: 'about:client', // A string specifying the referrer of the request. This can be a same-origin URL, about:client, or an empty string.,
+//     referrerPolicy: 'strict-origin-when-cross-origin', // no-referrer-when-downgrade, no-referrer, origin, same-origin...
+//     integrity: '', //a hash, like "sha256-abcdef1234567890"
+//     keepAlive: true,
+//     signal: undefined, // AbortController to abort request
+//     priority: 'auto', //Specifies the priority of the fetch request relative to other requests of the same. Must be one of the following strings: high, low, auto
+//     query: {}, // An object implementing `URLSearchParams.string()` which returns a string containing a query string suitable for use in a URL.
+//   };
+
+//   const { data, headers, ...otherOptions } = {
+//     ...defaultOptions,
+//     ...options,
+//   };
+
+//   const request = buildRequest(url, method, otherOptions, data, headers);
+
+//   const response = await fetch(request);
+//   // const response = await fetch(resolvedUrl, options);
+//   const results = await response.json();
+
+//   handleResponseError(response, results, method);
+
+//   return results;
+// }
+
+import { fetch } from 'undici';
+
+export async function request(method, url, options = {}) {
+  const headers = { ...options.headers };
+
+  if (!headers['Content-Type'] && options.body) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: options.body ? JSON.stringify(options.body) : undefined,
+  });
+
+  const responseBody = await readResponseBody(response);
+
+  if (response.statusCode >= 400) {
+    const error = new Error(
+      `Request to ${url} failed with status: ${response.statusCode}`
+    );
+    error.status = response.statusCode;
+    error.body = responseBody;
+    error.url = url;
+    error.message = `Request to ${url} failed with status: ${response.statusCode}`;
+    throw error;
+  }
+
   return {
-    ...params,
-    httpsAgent: agentOptions && new https.Agent(agentOptions),
+    status: response.statusCode,
+    headers: response.headers,
+    body: responseBody,
   };
 }
 
-/**
- * Make a GET request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @returns {Operation} - Function which takes state and returns a Promise
- * @example <caption>Get an item with a specified id from state</caption>
- *  get({
- *      url: state => `https://www.example.com/api/items/${state.id},
- *      headers: {"content-type": "application/json"}
- * });
- */
-export function get(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
+async function readResponseBody(response) {
+  const contentType = response.headers.get('content-type');
 
-    return axios({ method: 'get', ...withAgent(params) });
-  };
+  if (contentType && contentType.includes('application/json')) {
+    return await response.json();
+  } else {
+    const chunks = [];
+    for await (const chunk of response.body) {
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks).toString();
+  }
 }
 
-/**
- * Make a POST request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Sending a payload with data that comes from state</caption>
- * post({
- *   url: "https://example.com",
- *   data: (state) => state.data
- * });
- * @example <caption> Capturing the response for later use in state </caption>
- * alterState((state) => {
- *   return post({
- *     url: "https://example.com",
- *     data: (state) => state.data
- *   })(state).then(({response}) => {
- *    state.responseData = response.data
- *   })
- * });
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-export function post(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
-
-    return axios({ method: 'post', ...withAgent(params) });
-  };
+// Functions for different HTTP methods
+export async function get(url, options = {}) {
+  return request('GET', url, options);
 }
 
-/**
- * Make a DELETE request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Deleting a record with data that comes from state</caption>
- * delete({
- *    url: state => `https://www.example.com/api/items/${state.id}`,
- *  })(state);
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-function del(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
-
-    return axios({ method: 'delete', ...withAgent(params) });
-  };
+export async function post(url, options = {}) {
+  return request('POST', url, options);
 }
 
-export { del as delete };
-
-/**
- * Make a HEAD request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Gets the headers that would be returned if the HEAD request's URL was instead requested with the HTTP GET method</caption>
- * head({
- *   url: 'https://www.example.com/api/items',
- * });
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-export function head(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
-
-    return axios({ method: 'head', ...withAgent(params) });
-  };
+export async function put(url, options = {}) {
+  return request('PUT', url, options);
 }
 
-/**
- * Make a PUT request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.</caption>
- * put({
- *   url: state => `https://www.example.com/api/items/${state.id}`,
- *   data: state => state.data
- * });
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-export function put(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
-
-    return axios({ method: 'put', ...withAgent(params) });
-  };
+export async function del(url, options = {}) {
+  return request('DELETE', url, options);
 }
 
-/**
- * Make a PATCH request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Applies partial modifications to a resource, with data from state.</caption>
- * patch({
- *   url: state => `https://www.example.com/api/items/${state.id}`,
- *   data: state => state.data
- * });
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-export function patch(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
+// Example usage
+(async () => {
+  try {
+    const getUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+    const nonExistentUrl = 'https://jsonplaceholder.typicode.com/nonexistent';
 
-    return axios({ method: 'patch', ...withAgent(params) });
-  };
-}
+    const getResult = await get(getUrl);
+    console.log('GET Result:', getResult);
 
-/**
- * Make a OPTIONS request
- * @public
- * @function
- * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
- * @example <caption>Requests permitted communication options for a given URL or server, with data from state.</caption>
- * options({
- *   url: 'https://www.example.com/api/items',
- * });
- * @returns {Operation} - Function which takes state and returns a Promise
- */
-export function options(requestParams) {
-  return state => {
-    const params = expandRequestReferences(requestParams)(state);
-
-    return axios({ method: 'options', ...withAgent(params) });
-  };
-}
+    const nonexistentResult = await get(nonExistentUrl);
+    console.log('Nonexistent GET Result:', nonexistentResult);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+})();
