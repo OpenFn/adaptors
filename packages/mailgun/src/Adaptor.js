@@ -1,13 +1,26 @@
-
 import {
   execute as commonExecute,
   expandReferences,
   composeNextState,
-} from "@openfn/language-common";
-import Mailgun from "mailgun-js";
+} from '@openfn/language-common';
+import Mailgun from 'mailgun.js';
+import formData from 'form-data';
 // NOTE: We can use sync-request because the Node sandbox the client uses will
 // be killed after 300s, regardless of whether this succeeds, fails, or hangs.
-import request from "sync-request";
+import request from 'sync-request';
+
+const mailgun = new Mailgun(formData);
+
+const setupClient = state => {
+  const { apiKey } = state.configuration;
+  state.client = mailgun.client({ username: 'api', key: apiKey });
+  return state;
+};
+
+const teardownClient = state => {
+  delete state.client;
+  return state;
+};
 
 /**
  * Execute a sequence of operations.
@@ -27,8 +40,12 @@ export function execute(...operations) {
     data: null,
   };
 
-  return (state) => {
-    return commonExecute(...operations)({ ...initialState, ...state });
+  return state => {
+    return commonExecute(
+      setupClient,
+      ...operations,
+      teardownClient
+    )({ ...initialState, ...state });
   };
 }
 
@@ -50,38 +67,25 @@ export function execute(...operations) {
  * @param {object} params - Params for sending an email
  */
 export function send(params) {
-  return (state) => {
+  return state => {
+    const { client } = state;
+    const { domain } = state.configuration;
+
     const body = expandReferences(params)(state);
 
-    const { apiKey, domain } = state.configuration;
-
-    const mailgun = new Mailgun({ apiKey: apiKey, domain: domain });
-
-    if (body.attachment) {
-      const response = request("GET", body.attachment.url);
+    // if (body.attachment) {
+    //   const response = request('GET', body.attachment.url);
+    //   console.log(response);
+    //   var attch = new mailgun.Attachment({
+    //     data: response.body,
+    //     filename: body.attachment.filename,
+    //   });
+    //   body.attachment = attch;
+    // }
+    console.log('Sending mail:');
+    return client.messages.create(domain, body).then(response => {
       console.log(response);
-      var attch = new mailgun.Attachment({
-        data: response.body,
-        filename: body.attachment.filename,
-      });
-      body.attachment = attch;
-    }
-
-    console.log("Sending mail:");
-
-    return new Promise((resolve, reject) => {
-      mailgun.messages().send(body, (error, response) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else {
-          console.log(response);
-          resolve(response);
-        }
-      });
-    }).then((response) => {
-      const nextState = composeNextState(state, response);
-      return nextState;
+      return composeNextState(state, response);
     });
   };
 }
@@ -98,4 +102,4 @@ export {
   dataValue,
   lastReferenceValue,
   beta,
-} from "@openfn/language-common";
+} from '@openfn/language-common';
