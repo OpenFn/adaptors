@@ -73,15 +73,14 @@ export function send(params) {
 
     const body = expandReferences(params)(state);
 
-    // if (body.attachment) {
-    //   const response = request('GET', body.attachment.url);
-    //   console.log(response);
-    //   var attch = new mailgun.Attachment({
-    //     data: response.body,
-    //     filename: body.attachment.filename,
-    //   });
-    //   body.attachment = attch;
-    // }
+    if (body.attachment) {
+      const response = request('GET', body.attachment.url);
+      console.log(response);
+      body.attachment = {
+        data: response.body,
+        filename: body.attachment.filename,
+      };
+    }
     console.log('Sending mail:');
     return client.messages.create(domain, body).then(response => {
       console.log(response);
