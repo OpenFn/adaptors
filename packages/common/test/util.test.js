@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import {
+  enableMockClient,
   expandReferences,
   normalizeOauthConfig,
   get,
@@ -7,29 +8,26 @@ import {
   del,
 } from '../src/util';
 
-import { MockAgent, setGlobalDispatcher } from 'undici';
-
-const mockAgent = new MockAgent();
-const mockPool = mockAgent.get('https://www.example.com');
-
-setGlobalDispatcher(mockAgent);
+const client = enableMockClient('https://www.example.com');
 
 describe.only('methods', () => {
   it('should send a GET', async () => {
     // set up mock GET at /
     let request;
-    mockPool
+    client
       .intercept({
         path: '/api',
         method: 'GET',
       })
       .reply(200, r => {
+        console.log(r, 'from reply');
         request = r;
         return {};
       });
 
     await get('https://www.example.com/api');
 
+    console.log(request, 'req');
     // test the result
     expect(request.method).to.eql('GET');
   });
@@ -38,7 +36,7 @@ describe.only('methods', () => {
     // set up mock POST at /
     let request;
 
-    mockPool
+    client
       .intercept({
         path: '/api',
         method: 'POST',
@@ -58,7 +56,7 @@ describe.only('methods', () => {
     // set up mock DELETE at /
     let request;
 
-    mockPool
+    client
       .intercept({
         path: '/api',
         method: 'DELETE',
@@ -88,7 +86,7 @@ describe.skip('options', () => {
 
 describe('post', () => {
   it('sends a post request', async () => {
-    mockPool
+    client
       .intercept({
         path: '/api/fake',
         method: 'POST',
@@ -103,7 +101,7 @@ describe('post', () => {
   });
 
   it('should include a json body with content-type header', async () => {
-    mockPool
+    client
       .intercept({
         path: '/api/fake?id=2',
         method: 'POST',

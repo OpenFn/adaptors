@@ -7,7 +7,25 @@ import { Readable, Writable } from 'node:stream';
  *
  * None of these functions are operation factories
  */
-import { Client } from 'undici';
+import { Client, MockAgent } from 'undici';
+
+const clients = new Map();
+
+const getClient = baseUrl => {
+  if (!clients.has(baseUrl)) {
+    clients.set(baseUrl, new Client(baseUrl));
+  }
+  return clients.get(baseUrl);
+};
+
+// TODO make sure this is safe to call multple times
+// Ie, only maintain one mockagent, and re-use a client if it exists
+export const enableMockClient = baseUrl => {
+  const mockAgent = new MockAgent({ connections: 1 });
+  const client = mockAgent.get(baseUrl);
+  clients.set(baseUrl, client);
+  return client;
+};
 
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
@@ -73,11 +91,10 @@ function separateUrl(fullUrl) {
 }
 
 export async function request(method, fullUrl, options = {}) {
-  // let url = path;
   const { baseUrl, path } = separateUrl(fullUrl);
   const defaultOptions = {
     headers: {},
-    query: {},
+    query: undefined,
     timeout: {},
     tls: {},
     body: undefined,
@@ -96,13 +113,12 @@ export async function request(method, fullUrl, options = {}) {
     ? `${path}?${new URLSearchParams(query).toString()}`
     : path;
 
-  console.log(baseUrl, urlPath);
-  const client = new Client(baseUrl);
+  const client = getClient(baseUrl);
 
   const response = await client.request({
     path: urlPath,
-    method,
-    responseHeaders: headers,
+    method: method,
+    headers: headers,
     body: body ? JSON.stringify(body) : undefined,
   });
 
@@ -127,8 +143,7 @@ export async function request(method, fullUrl, options = {}) {
 }
 
 async function readResponseBody(response) {
-  console.log(response.headers);
-  const contentType = response.headers.get('Content-Type');
+  const contentType = response.headers['content-type'];
 
   if (contentType?.includes('application/json')) {
     return await response.json();
