@@ -46,7 +46,8 @@
     "csvtojson": "^2.0.10",
     "date-fns": "^2.25.0",
     "jsonpath-plus": "^4.0.0",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.19",
+    "undici": "^5.23.0"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

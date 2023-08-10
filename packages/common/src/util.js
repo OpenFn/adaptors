@@ -7,6 +7,7 @@ import { Readable, Writable } from 'node:stream';
  *
  * None of these functions are operation factories
  */
+import { Client } from 'undici';
 
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
@@ -62,4 +63,97 @@ export function normalizeOauthConfig(configuration) {
   if (accessToken) console.log('Using "accessToken" from state.configuration');
 
   return configuration;
+}
+
+function separateUrl(fullUrl) {
+  const urlObject = new URL(fullUrl);
+  const baseUrl = `${urlObject.protocol}//${urlObject.host}`;
+  const path = urlObject.pathname;
+  return { baseUrl, path };
+}
+
+export async function request(method, fullUrl, options = {}) {
+  // let url = path;
+  const { baseUrl, path } = separateUrl(fullUrl);
+  const defaultOptions = {
+    headers: {},
+    query: {},
+    timeout: {},
+    tls: {},
+    body: undefined,
+  };
+
+  const { headers, query, body, timeout, tls } = {
+    ...defaultOptions,
+    ...options,
+  };
+
+  if (!headers['Content-Type'] && body) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  const urlPath = query
+    ? `${path}?${new URLSearchParams(query).toString()}`
+    : path;
+
+  console.log(baseUrl, urlPath);
+  const client = new Client(baseUrl);
+
+  const response = await client.request({
+    path: urlPath,
+    method,
+    responseHeaders: headers,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  const responseBody = await readResponseBody(response);
+
+  if (response.status >= 400) {
+    const error = new Error(
+      `Request to ${url} failed with status: ${response.status}`
+    );
+    error.status = response.status;
+    error.body = responseBody;
+    error.url = url;
+    error.message = `Request to ${url} failed with status: ${response.status}`;
+    throw error;
+  }
+
+  return {
+    code: response.status,
+    headers: response.headers,
+    data: responseBody,
+  };
+}
+
+async function readResponseBody(response) {
+  console.log(response.headers);
+  const contentType = response.headers.get('Content-Type');
+
+  if (contentType?.includes('application/json')) {
+    return await response.json();
+  } else {
+    const chunks = [];
+    for await (const chunk of response.body) {
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks).toString();
+  }
+}
+
+// Functions for different HTTP methods
+export async function get(url, options = {}) {
+  return request('GET', url, options);
+}
+
+export async function post(url, body, options = {}) {
+  return request('POST', url, { body: body, ...options });
+}
+
+export async function put(url, body, options = {}) {
+  return request('PUT', url, { body: body, ...options });
+}
+
+export async function del(url, body, options = {}) {
+  return request('DELETE', url, { body: body, ...options });
 }
