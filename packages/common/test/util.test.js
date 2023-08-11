@@ -118,11 +118,62 @@ describe('options', () => {
       },
     });
 
-    console.log(response.headers);
-
     expect(request.query).to.eql({
       id: '2',
     });
+  });
+
+  it('should throw and use errorMap value', async () => {
+    client
+      .intercept({
+        path: '/api/noAccess',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    let error = null;
+    try {
+      await await get('https://www.example.com/api/noAccess', {
+        errors: {
+          404: 'No Access',
+        },
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error.message).to.eql('No Access');
+  });
+
+  it('should throw and use default values', async () => {
+    client
+      .intercept({
+        path: '/api/noAccess',
+        method: 'GET',
+      })
+      .reply(
+        405,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    let error = null;
+    try {
+      await await get('https://www.example.com/api/noAccess');
+    } catch (err) {
+      error = err;
+    }
+    expect(error.message).to.eql(
+      'GET request to /api/noAccess failed with status: 405'
+    );
   });
 
   it('should parse a response body as json if content-type is json', async () => {

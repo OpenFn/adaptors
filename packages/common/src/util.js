@@ -98,9 +98,13 @@ export async function request(method, fullUrl, options = {}) {
     timeout: {},
     tls: {},
     body: undefined,
+    errors: {
+      401: 'Unauthorised',
+      404: 'Not found',
+    },
   };
 
-  const { headers, query, body, timeout, tls } = {
+  const { headers, query, body, errors, timeout, tls } = {
     ...defaultOptions,
     ...options,
   };
@@ -116,24 +120,29 @@ export async function request(method, fullUrl, options = {}) {
     query: query,
     method: method,
     headers: headers,
+    errors: errors,
     body: body ? JSON.stringify(body) : undefined,
+    throwOnError: false,
   });
 
   const responseBody = await readResponseBody(response);
 
-  if (response.status >= 400) {
+  if (response.statusCode >= 400) {
+    const errorMessage = errors[response.statusCode]
+      ? errors[response.statusCode]
+      : `${method} request to ${path} failed with status: ${response.statusCode}`;
+
     const error = new Error(
-      `Request to ${url} failed with status: ${response.status}`
+      `Request to ${fullUrl} failed with status: ${response.statusCode}`
     );
-    error.status = response.status;
-    error.body = responseBody;
-    error.url = url;
-    error.message = `Request to ${url} failed with status: ${response.status}`;
+    error.code = response.statusCode;
+    error.url = fullUrl;
+    error.message = errorMessage;
     throw error;
   }
 
   return {
-    code: response.status,
+    code: response.statusCode,
     headers: response.headers,
     data: responseBody,
   };
