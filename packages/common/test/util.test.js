@@ -10,7 +10,7 @@ import {
 
 const client = enableMockClient('https://www.example.com');
 
-describe.only('methods', () => {
+describe('methods', () => {
   it('should send a GET', async () => {
     // set up mock GET at /
     let request;
@@ -20,14 +20,12 @@ describe.only('methods', () => {
         method: 'GET',
       })
       .reply(200, r => {
-        console.log(r, 'from reply');
         request = r;
         return {};
       });
 
     await get('https://www.example.com/api');
 
-    console.log(request, 'req');
     // test the result
     expect(request.method).to.eql('GET');
   });
@@ -73,58 +71,89 @@ describe.only('methods', () => {
   });
 });
 
-describe.skip('options', () => {
-  it('should include headers', () => {
+describe('options', () => {
+  it('should include headers', async () => {
     // check the headers that are incuded in the actual request
-  });
-
-  it('should parse a response body as json if content-type is json', () => {});
-
-  //TODO
-  it.skip('should force parse a response body as if json: true is passed', () => {});
-});
-
-describe('post', () => {
-  it('sends a post request', async () => {
+    let request;
     client
       .intercept({
-        path: '/api/fake',
-        method: 'POST',
+        path: '/api',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .reply(200);
+      .reply(200, r => {
+        request = r;
+        return {};
+      });
 
-    const response = await post('https://www.example.com/api/fake');
+    await get('https://www.example.com/api', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    expect(Object.keys(response)).to.eql(['code', 'headers', 'data']);
-
-    expect(response.code).to.eql(200);
+    expect(request.headers).to.eql({
+      'Content-Type': 'application/json',
+    });
   });
 
-  it('should include a json body with content-type header', async () => {
+  it('should encode keys and values of query', async () => {
+    // check the headers that are incuded in the actual request
+    let request;
     client
       .intercept({
-        path: '/api/fake?id=2',
-        method: 'POST',
-        body: JSON.stringify('stringPayload'),
+        path: '/api?id=2',
+        method: 'GET',
+      })
+      .reply(200, r => {
+        request = r;
+        return {};
+      });
+
+    const response = await get('https://www.example.com/api', {
+      query: {
+        id: '2',
+      },
+    });
+
+    console.log(response.headers);
+
+    expect(request.query).to.eql({
+      id: '2',
+    });
+  });
+
+  it('should parse a response body as json if content-type is json', async () => {
+    client
+      .intercept({
+        path: '/api?id=2',
+        method: 'GET',
       })
       .reply(
         200,
-        { id: 2 },
+        { id: '2' },
         {
           headers: { 'Content-Type': 'application/json' },
         }
       );
 
-    const response = await post(
-      'https://www.example.com/api/fake',
-      'stringPayload',
-      { query: { id: 2 } }
-    );
+    const response = await get('https://www.example.com/api', {
+      query: {
+        id: '2',
+      },
+    });
 
-    expect(response.code).to.eql(200);
-    expect(response.data).to.eql({ id: 2 });
+    expect(response.data).to.eql({
+      id: '2',
+    });
   });
+
+  //TODO
+  it.skip('should force parse a response body as if json: true is passed', () => {});
 });
+
 describe('util expandReferences', () => {
   it('should not modify string references', () => {
     const name = 'mulder';

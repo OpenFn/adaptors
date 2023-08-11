@@ -109,14 +109,11 @@ export async function request(method, fullUrl, options = {}) {
     headers['Content-Type'] = 'application/json';
   }
 
-  const urlPath = query
-    ? `${path}?${new URLSearchParams(query).toString()}`
-    : path;
-
   const client = getClient(baseUrl);
 
   const response = await client.request({
-    path: urlPath,
+    path: path,
+    query: query,
     method: method,
     headers: headers,
     body: body ? JSON.stringify(body) : undefined,
@@ -146,7 +143,7 @@ async function readResponseBody(response) {
   const contentType = response.headers['content-type'];
 
   if (contentType?.includes('application/json')) {
-    return await response.json();
+    return await response.body.json();
   } else {
     const chunks = [];
     for await (const chunk of response.body) {
