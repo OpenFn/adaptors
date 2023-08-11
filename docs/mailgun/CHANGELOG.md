@@ -1,5 +1,11 @@
 # @openfn/language-mailgun
 
+## 0.4.3
+
+### Patch Changes
+
+- f86576d: Security update to mailgun.js
+
 ## 0.4.2
 
 ### Patch Changes
