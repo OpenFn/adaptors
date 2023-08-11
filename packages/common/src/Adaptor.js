@@ -636,8 +636,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
       }
     }
     if (buffer.length) {
-      const [finalState] = await flushBuffer(state);
-      return finalState;
+      [state] = await flushBuffer(state);
     }
     return state;
   };

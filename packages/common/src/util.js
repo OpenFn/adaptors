@@ -1,3 +1,4 @@
+import { Readable, Writable } from 'node:stream';
 /**
  * General-purpose utility functions
  *
@@ -12,12 +13,25 @@ export function expandReferences(state, ...args) {
   return args.map(value => expandReference(state, value));
 }
 
+const isStream = value => {
+  if (value && typeof value == 'object') {
+    if (value instanceof Readable || value instanceof Writable) {
+      return true;
+    }
+    // This should catch streams returned by fetch (which for some reason aren't proper streams?)
+    if (value.pipeTo) {
+      return true;
+    }
+  }
+  return false;
+};
+
 function expandReference(state, value) {
   if (Array.isArray(value)) {
     return value.map(v => expandReference(state, v));
   }
 
-  if (typeof value == 'object' && !!value && !value.pipe) {
+  if (typeof value == 'object' && !!value && !isStream(value)) {
     return Object.keys(value).reduce((acc, key) => {
       return { ...acc, [key]: expandReference(state, value[key]) };
     }, {});
