@@ -1,5 +1,7 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { assert, expect } from 'chai';
-import testData from './testData.json' assert { type: 'json' };
+import testData from './fixtures/data.json' assert { type: 'json' };
 import {
   arrayToString,
   chunk,
@@ -530,5 +532,26 @@ describe('parseCsv', function () {
         ],
       ],
     });
+  });
+
+  it('should chunk a stream', async () => {
+    const state = { data: {}, references: [] };
+
+    const stream = fs.createReadStream(
+      path.resolve('./test/fixtures/data.csv')
+    );
+    const buffer = [];
+
+    await parseCsv(stream, { chunkSize: 1 }, (state, chunk) => {
+      assert.lengthOf(chunk, 1);
+      buffer.push(...chunk);
+      return state;
+    })(state);
+
+    assert.deepEqual(buffer, [
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+      { a: '7', b: '8', c: '9' },
+    ]);
   });
 });

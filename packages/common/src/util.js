@@ -17,7 +17,7 @@ function expandReference(state, value) {
     return value.map(v => expandReference(state, v));
   }
 
-  if (typeof value == 'object' && !!value) {
+  if (typeof value == 'object' && !!value && !value.pipe) {
     return Object.keys(value).reduce((acc, key) => {
       return { ...acc, [key]: expandReference(state, value[key]) };
     }, {});
