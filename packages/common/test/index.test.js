@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 import { assert, expect } from 'chai';
 import testData from './fixtures/data.json' assert { type: 'json' };
 import {
@@ -534,7 +535,7 @@ describe('parseCsv', function () {
     });
   });
 
-  it('should chunk a stream', async () => {
+  it.only('should chunk a stream from the filesystem', async () => {
     const state = { data: {}, references: [] };
 
     const stream = fs.createReadStream(
@@ -547,6 +548,33 @@ describe('parseCsv', function () {
       buffer.push(...chunk);
       return state;
     })(state);
+
+    assert.deepEqual(buffer, [
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+      { a: '7', b: '8', c: '9' },
+    ]);
+  });
+
+  it.only('should chunk a stream from unidici request', async () => {
+    const state = { data: {}, references: [] };
+
+    const buffer = [];
+
+    // TODO this will only run on my local machine right now
+    // Later I'll set up a mock to behave the same way
+    // (presuably I need to create my own stream to represent the data? Or can I just set the string in a mock?)
+    const request = await fetch('http://localhost:3000/data.csv');
+
+    await parseCsv(
+      Readable.from(request.body),
+      { chunkSize: 1 },
+      (state, chunk) => {
+        assert.lengthOf(chunk, 1);
+        buffer.push(...chunk);
+        return state;
+      }
+    )(state);
 
     assert.deepEqual(buffer, [
       { a: '1', b: '2', c: '3' },

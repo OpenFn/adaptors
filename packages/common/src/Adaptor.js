@@ -555,6 +555,18 @@ export function chunk(array, chunkSize) {
   return output;
 }
 
+const getParser = (csvData, options) => {
+  if (typeof csvData === 'string') {
+    return parse(csvData, options);
+  }
+
+  let stream = csvData;
+  if (csvData instanceof ReadableStream) {
+    stream = Readable.from(csvData);
+  }
+  return stream.pipe(parse(options));
+};
+
 /**
  * Takes a CSV file string or stream and parsing options as input, and returns a promise that
  * resolves to the parsed CSV data as an array of objects.
@@ -611,10 +623,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 
     let buffer = [];
 
-    const parser =
-      typeof resolvedCsvData === 'string'
-        ? parse(resolvedCsvData, options)
-        : resolvedCsvData.pipe(parse(options));
+    const parser = getParser(resolvedCsvData, options);
 
     const flushBuffer = async currentState => {
       const nextState = callback
@@ -625,7 +634,6 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 
       return [nextState, buffer];
     };
-
     for await (const record of parser) {
       buffer.push(record);
       if (buffer.length === options.chunkSize) {

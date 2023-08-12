@@ -19,7 +19,7 @@ const isStream = value => {
       return true;
     }
     // This should catch streams returned by fetch (which for some reason aren't proper streams?)
-    if (value.pipeTo) {
+    if (value.pipeTo || value.pipe) {
       return true;
     }
   }
