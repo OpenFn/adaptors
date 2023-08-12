@@ -634,19 +634,20 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 
       return [nextState, buffer];
     };
+
+    let result = state;
     for await (const record of parser) {
       buffer.push(record);
       if (buffer.length === options.chunkSize) {
-        const [nextState, nextBuffer] = await flushBuffer(state);
-        // eslint-disable-next-line no-param-reassign
-        state = nextState;
+        const [nextState, nextBuffer] = await flushBuffer(result);
+        result = nextState;
         buffer = nextBuffer;
       }
     }
     if (buffer.length) {
-      [state] = await flushBuffer(state);
+      [result] = await flushBuffer(result);
     }
-    return state;
+    return result;
   };
 }
 
