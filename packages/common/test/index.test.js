@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { Readable } from 'node:stream';
 import { assert, expect } from 'chai';
+import { request, MockAgent, setGlobalDispatcher } from 'undici';
 import testData from './fixtures/data.json' assert { type: 'json' };
 import {
   arrayToString,
@@ -28,6 +29,10 @@ import {
   splitKeys,
   toArray,
 } from '../src/Adaptor';
+
+const mockAgent = new MockAgent();
+setGlobalDispatcher(mockAgent);
+const mockPool = mockAgent.get('https://localhost:1');
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -558,16 +563,19 @@ describe('parseCsv', function () {
 
   it.only('should chunk a stream from unidici request', async () => {
     const state = { data: {}, references: [] };
-
     const buffer = [];
 
-    // TODO this will only run on my local machine right now
-    // Later I'll set up a mock to behave the same way
-    // (presuably I need to create my own stream to represent the data? Or can I just set the string in a mock?)
-    const request = await fetch('http://localhost:3000/data.csv');
+    mockPool
+      .intercept({
+        method: 'GET',
+        path: '/csv',
+      })
+      .reply(200, 'a,b,c\n1,2,3\n4,5,6\n7,8,9');
+
+    const response = await request('https://localhost:1/csv');
 
     await parseCsv(
-      Readable.from(request.body),
+      Readable.from(response.body),
       { chunkSize: 1 },
       (state, chunk) => {
         assert.lengthOf(chunk, 1);
