@@ -578,16 +578,12 @@ describe('parseCsv', function () {
 
     const response = await request('https://localhost:1/csv');
 
-    await parseCsv(
-      Readable.from(response.body),
-      { chunkSize: 1 },
-      (state, chunk) => {
-        callCount++;
-        assert.lengthOf(chunk, 1);
-        buffer.push(...chunk);
-        return state;
-      }
-    )(state);
+    await parseCsv(response.body, { chunkSize: 1 }, (state, chunk) => {
+      callCount++;
+      assert.lengthOf(chunk, 1);
+      buffer.push(...chunk);
+      return state;
+    })(state);
 
     assert.deepEqual(buffer, [
       { a: '1', b: '2', c: '3' },
