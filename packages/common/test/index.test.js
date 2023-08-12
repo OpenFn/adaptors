@@ -540,15 +540,17 @@ describe('parseCsv', function () {
     });
   });
 
-  it.only('should chunk a stream from the filesystem', async () => {
+  it('should chunk a stream from the filesystem', async () => {
     const state = { data: {}, references: [] };
+    const buffer = [];
+    let callCount = 0;
 
     const stream = fs.createReadStream(
       path.resolve('./test/fixtures/data.csv')
     );
-    const buffer = [];
 
     await parseCsv(stream, { chunkSize: 1 }, (state, chunk) => {
+      callCount++;
       assert.lengthOf(chunk, 1);
       buffer.push(...chunk);
       return state;
@@ -559,11 +561,13 @@ describe('parseCsv', function () {
       { a: '4', b: '5', c: '6' },
       { a: '7', b: '8', c: '9' },
     ]);
+    assert.equal(callCount, 3);
   });
 
-  it.only('should chunk a stream from unidici request', async () => {
+  it('should chunk a stream from unidici request', async () => {
     const state = { data: {}, references: [] };
     const buffer = [];
+    let callCount = 0;
 
     mockPool
       .intercept({
@@ -578,6 +582,7 @@ describe('parseCsv', function () {
       Readable.from(response.body),
       { chunkSize: 1 },
       (state, chunk) => {
+        callCount++;
         assert.lengthOf(chunk, 1);
         buffer.push(...chunk);
         return state;
@@ -589,5 +594,6 @@ describe('parseCsv', function () {
       { a: '4', b: '5', c: '6' },
       { a: '7', b: '8', c: '9' },
     ]);
+    assert.equal(callCount, 3);
   });
 });
