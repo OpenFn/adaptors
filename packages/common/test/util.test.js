@@ -9,7 +9,10 @@ import {
 } from '../src/util';
 
 const client = enableMockClient('https://www.example.com');
-
+describe.skip('request', () => {
+  it('should use baseUrl from options');
+  it('should use fullUrlOrPath');
+});
 describe('methods', () => {
   it('should send a GET', async () => {
     // set up mock GET at /
@@ -72,6 +75,9 @@ describe('methods', () => {
 });
 
 describe('options', () => {
+  it('should use errorMap with function');
+  it('should use errorMap with string');
+  it('should throw by default if a 404');
   it('should include headers', async () => {
     // check the headers that are incuded in the actual request
     let request;
@@ -172,7 +178,7 @@ describe('options', () => {
       error = err;
     }
     expect(error.message).to.eql(
-      'GET request to /api/noAccess failed with status: 405'
+      'GET request to https://www.example.com/api/noAccess failed with status: 405'
     );
   });
 

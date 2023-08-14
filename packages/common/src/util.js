@@ -83,26 +83,86 @@ export function normalizeOauthConfig(configuration) {
   return configuration;
 }
 
-function separateUrl(fullUrl) {
-  const urlObject = new URL(fullUrl);
-  const baseUrl = `${urlObject.protocol}//${urlObject.host}`;
-  const path = urlObject.pathname;
-  return { baseUrl, path };
-}
-
-export async function request(method, fullUrl, options = {}) {
-  const { baseUrl, path } = separateUrl(fullUrl);
-  const defaultOptions = {
-    headers: {},
-    query: undefined,
-    timeout: {},
-    tls: {},
-    body: undefined,
-    errors: {
-      401: 'Unauthorised',
-      404: 'Not found',
-    },
+const separateUrl = fullUrl => {
+  const url = new URL(fullUrl);
+  return {
+    baseUrl: url.origin,
+    path: url.pathname,
   };
+};
+
+/**
+ * The `defaultOptions` constant is an object that defines default values for various options that can
+ * be passed to the `request` function. These options include
+ * `headers`,
+ * `query`,
+ * `timeout`,
+ * `tls`,
+ * `body`, and
+ * `errors`.
+ */
+const defaultOptions = {
+  timeout: '',
+  headers: {},
+  query: undefined,
+  body: undefined,
+  errors: {},
+  tls: {},
+};
+
+const assertOK = (response, errorMap, fullUrl, method) => {
+  if (response.statusCode >= 400) {
+    const defaultErrorMesssage = `${method} request to ${fullUrl} failed with status: ${response.statusCode}`;
+
+    const errMessage = response =>
+      errorMap[response.statusCode] || defaultErrorMesssage;
+    let resolvedErrorMessage;
+    if (errMessage) {
+      if (typeof errMesssage === 'string') {
+        resolvedErrorMessage = errMessage;
+      } else {
+        resolvedErrorMessage = errMessage(response);
+      }
+    }
+
+    const error = new Error(resolvedErrorMessage);
+    error.code = response.statusCode;
+    error.url = fullUrl;
+    throw error;
+  }
+};
+
+const isValidHttpUrl = fullUrl => {
+  try {
+    const { protocol } = new URL(fullUrl);
+    return protocol === 'http:' || protocol === 'https:';
+  } catch (_) {
+    return false;
+  }
+};
+
+/**
+ * The function `request` is an asynchronous function that sends HTTP requests and returns the response
+ * data, headers, and status code.
+ * @param method - The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.).
+ * @param fullUrl - The full URL is the complete URL of the request, including the protocol (e.g.,
+ * "http://example.com/api").
+ * @param [options] - The `options` parameter is an object that contains additional configuration
+ * options for the request. It can have the following properties:
+ * @returns an object with the following properties:
+ * - code: the status code of the response
+ * - headers: the headers of the response
+ * - data: the body of the response
+ */
+export async function request(method, fullUrlOrPath, options = {}) {
+  let baseUrl, path;
+
+  if (!options.baseUrl || isValidHttpUrl(fullUrlOrPath)) {
+    ({ baseUrl, path } = separateUrl(fullUrlOrPath));
+  } else {
+    baseUrl = options.baseUrl;
+    path = fullUrlOrPath;
+  }
 
   const { headers, query, body, errors, timeout, tls } = {
     ...defaultOptions,
@@ -120,26 +180,15 @@ export async function request(method, fullUrl, options = {}) {
     query: query,
     method: method,
     headers: headers,
-    errors: errors,
     body: body ? JSON.stringify(body) : undefined,
     throwOnError: false,
+    bodyTimeout: timeout,
+    connect: tls,
   });
 
+  assertOK(response, errors, fullUrlOrPath, method);
+
   const responseBody = await readResponseBody(response);
-
-  if (response.statusCode >= 400) {
-    const errorMessage = errors[response.statusCode]
-      ? errors[response.statusCode]
-      : `${method} request to ${path} failed with status: ${response.statusCode}`;
-
-    const error = new Error(
-      `Request to ${fullUrl} failed with status: ${response.statusCode}`
-    );
-    error.code = response.statusCode;
-    error.url = fullUrl;
-    error.message = errorMessage;
-    throw error;
-  }
 
   return {
     code: response.statusCode,
@@ -152,29 +201,27 @@ async function readResponseBody(response) {
   const contentType = response.headers['content-type'];
 
   if (contentType?.includes('application/json')) {
-    return await response.body.json();
+    return response.body.json();
   } else {
-    const chunks = [];
-    for await (const chunk of response.body) {
-      chunks.push(chunk);
-    }
-    return Buffer.concat(chunks).toString();
+    // TODO This need more thinking
+    // The function should automagically return the right response based
+    // Content-type or request options
+    return response.body.text();
   }
 }
 
-// Functions for different HTTP methods
-export async function get(url, options = {}) {
+export const get = (url, options) => {
   return request('GET', url, options);
-}
+};
 
-export async function post(url, body, options = {}) {
-  return request('POST', url, { body: body, ...options });
-}
+export const post = (url, body, options) => {
+  return request('POST', url, { body, ...options });
+};
 
-export async function put(url, body, options = {}) {
-  return request('PUT', url, { body: body, ...options });
-}
+export const put = (url, body, options) => {
+  return request('PUT', url, { body, ...options });
+};
 
-export async function del(url, body, options = {}) {
-  return request('DELETE', url, { body: body, ...options });
-}
+export const del = (url, body, options) => {
+  return request('DELETE', url, { body, ...options });
+};
