@@ -3,6 +3,7 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
+import { Readable } from 'node:stream';
 
 import { expandReferences as newExpandReferences } from './util';
 
@@ -555,6 +556,18 @@ export function chunk(array, chunkSize) {
   return output;
 }
 
+const getParser = (csvData, options) => {
+  if (typeof csvData === 'string') {
+    return parse(csvData, options);
+  }
+
+  let stream = csvData;
+  if (csvData instanceof ReadableStream) {
+    stream = Readable.from(csvData);
+  }
+  return stream.pipe(parse(options));
+};
+
 /**
  * Takes a CSV file string or stream and parsing options as input, and returns a promise that
  * resolves to the parsed CSV data as an array of objects.
@@ -611,10 +624,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 
     let buffer = [];
 
-    const parser =
-      typeof resolvedCsvData === 'string'
-        ? parse(resolvedCsvData, options)
-        : resolvedCsvData.pipe(parse(options));
+    const parser = getParser(resolvedCsvData, options);
 
     const flushBuffer = async currentState => {
       const nextState = callback
@@ -626,17 +636,19 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
       return [nextState, buffer];
     };
 
+    let result = state;
     for await (const record of parser) {
       buffer.push(record);
       if (buffer.length === options.chunkSize) {
-        const [nextState, nextBuffer] = await flushBuffer(state);
-        // eslint-disable-next-line no-param-reassign
-        state = nextState;
+        const [nextState, nextBuffer] = await flushBuffer(result);
+        result = nextState;
         buffer = nextBuffer;
       }
     }
-    const [finalState] = await flushBuffer(state);
-    return finalState;
+    if (buffer.length) {
+      [result] = await flushBuffer(result);
+    }
+    return result;
   };
 }
 

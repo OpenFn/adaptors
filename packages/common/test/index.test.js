@@ -1,5 +1,8 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { assert, expect } from 'chai';
-import testData from './testData.json' assert { type: 'json' };
+import { request, MockAgent, setGlobalDispatcher } from 'undici';
+import testData from './fixtures/data.json' assert { type: 'json' };
 import {
   arrayToString,
   chunk,
@@ -25,6 +28,10 @@ import {
   splitKeys,
   toArray,
 } from '../src/Adaptor';
+
+const mockAgent = new MockAgent();
+setGlobalDispatcher(mockAgent);
+const mockPool = mockAgent.get('https://localhost:1');
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -530,5 +537,58 @@ describe('parseCsv', function () {
         ],
       ],
     });
+  });
+
+  it('should chunk a stream from the filesystem', async () => {
+    const state = { data: {}, references: [] };
+    const buffer = [];
+    let callCount = 0;
+
+    const stream = fs.createReadStream(
+      path.resolve('./test/fixtures/data.csv')
+    );
+
+    await parseCsv(stream, { chunkSize: 1 }, (state, chunk) => {
+      callCount++;
+      assert.lengthOf(chunk, 1);
+      buffer.push(...chunk);
+      return state;
+    })(state);
+
+    assert.deepEqual(buffer, [
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+      { a: '7', b: '8', c: '9' },
+    ]);
+    assert.equal(callCount, 3);
+  });
+
+  it('should chunk a stream from unidici request', async () => {
+    const state = { data: {}, references: [] };
+    const buffer = [];
+    let callCount = 0;
+
+    mockPool
+      .intercept({
+        method: 'GET',
+        path: '/csv',
+      })
+      .reply(200, 'a,b,c\n1,2,3\n4,5,6\n7,8,9');
+
+    const response = await request('https://localhost:1/csv');
+
+    await parseCsv(response.body, { chunkSize: 1 }, (state, chunk) => {
+      callCount++;
+      assert.lengthOf(chunk, 1);
+      buffer.push(...chunk);
+      return state;
+    })(state);
+
+    assert.deepEqual(buffer, [
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+      { a: '7', b: '8', c: '9' },
+    ]);
+    assert.equal(callCount, 3);
   });
 });
