@@ -1,5 +1,13 @@
 # @openfn/language-msgraph
 
+## 0.3.3
+
+### Patch Changes
+
+- b90e8a2: Add support for stream
+- Updated dependencies [df09270]
+  - @openfn/language-common@1.10.3
+
 ## 0.3.2
 
 ### Patch Changes

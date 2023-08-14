@@ -107,7 +107,7 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0
       '@openfn/language-common':
-        specifier: workspace:1.10.2
+        specifier: workspace:1.10.3
         version: link:../common
       csv-parse:
         specifier: ^4.16.3
@@ -211,10 +211,10 @@ importers:
   packages/commcare:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.2
+        specifier: workspace:1.10.3
         version: link:../common
       '@openfn/language-http':
-        specifier: workspace:^5.0.1
+        specifier: workspace:^5.0.2
         version: link:../http
       JSONPath:
         specifier: ^0.10.0
@@ -361,7 +361,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -586,7 +586,7 @@ importers:
   packages/http:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.2
+        specifier: workspace:1.10.3
         version: link:../common
       cheerio:
         specifier: ^1.0.0-rc.10
@@ -1080,7 +1080,7 @@ importers:
   packages/mssql:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.2
+        specifier: workspace:1.10.3
         version: link:../common
       tedious:
         specifier: 15.1.0
@@ -1114,7 +1114,7 @@ importers:
   packages/mysql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       json-sql:
         specifier: ^0.3.10
@@ -1200,7 +1200,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -1234,7 +1234,7 @@ importers:
   packages/openfn:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       axios:
         specifier: ^0.21.1
@@ -1332,7 +1332,7 @@ importers:
   packages/openmrs:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       superagent:
         specifier: ^8.0.9
@@ -1372,7 +1372,7 @@ importers:
   packages/postgresql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       pg:
         specifier: ^8.3.2
@@ -1412,7 +1412,7 @@ importers:
   packages/primero:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       cheerio:
         specifier: ^1.0.0-rc.10
@@ -1470,7 +1470,7 @@ importers:
   packages/progres:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -1510,7 +1510,7 @@ importers:
   packages/rapidpro:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -1630,7 +1630,7 @@ importers:
   packages/sftp:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.2
+        specifier: 1.10.3
         version: link:../common
       lodash:
         specifier: ^4.17.19

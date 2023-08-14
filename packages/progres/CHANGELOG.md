@@ -1,5 +1,12 @@
 # @openfn/language-progres
 
+## 1.3.6
+
+### Patch Changes
+
+- Updated dependencies [df09270]
+  - @openfn/language-common@1.10.3
+
 ## 1.3.5
 
 ### Patch Changes

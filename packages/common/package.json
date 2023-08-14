@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-common",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
