@@ -2,4 +2,4 @@
 '@openfn/language-common': minor
 ---
 
-new http common helperswq
+Add new http common helpers
