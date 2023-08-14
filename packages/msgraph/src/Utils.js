@@ -1,4 +1,5 @@
 import { fetch } from 'undici';
+import { Readable, Writable } from 'node:stream';
 import { composeNextState } from '@openfn/language-common';
 
 export function assertDrive(state, driveName) {
@@ -38,11 +39,33 @@ export function getAuth(token) {
   return token ? { headers: { Authorization: `Bearer ${token}` } } : null;
 }
 
+const isStream = value => {
+  if (value && typeof value == 'object') {
+    if (value instanceof Readable || value instanceof Writable) {
+      return true;
+    }
+    // This should catch streams returned by fetch (which for some reason aren't proper streams?)
+    if (value.pipeTo || value.pipe) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export function handleResponse(response, state, callback) {
-  const nextState = {
-    ...composeNextState(state, response),
-    response,
-  };
+  let nextState;
+  // Don't compose state if response is a stream
+  if (isStream(response)) {
+    nextState = {
+      ...state,
+      data: response,
+    };
+  } else {
+    nextState = {
+      ...composeNextState(state, response),
+      response,
+    };
+  }
   if (callback) return callback(nextState);
   return nextState;
 }
@@ -96,9 +119,10 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
 
+  // If not json then return a stream
   const data = contentType?.includes('application/json')
     ? await response.json()
-    : await response.text();
+    : response.body;
 
   handleResponseError(response, data, method);
 
