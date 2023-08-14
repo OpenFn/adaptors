@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.10.3
+
+### Patch Changes
+
+- df09270: Fix streaming interface to parseCSV
+
 ## 1.10.2
 
 ### Patch Changes
