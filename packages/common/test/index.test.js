@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { Readable } from 'node:stream';
 import { assert, expect } from 'chai';
 import { request, MockAgent, setGlobalDispatcher } from 'undici';
 import testData from './fixtures/data.json' assert { type: 'json' };
