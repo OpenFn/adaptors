@@ -11,19 +11,13 @@ setGlobalDispatcher(MockAgent);
 const readStream = async stream => {
   const reader = stream.getReader();
   let result = '';
-  // read() returns a promise that resolves
-  // when a value has been received
+
   await reader.read().then(function processText({ done, value }) {
-    // Result objects contain two properties:
-    // done  - true if the stream has already given you all its data.
-    // value - some data. Always undefined when done is true.
     if (done) {
       return;
     }
-
     const chunk = new TextDecoder().decode(value);
     result += chunk;
-    // Read some more, and call this function again
     return reader.read().then(processText);
   });
 
