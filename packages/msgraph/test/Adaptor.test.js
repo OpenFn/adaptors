@@ -355,7 +355,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { parseAs: 'text' })
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -397,7 +397,6 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
         driveName: 'mydrive',
-        parseAs: 'text',
       })
     )(state);
 
@@ -416,9 +415,7 @@ describe('getFile', () => {
       },
     };
 
-    const finalState = await execute(
-      getFile('/Sample Data/test.csv', { parseAs: 'text' })
-    )(state);
+    const finalState = await execute(getFile('/Sample Data/test.csv'))(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
   });

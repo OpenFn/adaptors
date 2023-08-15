@@ -227,7 +227,7 @@ export function getFile(pathOrId, options, callback = s => s) {
       options
     );
 
-    const { driveName, metadata, parseAs } = {
+    const { driveName, metadata } = {
       ...defaultOptions,
       ...resolvedOptions,
     };
@@ -254,7 +254,10 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     const auth = getAuth(accessToken);
 
-    const response = await request(url, { ...auth, parseAs });
+    const response = await request(url, {
+      ...auth,
+      parseAs: metadata ? 'json' : 'text',
+    });
 
     return handleResponse(response, state, callback);
   };
