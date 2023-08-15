@@ -1,12 +1,34 @@
 import { expect } from 'chai';
+import { setGlobalDispatcher } from 'undici';
+
 import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
 
-import { setGlobalDispatcher } from 'undici';
-
 setGlobalDispatcher(MockAgent);
+
+const readStream = async stream => {
+  const reader = stream.getReader();
+  let result = '';
+  // read() returns a promise that resolves
+  // when a value has been received
+  await reader.read().then(function processText({ done, value }) {
+    // Result objects contain two properties:
+    // done  - true if the stream has already given you all its data.
+    // value - some data. Always undefined when done is true.
+    if (done) {
+      return;
+    }
+
+    const chunk = new TextDecoder().decode(value);
+    result += chunk;
+    // Read some more, and call this function again
+    return reader.read().then(processText);
+  });
+
+  return result;
+};
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -359,7 +381,9 @@ describe('getFile', () => {
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
     )(state);
 
-    expect(finalState.data).to.eql(fixtures.itemContent);
+    const response = await readStream(finalState.data);
+
+    expect(response).to.eql(fixtures.itemContent);
   });
 
   it('should get a file metadata by id', async () => {
@@ -375,7 +399,9 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { metadata: true })
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
+        metadata: true,
+      })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -397,7 +423,9 @@ describe('getFile', () => {
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { driveName: 'mydrive' })
     )(state);
 
-    expect(finalState.data).to.eql(fixtures.itemContent);
+    const response = await readStream(finalState.data);
+
+    expect(response).to.eql(fixtures.itemContent);
   });
 
   it('should get a file by path', async () => {
@@ -415,8 +443,9 @@ describe('getFile', () => {
     const finalState = await execute(getFile('/Sample Data/test.csv', {}))(
       state
     );
+    const response = await readStream(finalState.data);
 
-    expect(finalState.data).to.eql(fixtures.itemContent);
+    expect(response).to.eql(fixtures.itemContent);
   });
 
   it('should get a file metadata by path', async () => {
