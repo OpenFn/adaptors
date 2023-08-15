@@ -1,10 +1,9 @@
 import { expect } from 'chai';
-import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
+import { setGlobalDispatcher } from 'undici';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
-
-import { setGlobalDispatcher } from 'undici';
+import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
 
 setGlobalDispatcher(MockAgent);
 
@@ -375,7 +374,9 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { metadata: true })
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
+        metadata: true,
+      })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -394,7 +395,9 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', { driveName: 'mydrive' })
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
+        driveName: 'mydrive',
+      })
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -412,9 +415,7 @@ describe('getFile', () => {
       },
     };
 
-    const finalState = await execute(getFile('/Sample Data/test.csv', {}))(
-      state
-    );
+    const finalState = await execute(getFile('/Sample Data/test.csv'))(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
   });
