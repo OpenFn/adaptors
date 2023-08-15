@@ -100,9 +100,10 @@ export function handleResponseError(response, data, method) {
 export const request = async (urlString, params = {}, method = 'GET') => {
   let url = urlString;
   const defaultHeaders = { 'Content-Type': 'application/json' };
-  const { headers } = params;
+  const { headers, parseAs } = params;
   const setHeaders = { ...headers, ...defaultHeaders };
 
+  delete params.parseAs;
   delete params.headers;
 
   let options = {
@@ -120,9 +121,15 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   const contentType = response.headers.get('Content-Type');
 
   // If not json then return a stream
-  const data = contentType?.includes('application/json')
-    ? await response.json()
-    : response.body;
+  let data;
+  if (parseAs) {
+    if (parseAs === 'json') data = await response.json();
+    if (parseAs === 'text') data = await response.text();
+  } else {
+    data = contentType?.includes('application/json')
+      ? await response.json()
+      : response.body;
+  }
 
   handleResponseError(response, data, method);
 

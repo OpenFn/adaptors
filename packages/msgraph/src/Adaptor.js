@@ -213,13 +213,13 @@ export function getFolder(pathOrId, options, callback = s => s) {
  * @return {Operation}
  */
 export function getFile(pathOrId, options, callback = s => s) {
+  const defaultOptions = {
+    driveName: 'default', // named drive in state.drives
+    metadata: false, // Returns file msgraph metadata
+    // $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
+    // select: '', // Eg: id,@microsoft.graph.downloadUrl
+  };
   return async state => {
-    const defaultOptions = {
-      driveName: 'default', // named drive in state.drives
-      metadata: false, // Returns file msgraph metadata
-      // $filter: '', // Eg: "file/mimeType eq \'application/vnd.ms-excel\'"
-      // select: '', // Eg: id,@microsoft.graph.downloadUrl
-    };
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
@@ -227,7 +227,7 @@ export function getFile(pathOrId, options, callback = s => s) {
       options
     );
 
-    const { driveName, metadata } = {
+    const { driveName, metadata, parseAs } = {
       ...defaultOptions,
       ...resolvedOptions,
     };
@@ -254,9 +254,9 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     const auth = getAuth(accessToken);
 
-    return request(url, { ...auth }).then(response =>
-      handleResponse(response, state, callback)
-    );
+    const response = await request(url, { ...auth, parseAs });
+
+    return handleResponse(response, state, callback);
   };
 }
 
