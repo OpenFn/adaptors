@@ -210,18 +210,13 @@ async function readResponseBody(response) {
   }
 }
 
-export const get = (url, options) => {
-  return request('GET', url, options);
-};
+export const get = (url, options) => request('GET', url, options);
 
-export const post = (url, body, options) => {
-  return request('POST', url, { body, ...options });
-};
+export const post = (url, body, options) =>
+  request('POST', url, { body, ...options });
 
-export const put = (url, body, options) => {
-  return request('PUT', url, { body, ...options });
-};
+export const put = (url, body, options) =>
+  request('PUT', url, { body, ...options });
 
-export const del = (url, body, options) => {
-  return request('DELETE', url, { body, ...options });
-};
+export const del = (url, body, options) =>
+  request('DELETE', url, { body, ...options });
