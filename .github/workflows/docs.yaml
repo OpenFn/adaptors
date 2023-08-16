@@ -33,7 +33,11 @@ jobs:
         run: git config user.email $GH_EMAIL
         env:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
-      - name: Build docs to docs branch
+      - name: Installing packages
+        run: pnpm install --frozen-lockfile
+      - name: Build docs
+        run: pnpm build:adaptors docs
+      - name: Commit docs to docs branch
         run: pnpm exec .github/workflows/docs.sh
 
       # Trigger a rebuild on the docs site to pull adaptor docs
