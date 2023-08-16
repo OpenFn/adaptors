@@ -9,9 +9,42 @@ import {
 } from '../src/util';
 
 const client = enableMockClient('https://www.example.com');
-describe.skip('request', () => {
-  it('should use baseUrl from options');
-  it('should use fullUrlOrPath');
+describe('request', () => {
+  it('should use baseUrl from options', async () => {
+    let request;
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, r => {
+        request = r;
+        return {};
+      });
+
+    const response = await get('/api', { baseUrl: 'https://www.example.com' });
+
+    expect(request.path).to.eql('/api');
+    expect(response.code).to.eql(200);
+  });
+
+  it('should use fullUrlOrPath', async () => {
+    let request;
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, r => {
+        request = r;
+        return {};
+      });
+
+    const response = await get('https://www.example.com/api');
+
+    expect(request.path).to.eql('/api');
+    expect(response.code).to.eql(200);
+  });
 });
 describe('methods', () => {
   it('should send a GET', async () => {
@@ -75,9 +108,59 @@ describe('methods', () => {
 });
 
 describe('options', () => {
-  it('should use errorMap with function');
-  it('should use errorMap with string');
-  it('should throw by default if a 404');
+  it('should use errorMap with function', async () => {
+    client
+      .intercept({
+        path: '/api/noAccess',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    let error = null;
+    try {
+      await get('https://www.example.com/api/noAccess', {
+        errors: {
+          404: response => (response.context ? 'No Access' : 'Not found'),
+        },
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error.message).to.eql('Not found');
+  });
+
+  it('should throw by default if a 404', async () => {
+    client
+      .intercept({
+        path: '/api/noAccess',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    let error = null;
+    try {
+      await get('https://www.example.com/api/noAccess');
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error.message).to.eql(
+      'Request to https://www.example.com/api/noAccess failed with status: 404'
+    );
+  });
   it('should include headers', async () => {
     // check the headers that are incuded in the actual request
     let request;
@@ -118,7 +201,7 @@ describe('options', () => {
         return {};
       });
 
-    const response = await get('https://www.example.com/api', {
+    await get('https://www.example.com/api', {
       query: {
         id: '2',
       },
@@ -129,7 +212,7 @@ describe('options', () => {
     });
   });
 
-  it('should throw and use errorMap value', async () => {
+  it('should throw and use errorMap string value', async () => {
     client
       .intercept({
         path: '/api/noAccess',
@@ -145,7 +228,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await await get('https://www.example.com/api/noAccess', {
+      await get('https://www.example.com/api/noAccess', {
         errors: {
           404: 'No Access',
         },

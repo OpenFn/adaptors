@@ -114,18 +114,13 @@ const assertOK = (response, errorMap, fullUrl) => {
   if (response.statusCode >= 400) {
     const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
 
-    const errMessage = response =>
-      errorMap[response.statusCode] || defaultErrorMesssage;
-    let resolvedErrorMessage;
-    if (errMessage) {
-      if (typeof errMesssage === 'string') {
-        resolvedErrorMessage = errMessage;
-      } else {
-        resolvedErrorMessage = errMessage(response);
-      }
-    }
+    const errMapMessage = errorMap[response.statusCode];
+    const errMessage =
+      typeof errMapMessage === 'function'
+        ? errMapMessage(response)
+        : errMapMessage || defaultErrorMesssage;
 
-    const error = new Error(resolvedErrorMessage);
+    const error = new Error(errMessage);
     error.code = response.statusCode;
     error.url = fullUrl;
     throw error;
