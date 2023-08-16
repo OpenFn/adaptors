@@ -110,9 +110,9 @@ const defaultOptions = {
   tls: {},
 };
 
-const assertOK = (response, errorMap, fullUrl, method) => {
+const assertOK = (response, errorMap, fullUrl) => {
   if (response.statusCode >= 400) {
-    const defaultErrorMesssage = `${method} request to ${fullUrl} failed with status: ${response.statusCode}`;
+    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
 
     const errMessage = response =>
       errorMap[response.statusCode] || defaultErrorMesssage;
@@ -186,7 +186,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     connect: tls,
   });
 
-  assertOK(response, errors, fullUrlOrPath, method);
+  assertOK(response, errors, fullUrlOrPath);
 
   const responseBody = await readResponseBody(response);
 

@@ -178,7 +178,7 @@ describe('options', () => {
       error = err;
     }
     expect(error.message).to.eql(
-      'GET request to https://www.example.com/api/noAccess failed with status: 405'
+      'Request to https://www.example.com/api/noAccess failed with status: 405'
     );
   });
 
