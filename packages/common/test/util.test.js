@@ -108,6 +108,55 @@ describe('methods', () => {
 });
 
 describe('options', () => {
+  it('should not throw 204 if response is okay using errorMap', async () => {
+    client
+      .intercept({
+        path: '/api/content',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    const response = await get('https://www.example.com/api/content', {
+      errors: {
+        204: 'Content not found',
+      },
+    });
+
+    expect(response.code).to.eql(200);
+  });
+  it('should throw 204 if response match using errorMap', async () => {
+    client
+      .intercept({
+        path: '/api/noContent',
+        method: 'GET',
+      })
+      .reply(
+        204,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+    let error = null;
+    try {
+      await get('https://www.example.com/api/noContent', {
+        errors: {
+          204: 'Content not found',
+        },
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error.message).to.eql('Content not found');
+  });
   it('should use errorMap with function', async () => {
     client
       .intercept({

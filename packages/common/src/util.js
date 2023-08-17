@@ -111,10 +111,11 @@ const defaultOptions = {
 };
 
 const assertOK = (response, errorMap, fullUrl) => {
-  if (response.statusCode >= 400) {
+  const errMapMessage = errorMap[response.statusCode];
+
+  if (errMapMessage || response.statusCode >= 400) {
     const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
 
-    const errMapMessage = errorMap[response.statusCode];
     const errMessage =
       typeof errMapMessage === 'function'
         ? errMapMessage(response)
