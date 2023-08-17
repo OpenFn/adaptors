@@ -172,10 +172,10 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const client = getClient(baseUrl);
 
   const response = await client.request({
-    path: path,
-    query: query,
-    method: method,
-    headers: headers,
+    path,
+    query,
+    method,
+    headers,
     body: body ? JSON.stringify(body) : undefined,
     throwOnError: false,
     bodyTimeout: timeout,
