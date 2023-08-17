@@ -10,6 +10,24 @@ import {
 
 const client = enableMockClient('https://www.example.com');
 describe('request', () => {
+  it('should not set header content-type to application/json if body is string', async () => {
+    let request;
+    client
+      .intercept({
+        path: '/api',
+        method: 'POST',
+      })
+      .reply(200, r => {
+        request = r;
+        return '';
+      });
+
+    await post('/api', 'some string', {
+      baseUrl: 'https://www.example.com',
+    });
+
+    expect(request.headers).to.eql({});
+  });
   it('should use baseUrl from options', async () => {
     let request;
     client

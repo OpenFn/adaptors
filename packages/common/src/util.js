@@ -102,7 +102,7 @@ const separateUrl = fullUrl => {
  * `errors`.
  */
 const defaultOptions = {
-  timeout: '',
+  timeout: 300, // Default to 300 seconds
   headers: {},
   query: undefined,
   body: undefined,
@@ -165,7 +165,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     ...options,
   };
 
-  if (!headers['Content-Type'] && body) {
+  if (!headers['Content-Type'] && typeof body !== 'string') {
     headers['Content-Type'] = 'application/json';
   }
 
