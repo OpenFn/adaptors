@@ -312,6 +312,8 @@ export function listAudienceInfo(query, callback = s => s) {
   };
 }
 
+export { request, get, post } from './Utils';
+
 // Note that we expose the entire axios package to the user here.
 export { axios, md5 };
 
