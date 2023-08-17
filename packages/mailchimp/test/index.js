@@ -1,11 +1,8 @@
 import chai from 'chai';
 const { expect } = chai;
 
-import nock from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
-
-import Adaptor from '../src';
-const { execute, post } = Adaptor;
+import { execute, upsertMembers } from '../src';
+// const { execute } = Adaptor;
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -73,30 +70,3 @@ describe('execute', () => {
     });
   });
 });
-
-describe('upsertMembers', async () => {});
-// describe("post", () => {
-
-//   before(() => {
-//     nock('https://fake.server.com').post('/api').reply(200, {foo: 'bar'});
-//   })
-
-//   it("calls the callback", () => {
-//     let state = {
-//       configuration: {
-//         username: "hello",
-//         password: "there"
-//       }
-//     };
-
-//     return execute(post({
-//       "url": "https://fake.server.com/api",
-//       "headers": null,
-//       "body": {"a": 1}
-//     }))(state).then((state) => {
-//       let responseBody = state.response.body
-//       // Check that the post made it's way to the request as a string.
-//       expect(responseBody).to.eql({foo: 'bar'})
-//     })
-//   })
-// })

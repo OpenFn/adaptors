@@ -51,18 +51,23 @@ function cleanupState(state) {
   return state;
 }
 /**
- * Add or update a list members
+ * Add or update a list members using batch subscribe or unsubscribe api
+ * `POST /list/{list_id}`
+ * Params options includes:
+ * - `listId` {string} - The unique ID for the list.
+ * - `members` {array} - An array of objects, each representing an email address and the subscription status for a specific list. Up to 500 members may be added or updated with each API call.
+ *
  * @example
  * upsertMembers((state) => ({
- *   listId: "someId",
- *   users: state.response.body.rows.map((u) => ({
+ *   listId: "mailchimpAudienceId",
+ *   members: state.data.map((u) => ({
  *     email: u.email,
  *     status: u.allow_other_emails ? "subscribed" : "unsubscribed",
  *     mergeFields: { FNAME: u.first_name, LNAME: u.last_name },
  *   })),
  * }));
  * @function
- * @param {object} params - a listId, users, and options
+ * @param {object} params - a listId, members, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
@@ -72,15 +77,14 @@ export function upsertMembers(params, callback = s => s) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
     // TODO: Add support for options
-    // TODO: rename users to members
     const defaultOptions = {
       update_existing: true,
       sync_tags: false,
     };
-    const { listId, users, options } = resolvedParams;
+    const { listId, members, options } = resolvedParams;
     const opts = { ...defaultOptions, ...options };
 
-    const membersList = users.map(member => ({
+    const membersList = members.map(member => ({
       email_address: member.email,
       status: member.status,
       merge_fields: member.mergeFields,

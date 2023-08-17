@@ -800,9 +800,6 @@ importers:
       mocha:
         specifier: ^7.2.0
         version: 7.2.0
-      nock:
-        specifier: ^12.0.3
-        version: 12.0.3
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
