@@ -38,8 +38,10 @@ export function execute(...operations) {
 
 function createClient(state) {
   const { apiKey, server } = state.configuration;
-  // TODO: throws an error if apiKey not specified in configuration
-  // TODO: should we set a default server if server not defined?
+  // Assert configuration keys
+  if (!apiKey) throw new Error('Your Mailchimp apiKey is required');
+  if (!server) throw new Error('Your Mailchimp server prefix is required');
+
   client.setConfig({ apiKey, server });
   return { ...state, client: client };
 }

@@ -12,7 +12,7 @@ describe('execute', () => {
     let state = {
       configuration: {
         apiKey: 'somEThINGkeyish',
-        server: 'https://mailchimp.com/api',
+        server: 'us11',
       },
     };
     let operations = [
@@ -39,18 +39,42 @@ describe('execute', () => {
     let state = {
       configuration: {
         apiKey: 'somEThINGkeyish',
-        server: 'https://mailchimp.com/api',
+        server: 'us11',
       },
     };
-
-    let finalState = execute()(state);
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ ...state, references: [], data: null });
     });
   });
+  it('should throw an error if apiKey is not defined', () => {
+    let state = {
+      configuration: {
+        apiKey: '',
+        server: 'us11',
+      },
+    };
+
+    execute()(state).catch(error => {
+      expect(error.message).to.eql('Your Mailchimp apiKey is required');
+    });
+  });
+
+  it('should throw an error if server is not defined', () => {
+    let state = {
+      configuration: {
+        apiKey: 'somEThINGkeyish',
+        server: '',
+      },
+    };
+
+    execute()(state).catch(error => {
+      expect(error.message).to.eql('Your Mailchimp server prefix is required');
+    });
+  });
 });
 
+describe('upsertMembers', async () => {});
 // describe("post", () => {
 
 //   before(() => {
