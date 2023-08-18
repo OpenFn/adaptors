@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 0.6.0
+
+### Minor Changes
+
+- 1582873: Add request, get and post functions
+
 ## 0.5.0
 
 ### Minor Changes

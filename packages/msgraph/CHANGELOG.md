@@ -1,5 +1,11 @@
 # @openfn/language-msgraph
 
+## 0.3.4
+
+### Patch Changes
+
+- 1c183e9: Fix getFile unit tests
+
 ## 0.3.3
 
 ### Patch Changes
