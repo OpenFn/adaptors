@@ -1,19 +1,18 @@
 import { composeNextState } from '@openfn/language-common';
 import { Client, MockAgent } from 'undici';
 
-const clients = new Map();
+let client;
 
 export const getClient = baseUrl => {
-  if (!clients.has(baseUrl)) {
-    clients.set(baseUrl, new Client(baseUrl));
+  if (client) {
+    return client;
   }
-  return clients.get(baseUrl);
+  return new Client(baseUrl);
 };
 
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
-  const client = mockAgent.get(baseUrl);
-  clients.set(baseUrl, client);
+  client = mockAgent.get(baseUrl);
   return client;
 };
 
