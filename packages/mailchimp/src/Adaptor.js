@@ -346,7 +346,7 @@ const assertOK = (response, fullUrl) => {
  * @param {function} [callback] - (Optional) callback function to handle the response.
  * @returns {Operation}
  */
-export const request = (method, path, options, callback = s => s) => {
+export const request = (method, path, options, callback) => {
   return async state => {
     const apiVersion = '3.0';
     const { apiKey, server } = state.configuration;
