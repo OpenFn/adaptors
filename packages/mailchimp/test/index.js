@@ -126,6 +126,33 @@ describe('get', () => {
 });
 
 describe('request', () => {
+  it('should throw 401', async () => {
+    const state = {
+      references: [],
+      configuration: {
+        apiKey: 'invalidKey-us11',
+        server: 'us11',
+      },
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+    };
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+        headers,
+      })
+      .reply(401);
+
+    await execute(request('GET', '/'))(state).catch(error => {
+      expect(error.message).to.eql(
+        'Request to https://us11.api.mailchimp.com/3.0/ failed with status: 401'
+      );
+    });
+  });
   it('should include method, path and headers', async () => {
     const state = {
       references: [],

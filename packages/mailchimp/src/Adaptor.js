@@ -322,6 +322,17 @@ const defaultOptions = {
   body: undefined,
 };
 
+// Assert response
+const assertOK = (response, fullUrl) => {
+  if (response.statusCode >= 400) {
+    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+
+    const error = new Error(defaultErrorMesssage);
+    error.code = response.statusCode;
+    error.url = fullUrl;
+    throw error;
+  }
+};
 /**
  * Make an HTTP request to Mailchimp API
  * @example <caption>Get list to all other resources available in the API</caption>
@@ -338,7 +349,7 @@ const defaultOptions = {
 export const request = (method, path, options, callback = s => s) => {
   return async state => {
     const apiVersion = '3.0';
-    const { apiKey } = state.configuration;
+    const { apiKey, server } = state.configuration;
 
     const [resolvedMethod, resolvedPath, resolvedOptions] = expandReferences(
       state,
@@ -357,13 +368,16 @@ export const request = (method, path, options, callback = s => s) => {
       Authorization: `Basic ${apiToken}`,
     };
 
+    const urlPath = `/${apiVersion}${resolvedPath}`;
     const response = await state.apiClient.request({
       method: resolvedMethod,
-      path: `/${apiVersion}${resolvedPath}`,
+      path: urlPath,
       headers,
       query,
       body: body ? JSON.stringify(body) : undefined,
     });
+
+    assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
 
     const responseBody = await response.body.json();
 
