@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@openfn/simple-ast": "0.4.1",
-    "@types/node": "18.11.7",
+    "@types/node": "18.17.5",
     "esno": "0.16.3",
     "jsdoc-to-markdown": "8.0.0",
     "ts-node": "10.9.1",
