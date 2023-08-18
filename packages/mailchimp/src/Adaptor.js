@@ -4,7 +4,7 @@ import client from '@mailchimp/mailchimp_marketing';
 import { expandReferences } from '@openfn/language-common/util';
 import { execute as commonExecute } from '@openfn/language-common';
 
-import { handleResponse } from './Utils';
+import { handleResponse, getClient } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -38,14 +38,18 @@ export function execute(...operations) {
 
 function createClient(state) {
   const { apiKey, server } = state.configuration;
+  const baseUrl = `https://${server}.api.mailchimp.com`;
+
   // TODO: throws an error if apiKey not specified in configuration
   // TODO: should we set a default server if server not defined?
+  const apiClient = getClient(baseUrl);
   client.setConfig({ apiKey, server });
-  return { ...state, client: client };
+  return { ...state, apiClient, client: client };
 }
 
 function cleanupState(state) {
-  delete state.client;
+  if (state?.apiClient) delete state.apiClient;
+  if (state?.client) delete state.client;
   return state;
 }
 /**
@@ -311,6 +315,108 @@ export function listAudienceInfo(query, callback = s => s) {
       .then(response => handleResponse(response, state, callback));
   };
 }
+
+// Default options for request()
+const defaultOptions = {
+  query: {},
+  body: undefined,
+};
+
+// Assert response
+const assertOK = (response, fullUrl) => {
+  if (response.statusCode >= 400) {
+    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+
+    const error = new Error(defaultErrorMesssage);
+    error.code = response.statusCode;
+    error.url = fullUrl;
+    throw error;
+  }
+};
+/**
+ * Make an HTTP request to Mailchimp API
+ * @example <caption>Get list to all other resources available in the API</caption>
+ * request('GET','/');
+ * @example <caption>Create a new account export in your Mailchimp account</caption>
+ * request('POST','/accounts-export', {include_stages:[]});
+ * @function
+ * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
+ * @param {string} path - The endpoint of the api to which the request should be made.
+ * @param {Object} options - Additional options for the request (query, body only).
+ * @param {function} [callback] - (Optional) callback function to handle the response.
+ * @returns {Operation}
+ */
+export const request = (method, path, options, callback) => {
+  return async state => {
+    const apiVersion = '3.0';
+    const { apiKey, server } = state.configuration;
+
+    const [resolvedMethod, resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      method,
+      path,
+      options
+    );
+    const { query, body } = { ...defaultOptions, ...resolvedOptions };
+
+    const apiToken = Buffer.from(`openfn:${apiKey}`, 'utf-8').toString(
+      'base64'
+    );
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken}`,
+    };
+
+    const urlPath = `/${apiVersion}${resolvedPath}`;
+    const response = await state.apiClient.request({
+      method: resolvedMethod,
+      path: urlPath,
+      headers,
+      query,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
+
+    const responseBody = await response.body.json();
+
+    const nextState = {
+      data: responseBody,
+      response: responseBody,
+    };
+    if (callback) return callback(nextState);
+    return nextState;
+  };
+};
+
+/**
+ * The get function is used to make a GET request to the Mailchimp API.
+ * @example <caption>Get a list of account exports for a given account</caption>
+ * get('/account-exports');
+ * @function
+ * @param {string} path - The endpoint of the api to which the request should be made
+ * @param {object} query - An object containing query parameters to be included in the request
+ * @param {function} [callback] - (Optional) callback to handle the response
+ * @returns {Operation}
+ */
+export const get = (path, query, callback) =>
+  request('GET', path, { query }, callback);
+
+/**
+ * The post function is used to make a POST request to the Mailchimp API.
+ *
+ * @example <caption>Create a new account export in your Mailchimp account</caption>
+ * post('/accounts-export', {include_stages:[]});
+ * @function
+ * @param {string} path - The endpoint of the api to which the request should be made.
+ * @param {object} body - The data to be sent in the body of the request
+ * @param {object} query - An object containing query parameters to be included in the request
+ * @param {function} [callback] - (Optional) callback to handle the response
+ * @returns {Operation}
+ */
+export const post = (path, body, query, callback) =>
+  request('POST', path, { body, query }, callback);
 
 // Note that we expose the entire axios package to the user here.
 export { axios, md5 };
