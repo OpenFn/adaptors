@@ -1,18 +1,22 @@
-import chai from 'chai';
-const { expect } = chai;
+import { expect } from 'chai';
 
-import nock from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import { request } from '../src/Adaptor.js';
+import { enableMockClient } from '../src/Utils';
+
+const client = enableMockClient('https://us11.api.mailchimp.com');
 
 import Adaptor from '../src';
 const { execute, post } = Adaptor;
+
+const apiToken = apiKey =>
+  Buffer.from(`openfn:${apiKey}`, 'utf-8').toString('base64');
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     let state = {
       configuration: {
         apiKey: 'somEThINGkeyish',
-        server: 'https://mailchimp.com/api',
+        server: 'us11',
       },
     };
     let operations = [
@@ -39,7 +43,7 @@ describe('execute', () => {
     let state = {
       configuration: {
         apiKey: 'somEThINGkeyish',
-        server: 'https://mailchimp.com/api',
+        server: 'us11',
       },
     };
 
@@ -51,28 +55,103 @@ describe('execute', () => {
   });
 });
 
-// describe("post", () => {
+describe('post', () => {
+  it('calls the callback', async () => {
+    let state = {
+      configuration: {
+        apiKey: '00bba-us11',
+        server: 'us11',
+      },
+    };
 
-//   before(() => {
-//     nock('https://fake.server.com').post('/api').reply(200, {foo: 'bar'});
-//   })
+    client
+      .intercept({
+        path: '/3.0/account-exports',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+        },
+      })
+      .reply(200, { foo: 'bar' });
 
-//   it("calls the callback", () => {
-//     let state = {
-//       configuration: {
-//         username: "hello",
-//         password: "there"
-//       }
-//     };
+    return execute(
+      post(
+        '/account-exports',
+        {
+          include_stages: [],
+        },
+        {},
+        state => {
+          let responseBody = state.data;
+          // Check that the post made it's way to the request as a string.
+          expect(responseBody).to.eql({ foo: 'bar' });
+        }
+      )
+    )(state);
+  });
+});
 
-//     return execute(post({
-//       "url": "https://fake.server.com/api",
-//       "headers": null,
-//       "body": {"a": 1}
-//     }))(state).then((state) => {
-//       let responseBody = state.response.body
-//       // Check that the post made it's way to the request as a string.
-//       expect(responseBody).to.eql({foo: 'bar'})
-//     })
-//   })
-// })
+describe('get', () => {
+  it('should send a get request', async () => {
+    const state = {
+      references: [],
+      configuration: {
+        apiKey: '00bba-us11',
+        server: 'us11',
+      },
+    };
+
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+        },
+      })
+      .reply(200, {
+        account_name: 'Open Function Group',
+        email: 'taylor@openfn.org',
+      });
+
+    const finalState = await execute(request('GET', '/'))(state);
+
+    expect(finalState.data).to.eql({
+      account_name: 'Open Function Group',
+      email: 'taylor@openfn.org',
+    });
+  });
+});
+
+describe('request', () => {
+  it('should include method, path and headers', async () => {
+    const state = {
+      references: [],
+      configuration: {
+        apiKey: '00bba-us11',
+        server: 'us11',
+      },
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+    };
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+        headers,
+      })
+      .reply(200, r => {
+        expect(r.method).to.eql('GET');
+        expect(r.path).to.eql('/3.0/');
+        expect(r.headers).to.eql(headers);
+        return r;
+      });
+
+    await execute(request('GET', '/'))(state);
+  });
+});
