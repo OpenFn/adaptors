@@ -2,4 +2,4 @@
 '@openfn/language-mailchimp': minor
 ---
 
-Add request, get and post functionswq
+Add request, get and post functions
