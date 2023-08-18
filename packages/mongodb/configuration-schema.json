@@ -1,11 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
-        "clusterUrl": {
-            "title": "Cluster URL",
+        "clusterHostname": {
+            "title": "Cluster Hostname",
             "type": "string",
-            "description": "Your MongoDB cluster / host URL",
-            "format": "uri",
+            "description": "Your MongoDB cluster hostname",
+            "format": "hostname",
             "minLength": 1,
             "examples": [
                 "yourCluster-xxxyzzz.mongodb.net"
@@ -34,7 +34,7 @@
     "type": "object",
     "additionalProperties": true,
     "required": [
-        "clusterUrl",
+        "clusterHostname",
         "username",
         "password"
     ]

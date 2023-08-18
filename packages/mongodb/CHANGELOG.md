@@ -1,5 +1,20 @@
 # @openfn/language-mongodb
 
+## 1.2.0
+
+### Minor Changes
+
+- Update configuration schema for MongoDB adaptor:
+  - Rename `clusterUrl` to `clusterHostname`
+  - Change `clusterHostname` format from `uri` to `hostname`
+  - Update `Adaptor.js` and tests to use new name
+
+  The MongoDB adaptor configuration expects a hostname, not a strict
+  URI. The existing configuration prevented a user from saving a 
+  "correct" configuration in Lightning, due to the JSON schema verification
+  failing. Changing the format of this configuration property to `hostname`
+  resolves this issue and justifies a name change of the property.
+
 ## 1.1.1
 
 ### Patch Changes

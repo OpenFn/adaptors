@@ -13,7 +13,7 @@ describe('execute', () => {
       configuration: {
         username: 'hello',
         password: 'there',
-        clusterUrl: 'demo.mongodb.net',
+        clusterHostname: 'demo.mongodb.net',
       },
     };
     let operations = [
