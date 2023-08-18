@@ -8,6 +8,8 @@
 <dt>
     <a href="#deleteMember">deleteMember(params, [callback])</a></dt>
 <dt>
+    <a href="#get">get(path, query, [callback])</a></dt>
+<dt>
     <a href="#listAudienceInfo">listAudienceInfo(query, [callback])</a></dt>
 <dt>
     <a href="#listAudiences">listAudiences(query, [callback])</a></dt>
@@ -15,6 +17,10 @@
     <a href="#listBatches">listBatches(params, [callback])</a></dt>
 <dt>
     <a href="#listMembers">listMembers(params, [callback])</a></dt>
+<dt>
+    <a href="#post">post(path, body, query, [callback])</a></dt>
+<dt>
+    <a href="#request">request(method, path, options, [callback])</a></dt>
 <dt>
     <a href="#startBatch">startBatch(params, [callback])</a></dt>
 <dt>
@@ -69,6 +75,26 @@ Permanently delete a member from a list
 | params | <code>object</code> | a listId, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
+
+* * *
+
+## get
+
+get(path, query, [callback]) ⇒ <code>Operation</code>
+The get function is used to make a GET request to the Mailchimp API.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The endpoint of the api to which the request should be made |
+| query | <code>object</code> | An object containing query parameters to be included in the request |
+| [callback] | <code>function</code> | (Optional) callback to handle the response |
+
+**Example** *(Get a list of account exports for a given account)*  
+```js
+get('/account-exports');
+```
 
 * * *
 
@@ -130,6 +156,52 @@ listMembers
 | params | <code>object</code> | a listId, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
+
+* * *
+
+## post
+
+post(path, body, query, [callback]) ⇒ <code>Operation</code>
+The post function is used to make a POST request to the Mailchimp API.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The endpoint of the api to which the request should be made. |
+| body | <code>object</code> | The data to be sent in the body of the request |
+| query | <code>object</code> | An object containing query parameters to be included in the request |
+| [callback] | <code>function</code> | (Optional) callback to handle the response |
+
+**Example** *(Create a new account export in your Mailchimp account)*  
+```js
+post('/accounts-export', {include_stages:[]});
+```
+
+* * *
+
+## request
+
+request(method, path, options, [callback]) ⇒ <code>Operation</code>
+Make an HTTP request to Mailchimp API
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE'). |
+| path | <code>string</code> | The endpoint of the api to which the request should be made. |
+| options | <code>Object</code> | Additional options for the request (query, body only). |
+| [callback] | <code>function</code> | (Optional) callback function to handle the response. |
+
+**Example** *(Get list to all other resources available in the API)*  
+```js
+request('GET','/');
+```
+**Example** *(Create a new account export in your Mailchimp account)*  
+```js
+request('POST','/accounts-export', {include_stages:[]});
+```
 
 * * *
 
