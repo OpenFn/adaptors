@@ -183,3 +183,9 @@ describe('getClaim', () => {
     expect(finalState.data).to.eql(fixtures.claim);
   });
 });
+
+describe('extractResource', () => {
+  it('should extract resource bundle');
+  it('should throw if resource bundle is invalid');
+  it('should modify response in callback');
+});

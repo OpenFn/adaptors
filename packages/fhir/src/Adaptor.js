@@ -172,6 +172,37 @@ export function getClaim(claimId, query, callback = s => s) {
     );
   };
 }
+
+/**
+ * A function that would extract all resources of the specified type from the bundle.
+ * @example
+ * extractResource({bundle},'resouceType')
+ * @param {object} bundle - Specify the bundle to extract resources from
+ * @param {string} resourceType - Specify the type of resource to be
+ * @param callback - (Optional) Handle the response from the server
+ * @return {Operation}
+ */
+export function extractResource(bundle, resourceType, callback) {
+  return state => {
+    const [resolvedBundle, resolveResourceType] = expandReferences(
+      state,
+      bundle,
+      resourceType
+    );
+
+    const { baseUrl, apiPath, authType, token } = state.configuration;
+
+    const url = `${baseUrl}/${apiPath}`;
+    const auth = `${authType} ${token}`;
+    // Prepare the payload
+    const options = { resolvedBundle, resolveResourceType, auth };
+
+    return request(url, options, 'POST').then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
+
 export { request } from './Utils';
 
 export {
