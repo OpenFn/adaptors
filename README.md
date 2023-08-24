@@ -277,10 +277,19 @@ The `build` command accepts a list of build steps as arguments: `ast`, `src`,
 `docs` and `dts`. Calling build on an adaptor with no arguments will build
 everything.
 
+Add `--watch` to watch the `src` for changes and rebuild this dist. This is
+useful when developing with the CLI.
+
 Each adaptor's build command should simply call `build-adaptor` with the package
 name.
 
 You can run `build --help` for more information.
+
+Examples:
+
+```
+pnpm -C packages/salesforce build --watch
+```
 
 ## Metadata
 
