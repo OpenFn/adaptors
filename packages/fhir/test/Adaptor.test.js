@@ -5,11 +5,13 @@ import {
   get,
   getClaim,
   createTransactionBundle,
+  extractResource,
 } from '../src/Adaptor.js';
 import { fixtures } from './ClientFixtures';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
+import axios from 'axios';
 
 setGlobalDispatcher(MockAgent);
 
@@ -185,7 +187,20 @@ describe('getClaim', () => {
 });
 
 describe('extractResource', () => {
-  it('should extract resource bundle');
-  it('should throw if resource bundle is invalid');
-  it('should modify response in callback');
+  const baseUrl = 'https://hapi.fhir.org/baseR4';
+
+  it('should extract resources of the specified type from the bundle', async () => {
+    const bundleResponse = await axios.get(`${baseUrl}/Bundle`);
+    const bundle = bundleResponse.data;
+
+    const resourceTypeToExtract = 'Patient';
+
+    const extractedResources = extractResource(bundle, resourceTypeToExtract)();
+    expect(extractedResources.resourceType).to.equal('Bundle');
+    expect(extractedResources.entry).to.be.an('array');
+        const allResourcesAreOfType = extractedResources.entry.every(entry =>
+      entry.resource.resourceType === resourceTypeToExtract
+    );
+    expect(allResourcesAreOfType).to.be.true;
+  });
 });

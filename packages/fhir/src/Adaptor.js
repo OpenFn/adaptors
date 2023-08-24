@@ -190,16 +190,35 @@ export function extractResource(bundle, resourceType, callback) {
       resourceType
     );
 
-    const { baseUrl, apiPath, authType, token } = state.configuration;
+    // Filter resources of the specified type
+    const extractedResources = (resolvedBundle.entry || []).filter(
+      entry =>
+        entry.resource && entry.resource.resourceType === resolveResourceType
+    );
 
+    const extractedBundle = {
+      resourceType: 'Bundle',
+      type: 'collection',
+      entry: extractedResources,
+    };
+
+    const { baseUrl, apiPath, authType, token } = state.configuration;
     const url = `${baseUrl}/${apiPath}`;
     const auth = `${authType} ${token}`;
-    // Prepare the payload
-    const options = { resolvedBundle, resolveResourceType, auth };
 
-    return request(url, options, 'POST').then(response =>
-      handleResponse(response, state, callback)
-    );
+  
+    const options = {
+      body: extractedBundle, 
+      headers: {
+        accept: 'application/fhir+json',
+        'Content-Type': 'application/fhir+json',
+        authorization: auth,
+      },
+    };
+
+    // Send the request and handle the response
+    return request(url, options, 'POST')
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
