@@ -440,5 +440,6 @@ export {
   fields,
   lastReferenceValue,
   merge,
+  chunk,
   sourceValue,
 } from '@openfn/language-common';
