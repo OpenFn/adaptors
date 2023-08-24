@@ -324,12 +324,19 @@ const defaultOptions = {
 
 // Assert response
 const assertOK = (response, fullUrl) => {
-  if (response.statusCode >= 400) {
-    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+  if (response.status >= 400) {
+    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.status}`;
 
     const error = new Error(defaultErrorMesssage);
-    error.code = response.statusCode;
+
     error.url = fullUrl;
+    error.type = response.type;
+    error.title = response.title;
+    error.status = response.status;
+    error.detail = response.detail;
+    error.instance = response.instance;
+    error.errors = response.errors;
+
     throw error;
   }
 };
@@ -377,11 +384,11 @@ export const request = (method, path, options, callback) => {
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
-
     const responseBody = await response.body.json();
+    assertOK(responseBody, `https://${server}.api.mailchimp.com${urlPath}`);
 
     const nextState = {
+      ...state,
       data: responseBody,
       response: responseBody,
     };
@@ -418,6 +425,7 @@ export const get = (path, query, callback) =>
 export const post = (path, body, query, callback) =>
   request('POST', path, { body, query }, callback);
 
+// TODO Remove axios export
 // Note that we expose the entire axios package to the user here.
 export { axios, md5 };
 
