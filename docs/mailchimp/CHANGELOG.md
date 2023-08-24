@@ -1,5 +1,13 @@
 # @openfn/language-mailchimp
 
+## 0.7.0
+
+### Minor Changes
+
+- 58fcea9: - Add chunk from common
+  - Improve error logs
+  - Return `state` in request finalState
+
 ## 0.6.0
 
 ### Minor Changes
