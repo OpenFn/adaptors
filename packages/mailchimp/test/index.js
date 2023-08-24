@@ -126,6 +126,72 @@ describe('get', () => {
 });
 
 describe('request', () => {
+  it('should return state with data and response', async () => {
+    const state = {
+      references: [],
+      configuration: {
+        apiKey: '00bba-us11',
+        server: 'us11',
+      },
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+    };
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+        headers,
+      })
+      .reply(200, {});
+
+    const finalState = await execute(request('GET', '/'))(state);
+
+    expect(finalState).to.eql({ ...state, data: {}, response: {} });
+  });
+  it('should expand argument refernces', async () => {
+    const operationFixture = [
+      {
+        method: 'POST',
+        path: '/lists/abdc123/members/test@openfn.org/tags',
+        operation_id: 'test@openfn.org',
+        body: '{}',
+      },
+    ];
+    const state = {
+      references: [],
+      configuration: {
+        apiKey: '00bba-us11',
+        server: 'us11',
+      },
+      operations: operationFixture,
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken(state.configuration.apiKey)}`,
+    };
+    client
+      .intercept({
+        path: '/3.0/batches',
+        method: 'POST',
+        headers,
+        data: operationFixture,
+      })
+      .reply(200, r => {
+        expect(r.body).to.eql(JSON.stringify(operationFixture));
+        expect(r.headers).to.eql(headers);
+        return r;
+      });
+
+    await execute(
+      request('POST', '/batches', state => ({
+        body: state.operations,
+      }))
+    )(state);
+  });
   it('should throw 401', async () => {
     const state = {
       references: [],
@@ -145,7 +211,13 @@ describe('request', () => {
         method: 'GET',
         headers,
       })
-      .reply(401);
+      .reply(401, {
+        type: 'https://mailchimp.com/developer/marketing/docs/errors/',
+        title: 'API Key Invalid',
+        status: 401,
+        detail: 'API key has been disabled',
+        instance: '82e67146-6d11-9301-ffa1-893f2918013a',
+      });
 
     await execute(request('GET', '/'))(state).catch(error => {
       expect(error.message).to.eql(
