@@ -393,6 +393,7 @@ export const request = (method, path, options, callback) => {
       response: responseBody,
     };
     if (callback) return callback(nextState);
+
     return nextState;
   };
 };

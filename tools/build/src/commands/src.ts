@@ -1,7 +1,8 @@
-import { build, Options } from 'tsup';
+import { build, Options as TsupOptions } from 'tsup';
 import resolvePath from '../util/resolve-path';
+import type { Options } from '../pipeline';
 
-const config: Options = {
+const config: TsupOptions = {
   format: ['esm', 'cjs'],
   target: 'node14',
   platform: 'node',
@@ -21,7 +22,7 @@ const fetchConfig = async (adaptorPath: string) => {
   return {};
 };
 
-export default async (lang: string) => {
+export default async (lang: string, options: Options = {}) => {
   const p = resolvePath(lang);
   console.log();
   console.log('Building JS');
@@ -38,5 +39,6 @@ export default async (lang: string) => {
   return build({
     ...defaultBuildConfig,
     ...overrides,
+    watch: options.watch,
   });
 };

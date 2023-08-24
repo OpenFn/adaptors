@@ -11,14 +11,22 @@ type Config = {
   out: string;
 };
 
-const run = async (lang: string, tasks: string[] = ['src', 'dts', 'docs']) => {
+export type Options = {
+  watch?: boolean;
+};
+
+const run = async (
+  lang: string,
+  tasks: string[] = ['src', 'dts', 'docs'],
+  options: Options = {}
+) => {
   console.log('Running pipeline for', lang);
   console.log(`Root dir: ${resolvePath(lang)}`);
 
   tasks
     .map(t => commands[t])
     .filter(fn => fn)
-    .reduce((p, task) => p.then(() => task(lang)), Promise.resolve());
+    .reduce((p, task) => p.then(() => task(lang, options)), Promise.resolve());
 };
 
 export default run;

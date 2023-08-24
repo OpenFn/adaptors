@@ -17,10 +17,14 @@ export const cmd = yargs(hideBin(process.argv))
     array: true,
     description: 'src, ast, docs, dts',
   })
+  .option('watch', {
+    boolean: true,
+    description: 'watch for changes and rebuild (only really works for src)',
+  })
   .parse();
 
 if (!cmd.tasks) {
   cmd.tasks = ['src', 'dts', 'docs', 'ast'];
 }
 
-run(cmd.lang, cmd.tasks);
+run(cmd.lang, cmd.tasks, { watch: cmd.watch });
