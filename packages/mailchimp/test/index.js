@@ -145,9 +145,16 @@ describe('request', () => {
         method: 'GET',
         headers,
       })
-      .reply(401);
+      .reply(401, {
+        type: 'https://mailchimp.com/developer/marketing/docs/errors/',
+        title: 'API Key Invalid',
+        status: 401,
+        detail: 'API key has been disabled',
+        instance: '82e67146-6d11-9301-ffa1-893f2918013a',
+      });
 
     await execute(request('GET', '/'))(state).catch(error => {
+      console.log(error);
       expect(error.message).to.eql(
         'Request to https://us11.api.mailchimp.com/3.0/ failed with status: 401'
       );
