@@ -1,6 +1,8 @@
 import md5 from 'md5';
 import axios from 'axios';
 import client from '@mailchimp/mailchimp_marketing';
+import gunzip from 'gunzip-maybe';
+import tar from 'tar-stream'
 import { expandReferences } from '@openfn/language-common/util';
 import { execute as commonExecute } from '@openfn/language-common';
 
@@ -25,7 +27,7 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(
+;    return commonExecute(
       createClient,
       ...operations,
       cleanupState
@@ -425,6 +427,48 @@ export const get = (path, query, callback) =>
  */
 export const post = (path, body, query, callback) =>
   request('POST', path, { body, query }, callback);
+
+// fetch a bach result, extract and parse it, and return to state
+// TODO this takes the request_body_url explicitly, but could we just take the batch response?
+export const getBatchResult = (url) => {
+  return async (state) => {
+    
+    // Fetch the file with the rest API client
+    const response = await state.apiClient.request({
+      method: 'GET',
+      path: url,
+      query,
+    });
+
+    // Extract the files from the tarball
+    const extract = tar.extract();
+    const stream = Readable.from(response.body);
+    stream.pipe(gunzip).pipe(extract);
+    
+    // This is where we'll save the result data
+    const responseByFile = {};
+    
+    // This iterates over every file in the tarball
+    for await (const entry of extract) {
+      let jsonString = ''
+      // Load the file's json into a string
+      for await (const d of entry) {
+        jsonString += d;
+      }
+      // Now parse and save the json to responseByFile using the file name
+      responseByFile[entry.header.name] = JSON.parse(jsonString);
+
+      // Now parse the next file
+      entry.resume();
+    }
+
+
+    return {
+      ...state,
+      data: responseByFile
+    }
+  }
+}
 
 // TODO Remove axios export
 // Note that we expose the entire axios package to the user here.
