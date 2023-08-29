@@ -4,12 +4,16 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
+import Ajv from 'ajv';
 
 import { expandReferences as newExpandReferences } from './util';
 
 export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
+
+const ajv = new Ajv();
+const schemaCache = {};
 
 /**
  * Execute a sequence of operations.
@@ -667,3 +671,45 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 //     return array.find(a => a[uid] === id);
 //   });
 // }
+
+/**
+ * Validate against a JSON schema
+ * @param {string|object} data or JSON path to validate
+ * @param {JSONschema} schema the schema to validate against
+ * @returns
+ */
+export function validate(data, schema) {
+  return state => {
+    if (!state.validationErrors) {
+      state.validationErrors = [];
+    }
+
+    let [resolvedData, resolvedSchema] = newExpandReferences(
+      state,
+      data,
+      schema
+    );
+
+    if (typeof resolved === 'string') {
+      [resolvedData] = JSONPath({ path: resolvedData, json: state });
+    }
+
+    // Warn if the schema doesn't have an id?
+    const schemaId = resolvedSchema.$id || 'schema';
+    console.log(schemaId);
+    console.log(resolvedData);
+    if (!schemaCache[schemaId]) {
+      schemaCache[schemaId] = ajv.compile(resolvedSchema);
+    }
+
+    const validate = schemaCache[schemaId];
+
+    if (!validate(state.data)) {
+      state.validationErrors.push({
+        data: state.data,
+        errors: validate.errors,
+      });
+    }
+    return state;
+  };
+}

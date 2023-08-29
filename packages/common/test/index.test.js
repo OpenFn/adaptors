@@ -592,3 +592,29 @@ describe('parseCsv', function () {
     assert.equal(callCount, 3);
   });
 });
+
+describe('validate', function () {
+  it('should validate against a json schema', function () {
+    const schema = {};
+    const data = {};
+
+    // should schema be on state?
+
+    // what happens if we fail? throw? write a "valid" key to stae?
+    // where does the schema come from?
+    validate(schema, data)(state);
+    const input = { a: { b: { c: 1, e: '' } } };
+
+    const desired1 = 1;
+    const desired2 = undefined;
+    const desired3 = '';
+
+    assert.equal(jsonValue(input, 'a.b.c'), desired1);
+    assert.equal(jsonValue(input, 'a.d.c'), desired2);
+    assert.equal(jsonValue(input, 'a.b.e'), desired3);
+  });
+
+  it('should validate against a json schema by url', function () {
+    validate('www', data)(state);
+  });
+});
