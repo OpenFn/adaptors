@@ -1,131 +1,180 @@
 import { expect } from 'chai';
-import { enableMockClient, get, post, del } from '../../src/util/http.js';
+import {
+  enableMockClient,
+  request,
+  get,
+  post,
+  del,
+} from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
 
-const mockClient = (
-  requestParams = { path, query, method, body, headers },
-  statusCode,
-  replyData,
-  replyHeaders
-) => {
-  return client
-    .intercept({
-      ...requestParams,
-    })
-    .reply(statusCode, replyData, replyHeaders);
-};
-
 describe('request function', () => {
-  it('should make a successful GET request', async () => {
-    mockClient(
-      {
-        path: '/api',
-        method: 'GET',
-      },
-      200,
-      {},
-      {
-        headers: {
-          'content-type': 'application/json',
-        },
-      }
-    );
+  // TODO - everything here should use `request` (not get)
+  describe('parseAs', () => {
+    // mock needs to include headers
+    it('should auto parse as json', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(
+          200,
+          {
+            name: 'mutchi',
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+            },
+          }
+        );
 
-    const result = await get('https://www.example.com/api');
+      const result = await request('GET', 'https://www.example.com/api');
+
+      expect(result.data).to.eql({ name: 'mutchi' });
+    });
+    it('should auto parse as text by default', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, {
+          name: 'joe',
+        });
+
+      const result = await request('GET', 'https://www.example.com/api');
+
+      expect(result.data).to.eql(JSON.stringify({ name: 'joe' }));
+    });
+
+    it('should auto parse as text in any other case', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, 'hello world', {
+          headers: {
+            'content-type': 'application/xml',
+          },
+        });
+
+      const result = await request('GET', 'https://www.example.com/api');
+
+      expect(result.data).to.eql('hello world');
+    });
+
+    // parameters needs to set parseAs
+    it('should force as json', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, {
+          name: 'aissa',
+        });
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'json',
+      });
+
+      expect(result.data).to.eql({ name: 'aissa' });
+    });
+    // explicitly include headers to ensure they're ignore?
+    it('should force as json even if content type is string', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(
+          200,
+          {
+            name: 'aissa',
+          },
+          {
+            headers: {
+              'content-type': 'application/text',
+            },
+          }
+        );
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'json',
+      });
+
+      expect(result.data).to.eql({ name: 'aissa' });
+    });
+    it('should force as stream', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, {
+          name: 'iam stream',
+        });
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'stream',
+      });
+
+      //TODO - Better technique for testing stream
+      expect(await result.data.json()).to.eql({ name: 'iam stream' });
+    });
+  });
+
+  it('should make a successful arbitary request', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'JOE',
+      })
+      .reply(
+        200,
+        {},
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const result = await request('JOE', 'https://www.example.com/api');
 
     expect(result.data).to.eql({});
     expect(result.code).to.eql(200);
   });
 
-  it('should handle different HTTP methods eg: POST', async () => {
-    let request;
-
-    client
-      .intercept({
-        path: '/api',
-        method: 'POST',
-      })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
-
-    await post('https://www.example.com/api');
-
-    expect(request.method).to.eql('POST');
-  });
-
-  it('should send a DELETE', async () => {
-    let request;
-
-    client
-      .intercept({
-        path: '/api',
-        method: 'DELETE',
-      })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
-
-    await del('https://www.example.com/api');
-
-    expect(request.method).to.eql('DELETE');
-  });
-
-  it.skip('should not set header content-type to application/json if body is string', async () => {
-    let request;
-    client
-      .intercept({
-        path: '/api',
-        method: 'POST',
-      })
-      .reply(200, r => {
-        request = r;
-        return '';
-      });
-
-    await post('/api', 'some string', {
-      baseUrl: 'https://www.example.com',
-    });
-
-    expect(request.headers).to.eql({});
-  });
-
   it('should use baseUrl from options', async () => {
-    let request;
     client
       .intercept({
         path: '/api',
         method: 'GET',
       })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
+      .reply(200, {});
 
-    const response = await get('/api', { baseUrl: 'https://www.example.com' });
+    const response = await request('GET', '/api', {
+      baseUrl: 'https://www.example.com',
+    });
 
-    expect(request.path).to.eql('/api');
     expect(response.code).to.eql(200);
   });
 
   it('should accept an absolute url', async () => {
-    let request;
     client
       .intercept({
         path: '/api',
         method: 'GET',
       })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
+      .reply(200, {});
 
-    const response = await get('https://www.example.com/api');
+    const response = await request('GET', 'https://www.example.com/api');
 
-    expect(request.path).to.eql('/api');
     expect(response.code).to.eql(200);
   });
 });
@@ -145,11 +194,15 @@ describe('options', () => {
         }
       );
 
-    const response = await get('https://www.example.com/api/content', {
-      errors: {
-        204: 'Content not found',
-      },
-    });
+    const response = await request(
+      'GET',
+      'https://www.example.com/api/content',
+      {
+        errors: {
+          204: 'Content not found',
+        },
+      }
+    );
 
     expect(response.code).to.eql(200);
   });
@@ -169,7 +222,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await get('https://www.example.com/api/noContent', {
+      await request('GET', 'https://www.example.com/api/noContent', {
         errors: {
           204: 'Content not found',
         },
@@ -196,7 +249,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await get('https://www.example.com/api/noAccess', {
+      await request('GET', 'https://www.example.com/api/noAccess', {
         errors: {
           404: response => (response.context ? 'No Access' : 'Not found'),
         },
@@ -224,7 +277,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await get('https://www.example.com/api/noAccess');
+      await request('GET', 'https://www.example.com/api/noAccess');
     } catch (err) {
       error = err;
     }
@@ -232,32 +285,6 @@ describe('options', () => {
     expect(error.message).to.eql(
       'Request to https://www.example.com/api/noAccess failed with status: 404'
     );
-  });
-  it('should include headers', async () => {
-    // check the headers that are incuded in the actual request
-    let request;
-    client
-      .intercept({
-        path: '/api',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
-
-    await get('https://www.example.com/api', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    expect(request.headers).to.eql({
-      'Content-Type': 'application/json',
-    });
   });
 
   it('should encode keys and values of query', async () => {
@@ -351,17 +378,72 @@ describe('options', () => {
         }
       );
 
-    const response = await get('https://www.example.com/api', {
+    const { data } = await get('https://www.example.com/api', {
       query: {
         id: '2',
       },
     });
 
-    expect(response.data).to.eql({
+    expect(data).to.eql({
       id: '2',
     });
   });
+});
 
-  //TODO
-  it.skip('should force parse a response body as if json: true is passed', () => {});
+describe('helpers', () => {
+  it('should make a successful GET request', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {},
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const { data, code } = await get('https://www.example.com/api');
+
+    expect(data).to.eql({});
+    expect(code).to.eql(200);
+  });
+  it('should handle different HTTP methods eg: POST', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'POST',
+      })
+      .reply(200);
+
+    const { code } = await post('https://www.example.com/api');
+
+    expect(code).to.eql(200);
+  });
+
+  it('should send a DELETE', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'DELETE',
+      })
+      .reply(
+        200,
+        {},
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const { data, code } = await del('https://www.example.com/api');
+
+    expect(data).to.eql({});
+    expect(code).to.eql(200);
+  });
 });

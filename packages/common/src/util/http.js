@@ -101,10 +101,6 @@ export async function request(method, fullUrlOrPath, options = {}) {
     ...options,
   };
 
-  if (!headers['Content-Type'] && typeof body !== 'string') {
-    headers['Content-Type'] = 'application/json';
-  }
-
   const client = getClient(baseUrl, { tls, timeout });
 
   const response = await client.request({
