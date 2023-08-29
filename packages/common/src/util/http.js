@@ -22,7 +22,9 @@ const getClient = baseUrl => {
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
   const client = mockAgent.get(baseUrl);
-  clients.set(baseUrl, client);
+  if (!clients.has(baseUrl)) {
+    clients.set(baseUrl, client);
+  }
   return client;
 };
 const separateUrl = fullUrl => {
