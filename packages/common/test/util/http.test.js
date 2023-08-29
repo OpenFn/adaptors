@@ -2,6 +2,14 @@ import { expect } from 'chai';
 import { enableMockClient, get, post, del } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
+
+const mockClient = (requestParams, statusCode, response, type) => {
+  return client
+    .intercept({
+      ...requestParams,
+    })
+    .reply(statusCode, response, type);
+};
 describe('request', () => {
   it('should not set header content-type to application/json if body is string', async () => {
     let request;
@@ -59,26 +67,27 @@ describe('request', () => {
 });
 describe('methods', () => {
   it('should send a GET', async () => {
-    // set up mock GET at /
-    let request;
-    client
-      .intercept({
+    mockClient(
+      {
         path: '/api',
         method: 'GET',
-      })
-      .reply(200, r => {
-        request = r;
-        return {};
-      });
+      },
+      200,
+      {},
+      {
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
 
-    await get('https://www.example.com/api');
+    const finalState = await get('https://www.example.com/api');
 
-    // test the result
-    expect(request.method).to.eql('GET');
+    expect(finalState.data).to.eql({});
+    expect(finalState.code).to.eql(200);
   });
 
   it('should send a POST', async () => {
-    // set up mock POST at /
     let request;
 
     client
@@ -93,12 +102,10 @@ describe('methods', () => {
 
     await post('https://www.example.com/api');
 
-    // test the result
     expect(request.method).to.eql('POST');
   });
 
   it('should send a DELETE', async () => {
-    // set up mock DELETE at /
     let request;
 
     client
@@ -113,7 +120,6 @@ describe('methods', () => {
 
     await del('https://www.example.com/api');
 
-    // test the result
     expect(request.method).to.eql('DELETE');
   });
 });

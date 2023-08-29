@@ -37,15 +37,6 @@ const separateUrl = fullUrl => {
   };
 };
 
-const defaultOptions = {
-  timeout: 300e3, // Default to 300 seconds
-  headers: {},
-  query: undefined,
-  body: undefined,
-  errors: {},
-  tls: {},
-};
-
 const assertOK = (response, errorMap, fullUrl) => {
   const errMapMessage = errorMap[response.statusCode];
 
@@ -73,6 +64,15 @@ const isValidHttpUrl = fullUrl => {
   }
 };
 
+const defaultOptions = {
+  timeout: 300e3, // Default to 300 seconds
+  headers: {},
+  query: undefined,
+  body: undefined,
+  errors: {},
+  tls: {},
+  parseAs: 'auto',
+};
 /**
  * The function `request` is an asynchronous function that sends HTTP requests and returns the response
  * data, headers, and status code.
@@ -96,7 +96,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     path = fullUrlOrPath;
   }
 
-  const { headers, query, body, errors, timeout, tls } = {
+  const { headers, query, body, errors, timeout, tls, parseAs } = {
     ...defaultOptions,
     ...options,
   };
@@ -118,7 +118,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   assertOK(response, errors, fullUrlOrPath);
 
-  const responseBody = await readResponseBody(response);
+  const responseBody = await readResponseBody(response, parseAs);
 
   return {
     code: response.statusCode,
@@ -127,16 +127,20 @@ export async function request(method, fullUrlOrPath, options = {}) {
   };
 }
 
-async function readResponseBody(response) {
+async function readResponseBody(response, parseAs) {
   const contentType = response.headers['content-type'];
 
-  if (contentType?.includes('application/json')) {
-    return response.body.json();
-  } else {
-    // TODO This need more thinking
-    // The function should automagically return the right response based
-    // Content-type or request options
-    return response.body.text();
+  switch (parseAs) {
+    case 'json':
+      return response.body.json();
+    case 'text':
+      return response.body.text();
+    case 'stream':
+      return response.body;
+    default:
+      return contentType?.includes('application/json')
+        ? response.body.json()
+        : response.body.text();
   }
 }
 
