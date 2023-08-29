@@ -39,7 +39,7 @@ describe('request', () => {
     expect(response.code).to.eql(200);
   });
 
-  it('should use fullUrlOrPath', async () => {
+  it('should accept an absolute url', async () => {
     let request;
     client
       .intercept({
