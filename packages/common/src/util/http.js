@@ -17,8 +17,6 @@ const getClient = baseUrl => {
   return clients.get(baseUrl);
 };
 
-// TODO make sure this is safe to call multple times
-// Ie, only maintain one mockagent, and re-use a client if it exists
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
   const client = mockAgent.get(baseUrl);
