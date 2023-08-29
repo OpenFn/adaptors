@@ -3,13 +3,19 @@ import { enableMockClient, get, post, del } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
 
-const mockClient = (requestParams, statusCode, response, type) => {
+const mockClient = (
+  requestParams = { path, query, method, body, headers },
+  statusCode,
+  replyData,
+  replyHeaders
+) => {
   return client
     .intercept({
       ...requestParams,
     })
-    .reply(statusCode, response, type);
+    .reply(statusCode, replyData, replyHeaders);
 };
+
 describe('request', () => {
   it('should not set header content-type to application/json if body is string', async () => {
     let request;
