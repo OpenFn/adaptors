@@ -10,9 +10,13 @@ import { Client, MockAgent } from 'undici';
 
 const clients = new Map();
 
-const getClient = baseUrl => {
+const getClient = (baseUrl, options) => {
+  const { tls, timeout } = options;
   if (!clients.has(baseUrl)) {
-    clients.set(baseUrl, new Client(baseUrl));
+    clients.set(
+      baseUrl,
+      new Client(baseUrl, { bodyTimeout: timeout, connect: tls })
+    );
   }
   return clients.get(baseUrl);
 };
@@ -33,18 +37,8 @@ const separateUrl = fullUrl => {
   };
 };
 
-/**
- * The `defaultOptions` constant is an object that defines default values for various options that can
- * be passed to the `request` function. These options include
- * `headers`,
- * `query`,
- * `timeout`,
- * `tls`,
- * `body`, and
- * `errors`.
- */
 const defaultOptions = {
-  timeout: 300, // Default to 300 seconds
+  timeout: 300e3, // Default to 300 seconds
   headers: {},
   query: undefined,
   body: undefined,
@@ -73,7 +67,7 @@ const assertOK = (response, errorMap, fullUrl) => {
 const isValidHttpUrl = fullUrl => {
   try {
     const { protocol } = new URL(fullUrl);
-    return protocol === 'http:' || protocol === 'https:';
+    return protocol.startsWith('http');
   } catch (_) {
     return false;
   }
@@ -111,7 +105,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     headers['Content-Type'] = 'application/json';
   }
 
-  const client = getClient(baseUrl);
+  const client = getClient(baseUrl, { tls, timeout });
 
   const response = await client.request({
     path,
@@ -120,8 +114,6 @@ export async function request(method, fullUrlOrPath, options = {}) {
     headers,
     body: body ? JSON.stringify(body) : undefined,
     throwOnError: false,
-    bodyTimeout: timeout,
-    connect: tls,
   });
 
   assertOK(response, errors, fullUrlOrPath);
