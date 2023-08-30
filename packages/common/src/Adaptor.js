@@ -677,39 +677,74 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
  * @param {string|object} data or JSON path to validate
  * @param {JSONschema} schema the schema to validate against
  * @returns
+ *
+ * TODO:
+ *  - should we accept schema as a URL and fetch it?
+ *  - This might be important as common.http is broken
+ *  - should we validate state.data? This is super useful inside an each, after a trigger or after a fetch
  */
-export function validate(data, schema) {
-  return state => {
+export function validate(schema = 'schema', data = 'data') {
+  return async state => {
+    console.log('state', state);
     if (!state.validationErrors) {
       state.validationErrors = [];
     }
 
-    let [resolvedData, resolvedSchema] = newExpandReferences(
-      state,
-      data,
-      schema
-    );
+    const resolvedData = resolveData();
+    const resolvedSchema = await resolveSchema();
+    console.log('data', resolvedData);
+    console.log('> schema', resolvedSchema);
 
-    if (typeof resolved === 'string') {
-      [resolvedData] = JSONPath({ path: resolvedData, json: state });
-    }
-
-    // Warn if the schema doesn't have an id?
+    // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
     const schemaId = resolvedSchema.$id || 'schema';
-    console.log(schemaId);
-    console.log(resolvedData);
     if (!schemaCache[schemaId]) {
       schemaCache[schemaId] = ajv.compile(resolvedSchema);
     }
 
     const validate = schemaCache[schemaId];
 
-    if (!validate(state.data)) {
+    if (!validate(resolvedData)) {
       state.validationErrors.push({
         data: state.data,
         errors: validate.errors,
       });
     }
     return state;
+
+    // Schema can be a url, jsonpath or object; or a function resolving to any of these
+    async function resolveSchema() {
+      // TODO hmm, I don't really want to expand schema if it's an object
+      const [schemaOrUrl] = newExpandReferences(state, schema);
+
+      if (typeof schemaOrUrl === 'string') {
+        try {
+          // Check if the schema is a URL - in which case we fetch it
+          const url = new URL(schemaOrUrl);
+          const response = await fetch(url);
+          return response.json();
+        } catch (e) {
+          if (e instanceof TypeError) {
+            // URL throws a TypeError if it's not a valid url, so we'll treat the string as a json path instead
+            return JSONPath({ path: schemaOrUrl, json: state })[0];
+          } else {
+            // error fetching the url
+            console.error('Error fetching schema from ', schemaOrUrl);
+            console.error(e);
+          }
+        }
+      }
+      // schema is an object
+      return schemaOrUrl;
+    }
+
+    // data can be a jsonpath or object; or function resolving to any of these
+    function resolveData() {
+      const [d] = newExpandReferences(state, data);
+
+      if (typeof d === 'string') {
+        return JSONPath({ path: d, json: state });
+      }
+      return d;
+    }
   };
 }
