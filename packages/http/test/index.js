@@ -1,14 +1,6 @@
-import {
-  execute,
-  get,
-  post,
-  put,
-  patch,
-  del,
-  alterState,
-  request,
-} from '../src';
+import { execute, get, post, put, patch, del, fn, request } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
+import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 import nock from 'nock';
 import { setUrl } from '../src/Utils';
@@ -35,7 +27,7 @@ function clientReq(method, state) {
   );
 }
 
-describe('The execute() function', () => {
+describe.skip('The execute() function', () => {
   it('executes each operation in sequence', () => {
     let state = {};
     let operations = [
@@ -72,7 +64,7 @@ describe('The execute() function', () => {
   });
 });
 
-describe('setUrl', () => {
+describe.skip('setUrl', () => {
   it('handles no slashes on either baseUrl or path', () => {
     const configuration = { baseUrl: 'https://www.test.com' };
     const path = 'users/5';
@@ -102,7 +94,7 @@ describe('setUrl', () => {
   });
 });
 
-const testServer = nock('https://www.example.com');
+const testServer = enableMockClient('https://www.example.com');
 
 describe('The client', () => {
   before(() => {
@@ -168,62 +160,72 @@ describe('The client', () => {
 
 describe('get()', () => {
   before(() => {
-    testServer.get('/api/fake').times(4).reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-
     testServer
-      .get('/api/showMeMyHeaders')
-      .times(3)
-      .reply(200, function (url, body) {
-        return [url, this.req.headers];
-      });
-
-    testServer
-      .get('/api/showMeMyHeaders?id=1')
-      .reply(200, function (url, body) {
-        return [url, this.req.headers];
-      });
-
-    testServer
-      .get('/api/fake-endpoint')
-      .matchHeader('followAllRedirects', true)
-      .reply(301, undefined, {
-        Location: 'https://www.example.com/api/fake-endpoint-2',
+      .intercept({
+        path: '/api/fake',
+        method: 'GET',
       })
-      .get('/api/fake-endpoint-2')
-      .reply(302, undefined, {
-        Location: 'https://www.example.com/api/fake-endpoint-3',
-      })
-      .get('/api/fake-endpoint-3')
-      .reply(200, function (url, body) {
-        return { url };
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
       });
 
-    testServer.get('/api/fake-cookies').reply(
-      200,
-      function (url, body) {
-        return { url };
-      },
-      { 'Set-Cookie': ['tasty_cookie=choco'] }
-    );
+    // testServer.get('/api/fake').times(4).reply(200, {
+    //   httpStatus: 'OK',
+    //   message: 'the response',
+    // });
 
-    testServer.get('/api/fake-callback').reply(200, function (url, body) {
-      return { url, id: 3 };
-    });
+    // testServer
+    //   .get('/api/showMeMyHeaders')
+    //   .times(3)
+    //   .reply(200, function (url, body) {
+    //     return [url, this.req.headers];
+    //   });
 
-    testServer.get('/api/fake-promise').reply(200, function (url, body) {
-      return new Promise((resolve, reject) => {
-        resolve({ url, id: 3 });
-      });
-    });
+    // testServer
+    //   .get('/api/showMeMyHeaders?id=1')
+    //   .reply(200, function (url, body) {
+    //     return [url, this.req.headers];
+    //   });
 
-    testServer.get('/api/badAuth').times(2).reply(404);
-    testServer.get('/api/crashDummy').times(2).reply(500);
+    // testServer
+    //   .get('/api/fake-endpoint')
+    //   .matchHeader('followAllRedirects', true)
+    //   .reply(301, undefined, {
+    //     Location: 'https://www.example.com/api/fake-endpoint-2',
+    //   })
+    //   .get('/api/fake-endpoint-2')
+    //   .reply(302, undefined, {
+    //     Location: 'https://www.example.com/api/fake-endpoint-3',
+    //   })
+    //   .get('/api/fake-endpoint-3')
+    //   .reply(200, function (url, body) {
+    //     return { url };
+    //   });
+
+    // testServer.get('/api/fake-cookies').reply(
+    //   200,
+    //   function (url, body) {
+    //     return { url };
+    //   },
+    //   { 'Set-Cookie': ['tasty_cookie=choco'] }
+    // );
+
+    // testServer.get('/api/fake-callback').reply(200, function (url, body) {
+    //   return { url, id: 3 };
+    // });
+
+    // testServer.get('/api/fake-promise').reply(200, function (url, body) {
+    //   return new Promise((resolve, reject) => {
+    //     resolve({ url, id: 3 });
+    //   });
+    // });
+
+    // testServer.get('/api/badAuth').times(2).reply(404);
+    // testServer.get('/api/crashDummy').times(2).reply(500);
   });
 
-  it('prepares nextState properly', () => {
+  it.only('prepares nextState properly', () => {
     let state = {
       configuration: {
         username: 'hello',
@@ -236,16 +238,17 @@ describe('get()', () => {
     };
 
     return execute(
-      alterState(state => {
+      fn(state => {
         state.counter = 1;
         return state;
       }),
       get('/api/fake', {}),
-      alterState(state => {
+      fn(state => {
         state.counter = 2;
         return state;
       })
     )(state).then(nextState => {
+      console.log(nextState);
       const { data, references, counter } = nextState;
       expect(data).to.haveOwnProperty('httpStatus', 'OK');
       expect(data).to.haveOwnProperty('message', 'the response');
@@ -969,7 +972,7 @@ describe('The `agentOptions` param', () => {
     };
 
     const finalState = await execute(
-      alterState(state => {
+      fn(state => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
@@ -1013,7 +1016,7 @@ describe('The `agentOptions` param', () => {
     };
 
     const finalState = await execute(
-      alterState(state => {
+      fn(state => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),

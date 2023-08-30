@@ -12,6 +12,8 @@ export { axios };
  * @param {object} value - data
  * @returns {Operation}
  */
+// TODO Deprecate or remove expandRequestReferences
+// Once new http helpers are available
 export function expandRequestReferences(params) {
   const [toKeep, toExpand] = splitKeys(params || {}, [
     'agentOptions',

@@ -1,24 +1,14 @@
-import {
-  setAuth,
-  setUrl,
-  mapToAxiosConfig,
-  tryJson,
-  assembleError,
-} from './Utils';
+import { setAuth, setUrl, mapToAxiosConfig, tryJson } from './Utils';
 
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
-  http,
 } from '@openfn/language-common';
 
-import nodeRequest from 'request';
+import { request, expandReferences } from '@openfn/language-common/util';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 import tough from 'tough-cookie';
-
-const { axios } = http;
 
 /**
  * Execute a sequence of operations.
@@ -46,16 +36,16 @@ export function execute(...operations) {
 var cookiejar = new tough.CookieJar();
 var Cookie = tough.Cookie;
 
-axios.interceptors.request.use(config => {
-  cookiejar?.getCookies(config.url, (err, cookies) => {
-    config.headers.cookie = cookies?.join('; ');
-  });
-  return config;
-});
+// axios.interceptors.request.use(config => {
+//   cookiejar?.getCookies(config.url, (err, cookies) => {
+//     config.headers.cookie = cookies?.join('; ');
+//   });
+//   return config;
+// });
 
 function handleCookies(response) {
   const { config, data, headers } = response;
-  if (config.keepCookie) {
+  if (config?.keepCookie) {
     let cookies;
     let keepCookies = [];
 
@@ -90,23 +80,23 @@ function handleCookies(response) {
 
 function handleResponse(state, response) {
   console.log(
-    response.config.method.toUpperCase(),
+    // response.config.method.toUpperCase(), // TODO Should we return method
     'request succeeded with',
-    response.status,
+    response.code,
     '✓'
   );
 
   const compatibleResp = {
     ...response,
-    httpStatus: response.status,
-    message: response.statusText,
-    data: tryJson(response.data),
+    // httpStatus: response.code, // TODO should we mantain this key?
+    // message: response.statusText, // TODO should we return statusText
+    body: tryJson(response.body),
   };
 
   const respWithCookies = handleCookies(compatibleResp);
 
   return {
-    ...composeNextState(state, respWithCookies.data),
+    ...composeNextState(state, respWithCookies.body),
     response: respWithCookies,
   };
 }
@@ -133,8 +123,11 @@ function handleCallback(state, callback) {
  */
 export function get(path, params, callback) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const url = setUrl(state.configuration, resolvedPath);
 
@@ -143,10 +136,9 @@ export function get(path, params, callback) {
       resolvedParams?.authentication ?? resolvedParams?.auth
     );
 
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
+    const config = mapToAxiosConfig({ ...resolvedParams, auth });
 
-    return http
-      .get(config)(state)
+    return request('GET', url, config)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -169,8 +161,11 @@ export function get(path, params, callback) {
  */
 export function post(path, params, callback) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const url = setUrl(state.configuration, resolvedPath);
 
@@ -181,8 +176,10 @@ export function post(path, params, callback) {
 
     const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
 
-    return http
-      .post(config)(state)
+    return request(
+      'POST',
+      config
+    )(state)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -205,9 +202,11 @@ export function post(path, params, callback) {
  */
 export function put(path, params, callback) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
     const url = setUrl(state.configuration, resolvedPath);
 
     const auth = setAuth(
@@ -217,8 +216,10 @@ export function put(path, params, callback) {
 
     const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
 
-    return http
-      .put(config)(state)
+    return request(
+      'PUT',
+      config
+    )(state)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -241,8 +242,11 @@ export function put(path, params, callback) {
  */
 export function patch(path, params, callback) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const url = setUrl(state.configuration, resolvedPath);
 
@@ -253,8 +257,10 @@ export function patch(path, params, callback) {
 
     const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
 
-    return http
-      .patch(config)(state)
+    return request(
+      'patch',
+      config
+    )(state)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -275,8 +281,11 @@ export function patch(path, params, callback) {
  */
 export function del(path, params, callback) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const url = setUrl(state.configuration, resolvedPath);
 
@@ -287,8 +296,10 @@ export function del(path, params, callback) {
 
     const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
 
-    return http
-      .delete(config)(state)
+    return request(
+      'DELETE',
+      config
+    )(state)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -324,36 +335,7 @@ export function parseXML(body, script) {
     }
   };
 }
-
-/**
- * Make a request using the 'request' node module. This module is deprecated.
- * @example
- *  request(params);
- * @function
- * @param {object} params - Query, Headers and Authentication parameters
- * @returns {Operation}
- */
-export function request(params) {
-  return state => {
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    return new Promise((resolve, reject) => {
-      nodeRequest(resolvedParams, (err, response, body) => {
-        const error = assembleError({ error: err, response, resolvedParams });
-        error && reject(error);
-
-        console.log(
-          '✓ Request succeeded. (The response body available in state.)'
-        );
-        const resp = tryJson(body);
-        resolve(resp);
-      });
-    });
-  };
-}
-
-export { axios };
-
+export { request } from '@openfn/language-common/util';
 export {
   alterState,
   arrayToString,
