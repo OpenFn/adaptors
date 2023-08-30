@@ -685,15 +685,12 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
  */
 export function validate(schema = 'schema', data = 'data') {
   return async state => {
-    console.log('state', state);
     if (!state.validationErrors) {
       state.validationErrors = [];
     }
 
     const resolvedData = resolveData();
     const resolvedSchema = await resolveSchema();
-    console.log('data', resolvedData);
-    console.log('> schema', resolvedSchema);
 
     // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
     const schemaId = resolvedSchema.$id || 'schema';
@@ -742,7 +739,7 @@ export function validate(schema = 'schema', data = 'data') {
       const [d] = newExpandReferences(state, data);
 
       if (typeof d === 'string') {
-        return JSONPath({ path: d, json: state });
+        return JSONPath({ path: d, json: state })[0];
       }
       return d;
     }

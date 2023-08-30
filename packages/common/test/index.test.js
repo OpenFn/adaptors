@@ -27,6 +27,7 @@ import {
   sourceValue,
   splitKeys,
   toArray,
+  validate,
 } from '../src/Adaptor';
 
 const mockAgent = new MockAgent();
@@ -593,28 +594,167 @@ describe('parseCsv', function () {
   });
 });
 
-describe('validate', function () {
-  it('should validate against a json schema', function () {
-    const schema = {};
-    const data = {};
+describe.only('validate', function () {
+  const schema = {
+    $id: 'https://example.com/person.schema.json',
+    // $schema: 'https://json-schema.org/draft/2020-12/schema',
+    title: 'Person',
+    type: 'object',
+    properties: {
+      firstName: {
+        type: 'string',
+        description: "The person's first name.",
+      },
+      lastName: {
+        type: 'string',
+        description: "The person's last name.",
+      },
+      age: {
+        description:
+          'Age in years which must be equal to or greater than zero.',
+        type: 'integer',
+        minimum: 0,
+      },
+    },
+  };
 
-    // should schema be on state?
+  it('should report no errors with default schema, data on state', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
 
-    // what happens if we fail? throw? write a "valid" key to stae?
-    // where does the schema come from?
-    validate(schema, data)(state);
-    const input = { a: { b: { c: 1, e: '' } } };
+    const state = {
+      schema,
+      data,
+    };
 
-    const desired1 = 1;
-    const desired2 = undefined;
-    const desired3 = '';
+    const result = await validate()(state);
 
-    assert.equal(jsonValue(input, 'a.b.c'), desired1);
-    assert.equal(jsonValue(input, 'a.d.c'), desired2);
-    assert.equal(jsonValue(input, 'a.b.e'), desired3);
+    expect(result.validationErrors).to.eql([]);
   });
 
-  it('should validate against a json schema by url', function () {
-    validate('www', data)(state);
+  it('should report one error with default schema, data on state', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.have.lengthOf(1);
+
+    const err = result.validationErrors[0];
+    expect(err.data).to.eql(data);
+    expect(err.errors).to.have.lengthOf(1);
+    expect(err.errors[0].message).to.eql('must be integer');
+  });
+
+  it('should report one error with json path arguments for schema, data', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      s: schema,
+      d: data,
+    };
+
+    const result = await validate('s', 'd')(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should report one error with object arguments for schema, data', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {};
+
+    const result = await validate(schema, data)(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should report one error with function arguments for schema, data', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {};
+
+    const result = await validate(
+      () => schema,
+      () => data
+    )(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it.skip('should fetch a schema from a url', () => {});
+
+  it('should compose with each to validate each item in an array', async function () {
+    const data = [
+      {
+        firstName: 'Scott',
+        lastName: 'Lang',
+        age: 'unknown',
+      },
+      {
+        firstName: 'Hope',
+        lastName: ['Van', 'Dyne'],
+        age: 30,
+      },
+    ];
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const doValidation = async s => validate()(s);
+    const result = await each('data[*]', doValidation)(state);
+
+    expect(result.validationErrors).to.have.lengthOf(2);
+    expect(result.validationErrors[0].data).to.eql(data[0]);
+    expect(result.validationErrors[1].data).to.eql(data[1]);
+  });
+
+  it('should compose with each to validate each item in an array with custom schema', async function () {
+    const data = [
+      {
+        firstName: 'Scott',
+        lastName: 'Lang',
+        age: 'unknown',
+      },
+      {
+        firstName: 'Hope',
+        lastName: ['Van', 'Dyne'],
+        age: 30,
+      },
+    ];
+
+    const state = {
+      'my-schema': schema,
+      data,
+    };
+
+    const doValidation = async s => validate('my-schema')(s);
+    const result = await each('data[*]', doValidation)(state);
+
+    expect(result.validationErrors).to.have.lengthOf(2);
+    expect(result.validationErrors[0].data).to.eql(data[0]);
+    expect(result.validationErrors[1].data).to.eql(data[1]);
   });
 });
