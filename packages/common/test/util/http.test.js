@@ -202,13 +202,7 @@ describe('options', () => {
         path: '/api/content',
         method: 'GET',
       })
-      .reply(
-        200,
-        {},
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      .reply(200, {});
 
     const response = await request(
       'GET',
@@ -228,13 +222,7 @@ describe('options', () => {
         path: '/api/noContent',
         method: 'GET',
       })
-      .reply(
-        204,
-        {},
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      .reply(204, { error: 'Content not found' });
 
     let error = null;
     try {
@@ -255,13 +243,7 @@ describe('options', () => {
         path: '/api/noAccess',
         method: 'GET',
       })
-      .reply(
-        404,
-        {},
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      .reply(404, { error: 'Not found' });
 
     let error = null;
     try {
@@ -282,13 +264,7 @@ describe('options', () => {
         path: '/api/noAccess',
         method: 'GET',
       })
-      .reply(
-        404,
-        {},
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      .reply(404, { error: 'Not found' });
 
     let error = null;
     try {
