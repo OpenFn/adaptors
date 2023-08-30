@@ -10,7 +10,6 @@ import {
 const client = enableMockClient('https://www.example.com');
 
 describe('request function', () => {
-  // TODO - everything here should use `request` (not get)
   describe('parseAs', () => {
     // mock needs to include headers
     it('should auto parse as json', async () => {
