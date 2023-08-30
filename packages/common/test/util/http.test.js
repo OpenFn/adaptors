@@ -11,7 +11,6 @@ const client = enableMockClient('https://www.example.com');
 
 describe('request function', () => {
   describe('parseAs', () => {
-    // mock needs to include headers
     it('should auto parse as json', async () => {
       client
         .intercept({
@@ -48,7 +47,6 @@ describe('request function', () => {
 
       expect(result.body).to.eql(JSON.stringify({ name: 'joe' }));
     });
-
     it('should auto parse as text in any other case', async () => {
       client
         .intercept({
@@ -65,8 +63,6 @@ describe('request function', () => {
 
       expect(result.body).to.eql('hello world');
     });
-
-    // parameters needs to set parseAs
     it('should force as json', async () => {
       client
         .intercept({
@@ -83,7 +79,6 @@ describe('request function', () => {
 
       expect(result.body).to.eql({ name: 'aissa' });
     });
-    // explicitly include headers to ensure they're ignore?
     it('should force as json even if content type is string', async () => {
       client
         .intercept({
@@ -172,7 +167,6 @@ describe('request function', () => {
     expect(result.body).to.eql({});
     expect(result.code).to.eql(200);
   });
-
   it('should use baseUrl from options', async () => {
     client
       .intercept({
@@ -187,7 +181,6 @@ describe('request function', () => {
 
     expect(response.code).to.eql(200);
   });
-
   it('should accept an absolute url', async () => {
     client
       .intercept({
@@ -283,7 +276,6 @@ describe('options', () => {
 
     expect(error.message).to.eql('Not found');
   });
-
   it('should throw by default if a 404', async () => {
     client
       .intercept({
@@ -309,9 +301,7 @@ describe('options', () => {
       'Request to https://www.example.com/api/noAccess failed with status: 404'
     );
   });
-
   it('should encode keys and values of query', async () => {
-    // check the headers that are incuded in the actual request
     let request;
     client
       .intercept({
@@ -333,7 +323,6 @@ describe('options', () => {
       id: '2',
     });
   });
-
   it('should throw and use errorMap string value', async () => {
     client
       .intercept({
@@ -361,7 +350,6 @@ describe('options', () => {
 
     expect(error.message).to.eql('No Access');
   });
-
   it('should throw and use default values', async () => {
     client
       .intercept({
@@ -422,7 +410,6 @@ describe('helpers', () => {
 
     expect(code).to.eql(200);
   });
-
   it('should send a DELETE', async () => {
     client
       .intercept({
