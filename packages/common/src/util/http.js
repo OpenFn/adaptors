@@ -63,7 +63,7 @@ const defaultOptions = {
 };
 /**
  * The function `request` is an asynchronous function that sends HTTP requests and returns the response
- * data, headers, and status code.
+ * body, headers, and status code.
  * @param method - The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.).
  * @param fullUrl - The full URL is the complete URL of the request, including the protocol (e.g.,
  * "http://example.com/api").
@@ -72,7 +72,7 @@ const defaultOptions = {
  * @returns an object with the following properties:
  * - code: the status code of the response
  * - headers: the headers of the response
- * - data: the body of the response
+ * - body: the body of the response
  */
 export async function request(method, fullUrlOrPath, options = {}) {
   const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
@@ -89,7 +89,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     query,
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined,
+    body,
     throwOnError: false,
   });
 
@@ -100,7 +100,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   return {
     code: response.statusCode,
     headers: response.headers,
-    data: responseBody,
+    body: responseBody,
   };
 }
 

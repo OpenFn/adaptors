@@ -32,7 +32,7 @@ describe('request function', () => {
 
       const result = await request('GET', 'https://www.example.com/api');
 
-      expect(result.data).to.eql({ name: 'mutchi' });
+      expect(result.body).to.eql({ name: 'mutchi' });
     });
     it('should auto parse as text by default', async () => {
       client
@@ -46,7 +46,7 @@ describe('request function', () => {
 
       const result = await request('GET', 'https://www.example.com/api');
 
-      expect(result.data).to.eql(JSON.stringify({ name: 'joe' }));
+      expect(result.body).to.eql(JSON.stringify({ name: 'joe' }));
     });
 
     it('should auto parse as text in any other case', async () => {
@@ -63,7 +63,7 @@ describe('request function', () => {
 
       const result = await request('GET', 'https://www.example.com/api');
 
-      expect(result.data).to.eql('hello world');
+      expect(result.body).to.eql('hello world');
     });
 
     // parameters needs to set parseAs
@@ -81,7 +81,7 @@ describe('request function', () => {
         parseAs: 'json',
       });
 
-      expect(result.data).to.eql({ name: 'aissa' });
+      expect(result.body).to.eql({ name: 'aissa' });
     });
     // explicitly include headers to ensure they're ignore?
     it('should force as json even if content type is string', async () => {
@@ -106,7 +106,7 @@ describe('request function', () => {
         parseAs: 'json',
       });
 
-      expect(result.data).to.eql({ name: 'aissa' });
+      expect(result.body).to.eql({ name: 'aissa' });
     });
     it('should force as stream', async () => {
       client
@@ -123,7 +123,31 @@ describe('request function', () => {
       });
 
       //TODO - Better technique for testing stream
-      expect(await result.data.json()).to.eql({ name: 'iam stream' });
+      expect(await result.body.json()).to.eql({ name: 'iam stream' });
+    });
+    it('should parse as json if content type is json', async () => {
+      client
+        .intercept({
+          path: '/api?id=2',
+          method: 'GET',
+        })
+        .reply(
+          200,
+          { id: '2' },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+
+      const { body } = await request('GET', 'https://www.example.com/api', {
+        query: {
+          id: '2',
+        },
+      });
+
+      expect(body).to.eql({
+        id: '2',
+      });
     });
   });
 
@@ -145,7 +169,7 @@ describe('request function', () => {
 
     const result = await request('JOE', 'https://www.example.com/api');
 
-    expect(result.data).to.eql({});
+    expect(result.body).to.eql({});
     expect(result.code).to.eql(200);
   });
 
@@ -362,31 +386,6 @@ describe('options', () => {
       'Request to https://www.example.com/api/noAccess failed with status: 405'
     );
   });
-
-  it('should parse a response body as json if content-type is json', async () => {
-    client
-      .intercept({
-        path: '/api?id=2',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        { id: '2' },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-
-    const { data } = await request('GET', 'https://www.example.com/api', {
-      query: {
-        id: '2',
-      },
-    });
-
-    expect(data).to.eql({
-      id: '2',
-    });
-  });
 });
 
 describe('helpers', () => {
@@ -406,9 +405,9 @@ describe('helpers', () => {
         }
       );
 
-    const { data, code } = await get('https://www.example.com/api');
+    const { body, code } = await get('https://www.example.com/api');
 
-    expect(data).to.eql({});
+    expect(body).to.eql({});
     expect(code).to.eql(200);
   });
   it('should handle different HTTP methods eg: POST', async () => {
@@ -440,9 +439,9 @@ describe('helpers', () => {
         }
       );
 
-    const { data, code } = await del('https://www.example.com/api');
+    const { body, code } = await del('https://www.example.com/api');
 
-    expect(data).to.eql({});
+    expect(body).to.eql({});
     expect(code).to.eql(200);
   });
 });
