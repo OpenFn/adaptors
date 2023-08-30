@@ -674,15 +674,19 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 // }
 
 /**
- * Validate against a JSON schema
- * @param {string|object} data or JSON path to validate
- * @param {JSONschema} schema the schema to validate against
- * @returns
- *
- * TODO:
- *  - should we accept schema as a URL and fetch it?
- *  - This might be important as common.http is broken
- *  - should we validate state.data? This is super useful inside an each, after a trigger or after a fetch
+ * Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
+ * Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
+ * Data can be passed directly or loaded as a JSON path from state.
+ * By default, schema is loaded from `state.schema` and data from `state.data`.
+ * @param {string|object} schema - The schema, path or URL to validate against
+ * @param {string|object} data - The data or path to validate
+ * @example <caption>Validate `state.data` with `state.schema`</caption>
+ * validate()
+ * @example <caption>Validate form data at `state.form` with a schema from a URL</caption>
+ * validate("https://www.example.com/schema/record", "form")
+ * @example <caption>Validate the each item in `state.records` with a schema from a URL</caption>
+ * each("records[*]", validate("https://www.example.com/schema/record"))
+ * @returns {Operation}
  */
 export function validate(schema = 'schema', data = 'data') {
   return async state => {
@@ -692,7 +696,6 @@ export function validate(schema = 'schema', data = 'data') {
 
     const resolvedData = resolveData();
     const resolvedSchema = await resolveSchema();
-    console.log(resolvedSchema);
     // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
     const schemaId = resolvedSchema.$id || 'schema';
     if (!schemaCache[schemaId]) {
