@@ -327,7 +327,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await get('https://www.example.com/api/noAccess', {
+      await request('GET', 'https://www.example.com/api/noAccess', {
         errors: {
           404: 'No Access',
         },
@@ -355,7 +355,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await await get('https://www.example.com/api/noAccess');
+      await await request('GET', 'https://www.example.com/api/noAccess');
     } catch (err) {
       error = err;
     }
@@ -378,7 +378,7 @@ describe('options', () => {
         }
       );
 
-    const { data } = await get('https://www.example.com/api', {
+    const { data } = await request('GET', 'https://www.example.com/api', {
       query: {
         id: '2',
       },

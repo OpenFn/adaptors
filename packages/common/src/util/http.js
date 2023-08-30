@@ -1,11 +1,3 @@
-/**
- * General-purpose utility functions
- *
- * These are designed more for use in adaptor code than job code
- * (but we could choose to export util from common)
- *
- * None of these functions are operation factories
- */
 import { Client, MockAgent } from 'undici';
 
 const clients = new Map();
@@ -29,13 +21,6 @@ export const enableMockClient = baseUrl => {
   }
   return client;
 };
-const separateUrl = fullUrl => {
-  const url = new URL(fullUrl);
-  return {
-    baseUrl: url.origin,
-    path: url.pathname,
-  };
-};
 
 const assertOK = (response, errorMap, fullUrl) => {
   const errMapMessage = errorMap[response.statusCode];
@@ -55,12 +40,15 @@ const assertOK = (response, errorMap, fullUrl) => {
   }
 };
 
-const isValidHttpUrl = fullUrl => {
-  try {
-    const { protocol } = new URL(fullUrl);
-    return protocol.startsWith('http');
-  } catch (_) {
-    return false;
+const parseUrl = (fullUrl, baseUrl) => {
+  if (/^https?:\/\//.test(fullUrl)) {
+    const url = new URL(fullUrl);
+    return {
+      baseUrl: url.origin,
+      path: url.pathname,
+    };
+  } else {
+    return { baseUrl, path: fullUrl };
   }
 };
 
@@ -87,14 +75,7 @@ const defaultOptions = {
  * - data: the body of the response
  */
 export async function request(method, fullUrlOrPath, options = {}) {
-  let baseUrl, path;
-
-  if (!options.baseUrl || isValidHttpUrl(fullUrlOrPath)) {
-    ({ baseUrl, path } = separateUrl(fullUrlOrPath));
-  } else {
-    baseUrl = options.baseUrl;
-    path = fullUrlOrPath;
-  }
+  const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
 
   const { headers, query, body, errors, timeout, tls, parseAs } = {
     ...defaultOptions,
