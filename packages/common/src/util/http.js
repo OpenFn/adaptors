@@ -115,7 +115,7 @@ async function readResponseBody(response, parseAs) {
     case 'stream':
       return response.body;
     default:
-      return contentType?.includes('application/json')
+      return contentType === 'application/json'
         ? response.body.json()
         : response.body.text();
   }
