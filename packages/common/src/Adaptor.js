@@ -5,6 +5,7 @@ import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 import Ajv from 'ajv';
+import { request } from 'undici';
 
 import { expandReferences as newExpandReferences } from './util';
 
@@ -691,7 +692,7 @@ export function validate(schema = 'schema', data = 'data') {
 
     const resolvedData = resolveData();
     const resolvedSchema = await resolveSchema();
-
+    console.log(resolvedSchema);
     // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
     const schemaId = resolvedSchema.$id || 'schema';
     if (!schemaCache[schemaId]) {
@@ -717,8 +718,8 @@ export function validate(schema = 'schema', data = 'data') {
         try {
           // Check if the schema is a URL - in which case we fetch it
           const url = new URL(schemaOrUrl);
-          const response = await fetch(url);
-          return response.json();
+          const response = await request(url);
+          return response.body.json();
         } catch (e) {
           if (e instanceof TypeError) {
             // URL throws a TypeError if it's not a valid url, so we'll treat the string as a json path instead

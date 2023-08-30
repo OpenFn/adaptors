@@ -594,7 +594,7 @@ describe('parseCsv', function () {
   });
 });
 
-describe.only('validate', function () {
+describe('validate', () => {
   const schema = {
     $id: 'https://example.com/person.schema.json',
     // $schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -618,7 +618,7 @@ describe.only('validate', function () {
     },
   };
 
-  it('should report no errors with default schema, data on state', async function () {
+  it('should report no errors with default schema, data on state', async () => {
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
@@ -635,7 +635,7 @@ describe.only('validate', function () {
     expect(result.validationErrors).to.eql([]);
   });
 
-  it('should report one error with default schema, data on state', async function () {
+  it('should report one error with default schema, data on state', async () => {
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
@@ -657,7 +657,7 @@ describe.only('validate', function () {
     expect(err.errors[0].message).to.eql('must be integer');
   });
 
-  it('should report one error with json path arguments for schema, data', async function () {
+  it('should report one error with json path arguments for schema, data', async () => {
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
@@ -673,7 +673,7 @@ describe.only('validate', function () {
     expect(result.validationErrors).to.have.lengthOf(1);
   });
 
-  it('should report one error with object arguments for schema, data', async function () {
+  it('should report one error with object arguments for schema, data', async () => {
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
@@ -686,7 +686,7 @@ describe.only('validate', function () {
     expect(result.validationErrors).to.have.lengthOf(1);
   });
 
-  it('should report one error with function arguments for schema, data', async function () {
+  it('should report one error with function arguments for schema, data', async () => {
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
@@ -702,9 +702,33 @@ describe.only('validate', function () {
     expect(result.validationErrors).to.have.lengthOf(1);
   });
 
-  it.skip('should fetch a schema from a url', () => {});
+  it('should fetch a schema from a url', async () => {
+    mockPool
+      .intercept({
+        method: 'GET',
+        path: '/schema',
+      })
+      .reply(201, schema, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  it('should compose with each to validate each item in an array', async function () {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      data,
+    };
+
+    const result = await validate('https://localhost:1/schema')(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should compose with each to validate each item in an array', async () => {
     const data = [
       {
         firstName: 'Scott',
@@ -731,7 +755,7 @@ describe.only('validate', function () {
     expect(result.validationErrors[1].data).to.eql(data[1]);
   });
 
-  it('should compose with each to validate each item in an array with custom schema', async function () {
+  it('should compose with each to validate each item in an array with custom schema', async () => {
     const data = [
       {
         firstName: 'Scott',
