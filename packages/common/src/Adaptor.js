@@ -4,7 +4,7 @@ import fromPairs from 'lodash/fp/fromPairs.js';
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
-import Ajv from 'ajv';
+
 import { request } from 'undici';
 
 import { expandReferences as newExpandReferences } from './util';
@@ -13,7 +13,6 @@ export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
 
-const ajv = new Ajv();
 const schemaCache = {};
 
 /**
@@ -673,6 +672,34 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 //   });
 // }
 
+const ajvVersions = {};
+
+// We need to import different versions of AJV depending on the schema
+// version - which is handled by this function
+const getAjvVersion = async schema => {
+  if (/^https?:\/\/json-schema.org\/draft\/2019/.test(schema)) {
+    if (!ajvVersions['2019']) {
+      const Ajv = (await import('ajv/dist/2019.js')).default;
+      ajvVersions['2019'] = new Ajv();
+    }
+    return ajvVersions['2019'];
+  }
+  if (/^https?:\/\/json-schema.org\/draft\/2020/.test(schema)) {
+    if (!ajvVersions['2020']) {
+      const Ajv = (await import('ajv/dist/2020.js')).default;
+      ajvVersions['2020'] = new Ajv();
+    }
+    return ajvVersions['2020'];
+  }
+
+  if (!ajvVersions['default']) {
+    const Ajv = (await import('ajv')).default;
+    ajvVersions['default'] = new Ajv();
+  }
+
+  return ajvVersions['default'];
+};
+
 /**
  * Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
  * Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
@@ -699,6 +726,7 @@ export function validate(schema = 'schema', data = 'data') {
     // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
     const schemaId = resolvedSchema.$id || 'schema';
     if (!schemaCache[schemaId]) {
+      const ajv = await getAjvVersion(resolvedSchema.$schema);
       schemaCache[schemaId] = ajv.compile(resolvedSchema);
     }
 

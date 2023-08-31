@@ -594,10 +594,10 @@ describe('parseCsv', function () {
   });
 });
 
-describe('validate', () => {
+describe.only('validate', () => {
   const schema = {
     $id: 'https://example.com/person.schema.json',
-    // $schema: 'https://json-schema.org/draft/2020-12/schema',
+    $schema: 'http://json-schema.org/draft-07/schema',
     title: 'Person',
     type: 'object',
     properties: {
@@ -780,5 +780,84 @@ describe('validate', () => {
     expect(result.validationErrors).to.have.lengthOf(2);
     expect(result.validationErrors[0].data).to.eql(data[0]);
     expect(result.validationErrors[1].data).to.eql(data[1]);
+  });
+
+  it('should validate 2019 schema', async () => {
+    const schema = {
+      $id: 'https://example.com/person.schema.json',
+      $schema: 'http://json-schema.org/draft/2019-09/schema',
+      title: 'Person',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+          description: "The person's first name.",
+        },
+        lastName: {
+          type: 'string',
+          description: "The person's last name.",
+        },
+        age: {
+          description:
+            'Age in years which must be equal to or greater than zero.',
+          type: 'integer',
+          minimum: 0,
+        },
+      },
+    };
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.eql([]);
+  });
+
+  it('should validate 2020 schema', async () => {
+    const schema = {
+      $id: 'https://example.com/person.schema.json',
+      $schema: 'http://json-schema.org/draft/2020-12/schema',
+      title: 'Person',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+          description: "The person's first name.",
+        },
+        lastName: {
+          type: 'string',
+          description: "The person's last name.",
+        },
+        age: {
+          description:
+            'Age in years which must be equal to or greater than zero.',
+          type: 'integer',
+          minimum: 0,
+        },
+      },
+    };
+
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.eql([]);
   });
 });
