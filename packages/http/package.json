@@ -38,9 +38,6 @@
     "cheerio-tableparser": "^1.0.1",
     "csv-parse": "^4.10.1",
     "fast-safe-stringify": "^2.0.7",
-    "form-data": "^3.0.0",
-    "lodash": "^4.17.19",
-    "request": "^2.88.2",
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {

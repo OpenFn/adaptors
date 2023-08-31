@@ -9,8 +9,8 @@ function stdGet(state) {
   return execute(get('https://www.example.com/api/fake', {}))(state).then(
     nextState => {
       const { data, references } = nextState;
-      expect(data).to.haveOwnProperty('httpStatus', 'OK');
-      expect(data).to.haveOwnProperty('message', 'the response');
+      expect(data).to.haveOwnProperty('code', '200');
+      expect(data).to.haveOwnProperty('body', 'the response');
 
       expect(references).to.eql([{ triggering: 'event' }]);
     }
@@ -166,8 +166,8 @@ describe('get()', () => {
         method: 'GET',
       })
       .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
+        code: '200',
+        body: 'the response',
       });
 
     // testServer.get('/api/fake').times(4).reply(200, {
@@ -175,12 +175,19 @@ describe('get()', () => {
     //   message: 'the response',
     // });
 
-    // testServer
-    //   .get('/api/showMeMyHeaders')
-    //   .times(3)
-    //   .reply(200, function (url, body) {
-    //     return [url, this.req.headers];
-    //   });
+    testServer
+      .intercept({
+        path: '/api/showMeMyHeaders',
+        method: 'GET',
+      })
+      .reply(200, req => req);
+
+    testServer
+      .intercept({
+        path: '/api/showMeMyHeaders?id=1',
+        method: 'GET',
+      })
+      .reply(200, req => req);
 
     // testServer
     //   .get('/api/showMeMyHeaders?id=1')
@@ -225,7 +232,7 @@ describe('get()', () => {
     // testServer.get('/api/crashDummy').times(2).reply(500);
   });
 
-  it.only('prepares nextState properly', () => {
+  it('prepares nextState properly', () => {
     let state = {
       configuration: {
         username: 'hello',
@@ -248,10 +255,9 @@ describe('get()', () => {
         return state;
       })
     )(state).then(nextState => {
-      console.log(nextState);
       const { data, references, counter } = nextState;
-      expect(data).to.haveOwnProperty('httpStatus', 'OK');
-      expect(data).to.haveOwnProperty('message', 'the response');
+      expect(data).to.haveOwnProperty('code', '200');
+      expect(data).to.haveOwnProperty('body', 'the response');
       expect(references).to.eql([{ triggering: 'event' }]);
       expect(counter).to.eql(2);
     });
@@ -295,27 +301,27 @@ describe('get()', () => {
       data: { triggering: 'event' },
     };
 
-    const finalState = await execute(
+    const { data, references } = await execute(
       get('https://www.example.com/api/showMeMyHeaders', {
         headers: { 'x-openfn': 'testing' },
       })
     )(state);
 
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
+    expect(data.path).to.eql('/api/showMeMyHeaders');
 
-    expect(finalState.data[1]).to.haveOwnProperty('x-openfn', 'testing');
+    expect(data.headers).to.haveOwnProperty('x-openfn', 'testing');
 
-    expect(finalState.data[1]).to.haveOwnProperty(
-      'authorization',
+    expect(data.headers).to.haveOwnProperty(
+      'Authorization',
       'Basic aGVsbG86dGhlcmU='
     );
 
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
+    // expect(data[1]).to.haveOwnProperty('host', 'www.example.com');
 
-    expect(finalState.references).to.eql([{ triggering: 'event' }]);
+    expect(references).to.eql([{ triggering: 'event' }]);
   });
 
-  it('accepts authentication for http basic auth', async () => {
+  it.only('accepts authentication for http basic auth', async () => {
     const state = {
       configuration: {
         username: 'hello',
@@ -324,15 +330,17 @@ describe('get()', () => {
       data: { triggering: 'event' },
     };
 
-    const finalState = await execute(
+    const { data, references } = await execute(
       get('https://www.example.com/api/showMeMyHeaders')
     )(state);
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
-    expect(finalState.data[1]).to.haveOwnProperty(
+
+    console.log(data);
+    expect(data.path).to.eql('/api/showMeMyHeaders');
+    expect(data.headers).to.haveOwnProperty(
       'authorization',
       'Basic aGVsbG86dGhlcmU='
     );
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
+    expect(data.headers).to.haveOwnProperty('host', 'www.example.com');
   });
 
   it('can enable gzip', async () => {

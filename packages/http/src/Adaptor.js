@@ -1,4 +1,4 @@
-import { setAuth, setUrl, mapToAxiosConfig, tryJson } from './Utils';
+import { basicAuth, setAuth, setUrl, tryJson } from './Utils';
 
 import {
   execute as commonExecute,
@@ -35,13 +35,6 @@ export function execute(...operations) {
 
 var cookiejar = new tough.CookieJar();
 var Cookie = tough.Cookie;
-
-// axios.interceptors.request.use(config => {
-//   cookiejar?.getCookies(config.url, (err, cookies) => {
-//     config.headers.cookie = cookies?.join('; ');
-//   });
-//   return config;
-// });
 
 function handleCookies(response) {
   const { config, data, headers } = response;
@@ -113,7 +106,6 @@ function handleCallback(state, callback) {
  *  get('/myEndpoint', {
  *    query: {foo: 'bar', a: 1},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
@@ -129,14 +121,17 @@ export function get(path, params, callback) {
       params
     );
 
-    const url = setUrl(state.configuration, resolvedPath);
+    const { baseUrl, username, password } = state.configuration;
 
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
-    );
+    const url = setUrl(baseUrl, resolvedPath);
 
-    const config = mapToAxiosConfig({ ...resolvedParams, auth });
+    const headers = resolvedParams?.headers ? resolvedParams.headers : {};
+    const auth = basicAuth(username, password, headers);
+
+    // Coerces options/paramaters for language-http into a set of configuration for the `request` function
+    // config = buildConfig(state, params)
+    // assert.equal(config, { headers: { 'content-type': 'application/json', "Authori" } }}})
+    const config = { ...resolvedParams, ...auth };
 
     return request('GET', url, config)
       .then(response => handleResponse(state, response))
@@ -192,7 +187,6 @@ export function post(path, params, callback) {
  *  put('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
@@ -214,12 +208,9 @@ export function put(path, params, callback) {
       resolvedParams?.authentication ?? resolvedParams?.auth
     );
 
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
+    const config = { ...resolvedParams, auth };
 
-    return request(
-      'PUT',
-      config
-    )(state)
+    return request('PUT', url, config)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
