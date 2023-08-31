@@ -61,14 +61,16 @@ const defaultOptions = {
   tls: {},
   parseAs: 'auto',
 };
+
 /**
- * The function `request` is an asynchronous function that sends HTTP requests and returns the response
+ * `request` is a a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
+ * Use the error map to provide custom error messages or get hold of the response in case of errors.
  * @param method - The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.).
- * @param fullUrl - The full URL is the complete URL of the request, including the protocol (e.g.,
- * "http://example.com/api").
+ * @param fullUrlOrPath - The full or partial URL for the request.
+ * If a partial URL, it will be based on `options.baseUrl`.
  * @param [options] - The `options` parameter is an object that contains additional configuration
- * options for the request. It can have the following properties:
+ * options for the request.
  * @returns an object with the following properties:
  * - code: the status code of the response
  * - headers: the headers of the response
