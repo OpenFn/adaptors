@@ -289,6 +289,9 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
+      undici:
+        specifier: ^5.22.1
+        version: 5.22.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -314,9 +317,6 @@ importers:
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.22.1
 
   packages/dhis2:
     dependencies:
