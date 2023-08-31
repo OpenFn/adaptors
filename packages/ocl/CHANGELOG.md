@@ -1,5 +1,11 @@
 # @openfn/language-ocl
 
+## 1.1.5
+
+### Patch Changes
+
+- 67a09fb: Add `fn` in OCL adaptor
+
 ## 1.1.4
 
 ### Patch Changes
