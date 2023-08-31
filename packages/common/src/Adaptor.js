@@ -5,7 +5,7 @@ import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
-import { expandReferences as newExpandReferences } from './util/index';
+import { expandReferences as newExpandReferences } from './util';
 
 export * as beta from './beta';
 export * as http from './http';
