@@ -1,12 +1,4 @@
 import { Readable, Writable } from 'node:stream';
-/**
- * General-purpose utility functions
- *
- * These are designed more for use in adaptor code than job code
- * (but we could choose to export util from common)
- *
- * None of these functions are operation factories
- */
 
 // TODO this doesn't currently support skip
 export function expandReferences(state, ...args) {
