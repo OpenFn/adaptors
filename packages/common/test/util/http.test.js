@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import * as undici from 'undici';
 import {
   enableMockClient,
@@ -12,8 +12,9 @@ const client = enableMockClient('https://www.example.com');
 
 describe.skip('undici', () => {
   // Debug utilities
-  it('should post JSON', () => {
-    undici.request('https://httpbin.org/anything', {
+  // This throws because undici can't handle a json body natively
+  it('should post JSON', async () => {
+    await undici.request('https://httpbin.org/anything', {
       method: 'POST',
       body: { hello: 'world' },
     });
