@@ -1,4 +1,4 @@
-import { basicAuth, setAuth, setUrl, tryJson } from './Utils';
+import { basicAuth } from './Utils';
 
 import {
   execute as commonExecute,
@@ -79,14 +79,7 @@ function handleResponse(state, response) {
     '✓'
   );
 
-  const compatibleResp = {
-    ...response,
-    // httpStatus: response.code, // TODO should we mantain this key?
-    // message: response.statusText, // TODO should we return statusText
-    body: tryJson(response.body),
-  };
-
-  const respWithCookies = handleCookies(compatibleResp);
+  const respWithCookies = handleCookies(response);
 
   return {
     ...composeNextState(state, respWithCookies.body),
@@ -121,20 +114,44 @@ export function get(path, params, callback) {
       params
     );
 
-    const url = setUrl(state.configuration, resolvedPath);
-
+    const baseUrl = state.configuration?.baseUrl;
     const auth = basicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, ...auth };
+    const options = { ...resolvedParams, ...auth, baseUrl };
 
-    return request('GET', url, config)
+    return request('GET', resolvedPath, options)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
 }
+
+// TODO  refactor to this pattern
+// function request(method, path, params, callback) {
+//   return state => {
+//     const [resolvedPath, resolvedParams] = expandReferences(
+//       state,
+//       path,
+//       params
+//     );
+
+//     const baseUrl = state.configuration?.baseUrl;
+//     const auth = basicAuth(
+//       state.configuration,
+//       resolvedParams?.headers ? resolvedParams.headers : {}
+//     );
+
+//     const options = { ...resolvedParams, ...auth, baseUrl };
+
+//     return request(method, resolvedPath, options)
+//       .then(response => handleResponse(state, response))
+//       .then(nextState => handleCallback(nextState, callback));
+//   };
+// }
+
+// export const get = (path, params, callback) => request('get', path, params, callback)
 
 /**
  * Make a POST request
@@ -158,16 +175,17 @@ export function post(path, params, callback) {
       params
     );
 
-    const url = setUrl(state.configuration, resolvedPath);
-
+    const baseUrl = state.configuration?.baseUrl;
     const auth = basicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, ...auth };
+    const options = { ...resolvedParams, ...auth, baseUrl };
 
-    return request('POST', url, config)
+    // console.log(options);
+
+    return request('POST', resolvedPath, options)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -194,16 +212,16 @@ export function put(path, params, callback) {
       path,
       params
     );
-    const url = setUrl(state.configuration, resolvedPath);
+    const baseUrl = state.configuration?.baseUrl;
 
     const auth = basicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, ...auth };
+    const options = { ...resolvedParams, ...auth, baseUrl };
 
-    return request('PUT', url, config)
+    return request('PUT', resolvedPath, options)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -231,16 +249,16 @@ export function patch(path, params, callback) {
       params
     );
 
-    const url = setUrl(state.configuration, resolvedPath);
+    const baseUrl = state.configuration?.baseUrl;
 
     const auth = basicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, ...auth };
+    const options = { ...resolvedParams, ...auth, baseUrl };
 
-    return request('patch', url, config)
+    return request('patch', resolvedPath, options)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -266,17 +284,16 @@ export function del(path, params, callback) {
       path,
       params
     );
-
-    const url = setUrl(state.configuration, resolvedPath);
+    const baseUrl = state.configuration?.baseUrl;
 
     const auth = basicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, ...auth };
+    const options = { ...resolvedParams, ...auth, baseUrl };
 
-    return request('DELETE', url, config)
+    return request('DELETE', resolvedPath, options)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -312,7 +329,10 @@ export function parseXML(body, script) {
     }
   };
 }
-export { request } from '@openfn/language-common/util';
+
+// TODO I don't think we should export this
+// export { request } from '@openfn/language-common/util';
+
 export {
   alterState,
   arrayToString,

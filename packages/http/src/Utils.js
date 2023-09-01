@@ -1,27 +1,7 @@
 import safeStringify from 'fast-safe-stringify';
 
-export function setUrl(configuration, path) {
-  const baseUrl = configuration?.baseUrl;
-  if (isValidHttpUrl(path)) return path;
-
-  if (baseUrl)
-    return `${baseUrl.replace(/\/$/, '')}/${path.replace(/^\/+/g, '')}`;
-
-  return path;
-}
-
-function isValidHttpUrl(string) {
-  let url;
-
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
-  }
-
-  return url.protocol === 'http:' || url.protocol === 'https:';
-}
-
+// TODO call this something like addBasicAuth
+// TODO add support for tls on config
 export function basicAuth(configuration, headers) {
   const username = configuration?.username;
   const password = configuration?.password;
@@ -34,16 +14,7 @@ export function basicAuth(configuration, headers) {
   return null;
 }
 
-export function setAuth(configuration, manualAuth) {
-  if (manualAuth) return manualAuth;
-  else if (configuration && configuration.username)
-    return {
-      username: configuration.username,
-      password: configuration.password,
-    };
-  else return null;
-}
-
+// TODO do we still need this ?
 export function assembleError({ response, error, params }) {
   if (response) {
     const customCodes = params?.options?.successCodes;
@@ -63,6 +34,7 @@ export function assembleError({ response, error, params }) {
   return new Error(safeStringify(response, null, 2));
 }
 
+// TODO, remove this
 export function tryJson(data) {
   if (typeof data === 'string') {
     try {

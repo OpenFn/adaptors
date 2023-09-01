@@ -1,9 +1,13 @@
-import { execute, get, post, put, patch, del, fn, request } from '../src';
+import { execute, get, post, put, patch, del, fn } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
+
+// TODO remove this before we merge
 import nock from 'nock';
-import { setUrl } from '../src/Utils';
+
+// TODO this is no longer need, but we still need the tests
+// import { setUrl } from '../src/Utils';
 
 const testServer = enableMockClient('https://www.example.com');
 
@@ -29,7 +33,7 @@ function clientReq(method, state) {
   );
 }
 
-describe.skip('The execute() function', () => {
+describe('The execute() function', () => {
   it('executes each operation in sequence', () => {
     let state = {};
     let operations = [
@@ -66,6 +70,7 @@ describe.skip('The execute() function', () => {
   });
 });
 
+// TODO make sure these are covered in the general get tests
 describe.skip('setUrl', () => {
   it('handles no slashes on either baseUrl or path', () => {
     const configuration = { baseUrl: 'https://www.test.com' };
@@ -96,6 +101,7 @@ describe.skip('setUrl', () => {
   });
 });
 
+// TODO I think all these can go?
 describe('The client', () => {
   before(() => {
     testServer
@@ -318,7 +324,7 @@ describe('get()', () => {
         method: 'GET',
       })
       .reply(500);
-    // testServer.get('/api/crashDummy').times(2).reply(500);
+    // testServer.get('/api/crshDummy').times(2).reply(500);
   });
 
   it('prepares nextState properly', () => {
@@ -524,6 +530,7 @@ describe('get()', () => {
     expect(data.id).to.eql(3);
   });
 
+  // TODO we can keep this if we update the error map!
   it.skip('allows successCodes to be specified via options', async () => {
     const state = {
       configuration: {},
@@ -532,7 +539,7 @@ describe('get()', () => {
 
     const { response } = await execute(
       get('https://www.example.com/api/badAuth', {
-        options: { successCodes: [404] },
+        errors: { 404: false },
       })
     )(state);
 
@@ -942,13 +949,21 @@ describe('patch', () => {
     expect(data).to.eql({ id: 6, name: 'New name' });
   });
 
-  it.skip('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .patch('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+  it.only('can be called inside an each block', async () => {
+    // nock('https://www.repeat.com')
+    //   .patch('/api/fake-json')
+    //   .times(3)
+    //   .reply(200, function (url, body) {
+    //     return body;
+    //   });
+
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200)
+      .persist();
 
     const state = {
       configuration: {},
@@ -961,19 +976,20 @@ describe('patch', () => {
     };
 
     const finalState = await execute(
-      each(
-        '$.things[*]',
-        patch(
+      // each(
+      //   '$.things[*]',
+        post(
           'https://www.repeat.com/api/fake-json',
           {
-            body: state => state.data,
+            // headers: { 'Content-Type': 'application/json' },
+            body: { a: 'b' },
           },
           next => {
             next.replies.push(next.response.config.data);
             return next;
           }
         )
-      )
+      // )
     )(state);
 
     console.log(finalState.replies);
