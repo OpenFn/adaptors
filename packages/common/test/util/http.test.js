@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import * as undici from 'undici';
 import {
   enableMockClient,
   request,
@@ -8,6 +9,16 @@ import {
 } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
+
+describe.skip('undici', () => {
+  // Debug utilities
+  it('should post JSON', () => {
+    undici.request('https://httpbin.org/anything', {
+      method: 'POST',
+      body: { hello: 'world' },
+    });
+  });
+});
 
 describe('request function', () => {
   describe('parseAs', () => {
@@ -150,7 +161,7 @@ describe('request function', () => {
     client
       .intercept({
         path: '/api',
-        method: 'JOE',
+        method: 'TEST',
       })
       .reply(
         200,
@@ -162,7 +173,7 @@ describe('request function', () => {
         }
       );
 
-    const result = await request('JOE', 'https://www.example.com/api');
+    const result = await request('TEST', 'https://www.example.com/api');
 
     expect(result.body).to.eql({});
     expect(result.code).to.eql(200);
@@ -190,6 +201,27 @@ describe('request function', () => {
       .reply(200, {});
 
     const response = await request('GET', 'https://www.example.com/api');
+
+    expect(response.code).to.eql(200);
+  });
+  it('should send data', async () => {
+    const data = {
+      hello: 'world',
+    };
+    let responseData;
+    client
+      .intercept({
+        path: '/api',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => {
+        responseData = body;
+        return {};
+      });
+
+    const response = await request('POST', 'https://www.example.com/api', {
+      body: data,
+    });
 
     expect(response.code).to.eql(200);
   });
@@ -374,17 +406,26 @@ describe('helpers', () => {
     expect(body).to.eql({});
     expect(code).to.eql(200);
   });
-  it('should handle different HTTP methods eg: POST', async () => {
+  it('should send a post', async () => {
+    const data = {
+      hello: 'world',
+    };
+    let responseData;
+
     client
       .intercept({
         path: '/api',
         method: 'POST',
       })
-      .reply(200);
+      .reply(200, ({ body }) => {
+        responseData = body;
+        return {};
+      });
 
-    const { code } = await post('https://www.example.com/api');
+    const { code } = await post('https://www.example.com/api', data);
 
     expect(code).to.eql(200);
+    expect(responseData).to.eql(data);
   });
   it('should send a DELETE', async () => {
     client
