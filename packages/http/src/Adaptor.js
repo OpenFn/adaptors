@@ -121,16 +121,13 @@ export function get(path, params, callback) {
       params
     );
 
-    const { baseUrl, username, password } = state.configuration;
+    const url = setUrl(state.configuration, resolvedPath);
 
-    const url = setUrl(baseUrl, resolvedPath);
+    const auth = basicAuth(
+      state.configuration,
+      resolvedParams?.headers ? resolvedParams.headers : {}
+    );
 
-    const headers = resolvedParams?.headers ? resolvedParams.headers : {};
-    const auth = basicAuth(username, password, headers);
-
-    // Coerces options/paramaters for language-http into a set of configuration for the `request` function
-    // config = buildConfig(state, params)
-    // assert.equal(config, { headers: { 'content-type': 'application/json', "Authori" } }}})
     const config = { ...resolvedParams, ...auth };
 
     return request('GET', url, config)
@@ -146,7 +143,6 @@ export function get(path, params, callback) {
  *  post('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
@@ -164,17 +160,14 @@ export function post(path, params, callback) {
 
     const url = setUrl(state.configuration, resolvedPath);
 
-    const auth = setAuth(
+    const auth = basicAuth(
       state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
+      resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
+    const config = { ...resolvedParams, ...auth };
 
-    return request(
-      'POST',
-      config
-    )(state)
+    return request('POST', url, config)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -203,12 +196,12 @@ export function put(path, params, callback) {
     );
     const url = setUrl(state.configuration, resolvedPath);
 
-    const auth = setAuth(
+    const auth = basicAuth(
       state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
+      resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = { ...resolvedParams, auth };
+    const config = { ...resolvedParams, ...auth };
 
     return request('PUT', url, config)
       .then(response => handleResponse(state, response))
@@ -223,7 +216,6 @@ export function put(path, params, callback) {
  *  patch('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
@@ -241,17 +233,14 @@ export function patch(path, params, callback) {
 
     const url = setUrl(state.configuration, resolvedPath);
 
-    const auth = setAuth(
+    const auth = basicAuth(
       state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
+      resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
+    const config = { ...resolvedParams, ...auth };
 
-    return request(
-      'patch',
-      config
-    )(state)
+    return request('patch', url, config)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };
@@ -280,17 +269,14 @@ export function del(path, params, callback) {
 
     const url = setUrl(state.configuration, resolvedPath);
 
-    const auth = setAuth(
+    const auth = basicAuth(
       state.configuration,
-      resolvedParams?.authentication ?? resolvedParams.auth
+      resolvedParams?.headers ? resolvedParams.headers : {}
     );
 
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
+    const config = { ...resolvedParams, ...auth };
 
-    return request(
-      'DELETE',
-      config
-    )(state)
+    return request('DELETE', url, config)
       .then(response => handleResponse(state, response))
       .then(nextState => handleCallback(nextState, callback));
   };

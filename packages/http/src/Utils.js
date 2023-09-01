@@ -1,6 +1,7 @@
 import safeStringify from 'fast-safe-stringify';
 
-export function setUrl(baseUrl, path) {
+export function setUrl(configuration, path) {
+  const baseUrl = configuration?.baseUrl;
   if (isValidHttpUrl(path)) return path;
 
   if (baseUrl)
@@ -21,7 +22,9 @@ function isValidHttpUrl(string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-export function basicAuth(username, password, headers) {
+export function basicAuth(configuration, headers) {
+  const username = configuration?.username;
+  const password = configuration?.password;
   if (username && password) {
     const base64Encode = btoa(`${username}:${password}`);
     headers['Authorization'] = `Basic ${base64Encode}`;

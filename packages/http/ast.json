@@ -80,7 +80,7 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -206,7 +206,7 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
