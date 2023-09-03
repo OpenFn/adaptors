@@ -16,7 +16,7 @@ for required and optional `configuration` properties.
 ### A example expression using the `create` function
 
 ```js
-create('patient', { name: 'Bukayo' });
+promptChatGpt('Generate a nodejs function to do addition of two numbers');
 ```
 
 ## Development
