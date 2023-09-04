@@ -5,7 +5,10 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 
-import { request, expandReferences } from '@openfn/language-common/util';
+import {
+  request as commonRequest,
+  expandReferences,
+} from '@openfn/language-common/util';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 import tough from 'tough-cookie';
@@ -33,8 +36,8 @@ export function execute(...operations) {
   };
 }
 
-var cookiejar = new tough.CookieJar();
-var Cookie = tough.Cookie;
+const cookiejar = new tough.CookieJar();
+const Cookie = tough.Cookie;
 
 function handleCookies(response) {
   const { config, data, headers } = response;
@@ -92,6 +95,32 @@ function handleCallback(state, callback) {
   return state;
 }
 
+// TODO  refactor to this pattern
+function request(method, path, params, callback) {
+  return state => {
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    const body = state.resolvedParams?.body
+      ? JSON.stringify(state.resolvedParams?.body)
+      : null;
+    const baseUrl = state.configuration?.baseUrl;
+    const auth = basicAuth(
+      state.configuration,
+      resolvedParams?.headers ? resolvedParams.headers : {}
+    );
+
+    const options = { ...resolvedParams, ...auth, baseUrl, body };
+
+    return commonRequest(method, resolvedPath, options)
+      .then(response => handleResponse(state, response))
+      .then(nextState => handleCallback(nextState, callback));
+  };
+}
+
 /**
  * Make a GET request
  * @public
@@ -107,51 +136,8 @@ function handleCallback(state, callback) {
  * @returns {Operation}
  */
 export function get(path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-
-    const baseUrl = state.configuration?.baseUrl;
-    const auth = basicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
-
-    const options = { ...resolvedParams, ...auth, baseUrl };
-
-    return request('GET', resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return request('get', path, params, callback);
 }
-
-// TODO  refactor to this pattern
-// function request(method, path, params, callback) {
-//   return state => {
-//     const [resolvedPath, resolvedParams] = expandReferences(
-//       state,
-//       path,
-//       params
-//     );
-
-//     const baseUrl = state.configuration?.baseUrl;
-//     const auth = basicAuth(
-//       state.configuration,
-//       resolvedParams?.headers ? resolvedParams.headers : {}
-//     );
-
-//     const options = { ...resolvedParams, ...auth, baseUrl };
-
-//     return request(method, resolvedPath, options)
-//       .then(response => handleResponse(state, response))
-//       .then(nextState => handleCallback(nextState, callback));
-//   };
-// }
-
-// export const get = (path, params, callback) => request('get', path, params, callback)
 
 /**
  * Make a POST request
@@ -167,28 +153,9 @@ export function get(path, params, callback) {
  * @param {function} callback - (Optional) Callback function
  * @returns {operation}
  */
+
 export function post(path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-
-    const baseUrl = state.configuration?.baseUrl;
-    const auth = basicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
-
-    const options = { ...resolvedParams, ...auth, baseUrl };
-
-    // console.log(options);
-
-    return request('POST', resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  request('post', path, params, callback);
 }
 
 /**
@@ -206,25 +173,7 @@ export function post(path, params, callback) {
  * @returns {Operation}
  */
 export function put(path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-    const baseUrl = state.configuration?.baseUrl;
-
-    const auth = basicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
-
-    const options = { ...resolvedParams, ...auth, baseUrl };
-
-    return request('PUT', resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  request('put', path, params, callback);
 }
 
 /**
@@ -242,26 +191,7 @@ export function put(path, params, callback) {
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-
-    const baseUrl = state.configuration?.baseUrl;
-
-    const auth = basicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
-
-    const options = { ...resolvedParams, ...auth, baseUrl };
-
-    return request('patch', resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  request('patch', path, params, callback);
 }
 
 /**
