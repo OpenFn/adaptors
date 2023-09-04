@@ -23,16 +23,6 @@ function stdGet(state) {
   );
 }
 
-function clientReq(method, state) {
-  return execute(method('https://www.example.com/api/fake', {}))(state).then(
-    nextState => {
-      const { data, references } = nextState;
-      expect(data).to.eql({ code: 200, body: 'the response' });
-      expect(references).to.eql([{ a: 1 }]);
-    }
-  );
-}
-
 describe('The execute() function', () => {
   it('executes each operation in sequence', () => {
     let state = {};
@@ -101,119 +91,6 @@ describe.skip('setUrl', () => {
   });
 });
 
-// TODO I think all these can go?
-describe('The client', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/api/fake',
-        method: 'GET',
-      })
-      .reply(200, req => ({
-        code: 200,
-        headers: req.headers,
-        body: 'the response',
-      }));
-
-    testServer
-      .intercept({
-        path: '/api/fake',
-        method: 'POST',
-      })
-      .reply(200, req => ({
-        code: 200,
-        headers: req.headers,
-        body: 'the response',
-      }));
-
-    testServer
-      .intercept({
-        path: '/api/fake',
-        method: 'PUT',
-      })
-      .reply(200, req => ({
-        code: 200,
-        headers: req.headers,
-        body: 'the response',
-      }));
-
-    testServer
-      .intercept({
-        path: '/api/fake',
-        method: 'PATCH',
-      })
-      .reply(200, req => ({
-        code: 200,
-        headers: req.headers,
-        body: 'the response',
-      }));
-
-    testServer
-      .intercept({
-        path: '/api/fake',
-        method: 'DELETE',
-      })
-      .reply(200, req => ({
-        code: 200,
-        headers: req.headers,
-        body: 'the response',
-      }));
-
-    // testServer.post('/api/fake').reply(200, {
-    //   httpStatus: 'OK',
-    //   message: 'the response',
-    // });
-
-    // testServer.put('/api/fake').reply(200, {
-    //   httpStatus: 'OK',
-    //   message: 'the response',
-    // });
-
-    // testServer.patch('/api/fake').reply(200, {
-    //   httpStatus: 'OK',
-    //   message: 'the response',
-    // });
-
-    // testServer.delete('/api/fake').reply(200, {
-    //   httpStatus: 'OK',
-    //   message: 'the response',
-    // });
-  });
-
-  after(() => {
-    nock.cleanAll();
-  });
-  const stdState = {
-    configuration: null,
-    data: { a: 1 },
-  };
-
-  it('works with GET', () => {
-    let state = stdState;
-    clientReq(get, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(post, state);
-  });
-
-  it('works with PATCH', () => {
-    let state = stdState;
-    clientReq(patch, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(put, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(del, state);
-  });
-});
-
 describe('get()', () => {
   before(() => {
     testServer
@@ -226,11 +103,6 @@ describe('get()', () => {
         body: 'the response',
       })
       .persist();
-
-    // testServer.get('/api/fake').times(4).reply(200, {
-    //   httpStatus: 'OK',
-    //   message: 'the response',
-    // });
 
     testServer
       .intercept({
@@ -978,17 +850,17 @@ describe('patch', () => {
     const finalState = await execute(
       // each(
       //   '$.things[*]',
-        post(
-          'https://www.repeat.com/api/fake-json',
-          {
-            // headers: { 'Content-Type': 'application/json' },
-            body: { a: 'b' },
-          },
-          next => {
-            next.replies.push(next.response.config.data);
-            return next;
-          }
-        )
+      post(
+        'https://www.repeat.com/api/fake-json',
+        {
+          // headers: { 'Content-Type': 'application/json' },
+          body: { a: 'b' },
+        },
+        next => {
+          next.replies.push(next.response.config.data);
+          return next;
+        }
+      )
       // )
     )(state);
 
