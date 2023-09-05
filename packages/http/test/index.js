@@ -3,47 +3,6 @@ import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 
-// TODO this is no longer need, but we still need the tests
-// import { setUrl } from '../src/Utils';
-// TODO make sure these are covered in the general get tests
-describe.skip('parseUrl', () => {
-  it('handles no slashes on either baseUrl or path', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = 'users/5';
-
-    expect(parseUrl(path, configuration.baseUrl)).to.eql(
-      'https://www.test.com/users/5'
-    );
-  });
-
-  it('handles a trailing slash on baseUrl and a leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = '/users/5';
-
-    expect(parseUrl(path, configuration.baseUrl)).to.eql(
-      'https://www.test.com/users/5'
-    );
-  });
-
-  it('handles a trailing slash on baseUrl, no leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = 'users/5';
-
-    expect(parseUrl(path, configuration.baseUrl)).to.eql(
-      'https://www.test.com/users/5'
-    );
-  });
-
-  it('handles a leading slash on path, nothing on baseUrl', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = '/users/5';
-
-    expect(parseUrl(path, configuration.baseUrl)).to.eql(
-      'https://www.test.com/users/5'
-    );
-  });
-});
-
 const testServer = enableMockClient('https://www.example.com');
 
 function stdGet(state) {
@@ -303,15 +262,16 @@ describe('get()', () => {
   it('accepts authentication for http basic auth', async () => {
     const state = {
       configuration: {
+        baseUrl: 'https://www.example.com',
         username: 'hello',
         password: 'there',
       },
       data: { triggering: 'event' },
     };
 
-    const { data, response } = await execute(
-      get('https://www.example.com/api/showMeMyHeaders')
-    )(state);
+    const { data, response } = await execute(get('/api/showMeMyHeaders'))(
+      state
+    );
 
     expect(data.path).to.eql('/api/showMeMyHeaders');
     expect(response.headers).to.haveOwnProperty(

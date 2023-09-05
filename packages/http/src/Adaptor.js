@@ -95,7 +95,6 @@ function handleCallback(state, callback) {
   return state;
 }
 
-// TODO  refactor to this pattern
 function request(method, path, params, callback) {
   return state => {
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -242,9 +241,6 @@ export function parseXML(body, script) {
     }
   };
 }
-
-// TODO I don't think we should export this
-// export { request } from '@openfn/language-common/util';
 
 export {
   alterState,
