@@ -3,11 +3,46 @@ import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 
-// TODO remove this before we merge
-import nock from 'nock';
-
 // TODO this is no longer need, but we still need the tests
 // import { setUrl } from '../src/Utils';
+// TODO make sure these are covered in the general get tests
+describe.skip('parseUrl', () => {
+  it('handles no slashes on either baseUrl or path', () => {
+    const configuration = { baseUrl: 'https://www.test.com' };
+    const path = 'users/5';
+
+    expect(parseUrl(path, configuration.baseUrl)).to.eql(
+      'https://www.test.com/users/5'
+    );
+  });
+
+  it('handles a trailing slash on baseUrl and a leading slash on path', () => {
+    const configuration = { baseUrl: 'https://www.test.com/' };
+    const path = '/users/5';
+
+    expect(parseUrl(path, configuration.baseUrl)).to.eql(
+      'https://www.test.com/users/5'
+    );
+  });
+
+  it('handles a trailing slash on baseUrl, no leading slash on path', () => {
+    const configuration = { baseUrl: 'https://www.test.com/' };
+    const path = 'users/5';
+
+    expect(parseUrl(path, configuration.baseUrl)).to.eql(
+      'https://www.test.com/users/5'
+    );
+  });
+
+  it('handles a leading slash on path, nothing on baseUrl', () => {
+    const configuration = { baseUrl: 'https://www.test.com' };
+    const path = '/users/5';
+
+    expect(parseUrl(path, configuration.baseUrl)).to.eql(
+      'https://www.test.com/users/5'
+    );
+  });
+});
 
 const testServer = enableMockClient('https://www.example.com');
 
@@ -60,37 +95,6 @@ describe('The execute() function', () => {
   });
 });
 
-// TODO make sure these are covered in the general get tests
-describe.skip('setUrl', () => {
-  it('handles no slashes on either baseUrl or path', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = 'users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-
-  it('handles a trailing slash on baseUrl and a leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = '/users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-
-  it('handles a trailing slash on baseUrl, no leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = 'users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-
-  it('handles a leading slash on path, nothing on baseUrl', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = '/users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-});
-
 describe('get()', () => {
   before(() => {
     testServer
@@ -98,10 +102,18 @@ describe('get()', () => {
         path: '/api/fake',
         method: 'GET',
       })
-      .reply(200, {
-        code: '200',
-        body: 'the response',
-      })
+      .reply(
+        200,
+        {
+          code: '200',
+          body: 'the response',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .persist();
 
     testServer
@@ -113,6 +125,7 @@ describe('get()', () => {
         headers: {
           'x-openfn': 'testing',
           authorization: 'Basic aGVsbG86dGhlcmU=',
+          'Content-Type': 'application/json',
         },
       })
       .persist();
@@ -122,7 +135,11 @@ describe('get()', () => {
         path: '/api/showMeMyHeaders?id=1',
         method: 'GET',
       })
-      .reply(200, req => req);
+      .reply(200, req => req, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
     // TODO Follow All Redirects support
     // testServer
@@ -145,58 +162,53 @@ describe('get()', () => {
         path: '/api/fake-cookies',
         method: 'GET',
       })
-      .reply(200, {
-        __cookie: 'tasty_cookie=choco',
-        __headers: { 'Set-Cookie': ['tasty_cookie=choco'] },
-      });
-
-    // testServer.get('/api/fake-cookies').reply(
-    //   200,
-    //   function (url, body) {
-    //     return { url };
-    //   },
-    //   { 'Set-Cookie': ['tasty_cookie=choco'] }
-    // );
+      .reply(
+        200,
+        {
+          __cookie: 'tasty_cookie=choco',
+          __headers: { 'Set-Cookie': ['tasty_cookie=choco'] },
+        },
+        {
+          headers: {
+            'Set-Cookie': ['tasty_cookie=choco'],
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
     testServer
       .intercept({
         path: '/api/fake-callback',
         method: 'GET',
       })
-      .reply(200, req => ({ ...req, id: 3 }));
-
-    // testServer.get('/api/fake-callback').reply(200, function (url, body) {
-    //   return { url, id: 3 };
-    // });
+      .reply(200, req => ({ ...req, id: 3 }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
 
     testServer
       .intercept({
         path: '/api/fake-promise',
         method: 'GET',
       })
-      .reply(200, req => ({ ...req, id: 3 }));
-
-    // testServer.get('/api/fake-promise').reply(200, function (url, body) {
-    //   return new Promise((resolve, reject) => {
-    //     resolve({ url, id: 3 });
-    //   });
-    // });
+      .reply(200, req => ({ ...req, id: 3 }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
 
     testServer
       .intercept({
         path: '/api/badAuth',
         method: 'GET',
       })
-      .reply(404);
+      .reply(404)
+      .persist();
 
-    // testServer.get('/api/badAuth').times(2).reply(404);
     testServer
       .intercept({
         path: '/api/crashDummy',
         method: 'GET',
       })
-      .reply(500);
-    // testServer.get('/api/crshDummy').times(2).reply(500);
+      .reply(500)
+      .persist();
   });
 
   it('prepares nextState properly', () => {
@@ -310,38 +322,18 @@ describe('get()', () => {
     // expect(data.headers).to.haveOwnProperty('host', 'www.example.com');
   });
 
-  // TODO support for gzip option
-  it.skip('can enable gzip', async () => {
+  it('allows query strings to be set', async () => {
     const state = {
       configuration: {},
       data: {},
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/showMeMyHeaders', { gzip: true })
-    )(state);
-
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
-
-    expect(finalState.data[1]).to.haveOwnProperty(
-      'accept-encoding',
-      'gzip, deflate'
-    );
-
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
-  });
-
-  it.skip('allows query strings to be set', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const { data, response } = await execute(
+    const { data } = await execute(
       get('https://www.example.com/api/showMeMyHeaders', { query: { id: 1 } })
     )(state);
 
-    expect(data.path).to.eql('/api/showMeMyHeaders?id=1');
+    expect(data.path).to.eql('/api/showMeMyHeaders');
+    expect(data.query).to.eql({ id: 1 });
     // TODO how to test baseUrl? Do we want to test baseUrl
     // expect(data[1]).to.haveOwnProperty('host', 'www.example.com');
   });
@@ -397,13 +389,12 @@ describe('get()', () => {
     };
 
     const { data } = await execute(
-      get('https://www.example.com/api/fake-promise', {})
+      get('https://www.example.com/api/fake-promise')
     )(state).then(state => state);
     expect(data.id).to.eql(3);
   });
 
-  // TODO we can keep this if we update the error map!
-  it.skip('allows successCodes to be specified via options', async () => {
+  it('allows errors to be specified via options', async () => {
     const state = {
       configuration: {},
       data: {},
@@ -431,13 +422,14 @@ describe('get()', () => {
     expect(error.code).to.eql(500);
   });
 
-  it.skip('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .get('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+  it('can be called inside an each block', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'GET',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -453,19 +445,17 @@ describe('get()', () => {
       each(
         '$.things[*]',
         get(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -479,50 +469,18 @@ describe('post', () => {
   before(() => {
     testServer
       .intercept({
-        path: '/api/fake-json',
-        method: 'POST',
-      })
-      .reply(200, { name: 'test', age: 24 });
-
-    testServer
-      .intercept({
-        path: '/api/fake-form',
-        method: 'POST',
-      })
-      .reply(200, function (url, body) {
-        return body;
-      });
-
-    testServer
-      .intercept({
-        path: '/api/fake-formData',
-        method: 'POST',
-      })
-      .reply(200, function (url, body) {
-        return body;
-      });
-
-    testServer
-      .intercept({
         path: '/api/csv-reader',
         method: 'POST',
       })
-      .reply(200, function (url, body) {
-        return body;
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
       .persist();
-
-    testServer
-      .intercept({
-        path: '/api/fake-custom-success-codes',
-        method: 'POST',
-      })
-      .reply(302, function (url, body) {
-        return { ...body, statusCode: 302 };
-      });
   });
 
-  it.skip('should make an http request from inside the parseCSV callback', async function () {
+  it('should make an http request from inside the parseCSV callback', async function () {
     const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
     const state = { references: [], data: [], apiResponses: [] };
 
@@ -536,7 +494,7 @@ describe('post', () => {
             body: rows,
           },
           state => {
-            state.apiResponses.push(...state.response.data);
+            state.apiResponses.push(...state.response.body);
             return state;
           }
         )(state)
@@ -552,18 +510,35 @@ describe('post', () => {
   });
 
   it('can set JSON on the request body', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, { name: 'test', age: 24 });
+
     const state = {
       configuration: {},
       data: { name: 'test', age: 24 },
     };
 
     const finalState = await execute(
-      post('https://www.example.com/api/fake-json', { body: state.data })
+      post('https://www.example.com/api/fake-json', {
+        body: state.data,
+        parseAs: 'json',
+      })
     )(state);
     expect(finalState.data).to.eql({ name: 'test', age: 24 });
   });
 
   it.skip('can set data via Form param on the request body', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-form',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body);
+
     let form = {
       username: 'fake',
       password: 'fake_pass',
@@ -589,6 +564,12 @@ describe('post', () => {
   });
 
   it.skip('can set FormData on the request body', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-formData',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body);
     let formData = {
       id: 'fake_id',
       parent: 'fake_parent',
@@ -619,13 +600,14 @@ describe('post', () => {
     );
   });
 
-  it.skip('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .post('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+  it('can be called inside an each block', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -641,12 +623,12 @@ describe('post', () => {
       each(
         '$.things[*]',
         post(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
@@ -661,12 +643,13 @@ describe('post', () => {
   });
 
   it.skip('can be called inside an each with old "json" request config', async () => {
-    nock('https://www.repeat.com')
-      .post('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -682,12 +665,12 @@ describe('post', () => {
       each(
         '$.things[*]',
         post(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             json: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
@@ -701,26 +684,31 @@ describe('post', () => {
     ]);
   });
 
-  it.skip('can set successCodes on the request', async () => {
-    let data = {
-      id: 'fake_id',
-      parent: 'fake_parent',
-      mobile_phone: 'fake_phone',
-    };
+  it('can set successCodes on the request', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-custom-success-codes',
+        method: 'POST',
+      })
+      .reply(302, ({ body }) => ({ body, code: 302 }));
+
     const state = {
       configuration: {},
-      data,
+      data: {
+        id: 'fake_id',
+        parent: 'fake_parent',
+        mobile_phone: 'fake_phone',
+      },
     };
-    const finalState = await execute(
+    const { data } = await execute(
       post('https://www.example.com/api/fake-custom-success-codes', {
-        data: state => {
-          return state.data;
-        },
-        options: { successCodes: [302] },
+        body: state => state.data,
+        errors: { 302: false },
+        parseAs: 'json',
       })
     )(state);
 
-    expect(finalState.data.statusCode).to.eq(302);
+    expect(data.code).to.eq(302);
   });
 });
 
@@ -731,10 +719,17 @@ describe('put', () => {
         path: '/api/fake-items/6',
         method: 'PUT',
       })
-      .reply(200, { name: 'New name' });
+      .reply(
+        200,
+        { name: 'New name' },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
   });
 
-  // TODO, why this is passing ?
   it('sends a put request', async () => {
     const state = {
       configuration: {},
@@ -750,16 +745,19 @@ describe('put', () => {
     expect(data).to.eql({ name: 'New name' });
   });
 
-  it.skip('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .put('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+  it('can be called inside an each block', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'put',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
-      configuration: {},
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
       things: [
         { name: 'a', age: 42 },
         { name: 'b', age: 83 },
@@ -772,19 +770,17 @@ describe('put', () => {
       each(
         '$.things[*]',
         put(
-          'https://www.repeat.com/api/fake-json',
+          '/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -801,12 +797,18 @@ describe('patch', () => {
         path: '/api/fake-items/6',
         method: 'PATCH',
       })
-      .reply(200, { name: 'New name', id: 6 });
+      .reply(
+        200,
+        { name: 'New name', id: 6 },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
   });
 
-  // Interesting error
-  // InvalidArgumentError: body must be a string, a Buffer, a Readable stream, an iterable, or an async iterable
-  it.skip('sends a patch request', async () => {
+  it('sends a patch request', async () => {
     const state = {
       configuration: {},
       data: { name: 'New name', id: 6 },
@@ -821,24 +823,19 @@ describe('patch', () => {
     expect(data).to.eql({ id: 6, name: 'New name' });
   });
 
-  it.only('can be called inside an each block', async () => {
-    // nock('https://www.repeat.com')
-    //   .patch('/api/fake-json')
-    //   .times(3)
-    //   .reply(200, function (url, body) {
-    //     return body;
-    //   });
-
+  it('can be called inside an each block', async () => {
     testServer
       .intercept({
         path: '/api/fake-json',
-        method: 'POST',
+        method: 'PATCH',
       })
-      .reply(200)
+      .reply(200, ({ body }) => body)
       .persist();
 
     const state = {
-      configuration: {},
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
       things: [
         { name: 'a', age: 42 },
         { name: 'b', age: 83 },
@@ -848,23 +845,20 @@ describe('patch', () => {
     };
 
     const finalState = await execute(
-      // each(
-      //   '$.things[*]',
-      post(
-        'https://www.repeat.com/api/fake-json',
-        {
-          // headers: { 'Content-Type': 'application/json' },
-          body: { a: 'b' },
-        },
-        next => {
-          next.replies.push(next.response.config.data);
-          return next;
-        }
+      each(
+        '$.things[*]',
+        patch(
+          '/api/fake-json',
+          state => ({
+            body: state.data,
+          }),
+          next => {
+            next.replies.push(next.response.body);
+            return next;
+          }
+        )
       )
-      // )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -881,7 +875,15 @@ describe('delete', () => {
         path: '/api/fake-del-items/6',
         method: 'DELETE',
       })
-      .reply(204, {});
+      .reply(
+        204,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
   });
 
   it('sends a delete request', async () => {
@@ -897,13 +899,14 @@ describe('delete', () => {
     expect(response.code).to.eql(204);
   });
 
-  it.skip('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .delete('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+  it('can be called inside an each block', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'DELETE',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -919,12 +922,12 @@ describe('delete', () => {
       each(
         '$.things[*]',
         del(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
@@ -943,11 +946,7 @@ describe('delete', () => {
 
 describe.skip('the old request operation', () => {
   before(() => {
-    testServer
-      .post('/api/oldEndpoint?hi=there')
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer.post('/api/oldEndpoint?hi=there').reply(200, ({ body }) => body);
   });
 
   it('sends a post request', async () => {
@@ -971,9 +970,12 @@ describe.skip('the old request operation', () => {
 describe.skip('The `agentOptions` param', () => {
   before(() => {
     testServer
-      .post('/api/sslCertCheck')
-      .times(3)
-      .reply(200, (url, body) => body);
+      .intercept({
+        path: '/api/sslCertCheck',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
   });
 
   it('gets expanded and still works', async () => {
@@ -1048,7 +1050,12 @@ describe.skip('The `agentOptions` param', () => {
 
 describe.skip('reject unauthorized allows for bad certs', () => {
   before(() => {
-    testServer.get('/api/insecureStuff').reply(200, 'all my secrets!');
+    testServer
+      .intercept({
+        path: '/api/insecureStuff',
+        method: 'GET',
+      })
+      .reply(200, 'all my secrets!');
   });
 
   it('lets the user send requests while ignoring SSL', async () => {

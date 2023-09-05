@@ -104,9 +104,10 @@ function request(method, path, params, callback) {
       params
     );
 
-    const body = state.resolvedParams?.body
-      ? JSON.stringify(state.resolvedParams?.body)
+    const body = resolvedParams?.body
+      ? JSON.stringify(resolvedParams?.body)
       : null;
+
     const baseUrl = state.configuration?.baseUrl;
     const auth = basicAuth(
       state.configuration,
@@ -136,7 +137,7 @@ function request(method, path, params, callback) {
  * @returns {Operation}
  */
 export function get(path, params, callback) {
-  return request('get', path, params, callback);
+  return request('GET', path, params, callback);
 }
 
 /**
@@ -155,7 +156,7 @@ export function get(path, params, callback) {
  */
 
 export function post(path, params, callback) {
-  request('post', path, params, callback);
+  return request('POST', path, params, callback);
 }
 
 /**
@@ -173,7 +174,7 @@ export function post(path, params, callback) {
  * @returns {Operation}
  */
 export function put(path, params, callback) {
-  request('put', path, params, callback);
+  return request('PUT', path, params, callback);
 }
 
 /**
@@ -191,7 +192,7 @@ export function put(path, params, callback) {
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
-  request('patch', path, params, callback);
+  return request('PATCH', path, params, callback);
 }
 
 /**
@@ -208,25 +209,7 @@ export function patch(path, params, callback) {
  * @returns {Operation}
  */
 export function del(path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-    const baseUrl = state.configuration?.baseUrl;
-
-    const auth = basicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
-
-    const options = { ...resolvedParams, ...auth, baseUrl };
-
-    return request('DELETE', resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return request('DELETE', path, params, callback);
 }
 
 /**
