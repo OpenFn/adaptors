@@ -25,7 +25,12 @@ export const enableMockClient = baseUrl => {
 const assertOK = (response, errorMap, fullUrl) => {
   const errMapMessage = errorMap[response.statusCode];
 
-  if (errMapMessage || response.statusCode >= 400) {
+  const checkSuccessCode =
+    typeof errMapMessage === 'boolean'
+      ? errMapMessage
+      : errMapMessage || response.statusCode >= 400;
+
+  if (checkSuccessCode) {
     const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
 
     const errMessage =
