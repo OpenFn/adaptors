@@ -76,6 +76,8 @@
 <dt>
     <a href="#toArray">toArray(arg)</a></dt>
 <dt>
+    <a href="#validate">validate(schema, data)</a></dt>
+<dt>
     <a href="#withAgent">withAgent(params)</a></dt>
 </dl>
 
@@ -876,6 +878,36 @@ Does not affect array objects.
 each(function(state) {
   return toArray( dataValue("path_of_array")(state) )
 }, ...)
+```
+
+* * *
+
+## validate
+
+validate(schema, data) ⇒ <code>Operation</code>
+Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
+Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
+Data can be passed directly or loaded as a JSON path from state.
+By default, schema is loaded from `state.schema` and data from `state.data`.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | <code>string</code> \| <code>object</code> | The schema, path or URL to validate against |
+| data | <code>string</code> \| <code>object</code> | The data or path to validate |
+
+**Example** *(Validate &#x60;state.data&#x60; with &#x60;state.schema&#x60;)*  
+```js
+validate()
+```
+**Example** *(Validate form data at &#x60;state.form&#x60; with a schema from a URL)*  
+```js
+validate("https://www.example.com/schema/record", "form")
+```
+**Example** *(Validate the each item in &#x60;state.records&#x60; with a schema from a URL)*  
+```js
+each("records[*]", validate("https://www.example.com/schema/record"))
 ```
 
 * * *
