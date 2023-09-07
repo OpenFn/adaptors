@@ -2,10 +2,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "host": {
-      "title": "Host URL",
+      "title": "Host",
       "type": "string",
       "description": "Postgres instance host URL",
       "minLength": 1,
+      "anyOf": [
+        {
+          "format": "uri"
+        },
+        {
+          "format": "ipv4"
+        }
+      ],
       "examples": [
         "https://some-host.compute-1.amazonaws.com",
         "201.220.61.246"
