@@ -8,7 +8,7 @@
       "minLength": 1,
       "examples": [
         "https://some-host.compute-1.amazonaws.com",
-        "201.220.61.246",
+        "201.220.61.246"
       ]
     },
     "port": {
@@ -66,5 +66,9 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["host", "port", "database"]
+  "required": [
+    "host",
+    "port",
+    "database"
+  ]
 }
