@@ -118,25 +118,6 @@ describe('get()', () => {
 
     testServer
       .intercept({
-        path: '/api/fake-cookies',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          __cookie: 'tasty_cookie=choco',
-          __headers: { 'Set-Cookie': ['tasty_cookie=choco'] },
-        },
-        {
-          headers: {
-            'Set-Cookie': ['tasty_cookie=choco'],
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-    testServer
-      .intercept({
         path: '/api/fake-callback',
         method: 'GET',
       })
@@ -310,21 +291,6 @@ describe('get()', () => {
       })
     )(state);
     expect(finalState.data.url).to.eql('/api/fake-endpoint-3');
-  });
-
-  it('can keep and reuse cookies', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const { data } = await execute(
-      get('https://www.example.com/api/fake-cookies', {
-        keepCookie: true,
-      })
-    )(state);
-
-    expect(data.__cookie).to.eql('tasty_cookie=choco');
   });
 
   it('accepts callbacks and calls them with nextState', async () => {
@@ -514,7 +480,6 @@ describe('post', () => {
       })
     )(state);
 
-    console.log(finalState.data);
     expect(finalState.data.body).to.contain(
       'Content-Disposition: form-data; name="username"\r\n\r\nfake'
     );
@@ -894,8 +859,6 @@ describe('delete', () => {
       )
     )(state);
 
-    console.log(finalState.replies);
-
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
       '{"name":"b","age":83}',
@@ -942,7 +905,7 @@ describe.skip('The `agentOptions` param', () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 1 },
@@ -966,7 +929,7 @@ describe.skip('The `agentOptions` param', () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 1 },
@@ -986,7 +949,7 @@ describe.skip('The `agentOptions` param', () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 2 },

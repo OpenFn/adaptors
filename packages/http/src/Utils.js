@@ -1,8 +1,7 @@
 import safeStringify from 'fast-safe-stringify';
 
-// TODO call this something like addBasicAuth
 // TODO add support for tls on config
-export function basicAuth(configuration, headers) {
+export function addBasicAuth(configuration, headers) {
   const username = configuration?.username;
   const password = configuration?.password;
   if (username && password) {

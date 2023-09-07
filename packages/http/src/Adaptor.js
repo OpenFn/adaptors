@@ -1,4 +1,4 @@
-import { basicAuth } from './Utils';
+import { addBasicAuth } from './Utils';
 
 import {
   execute as commonExecute,
@@ -11,7 +11,6 @@ import {
 } from '@openfn/language-common/util';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
-import tough from 'tough-cookie';
 
 /**
  * Execute a sequence of operations.
@@ -36,44 +35,6 @@ export function execute(...operations) {
   };
 }
 
-const cookiejar = new tough.CookieJar();
-const Cookie = tough.Cookie;
-
-function handleCookies(response) {
-  const { config, data, headers } = response;
-  if (config?.keepCookie) {
-    let cookies;
-    let keepCookies = [];
-
-    if (headers['set-cookie']) {
-      if (headers['set-cookie'] instanceof Array) {
-        cookies = headers['set-cookie']?.map(Cookie.parse);
-      } else {
-        cookies = [Cookie.parse(headers['set-cookie'])];
-      }
-
-      headers['set-cookie']?.forEach(c => {
-        cookiejar.setCookie(Cookie.parse(c), config.url, (err, cookie) => {
-          keepCookies?.push(cookie?.cookieString());
-        });
-      });
-    }
-
-    const extendableData = Array.isArray(data) ? { body: data } : data;
-
-    return {
-      ...response,
-      data: {
-        ...extendableData,
-        __cookie: keepCookies?.length === 1 ? keepCookies[0] : keepCookies,
-        __headers: response.headers,
-      },
-    };
-  }
-
-  return response;
-}
-
 function handleResponse(state, response) {
   console.log(
     // response.config.method.toUpperCase(), // TODO Should we return method
@@ -82,11 +43,9 @@ function handleResponse(state, response) {
     '✓'
   );
 
-  const respWithCookies = handleCookies(response);
-
   return {
-    ...composeNextState(state, respWithCookies.body),
-    response: respWithCookies,
+    ...composeNextState(state, response.body),
+    response,
   };
 }
 
@@ -108,7 +67,7 @@ function request(method, path, params, callback) {
       : null;
 
     const baseUrl = state.configuration?.baseUrl;
-    const auth = basicAuth(
+    const auth = addBasicAuth(
       state.configuration,
       resolvedParams?.headers ? resolvedParams.headers : {}
     );
