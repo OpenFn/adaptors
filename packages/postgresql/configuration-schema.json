@@ -4,7 +4,7 @@
     "host": {
       "title": "Host",
       "type": "string",
-      "description": "Postgres instance host URL",
+      "description": "Postgres instance host URL or IP address",
       "minLength": 1,
       "anyOf": [
         {
