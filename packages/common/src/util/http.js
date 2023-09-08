@@ -53,7 +53,8 @@ const parseUrl = (fullUrl, baseUrl) => {
       path: url.pathname,
     };
   } else {
-    return { baseUrl, path: fullUrl };
+    const path = fullUrl.startsWith('/') ? fullUrl : `/${fullUrl}`;
+    return { baseUrl, path };
   }
 };
 
@@ -122,7 +123,7 @@ async function readResponseBody(response, parseAs) {
     case 'stream':
       return response.body;
     default:
-      return contentType === 'application/json'
+      return contentType && contentType.includes('application/json')
         ? response.body.json()
         : response.body.text();
   }

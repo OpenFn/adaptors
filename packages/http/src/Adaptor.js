@@ -212,7 +212,7 @@ export {
   field,
   fields,
   fn,
-  http,
+  chunk,
   humanProper,
   lastReferenceValue,
   merge,
