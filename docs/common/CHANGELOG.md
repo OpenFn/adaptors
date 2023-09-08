@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.11.0
+
+### Minor Changes
+
+- 85c35b8: Add validate function to validate data against a JSON schema
+
 ## 1.10.3
 
 ### Patch Changes
