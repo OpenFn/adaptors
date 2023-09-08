@@ -1,5 +1,12 @@
 # @openfn/language-sftp
 
+## 0.8.7
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 0.8.6
 
 ### Patch Changes

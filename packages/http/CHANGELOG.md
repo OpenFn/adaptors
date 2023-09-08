@@ -1,5 +1,12 @@
 # @openfn/language-http
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 5.0.2
 
 ### Patch Changes
