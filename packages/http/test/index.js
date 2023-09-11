@@ -100,22 +100,6 @@ describe('get()', () => {
         },
       });
 
-    // TODO Follow All Redirects support
-    // testServer
-    //   .get('/api/fake-endpoint')
-    //   .matchHeader('followAllRedirects', true)
-    //   .reply(301, undefined, {
-    //     Location: 'https://www.example.com/api/fake-endpoint-2',
-    //   })
-    //   .get('/api/fake-endpoint-2')
-    //   .reply(302, undefined, {
-    //     Location: 'https://www.example.com/api/fake-endpoint-3',
-    //   })
-    //   .get('/api/fake-endpoint-3')
-    //   .reply(200, function (url, body) {
-    //     return { url };
-    //   });
-
     testServer
       .intercept({
         path: '/api/fake-callback',
@@ -279,7 +263,66 @@ describe('get()', () => {
     // expect(data[1]).to.haveOwnProperty('host', 'www.example.com');
   });
 
-  it.skip('can follow redirects', async () => {
+  // TODO test with maxDirects, followAllRedirects, and falsey values
+  it.only('can follow redirects', async () => {
+    // TODO Follow All Redirects support
+    testServer
+      .intercept({
+        path: '/api/fake-endpoint',
+        method: 'GET',
+      })
+      .reply(
+        301,
+        res => {
+          console.log(res, 'actual response');
+
+          return 1;
+        },
+        {
+          headers: {
+            Location: 'https://www.example.com/api/fake-endpoint-2',
+          },
+        }
+      );
+
+    testServer
+      .intercept({
+        path: '/api/fake-endpoint-2',
+        method: 'GET',
+      })
+      .reply(302, 2, {
+        headers: {
+          Location: 'https://www.example.com/api/fake-endpoint-2',
+        },
+      });
+
+    testServer.intercept(
+      {
+        path: '/api/fake-endpoint-3',
+        method: 'GET',
+      },
+      200,
+      res => {
+        console.log(res);
+
+        return res.path;
+      }
+    );
+    // testServer
+    //   .get('/api/fake-endpoint')
+    //   .matchHeader('redirect', true)
+    //   .reply(301, undefined, {
+    //     Location: 'https://www.example.com/api/fake-endpoint-2',
+    //   })
+    //   .get('/api/fake-endpoint-2')
+    //   .reply(302, undefined, {
+    //     Location: 'https://www.example.com/api/fake-endpoint-3',
+    //   })
+    //   .get('/api/fake-endpoint-3')
+    //   .reply(200, function (url, body) {
+    //     return { url };
+    //   });
+
     const state = {
       configuration: {},
       data: {},
@@ -287,20 +330,22 @@ describe('get()', () => {
 
     const finalState = await execute(
       get('https://www.example.com/api/fake-endpoint', {
-        headers: { followAllRedirects: true },
+        followAllRedirects: true,
       })
     )(state);
+
+    console.log(finalState.data, 'respo');
     expect(finalState.data.url).to.eql('/api/fake-endpoint-3');
   });
 
   it('accepts callbacks and calls them with nextState', async () => {
     const state = {
-      configuration: {},
+      configuration: { baseUrl: 'https://www.example.com' },
       data: {},
     };
 
     const { data } = await execute(
-      get('https://www.example.com/api/fake-callback', {}, state => {
+      get('api/fake-callback', {}, state => {
         return state;
       })
     )(state);
@@ -495,6 +540,7 @@ describe('post', () => {
         method: 'POST',
       })
       .reply(200, ({ body }) => body);
+
     let formData = {
       id: 'fake_id',
       parent: 'fake_parent',
@@ -506,21 +552,20 @@ describe('post', () => {
       data: formData,
     };
 
-    const finalState = await execute(
+    const { data } = await execute(
       post('https://www.example.com/api/fake-formData', {
-        formData: state => {
-          return state.data;
-        },
+        form: state => state.data,
       })
     )(state);
 
-    expect(finalState.data.body).to.contain(
+    console.log(data);
+    expect(data).to.contain(
       'Content-Disposition: form-data; name="id"\r\n\r\nfake_id'
     );
-    expect(finalState.data.body).to.contain(
+    expect(data).to.contain(
       'Content-Disposition: form-data; name="parent"\r\n\r\nfake_parent'
     );
-    expect(finalState.data.body).to.contain(
+    expect(data.body).to.contain(
       'Content-Disposition: form-data; name="mobile_phone"\r\n\r\nfake_phone'
     );
   });

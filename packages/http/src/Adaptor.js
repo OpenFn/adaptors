@@ -1,4 +1,4 @@
-import { addBasicAuth } from './Utils';
+import FormData from 'form-data';
 
 import {
   execute as commonExecute,
@@ -11,6 +11,8 @@ import {
 } from '@openfn/language-common/util';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
+
+import { addBasicAuth } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -62,17 +64,40 @@ function request(method, path, params, callback) {
       params
     );
 
-    const body = resolvedParams?.body
-      ? JSON.stringify(resolvedParams?.body)
-      : null;
+    // let form = null;
+    let body = resolvedParams?.body;
+    let headers = resolvedParams?.headers;
+
+    if (resolvedParams?.form) {
+      let form = new FormData();
+      Object.entries(resolvedParams?.form).forEach(element => {
+        form.append(element[0], element[1]);
+      });
+
+      const formHeaders = form.getHeaders();
+
+      headers = { ...headers, ...formHeaders };
+
+      body = form;
+    } else {
+      body = body ? JSON.stringify(body) : null;
+    }
 
     const baseUrl = state.configuration?.baseUrl;
-    const auth = addBasicAuth(
-      state.configuration,
-      resolvedParams?.headers ? resolvedParams.headers : {}
-    );
 
-    const options = { ...resolvedParams, ...auth, baseUrl, body };
+    const auth = addBasicAuth(state.configuration, headers ? headers : {});
+
+    const maxRedirections =
+      resolvedParams?.maxRedirections ??
+      (resolvedParams?.followAllRedirects === false ? 0 : 5);
+
+    const options = {
+      ...resolvedParams,
+      ...auth,
+      baseUrl,
+      body,
+      maxRedirections,
+    };
 
     return commonRequest(method, resolvedPath, options)
       .then(response => handleResponse(state, response))

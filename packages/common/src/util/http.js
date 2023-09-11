@@ -85,7 +85,16 @@ const defaultOptions = {
 export async function request(method, fullUrlOrPath, options = {}) {
   const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
 
-  const { headers, query, body, errors, timeout, tls, parseAs } = {
+  const {
+    headers,
+    query,
+    body,
+    errors,
+    timeout,
+    tls,
+    parseAs,
+    maxRedirections,
+  } = {
     ...defaultOptions,
     ...options,
   };
@@ -99,6 +108,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     headers,
     body,
     throwOnError: false,
+    maxRedirections,
   });
 
   assertOK(response, errors, fullUrlOrPath);
