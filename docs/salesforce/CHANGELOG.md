@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.1.0
+
+### Minor Changes
+
+- 1e3a083: add bulkQuery function
+
 ## 4.0.8
 
 ### Patch Changes
