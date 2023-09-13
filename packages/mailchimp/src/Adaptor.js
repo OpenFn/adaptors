@@ -353,7 +353,7 @@ const assertOK = (response, fullUrl) => {
  * @param {function} [callback] - (Optional) callback function to handle the response.
  * @returns {Operation}
  */
-export const request = (method, path, options, callback) => {
+export function request(method, path, options, callback) {
   return async state => {
     const apiVersion = '3.0';
     const { apiKey, server } = state.configuration;
@@ -396,7 +396,7 @@ export const request = (method, path, options, callback) => {
 
     return nextState;
   };
-};
+}
 
 /**
  * The get function is used to make a GET request to the Mailchimp API.
@@ -408,8 +408,9 @@ export const request = (method, path, options, callback) => {
  * @param {function} [callback] - (Optional) callback to handle the response
  * @returns {Operation}
  */
-export const get = (path, query, callback) =>
-  request('GET', path, { query }, callback);
+export function get(path, query, callback) {
+  return request('GET', path, { query }, callback);
+}
 
 /**
  * The post function is used to make a POST request to the Mailchimp API.
@@ -423,8 +424,9 @@ export const get = (path, query, callback) =>
  * @param {function} [callback] - (Optional) callback to handle the response
  * @returns {Operation}
  */
-export const post = (path, body, query, callback) =>
-  request('POST', path, { body, query }, callback);
+export function post(path, body, query, callback) {
+  return request('POST', path, { body, query }, callback);
+}
 
 // TODO Remove axios export
 // Note that we expose the entire axios package to the user here.
