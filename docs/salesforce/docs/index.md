@@ -4,6 +4,8 @@
 <dt>
     <a href="#bulk">bulk(sObject, operation, options, fun)</a></dt>
 <dt>
+    <a href="#bulkQuery">bulkQuery(qs, callback)</a></dt>
+<dt>
     <a href="#cleanupState">cleanupState(state)</a></dt>
 <dt>
     <a href="#create">create(sObject, attrs)</a></dt>
@@ -61,6 +63,28 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
     return { 'Age__c': x.age, 'Name': x.name }
   })
 });
+```
+
+* * *
+
+## bulkQuery
+
+bulkQuery(qs, callback) ⇒ <code>Operation</code>
+Execute an SOQL Bulk Query.
+Note that in an event of a query error,
+error logs will be printed but the operation will not throw the error.
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| qs | <code>String</code> | A query string. |
+| callback | <code>function</code> | A callback to execute once the record is retrieved |
+
+**Example**  
+```js
+bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```
 
 * * *
