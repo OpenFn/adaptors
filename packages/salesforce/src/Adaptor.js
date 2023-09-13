@@ -14,6 +14,7 @@
 import {
   execute as commonExecute,
   expandReferences,
+  composeNextState,
   field,
   chunk,
 } from '@openfn/language-common';
@@ -162,6 +163,49 @@ export function query(qs) {
         ...state,
         references: [result, ...state.references],
       };
+    });
+  };
+}
+
+/**
+ * Execute an SOQL Bulk Query.
+ * Note that in an event of a query error,
+ * error logs will be printed but the operation will not throw the error.
+ * @public
+ * @example
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @function
+ * @param {String} qs - A query string.
+ * @param {Function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
+export function bulkQuery(qs, callback) {
+  return state => {
+    const { connection } = state;
+    const resolvedQs = expandReferences(qs)(state);
+    console.log(`Executing query: ${resolvedQs}`);
+
+    let records = [];
+    return new Promise((resolve, reject) => {
+      connection.bulk
+        .query(resolvedQs)
+        .on('record', function (rec) {
+          records.push(rec);
+        })
+        .on('error', function (err) {
+          console.error(err);
+          reject(err);
+        })
+        .on('end', () => resolve(records));
+    }).then(result => {
+      console.log('Results retrieved and pushed to state.data');
+
+      const nextState = {
+        ...composeNextState(state, result),
+        result,
+      };
+      if (callback) return callback(nextState);
+      return nextState;
     });
   };
 }
