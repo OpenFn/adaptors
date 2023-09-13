@@ -384,6 +384,8 @@ export function request(method, path, options, callback) {
       body: body ? JSON.stringify(body) : undefined,
     });
 
+    console.log('Mailchimp says', response.statusCode);
+
     const responseBody = await response.body.json();
     assertOK(responseBody, `https://${server}.api.mailchimp.com${urlPath}`);
 
