@@ -245,6 +245,59 @@
       "valid": true
     },
     {
+      "name": "bulkQuery",
+      "params": [
+        "qs",
+        "callback"
+      ],
+      "docs": {
+        "description": "Execute an SOQL Bulk Query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A query string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "qs"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the record is retrieved",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "bulk",
       "params": [
         "sObject",
