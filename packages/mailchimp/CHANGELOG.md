@@ -1,5 +1,13 @@
 # @openfn/language-mailchimp
 
+## 0.7.1
+
+### Patch Changes
+
+- 1f856c4: Update configuration schema
+- 48394f5: - fix ast docs warnings
+  - add status code log on request
+
 ## 0.7.0
 
 ### Minor Changes
