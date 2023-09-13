@@ -2,4 +2,5 @@
 '@openfn/language-mailchimp': patch
 ---
 
-improve ast docs
+- fix ast docs warnings
+- add status code log on request
