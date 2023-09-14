@@ -4,7 +4,7 @@
 <dt>
     <a href="#bulk">bulk(sObject, operation, options, fun)</a></dt>
 <dt>
-    <a href="#bulkQuery">bulkQuery(qs, callback)</a></dt>
+    <a href="#bulkQuery">bulkQuery(qs, options, callback)</a></dt>
 <dt>
     <a href="#cleanupState">cleanupState(state)</a></dt>
 <dt>
@@ -69,8 +69,9 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
 
 ## bulkQuery
 
-bulkQuery(qs, callback) ⇒ <code>Operation</code>
+bulkQuery(qs, options, callback) ⇒ <code>Operation</code>
 Execute an SOQL Bulk Query.
+This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
 
@@ -80,11 +81,20 @@ error logs will be printed but the operation will not throw the error.
 | Param | Type | Description |
 | --- | --- | --- |
 | qs | <code>String</code> | A query string. |
+| options | <code>Object</code> | Options passed to the bulk api. |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
 
-**Example**  
+**Example** *(The results will be available on &#x60;state.data&#x60;)*  
 ```js
 bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+```
+**Example**  
+```js
+bulkQuery(
+  (state) =>
+    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+  { pollTimeout: 10000, pollInterval: 6000 }
+);
 ```
 
 * * *
