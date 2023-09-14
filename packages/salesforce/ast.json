@@ -252,7 +252,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nSee {@link https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_bulk_query_intro.htm here}\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
         "tags": [
           {
             "title": "public",
