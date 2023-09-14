@@ -18,6 +18,9 @@ import {
   field,
   chunk,
 } from '@openfn/language-common';
+
+import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
 
@@ -169,20 +172,38 @@ export function query(qs) {
 
 /**
  * Execute an SOQL Bulk Query.
+ * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
  * Note that in an event of a query error,
  * error logs will be printed but the operation will not throw the error.
  * @public
  * @example
+ * <caption>The results will be available on `state.data`</caption>
  * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example
+ * bulkQuery(
+ *   (state) =>
+ *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+ *   { pollTimeout: 10000, pollInterval: 6000 }
+ * );
  * @function
  * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function bulkQuery(qs, callback) {
+export function bulkQuery(qs, options, callback) {
   return state => {
     const { connection } = state;
-    const resolvedQs = expandReferences(qs)(state);
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+
+    //TODO Add documentation for supported options
+    connection.bulk.pollTimeout = resolvedOptions?.pollTimeout || 100000;
+    connection.bulk.pollInterval = resolvedOptions?.pollInterval || 6000;
+
     console.log(`Executing query: ${resolvedQs}`);
 
     let records = [];

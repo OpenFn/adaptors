@@ -248,10 +248,11 @@
       "name": "bulkQuery",
       "params": [
         "qs",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
         "tags": [
           {
             "title": "public",
@@ -260,7 +261,12 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
+            "caption": "The results will be available on `state.data`"
+          },
+          {
+            "title": "example",
+            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
           },
           {
             "title": "function",
@@ -275,6 +281,15 @@
               "name": "String"
             },
             "name": "qs"
+          },
+          {
+            "title": "param",
+            "description": "Options passed to the bulk api.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
           },
           {
             "title": "param",
