@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.2.0
+
+### Minor Changes
+
+- fc58f1c: add options in bulkQuery
+
 ## 4.1.0
 
 ### Minor Changes
