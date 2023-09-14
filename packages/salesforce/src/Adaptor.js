@@ -173,7 +173,6 @@ export function query(qs) {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * See {@link https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_bulk_query_intro.htm here}
  * Note that in an event of a query error,
  * error logs will be printed but the operation will not throw the error.
  * @public
