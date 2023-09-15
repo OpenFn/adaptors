@@ -287,7 +287,7 @@ export function bulkQuery(qs, options, callback) {
     );
 
     const nextState = {
-      ...state,
+      ...composeNextState(state, result),
       result,
     };
     if (callback) return callback(nextState);
