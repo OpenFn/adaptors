@@ -188,46 +188,111 @@ export function query(qs) {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
+async function pollJobResult(conn, job, pollInterval, pollTimeout) {
+  let attempt = 0;
+
+  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
+
+  // Handle maxPollingAttempts
+  if (attempt > maxPollingAttempts)
+    throw new Error('Polling time out. Job Id = ', job.id);
+
+  while (attempt < maxPollingAttempts) {
+    try {
+      // Make an HTTP GET request to check the job status
+      const jobInfo = await conn
+        .request({
+          method: 'GET',
+          url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .catch(error => {
+          console.log('Failed to fetch job information', error);
+        });
+
+      if (jobInfo && jobInfo.state === 'JobComplete') {
+        const response = await conn.request({
+          method: 'GET',
+          url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        console.log('Job result retrieved', response.length);
+        return response;
+      } else {
+        console.log(
+          `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
+            jobInfo.state
+          }:`
+        );
+      }
+
+      // Wait for the polling interval before the next attempt
+      await new Promise(resolve => setTimeout(resolve, pollInterval));
+      attempt++;
+    } catch (error) {
+      console.error('Error during polling attempt:', error);
+      return null;
+    }
+  }
+}
+
+const defaultOptions = {
+  pollTimeout: 90000, // in ms
+  pollInterval: 3000, // in ms
+};
 export function bulkQuery(qs, options, callback) {
-  return state => {
+  return async state => {
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
       state,
       qs,
       options
     );
+    const apiVersion = connection.version;
 
-    //TODO Add documentation for supported options
-    connection.bulk.pollTimeout = resolvedOptions?.pollTimeout || 100000;
-    connection.bulk.pollInterval = resolvedOptions?.pollInterval || 6000;
+    const { pollTimeout, pollInterval } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
 
     console.log(`Executing query: ${resolvedQs}`);
 
-    let records = [];
-    return new Promise((resolve, reject) => {
-      connection.bulk
-        .query(resolvedQs)
-        .on('record', function (rec) {
-          records.push(rec);
-        })
-        .on('error', function (err) {
-          console.error(err);
-          reject(err);
-        })
-        .on('end', () => resolve(records));
-    }).then(result => {
-      console.log('Results retrieved and pushed to state.data');
-
-      const nextState = {
-        ...composeNextState(state, result),
-        result,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
+    const queryJob = await connection.request({
+      method: 'POST',
+      url: `/services/data/v${apiVersion}/jobs/query`,
+      body: JSON.stringify({
+        operation: 'query',
+        query: resolvedQs,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+
+    const result = await pollJobResult(
+      connection,
+      queryJob,
+      pollInterval,
+      pollTimeout
+    );
+
+    const nextState = {
+      ...state,
+      result,
+    };
+    if (callback) return callback(nextState);
+
+    return nextState;
   };
 }
 
@@ -574,6 +639,19 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
+function apiVersionAssertion(apiVersion) {
+  const apiVersionRegex = /^\d{2}\.\d$/;
+  let version = '52.0';
+  if (apiVersion && apiVersionRegex.test(apiVersion)) {
+    console.log('Using Salesforce API version', apiVersion);
+    version = apiVersion;
+  } else {
+    console.log('Invalid salesforce apiVersion', apiVersion);
+    console.log('Using Salesforce API version', version);
+  }
+
+  return version;
+}
 /**
  * Creates a connection.
  * @example
@@ -583,13 +661,21 @@ export function reference(position) {
  * @returns {State}
  */
 function createConnection(state) {
-  const { loginUrl } = state.configuration;
+  const { loginUrl, apiVersion } = state.configuration;
 
   if (!loginUrl) {
     throw new Error('loginUrl missing from configuration.');
   }
 
-  return { ...state, connection: new jsforce.Connection({ loginUrl }) };
+  return {
+    ...state,
+    connection: apiVersion
+      ? new jsforce.Connection({
+          loginUrl,
+          version: apiVersionAssertion(apiVersion),
+        })
+      : new jsforce.Connection({ loginUrl }),
+  };
 }
 
 /**
@@ -676,6 +762,7 @@ export function steps(...operations) {
 
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
+import { result } from 'lodash';
 
 export { axios };
 
