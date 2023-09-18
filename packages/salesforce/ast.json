@@ -293,6 +293,30 @@
           },
           {
             "title": "param",
+            "description": "Polling timeout in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollTimeout"
+          },
+          {
+            "title": "param",
+            "description": "Polling interval in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollInterval"
+          },
+          {
+            "title": "param",
             "description": "A callback to execute once the record is retrieved",
             "type": {
               "type": "NameExpression",
@@ -310,7 +334,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "bulk",
