@@ -259,6 +259,7 @@ export function bulkQuery(qs, options, callback) {
     );
     const apiVersion = connection.version;
 
+    console.log(apiVersion);
     const { pollTimeout, pollInterval } = {
       ...defaultOptions,
       ...resolvedOptions,

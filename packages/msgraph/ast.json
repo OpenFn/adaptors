@@ -326,6 +326,60 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "submitXls",
+      "params": [
+        "request",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Convert form data to xls then submit.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Object including form data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "formData"
+          },
+          {
+            "title": "param",
+            "description": "Request params including case type and external id.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],
