@@ -198,51 +198,49 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 
   const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
 
-  // Handle maxPollingAttempts
-  if (attempt > maxPollingAttempts)
-    throw new Error('Polling time out. Job Id = ', job.id);
-
   while (attempt < maxPollingAttempts) {
-    try {
-      // Make an HTTP GET request to check the job status
-      const jobInfo = await conn
-        .request({
-          method: 'GET',
-          url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .catch(error => {
-          console.log('Failed to fetch job information', error);
-        });
+    // Make an HTTP GET request to check the job status
+    const jobInfo = await conn
+      .request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .catch(error => {
+        console.log('Failed to fetch job information', error);
+      });
 
-      if (jobInfo && jobInfo.state === 'JobComplete') {
-        const response = await conn.request({
-          method: 'GET',
-          url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+    if (jobInfo && jobInfo.state === 'JobComplete') {
+      const response = await conn.request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        console.log('Job result retrieved', response.length);
-        return response;
-      } else {
-        console.log(
-          `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
-            jobInfo.state
-          }:`
+      console.log('Job result retrieved', response.length);
+      return response;
+    } else {
+      // Handle maxPollingAttempts
+      if (attempt + 1 === maxPollingAttempts) {
+        console.error(
+          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
         );
+        throw new Error(`Polling time out. Job Id = ${job.id}`);
       }
-
-      // Wait for the polling interval before the next attempt
-      await new Promise(resolve => setTimeout(resolve, pollInterval));
-      attempt++;
-    } catch (error) {
-      console.error('Error during polling attempt:', error);
-      return null;
+      console.log(
+        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
+          jobInfo.state
+        }:`
+      );
     }
+
+    // Wait for the polling interval before the next attempt
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
+    attempt++;
   }
 }
 
@@ -639,7 +637,7 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
-function apiVersionAssertion(apiVersion) {
+function setApiVersion(apiVersion) {
   const apiVersionRegex = /^\d{2}\.\d$/;
   let version = '52.0';
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
@@ -672,7 +670,7 @@ function createConnection(state) {
     connection: apiVersion
       ? new jsforce.Connection({
           loginUrl,
-          version: apiVersionAssertion(apiVersion),
+          version: setApiVersion(apiVersion),
         })
       : new jsforce.Connection({ loginUrl }),
   };
@@ -762,7 +760,6 @@ export function steps(...operations) {
 
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
-import { result } from 'lodash';
 
 export { axios };
 
