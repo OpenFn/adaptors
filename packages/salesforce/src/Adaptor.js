@@ -170,29 +170,6 @@ export function query(qs) {
   };
 }
 
-/**
- * Execute an SOQL Bulk Query.
- * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * Note that in an event of a query error,
- * error logs will be printed but the operation will not throw the error.
- * @public
- * @example
- * <caption>The results will be available on `state.data`</caption>
- * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example
- * bulkQuery(
- *   (state) =>
- *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
- *   { pollTimeout: 10000, pollInterval: 6000 }
- * );
- * @function
- * @param {String} qs - A query string.
- * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
- * @param {Function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
- */
 async function pollJobResult(conn, job, pollInterval, pollTimeout) {
   let attempt = 0;
 
@@ -248,6 +225,30 @@ const defaultOptions = {
   pollTimeout: 90000, // in ms
   pollInterval: 3000, // in ms
 };
+
+/**
+ * Execute an SOQL Bulk Query.
+ * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
+ * Note that in an event of a query error,
+ * error logs will be printed but the operation will not throw the error.
+ * @public
+ * @example
+ * <caption>The results will be available on `state.data`</caption>
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example
+ * bulkQuery(
+ *   (state) =>
+ *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+ *   { pollTimeout: 10000, pollInterval: 6000 }
+ * );
+ * @function
+ * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {Function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
 export function bulkQuery(qs, options, callback) {
   return async state => {
     const { connection } = state;
