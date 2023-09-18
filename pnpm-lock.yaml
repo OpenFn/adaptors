@@ -1054,6 +1054,9 @@ importers:
       undici:
         specifier: ^5.22.1
         version: 5.22.1
+      xlsx:
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
+        version: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -12931,6 +12934,14 @@ packages:
     resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz}
     name: xlsx
     version: 0.19.3
+    engines: {node: '>=0.8'}
+    hasBin: true
+    dev: false
+
+  '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz':
+    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz}
+    name: xlsx
+    version: 0.20.0
     engines: {node: '>=0.8'}
     hasBin: true
     dev: false
