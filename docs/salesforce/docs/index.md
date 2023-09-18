@@ -82,6 +82,8 @@ error logs will be printed but the operation will not throw the error.
 | --- | --- | --- |
 | qs | <code>String</code> | A query string. |
 | options | <code>Object</code> | Options passed to the bulk api. |
+| [options.pollTimeout] | <code>integer</code> | Polling timeout in milliseconds. |
+| [options.pollInterval] | <code>integer</code> | Polling interval in milliseconds. |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
 
 **Example** *(The results will be available on &#x60;state.data&#x60;)*  
