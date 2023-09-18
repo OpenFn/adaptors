@@ -1,4 +1,5 @@
 import xlsx from 'xlsx';
+import FormData from 'form-data';
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
@@ -264,6 +265,14 @@ export function getFile(pathOrId, options, callback = s => s) {
   };
 }
 
+const defaultReq = {
+  fileName: `${new Date()}.xlsx`,
+  wsName: 'Sheet',
+  method: 'PUT',
+  contentType: 'application/vnd.ms-excel',
+  type: 'buffer',
+  bookType: 'xlsx',
+};
 /**
  * Convert form data to xls then submit.
  * @public
@@ -281,31 +290,47 @@ export function submitXls(req, data, callback) {
     const { accessToken, apiVersion } = state.configuration;
 
     const [resolvedRequest, resolvedData] = expandReferences(state, req, data);
-    const { method, name, path } = resolvedRequest;
-    // PUT https://graph.microsoft.com/v1.0/sites/{site-id}/drive/items/{parent-item-id}:/{file-name}:/content
+    const { method, wsName, path, fileName, type, bookType, contentType } = {
+      ...defaultReq,
+      ...resolvedRequest,
+    };
+
     const url = getUrl(path, apiVersion);
 
-    console.log(url);
     const auth = getAuth(accessToken);
+
+    console.log(resolvedData.length, 'data');
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(resolvedData);
-    const ws_name = name || 'SheetJS';
 
-    xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
+    console.log(worksheet, 'ws');
+
+    xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
 
     // Generate buffer
-    const xlsxBlob = xlsx.writeFile(workbook, {
-      type: 'buffer',
-      bookType: 'xls',
-    });
+    const xlsxBlob = xlsx.write(workbook, { type, bookType });
 
+    const body = new FormData();
+    body.append('file', xlsxBlob, { filename: fileName });
+
+    // const blob = new Blob([xlsxBlob], { type: 'application/octet-stream' });
+    // body.append('file', blob, ws_name);
+
+    // body.append('file', xlsxBlob, ws_name);
+    // body.append('data', new File([xlsxBlob], 'sheetjs.xlsx'));
+
+    console.log(body, 'body');
     console.log('Posting to url: '.concat(url));
     // Upload the XLSX file
     return request(
       url,
       {
-        ...auth,
+        headers: {
+          ...auth.headers,
+          // 'Content-Disposition': `attachment; filename="${ws_name}.xlsx"`,
+          'Content-Type': contentType,
+        },
         body: xlsxBlob,
       },
       method || 'PUT'

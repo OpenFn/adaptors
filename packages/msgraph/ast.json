@@ -330,7 +330,7 @@
     {
       "name": "submitXls",
       "params": [
-        "request",
+        "req",
         "data",
         "callback"
       ],
@@ -344,7 +344,7 @@
           },
           {
             "title": "example",
-            "description": "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
+            "description": "submitXls(\n)"
           },
           {
             "title": "function",
@@ -353,21 +353,30 @@
           },
           {
             "title": "param",
-            "description": "Object including form data.",
+            "description": "Request Object",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "formData"
+            "name": "req"
           },
           {
             "title": "param",
-            "description": "Request params including case type and external id.",
+            "description": "Data Object",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "params"
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -379,7 +388,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
