@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.2.1
+
+### Patch Changes
+
+- 07debe9: Update bulkQuery to use bulkv2
+
 ## 4.2.0
 
 ### Minor Changes
