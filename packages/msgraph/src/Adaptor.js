@@ -1,8 +1,13 @@
-import xlsx from 'xlsx';
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, setUrl, handleResponse, assertDrive } from './Utils';
+import {
+  request,
+  setUrl,
+  handleResponse,
+  assertDrive,
+  createXls,
+} from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -264,12 +269,6 @@ const defaultRequest = {
   contentType: 'application/vnd.ms-excel',
 };
 
-const defaultData = {
-  type: 'buffer',
-  bookType: 'xlsx',
-  wsName: 'Sheet',
-  rows: [],
-};
 /**
  * Convert form data to xls then submit.
  * @public
@@ -299,19 +298,11 @@ export function submitXls(req, data, callback) {
       ...resolvedRequest,
     };
 
-    const { wsName, type, bookType, rows } = {
-      ...defaultData,
-      ...resolvedData,
-    };
-
     const url = setUrl(path, apiVersion);
 
-    const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet(rows);
-
-    xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
     // Generate buffer
-    const xlsxBlob = xlsx.write(workbook, { type, bookType });
+    const xlsxBlob = createXls(resolvedData);
+    console.log('Creating Excel File');
 
     // Upload the XLSX file
     return request(url, {

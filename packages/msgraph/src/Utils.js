@@ -1,3 +1,4 @@
+import xlsx from 'xlsx';
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
 import { composeNextState } from '@openfn/language-common';
@@ -132,4 +133,25 @@ export const request = async (path, params) => {
 
 function makeAuthHeader(accessToken) {
   return accessToken ? `Bearer ${accessToken}` : null;
+}
+
+const defaultData = {
+  type: 'buffer',
+  bookType: 'xlsx',
+  wsName: 'Sheet',
+  rows: [],
+};
+
+export function createXls(data) {
+  const { wsName, type, bookType, rows } = {
+    ...defaultData,
+    ...data,
+  };
+  const workbook = xlsx.utils.book_new();
+  const worksheet = xlsx.utils.json_to_sheet(rows);
+
+  xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
+  // Generate buffer
+
+  return xlsx.write(workbook, { type, bookType });
 }
