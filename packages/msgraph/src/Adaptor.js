@@ -1,9 +1,8 @@
 import xlsx from 'xlsx';
-import FormData from 'form-data';
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, getAuth, getUrl, handleResponse, assertDrive } from './Utils';
+import { request, setUrl, handleResponse, assertDrive } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -63,15 +62,15 @@ export function create(resource, data, callback) {
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = getUrl({ apiVersion, resolvedResource });
-    const auth = getAuth(accessToken);
+    const url = setUrl({ apiVersion, resolvedResource });
 
     const options = {
-      auth,
-      ...resolvedData,
+      accessToken,
+      body: JSON.stringify(resolvedData),
+      method: 'POST',
     };
 
-    return request(url, options, 'POST').then(response =>
+    return request(url, options).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -93,10 +92,9 @@ export function get(path, query, callback = false) {
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
-    const url = getUrl(resolvedPath, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resolvedPath, apiVersion);
 
-    return request(url, { ...resolvedQuery, ...auth }).then(response =>
+    return request(url, { query: resolvedQuery, accessToken }).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -137,10 +135,9 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
       resource = `${owner}/${id}/drive`;
     }
 
-    const url = getUrl(resource, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
-    return request(url, { ...auth }).then(response => {
+    return request(url, { accessToken }).then(response => {
       state.drives[resolvedName] = response;
       return callback(state);
     });
@@ -193,10 +190,9 @@ export function getFolder(pathOrId, options, callback = s => s) {
       resource += resolvedPathOrId.startsWith('/') ? ':/children' : '/children';
     }
 
-    const url = getUrl(resource, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
-    return request(url, { ...auth }).then(response =>
+    return request(url, { accessToken }).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -252,12 +248,10 @@ export function getFile(pathOrId, options, callback = s => s) {
       resource += resolvedPathOrId.startsWith('/') ? ':/content' : '/content';
     }
 
-    const url = getUrl(resource, apiVersion);
-
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
     const response = await request(url, {
-      ...auth,
+      accessToken,
       parseAs: metadata ? 'json' : 'text',
     });
 
@@ -266,7 +260,6 @@ export function getFile(pathOrId, options, callback = s => s) {
 }
 
 const defaultReq = {
-  fileName: `${new Date()}.xlsx`,
   wsName: 'Sheet',
   method: 'PUT',
   contentType: 'application/vnd.ms-excel',
@@ -290,51 +283,29 @@ export function submitXls(req, data, callback) {
     const { accessToken, apiVersion } = state.configuration;
 
     const [resolvedRequest, resolvedData] = expandReferences(state, req, data);
-    const { method, wsName, path, fileName, type, bookType, contentType } = {
+    const { method, wsName, path, type, bookType, contentType } = {
       ...defaultReq,
       ...resolvedRequest,
     };
 
-    const url = getUrl(path, apiVersion);
-
-    const auth = getAuth(accessToken);
-
-    console.log(resolvedData.length, 'data');
+    const url = setUrl(path, apiVersion);
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(resolvedData);
 
-    console.log(worksheet, 'ws');
-
     xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
-
     // Generate buffer
     const xlsxBlob = xlsx.write(workbook, { type, bookType });
 
-    const body = new FormData();
-    body.append('file', xlsxBlob, { filename: fileName });
-
-    // const blob = new Blob([xlsxBlob], { type: 'application/octet-stream' });
-    // body.append('file', blob, ws_name);
-
-    // body.append('file', xlsxBlob, ws_name);
-    // body.append('data', new File([xlsxBlob], 'sheetjs.xlsx'));
-
-    console.log(body, 'body');
-    console.log('Posting to url: '.concat(url));
     // Upload the XLSX file
-    return request(
-      url,
-      {
-        headers: {
-          ...auth.headers,
-          // 'Content-Disposition': `attachment; filename="${ws_name}.xlsx"`,
-          'Content-Type': contentType,
-        },
-        body: xlsxBlob,
+    return request(url, {
+      accessToken,
+      headers: {
+        'Content-Type': contentType,
       },
-      method || 'PUT'
-    ).then(response => handleResponse(response, state, callback));
+      body: xlsxBlob,
+      method,
+    }).then(response => handleResponse(response, state, callback));
   };
 }
 
