@@ -14,7 +14,7 @@ export function assertDrive(state, driveName) {
   }
 }
 
-export function getUrl(resource, apiVersion) {
+export function setUrl(resource, apiVersion) {
   if (isValidHttpUrl(resource)) return resource;
 
   const pathSuffix = apiVersion
@@ -33,10 +33,6 @@ function isValidHttpUrl(string) {
   }
 
   return url.protocol === 'http:' || url.protocol === 'https:';
-}
-
-export function getAuth(token) {
-  return token ? { headers: { Authorization: `Bearer ${token}` } } : null;
 }
 
 const isStream = value => {
@@ -84,37 +80,35 @@ export function handleResponseError(response, data, method) {
   }
 }
 
+const defaultOptions = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  accessToken: '',
+};
 /**
  * This is an asynchronous function that sends a request to a specified URL with optional parameters
  * and headers, and returns the response data in JSON format.
  * @param {string} url - The URL of the API endpoint that the request is being made to.
- * @param {object} [params] - An object containing any additional parameters to be sent with the request, such
+ * @param {object} [options] - An object containing any additional parameters to be sent with the request, such
  * as query parameters or request body data. It is an optional parameter and defaults to an empty
  * object if not provided.
- * @param {string} [method=GET] - The HTTP method to be used for the request. It defaults to 'GET' if not
- * specified.
  * @returns The `request` function is returning the parsed JSON data from the response of the HTTP
  * request made to the specified `url` with the given `params` and `method`. If there is an error in
  * the response, the function will throw an error.
  */
-export const request = async (urlString, params = {}, method = 'GET') => {
-  let url = urlString;
-  const defaultHeaders = { 'Content-Type': 'application/json' };
-  const { headers, parseAs } = params;
-  const setHeaders = { ...headers, ...defaultHeaders };
+export const request = async (path, params) => {
+  let url = path;
+  const options = { ...defaultOptions, ...params };
+  const { parseAs, query, method, accessToken } = options;
+  delete options.parseAs;
+  delete options.accessToken;
 
-  delete params.parseAs;
-  delete params.headers;
+  options.headers['Authorization'] = makeAuthHeader(accessToken);
 
-  let options = {
-    method,
-    headers: setHeaders, // Add nonce for WP REST API
-  };
-
-  if ('GET' === method) {
-    url = `${urlString}?${new URLSearchParams(params).toString()}`;
-  } else {
-    options.body = JSON.stringify(params);
+  if (method === 'GET' && query) {
+    url = `${path}?${new URLSearchParams(query).toString()}`;
   }
 
   const response = await fetch(url, options);
@@ -135,3 +129,7 @@ export const request = async (urlString, params = {}, method = 'GET') => {
 
   return data;
 };
+
+function makeAuthHeader(accessToken) {
+  return accessToken ? `Bearer ${accessToken}` : null;
+}
