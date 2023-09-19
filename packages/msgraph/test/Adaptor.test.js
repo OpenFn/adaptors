@@ -3,7 +3,13 @@ import { setGlobalDispatcher } from 'undici';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
-import { execute, getDrive, getFolder, getFile } from '../src/Adaptor.js';
+import {
+  execute,
+  getDrive,
+  getFolder,
+  getFile,
+  submitXls,
+} from '../src/Adaptor.js';
 
 setGlobalDispatcher(MockAgent);
 
@@ -450,5 +456,47 @@ describe('getFile', () => {
     await getFile('/Sample Data/test.csv')(state).catch(e => {
       expect(e.message).to.contain('Drive is not defined');
     });
+  });
+});
+
+describe('submitXls', () => {
+  it.skip('should convert array of object to excel and post to specified path', async () => {
+    const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
+      siteId: 'openfn.sharepoint.com',
+      folderId: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
+      drives: {},
+      rows: [
+        [
+          {
+            name: 'Mtuchi',
+            birthday: '1/1/1973',
+          },
+          {
+            name: 'Aleksa',
+            birthday: '1/1/2023',
+          },
+        ],
+      ],
+    };
+
+    const fileName = '2023_09_19T07_29_09_369Z.xls';
+    const fileUploadPath = `sites/${state.siteId}/drive/items/${state.folderId}:/${fileName}:/content`;
+
+    const finalState = await submitXls(
+      {
+        path: fileUploadPath,
+      },
+      {
+        wsName: 'Birthdays',
+        rows: state.rows,
+      }
+    )(state);
+    console.log(finalState);
+    /* The above code is written in JavaScript and it is using the `expect` function to check if the
+    `data` variable is equal to the `fixtures.submitXlsResponse` variable. */
+    // expect(data).to.eql(fixtures.submitXlsResponse);
   });
 });

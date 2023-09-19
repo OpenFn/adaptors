@@ -135,12 +135,12 @@ mockPool
   .reply(200, fixtures.itemContent)
   .persist();
 
-// mockPool
-//   .intercept({
-//     path: '/v1.0/sites/openfn.sharepoint.com/drive/items/d97073d1-5ee7-4218-97cd-bd4167078516?select=id,@microsoft.graph.downloadUrl',
-//     method: 'GET',
-//     headers: headers,
-//   })
-//   .reply(200, fixtures.itemWithOptions);
+mockPool
+  .intercept({
+    path: '/v1.0/sites/openfn.sharepoint.com/drive/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD:/2023_09_19T07_29_09_369Z.xls:/content',
+    method: 'PUT',
+    headers: headers,
+  })
+  .reply(200, fixtures.submitXlsResponse);
 
 export default mockAgent;
