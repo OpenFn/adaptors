@@ -259,12 +259,16 @@ export function getFile(pathOrId, options, callback = s => s) {
   };
 }
 
-const defaultReq = {
-  wsName: 'Sheet',
+const defaultRequest = {
   method: 'PUT',
   contentType: 'application/vnd.ms-excel',
+};
+
+const defaultData = {
   type: 'buffer',
   bookType: 'xlsx',
+  wsName: 'Sheet',
+  rows: [],
 };
 /**
  * Convert form data to xls then submit.
@@ -274,7 +278,14 @@ const defaultReq = {
  * )
  * @function
  * @param {Object} req - Request Object
+ * @param {String} [req.path] - Request Url path to msgraph upload endpoint
+ * @param {String} [req.method] - Request method
+ * @param {String} [req.contentType] - Request content-type
  * @param {Object} data - Data Object
+ * @param {String} [data.wsName] - Worksheet name i.e 32 Characters
+ * @param {Array} [data.rows] - Array of objects
+ * @param {String} [data.type] - The return value type, Default is 'buffer'. Other type options 'base64', 'binary', 'string', 'array', 'file'
+ * @param {String} [data.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
  * @param {Function} callback - Optional callback function
  * @returns {Operation}
  */
@@ -283,15 +294,20 @@ export function submitXls(req, data, callback) {
     const { accessToken, apiVersion } = state.configuration;
 
     const [resolvedRequest, resolvedData] = expandReferences(state, req, data);
-    const { method, wsName, path, type, bookType, contentType } = {
-      ...defaultReq,
+    const { method, path, contentType } = {
+      ...defaultRequest,
       ...resolvedRequest,
+    };
+
+    const { wsName, type, bookType, rows } = {
+      ...defaultData,
+      ...resolvedData,
     };
 
     const url = setUrl(path, apiVersion);
 
     const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet(resolvedData);
+    const worksheet = xlsx.utils.json_to_sheet(rows);
 
     xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
     // Generate buffer

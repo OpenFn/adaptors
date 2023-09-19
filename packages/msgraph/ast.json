@@ -362,12 +362,96 @@
           },
           {
             "title": "param",
+            "description": "Request Url path to msgraph upload endpoint",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "req.path"
+          },
+          {
+            "title": "param",
+            "description": "Request method",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "req.method"
+          },
+          {
+            "title": "param",
+            "description": "Request content-type",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "req.contentType"
+          },
+          {
+            "title": "param",
             "description": "Data Object",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
             "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Worksheet name i.e 32 Characters",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "data.wsName"
+          },
+          {
+            "title": "param",
+            "description": "Array of objects",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              }
+            },
+            "name": "data.rows"
+          },
+          {
+            "title": "param",
+            "description": "The return value type, Default is 'buffer'. Other type options 'base64', 'binary', 'string', 'array', 'file'",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "data.type"
+          },
+          {
+            "title": "param",
+            "description": "File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "data.bookType"
           },
           {
             "title": "param",
@@ -388,7 +472,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
