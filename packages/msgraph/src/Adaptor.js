@@ -29,8 +29,11 @@ export function execute(...operations) {
   };
 
   const cleanup = finalState => {
-    const { drives, ...rest } = finalState;
-    return rest;
+    if (finalState?.drives) {
+      delete finalState.drives;
+    }
+
+    return finalState;
   };
 
   return state => {
@@ -266,7 +269,10 @@ export function getFile(pathOrId, options, callback = s => s) {
 
 const defaultRequest = {
   method: 'PUT',
-  contentType: 'application/vnd.ms-excel',
+  contentType: 'application/octet-stream',
+  siteId: '',
+  parentItemId: '',
+  fileName: '',
 };
 
 /**
@@ -293,7 +299,7 @@ export function submitXls(req, data, callback) {
     const { accessToken, apiVersion } = state.configuration;
 
     const [resolvedRequest, resolvedData] = expandReferences(state, req, data);
-    const { method, path, contentType } = {
+    const { method, path, contentType, siteId, parentItemId, fileName } = {
       ...defaultRequest,
       ...resolvedRequest,
     };
@@ -305,11 +311,38 @@ export function submitXls(req, data, callback) {
     console.log('Creating Excel File');
 
     // Upload the XLSX file
-    return request(url, {
+    const { id: driveId } = state.drives['default'];
+    // /drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession
+    // sites/${siteId}/drive/items/${parentItemId}:/${fileName}:/createUploadSession
+    const uploadSession = await request(
+      setUrl(
+        `drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession`,
+        apiVersion
+      ),
+      {
+        method: 'POST',
+        accessToken,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          '@microsoft.graph.conflictBehavior': 'replace', // Specify conflict behavior if file with the same name exists
+          name: fileName,
+        }),
+      }
+    );
+
+    const uploadUrl = uploadSession.uploadUrl;
+
+    console.log(xlsxBlob.length, 'xlsxBlog length');
+    console.log(`0-${xlsxBlob.length - 1}/${xlsxBlob.length}`, 'content-range');
+    return request(uploadUrl, {
       accessToken,
       headers: {
-        'Content-Type': contentType,
+        // 'Content-Type': contentType,
+        'Content-Range': `bytes 0-${xlsxBlob.length - 1}/${xlsxBlob.length}`,
       },
+      highWaterMark: 1024 * 1024,
       body: xlsxBlob,
       method,
     }).then(response => handleResponse(response, state, callback));
