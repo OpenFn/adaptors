@@ -28,7 +28,8 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^5.22.1"
+    "undici": "^5.22.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
     "@openfn/buildtools": "workspace:^1.0.2",

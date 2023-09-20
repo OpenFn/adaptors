@@ -1,6 +1,8 @@
+import xlsx from 'xlsx';
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
-import { composeNextState } from '@openfn/language-common';
+import { composeNextState, asData } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {
@@ -14,7 +16,7 @@ export function assertDrive(state, driveName) {
   }
 }
 
-export function getUrl(resource, apiVersion) {
+export function setUrl(resource, apiVersion) {
   if (isValidHttpUrl(resource)) return resource;
 
   const pathSuffix = apiVersion
@@ -33,10 +35,6 @@ function isValidHttpUrl(string) {
   }
 
   return url.protocol === 'http:' || url.protocol === 'https:';
-}
-
-export function getAuth(token) {
-  return token ? { headers: { Authorization: `Bearer ${token}` } } : null;
 }
 
 const isStream = value => {
@@ -84,37 +82,35 @@ export function handleResponseError(response, data, method) {
   }
 }
 
+const defaultOptions = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  accessToken: '',
+};
 /**
  * This is an asynchronous function that sends a request to a specified URL with optional parameters
  * and headers, and returns the response data in JSON format.
  * @param {string} url - The URL of the API endpoint that the request is being made to.
- * @param {object} [params] - An object containing any additional parameters to be sent with the request, such
+ * @param {object} [options] - An object containing any additional parameters to be sent with the request, such
  * as query parameters or request body data. It is an optional parameter and defaults to an empty
  * object if not provided.
- * @param {string} [method=GET] - The HTTP method to be used for the request. It defaults to 'GET' if not
- * specified.
  * @returns The `request` function is returning the parsed JSON data from the response of the HTTP
  * request made to the specified `url` with the given `params` and `method`. If there is an error in
  * the response, the function will throw an error.
  */
-export const request = async (urlString, params = {}, method = 'GET') => {
-  let url = urlString;
-  const defaultHeaders = { 'Content-Type': 'application/json' };
-  const { headers, parseAs } = params;
-  const setHeaders = { ...headers, ...defaultHeaders };
+export const request = async (path, params) => {
+  let url = path;
+  const options = { ...defaultOptions, ...params };
+  const { parseAs, query, method, accessToken } = options;
+  delete options.parseAs;
+  delete options.accessToken;
 
-  delete params.parseAs;
-  delete params.headers;
+  options.headers['Authorization'] = makeAuthHeader(accessToken);
 
-  let options = {
-    method,
-    headers: setHeaders, // Add nonce for WP REST API
-  };
-
-  if ('GET' === method) {
-    url = `${urlString}?${new URLSearchParams(params).toString()}`;
-  } else {
-    options.body = JSON.stringify(params);
+  if (method === 'GET' && query) {
+    url = `${path}?${new URLSearchParams(query).toString()}`;
   }
 
   const response = await fetch(url, options);
@@ -135,3 +131,67 @@ export const request = async (urlString, params = {}, method = 'GET') => {
 
   return data;
 };
+
+function makeAuthHeader(accessToken) {
+  return accessToken ? `Bearer ${accessToken}` : null;
+}
+
+const defaultSheetOptions = {
+  bookType: 'xlsx',
+  wsName: 'Sheet',
+};
+
+/**
+ * The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
+ * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
+ * buffer.
+ * @public
+ * @example
+ * <caption>Create a buffer containing excel file with `xlsx` output format  </caption>
+ * sheetToBuffer('$.data[*]', {
+ *  wsName: 'Invalid Grant Codes',
+ *  bookType: 'xlsx',
+ * });
+ * @param rows - The `rows` parameter is an array of objects representing the data to be written to the
+ * Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object
+ * represent the column headers. The values of the object represent the data in each cell of the row.
+ * @param options - The `options` parameter is an object that contains additional configuration options
+ * @param {String} [options.wsName] - Worksheet name i.e 32 Characters
+ * @param {String} [options.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
+ * for the function. It can have the following properties:
+ * @returns a buffer containing the Excel file in `state.buffer`.
+ */
+export function sheetToBuffer(rows, options, callback) {
+  return state => {
+    const resolvedRows = asData(rows, state);
+    const [resolvedOptions] = expandReferences(state, options);
+
+    const { wsName, bookType } = {
+      ...defaultSheetOptions,
+      ...resolvedOptions,
+    };
+
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet(resolvedRows);
+
+    xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
+
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType });
+
+    console.log(`Creating sheet buffer with bookType '${bookType}'`);
+
+    const nextState = { ...state, buffer };
+
+    if (callback) return callback(nextState);
+
+    return nextState;
+  };
+}
+
+export function assertResources(resources) {
+  const { driveId, siteId, parentItemId } = resources;
+  if (driveId && siteId)
+    throw new Error('Use either "driveId" or "siteId" not both');
+  if (!driveId && !siteId) throw new Error('"siteId" or "driveId" is required');
+  if (!parentItemId) throw new Error('Parent Item Id is required');
+}

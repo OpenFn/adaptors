@@ -1,7 +1,13 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request, getAuth, getUrl, handleResponse, assertDrive } from './Utils';
+import {
+  request,
+  setUrl,
+  handleResponse,
+  assertDrive,
+  assertResources,
+} from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -23,8 +29,14 @@ export function execute(...operations) {
   };
 
   const cleanup = finalState => {
-    const { drives, ...rest } = finalState;
-    return rest;
+    if (finalState?.buffer) {
+      delete finalState.buffer;
+    }
+    if (finalState?.drives) {
+      delete finalState.drives;
+    }
+
+    return finalState;
   };
 
   return state => {
@@ -61,15 +73,15 @@ export function create(resource, data, callback) {
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = getUrl({ apiVersion, resolvedResource });
-    const auth = getAuth(accessToken);
+    const url = setUrl({ apiVersion, resolvedResource });
 
     const options = {
-      auth,
-      ...resolvedData,
+      accessToken,
+      body: JSON.stringify(resolvedData),
+      method: 'POST',
     };
 
-    return request(url, options, 'POST').then(response =>
+    return request(url, options).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -91,10 +103,9 @@ export function get(path, query, callback = false) {
     const { accessToken, apiVersion } = state.configuration;
     const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
-    const url = getUrl(resolvedPath, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resolvedPath, apiVersion);
 
-    return request(url, { ...resolvedQuery, ...auth }).then(response =>
+    return request(url, { query: resolvedQuery, accessToken }).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -135,10 +146,9 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
       resource = `${owner}/${id}/drive`;
     }
 
-    const url = getUrl(resource, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
-    return request(url, { ...auth }).then(response => {
+    return request(url, { accessToken }).then(response => {
       state.drives[resolvedName] = response;
       return callback(state);
     });
@@ -191,10 +201,9 @@ export function getFolder(pathOrId, options, callback = s => s) {
       resource += resolvedPathOrId.startsWith('/') ? ':/children' : '/children';
     }
 
-    const url = getUrl(resource, apiVersion);
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
-    return request(url, { ...auth }).then(response =>
+    return request(url, { accessToken }).then(response =>
       handleResponse(response, state, callback)
     );
   };
@@ -250,12 +259,10 @@ export function getFile(pathOrId, options, callback = s => s) {
       resource += resolvedPathOrId.startsWith('/') ? ':/content' : '/content';
     }
 
-    const url = getUrl(resource, apiVersion);
-
-    const auth = getAuth(accessToken);
+    const url = setUrl(resource, apiVersion);
 
     const response = await request(url, {
-      ...auth,
+      accessToken,
       parseAs: metadata ? 'json' : 'text',
     });
 
@@ -263,7 +270,104 @@ export function getFile(pathOrId, options, callback = s => s) {
   };
 }
 
-export { request } from './Utils';
+const defaultResource = {
+  contentType: 'application/octet-stream',
+  driveId: '',
+  folderId: '',
+  fileName: 'sheet.xls',
+  onConflict: 'replace',
+};
+
+/**
+ * Upload a file to a drive
+ * @public
+ * @example
+ * <caption>Upload Excel file to a drive using `driveId` and `parantItemId`</caption>
+ * uploadFile(
+ *   state => ({
+ *     driveId: state.driveId,
+ *     folderId: state.folderId,
+ *     fileName: `Tracker.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
+ * @example
+ * <caption>Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`</caption>
+ * uploadFile(
+ *   state => ({
+ *     siteId: state.siteId,
+ *     folderId: state.folderId,
+ *     fileName: `Report.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
+ * @function
+ * @param {Object} resource - Resource Object
+ * @param {String} [resource.driveId] - Drive Id
+ * @param {String} [resource.driveId] - Site Id
+ * @param {String} [resource.folderId] - Parent folder id
+ * @param {String} [resource.contentType] - Resource content-type
+ * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace"
+ * @param {Object} data - A buffer containing the file.
+ * @param {Function} callback - Optional callback function
+ * @returns {Operation}
+ */
+export function uploadFile(resource, data, callback) {
+  return async state => {
+    const { accessToken, apiVersion } = state.configuration;
+
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resource,
+      data
+    );
+
+    const { contentType, driveId, siteId, folderId, onConflict, fileName } = {
+      ...defaultResource,
+      ...resolvedResource,
+    };
+
+    assertResources({ driveId, siteId, folderId });
+
+    const path =
+      (driveId &&
+        `drives/${driveId}/items/${folderId}:/${fileName}:/createUploadSession`) ||
+      (siteId &&
+        `sites/${siteId}/drive/items/${folderId}:/${fileName}:/createUploadSession`);
+
+    const uploadSession = await request(setUrl(path, apiVersion), {
+      method: 'POST',
+      accessToken,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        '@microsoft.graph.conflictBehavior': onConflict,
+        name: fileName,
+      }),
+    });
+
+    const uploadUrl = uploadSession.uploadUrl;
+
+    console.log(`Uploading file...`);
+
+    return request(uploadUrl, {
+      method: 'PUT',
+      accessToken,
+      headers: {
+        'Content-Type': contentType,
+        'Content-Length': `${resolvedData.length}`,
+        'Content-Range': `bytes 0-${resolvedData.length - 1}/${
+          resolvedData.length
+        }`,
+      },
+
+      body: resolvedData,
+    }).then(response => handleResponse(response, state, callback));
+  };
+}
+
+export { request, sheetToBuffer } from './Utils';
 
 export {
   dataPath,
