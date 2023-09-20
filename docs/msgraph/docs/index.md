@@ -11,6 +11,10 @@
     <a href="#getFile">getFile(pathOrId, options, [callback])</a></dt>
 <dt>
     <a href="#getFolder">getFolder(pathOrId, options, [callback])</a></dt>
+<dt>
+    <a href="#sheetToBuffer">sheetToBuffer(rows, options)</a></dt>
+<dt>
+    <a href="#uploadFile">uploadFile(resource, data, callback)</a></dt>
 </dl>
 
 ## create
@@ -144,12 +148,83 @@ and headers, and returns the response data in JSON format.
 request made to the specified `url` with the given `params` and `method`. If there is an error in
 the response, the function will throw an error.  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | The URL of the API endpoint that the request is being made to. |
-| [params] | <code>object</code> |  | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |
-| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to be used for the request. It defaults to 'GET' if not specified. |
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | The URL of the API endpoint that the request is being made to. |
+| [options] | <code>object</code> | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |
 
+
+* * *
+
+## sheetToBuffer
+
+sheetToBuffer(rows, options) ⇒
+The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
+and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
+buffer.
+
+**Kind**: global function  
+**Returns**: a buffer containing the Excel file in `state.buffer`.  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rows |  | The `rows` parameter is an array of objects representing the data to be written to the Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object represent the column headers. The values of the object represent the data in each cell of the row. |
+| options |  | The `options` parameter is an object that contains additional configuration options |
+| [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
+| [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
+
+**Example** *(Create a buffer containing excel file with &#x60;xlsx&#x60; output format  )*  
+```js
+sheetToBuffer('$.data[*]', {
+ wsName: 'Invalid Grant Codes',
+ bookType: 'xlsx',
+});
+```
+
+* * *
+
+## uploadFile
+
+uploadFile(resource, data, callback) ⇒ <code>Operation</code>
+Upload a file to a drive
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>Object</code> | Resource Object |
+| [resource.driveId] | <code>String</code> | Drive Id |
+| [resource.driveId] | <code>String</code> | Site Id |
+| [resource.folderId] | <code>String</code> | Parent folder id |
+| [resource.contentType] | <code>String</code> | Resource content-type |
+| [resource.onConflict] | <code>String</code> | Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace" |
+| data | <code>Object</code> | A buffer containing the file. |
+| callback | <code>function</code> | Optional callback function |
+
+**Example** *(Upload Excel file to a drive using &#x60;driveId&#x60; and &#x60;parantItemId&#x60;)*  
+```js
+uploadFile(
+  state => ({
+    driveId: state.driveId,
+    folderId: state.folderId,
+    fileName: `Tracker.xlsx`,
+  }),
+  state => state.buffer
+);
+```
+**Example** *(Upload Excel file to a SharePoint drive using &#x60;siteId&#x60; and &#x60;parantItemId&#x60;)*  
+```js
+uploadFile(
+  state => ({
+    siteId: state.siteId,
+    folderId: state.folderId,
+    fileName: `Report.xlsx`,
+  }),
+  state => state.buffer
+);
+```
 
 * * *
 
