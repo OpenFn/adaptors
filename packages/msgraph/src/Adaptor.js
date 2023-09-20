@@ -273,7 +273,7 @@ export function getFile(pathOrId, options, callback = s => s) {
 const defaultResource = {
   contentType: 'application/octet-stream',
   driveId: '',
-  parentItemId: '',
+  folderId: '',
   fileName: 'sheet.xls',
   onConflict: 'replace',
 };
@@ -282,13 +282,30 @@ const defaultResource = {
  * Upload a file to a drive
  * @public
  * @example
+ * <caption>Upload Excel file to a drive using `driveId` and `parantItemId`</caption>
  * uploadFile(
- * )
+ *   state => ({
+ *     driveId: state.driveId,
+ *     folderId: state.folderId,
+ *     fileName: `Tracker.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
+ * @example
+ * <caption>Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`</caption>
+ * uploadFile(
+ *   state => ({
+ *     siteId: state.siteId,
+ *     folderId: state.folderId,
+ *     fileName: `Report.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
  * @function
  * @param {Object} resource - Resource Object
  * @param {String} [resource.driveId] - Drive Id
  * @param {String} [resource.driveId] - Site Id
- * @param {String} [resource.parentItemId] - Parent folder id
+ * @param {String} [resource.folderId] - Parent folder id
  * @param {String} [resource.contentType] - Resource content-type
  * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists
  * @param {Object} data - A buffer containing the file.
@@ -305,19 +322,18 @@ export function uploadFile(resource, data, callback) {
       data
     );
 
-    const { contentType, driveId, siteId, parentItemId, onConflict, fileName } =
-      {
-        ...defaultResource,
-        ...resolvedResource,
-      };
+    const { contentType, driveId, siteId, folderId, onConflict, fileName } = {
+      ...defaultResource,
+      ...resolvedResource,
+    };
 
-    assertResources({ driveId, siteId, parentItemId });
+    assertResources({ driveId, siteId, folderId });
 
     const path =
       (driveId &&
-        `drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession`) ||
+        `drives/${driveId}/items/${folderId}:/${fileName}:/createUploadSession`) ||
       (siteId &&
-        `sites/${siteId}/drive/items/${parentItemId}:/${fileName}:/createUploadSession`);
+        `sites/${siteId}/drive/items/${folderId}:/${fileName}:/createUploadSession`);
 
     const uploadSession = await request(setUrl(path, apiVersion), {
       method: 'POST',

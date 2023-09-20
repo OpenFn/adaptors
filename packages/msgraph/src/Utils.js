@@ -145,6 +145,13 @@ const defaultSheetOptions = {
  * The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
  * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
  * buffer.
+ * @public
+ * @example
+ * <caption>Create a buffer containing excel file with `xlsx` output format  </caption>
+ * sheetToBuffer('$.data[*]', {
+ *  wsName: 'Invalid Grant Codes',
+ *  bookType: 'xlsx',
+ * });
  * @param rows - The `rows` parameter is an array of objects representing the data to be written to the
  * Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object
  * represent the column headers. The values of the object represent the data in each cell of the row.
@@ -152,7 +159,7 @@ const defaultSheetOptions = {
  * @param {String} [options.wsName] - Worksheet name i.e 32 Characters
  * @param {String} [daoptionsta.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
  * for the function. It can have the following properties:
- * @returns a buffer containing the Excel file.
+ * @returns a buffer containing the Excel file in `state.buffer`.
  */
 export function sheetToBuffer(rows, options, callback) {
   return state => {

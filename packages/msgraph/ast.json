@@ -344,7 +344,13 @@
           },
           {
             "title": "example",
-            "description": "uploadFile(\n)"
+            "description": "uploadFile(\n  state => ({\n    driveId: state.driveId,\n    folderId: state.folderId,\n    fileName: `Tracker.xlsx`,\n  }),\n  state => state.buffer\n);",
+            "caption": "Upload Excel file to a drive using `driveId` and `parantItemId`"
+          },
+          {
+            "title": "example",
+            "description": "uploadFile(\n  state => ({\n    siteId: state.siteId,\n    folderId: state.folderId,\n    fileName: `Report.xlsx`,\n  }),\n  state => state.buffer\n);",
+            "caption": "Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`"
           },
           {
             "title": "function",
@@ -394,7 +400,7 @@
                 "name": "String"
               }
             },
-            "name": "resource.parentItemId"
+            "name": "resource.folderId"
           },
           {
             "title": "param",
