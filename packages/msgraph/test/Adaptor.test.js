@@ -8,7 +8,7 @@ import {
   getDrive,
   getFolder,
   getFile,
-  createUploadSheet,
+  uploadFile,
 } from '../src/Adaptor.js';
 
 setGlobalDispatcher(MockAgent);
@@ -459,7 +459,7 @@ describe('getFile', () => {
   });
 });
 
-describe('createUploadSheet', () => {
+describe('uploadFile', () => {
   it.skip('should convert array of object to excel and post to specified path', async () => {
     const state = {
       configuration: {
@@ -482,21 +482,18 @@ describe('createUploadSheet', () => {
       ],
     };
 
-    const fileName = '2023_09_19T07_29_09_369Z.xls';
-    const fileUploadPath = `sites/${state.siteId}/drive/items/${state.folderId}:/${fileName}:/content`;
-
-    const finalState = await createUploadSheet(
-      {
-        path: fileUploadPath,
-      },
-      {
-        wsName: 'Birthdays',
-        rows: state.rows,
-      }
+    const finalState = await uploadFile(
+      state => ({
+        siteId: state.siteId,
+        parentItemId: state.folderId,
+        fileName: `invalidGrantCodeRows_${new Date()
+          .toISOString()
+          .replace(/[-:.]/g, '_')}.csv`,
+      }),
+      state => state.buffer
     )(state);
-    console.log(finalState);
-    /* The above code is written in JavaScript and it is using the `expect` function to check if the
-    `data` variable is equal to the `fixtures.createUploadSheetResponse` variable. */
-    // expect(data).to.eql(fixtures.createUploadSheetResponse);
+
+    console.log(finalState.buffer);
+    expect(data).to.eql(fixtures.uploadFileResponse);
   });
 });

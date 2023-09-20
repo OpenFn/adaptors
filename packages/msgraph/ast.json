@@ -328,7 +328,7 @@
       "valid": true
     },
     {
-      "name": "createUploadSheet",
+      "name": "uploadFile",
       "params": [
         "resource",
         "data",
@@ -344,7 +344,7 @@
           },
           {
             "title": "example",
-            "description": "createUploadSheet(\n)"
+            "description": "uploadFile(\n)"
           },
           {
             "title": "function",
@@ -362,7 +362,19 @@
           },
           {
             "title": "param",
-            "description": "Drive id",
+            "description": "Drive Id",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.driveId"
+          },
+          {
+            "title": "param",
+            "description": "Site Id",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -398,60 +410,24 @@
           },
           {
             "title": "param",
-            "description": "Data Object",
+            "description": "Specify conflict behavior if file with the same name exists",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.onConflict"
+          },
+          {
+            "title": "param",
+            "description": "A buffer containing the file.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
             "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Worksheet name i.e 32 Characters",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "String"
-              }
-            },
-            "name": "data.wsName"
-          },
-          {
-            "title": "param",
-            "description": "Array of objects",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              }
-            },
-            "name": "data.rows"
-          },
-          {
-            "title": "param",
-            "description": "The return value type, Default is 'buffer'. Other type options 'base64', 'binary', 'string', 'array', 'file'",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "String"
-              }
-            },
-            "name": "data.type"
-          },
-          {
-            "title": "param",
-            "description": "File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "String"
-              }
-            },
-            "name": "data.bookType"
           },
           {
             "title": "param",

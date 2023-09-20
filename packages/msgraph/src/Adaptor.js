@@ -6,7 +6,7 @@ import {
   setUrl,
   handleResponse,
   assertDrive,
-  createSheet,
+  assertResources,
 } from './Utils';
 
 /**
@@ -29,6 +29,9 @@ export function execute(...operations) {
   };
 
   const cleanup = finalState => {
+    if (finalState?.buffer) {
+      delete finalState.buffer;
+    }
     if (finalState?.drives) {
       delete finalState.drives;
     }
@@ -267,33 +270,32 @@ export function getFile(pathOrId, options, callback = s => s) {
   };
 }
 
-const defaultRequest = {
+const defaultResource = {
   contentType: 'application/octet-stream',
   driveId: '',
   parentItemId: '',
   fileName: 'sheet.xls',
+  onConflict: 'replace',
 };
 
 /**
  * Convert form data to xls then submit.
  * @public
  * @example
- * createUploadSheet(
+ * uploadFile(
  * )
  * @function
  * @param {Object} resource - Resource Object
- * @param {String} [resource.driveId] - Drive id
+ * @param {String} [resource.driveId] - Drive Id
+ * @param {String} [resource.driveId] - Site Id
  * @param {String} [resource.parentItemId] - Parent folder id
  * @param {String} [resource.contentType] - Resource content-type
- * @param {Object} data - Data Object
- * @param {String} [data.wsName] - Worksheet name i.e 32 Characters
- * @param {Array} [data.rows] - Array of objects
- * @param {String} [data.type] - The return value type, Default is 'buffer'. Other type options 'base64', 'binary', 'string', 'array', 'file'
- * @param {String} [data.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
+ * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists
+ * @param {Object} data - A buffer containing the file.
  * @param {Function} callback - Optional callback function
  * @returns {Operation}
  */
-export function createUploadSheet(resource, data, callback) {
+export function uploadFile(resource, data, callback) {
   return async state => {
     const { accessToken, apiVersion } = state.configuration;
 
@@ -302,56 +304,54 @@ export function createUploadSheet(resource, data, callback) {
       resource,
       data
     );
-    const { contentType, driveId, parentItemId, fileName } = {
-      ...defaultRequest,
-      ...resolvedResource,
-    };
 
-    const xlsxBuffer = createSheet(resolvedData);
-
-    const uploadSession = await request(
-      setUrl(
-        `drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession`,
-        apiVersion
-      ),
+    const { contentType, driveId, siteId, parentItemId, onConflict, fileName } =
       {
-        method: 'POST',
-        accessToken,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          '@microsoft.graph.conflictBehavior': 'replace', // Specify conflict behavior if file with the same name exists
-          name: fileName,
-        }),
-      }
-    );
+        ...defaultResource,
+        ...resolvedResource,
+      };
+
+    assertResources({ driveId, siteId, parentItemId });
+
+    const path =
+      (driveId &&
+        `drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession`) ||
+      (siteId &&
+        `sites/${siteId}/drive/items/${parentItemId}:/${fileName}:/createUploadSession`);
+
+    const uploadSession = await request(setUrl(path, apiVersion), {
+      method: 'POST',
+      accessToken,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        '@microsoft.graph.conflictBehavior': onConflict,
+        name: fileName,
+      }),
+    });
 
     const uploadUrl = uploadSession.uploadUrl;
 
-    console.log(xlsxBuffer.length, 'xlsxBuffer length');
-    console.log(
-      `0-${xlsxBuffer.length - 1}/${xlsxBuffer.length}`,
-      'content-range'
-    );
+    console.log(`Uploading file...`);
 
     return request(uploadUrl, {
       method: 'PUT',
       accessToken,
       headers: {
         'Content-Type': contentType,
-        'Content-Length': `${xlsxBuffer.length}`,
-        'Content-Range': `bytes 0-${xlsxBuffer.length - 1}/${
-          xlsxBuffer.length
+        'Content-Length': `${resolvedData.length}`,
+        'Content-Range': `bytes 0-${resolvedData.length - 1}/${
+          resolvedData.length
         }`,
       },
 
-      body: xlsxBuffer,
+      body: resolvedData,
     }).then(response => handleResponse(response, state, callback));
   };
 }
 
-export { request } from './Utils';
+export { request, sheetToBuffer } from './Utils';
 
 export {
   dataPath,

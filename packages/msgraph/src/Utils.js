@@ -1,7 +1,8 @@
 import xlsx from 'xlsx';
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
-import { composeNextState } from '@openfn/language-common';
+import { composeNextState, asData } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {
@@ -135,22 +136,55 @@ function makeAuthHeader(accessToken) {
   return accessToken ? `Bearer ${accessToken}` : null;
 }
 
-const defaultData = {
-  type: 'buffer',
+const defaultSheetOptions = {
   bookType: 'xlsx',
   wsName: 'Sheet',
-  rows: [],
 };
 
-export function createSheet(data) {
-  const { wsName, type, bookType, rows } = {
-    ...defaultData,
-    ...data,
-  };
-  const workbook = xlsx.utils.book_new();
-  const worksheet = xlsx.utils.json_to_sheet(rows);
+/**
+ * The function `sheetToBuffer` takes in rows and options, expands any references, creates a workbook
+ * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
+ * buffer.
+ * @param rows - The `rows` parameter is an array of objects representing the data to be written to the
+ * Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object
+ * represent the column headers. The values of the object represent the data in each cell of the row.
+ * @param options - The `options` parameter is an object that contains additional configuration options
+ * @param {String} [options.wsName] - Worksheet name i.e 32 Characters
+ * @param {String} [daoptionsta.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
+ * for the function. It can have the following properties:
+ * @returns a buffer containing the Excel file.
+ */
+export function sheetToBuffer(rows, options, callback) {
+  return state => {
+    const resolvedRows = asData(rows, state);
+    const [resolvedOptions] = expandReferences(state, options);
 
-  xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
-  console.log('Creating Excel File');
-  return xlsx.write(workbook, { type, bookType });
+    const { wsName, bookType } = {
+      ...defaultSheetOptions,
+      ...resolvedOptions,
+    };
+
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet(resolvedRows);
+
+    xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
+
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType });
+
+    console.log(`Creating sheet buffer with bookType '${bookType}'`);
+
+    const nextState = { ...state, buffer };
+
+    if (callback) return callback(nextState);
+
+    return nextState;
+  };
+}
+
+export function assertResources(resources) {
+  const { driveId, siteId, parentItemId } = resources;
+  if (driveId && siteId)
+    throw new Error('Use either "driveId" or "siteId" not both');
+  if (!driveId && !siteId) throw new Error('"siteId" or "driveId" is required');
+  if (!parentItemId) throw new Error('Parent Item Id is required');
 }
