@@ -2,4 +2,4 @@
 '@openfn/language-msgraph': minor
 ---
 
-Add submitXls function
+Add `uploadFile` and `sheetToBuffer` function
