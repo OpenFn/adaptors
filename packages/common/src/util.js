@@ -27,6 +27,10 @@ const isStream = value => {
 };
 
 function expandReference(state, value) {
+  if (Buffer.isBuffer(value)) {
+    return value;
+  }
+
   if (Array.isArray(value)) {
     return value.map(v => expandReference(state, v));
   }
