@@ -142,7 +142,7 @@ const defaultSheetOptions = {
 };
 
 /**
- * The function `sheetToBuffer` takes in rows and options, expands any references, creates a workbook
+ * The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
  * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
  * buffer.
  * @param rows - The `rows` parameter is an array of objects representing the data to be written to the

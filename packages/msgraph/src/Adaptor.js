@@ -279,7 +279,7 @@ const defaultResource = {
 };
 
 /**
- * Convert form data to xls then submit.
+ * Upload a file to a drive
  * @public
  * @example
  * uploadFile(

@@ -335,7 +335,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Convert form data to xls then submit.",
+        "description": "Upload a file to a drive",
         "tags": [
           {
             "title": "public",
