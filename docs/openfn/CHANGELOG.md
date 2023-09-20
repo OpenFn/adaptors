@@ -1,5 +1,12 @@
 # @openfn/language-openfn
 
+## 1.3.8
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
 ## 1.3.7
 
 ### Patch Changes
