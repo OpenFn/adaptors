@@ -157,7 +157,7 @@ const defaultSheetOptions = {
  * represent the column headers. The values of the object represent the data in each cell of the row.
  * @param options - The `options` parameter is an object that contains additional configuration options
  * @param {String} [options.wsName] - Worksheet name i.e 32 Characters
- * @param {String} [daoptionsta.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
+ * @param {String} [options.bookType] - File format of the exported file, Default is 'xlsx'. See {@link https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats here}
  * for the function. It can have the following properties:
  * @returns a buffer containing the Excel file in `state.buffer`.
  */
