@@ -328,9 +328,9 @@
       "valid": true
     },
     {
-      "name": "submitXls",
+      "name": "createUploadSheet",
       "params": [
-        "req",
+        "resource",
         "data",
         "callback"
       ],
@@ -344,7 +344,7 @@
           },
           {
             "title": "example",
-            "description": "submitXls(\n)"
+            "description": "createUploadSheet(\n)"
           },
           {
             "title": "function",
@@ -353,16 +353,16 @@
           },
           {
             "title": "param",
-            "description": "Request Object",
+            "description": "Resource Object",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "req"
+            "name": "resource"
           },
           {
             "title": "param",
-            "description": "Request Url path to msgraph upload endpoint",
+            "description": "Drive id",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -370,11 +370,11 @@
                 "name": "String"
               }
             },
-            "name": "req.path"
+            "name": "resource.driveId"
           },
           {
             "title": "param",
-            "description": "Request method",
+            "description": "Parent folder id",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -382,11 +382,11 @@
                 "name": "String"
               }
             },
-            "name": "req.method"
+            "name": "resource.parentItemId"
           },
           {
             "title": "param",
-            "description": "Request content-type",
+            "description": "Resource content-type",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -394,7 +394,7 @@
                 "name": "String"
               }
             },
-            "name": "req.contentType"
+            "name": "resource.contentType"
           },
           {
             "title": "param",

@@ -50,7 +50,6 @@ const isStream = value => {
 };
 
 export function handleResponse(response, state, callback) {
-  console.log('are ok');
   let nextState;
   // Don't compose state if response is a stream
   if (isStream(response)) {
@@ -152,6 +151,6 @@ export function createXls(data) {
   const worksheet = xlsx.utils.json_to_sheet(rows);
 
   xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
-
+  console.log('Creating Excel File');
   return xlsx.write(workbook, { type, bookType });
 }

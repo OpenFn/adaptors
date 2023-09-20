@@ -268,24 +268,23 @@ export function getFile(pathOrId, options, callback = s => s) {
 }
 
 const defaultRequest = {
-  method: 'PUT',
   contentType: 'application/octet-stream',
-  siteId: '',
+  driveId: '',
   parentItemId: '',
-  fileName: '',
+  fileName: 'sheet.xls',
 };
 
 /**
  * Convert form data to xls then submit.
  * @public
  * @example
- * submitXls(
+ * createUploadSheet(
  * )
  * @function
- * @param {Object} req - Request Object
- * @param {String} [req.path] - Request Url path to msgraph upload endpoint
- * @param {String} [req.method] - Request method
- * @param {String} [req.contentType] - Request content-type
+ * @param {Object} resource - Resource Object
+ * @param {String} [resource.driveId] - Drive id
+ * @param {String} [resource.parentItemId] - Parent folder id
+ * @param {String} [resource.contentType] - Resource content-type
  * @param {Object} data - Data Object
  * @param {String} [data.wsName] - Worksheet name i.e 32 Characters
  * @param {Array} [data.rows] - Array of objects
@@ -294,26 +293,22 @@ const defaultRequest = {
  * @param {Function} callback - Optional callback function
  * @returns {Operation}
  */
-export function submitXls(req, data, callback) {
+export function createUploadSheet(resource, data, callback) {
   return async state => {
     const { accessToken, apiVersion } = state.configuration;
 
-    const [resolvedRequest, resolvedData] = expandReferences(state, req, data);
-    const { method, path, contentType, siteId, parentItemId, fileName } = {
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resource,
+      data
+    );
+    const { contentType, driveId, parentItemId, fileName } = {
       ...defaultRequest,
-      ...resolvedRequest,
+      ...resolvedResource,
     };
 
-    const url = setUrl(path, apiVersion);
+    const xlsxBuffer = createXls(resolvedData);
 
-    // Generate buffer
-    const xlsxBlob = createXls(resolvedData);
-    console.log('Creating Excel File');
-
-    // Upload the XLSX file
-    const { id: driveId } = state.drives['default'];
-    // /drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession
-    // sites/${siteId}/drive/items/${parentItemId}:/${fileName}:/createUploadSession
     const uploadSession = await request(
       setUrl(
         `drives/${driveId}/items/${parentItemId}:/${fileName}:/createUploadSession`,
@@ -334,17 +329,24 @@ export function submitXls(req, data, callback) {
 
     const uploadUrl = uploadSession.uploadUrl;
 
-    console.log(xlsxBlob.length, 'xlsxBlog length');
-    console.log(`0-${xlsxBlob.length - 1}/${xlsxBlob.length}`, 'content-range');
+    console.log(xlsxBuffer.length, 'xlsxBuffer length');
+    console.log(
+      `0-${xlsxBuffer.length - 1}/${xlsxBuffer.length}`,
+      'content-range'
+    );
+
     return request(uploadUrl, {
+      method: 'PUT',
       accessToken,
       headers: {
-        // 'Content-Type': contentType,
-        'Content-Range': `bytes 0-${xlsxBlob.length - 1}/${xlsxBlob.length}`,
+        'Content-Type': contentType,
+        'Content-Length': `${xlsxBuffer.length}`,
+        'Content-Range': `bytes 0-${xlsxBuffer.length - 1}/${
+          xlsxBuffer.length
+        }`,
       },
-      highWaterMark: 1024 * 1024,
-      body: xlsxBlob,
-      method,
+
+      body: xlsxBuffer,
     }).then(response => handleResponse(response, state, callback));
   };
 }
