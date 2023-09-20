@@ -189,9 +189,9 @@ export function sheetToBuffer(rows, options, callback) {
 }
 
 export function assertResources(resources) {
-  const { driveId, siteId, parentItemId } = resources;
+  const { driveId, siteId, folderId } = resources;
   if (driveId && siteId)
     throw new Error('Use either "driveId" or "siteId" not both');
   if (!driveId && !siteId) throw new Error('"siteId" or "driveId" is required');
-  if (!parentItemId) throw new Error('Parent Item Id is required');
+  if (!folderId) throw new Error('Parent Item Id is required');
 }
