@@ -307,7 +307,7 @@ const defaultResource = {
  * @param {String} [resource.driveId] - Site Id
  * @param {String} [resource.folderId] - Parent folder id
  * @param {String} [resource.contentType] - Resource content-type
- * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists
+ * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace"
  * @param {Object} data - A buffer containing the file.
  * @param {Function} callback - Optional callback function
  * @returns {Operation}

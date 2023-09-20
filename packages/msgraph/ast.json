@@ -416,7 +416,7 @@
           },
           {
             "title": "param",
-            "description": "Specify conflict behavior if file with the same name exists",
+            "description": "Specify conflict behavior if file with the same name exists. Can be \"rename | fail | replace\"",
             "type": {
               "type": "OptionalType",
               "expression": {
