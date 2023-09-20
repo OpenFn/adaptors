@@ -142,7 +142,7 @@ const defaultData = {
   rows: [],
 };
 
-export function createXls(data) {
+export function createSheet(data) {
   const { wsName, type, bookType, rows } = {
     ...defaultData,
     ...data,

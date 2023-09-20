@@ -6,7 +6,7 @@ import {
   setUrl,
   handleResponse,
   assertDrive,
-  createXls,
+  createSheet,
 } from './Utils';
 
 /**
@@ -307,7 +307,7 @@ export function createUploadSheet(resource, data, callback) {
       ...resolvedResource,
     };
 
-    const xlsxBuffer = createXls(resolvedData);
+    const xlsxBuffer = createSheet(resolvedData);
 
     const uploadSession = await request(
       setUrl(

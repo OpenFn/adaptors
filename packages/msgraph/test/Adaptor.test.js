@@ -8,7 +8,7 @@ import {
   getDrive,
   getFolder,
   getFile,
-  submitXls,
+  createUploadSheet,
 } from '../src/Adaptor.js';
 
 setGlobalDispatcher(MockAgent);
@@ -459,7 +459,7 @@ describe('getFile', () => {
   });
 });
 
-describe('submitXls', () => {
+describe('createUploadSheet', () => {
   it.skip('should convert array of object to excel and post to specified path', async () => {
     const state = {
       configuration: {
@@ -485,7 +485,7 @@ describe('submitXls', () => {
     const fileName = '2023_09_19T07_29_09_369Z.xls';
     const fileUploadPath = `sites/${state.siteId}/drive/items/${state.folderId}:/${fileName}:/content`;
 
-    const finalState = await submitXls(
+    const finalState = await createUploadSheet(
       {
         path: fileUploadPath,
       },
@@ -496,7 +496,7 @@ describe('submitXls', () => {
     )(state);
     console.log(finalState);
     /* The above code is written in JavaScript and it is using the `expect` function to check if the
-    `data` variable is equal to the `fixtures.submitXlsResponse` variable. */
-    // expect(data).to.eql(fixtures.submitXlsResponse);
+    `data` variable is equal to the `fixtures.createUploadSheetResponse` variable. */
+    // expect(data).to.eql(fixtures.createUploadSheetResponse);
   });
 });
