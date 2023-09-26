@@ -58,10 +58,18 @@ function connect(state) {
 
   const connect = client.connect({ host, port }, connection, auth);
 
+  logger('Connect client');
   return { ...state, connect };
 }
 
+function disconnect(state) {
+  return state.connect.then(async client => {
+    logger('Disconnect client');
+    await client.close();
+  });
+}
 function cleanupState(state) {
+  disconnect(state);
   delete state.connect;
   return state;
 }
@@ -94,10 +102,11 @@ export function query(qs, options, callback) {
         const result = await execSql(session, resolvedQs, resolvedOptions);
 
         logger('Success... ✔');
-        logger('Retrived', result.length, 'result(s)');
+        logger(
+          `Retrived ${result.length} result${result.length > 1 ? 's' : ''}`
+        );
 
         await session.close();
-        await client.close();
 
         const nextState = {
           ...composeNextState(state, result),
