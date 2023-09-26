@@ -16,13 +16,13 @@ describe('execute', () => {
     };
     const operations = [
       state => {
-        return { connect: state.connect, counter: 1 };
+        return { counter: 1 };
       },
       state => {
-        return { connect: state.connect, counter: 2 };
+        return { counter: 2 };
       },
       state => {
-        return { connect: state.connect, counter: 3 };
+        return { counter: 3 };
       },
     ];
 

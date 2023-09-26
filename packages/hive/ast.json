@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "query(\"select count(0) patient\");",
+            "description": "query(\"select count(*) from patient\");",
             "caption": "Get patient count from hive database"
           },
           {

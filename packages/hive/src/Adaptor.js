@@ -9,7 +9,10 @@ import hive from 'hive-driver';
 const { TCLIService, TCLIService_types } = hive.thrift;
 const utils = new hive.HiveUtils(TCLIService_types);
 
-const logger = message => console.log(message);
+let client = null;
+let session = null;
+const hiveClient = new hive.HiveClient(TCLIService, TCLIService_types);
+const connection = new hive.connections.TcpConnection();
 
 /**
  * Execute a sequence of operations.
@@ -33,7 +36,7 @@ export function execute(...operations) {
     return commonExecute(
       connect,
       ...operations,
-      cleanupState
+      disconnect
     )({
       ...initialState,
       ...state,
@@ -41,12 +44,9 @@ export function execute(...operations) {
   };
 }
 
-function connect(state) {
+async function connect(state) {
   const { host, port, username, password } = state.configuration;
 
-  const client = new hive.HiveClient(TCLIService, TCLIService_types);
-
-  const connection = new hive.connections.TcpConnection();
   const auth =
     username && password
       ? new hive.auth.PlainTcpAuthentication({
@@ -55,23 +55,24 @@ function connect(state) {
         })
       : new hive.auth.NoSaslAuthentication();
 
-  const connect = client.connect({ host, port }, connection, auth);
+  client = await hiveClient.connect({ host, port }, connection, auth);
 
-  logger('Connect client');
-  return { ...state, connect };
-}
-
-function disconnect(state) {
-  return state.connect.then(async client => {
-    logger('Disconnect client');
-    await client.close();
+  session = await client.openSession({
+    client_protocol:
+      TCLIService_types.TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V10,
   });
-}
-function cleanupState(state) {
-  disconnect(state);
-  delete state.connect;
+
+  console.log('Connect client');
   return state;
 }
+
+async function disconnect(state) {
+  console.log('Disconnect client');
+  await session.close();
+  await client.close();
+  return state;
+}
+
 /**
  * Execute an SQL statement
  * @public
@@ -87,39 +88,23 @@ function cleanupState(state) {
 export function query(qs, options, callback) {
   return async state => {
     const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
-    const { connect } = state;
 
-    return connect
-      .then(async client => {
-        const session = await client.openSession({
-          client_protocol:
-            TCLIService_types.TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V10,
-        });
+    console.log(`Executing query: ${resolvedQs}`);
 
-        logger(`Executing query: ${resolvedQs}`);
+    const result = await execSql(resolvedQs, resolvedOptions);
 
-        const result = await execSql(session, resolvedQs, resolvedOptions);
+    console.log('Success... ✔');
+    console.log(
+      `Retrived ${result.length} result${result.length > 1 ? 's' : ''}`
+    );
 
-        logger('Success... ✔');
-        logger(
-          `Retrived ${result.length} result${result.length > 1 ? 's' : ''}`
-        );
+    const nextState = {
+      ...composeNextState(state, result),
+      result,
+    };
 
-        await session.close();
-
-        const nextState = {
-          ...composeNextState(state, result),
-          result,
-        };
-
-        if (callback) callback(nextState);
-        return nextState;
-      })
-      .catch(error => {
-        console.error(error);
-        logger(error, 'debug');
-        return { ...state, error };
-      });
+    if (callback) callback(nextState);
+    return nextState;
   };
 }
 
@@ -127,7 +112,7 @@ const defaultOpts = {
   runAsync: true,
 };
 
-async function execSql(session, statement, options) {
+async function execSql(statement, options) {
   const opts = { ...defaultOpts, ...options };
   const operation = await session.executeStatement(statement, opts);
   await utils.waitUntilReady(operation, true);
