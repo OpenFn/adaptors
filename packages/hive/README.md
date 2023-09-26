@@ -13,7 +13,7 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/hive-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `query` function
 
 ```js
 query('select count(*) from patient');
