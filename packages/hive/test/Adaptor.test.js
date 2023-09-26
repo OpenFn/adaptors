@@ -1,9 +1,19 @@
 import { expect } from 'chai';
-import { execute, create, dataValue, sql } from '../src/Adaptor.js';
+import { execute, query } from '../src/Adaptor.js';
+
+import pkg from 'hive-driver';
+const { HiveOperation } = pkg;
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    const state = {};
+    const state = {
+      configuration: {
+        host: 'localhost',
+        username: 'admin',
+        password: 'admin',
+        port: '10000',
+      },
+    };
     const operations = [
       state => {
         return { counter: 1 };
@@ -30,5 +40,23 @@ describe('execute', () => {
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
     });
+  });
+});
+
+describe.skip('query', () => {
+  it('Execute SQL statement', async () => {
+    const state = {
+      configuration: {
+        host: 'localhost',
+        username: 'admin',
+        password: 'admin',
+        port: '10000',
+      },
+    };
+    await query('select * from table', { runAsync: true })(state).then(
+      result => {
+        expect(result).instanceOf(HiveOperation);
+      }
+    );
   });
 });
