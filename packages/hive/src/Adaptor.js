@@ -4,10 +4,12 @@ import {
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-const hive = require('hive-driver');
+import hive from 'hive-driver';
+
 const { TCLIService, TCLIService_types } = hive.thrift;
 const utils = new hive.HiveUtils(TCLIService_types);
-const logger = logResponse => console.log(logResponse);
+
+const logger = message => console.log(message);
 
 /**
  * Execute a sequence of operations.
@@ -69,14 +71,14 @@ function cleanupState(state) {
  * @public
  * @example
  * <caption>Get patient count from hive database</caption>
- * sql("select count(0) patient");
+ * query("select count(0) patient");
  * @function
  * @param {string} qs - SQL statement
  * @param {object} options - (Optional) options for executing sql statement
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function sql(qs, options, callback) {
+export function query(qs, options, callback) {
   return state => {
     const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
     const { connect } = state;
@@ -88,12 +90,12 @@ export function sql(qs, options, callback) {
             TCLIService_types.TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V10,
         });
 
-        console.log(`Executing query: ${resolvedQs}`);
+        logger(`Executing query: ${resolvedQs}`);
 
         const result = await execSql(session, resolvedQs, resolvedOptions);
 
-        console.log('Success... ✔');
-        console.log('Retrived', result.length, 'result(s)');
+        logger('Success... ✔');
+        logger('Retrived', result.length, 'result(s)');
 
         await session.close();
         await client.close();
@@ -108,6 +110,7 @@ export function sql(qs, options, callback) {
       })
       .catch(error => {
         console.error(error);
+        logger(error, 'debug');
         return { ...state, error };
       });
   };
@@ -120,7 +123,7 @@ const defaultOpts = {
 async function execSql(session, statement, options) {
   const opts = { ...defaultOpts, ...options };
   const operation = await session.executeStatement(statement, opts);
-  await utils.waitUntilReady(operation, true, logger);
+  await utils.waitUntilReady(operation, true);
   await utils.fetchAll(operation);
   const result = await utils.getResult(operation);
 

@@ -1,7 +1,7 @@
 {
   "operations": [
     {
-      "name": "sql",
+      "name": "query",
       "params": [
         "qs",
         "options",
@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "sql(\"select count(0) patient\");",
+            "description": "query(\"select count(0) patient\");",
             "caption": "Get patient count from hive database"
           },
           {
