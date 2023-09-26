@@ -29,7 +29,6 @@ export function execute(...operations) {
     data: null,
   };
 
-  // TODO: Add session-based authentication here if your API needs it.
   return state => {
     return commonExecute(
       connect,
