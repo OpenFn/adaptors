@@ -85,7 +85,7 @@ function cleanupState(state) {
  * @returns {Operation}
  */
 export function query(qs, options, callback) {
-  return state => {
+  return async state => {
     const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
     const { connect } = state;
 
