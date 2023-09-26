@@ -42,8 +42,7 @@ export function execute(...operations) {
 }
 
 function connect(state) {
-  //TODO @Mtuchi how to use the databse?
-  const { host, port, username, password, database } = state.configuration;
+  const { host, port, username, password } = state.configuration;
 
   const client = new hive.HiveClient(TCLIService, TCLIService_types);
 
