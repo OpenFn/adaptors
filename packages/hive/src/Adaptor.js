@@ -94,9 +94,7 @@ export function query(qs, options, callback) {
     const result = await execSql(resolvedQs, resolvedOptions);
 
     console.log('Success... ✔');
-    console.log(
-      `Retrived ${result.length} result${result.length > 1 ? 's' : ''}`
-    );
+    console.log('Retrieved', result.length, 'items');
 
     const nextState = {
       ...composeNextState(state, result),
