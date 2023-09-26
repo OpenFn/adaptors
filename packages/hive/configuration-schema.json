@@ -1,36 +1,61 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
+    "host": {
+      "title": "Host URL",
+      "type": "string",
+      "description": "The database instance host URL",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": [
+        "some-host-url.compute-1.amazonaws.com"
+      ]
+    },
+    "port": {
+      "title": "Port",
+      "type": "integer",
+      "default": 10001,
+      "description": "Database instance port",
+      "minLength": 1,
+      "examples": [
+        10001
+      ]
+    },
+    "database": {
+      "title": "Database",
+      "type": "string",
+      "description": "The database name",
+      "minLength": 1,
+      "examples": [
+        "demo-db"
+      ]
     },
     "username": {
       "title": "Username",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
+      "description": "The username to log in the database",
+      "minLength": 1,
+      "examples": [
+        "admin-demo"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
-      "description": "Password",
+      "description": "The password to log in the database",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "minLength": 1,
+      "examples": [
+        "@super(!)Secretpass"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": [
+    "host",
+    "port",
+    "username",
+    "password"
+  ]
 }
