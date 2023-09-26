@@ -3,9 +3,11 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request } from './Utils';
 
 const hive = require('hive-driver');
+const { TCLIService, TCLIService_types } = hive.thrift;
+const utils = new hive.HiveUtils(TCLIService_types);
+const logger = logResponse => console.log(logResponse);
 
 /**
  * Execute a sequence of operations.
@@ -27,74 +29,106 @@ export function execute(...operations) {
 
   // TODO: Add session-based authentication here if your API needs it.
   return state => {
-    return commonExecute(...operations)({
+    return commonExecute(
+      connect,
+      ...operations,
+      cleanupState
+    )({
       ...initialState,
       ...state,
     });
   };
 }
 
+function connect(state) {
+  //TODO @Mtuchi how to use the databse?
+  const { host, port, username, password, database } = state.configuration;
+
+  const client = new hive.HiveClient(TCLIService, TCLIService_types);
+
+  const connection = new hive.connections.TcpConnection();
+  const auth =
+    username && password
+      ? new hive.auth.PlainTcpAuthentication({
+          username,
+          password,
+        })
+      : new hive.auth.NoSaslAuthentication();
+
+  const connect = client.connect({ host, port }, connection, auth);
+
+  return { ...state, connect };
+}
+
+function cleanupState(state) {
+  delete state.connect;
+  return state;
+}
 /**
- * Create some resource in some system
+ * Execute an SQL statement
  * @public
  * @example
- * create("patient", {"name": "Bukayo"})
+ * <caption>Get patient count from hive database</caption>
+ * sql("select count(0) patient");
  * @function
- * @param {string} resource - The type of entity that will be created
- * @param {object} data - The data to create the new resource
+ * @param {string} qs - SQL statement
+ * @param {object} options - (Optional) options for executing sql statement
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function doHive(sql, callback) {
+export function sql(qs, options, callback) {
   return state => {
-    const [resolvedSql] = expandReferences(state, sql);
-    const { host, port } = state.configuration;
+    const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
+    const { connect } = state;
 
-    const { TCLIService, TCLIService_types } = hive.thrift;
-    const client = new hive.HiveClient(TCLIService, TCLIService_types);
-
-    return client
-      .connect(
-        {
-          host: 'localhost',
-          port: 10000,
-        },
-        new hive.connections.TcpConnection(),
-        new hive.auth.NoSaslAuthentication()
-      )
+    return connect
       .then(async client => {
         const session = await client.openSession({
           client_protocol:
             TCLIService_types.TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V10,
         });
-        const response = await session.getInfo(
-          TCLIService_types.TGetInfoType.CLI_DBMS_VER
-        );
 
-        console.log(response.getValue());
+        console.log(`Executing query: ${resolvedQs}`);
+
+        const result = await execSql(session, resolvedQs, resolvedOptions);
+
+        console.log('Success... ✔');
+        console.log('Retrived', result.length, 'result(s)');
 
         await session.close();
+        await client.close();
 
-        return state;
+        const nextState = {
+          ...composeNextState(state, result),
+          result,
+        };
+
+        if (callback) callback(nextState);
+        return nextState;
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
+        return { ...state, error };
       });
-
-    // return request(url, options).then(response => {
-    //   const nextState = {
-    //     ...composeNextState(state, response.data),
-    //     response,
-    //   };
-    //   if (callback) return callback(nextState);
-    //   return nextState;
-    // });
   };
 }
 
-export { request } from './Utils';
+const defaultOpts = {
+  runAsync: true,
+};
 
-// TODO: Decide which functions to publish from @openfn/language-common
+async function execSql(session, statement, options) {
+  const opts = { ...defaultOpts, ...options };
+  const operation = await session.executeStatement(statement, opts);
+  await utils.waitUntilReady(operation, true, logger);
+  await utils.fetchAll(operation);
+  const result = await utils.getResult(operation);
+
+  await operation.close();
+
+  return result.getValue();
+}
+
 export {
   dataPath,
   dataValue,
@@ -103,7 +137,7 @@ export {
   field,
   fields,
   fn,
-  http,
+  parseCsv,
   lastReferenceValue,
   merge,
   sourceValue,
