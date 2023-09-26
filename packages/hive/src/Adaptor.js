@@ -77,7 +77,7 @@ function cleanupState(state) {
  * @public
  * @example
  * <caption>Get patient count from hive database</caption>
- * query("select count(0) patient");
+ * query("select count(*) from patient");
  * @function
  * @param {string} qs - SQL statement
  * @param {object} options - (Optional) options for executing sql statement
