@@ -6,7 +6,7 @@
 <dt>
     <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
 <dt>
-    <a href="#list">list(dirPath, [callback])</a></dt>
+    <a href="#list">list(dirPath, filter, [callback])</a></dt>
 <dt>
     <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
 <dt>
@@ -61,7 +61,7 @@ getJSON(
 
 ## list
 
-list(dirPath, [callback]) ⇒ <code>Operation</code>
+list(dirPath, filter, [callback]) ⇒ <code>Operation</code>
 List files present in a directory
 
 **Kind**: global function  
@@ -69,12 +69,32 @@ List files present in a directory
 
 | Param | Type | Description |
 | --- | --- | --- |
-| dirPath | <code>string</code> | Path to resource |
+| dirPath | <code>string</code> | Path to remote directory |
+| filter | <code>function</code> | a filter function used to select return entries |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example** *(basic files listing)*  
 ```js
 list('/some/path/')
+```
+**Example** *(list files with filters)*  
+```js
+list('/some/path/', file=> {
+ return /foo.\.txt/.test(file.name);
+})
+```
+**Example** *(list files with filters and use callback)*  
+```js
+list(
+  "/some/path/",
+  (file) => /foo.\.txt/.test(file.name),
+  (state) => {
+    const latestFile = state.data.filter(
+      (file) => file.modifyTime <= new Date()
+    );
+    return { ...state, latestFile };
+  }
+);
 ```
 
 * * *
