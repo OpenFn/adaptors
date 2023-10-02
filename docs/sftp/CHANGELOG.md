@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 1.0.0
+
+### Major Changes
+
+- e52ba66: add `filter` option in `list()` function
+
 ## 0.8.8
 
 ### Patch Changes
