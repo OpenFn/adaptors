@@ -1,5 +1,5 @@
 ---
-'@openfn/language-sftp': minor
+'@openfn/language-sftp': major
 ---
 
-add filter option in list function
+add `filter` option in `list()` function
