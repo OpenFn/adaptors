@@ -17,7 +17,18 @@
           },
           {
             "title": "example",
-            "description": "list('/some/path/')"
+            "description": "list('/some/path/')",
+            "caption": "basic files listing"
+          },
+          {
+            "title": "example",
+            "description": "list('/some/path/', file=> {\n return /foo.\\.txt/.test(file.name);\n})",
+            "caption": "list files with filters"
+          },
+          {
+            "title": "example",
+            "description": "list(\n  \"/some/path/\",\n  (file) => /foo.\\.txt/.test(file.name),\n  (state) => {\n    const latestFile = state.data.filter(\n      (file) => file.modifyTime <= new Date()\n    );\n    return { ...state, latestFile };\n  }\n);",
+            "caption": "list files with filters and use callback"
           },
           {
             "title": "function",

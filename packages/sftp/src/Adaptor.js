@@ -54,7 +54,25 @@ function disconnect(state) {
  * List files present in a directory
  * @public
  * @example
+ * <caption>basic files listing</caption>
  * list('/some/path/')
+ * @example
+ * <caption>list files with filters</caption>
+ * list('/some/path/', file=> {
+ *  return /foo.\.txt/.test(file.name);
+ * })
+ * @example
+ * <caption>list files with filters and use callback</caption>
+ * list(
+ *   "/some/path/",
+ *   (file) => /foo.\.txt/.test(file.name),
+ *   (state) => {
+ *     const latestFile = state.data.filter(
+ *       (file) => file.modifyTime <= new Date()
+ *     );
+ *     return { ...state, latestFile };
+ *   }
+ * );
  * @function
  * @param {string} dirPath - Path to remote directory
  * @param {function} filter - a filter function used to select return entries
