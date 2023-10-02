@@ -4,6 +4,7 @@
       "name": "list",
       "params": [
         "dirPath",
+        "filter",
         "callback"
       ],
       "docs": {
@@ -25,12 +26,21 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to remote directory",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "dirPath"
+          },
+          {
+            "title": "param",
+            "description": "a filter function used to select return entries",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "filter"
           },
           {
             "title": "param",

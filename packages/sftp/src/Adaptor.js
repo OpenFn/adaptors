@@ -56,14 +56,15 @@ function disconnect(state) {
  * @example
  * list('/some/path/')
  * @function
- * @param {string} dirPath - Path to resource
+ * @param {string} dirPath - Path to remote directory
+ * @param {function} filter - a filter function used to select return entries
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath, callback = x => x) {
+export function list(dirPath, filter, callback) {
   return state => {
     return sftp
-      .list(dirPath)
+      .list(dirPath, filter)
       .then(files => handleResponse(files, state, callback))
       .catch(handleError);
   };
