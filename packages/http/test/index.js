@@ -292,7 +292,7 @@ describe('get()', () => {
       })
       .reply(302, 2, {
         headers: {
-          Location: 'https://www.example.com/api/fake-endpoint-2',
+          Location: 'https://www.example.com/api/fake-endpoint-3',
         },
       });
 
@@ -334,7 +334,7 @@ describe('get()', () => {
       })
     )(state);
 
-    console.log(finalState.data, 'respo');
+    console.log(finalState, 'finalState');
     expect(finalState.data.url).to.eql('/api/fake-endpoint-3');
   });
 

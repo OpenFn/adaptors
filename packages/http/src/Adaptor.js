@@ -85,7 +85,7 @@ function request(method, path, params, callback) {
 
     const baseUrl = state.configuration?.baseUrl;
 
-    const auth = addBasicAuth(state.configuration, headers ? headers : {});
+    const auth = addBasicAuth(state.configuration, headers || {});
 
     const maxRedirections =
       resolvedParams?.maxRedirections ??
