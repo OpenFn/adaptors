@@ -1,4 +1,4 @@
-import FormData from 'form-data';
+// import FormData from 'form-data';
 
 import {
   execute as commonExecute,
@@ -64,7 +64,6 @@ function request(method, path, params, callback) {
       params
     );
 
-    // let form = null;
     let body = resolvedParams?.body;
     let headers = resolvedParams?.headers;
 
@@ -73,10 +72,6 @@ function request(method, path, params, callback) {
       Object.entries(resolvedParams?.form).forEach(element => {
         form.append(element[0], element[1]);
       });
-
-      const formHeaders = form.getHeaders();
-
-      headers = { ...headers, ...formHeaders };
 
       body = form;
     } else {

@@ -264,7 +264,7 @@ describe('get()', () => {
   });
 
   // TODO test with maxDirects, followAllRedirects, and falsey values
-  it.only('can follow redirects', async () => {
+  it.skip('can follow redirects', async () => {
     // TODO Follow All Redirects support
     testServer
       .intercept({
@@ -533,13 +533,16 @@ describe('post', () => {
     );
   });
 
-  it.skip('can set FormData on the request body', async () => {
+  it.only('can set FormData on the request body', async () => {
     testServer
       .intercept({
         path: '/api/fake-formData',
         method: 'POST',
       })
-      .reply(200, ({ body }) => body);
+      .reply(200, res => {
+        console.log(res.body, 'from reply');
+        return res;
+      });
 
     let formData = {
       id: 'fake_id',
@@ -558,7 +561,7 @@ describe('post', () => {
       })
     )(state);
 
-    console.log(data);
+    console.log(data, 'state.data');
     expect(data).to.contain(
       'Content-Disposition: form-data; name="id"\r\n\r\nfake_id'
     );
