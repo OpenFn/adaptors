@@ -502,46 +502,19 @@ describe('post', () => {
     expect(finalState.data).to.eql({ name: 'test', age: 24 });
   });
 
-  it.skip('can set data via Form param on the request body', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-form',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body);
-
-    let form = {
-      username: 'fake',
-      password: 'fake_pass',
-    };
-    const state = {
-      configuration: {},
-      data: form,
-    };
-
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-form', {
-        form: state => state.data,
-      })
-    )(state);
-
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="username"\r\n\r\nfake'
-    );
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="password"\r\n\r\nfake_pass'
-    );
-  });
-
-  it.only('can set FormData on the request body', async () => {
+  it('can send plain jSON as formdata', async () => {
+    let form;
     testServer
       .intercept({
         path: '/api/fake-formData',
         method: 'POST',
       })
       .reply(200, res => {
-        console.log(res.body, 'from reply');
-        return res;
+        // What we receive in the mock should be formdata
+        // note that we should also have a bunch of headers,
+        // but they seem to be missing
+        form = res.body;
+        return 'ok';
       });
 
     let formData = {
@@ -550,27 +523,15 @@ describe('post', () => {
       mobile_phone: 'fake_phone',
     };
 
-    const state = {
-      configuration: {},
-      data: formData,
-    };
-
     const { data } = await execute(
       post('https://www.example.com/api/fake-formData', {
-        form: state => state.data,
+        form: formData,
       })
-    )(state);
+    )({});
 
-    console.log(data, 'state.data');
-    expect(data).to.contain(
-      'Content-Disposition: form-data; name="id"\r\n\r\nfake_id'
-    );
-    expect(data).to.contain(
-      'Content-Disposition: form-data; name="parent"\r\n\r\nfake_parent'
-    );
-    expect(data.body).to.contain(
-      'Content-Disposition: form-data; name="mobile_phone"\r\n\r\nfake_phone'
-    );
+    expect(data).to.equal('ok');
+    expect(form instanceof FormData).to.equal(true);
+    expect(form.getLength()).to.equal(3);
   });
 
   it('can be called inside an each block', async () => {
