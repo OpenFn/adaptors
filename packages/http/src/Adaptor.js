@@ -1,5 +1,3 @@
-// import FormData from 'form-data';
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -38,13 +36,6 @@ export function execute(...operations) {
 }
 
 function handleResponse(state, response) {
-  console.log(
-    // response.config.method.toUpperCase(), // TODO Should we return method
-    'request succeeded with',
-    response.code,
-    '✓'
-  );
-
   return {
     ...composeNextState(state, response.body),
     response,
