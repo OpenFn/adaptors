@@ -1,4 +1,5 @@
 import { Client, MockAgent } from 'undici';
+import { getReasonPhrase } from 'http-status-codes';
 
 const clients = new Map();
 
@@ -13,6 +14,7 @@ const getClient = (baseUrl, options) => {
   return clients.get(baseUrl);
 };
 
+const startTime = Date.now();
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
   const client = mockAgent.get(baseUrl);
@@ -22,8 +24,9 @@ export const enableMockClient = baseUrl => {
   return client;
 };
 
-const assertOK = (response, errorMap, fullUrl) => {
+const assertOK = (response, errorMap, fullUrl, method) => {
   const errMapMessage = errorMap[response.statusCode];
+  const statusText = getReasonPhrase(response.statusCode);
 
   const checkSuccessCode =
     typeof errMapMessage === 'boolean'
@@ -31,7 +34,10 @@ const assertOK = (response, errorMap, fullUrl) => {
       : errMapMessage || response.statusCode >= 400;
 
   if (checkSuccessCode) {
-    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+    const defaultErrorMesssage = `${method} ${fullUrl} - ${response.statusCode} ${statusText}`;
+    const endTime = Date.now();
+    const responseTime = endTime - startTime;
+    console.log(defaultErrorMesssage, `in ${responseTime}ms`);
 
     const errMessage =
       typeof errMapMessage === 'function'
@@ -110,15 +116,24 @@ export async function request(method, fullUrlOrPath, options = {}) {
     throwOnError: false,
     maxRedirections,
   });
+  const statusText = getReasonPhrase(response.statusCode);
+  assertOK(response, errors, fullUrlOrPath, method);
 
-  assertOK(response, errors, fullUrlOrPath);
+  const responseBody = await readResponseBody(response, parseAs).then(res => {
+    const endTime = Date.now();
+    const responseTime = endTime - startTime;
 
-  const responseBody = await readResponseBody(response, parseAs);
+    console.log(
+      `${method} ${fullUrlOrPath} - ${response.statusCode} ${statusText} in ${responseTime}ms`
+    );
+    return res;
+  });
 
   return {
     code: response.statusCode,
     headers: response.headers,
     body: responseBody,
+    message: statusText,
   };
 }
 

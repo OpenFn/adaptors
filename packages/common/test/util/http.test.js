@@ -230,7 +230,7 @@ describe('options', () => {
       'https://www.example.com/api/content',
       {
         errors: {
-          204: 'Content not found',
+          204: 'No Content',
         },
       }
     );
@@ -243,20 +243,20 @@ describe('options', () => {
         path: '/api/noContent',
         method: 'GET',
       })
-      .reply(204, { error: 'Content not found' });
+      .reply(204, { error: 'No Content' });
 
     let error = null;
     try {
       await request('GET', 'https://www.example.com/api/noContent', {
         errors: {
-          204: 'Content not found',
+          204: 'No Content',
         },
       });
     } catch (err) {
       error = err;
     }
 
-    expect(error.message).to.eql('Content not found');
+    expect(error.message).to.eql('No Content');
   });
   it('should use errorMap with function', async () => {
     client
@@ -264,20 +264,20 @@ describe('options', () => {
         path: '/api/noAccess',
         method: 'GET',
       })
-      .reply(404, { error: 'Not found' });
+      .reply(404, { error: 'Not Found' });
 
     let error = null;
     try {
       await request('GET', 'https://www.example.com/api/noAccess', {
         errors: {
-          404: response => (response.context ? 'No Access' : 'Not found'),
+          404: response => (response.context ? 'No Access' : 'Not Found'),
         },
       });
     } catch (err) {
       error = err;
     }
 
-    expect(error.message).to.eql('Not found');
+    expect(error.message).to.eql('Not Found');
   });
   it('should throw by default if a 404', async () => {
     client
@@ -285,7 +285,7 @@ describe('options', () => {
         path: '/api/noAccess',
         method: 'GET',
       })
-      .reply(404, { error: 'Not found' });
+      .reply(404, { error: 'Not Found' });
 
     let error = null;
     try {
@@ -295,7 +295,7 @@ describe('options', () => {
     }
 
     expect(error.message).to.eql(
-      'Request to https://www.example.com/api/noAccess failed with status: 404'
+      'GET https://www.example.com/api/noAccess - 404 Not Found'
     );
   });
   it('should encode keys and values of query', async () => {
@@ -368,7 +368,7 @@ describe('options', () => {
       error = err;
     }
     expect(error.message).to.eql(
-      'Request to https://www.example.com/api/noAccess failed with status: 405'
+      'GET https://www.example.com/api/noAccess - 405 Method Not Allowed'
     );
   });
 });
