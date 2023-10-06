@@ -429,6 +429,7 @@ describe('post', () => {
 
   it('can send plain jSON as formdata', async () => {
     let form;
+    let entries = [];
     testServer
       .intercept({
         path: '/api/fake-formData',
@@ -439,6 +440,9 @@ describe('post', () => {
         // note that we should also have a bunch of headers,
         // but they seem to be missing
         form = res.body;
+        for (const [key, value] of form.entries()) {
+          entries.push({ [key]: value });
+        }
         return 'ok';
       });
 
@@ -456,7 +460,7 @@ describe('post', () => {
 
     expect(data).to.equal('ok');
     expect(form instanceof FormData).to.equal(true);
-    expect(form.getLength()).to.equal(3);
+    expect(entries.length).to.equal(3);
   });
 
   it('can be called inside an each block', async () => {
