@@ -14,7 +14,6 @@ const getClient = (baseUrl, options) => {
   return clients.get(baseUrl);
 };
 
-const startTime = Date.now();
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
   const client = mockAgent.get(baseUrl);
@@ -28,12 +27,12 @@ const assertOK = (response, errorMap, fullUrl, method) => {
   const errMapMessage = errorMap[response.statusCode];
   const statusText = getReasonPhrase(response.statusCode);
 
-  const checkSuccessCode =
+  const isError =
     typeof errMapMessage === 'boolean'
       ? errMapMessage
       : errMapMessage || response.statusCode >= 400;
 
-  if (checkSuccessCode) {
+  if (isError) {
     const defaultErrorMesssage = `${method} ${fullUrl} - ${response.statusCode} ${statusText}`;
     const endTime = Date.now();
     const responseTime = endTime - startTime;
@@ -73,7 +72,7 @@ const defaultOptions = {
   tls: {},
   parseAs: 'auto',
 };
-
+const startTime = Date.now();
 /**
  * `request` is a a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
@@ -119,21 +118,16 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const statusText = getReasonPhrase(response.statusCode);
   assertOK(response, errors, fullUrlOrPath, method);
 
-  const responseBody = await readResponseBody(response, parseAs).then(res => {
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-
-    console.log(
-      `${method} ${fullUrlOrPath} - ${response.statusCode} ${statusText} in ${responseTime}ms`
-    );
-    return res;
-  });
+  const responseBody = await readResponseBody(response, parseAs);
+  const endTime = Date.now();
+  const responseTime = endTime - startTime;
 
   return {
     code: response.statusCode,
     headers: response.headers,
     body: responseBody,
     message: statusText,
+    responseTime,
   };
 }
 

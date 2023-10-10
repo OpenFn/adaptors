@@ -35,18 +35,6 @@ export function execute(...operations) {
   };
 }
 
-function handleResponse(state, response) {
-  return {
-    ...composeNextState(state, response.body),
-    response,
-  };
-}
-
-function handleCallback(state, callback) {
-  if (callback) return callback(state);
-  return state;
-}
-
 function request(method, path, params, callback) {
   return state => {
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -60,13 +48,12 @@ function request(method, path, params, callback) {
 
     if (resolvedParams?.form) {
       let form = new FormData();
-      Object.entries(resolvedParams?.form).forEach(element => {
-        form.append(element[0], element[1]);
-      });
-
+      for (const key of Object.entries(resolvedParams.form)) {
+        form.append(key, form[key]);
+      }
       body = form;
-    } else {
-      body = body ? JSON.stringify(body) : null;
+    } else if (body) {
+      body = JSON.stringify(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;
@@ -86,8 +73,11 @@ function request(method, path, params, callback) {
     };
 
     return commonRequest(method, resolvedPath, options)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
+      .then(response => ({
+        ...composeNextState(state, response.body),
+        response,
+      }))
+      .then(nextState => callback?.(nextState) ?? nextState);
   };
 }
 
