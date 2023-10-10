@@ -23,7 +23,7 @@ export const enableMockClient = baseUrl => {
   return client;
 };
 
-const assertOK = (response, errorMap, fullUrl, method) => {
+const assertOK = (response, errorMap, fullUrl, method, startTime) => {
   const errMapMessage = errorMap[response.statusCode];
   const statusText = getReasonPhrase(response.statusCode);
 
@@ -34,9 +34,8 @@ const assertOK = (response, errorMap, fullUrl, method) => {
 
   if (isError) {
     const defaultErrorMesssage = `${method} ${fullUrl} - ${response.statusCode} ${statusText}`;
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-    console.log(defaultErrorMesssage, `in ${responseTime}ms`);
+
+    const duration = startTime - Date.now();
 
     const errMessage =
       typeof errMapMessage === 'function'
@@ -46,6 +45,8 @@ const assertOK = (response, errorMap, fullUrl, method) => {
     const error = new Error(errMessage);
     error.code = response.statusCode;
     error.url = fullUrl;
+    error.duration = duration;
+    error.method = method;
     throw error;
   }
 };
@@ -72,7 +73,7 @@ const defaultOptions = {
   tls: {},
   parseAs: 'auto',
 };
-const startTime = Date.now();
+
 /**
  * `request` is a a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
@@ -88,6 +89,7 @@ const startTime = Date.now();
  * - body: the body of the response
  */
 export async function request(method, fullUrlOrPath, options = {}) {
+  const startTime = Date.now();
   const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
 
   const {
@@ -116,18 +118,19 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   });
   const statusText = getReasonPhrase(response.statusCode);
-  assertOK(response, errors, fullUrlOrPath, method);
+
+  assertOK(response, errors, fullUrlOrPath, method, startTime);
 
   const responseBody = await readResponseBody(response, parseAs);
   const endTime = Date.now();
-  const responseTime = endTime - startTime;
+  const duration = endTime - startTime;
 
   return {
     code: response.statusCode,
     headers: response.headers,
     body: responseBody,
     message: statusText,
-    responseTime,
+    duration,
   };
 }
 

@@ -85,10 +85,10 @@ function request(method, path, params, callback) {
  * Make a GET request
  * @public
  * @example
- *  get('/myEndpoint', {
- *    query: {foo: 'bar', a: 1},
- *    headers: {'content-type': 'application/json'},
- *  })
+ * get('/myEndpoint', {
+ *   query: {foo: 'bar', a: 1},
+ *   headers: {'content-type': 'application/json'},
+ * })
  * @function
  * @param {string} path - Path to resource
  * @param {object} params - Query, Headers and Authentication parameters
