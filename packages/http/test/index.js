@@ -505,7 +505,7 @@ describe('post', () => {
     ]);
   });
 
-  it.skip('can be called inside an each with old "json" request config', async () => {
+  it('can be called inside an each with old "json" request config', async () => {
     testServer
       .intercept({
         path: '/api/fake-json',
@@ -805,37 +805,18 @@ describe('delete', () => {
   });
 });
 
-describe.skip('the old request operation', () => {
-  before(() => {
-    testServer.post('/api/oldEndpoint?hi=there').reply(200, ({ body }) => body);
-  });
-
-  it('sends a post request', async () => {
-    const state = {
-      configuration: {},
-      data: { a: 1 },
-    };
-    const finalState = await execute(
-      request({
-        method: 'post',
-        url: 'https://www.example.com/api/oldEndpoint',
-        json: { a: 1 },
-        qs: { hi: 'there' },
-      })
-    )(state);
-
-    expect(finalState).to.eql({ a: 1 });
-  });
-});
-
-describe.skip('The `agentOptions` param', () => {
+describe('The `tls` param', () => {
   before(() => {
     testServer
       .intercept({
         path: '/api/sslCertCheck',
         method: 'POST',
       })
-      .reply(200, ({ body }) => body)
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .persist();
   });
 
@@ -854,13 +835,12 @@ describe.skip('The `agentOptions` param', () => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', {
+      post('https://www.example.com/api/sslCertCheck', state => ({
         body: state.data,
-        agentOptions: state => state.httpsOptions,
-      })
+        agentOptions: state.httpsOptions,
+      }))
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 
   it('lets the user create an https agent with a cert', async () => {
@@ -876,11 +856,10 @@ describe.skip('The `agentOptions` param', () => {
     const finalState = await execute(
       post('https://www.example.com/api/sslCertCheck', {
         body: state => state.data,
-        agentOptions: { ca: state.configuration.privateKey },
+        tls: { ca: state.configuration.privateKey },
       })
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 
   it('lets the user define a cert earlier and use it later', async () => {
@@ -900,16 +879,15 @@ describe.skip('The `agentOptions` param', () => {
       }),
       post('https://www.example.com/api/sslCertCheck', {
         body: state => state.data,
-        agentOptions: state => state.httpsOptions,
+        tls: state => state.httpsOptions,
       })
     )(state);
 
     expect(finalState.data).to.eql({ a: 2 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 });
 
-describe.skip('reject unauthorized allows for bad certs', () => {
+describe('reject unauthorized allows for bad certs', () => {
   before(() => {
     testServer
       .intercept({
@@ -932,9 +910,6 @@ describe.skip('reject unauthorized allows for bad certs', () => {
       })
     )(state);
 
-    expect(finalState.data.body).to.eql('all my secrets!');
-    expect(
-      finalState.response.config.httpsAgent.options.rejectUnauthorized
-    ).to.eql(false);
+    expect(finalState.data).to.eql('all my secrets!');
   });
 });

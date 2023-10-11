@@ -46,6 +46,12 @@ function request(method, path, params, callback) {
     let body = resolvedParams?.body;
     let headers = resolvedParams?.headers;
 
+    if (resolvedParams?.json) {
+      console.warn(
+        'DEPRECATION WARNING: Please migrate from `json` to `body`.'
+      );
+      body = resolvedParams.json;
+    }
     if (resolvedParams?.form) {
       let form = new FormData();
       for (const key of Object.entries(resolvedParams.form)) {
@@ -64,19 +70,33 @@ function request(method, path, params, callback) {
       resolvedParams?.maxRedirections ??
       (resolvedParams?.followAllRedirects === false ? 0 : 5);
 
+    const tls = resolvedParams?.tls ?? resolvedParams?.agentOptions;
+
+    if (resolvedParams?.agentOptions) {
+      console.warn(
+        'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`.'
+      );
+    }
+
     const options = {
       ...resolvedParams,
       ...auth,
       baseUrl,
       body,
+      tls,
       maxRedirections,
     };
 
     return commonRequest(method, resolvedPath, options)
-      .then(response => ({
-        ...composeNextState(state, response.body),
-        response,
-      }))
+      .then(response => {
+        const { method, url, body, code, duration } = response;
+        console.log(method, url, '-', code, 'in', duration + 'ms');
+
+        return {
+          ...composeNextState(state, body),
+          response,
+        };
+      })
       .then(nextState => callback?.(nextState) ?? nextState);
   };
 }

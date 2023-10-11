@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n   query: {foo: 'bar', a: 1},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
