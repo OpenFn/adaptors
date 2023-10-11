@@ -126,6 +126,8 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const duration = endTime - startTime;
 
   return {
+    method,
+    url: fullUrlOrPath,
     code: response.statusCode,
     headers: response.headers,
     body: responseBody,
