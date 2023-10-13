@@ -170,10 +170,6 @@ export function query(qs) {
   };
 }
 
-const defaultOptions = {
-  pollTimeout: 90000, // in ms
-  pollInterval: 3000, // in ms
-};
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -198,6 +194,10 @@ const defaultOptions = {
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
+  const defaultOptions = {
+    pollTimeout: 90000, // in ms
+    pollInterval: 3000, // in ms
+  };
   return async state => {
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
