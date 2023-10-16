@@ -142,7 +142,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
 function requestBodyType(body) {
   if (!body) {
-    return body; // Return null or undefined as is
+    return undefined;
   }
 
   if (Buffer.isBuffer(body) || body instanceof Readable) {

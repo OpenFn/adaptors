@@ -1,4 +1,6 @@
 import { expect } from 'chai';
+import { Readable } from 'node:stream';
+
 import {
   enableMockClient,
   request,
@@ -10,6 +12,131 @@ import {
 const client = enableMockClient('https://www.example.com');
 
 describe('request function', () => {
+  describe('requestBodyType function', () => {
+    let reqBody;
+    before(() => {
+      client
+        .intercept({
+          path: '/test-body',
+          method: 'POST',
+        })
+        .reply(200, ({ body }) => {
+          reqBody = body;
+          return {};
+        })
+        .persist();
+    });
+    it('Handles null body', async () => {
+      await request('POST', 'https://www.example.com/test-body', {
+        body: null,
+      });
+
+      expect(reqBody).to.eql(undefined);
+    });
+
+    it('Handles undefined body', async () => {
+      await request('POST', 'https://www.example.com/test-body');
+
+      expect(reqBody).to.eql(undefined);
+    });
+
+    it('Handles Buffer body', async () => {
+      const buffer = Buffer.from('Test data');
+      await request('POST', 'https://www.example.com/test-body', {
+        body: buffer,
+      });
+
+      expect(reqBody).to.eql(buffer);
+    });
+
+    it('Handles Readable stream body', async () => {
+      const readableStream = new Readable.from('Test data');
+      await request('POST', 'https://www.example.com/test-body', {
+        body: readableStream,
+      });
+
+      expect(reqBody).to.eql(readableStream);
+    });
+
+    it('Handles string body', async () => {
+      const stringBody = 'Test data';
+      await request('POST', 'https://www.example.com/test-body', {
+        body: stringBody,
+      });
+
+      expect(reqBody).to.eql(stringBody);
+    });
+
+    it('Handles object body (async iterable)', async () => {
+      const asyncIterable = {
+        [Symbol.asyncIterator]: function () {
+          let i = 0;
+          return {
+            async next() {
+              if (i < 3) {
+                return { value: i++, done: false };
+              } else {
+                return { done: true };
+              }
+            },
+          };
+        },
+      };
+
+      await request('POST', 'https://www.example.com/test-body', {
+        body: asyncIterable,
+      });
+      expect(reqBody).to.eql(asyncIterable);
+    });
+
+    it('Handles object body (iterable)', async () => {
+      const iterable = {
+        [Symbol.iterator]: function () {
+          let i = 0;
+          return {
+            next() {
+              if (i < 3) {
+                return { value: i++, done: false };
+              } else {
+                return { done: true };
+              }
+            },
+          };
+        },
+      };
+      await request('POST', 'https://www.example.com/test-body', {
+        body: iterable,
+      });
+      expect(reqBody).to.eql(iterable);
+    });
+
+    it('Handles object body (converts to JSON)', async () => {
+      const objBody = { key: 'value' };
+      const expectedJSON = JSON.stringify(objBody);
+      await request('POST', 'https://www.example.com/test-body', {
+        body: objBody,
+      });
+      expect(reqBody).to.eql(expectedJSON);
+    });
+
+    it('Handles FormData body', async () => {
+      const formData = new FormData();
+      formData.append('key1', 'value1');
+      formData.append('key2', 'value2');
+      await request('POST', 'https://www.example.com/test-body', {
+        body: formData,
+      });
+      expect(reqBody).to.eql(formData);
+    });
+
+    it('Handles unsupported body type', async () => {
+      await request('POST', 'https://www.example.com/test-body', {
+        body: 123,
+      }).catch(error => {
+        expect(error.message).to.eql('Unsupported body type');
+      });
+    });
+  });
   describe('parseAs', () => {
     it('should auto parse as json', async () => {
       client
