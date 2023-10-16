@@ -52,14 +52,13 @@ function request(method, path, params, callback) {
       );
       body = resolvedParams.json;
     }
+
     if (resolvedParams?.form) {
       let form = new FormData();
-      for (const key of Object.entries(resolvedParams.form)) {
-        form.append(key, form[key]);
+      for (const [key, value] of Object.entries(resolvedParams.form)) {
+        form.append(key, value);
       }
       body = form;
-    } else if (body) {
-      body = JSON.stringify(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;
