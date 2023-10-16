@@ -1,5 +1,6 @@
 import { Client, MockAgent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
+import { Readable } from 'node:stream';
 
 const clients = new Map();
 
@@ -116,7 +117,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     query,
     method,
     headers,
-    body,
+    body: requestBodyType(body),
     throwOnError: false,
     maxRedirections,
   });
@@ -137,6 +138,33 @@ export async function request(method, fullUrlOrPath, options = {}) {
     message: statusText,
     duration,
   };
+}
+
+function requestBodyType(body) {
+  if (!body) {
+    return body; // Return null or undefined as is
+  }
+
+  if (Buffer.isBuffer(body) || body instanceof Readable) {
+    return body;
+  }
+
+  if (typeof body === 'object') {
+    if (
+      Symbol.asyncIterator in Object(body) ||
+      Symbol.iterator in Object(body) ||
+      body instanceof FormData
+    ) {
+      return body;
+    }
+    return JSON.stringify(body);
+  }
+
+  if (typeof body === 'string') {
+    return body;
+  }
+
+  throw new Error('Unsupported body type');
 }
 
 async function readResponseBody(response, parseAs) {

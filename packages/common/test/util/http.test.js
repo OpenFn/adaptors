@@ -399,22 +399,22 @@ describe('helpers', () => {
     const data = {
       hello: 'world',
     };
-    let responseData;
 
     client
       .intercept({
         path: '/api',
         method: 'POST',
       })
-      .reply(200, ({ body }) => {
-        responseData = body;
-        return {};
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'content-type': 'application/json',
+        },
       });
 
-    const { code } = await post('https://www.example.com/api', data);
+    const { code, body } = await post('https://www.example.com/api', data);
 
     expect(code).to.eql(200);
-    expect(responseData).to.eql(data);
+    expect(body).to.eql(data);
   });
   it('should send a DELETE', async () => {
     client
