@@ -660,47 +660,62 @@ function setApiVersion(apiVersion) {
  * @returns {State}
  */
 function createConnection(state) {
-  const { loginUrl, apiVersion } = state.configuration;
+  const {
+    loginUrl,
+    instanceUrl,
+    accessToken,
+    apiVersion,
+    username,
+    password,
+    securityToken,
+  } = state.configuration;
 
-  if (!loginUrl) {
-    throw new Error('loginUrl missing from configuration.');
-  }
+  let connection;
 
-  return {
-    ...state,
-    connection: apiVersion
+  if (loginUrl) {
+    assertBasicCredentials(username, password, securityToken);
+    connection = apiVersion
       ? new jsforce.Connection({
           loginUrl,
           version: setApiVersion(apiVersion),
         })
-      : new jsforce.Connection({ loginUrl }),
-  };
+      : new jsforce.Connection({ loginUrl });
+
+    connection.login(username, password + securityToken);
+    // NOTE: Uncomment this to debug connection issues.
+    // .then(response => {
+    //   console.log(connection);
+    //   console.log(response);
+    //   return state;
+    // })
+  }
+
+  if (instanceUrl) {
+    if (!accessToken) {
+      throw new Error('accessToken missing from configuration');
+    }
+    connection = apiVersion
+      ? new jsforce.Connection({
+          instanceUrl,
+          accessToken,
+          version: setApiVersion(apiVersion),
+        })
+      : new jsforce.Connection({ instanceUrl, accessToken });
+  }
+
+  return { ...state, connection };
 }
 
-/**
- * Performs a login.
- * @example
- * login(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function login(state) {
-  const { username, password, securityToken } = state.configuration;
-  let { connection } = state;
-  console.info(`Logging in as ${username}.`);
-
-  return (
-    connection
-      .login(username, password + securityToken)
-      // NOTE: Uncomment this to debug connection issues.
-      // .then(response => {
-      //   console.log(connection);
-      //   console.log(response);
-      //   return state;
-      // })
-      .then(() => state)
-  );
+function assertBasicCredentials(username, password, securityToken) {
+  if (!username) {
+    throw new Error('username missing from configuration');
+  }
+  if (!password) {
+    throw new Error('password missing from configuration');
+  }
+  if (!securityToken) {
+    throw new Error('securityToken missing from configuration');
+  }
 }
 
 /**
@@ -725,7 +740,6 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      login,
       ...flatten(operations),
       cleanupState
     )({ ...initialState, ...state });
