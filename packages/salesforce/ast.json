@@ -427,7 +427,7 @@
           },
           {
             "title": "example",
-            "description": "bulk2('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {\n  return state.data.someArray.map(x => {\n    return { 'Age__c': x.age, 'Name': x.name }\n  })\n});"
+            "description": "bulk2(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true, pollInterval: 3000, pollTimeout: 240000 },\n  (state) => {\n    return state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }));\n  }\n);"
           },
           {
             "title": "function",
@@ -499,7 +499,7 @@
           },
           {
             "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
+            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5'\n], { failOnError: true })"
           },
           {
             "title": "function",

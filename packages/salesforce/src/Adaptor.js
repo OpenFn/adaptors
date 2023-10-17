@@ -188,16 +188,12 @@ export function query(qs) {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds. Default 3000
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds. Default 9000
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
-  const defaultOptions = {
-    pollTimeout: 90000, // in ms
-    pollInterval: 3000, // in ms
-  };
   return async state => {
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
@@ -206,10 +202,7 @@ export function bulkQuery(qs, options, callback) {
       options
     );
 
-    const { pollTimeout, pollInterval } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
+    const { pollInterval = 3000, pollTimeout = 9000 } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
 
@@ -356,10 +349,16 @@ const defaultBulkOptions = {
 export function bulk2(sObject, operation, options, fun) {
   return async state => {
     const { connection } = state;
-    const { failOnError, allowNoOp, pollTimeout, pollInterval } = {
-      ...defaultBulkOptions,
-      ...options,
-    };
+    const {
+      failOnError = true,
+      allowNoOp = true,
+      pollInterval = 3000,
+      pollTimeout = 9000,
+    } = options;
+
+    console.log(pollInterval, 'pollInterval');
+    console.log(pollTimeout, 'pollTimeout');
+
     const finalAttrs = fun(state);
 
     if (allowNoOp && finalAttrs.length === 0) {
