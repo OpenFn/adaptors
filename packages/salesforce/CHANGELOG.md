@@ -1,5 +1,16 @@
 # @openfn/language-salesforce
 
+## 5.0.0-alpha
+
+> This is an experimental alpha release based on jsforce beta 2. It is not
+> recommended for production use.
+
+### Major Changes
+
+- Update jsforce dependency [29cce5b]
+- Add `bulk2` function [97d3729]
+- Update `bulkQuery` function to use jsforce `bulk2.query` [97d3729]
+
 ## 4.2.2
 
 ### Patch Changes

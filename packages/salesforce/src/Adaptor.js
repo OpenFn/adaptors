@@ -170,62 +170,6 @@ export function query(qs) {
   };
 }
 
-async function pollJobResult(conn, job, pollInterval, pollTimeout) {
-  let attempt = 0;
-
-  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
-
-  while (attempt < maxPollingAttempts) {
-    // Make an HTTP GET request to check the job status
-    const jobInfo = await conn
-      .request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .catch(error => {
-        console.log('Failed to fetch job information', error);
-      });
-
-    if (jobInfo && jobInfo.state === 'JobComplete') {
-      const response = await conn.request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      console.log('Job result retrieved', response.length);
-      return response;
-    } else {
-      // Handle maxPollingAttempts
-      if (attempt + 1 === maxPollingAttempts) {
-        console.error(
-          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
-        );
-        throw new Error(`Polling time out. Job Id = ${job.id}`);
-      }
-      console.log(
-        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
-          jobInfo.state
-        }:`
-      );
-    }
-
-    // Wait for the polling interval before the next attempt
-    await new Promise(resolve => setTimeout(resolve, pollInterval));
-    attempt++;
-  }
-}
-
-const defaultOptions = {
-  pollTimeout: 90000, // in ms
-  pollInterval: 3000, // in ms
-};
-
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -244,8 +188,8 @@ const defaultOptions = {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds. Default 3000
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds. Default 9000
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
@@ -257,33 +201,15 @@ export function bulkQuery(qs, options, callback) {
       qs,
       options
     );
-    const apiVersion = connection.version;
 
-    const { pollTimeout, pollInterval } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
+    const { pollInterval = 3000, pollTimeout = 9000 } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
 
-    const queryJob = await connection.request({
-      method: 'POST',
-      url: `/services/data/v${apiVersion}/jobs/query`,
-      body: JSON.stringify({
-        operation: 'query',
-        query: resolvedQs,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const result = await pollJobResult(
-      connection,
-      queryJob,
+    const result = await connection.bulk2.query(resolvedQs, {
+      pollTimeout,
       pollInterval,
-      pollTimeout
-    );
+    });
 
     const nextState = {
       ...composeNextState(state, result),
@@ -396,12 +322,109 @@ export function bulk(sObject, operation, options, fun) {
 }
 
 /**
+ * Create and execute a bulk job using Salesforce Bulk API v2.
+ * @public
+ * @example
+ * bulk2(
+ *   "Patient__c",
+ *   "insert",
+ *   { failOnError: true, pollInterval: 3000, pollTimeout: 240000 },
+ *   (state) => {
+ *     return state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }));
+ *   }
+ * );
+ * @function
+ * @param {String} sObject - API name of the sObject.
+ * @param {String} operation - The bulk operation to be performed
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {Function} fun - A function which takes state and returns an array.
+ * @returns {Operation}
+ */
+export function bulk2(sObject, operation, options, fun) {
+  return async state => {
+    const { connection } = state;
+    const {
+      failOnError = true,
+      allowNoOp = true,
+      pollInterval = 3000,
+      pollTimeout = 9000,
+    } = options;
+
+    console.log(pollInterval, 'pollInterval');
+    console.log(pollTimeout, 'pollTimeout');
+
+    const finalAttrs = fun(state);
+
+    if (allowNoOp && finalAttrs.length === 0) {
+      console.info(
+        `No items in ${sObject} array. Skipping bulk ${operation} operation.`
+      );
+      return state;
+    }
+
+    if (finalAttrs.length > 10000) {
+      console.log('Your batch is bigger than 10,000 records; chunking...');
+    }
+
+    const chunkedBatches = chunk(finalAttrs, 10000);
+
+    let mapOptions = options;
+    if (mapOptions?.extIdField) {
+      const { extIdField, ...opts } = mapOptions;
+      mapOptions = { ...opts, externalIdFieldName: extIdField };
+    }
+
+    const results = await Promise.all(
+      chunkedBatches.map(async chunkedBatch => {
+        connection.bulk2.pollInterval = pollInterval;
+        connection.bulk2.pollTimeout = pollTimeout;
+
+        console.info(
+          `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
+        );
+
+        await connection.bulk2
+          .loadAndWaitForResults({
+            object: sObject,
+            operation,
+            input: chunkedBatch,
+            ...mapOptions,
+          })
+          .then(res => {
+            const errors = res.failedResults;
+
+            errors.forEach(err => {
+              err[`${options.extIdField}`] =
+                chunkedBatch[err.position - 1][options.extIdField];
+            });
+
+            if (failOnError && errors.length > 0) {
+              console.error('Errors detected:');
+
+              throw new Error(JSON.stringify(errors, null, 2));
+            } else {
+              console.log('Successful Result : ', res.successfulResults.length);
+              console.log(
+                'Unprocessed Records : ',
+                res.unprocessedRecords.length
+              );
+              return res;
+            }
+          });
+      })
+    );
+
+    console.log('Merging results arrays.');
+    return { ...state, references: results.concat(state.references) };
+  };
+}
+/**
  * Delete records of an object.
  * @public
  * @example
  * destroy('obj_name', [
  *  '0060n00000JQWHYAA5',
- *  '0090n00000JQEWHYAA5
+ *  '0090n00000JQEWHYAA5'
  * ], { failOnError: true })
  * @function
  * @param {String} sObject - API name of the sObject.
