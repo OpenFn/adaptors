@@ -131,13 +131,19 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   return {
     method,
-    url: fullUrlOrPath,
+    url: responseUrl(fullUrlOrPath, response),
     code: response.statusCode,
     headers: response.headers,
     body: responseBody,
     message: statusText,
     duration,
   };
+}
+
+function responseUrl(reqUrl, response) {
+  const reqHistory = response.context?.history;
+  const lastUrl = reqHistory && reqHistory[reqHistory.length - 1];
+  return lastUrl ? lastUrl.pathname : reqUrl;
 }
 
 function requestBodyType(body) {
