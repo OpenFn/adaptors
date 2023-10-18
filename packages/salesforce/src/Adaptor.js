@@ -321,12 +321,6 @@ export function bulk(sObject, operation, options, fun) {
   };
 }
 
-const defaultBulkOptions = {
-  failOnError: true,
-  allowNoOp: true,
-  pollInterval: 6000,
-  pollTimeout: 240000,
-};
 /**
  * Create and execute a bulk job using Salesforce Bulk API v2.
  * @public
@@ -421,8 +415,7 @@ export function bulk2(sObject, operation, options, fun) {
     );
 
     console.log('Merging results arrays.');
-    const merged = [].concat(...results);
-    return { ...state, references: [merged, ...state.references] };
+    return { ...state, references: results.concat(state.references) };
   };
 }
 /**

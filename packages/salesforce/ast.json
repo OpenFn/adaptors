@@ -293,7 +293,7 @@
           },
           {
             "title": "param",
-            "description": "Polling timeout in milliseconds.",
+            "description": "Polling timeout in milliseconds. Default 3000",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -305,7 +305,7 @@
           },
           {
             "title": "param",
-            "description": "Polling interval in milliseconds.",
+            "description": "Polling interval in milliseconds. Default 9000",
             "type": {
               "type": "OptionalType",
               "expression": {
