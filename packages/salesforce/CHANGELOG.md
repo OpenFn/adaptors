@@ -1,6 +1,6 @@
 # @openfn/language-salesforce
 
-## 5.0.0-alpha
+## 5.0.0
 
 > This is an experimental alpha release based on jsforce beta 2. It is not
 > recommended for production use.

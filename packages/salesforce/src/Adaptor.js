@@ -350,9 +350,6 @@ export function bulk2(sObject, operation, options, fun) {
       pollTimeout = 9000,
     } = options;
 
-    console.log(pollInterval, 'pollInterval');
-    console.log(pollTimeout, 'pollTimeout');
-
     const finalAttrs = fun(state);
 
     if (allowNoOp && finalAttrs.length === 0) {
@@ -374,7 +371,8 @@ export function bulk2(sObject, operation, options, fun) {
       mapOptions = { ...opts, externalIdFieldName: extIdField };
     }
 
-    const results = await Promise.all(
+    let results = [];
+    await Promise.all(
       chunkedBatches.map(async chunkedBatch => {
         connection.bulk2.pollInterval = pollInterval;
         connection.bulk2.pollTimeout = pollTimeout;
@@ -408,7 +406,7 @@ export function bulk2(sObject, operation, options, fun) {
                 'Unprocessed Records : ',
                 res.unprocessedRecords.length
               );
-              return res;
+              results.push(res);
             }
           });
       })
