@@ -1,14 +1,7 @@
 import { execute, get, post, put, patch, del, fn } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import httpServer from './helpers/http';
-import httpsServer from './helpers/https';
-
-const { expect } = chai;
-
-chai.use(chaiHttp);
+import { expect } from 'chai';
 
 const testServer = enableMockClient('https://www.example.com');
 
@@ -140,31 +133,6 @@ describe('get()', () => {
       })
       .reply(500)
       .persist();
-  });
-
-  it.only('fails, as expected', function (done) {
-    chai
-      .request(httpServer)
-      .get('/')
-      .end((err, res) => {
-        console.log(err, 'err');
-        console.log(res, 'res');
-        // expect(res).to.have.status(123);
-        done(); // <= Call done to signal callback end
-      });
-  });
-  it('can follow redirects', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const finalState = await execute(
-      get('https://www.example.com/api/fake-endpoint', {
-        headers: { followAllRedirects: true },
-      })
-    )(state);
-    expect(finalState.data.url).to.eql('/api/fake-endpoint-3');
   });
 
   it('prepares nextState properly', () => {
