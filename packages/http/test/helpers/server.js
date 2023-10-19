@@ -1,11 +1,19 @@
 import http from 'http';
 import https from 'https';
+import koa from 'koa';
+import sslify from 'koa-sslify';
 
-// Listen on port 8080
+import { key, cert } from './certs.js';
+
+let app = new koa();
+app.use(sslify.default());
+
+app.use(async ctx => {
+  ctx.body = 'Hello World';
+});
+
 const port = 8080;
-// Create an HTTP server to listen for incoming requests
 const httpServer = http.createServer((req, res) => {
-  // Handle the redirect logic here
   switch (req.url) {
     case '/redirect':
       console.log('redirecting to /new-location');
@@ -32,10 +40,7 @@ const httpServer = http.createServer((req, res) => {
 });
 
 // Create an HTTPS server for handling the redirected request
-const httpsServer = https.createServer((req, res) => {
-  // Handle the redirected request here
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('This is the HTTPS server handling the redirected request.');
-});
+const certOptions = { key, cert };
+const httpsServer = https.createServer(certOptions || {}, app.callback());
 
 export { httpServer, httpsServer };
