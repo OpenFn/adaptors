@@ -8,23 +8,21 @@ const httpServer = http.createServer((req, res) => {
   // Handle the redirect logic here
   switch (req.url) {
     case '/redirect':
-      console.log('redirecting!');
+      console.log('redirecting to /new-location');
       res.writeHead(301, { Location: `http://localhost:${port}/new-location` });
       res.end();
       break;
     case '/new-location':
-      console.log('redirecting!');
+      console.log('redirecting to /new-location-1');
       res.writeHead(302, {
         Location: `http://localhost:${port}/new-location-1`,
       });
       res.end();
       break;
     case '/new-location-1':
-      console.log('redirecting!');
-      console.log(req.url);
-
+      console.log('Done redirecting');
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ url: req.url, res: 'Done redicting!' }));
+      res.end(JSON.stringify({ url: req.url, res: 'Done redirecting!' }));
       break;
     default:
       res.writeHead(200, { 'Content-Type': 'text/plain' });

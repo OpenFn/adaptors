@@ -16,7 +16,7 @@ describe('Integration tests', () => {
     });
   });
 
-  it.only('can follow redirects', async () => {
+  it('can follow redirects', async () => {
     const state = {
       configuration: {
         baseUrl: `http://localhost:${httpServer.address().port}`,
@@ -30,10 +30,9 @@ describe('Integration tests', () => {
       })
     )(state);
 
-    console.log(finalState);
-
     expect(response.url).to.eql('/new-location-1');
   });
+
   after(() => {
     httpServer.close();
     httpsServer.close();
