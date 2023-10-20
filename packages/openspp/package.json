@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openspp",
-  "version": "3.0.1",
+  "version": "1.0.0",
   "description": "The standard openspp for building OpenFn adaptors",
   "type": "module",
   "exports": {
