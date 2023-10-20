@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-template",
+  "name": "@openfn/language-openspp",
   "version": "3.0.1",
-  "description": "The standard template for building OpenFn adaptors",
+  "description": "The standard openspp for building OpenFn adaptors",
   "type": "module",
   "exports": {
     ".": {
@@ -11,7 +11,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor template",
+    "build": "pnpm clean && build-adaptor openspp",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
