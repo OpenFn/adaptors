@@ -24,6 +24,20 @@ export const enableMockClient = baseUrl => {
   return client;
 };
 
+class RequestError extends Error {
+  constructor(errMessage, response, fullUrl, duration, method) {
+    super(errMessage);
+
+    this.code = response.statusCode;
+    this.url = fullUrl;
+    this.duration = duration;
+    this.method = method;
+
+    // Set the prototype explicitly for a custom error class
+    Object.setPrototypeOf(this, RequestError.prototype);
+  }
+}
+
 const assertOK = (response, errorMap, fullUrl, method, startTime) => {
   const errMapMessage = errorMap[response.statusCode];
   const statusText = getReasonPhrase(response.statusCode);
@@ -43,11 +57,14 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
         ? errMapMessage(response)
         : errMapMessage || defaultErrorMesssage;
 
-    const error = new Error(errMessage);
-    error.code = response.statusCode;
-    error.url = fullUrl;
-    error.duration = duration;
-    error.method = method;
+    const error = new RequestError(
+      errMessage,
+      statusCode,
+      fullUrl,
+      duration,
+      method
+    );
+
     throw error;
   }
 };
