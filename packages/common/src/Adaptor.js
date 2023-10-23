@@ -10,7 +10,6 @@ import { request } from 'undici';
 import { expandReferences as newExpandReferences } from './util';
 
 export * as beta from './beta';
-export * as http from './http';
 export * as dateFns from './dateFns';
 
 const schemaCache = {};
