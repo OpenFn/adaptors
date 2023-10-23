@@ -30,7 +30,7 @@ importers:
   packages/asana:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -64,7 +64,7 @@ importers:
   packages/beyonic:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -165,7 +165,7 @@ importers:
   packages/cartodb:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -475,7 +475,7 @@ importers:
   packages/godata:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -641,7 +641,7 @@ importers:
   packages/khanacademy:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       qs:
         specifier: ^6.11.0
@@ -770,7 +770,7 @@ importers:
         specifier: ^3.0.80
         version: 3.0.80
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -810,7 +810,7 @@ importers:
   packages/mailgun:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       form-data:
         specifier: ^4.0.0
@@ -856,7 +856,7 @@ importers:
   packages/maximo:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       base-64:
         specifier: ^0.1.0
@@ -911,7 +911,7 @@ importers:
   packages/medicmobile:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       lodash:
         specifier: ^4.17.21
@@ -954,7 +954,7 @@ importers:
   packages/mogli:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1009,7 +1009,7 @@ importers:
   packages/mongodb:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       mongodb:
         specifier: ^3.7.3
@@ -1046,8 +1046,8 @@ importers:
   packages/msgraph:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       undici:
         specifier: ^5.22.1
         version: 5.22.1
@@ -1274,7 +1274,7 @@ importers:
   packages/openhim:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1547,7 +1547,7 @@ importers:
   packages/resourcemap:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1584,7 +1584,7 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
+        specifier: workspace:^1.10.3
         version: link:../common
       axios:
         specifier: ^0.21.4
@@ -1679,7 +1679,7 @@ importers:
   packages/smpp:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1716,7 +1716,7 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1753,7 +1753,7 @@ importers:
   packages/telerivet:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1796,7 +1796,7 @@ importers:
   packages/template:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -1830,7 +1830,7 @@ importers:
   packages/twilio:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       twilio:
         specifier: ^3.83.2
@@ -1867,7 +1867,7 @@ importers:
   packages/vtiger:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       lodash-fp:
         specifier: ^0.10.4
@@ -1913,7 +1913,7 @@ importers:
   packages/zoho:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -3255,6 +3255,21 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
 
+  /@openfn/language-common@1.11.1:
+    resolution: {integrity: sha512-pyi2QymdF9NmUYJX/Bsv5oBy7TvzICfKcnCqutq412HYq2KTGKDO2dMWloDrxrH1kuzG+4XkSn0ZUom36b3KAA==}
+    dependencies:
+      ajv: 8.12.0
+      axios: 1.1.3
+      csv-parse: 5.4.0
+      csvtojson: 2.0.10
+      date-fns: 2.29.3
+      jsonpath-plus: 4.0.0
+      lodash: 4.17.21
+      undici: 5.23.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@openfn/simple-ast@0.3.2:
     resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
     hasBin: true
@@ -3517,6 +3532,15 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  /ajv@8.12.0:
+    resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js: 4.4.1
+    dev: false
 
   /ansi-colors@3.2.3:
     resolution: {integrity: sha512-LEHHyuhlPY3TmuUYMh2oz89lTShfvgbmzaBcxve9t/9Wuy7Dwf4yoAKcND7KFT1HAQfqZ12qtc+DUrBMeKF9nw==}
@@ -8489,6 +8513,10 @@ packages:
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
 
+  /json-schema-traverse@1.0.0:
+    resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+    dev: false
+
   /json-schema@0.4.0:
     resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
     dev: false
@@ -8547,7 +8575,7 @@ packages:
   /jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: true
 
   /jsonparse@1.3.1:
@@ -10817,6 +10845,11 @@ packages:
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
+
+  /require-from-string@2.0.2:
+    resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /require-main-filename@1.0.1:
     resolution: {integrity: sha512-IqSUtOVP4ksd1C/ej5zeEh/BIP2ajqpn8c5x+q99gvcIG/Qf0cud5raVnE/Dwd0ua9TXYDoDc0RE5hBSdz22Ug==}
