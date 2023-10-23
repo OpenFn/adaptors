@@ -32,9 +32,6 @@ class RequestError extends Error {
     this.url = fullUrl;
     this.duration = duration;
     this.method = method;
-
-    // Set the prototype explicitly for a custom error class
-    Object.setPrototypeOf(this, RequestError.prototype);
   }
 }
 
@@ -59,7 +56,7 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
 
     const error = new RequestError(
       errMessage,
-      statusCode,
+      response,
       fullUrl,
       duration,
       method
