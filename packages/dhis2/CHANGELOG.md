@@ -1,5 +1,15 @@
 # @openfn/language-dhis2
 
+## 4.0.3
+
+### Patch Changes
+
+- 222184d: remove Class Log and replaced
+
+  - `Log.success` with `console.log`
+  - `Log.warn` with `console.warn`
+  - `Log.error` with `console.error`
+
 ## 4.0.2
 
 ### Patch Changes
