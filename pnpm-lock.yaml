@@ -30,7 +30,7 @@ importers:
   packages/asana:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: ^1.8.1
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
