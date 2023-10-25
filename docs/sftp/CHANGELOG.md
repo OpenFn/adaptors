@@ -1,5 +1,12 @@
 # @openfn/language-sftp
 
+## 1.0.1
+
+### Patch Changes
+
+- 771c814: - Properly disconnect on error
+  - Improve operation logs
+
 ## 1.0.0
 
 ### Major Changes
