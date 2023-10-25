@@ -6,7 +6,7 @@ or Typescript modules that provide helper functions to communicate with a
 specific external system.
 
 For a fully open source workflow automation platform that leverages these
-adaptors, see [OpenFn Lighnting](https://github.com/OpenFn/lightning).
+adaptors, see [OpenFn Lightning](https://github.com/OpenFn/lightning).
 
 ## Getting Started
 
