@@ -32,8 +32,8 @@ export function execute(...operations) {
       ...operations,
       disconnect
     )({ ...initialState, ...state }).catch(e => {
-      console.error(e);
-      return disconnect(state);
+      disconnect(state);
+      throw e;
     });
 }
 
