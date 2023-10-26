@@ -33,7 +33,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.10.3",
+    "@openfn/language-common": "1.11.1",
     "cheerio": "^1.0.0-rc.10",
     "cheerio-tableparser": "^1.0.1",
     "csv-parse": "^4.10.1",

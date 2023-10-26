@@ -30,8 +30,8 @@ importers:
   packages/asana:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -64,8 +64,8 @@ importers:
   packages/beyonic:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -107,8 +107,8 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0
       '@openfn/language-common':
-        specifier: workspace:1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       csv-parse:
         specifier: ^4.16.3
         version: 4.16.3
@@ -165,8 +165,8 @@ importers:
   packages/cartodb:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -211,8 +211,8 @@ importers:
   packages/commcare:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       '@openfn/language-http':
         specifier: workspace:^5.0.2
         version: link:../http
@@ -318,8 +318,8 @@ importers:
   packages/dhis2:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.24.0
         version: 0.24.0
@@ -361,8 +361,8 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       request:
         specifier: ^2.72.0
         version: 2.88.2
@@ -402,7 +402,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.0
-        version: link:../common
+        version: 1.11.1
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -441,8 +441,8 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       undici:
         specifier: ^5.22.1
         version: 5.22.1
@@ -475,8 +475,8 @@ importers:
   packages/godata:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -516,7 +516,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.0
-        version: link:../common
+        version: 1.11.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -549,8 +549,8 @@ importers:
   packages/googlesheets:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.10.0
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       googleapis:
         specifier: 100.0.0
         version: 100.0.0
@@ -586,8 +586,8 @@ importers:
   packages/http:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       cheerio:
         specifier: ^1.0.0-rc.10
         version: 1.0.0-rc.12
@@ -641,8 +641,8 @@ importers:
   packages/khanacademy:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       qs:
         specifier: ^6.11.0
         version: 6.11.0
@@ -681,8 +681,8 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -715,8 +715,8 @@ importers:
   packages/magpi:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -770,8 +770,8 @@ importers:
         specifier: ^3.0.80
         version: 3.0.80
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -810,8 +810,8 @@ importers:
   packages/mailgun:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       form-data:
         specifier: ^4.0.0
         version: 4.0.0
@@ -856,8 +856,8 @@ importers:
   packages/maximo:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       base-64:
         specifier: ^0.1.0
         version: 0.1.0
@@ -911,8 +911,8 @@ importers:
   packages/medicmobile:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -954,8 +954,8 @@ importers:
   packages/mogli:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1009,8 +1009,8 @@ importers:
   packages/mongodb:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       mongodb:
         specifier: ^3.7.3
         version: 3.7.3
@@ -1080,8 +1080,8 @@ importers:
   packages/mssql:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       tedious:
         specifier: 15.1.0
         version: 15.1.0
@@ -1114,8 +1114,8 @@ importers:
   packages/mysql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       json-sql:
         specifier: ^0.3.10
         version: 0.3.11
@@ -1200,8 +1200,8 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1234,8 +1234,8 @@ importers:
   packages/openfn:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.1
         version: 0.21.4
@@ -1274,8 +1274,8 @@ importers:
   packages/openhim:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1332,8 +1332,8 @@ importers:
   packages/openmrs:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       superagent:
         specifier: ^8.0.9
         version: 8.0.9
@@ -1372,8 +1372,8 @@ importers:
   packages/postgresql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       pg:
         specifier: ^8.3.2
         version: 8.8.0
@@ -1412,8 +1412,8 @@ importers:
   packages/primero:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       cheerio:
         specifier: ^1.0.0-rc.10
         version: 1.0.0-rc.12
@@ -1470,8 +1470,8 @@ importers:
   packages/progres:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -1510,8 +1510,8 @@ importers:
   packages/rapidpro:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -1547,8 +1547,8 @@ importers:
   packages/resourcemap:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1584,8 +1584,8 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       axios:
         specifier: ^0.21.4
         version: 0.21.4
@@ -1630,8 +1630,8 @@ importers:
   packages/sftp:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.10.3
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
@@ -1679,8 +1679,8 @@ importers:
   packages/smpp:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1716,8 +1716,8 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1753,8 +1753,8 @@ importers:
   packages/telerivet:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1796,8 +1796,8 @@ importers:
   packages/template:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1830,8 +1830,8 @@ importers:
   packages/twilio:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       twilio:
         specifier: ^3.83.2
         version: 3.83.3
@@ -1867,8 +1867,8 @@ importers:
   packages/vtiger:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       lodash-fp:
         specifier: ^0.10.4
         version: 0.10.4
@@ -1913,8 +1913,8 @@ importers:
   packages/zoho:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
-        version: link:../common
+        specifier: 1.11.1
+        version: 1.11.1
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
