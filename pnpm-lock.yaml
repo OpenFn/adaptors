@@ -1778,7 +1778,7 @@ importers:
   packages/template:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: workspace:*
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
