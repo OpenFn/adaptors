@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 1.0.2
+
+### Patch Changes
+
+- a666a63: On error disconnect then throw
+
 ## 1.0.1
 
 ### Patch Changes
