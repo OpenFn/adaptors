@@ -2,9 +2,47 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util'
-import { request } from './Utils';
 
+import {
+  request as commonRequest,
+  expandReferences,
+} from '@openfn/language-common/util';
+
+import { makeBasicAuth } from './Utils';
+
+export function request(method, path, params, callback) {
+  return state => {
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    const { username, password, baseUrl } = state.configuration;
+
+    let { headers = { 'content-type': 'application/json' } } = resolvedParams;
+
+    headers['Authorization'] = makeBasicAuth(username, password);
+
+    const options = {
+      ...resolvedParams,
+      headers,
+      baseUrl,
+    };
+
+    return commonRequest(method, resolvedPath, options)
+      .then(response => {
+        const { method, url, body, code, duration } = response;
+        console.log(method, url, '-', code, 'in', duration + 'ms');
+
+        return {
+          ...composeNextState(state, body),
+          response,
+        };
+      })
+      .then(nextState => callback?.(nextState) ?? nextState);
+  };
+}
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
@@ -44,32 +82,8 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function create(resource, data, callback) {
-  return state => {
-    const [resolvedResource, resolvedData] = expandReferences(state, resource, data); 
-
-    const { baseUrl, username, password } = state.configuration;
-
-    const url = `${baseUrl}/api/${resolvedResource}`;
-    const auth = { username, password };
-
-    const options = {
-      auth,
-      body: resolvedData,
-      method: 'POST',
-    };
-
-    return request(url, options).then(response => {
-      const nextState = {
-        ...composeNextState(state, response.data),
-        response,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
-    });
-  };
+  return request('POST', `/api/${resource}`, { body: data }, callback);
 }
-
-export { request } from './Utils';
 
 // TODO: Decide which functions to publish from @openfn/language-common
 export {
@@ -80,7 +94,8 @@ export {
   field,
   fields,
   fn,
-  http,
+  chunk,
+  parseCsv,
   lastReferenceValue,
   merge,
   sourceValue,
