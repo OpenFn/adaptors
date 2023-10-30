@@ -4,3 +4,14 @@ export function makeBasicAuth(username, password) {
   const credentials = buff.toString('base64');
   return `Basic ${credentials}`;
 }
+
+export function assertConfiguration(configuration) {
+  const { username, password, baseUrl } = configuration;
+
+  if (!username || !password || !baseUrl) {
+    throw new Error(
+      'Username, password, and baseUrl must be provided in state.configuration'
+    );
+  }
+  return { username, password, baseUrl };
+}

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { execute, create, dataValue, request } from '../src/Adaptor.js';
 
 import { enableMockClient } from '@openfn/language-common/util';
 
@@ -37,8 +37,48 @@ describe('execute', () => {
   });
 });
 
+describe('request', () => {
+  it('should makea get request', async () => {
+    testServer
+      .intercept({
+        path: '/api/patients',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(
+        200,
+        { id: 7, fullName: 'Mamadou', gender: 'M' },
+        {
+          headers: { 'content-type': 'application/json' },
+        }
+      );
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data: {
+        fullName: 'Mamadou',
+        gender: 'M',
+      },
+    };
+
+    const finalState = await execute(request('GET', 'api/patients'))(state);
+
+    expect(finalState.data).to.eql({
+      fullName: 'Mamadou',
+      gender: 'M',
+      id: 7,
+    });
+  });
+});
+
 describe('create', () => {
-  before(() => {
+  it('makes a post request to the right endpoint', async () => {
     testServer
       .intercept({
         path: '/api/patients',
@@ -55,25 +95,6 @@ describe('create', () => {
           headers: { 'content-type': 'application/json' },
         }
       );
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(
-        404,
-        {
-          message: 'Not found',
-          status: 'error',
-          code: 404,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-  });
-
-  it('makes a post request to the right endpoint', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://www.example.com',
@@ -101,6 +122,22 @@ describe('create', () => {
   });
 
   it('throws an error for a 404', async () => {
+    testServer
+      .intercept({
+        path: '/api/noAccess',
+        method: 'POST',
+      })
+      .reply(
+        404,
+        {
+          message: 'Not found',
+          status: 'error',
+          code: 404,
+        },
+        {
+          headers: { 'content-type': 'application/json' },
+        }
+      );
     const state = {
       configuration: {
         baseUrl: 'https://www.example.com',
@@ -118,10 +155,10 @@ describe('create', () => {
     expect(error.message).to.eql('POST /api/noAccess - 404 Not Found');
   });
 
-  it.skip('handles and throws different kinds of errors', async () => {
+  it('handles and throws different kinds of errors', async () => {
     testServer
       .intercept({
-        path: '/api/!@#$%^&*',
+        path: '/api/server-error',
         method: 'POST',
       })
       .reply(
@@ -143,12 +180,14 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(create('!@#$%^&*', { name: 'taylor' }))(
+    const error = await execute(create('server-error', { name: 'taylor' }))(
       state
     ).catch(error => {
       return error;
     });
 
-    expect(error.message).to.eql('Server error');
+    expect(error.message).to.eql(
+      'POST /api/server-error - 500 Internal Server Error'
+    );
   });
 });

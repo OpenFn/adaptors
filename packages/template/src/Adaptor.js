@@ -8,7 +8,7 @@ import {
   expandReferences,
 } from '@openfn/language-common/util';
 
-import { makeBasicAuth } from './Utils';
+import { makeBasicAuth, assertConfiguration } from './Utils';
 
 export function request(method, path, params, callback) {
   return state => {
@@ -18,9 +18,19 @@ export function request(method, path, params, callback) {
       params
     );
 
-    const { username, password, baseUrl } = state.configuration;
-
-    let { headers = { 'content-type': 'application/json' } } = resolvedParams;
+    const { username, password, baseUrl } = assertConfiguration(
+      state.configuration
+    );
+    // Initialize headers as an empty object
+    let headers = {};
+    // Check if resolvedParams has headers, and merge them into the headers object
+    if (resolvedParams?.headers) {
+      headers = resolvedParams.headers;
+    }
+    // Set the 'content-type' header if it's not already set
+    if (!headers['content-type']) {
+      headers['content-type'] = 'application/json';
+    }
 
     headers['Authorization'] = makeBasicAuth(username, password);
 
