@@ -10,7 +10,3 @@
 - Removed `http` on `common` to improve compatibility and reduce potential
   security vulnerabilities.
 - Removed unused dependencies `axios`, `csv2json` and `nock`
-
-### Known Issues
-
-- None at the moment.
