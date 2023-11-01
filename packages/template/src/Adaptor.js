@@ -8,7 +8,7 @@ import {
   expandReferences,
 } from '@openfn/language-common/util';
 
-import { makeBasicAuth, assertConfiguration } from './Utils';
+import { makeBasicAuth, checkConfig } from './Utils';
 
 export function request(method, path, params, callback) {
   return state => {
@@ -18,9 +18,7 @@ export function request(method, path, params, callback) {
       params
     );
 
-    const { username, password, baseUrl } = assertConfiguration(
-      state.configuration
-    );
+    const { username, password, baseUrl } = checkConfig(state.configuration);
     // Initialize headers as an empty object
     let headers = {};
     // Check if resolvedParams has headers, and merge them into the headers object
@@ -42,8 +40,8 @@ export function request(method, path, params, callback) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
-        const { method, url, body, code, duration } = response;
-        console.log(method, url, '-', code, 'in', duration + 'ms');
+        const { body, log } = response;
+        log();
 
         return {
           ...composeNextState(state, body),

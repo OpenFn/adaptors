@@ -5,7 +5,7 @@ export function makeBasicAuth(username, password) {
   return `Basic ${credentials}`;
 }
 
-export function assertConfiguration(configuration) {
+export function checkConfig(configuration) {
   const { username, password, baseUrl } = configuration;
 
   if (!username || !password || !baseUrl) {

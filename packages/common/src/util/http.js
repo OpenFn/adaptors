@@ -137,6 +137,20 @@ export async function request(method, fullUrlOrPath, options = {}) {
     body: responseBody,
     message: statusText,
     duration,
+    log: message => {
+      if (message) {
+        console.log(message);
+      } else {
+        console.log(
+          method,
+          fullUrlOrPath,
+          '-',
+          response.statusCode,
+          'in',
+          duration + 'ms'
+        );
+      }
+    },
   };
 }
 
