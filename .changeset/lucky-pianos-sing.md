@@ -9,11 +9,7 @@
   environments.
 - Removed `http` on `common` to improve compatibility and reduce potential
   security vulnerabilities.
-
-### Deprecated
-
-- Deprecated the use of _http.method()_ Eg: `http.post()` as it is no longer a
-  part of the `@openfn/language-common`.
+- Removed unused dependencies `axios`, `csv2json` and `nock`
 
 ### Known Issues
 
