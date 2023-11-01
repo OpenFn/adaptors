@@ -34,7 +34,7 @@ const httpServer = http.createServer((req, res) => {
 
 // Create an HTTPS server for handling the redirected request
 let app = new koa();
-const httpsPort = 443;
+const httpsPort = 1443;
 app.use(sslify.default());
 
 app.use(async ctx => {
