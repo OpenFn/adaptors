@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import http from 'http';
 import https from 'https';
-import koa from 'koa';
-import sslify from 'koa-sslify';
 
 import { execute, get, post } from '../src';
 
@@ -33,15 +31,12 @@ const httpServer = http.createServer((req, res) => {
 });
 
 // Create an HTTPS server for handling the redirected request
-let app = new koa();
 const httpsPort = 1443;
-app.use(sslify.default());
-
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
 const certOptions = { key, cert };
-const httpsServer = https.createServer(certOptions || {}, app.callback());
+const httpsServer = https.createServer(certOptions || {}, (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello, HTTPS World!');
+});
 
 describe('Integration tests', () => {
   before(() => {
@@ -120,7 +115,7 @@ describe('Integration tests', () => {
       })
     )(state);
 
-    expect(response.body).to.eql('Hello World');
+    expect(response.body).to.eql('Hello, HTTPS World!');
   });
 
   it('should fail if certs are not  added to the request', async () => {
