@@ -31,7 +31,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -65,7 +65,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -108,7 +108,7 @@ importers:
         version: 5.12.0
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       csv-parse:
         specifier: ^4.16.3
         version: 4.16.3
@@ -166,7 +166,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -212,10 +212,10 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       '@openfn/language-http':
         specifier: ^5.0.2
-        version: link:../http
+        version: 5.0.2
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -313,7 +313,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.24.0
         version: 0.24.0
@@ -356,7 +356,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       request:
         specifier: ^2.72.0
         version: 2.88.2
@@ -396,7 +396,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.0
-        version: link:../common
+        version: 1.10.3
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -436,7 +436,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       undici:
         specifier: ^5.22.1
         version: 5.22.1
@@ -470,7 +470,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -510,7 +510,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.0
-        version: link:../common
+        version: 1.10.3
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -544,7 +544,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.0
-        version: link:../common
+        version: 1.10.3
       googleapis:
         specifier: 100.0.0
         version: 100.0.0
@@ -615,7 +615,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       qs:
         specifier: ^6.11.0
         version: 6.11.0
@@ -655,7 +655,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -689,7 +689,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -744,7 +744,7 @@ importers:
         version: 3.0.80
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -784,7 +784,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       form-data:
         specifier: ^4.0.0
         version: 4.0.0
@@ -830,7 +830,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       base-64:
         specifier: ^0.1.0
         version: 0.1.0
@@ -885,7 +885,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -928,7 +928,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -983,7 +983,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       mongodb:
         specifier: ^3.7.3
         version: 3.7.3
@@ -1020,7 +1020,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       undici:
         specifier: ^5.22.1
         version: 5.22.1
@@ -1054,7 +1054,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       tedious:
         specifier: 15.1.0
         version: 15.1.0
@@ -1088,7 +1088,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       json-sql:
         specifier: ^0.3.10
         version: 0.3.11
@@ -1137,7 +1137,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       nexmo:
         specifier: 2.9.1
         version: 2.9.1
@@ -1174,7 +1174,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1208,7 +1208,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.1
         version: 0.21.4
@@ -1248,7 +1248,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1306,7 +1306,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       superagent:
         specifier: ^8.0.9
         version: 8.0.9
@@ -1346,7 +1346,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       pg:
         specifier: ^8.3.2
         version: 8.8.0
@@ -1386,7 +1386,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       cheerio:
         specifier: ^1.0.0-rc.10
         version: 1.0.0-rc.12
@@ -1444,7 +1444,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -1484,7 +1484,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.2
         version: 0.21.4
@@ -1521,7 +1521,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1558,7 +1558,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.10.3
-        version: link:../common
+        version: 1.10.3
       axios:
         specifier: ^0.21.4
         version: 0.21.4
@@ -1604,7 +1604,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 1.10.3
-        version: link:../common
+        version: 1.10.3
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
@@ -1653,7 +1653,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1690,7 +1690,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1727,7 +1727,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1770,7 +1770,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
     devDependencies:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
@@ -1804,7 +1804,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       twilio:
         specifier: ^3.83.2
         version: 3.83.3
@@ -1841,7 +1841,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       lodash-fp:
         specifier: ^0.10.4
         version: 0.10.4
@@ -1887,7 +1887,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: ^1.8.1
-        version: link:../common
+        version: 1.10.3
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3230,6 +3230,35 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
 
+  /@openfn/language-common@1.10.3:
+    resolution: {integrity: sha512-abFOM/aj/L7qhiQEJyxX95HL2mARINNfXEt/SUcdMKcbENSbu+KRKGv7spBrn72PJ9pngo4/+OWxmQzzt4FEfQ==}
+    dependencies:
+      axios: 1.1.3
+      csv-parse: 5.4.0
+      csvtojson: 2.0.10
+      date-fns: 2.29.3
+      jsonpath-plus: 4.0.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@openfn/language-http@5.0.2:
+    resolution: {integrity: sha512-jSfMcObunuxsbv/nc3HtOOurw1kv1cPf1NmytZxr4x9E+zZGynQjt4GXbNeQEEAtABX9mcsl3F1k2N+IMsyHpQ==}
+    dependencies:
+      '@openfn/language-common': 1.10.3
+      cheerio: 1.0.0-rc.12
+      cheerio-tableparser: 1.0.1
+      csv-parse: 4.16.3
+      fast-safe-stringify: 2.1.1
+      form-data: 3.0.1
+      lodash: 4.17.21
+      request: 2.88.2
+      tough-cookie: 4.1.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@openfn/simple-ast@0.3.2:
     resolution: {integrity: sha512-NIvZsKSBQmGjQwqv8uDFpsTQquHkpoBH09pg+SJsInoa4L8CEW1g+ZU2O9D+i4xYeNciYb1nsfJ9n9TjxYAvzg==}
     hasBin: true
@@ -3886,6 +3915,16 @@ packages:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
       follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios@1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -5566,6 +5605,16 @@ packages:
       stream-transform: 2.1.3
     dev: true
 
+  /csvtojson@2.0.10:
+    resolution: {integrity: sha512-lUWFxGKyhraKCW8Qghz6Z0f2l/PqB1W3AO0HKJzGIQ5JRSlR651ekJDiGJbBT4sRNNv5ddnSGVEnsxP9XRCVpQ==}
+    engines: {node: '>=4.0.0'}
+    hasBin: true
+    dependencies:
+      bluebird: 3.7.2
+      lodash: 4.17.21
+      strip-bom: 2.0.0
+    dev: false
+
   /currently-unhandled@0.4.1:
     resolution: {integrity: sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==}
     engines: {node: '>=0.10.0'}
@@ -7054,6 +7103,15 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  /form-data@3.0.1:
+    resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: false
+
   /form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
@@ -8207,6 +8265,10 @@ packages:
   /is-unicode-supported@1.3.0:
     resolution: {integrity: sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==}
     engines: {node: '>=12'}
+    dev: false
+
+  /is-utf8@0.2.1:
+    resolution: {integrity: sha512-rMYPYvCzsXywIsldgLaSoPlw5PfoB/ssr7hY4pLfcodrA5M/eArza1a9VmTiNIBNMjOGr1Ow9mTyU2o69U6U9Q==}
     dev: false
 
   /is-weakref@1.0.2:
@@ -10409,11 +10471,6 @@ packages:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
     dev: false
 
-  /punycode@2.1.1:
-    resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
-    engines: {node: '>=6'}
-    dev: false
-
   /punycode@2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
@@ -11566,6 +11623,13 @@ packages:
       ansi-regex: 6.0.1
     dev: false
 
+  /strip-bom@2.0.0:
+    resolution: {integrity: sha512-kwrX1y7czp1E69n2ajbG65mIo9dqvJ+8aBQXOGVxqwvNbsXdFM6Lq37dLAY3mknUwru8CfcCbfOLL/gMo+fi3g==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      is-utf8: 0.2.1
+    dev: false
+
   /strip-bom@3.0.0:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
@@ -11981,7 +12045,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       psl: 1.9.0
-      punycode: 2.1.1
+      punycode: 2.3.0
       universalify: 0.2.0
       url-parse: 1.5.10
     dev: false
