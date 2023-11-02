@@ -107,7 +107,7 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0
       '@openfn/language-common':
-        specifier: workspace:1.10.3
+        specifier: ^1.10.3
         version: link:../common
       csv-parse:
         specifier: ^4.16.3
@@ -211,10 +211,10 @@ importers:
   packages/commcare:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.3
+        specifier: ^1.10.3
         version: link:../common
       '@openfn/language-http':
-        specifier: workspace:^5.0.2
+        specifier: ^5.0.2
         version: link:../http
       JSONPath:
         specifier: ^0.10.0
@@ -268,15 +268,9 @@ importers:
 
   packages/common:
     dependencies:
-      axios:
-        specifier: 1.1.3
-        version: 1.1.3
       csv-parse:
         specifier: ^5.4.0
         version: 5.4.0
-      csvtojson:
-        specifier: ^2.0.10
-        version: 2.0.10
       date-fns:
         specifier: ^2.25.0
         version: 2.29.3
@@ -311,9 +305,6 @@ importers:
       mocha:
         specifier: 9.2.2
         version: 9.2.2
-      nock:
-        specifier: 13.2.9
-        version: 13.2.9
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -321,7 +312,7 @@ importers:
   packages/dhis2:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: ^1.8.1
         version: link:../common
       axios:
         specifier: ^0.24.0
@@ -444,7 +435,7 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: ^1.8.1
         version: link:../common
       undici:
         specifier: ^5.22.1
@@ -552,7 +543,7 @@ importers:
   packages/googlesheets:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.10.0
+        specifier: ^1.10.0
         version: link:../common
       googleapis:
         specifier: 100.0.0
@@ -663,7 +654,7 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: ^1.8.1
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -697,7 +688,7 @@ importers:
   packages/magpi:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: ^1.8.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1028,7 +1019,7 @@ importers:
   packages/msgraph:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
+        specifier: ^1.10.3
         version: link:../common
       undici:
         specifier: ^5.22.1
@@ -1062,7 +1053,7 @@ importers:
   packages/mssql:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.10.3
+        specifier: ^1.10.3
         version: link:../common
       tedious:
         specifier: 15.1.0
@@ -1145,7 +1136,7 @@ importers:
   packages/nexmo:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^
+        specifier: ^1.10.3
         version: link:../common
       nexmo:
         specifier: 2.9.1
@@ -1566,7 +1557,7 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
+        specifier: ^1.10.3
         version: link:../common
       axios:
         specifier: ^0.21.4
@@ -1965,7 +1956,7 @@ importers:
   tools/import-tests:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.7.4
+        specifier: workspace:*
         version: link:../../packages/common
       mocha:
         specifier: ^10.1.0
@@ -3899,16 +3890,6 @@ packages:
       - debug
     dev: false
 
-  /axios@1.1.3:
-    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
-    dependencies:
-      follow-redirects: 1.15.2
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
   /axios@1.4.0:
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
     dependencies:
@@ -5584,16 +5565,6 @@ packages:
       csv-stringify: 5.6.5
       stream-transform: 2.1.3
     dev: true
-
-  /csvtojson@2.0.10:
-    resolution: {integrity: sha512-lUWFxGKyhraKCW8Qghz6Z0f2l/PqB1W3AO0HKJzGIQ5JRSlR651ekJDiGJbBT4sRNNv5ddnSGVEnsxP9XRCVpQ==}
-    engines: {node: '>=4.0.0'}
-    hasBin: true
-    dependencies:
-      bluebird: 3.7.2
-      lodash: 4.17.21
-      strip-bom: 2.0.0
-    dev: false
 
   /currently-unhandled@0.4.1:
     resolution: {integrity: sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==}
@@ -8236,10 +8207,6 @@ packages:
   /is-unicode-supported@1.3.0:
     resolution: {integrity: sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==}
     engines: {node: '>=12'}
-    dev: false
-
-  /is-utf8@0.2.1:
-    resolution: {integrity: sha512-rMYPYvCzsXywIsldgLaSoPlw5PfoB/ssr7hY4pLfcodrA5M/eArza1a9VmTiNIBNMjOGr1Ow9mTyU2o69U6U9Q==}
     dev: false
 
   /is-weakref@1.0.2:
@@ -11597,13 +11564,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       ansi-regex: 6.0.1
-    dev: false
-
-  /strip-bom@2.0.0:
-    resolution: {integrity: sha512-kwrX1y7czp1E69n2ajbG65mIo9dqvJ+8aBQXOGVxqwvNbsXdFM6Lq37dLAY3mknUwru8CfcCbfOLL/gMo+fi3g==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      is-utf8: 0.2.1
     dev: false
 
   /strip-bom@3.0.0:
