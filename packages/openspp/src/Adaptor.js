@@ -617,7 +617,6 @@ export function unenroll(registrant_id, program_id, callback=false) {
   };
 };
 
-// TODO: Decide which functions to publish from @openfn/language-common
 export {
   dataPath,
   dataValue,
