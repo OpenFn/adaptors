@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openspp",
   "version": "1.0.0",
-  "description": "The standard openspp for building OpenFn adaptors",
+  "description": "An OpenFn adaptor for working with the OpenSPP json rpc",
   "type": "module",
   "exports": {
     ".": {
