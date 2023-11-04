@@ -4,29 +4,10 @@ import {
   expandReferences,
 } from "@openfn/language-common";
 
-import pkg from "odoo";
+import pkg from "odoo-await";
 const { Odoo } = pkg;
 
 var sppConnector = null;
-
-
-export class Log {
-  static info(message) {
-    return console.info(`ℹ `, message);
-  }
-
-  static success(message) {
-    return console.info(`✓ Success at ${new Date()}:\n∟`, message);
-  }
-
-  static warn(message) {
-    return console.warn(`⚠ Warning at ${new Date()}:\n∟`, message);
-  }
-
-  static error(message) {
-    return console.error(`✗ Error at ${new Date()}:\n∟`, message);
-  }
-}
 
 
 /**
@@ -50,7 +31,7 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({ ...initialState, ...state });
+    return commonExecute(login, ...operations)({ ...initialState, ...state });
   };
 }
 
@@ -62,83 +43,64 @@ export function execute(...operations) {
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-function login(state) {
+async function login(state) {
   const {baseUrl, username, password, database} = state.configuration;
   sppConnector = new Odoo({
     host: baseUrl,
-    database: database,
+    db: database,
     username: username,
     password: password
   });
-  sppConnector.connect((err) => {
-    if (err) {
-      Log.error(err);
-      throw new Error("Can't login to OpenSPP, please check your credentials or network!");
-    }
-  });
+  try {
+    await sppConnector.connect();
+  } catch (err) {
+    console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    throw new Error("Can't login to OpenSPP, please check your credentials or network!");
+  }
   return state;
 }
 
 /**
  * Create a brand new program membership for registrant.
  * @example
- *  _creatingEnrolledRegistrantToProgram("IND_Q4VGGZPF", "PROG_2023_00000001")
+ * creatingEnrolledRegistrantToProgram("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @private
  * @param {string} registrant_id - registrant_id of group / individual wanted to unenroll 
  * @param {string} program_id - program_id of program 
  */
-function _creatingEnrolledRegistrantToProgram(registrant_id, program_id) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  let registrant;
-  let program;
-  sppConnector
-    .search_read(
+async function creatingEnrolledRegistrantToProgram(registrant_id, program_id) {
+  try {
+    let registrant = await sppConnector.searchRead(
       "res.partner",
+      [["is_registrant", "=", true], ["registrant_id", "=", registrant_id]],
+      ["id"],
+      { limit: 1 },
+    );
+    if (registrant.length === 0) {
+      throw new Error(`Registrant ${registrant_id} not exists!`);
+    }
+    registrant = registrant[0].id;
+    let program = await sppConnector.searchRead(
+      "g2p.program",
+      [["program_id", "=", program_id]],
+      ["id"],
+      { limit: 1 },
+    );
+    if (program.length === 0) {
+      throw new Error(`Program ${program_id} not exists!`);
+    }
+    program = program[0].id;
+    await sppConnector.create(
+      "g2p.program_membership",
       {
-        domain: [["is_registrant", "=", true], ["registrant_id", "=", registrant_id]],
-        limit: 1,
-        fields: ["id"],
-      },
-      (err, res) => {
-        if (err) {
-          Log.error(err);
-        }
-        registrant = res;
+        program_id: program,
+        partner_id: registrant,
+        state: "enrolled",
       }
-    )
-    .then(() =>{
-      sppConnector.search_read(
-        "g2p.program",
-        {
-          domain: [["program_id", "=", program_id]],
-          limit: 1,
-          fields: ["id"],
-        },
-        (err, res) => {
-          if (err) {
-            Log.error(err);
-          }
-          program = res;
-        }
-      )
-    })
-    .then(() =>{
-      if (!registrant || !program) {
-        return Log.error("Registrant or Program not exists!");
-      }
-      let registrantId = registrant[0].id;
-      let programId = program[0].id;
-      sppConnector.create(
-        "g2p.program_membership",
-        {
-          program_id: programId,
-          partner_id: registrantId,
-          state: "enrolled",
-        }
-      );
-    });
+    );
+  } catch (err) {
+    return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+  }
 };
 
 /**
@@ -152,39 +114,35 @@ function _creatingEnrolledRegistrantToProgram(registrant_id, program_id) {
  * @returns {Operation}
  */
 export function getGroup(registrant_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [
       ["is_registrant", "=", true],
       ["is_group", "=", true],
       ["registrant_id", "=", registrant_id]
     ];
-    let defaultOrder = "id desc";
     let defaultFields = [
       "name", "address", "phone", "kind", "registration_date", "registrant_id"
     ];
-    let options = {
-      domain: defaultDomain,
-      limit: 1,
-      order: defaultOrder,
-      fields: defaultFields
-    };
-    sppConnector.search_read("res.partner", options, (err, group) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let group = await sppConnector.searchRead(
+        "res.partner",
+        defaultDomain,
+        defaultFields,
+        { limit: 1, order: "id desc" },
+      );
+      if (group.length === 0) {
+        return console.log(`✗ Error at ${new Date()}:\n∟Group ${registrant_id} not found!`);
       }
-      if (!group) {
-        return Log.warn(`Group ${registrant_id} not found!`);
-      }
-      Log.info(`Group ${registrant_id} found!`);
-      let nextState = composeNextState(state, group);
+      console.log(`ℹ Group ${registrant_id} found!`);
+      let nextState = composeNextState(state, group[0]);
       if (callback) {
         return callback(nextState);
+      } else {
+        return nextState;
       }
-      return nextState;
-    });
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
@@ -199,40 +157,36 @@ export function getGroup(registrant_id, callback=false) {
  * @returns {Operation}
  */
 export function getIndividual(registrant_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [
       ["is_registrant", "=", true],
-      ["is_group", "=", true],
+      ["is_group", "=", false],
       ["registrant_id", "=", registrant_id]
     ];
-    let defaultOrder = "id desc";
     let defaultFields = [
       "name", "address", "phone", "registrant_id",
       "gender", "email", "category_id", "birthdate",
     ];
-    let options = {
-      domain: defaultDomain,
-      limit: 1,
-      order: defaultOrder,
-      fields: defaultFields
-    };
-    sppConnector.search_read("res.partner", options, (err, individual) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let individual = await sppConnector.searchRead(
+        "res.partner",
+        defaultDomain,
+        defaultFields,
+        { limit: 1, order: "id desc" },
+      );
+      if (individual.length === 0) {
+        return console.log(`✗ Error at ${new Date()}:\n∟Individual with id=${registrant_id} not found!`);
       }
-      if (!individual) {
-        return Log.warn(`Individual with id=${registrant_id} not found!`);
-      }
-      Log.info(`Individual with id=${registrant_id} found!`);
-      let nextState = composeNextState(state, individual);
+      console.log(`ℹ Individual with id=${registrant_id} found!`);
+      let nextState = composeNextState(state, individual[0]);
       if (callback) {
         return callback(nextState);
+      } else {
+        return nextState;
       }
-      return nextState;
-    });
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
@@ -248,40 +202,51 @@ export function getIndividual(registrant_id, callback=false) {
  * @returns {Operation}
  */
 export function getGroupMembers(registrant_id, offset=0, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
-    let defaultDomain = [
-      ["is_ended", "=", false],
-      ["group.registrant_id", "=", registrant_id]
-    ];
-    let defaultFields = [
-      "individual", "kind", "start_date", "ended_date",
-      "individual_birthdate", "individual_gender"
-    ];
-    let options = {
-      domain: defaultDomain,
-      limit: 100,
-      fields: defaultFields
-    };
-    if (offset > 0) {
-      options.offset = offset
-    }
-    sppConnector.search_read("g2p.group.membership", options, (err, members) => {
-      if (err) {
-        return Log.error(err);
+  return async state => {
+    try {
+      let group_id = await sppConnector.search(
+        "res.partner",
+        [
+          ["is_group", "=", true],
+          ["is_registrant", "=", true],
+          ["registrant_id", "=", registrant_id],
+        ]
+      );
+      if (group_id.length === 0) {
+        return console.log(`✗ Error at ${new Date()}:\n∟Group id=${registrant_id} not found!`);
       }
+      let defaultDomain = [
+        ["is_ended", "=", false],
+        ["group", "=", group_id[0]]
+      ];
+      let defaultFields = [
+        "individual", "kind", "start_date", "ended_date",
+        "individual_birthdate", "individual_gender"
+      ];
+      let options = {
+        limit: 100,
+        order: "id desc"
+      };
+      if (offset > 0) {
+        options.offset = offset
+      }
+      let members = await sppConnector.searchRead(
+        "g2p.group.membership",
+        defaultDomain,
+        defaultFields,
+        options,
+      );
       if (!members) {
-        return Log.warn(`Household ${registrant_id} not found or not having members!`)
+        return console.log(`⚠ Warning at ${new Date()}:\n∟Household ${registrant_id} not having members!`)
       }
-      Log.info(`Household ${registrant_id} members found!`);
+      console.log(`ℹ Household ${registrant_id} members found!`);
       let nextState = composeNextState(state, members);
       if (callback) {
         return callback(nextState);
       }
-      return nextState;
-    })
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   }
 };
 
@@ -297,37 +262,37 @@ export function getGroupMembers(registrant_id, offset=0, callback=false) {
  * @returns {Operation}
  */
 export function getServicePoint(name, offset=0, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [["name", "=", name]];
     let defaultFields = [
       "name", "area_id", "service_type_ids", "phone_sanitized",
       "shop_address", "is_contract_active", "is_disabled"
     ];
     let options = {
-      domain: defaultDomain,
       limit: 100,
-      fields: defaultFields
+      order: "id desc",
     };
     if (offset > 0) {
       options.offset = offset;
     }
-    sppConnector.search_read("spp.service.point", options, (err, agents) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let agents = await sppConnector.searchRead(
+        "spp.service.point",
+        defaultDomain,
+        defaultFields,
+        options,
+      );
+      if (agents.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟Agent ${name} not found!`);
       }
-      if (!agents) {
-        return Log.warn(`Agent ${name} not found!`)
-      }
-      Log.info(`Agent ${name} found!`);
+      console.log(`ℹ Agent ${name} found!`);
       let nextState = composeNextState(state, agents);
       if (callback) {
         return callback(nextState);
       }
-      return nextState;
-    })
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   }
 };
 
@@ -343,10 +308,7 @@ export function getServicePoint(name, offset=0, callback=false) {
  * @returns {Operation}
  */
 export function searchGroup(domain, offset=0, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [
       ["is_registrant", "=", true],
       ["is_group", "=", true],
@@ -365,26 +327,29 @@ export function searchGroup(domain, offset=0, callback=false) {
     }
     let finalDomain = [...domain, ...defaultDomain];
     let options = {
-      domain: finalDomain,
       limit: 100,
       offset: offset,
       order: defaultOrder,
-      fields: defaultFields
     };
-    sppConnector.search_read("res.partner", options, (err, groups) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let groups = await sppConnector.searchRead(
+        "res.partner",
+        finalDomain,
+        defaultFields,
+        options,
+      );
+      if (groups.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟Group with domain=${domain} not found!`);
       }
-      if (!groups) {
-        return Log.warn(`Group with domain=${domain} not found!`);
-      }
-      Log.info(`Group with domain=${domain} found!`);
+      console.log(`ℹ Group with domain=${domain} found!`);
       let nextState = composeNextState(state, groups);
       if (callback) {
         return callback(nextState);
       }
       return nextState;
-    });
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   }
 }
 
@@ -400,10 +365,7 @@ export function searchGroup(domain, offset=0, callback=false) {
  * @returns {Operation}
  */
 export function searchIndividual(domain, offset=0, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [
       ["is_registrant", "=", true],
       ["is_group", "=", false],
@@ -422,26 +384,29 @@ export function searchIndividual(domain, offset=0, callback=false) {
     }
     let finalDomain = [...domain, ...defaultDomain];
     let options = {
-      domain: finalDomain,
       limit: 100,
       offset: offset,
       order: defaultOrder,
-      fields: defaultFields
     };
-    sppConnector.search_read("res.partner", options, (err, individuals) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let individuals = await sppConnector.searchRead(
+        "res.partner",
+        finalDomain,
+        defaultFields,
+        options,
+      );
+      if (individuals.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟Individual with domain=${domain} not found!`);
       }
-      if (!individuals) {
-        return Log.warn(`Individual with domain=${domain} not found!`);
-      }
-      Log.info(`Individual with domain=${domain} found!`);
+      console.log(`ℹ Individual with domain=${domain} found!`);
       let nextState = composeNextState(state, individuals);
       if (callback) {
         return callback(nextState);
       }
       return nextState;
-    });
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   }
 }
 
@@ -456,34 +421,32 @@ export function searchIndividual(domain, offset=0, callback=false) {
  * @returns {Operation}
  */
 export function getProgram(program_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [["program_id", "=", program_id]];
     let defaultFields = [
       "name", "program_id", "eligible_beneficiaries_count",
       "cycles_count", "state", "target_type"
     ];
-    let options = {
-      domain: defaultDomain,
-      limit: 1,
-      fields: defaultFields
-    };
-    sppConnector.search_read("g2p.program", options, (err, program) => {
-      if (err) {
-        return Log.error(err);
+    let options = { limit: 1 };
+    try {
+      let program = await sppConnector.searchRead(
+        "g2p.program",
+        defaultDomain,
+        defaultFields,
+        options,
+      );
+      if (program.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟Program ${program_id} not found!`);
       }
-      if (!program) {
-        return Log.warn(`Program ${program_id} not found!`)
-      }
-      Log.info(`Program ${program_id} found!`);
-      let nextState = composeNextState(state, program);
+      console.log(`ℹ Program ${program_id} found!`);
+      let nextState = composeNextState(state, program[0]);
       if (callback) {
         return callback(nextState);
       }
       return nextState;
-    })
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   }
 }
 
@@ -498,34 +461,34 @@ export function getProgram(program_id, callback=false) {
  * @returns {Operation}
  */
 export function getPrograms(offset=0, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [];
     let defaultFields = ["name", "program_id"];
     let defaultOrder = "id";
     let options = {
-      domain: defaultDomain,
       limit: 100,
-      fields: defaultFields,
       offset: offset,
       order: defaultOrder,
     };
-    sppConnector.search_read("g2p.program", options, (err, programs) => {
-      if (err) {
-        return Log.error(err);
+    try {
+      let programs = await sppConnector.searchRead(
+        "g2p.program",
+        defaultDomain,
+        defaultFields,
+        options,
+      );
+      if (programs.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟No program found!`);
       }
-      if (!programs) {
-        return Log.warn("No program found!");
-      }
-      Log.info("Program(s) found!");
+      console.log(`ℹ Program(s) found!`);
       let nextState = composeNextState(state, programs);
       if (callback) {
         return callback(nextState);
       }
       return nextState;
-    });
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
@@ -540,44 +503,34 @@ export function getPrograms(offset=0, callback=false) {
  * @returns {Operation}
  */
 export function getEnrolledPrograms(registrant_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let defaultDomain = [["partner_id.registrant_id", "=", registrant_id]];
     let defaultFields = ["program_id"];
-    sppConnector.search_read(
-      "g2p.program_membership",
-      {
-        domain: defaultDomain,
-        fields: defaultFields,
-        limit: 500
-      },
-      (err, program_ids) => {
-        if (err) {
-          return Log.error(err);
-        }
-        if (!program_ids) {
-          return Log.warn("No enrolled program(s) found!");
-        }
-        Log.info("Enrolled program(s) found!");
-        sppConnector.search_read(
-          "g2p.program",
-          {
-            domain: [["id", "in", program_ids]],
-            fields: defaultFields,
-            limit: program_ids.length
-          },
-          (err, programs) => {
-            let nextState = composeNextState(state, programs);
-            if (callback) {
-              return callback(nextState);
-            }
-            return nextState;
-          }
-        );
+    try {
+      let program_ids = await sppConnector.searchRead(
+        "g2p.program_membership",
+        defaultDomain,
+        defaultFields,
+      );
+      if (program_ids.length === 0) {
+        return console.log(`⚠ Warning at ${new Date()}:\n∟No enrolled program(s) found!`);
       }
-    );
+      console.log(`ℹ Enrolled program(s) found!`);
+      program_ids = program_ids.map(i => i.program_id[0]);
+      let programs = await sppConnector.searchRead(
+        "g2p.program",
+        [["id", "in", program_ids]],
+        defaultFields,
+        { limit: program_ids.length }
+      );
+      let nextState = composeNextState(state, programs);
+      if (callback) {
+        return callback(nextState);
+      }
+      return nextState;
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
@@ -592,49 +545,36 @@ export function getEnrolledPrograms(registrant_id, callback=false) {
  * @param {function} callback - An optional callback function
  */
 export function enroll(registrant_id, program_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let domain = [
       ["partner_id.registrant_id", "=", registrant_id],
       ["program_id.program_id", "=", program_id],
     ];
     let fields = ["partner_id", "program_id", "state"];
-    sppConnector.search_read(
-      "g2p.program_membership",
-      {
-        domain: domain,
-        limit: 1,
-        fields: fields,
-      },
-      (err, result) => {
-        if (err) {
-          return Log.error(err);
+    try {
+      let programMember = await sppConnector.searchRead(
+        "g2p.program_membership",
+        domain,
+        fields,
+        { limit: 1 }
+      );
+      if (programMember.length > 0) {
+        let membership = programMember[0];
+        if (membership.state !== "enrolled") {
+          await sppConnector.update(
+            "g2p.program_membership",
+            membership.id,
+            { state: "enrolled" },
+          );
         }
-        if (Array.isArray(result) && result.length > 0) {
-          let membership = result[0];
-          if (membership.state === "enrolled") {
-            return Log.info(`Registrant ${registrant_id} enrolled into Program ${program_id}`);
-          } else {
-            sppConnector.update(
-              model="g2p.program_membership",
-              id=membership.id,
-              params={state: "enrolled"},
-              (err, result) => {
-                if (err) {
-                  return Log.error(err);
-                }
-                return Log.info(`Registrant ${registrant_id} enrolled into Program ${program_id}`);
-              }
-            );
-          }
-        } else {
-          Log.info("Please waiting to create program membership");
-          return _creatingEnrolledRegistrantToProgram(registrant_id, program_id);
-        }
+        return console.log(`ℹ Registrant ${registrant_id} enrolled into Program ${program_id}`);
+      } else {
+        console.log(`ℹ Please wait for creating program membership!`);
+        return await creatingEnrolledRegistrantToProgram(registrant_id, program_id);
       }
-    );
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
@@ -649,43 +589,31 @@ export function enroll(registrant_id, program_id, callback=false) {
  * @param {function} callback - An optional callback function
  */
 export function unenroll(registrant_id, program_id, callback=false) {
-  if (sppConnector === null) {
-    login(state);
-  }
-  return state => {
+  return async state => {
     let domain = [
       ["partner_id.registrant_id", "=", registrant_id],
       ["program_id.program_id", "=", program_id],
     ];
     let fields = ["partner_id", "program_id", "state"];
-    sppConnector.search_read(
-      "g2p.program_membership",
-      {
-        domain: domain,
-        fields: fields,
-        limit: 1
-      },
-      (err, result) => {
-        if (err) {
-          Log.error(err);
-        }
-        if ((Array.isArray(result) && result.length === 0) || result[0].state !== "enrolled") {
-          Log.info(`Registrant ${registrant_id} is not enrolled into Program ${program_id}`);
-        } else {
-          sppConnector.update(
-            model="g2p.program_membership",
-            id=membership.id,
-            params={state: "not_eligible"},
-            (err, result) => {
-              if (err) {
-                return Log.error(err);
-              }
-              return Log.info(`Registrant ${registrant_id} enrolled into Program ${program_id}`);
-            }
-          );
-        }
+    try {
+      let programMember = await sppConnector.searchRead(
+        "g2p.program_membership",
+        domain,
+        fields,
+        { limit: 1 }
+      );
+      if (programMember.length > 0 && programMember[0].state === "enrolled") {
+        let membership = programMember[0];
+        await sppConnector.update(
+          "g2p.program_membership",
+          membership.id,
+          { state: "not_eligible" },
+        );
       }
-    );
+      return console.log(`ℹ Registrant ${registrant_id} not enroll into Program ${program_id}`);
+    } catch (err) {
+      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    }
   };
 };
 
