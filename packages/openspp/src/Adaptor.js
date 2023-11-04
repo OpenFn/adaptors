@@ -7,7 +7,7 @@ import {
 import pkg from "odoo-await";
 const { Odoo } = pkg;
 
-var sppConnector = null;
+let sppConnector;
 
 
 /**
@@ -23,8 +23,6 @@ var sppConnector = null;
  * @returns {Operation}
  */
 export function execute(...operations) {
-  sppConnector = null;
-
   const initialState = {
     references: [],
     data: null,
@@ -54,7 +52,7 @@ async function login(state) {
   try {
     await sppConnector.connect();
   } catch (err) {
-    console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    console.log(`✗ Error: ${err}`);
     throw new Error("Can't login to OpenSPP, please check your credentials or network!");
   }
   return state;
@@ -63,12 +61,12 @@ async function login(state) {
 /**
  * Create a brand new program membership for registrant.
  * @example
- * creatingEnrolledRegistrantToProgram("IND_Q4VGGZPF", "PROG_2023_00000001")
+ * createProgramMembership("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @private
  * @param {string} registrant_id - registrant_id of group / individual wanted to unenroll 
  * @param {string} program_id - program_id of program 
  */
-async function creatingEnrolledRegistrantToProgram(registrant_id, program_id) {
+async function createProgramMembership(registrant_id, program_id) {
   try {
     let registrant = await sppConnector.searchRead(
       "res.partner",
@@ -99,7 +97,7 @@ async function creatingEnrolledRegistrantToProgram(registrant_id, program_id) {
       }
     );
   } catch (err) {
-    return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+    console.log(`✗ Error: ${err}`);
   }
 };
 
@@ -131,7 +129,8 @@ export function getGroup(registrant_id, callback=false) {
         { limit: 1, order: "id desc" },
       );
       if (group.length === 0) {
-        return console.log(`✗ Error at ${new Date()}:\n∟Group ${registrant_id} not found!`);
+        console.log(`✗ Error: Group ${registrant_id} not found!`);
+        return state;
       }
       console.log(`ℹ Group ${registrant_id} found!`);
       let nextState = composeNextState(state, group[0]);
@@ -141,7 +140,8 @@ export function getGroup(registrant_id, callback=false) {
         return nextState;
       }
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   };
 };
@@ -175,7 +175,8 @@ export function getIndividual(registrant_id, callback=false) {
         { limit: 1, order: "id desc" },
       );
       if (individual.length === 0) {
-        return console.log(`✗ Error at ${new Date()}:\n∟Individual with id=${registrant_id} not found!`);
+        console.log(`✗ Error: Individual with id=${registrant_id} not found!`);
+        return state;
       }
       console.log(`ℹ Individual with id=${registrant_id} found!`);
       let nextState = composeNextState(state, individual[0]);
@@ -185,7 +186,8 @@ export function getIndividual(registrant_id, callback=false) {
         return nextState;
       }
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   };
 };
@@ -213,7 +215,8 @@ export function getGroupMembers(registrant_id, offset=0, callback=false) {
         ]
       );
       if (group_id.length === 0) {
-        return console.log(`✗ Error at ${new Date()}:\n∟Group id=${registrant_id} not found!`);
+        console.log(`✗ Error: Group id=${registrant_id} not found!`);
+        return state;
       }
       let defaultDomain = [
         ["is_ended", "=", false],
@@ -237,7 +240,8 @@ export function getGroupMembers(registrant_id, offset=0, callback=false) {
         options,
       );
       if (!members) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟Household ${registrant_id} not having members!`)
+        console.log(`⚠ Warning: Household ${registrant_id} not having members!`)
+        return state;
       }
       console.log(`ℹ Household ${registrant_id} members found!`);
       let nextState = composeNextState(state, members);
@@ -245,7 +249,8 @@ export function getGroupMembers(registrant_id, offset=0, callback=false) {
         return callback(nextState);
       }
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   }
 };
@@ -283,7 +288,8 @@ export function getServicePoint(name, offset=0, callback=false) {
         options,
       );
       if (agents.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟Agent ${name} not found!`);
+        console.log(`⚠ Warning: Agent ${name} not found!`);
+        return state;
       }
       console.log(`ℹ Agent ${name} found!`);
       let nextState = composeNextState(state, agents);
@@ -291,7 +297,8 @@ export function getServicePoint(name, offset=0, callback=false) {
         return callback(nextState);
       }
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   }
 };
@@ -339,7 +346,8 @@ export function searchGroup(domain, offset=0, callback=false) {
         options,
       );
       if (groups.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟Group with domain=${domain} not found!`);
+        console.log(`⚠ Warning: Group with domain=${domain} not found!`);
+        return state;
       }
       console.log(`ℹ Group with domain=${domain} found!`);
       let nextState = composeNextState(state, groups);
@@ -348,7 +356,8 @@ export function searchGroup(domain, offset=0, callback=false) {
       }
       return nextState;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   }
 }
@@ -396,7 +405,8 @@ export function searchIndividual(domain, offset=0, callback=false) {
         options,
       );
       if (individuals.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟Individual with domain=${domain} not found!`);
+        console.log(`⚠ Warning: Individual with domain=${domain} not found!`);
+        return state;
       }
       console.log(`ℹ Individual with domain=${domain} found!`);
       let nextState = composeNextState(state, individuals);
@@ -405,7 +415,8 @@ export function searchIndividual(domain, offset=0, callback=false) {
       }
       return nextState;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   }
 }
@@ -436,7 +447,8 @@ export function getProgram(program_id, callback=false) {
         options,
       );
       if (program.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟Program ${program_id} not found!`);
+        console.log(`⚠ Warning: Program ${program_id} not found!`);
+        return state;
       }
       console.log(`ℹ Program ${program_id} found!`);
       let nextState = composeNextState(state, program[0]);
@@ -445,7 +457,8 @@ export function getProgram(program_id, callback=false) {
       }
       return nextState;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   }
 }
@@ -478,7 +491,8 @@ export function getPrograms(offset=0, callback=false) {
         options,
       );
       if (programs.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟No program found!`);
+        console.log(`⚠ Warning: No program found!`);
+        return state;
       }
       console.log(`ℹ Program(s) found!`);
       let nextState = composeNextState(state, programs);
@@ -487,7 +501,8 @@ export function getPrograms(offset=0, callback=false) {
       }
       return nextState;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   };
 };
@@ -513,7 +528,8 @@ export function getEnrolledPrograms(registrant_id, callback=false) {
         defaultFields,
       );
       if (program_ids.length === 0) {
-        return console.log(`⚠ Warning at ${new Date()}:\n∟No enrolled program(s) found!`);
+        console.log(`⚠ Warning: No enrolled program(s) found!`);
+        return state;
       }
       console.log(`ℹ Enrolled program(s) found!`);
       program_ids = program_ids.map(i => i.program_id[0]);
@@ -529,7 +545,8 @@ export function getEnrolledPrograms(registrant_id, callback=false) {
       }
       return nextState;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   };
 };
@@ -567,13 +584,14 @@ export function enroll(registrant_id, program_id, callback=false) {
             { state: "enrolled" },
           );
         }
-        return console.log(`ℹ Registrant ${registrant_id} enrolled into Program ${program_id}`);
+        console.log(`ℹ Registrant ${registrant_id} enrolled into Program ${program_id}`);
       } else {
-        console.log(`ℹ Please wait for creating program membership!`);
-        return await creatingEnrolledRegistrantToProgram(registrant_id, program_id);
+        await createProgramMembership(registrant_id, program_id);
       }
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+    } finally {
+      return state;
     }
   };
 };
@@ -610,9 +628,11 @@ export function unenroll(registrant_id, program_id, callback=false) {
           { state: "not_eligible" },
         );
       }
-      return console.log(`ℹ Registrant ${registrant_id} not enroll into Program ${program_id}`);
+      console.log(`ℹ Registrant ${registrant_id} not enroll into Program ${program_id}`);
+      return state;
     } catch (err) {
-      return console.log(`✗ Error at ${new Date()}:\n∟${err}`);
+      console.log(`✗ Error: ${err}`);
+      return state;
     }
   };
 };

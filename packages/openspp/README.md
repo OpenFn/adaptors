@@ -1,17 +1,17 @@
-# language-template <img src='assets/sq-256x256.png' width="30" height="30"/>
+# language-openspp <img src='assets/sq-256x256.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
 API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/template-docs)
+View the [docs site](https://docs.openfn.org/adaptors/packages/openspp-docs)
 for full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/template-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/openspp-configuration-schema/)
 for required and optional `configuration` properties.
 
 ### A example expression using the `create` function
