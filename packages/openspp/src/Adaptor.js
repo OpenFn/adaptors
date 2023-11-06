@@ -5,7 +5,7 @@ import {
 } from "@openfn/language-common";
 
 import pkg from "odoo-await";
-const { Odoo } = pkg;
+const Odoo = pkg;
 
 let sppConnector;
 
@@ -44,7 +44,7 @@ export function execute(...operations) {
 async function login(state) {
   const {baseUrl, username, password, database} = state.configuration;
   sppConnector = new Odoo({
-    host: baseUrl,
+    baseUrl: baseUrl,
     db: database,
     username: username,
     password: password
@@ -53,7 +53,7 @@ async function login(state) {
     await sppConnector.connect();
   } catch (err) {
     console.log(`✗ Error: ${err}`);
-    throw new Error("Can't login to OpenSPP, please check your credentials or network!");
+    sppConnector = null;
   }
   return state;
 }
