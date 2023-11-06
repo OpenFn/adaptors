@@ -7,14 +7,18 @@
       "description": "The Salesforce instance login URL",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://somesalesforcelogin.url"]
+      "examples": [
+        "https://somesalesforcelogin.url"
+      ]
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "The username to log in the Salesforce instance",
       "minLength": 1,
-      "examples": ["someusername"]
+      "examples": [
+        "someusername"
+      ]
     },
     "password": {
       "title": "Password",
@@ -22,17 +26,37 @@
       "description": "The password to log in the Salesforce instance",
       "writeOnly": true,
       "minLength": 1,
-      "examples": ["@super(!)SecretPass"]
+      "examples": [
+        "@super(!)SecretPass"
+      ]
     },
     "securityToken": {
       "title": "Security Token",
       "type": "string",
       "description": "The security token to access the Salesforce instance",
       "minLength": 1,
-      "examples": ["salesforcesecuritytoken"]
+      "examples": [
+        "salesforcesecuritytoken"
+      ]
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "pattern": "^[0-9]{2}\\.[0-9]$",
+      "placeholder": "52.0",
+      "description": "Salesforce API Version",
+      "minLength": 1,
+      "examples": [
+        "59.0"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["loginUrl", "username", "password", "securityToken"]
+  "required": [
+    "loginUrl",
+    "username",
+    "password",
+    "securityToken"
+  ]
 }

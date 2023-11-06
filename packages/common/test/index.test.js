@@ -27,6 +27,7 @@ import {
   sourceValue,
   splitKeys,
   toArray,
+  validate,
 } from '../src/Adaptor';
 
 const mockAgent = new MockAgent();
@@ -590,5 +591,273 @@ describe('parseCsv', function () {
       { a: '7', b: '8', c: '9' },
     ]);
     assert.equal(callCount, 3);
+  });
+});
+
+describe('validate', () => {
+  const schema = {
+    $id: 'https://example.com/person.schema.json',
+    $schema: 'http://json-schema.org/draft-07/schema',
+    title: 'Person',
+    type: 'object',
+    properties: {
+      firstName: {
+        type: 'string',
+        description: "The person's first name.",
+      },
+      lastName: {
+        type: 'string',
+        description: "The person's last name.",
+      },
+      age: {
+        description:
+          'Age in years which must be equal to or greater than zero.',
+        type: 'integer',
+        minimum: 0,
+      },
+    },
+  };
+
+  it('should report no errors with default schema, data on state', async () => {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.eql([]);
+  });
+
+  it('should report one error with default schema, data on state', async () => {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.have.lengthOf(1);
+
+    const err = result.validationErrors[0];
+    expect(err.data).to.eql(data);
+    expect(err.errors).to.have.lengthOf(1);
+    expect(err.errors[0].message).to.eql('must be integer');
+  });
+
+  it('should report one error with json path arguments for schema, data', async () => {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      s: schema,
+      d: data,
+    };
+
+    const result = await validate('s', 'd')(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should report one error with object arguments for schema, data', async () => {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {};
+
+    const result = await validate(schema, data)(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should report one error with function arguments for schema, data', async () => {
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {};
+
+    const result = await validate(
+      () => schema,
+      () => data
+    )(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should fetch a schema from a url', async () => {
+    mockPool
+      .intercept({
+        method: 'GET',
+        path: '/schema',
+      })
+      .reply(201, schema, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 'unknown',
+    };
+
+    const state = {
+      data,
+    };
+
+    const result = await validate('https://localhost:1/schema')(state);
+    expect(result.validationErrors).to.have.lengthOf(1);
+  });
+
+  it('should compose with each to validate each item in an array', async () => {
+    const data = [
+      {
+        firstName: 'Scott',
+        lastName: 'Lang',
+        age: 'unknown',
+      },
+      {
+        firstName: 'Hope',
+        lastName: ['Van', 'Dyne'],
+        age: 30,
+      },
+    ];
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const doValidation = async s => validate()(s);
+    const result = await each('data[*]', doValidation)(state);
+
+    expect(result.validationErrors).to.have.lengthOf(2);
+    expect(result.validationErrors[0].data).to.eql(data[0]);
+    expect(result.validationErrors[1].data).to.eql(data[1]);
+  });
+
+  it('should compose with each to validate each item in an array with custom schema', async () => {
+    const data = [
+      {
+        firstName: 'Scott',
+        lastName: 'Lang',
+        age: 'unknown',
+      },
+      {
+        firstName: 'Hope',
+        lastName: ['Van', 'Dyne'],
+        age: 30,
+      },
+    ];
+
+    const state = {
+      'my-schema': schema,
+      data,
+    };
+
+    const doValidation = async s => validate('my-schema')(s);
+    const result = await each('data[*]', doValidation)(state);
+
+    expect(result.validationErrors).to.have.lengthOf(2);
+    expect(result.validationErrors[0].data).to.eql(data[0]);
+    expect(result.validationErrors[1].data).to.eql(data[1]);
+  });
+
+  it('should validate 2019 schema', async () => {
+    const schema = {
+      $id: 'https://example.com/person.schema.json',
+      $schema: 'http://json-schema.org/draft/2019-09/schema',
+      title: 'Person',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+          description: "The person's first name.",
+        },
+        lastName: {
+          type: 'string',
+          description: "The person's last name.",
+        },
+        age: {
+          description:
+            'Age in years which must be equal to or greater than zero.',
+          type: 'integer',
+          minimum: 0,
+        },
+      },
+    };
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.eql([]);
+  });
+
+  it('should validate 2020 schema', async () => {
+    const schema = {
+      $id: 'https://example.com/person.schema.json',
+      $schema: 'http://json-schema.org/draft/2020-12/schema',
+      title: 'Person',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+          description: "The person's first name.",
+        },
+        lastName: {
+          type: 'string',
+          description: "The person's last name.",
+        },
+        age: {
+          description:
+            'Age in years which must be equal to or greater than zero.',
+          type: 'integer',
+          minimum: 0,
+        },
+      },
+    };
+
+    const data = {
+      firstName: 'Scott',
+      lastName: 'Lang',
+      age: 30,
+    };
+
+    const state = {
+      schema,
+      data,
+    };
+
+    const result = await validate()(state);
+
+    expect(result.validationErrors).to.eql([]);
   });
 });

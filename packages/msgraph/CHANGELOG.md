@@ -1,5 +1,23 @@
 # @openfn/language-msgraph
 
+## 0.4.0
+
+### Minor Changes
+
+- 4cd6587: Add `uploadFile` and `sheetToBuffer` function
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 0.3.4
 
 ### Patch Changes

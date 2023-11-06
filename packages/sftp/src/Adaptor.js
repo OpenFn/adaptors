@@ -4,7 +4,7 @@ import {
   parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import { isObjectEmpty, handleResponse, handleError, handleLog } from './Utils';
+import { isObjectEmpty, handleResponse } from './Utils';
 
 let sftp = null;
 
@@ -31,7 +31,10 @@ export function execute(...operations) {
       connect,
       ...operations,
       disconnect
-    )({ ...initialState, ...state });
+    )({ ...initialState, ...state }).catch(e => {
+      disconnect(state);
+      throw e;
+    });
 }
 
 function connect(state) {
@@ -54,18 +57,36 @@ function disconnect(state) {
  * List files present in a directory
  * @public
  * @example
+ * <caption>basic files listing</caption>
  * list('/some/path/')
+ * @example
+ * <caption>list files with filters</caption>
+ * list('/some/path/', file=> {
+ *  return /foo.\.txt/.test(file.name);
+ * })
+ * @example
+ * <caption>list files with filters and use callback</caption>
+ * list(
+ *   "/some/path/",
+ *   (file) => /foo.\.txt/.test(file.name),
+ *   (state) => {
+ *     const latestFile = state.data.filter(
+ *       (file) => file.modifyTime <= new Date()
+ *     );
+ *     return { ...state, latestFile };
+ *   }
+ * );
  * @function
- * @param {string} dirPath - Path to resource
+ * @param {string} dirPath - Path to remote directory
+ * @param {function} filter - a filter function used to select return entries
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath, callback = x => x) {
+export function list(dirPath, filter, callback) {
   return state => {
     return sftp
-      .list(dirPath)
-      .then(files => handleResponse(files, state, callback))
-      .catch(handleError);
+      .list(dirPath, filter)
+      .then(files => handleResponse(files, state, callback));
   };
 }
 
@@ -110,6 +131,7 @@ export function getCSV(filePath, parsingOptions = {}) {
         })
         .then(() => {
           console.debug('Parsing rows to JSON.\n');
+          console.time('Stream finished');
           return new Promise((resolve, reject) => {
             const content = Buffer.concat(results).toString('utf8');
             resolve(content.split('\r\n'));
@@ -118,8 +140,10 @@ export function getCSV(filePath, parsingOptions = {}) {
             return nextState;
           });
         })
-        .then(state => handleLog('Stream finished.', state))
-        .catch(handleError);
+        .then(state => {
+          console.timeEnd('Stream finished');
+          return state;
+        });
     }
   };
 }
@@ -141,11 +165,14 @@ export function getCSV(filePath, parsingOptions = {}) {
  */
 export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
+    console.time('Upload finished');
     return sftp
       .put(localFilePath, remoteFilePath, parsingOptions)
       .then(response => handleResponse(response, state))
-      .then(state => handleLog('Upload finished.', state))
-      .catch(e => handleError(e, true));
+      .then(state => {
+        console.timeEnd('Upload finished');
+        return state;
+      });
   };
 }
 
@@ -173,6 +200,7 @@ export function getJSON(filePath, encoding) {
       })
       .then(() => {
         console.debug('Receiving stream.\n');
+        console.time('Stream finished');
 
         return new Promise((resolve, reject) => {
           const content = Buffer.concat(results).toString('utf8');
@@ -182,8 +210,10 @@ export function getJSON(filePath, encoding) {
           return nextState;
         });
       })
-      .then(state => handleLog('Stream finished.', state))
-      .catch(e => handleError(e, true));
+      .then(state => {
+        console.timeEnd('Stream finished');
+        return state;
+      });
   };
 }
 
