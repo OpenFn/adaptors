@@ -1,6 +1,6 @@
-# language-openspp <img src='assets/sq-256x256.png' width="30" height="30"/>
+# language-openspp <img src='assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
+An OpenFn **_adaptor_** for building integration jobs for use with OpenSPP
 API.
 
 ## Documentation
@@ -14,10 +14,10 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/openspp-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `getServicePoint` function
 
 ```js
-create('patient', { name: 'Bukayo' });
+getServicePoint("newagentflour");
 ```
 
 ## Development

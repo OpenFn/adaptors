@@ -1,9 +1,16 @@
-import { expect } from 'chai';
-import { execute } from '../src/Adaptor.js';
+import { expect } from "chai";
+import { execute } from "../src/Adaptor.js";
 
-describe('execute', () => {
-  it('executes each operation in sequence', done => {
-    const state = {};
+describe("execute", () => {
+  it("executes each operation in sequence", done => {
+    const state = {
+      configuration: {
+        username: "admin",
+        password: "935j-jv38-yeu9",
+        baseUrl: "https://dev.newlogic-demo.com/",
+        database: "devel",
+      },
+    };;
     const operations = [
       state => {
         return { counter: 1 };
@@ -24,7 +31,7 @@ describe('execute', () => {
       .catch(done);
   });
 
-  it('assigns references, data to the initialState', () => {
+  it("assigns references, data to the initialState", () => {
     const state = {};
 
     execute()(state).then(finalState => {
