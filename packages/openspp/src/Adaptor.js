@@ -7,7 +7,7 @@ import {
 import pkg from "odoo-await";
 const Odoo = pkg;
 
-let sppConnector;
+let sppConnector = null;
 
 
 /**
