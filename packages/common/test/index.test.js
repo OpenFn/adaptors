@@ -28,11 +28,44 @@ import {
   splitKeys,
   toArray,
   validate,
+
+  operation,
 } from '../src/Adaptor';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
 const mockPool = mockAgent.get('https://localhost:1');
+
+// TODO move to the bottom or another file
+describe.only('operation', () => {
+  it('should return an operation factory that works', async () => {
+  // declare an operation called fetch
+  const fetch = operation(async (state, url) => {
+    // do a simple request with undici and write it to state
+    const response = await request(url)
+    state.data = await response.body.text()
+    return state;
+  })
+
+  mockPool
+      .intercept({
+        method: 'GET',
+        path: '/a',
+      })
+      .reply(200, 'ok');
+
+  const state = {};
+
+  // run it
+  // Note that there's no way to mock the operation yet
+  // Answers are a) provide a dymanic mock callback
+  // b) provide an inner function which accepts a client
+  await fetch('https://localhost:1/a')(state)
+
+  // check the state
+  expect(state.data).to.eql('ok')
+  })
+})
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
