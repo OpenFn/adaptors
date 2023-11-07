@@ -54,34 +54,6 @@ export function execute(...operations) {
 }
 
 /**
- * alias for "fn()"
- * @function
- * @param {Function} func is the function
- * @returns {Operation}
- */
-export function alterState(func) {
-  return fn(func);
-}
-
-/**
- * Creates a custom step (or operation) for more flexible job writing.
- * @public
- * @example
- * fn(state => {
- *   // do some things to state
- *   return state;
- * });
- * @function
- * @param {Function} func is the function
- * @returns {Operation}
- */
-export function fn(func) {
-  return state => {
-    return func(state);
-  };
-}
-
-/**
  * Picks out a single value from a JSON object.
  * If a JSONPath returns more than one value for the reference, the first
  * item will be returned.
@@ -97,39 +69,8 @@ export function jsonValue(obj, path) {
   return JSONPath({ path, json: obj })[0];
 }
 
-/**
- * Picks out a single value from source data.
- * If a JSONPath returns more than one value for the reference, the first
- * item will be returned.
- * @public
- * @example
- * sourceValue('$.key')
- * @function
- * @param {String} path - JSONPath referencing a point in `state`.
- * @returns {Operation}
- */
-export function sourceValue(path) {
-  return state => {
-    return JSONPath({ path, json: state })[0];
-  };
-}
 
-/**
- * Picks out a value from source data.
- * Will return whatever JSONPath returns, which will always be an array.
- * If you need a single value use `sourceValue` instead.
- * @public
- * @example
- * source('$.key')
- * @function
- * @param {String} path - JSONPath referencing a point in `state`.
- * @returns {Array.<String|Object>}
- */
-export function source(path) {
-  return state => {
-    return JSONPath({ path, json: state });
-  };
-}
+
 
 /**
  * Ensures a path points at the data.
@@ -245,7 +186,7 @@ export const map = curry(function (path, operation, state) {
 export function asData(data, state) {
   switch (typeof data) {
     case 'string':
-      return source(data)(state);
+      return JSONPath({ path: data, json: state });
     case 'object':
       return data;
     case 'function':
@@ -253,44 +194,7 @@ export function asData(data, state) {
   }
 }
 
-/**
- * Scopes an array of data based on a JSONPath.
- * Useful when the source data has `n` items you would like to map to
- * an operation.
- * The operation will receive a slice of the data based of each item
- * of the JSONPath provided.
- *
- * It also ensures the results of an operation make their way back into
- * the state's references.
- * @public
- * @example
- * each("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
- *   )
- * )
- * @function
- * @param {DataSource} dataSource - JSONPath referencing a point in `state`.
- * @param {Operation} operation - The operation needed to be repeated.
- * @returns {Operation}
- */
-export function each(dataSource, operation) {
-  if (!dataSource) {
-    throw new TypeError('dataSource argument for each operation is invalid.');
-  }
 
-  return state => {
-    return asData(dataSource, state).reduce((state, data, index) => {
-      if (state.then) {
-        return state.then(state => {
-          return operation({ ...state, data, index });
-        });
-      } else {
-        return operation({ ...state, data, index });
-      }
-    }, state);
-  };
-}
 
 /**
  * Combines two operations into one
