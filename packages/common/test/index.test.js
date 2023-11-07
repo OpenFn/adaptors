@@ -9,7 +9,6 @@ import {
   combine,
   dataPath,
   dataValue,
-  each,
   execute,
   expandReferences,
   field,
@@ -23,21 +22,24 @@ import {
   parseCsv,
   referencePath,
   scrubEmojis,
-  source,
-  sourceValue,
   splitKeys,
   toArray,
   validate,
 
   operation,
 } from '../src/Adaptor';
+import {
+  sourceValue,
+  each,
+  source,
+} from '../src/operations';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
 const mockPool = mockAgent.get('https://localhost:1');
 
 // TODO move to the bottom or another file
-describe.only('operation', () => {
+describe('operation', () => {
   it('should return an operation factory that works', async () => {
   // declare an operation called fetch
   const fetch = operation(async (state, url) => {
