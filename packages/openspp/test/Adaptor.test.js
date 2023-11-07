@@ -1,16 +1,23 @@
 import { expect } from "chai";
-import { execute } from "../src/Adaptor.js";
+import {
+  execute,
+  getServicePoint,
+  searchGroup,
+  searchIndividual,
+} from "../src/Adaptor.js";
+
+const state = {
+  configuration: {
+    username: "admin",
+    password: "admin",
+    baseUrl: "https://demo.openspp.org/",
+    database: "openspp_adaptor",
+  },
+  references: [],
+};
 
 describe("execute", () => {
   it("executes each operation in sequence", done => {
-    const state = {
-      configuration: {
-        username: "admin",
-        password: "935j-jv38-yeu9",
-        baseUrl: "https://dev.newlogic-demo.com/",
-        database: "devel",
-      },
-    };;
     const operations = [
       state => {
         return { counter: 1 };
@@ -30,12 +37,25 @@ describe("execute", () => {
       .then(done)
       .catch(done);
   });
+});
 
-  it("assigns references, data to the initialState", () => {
-    const state = {};
+describe("getServicePoint", () => {
+  it("get non-existing service point from demo server", async () => {
+    let finalState = await getServicePoint("n0n-3x15t1n6-53rv1c3-p01nt")(state);
+    expect(finalState.data).to.be.undefined;
+  });
+});
 
-    execute()(state).then(finalState => {
-      expect(finalState).to.eql({ references: [], data: null });
-    });
+describe("searchGroup", () => {
+  it("search non-existing group from demo server", async () => {
+    let finalState = await searchGroup([["id", "=", -1]])(state);
+    expect(finalState.data).to.be.undefined;
+  });
+});
+
+describe("searchIndividual", () => {
+  it("search non-existing individual from demo server", async () => {
+    let finalState = await searchIndividual([["id", "=", -1]])(state);
+    expect(finalState.data).to.be.undefined;
   });
 });

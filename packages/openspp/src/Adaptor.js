@@ -248,6 +248,7 @@ export function getGroupMembers(registrant_id, offset=0, callback=false) {
       if (callback) {
         return callback(nextState);
       }
+      return nextState;
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -296,6 +297,7 @@ export function getServicePoint(name, offset=0, callback=false) {
       if (callback) {
         return callback(nextState);
       }
+      return nextState;
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
