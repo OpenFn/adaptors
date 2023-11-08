@@ -1,4 +1,4 @@
-import xlsx from 'xlsx';
+// import xlsx from 'xlsx';
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
 import { composeNextState, asData } from '@openfn/language-common';
@@ -50,22 +50,19 @@ const isStream = value => {
   return false;
 };
 
-export function handleResponse(response, state, callback) {
-  let nextState;
+export function handleResponse(response, state, callback = (s) => s) {
   // Don't compose state if response is a stream
   if (isStream(response)) {
-    nextState = {
+    return callback({
       ...state,
       data: response,
-    };
-  } else {
-    nextState = {
-      ...composeNextState(state, response),
-      response,
-    };
+    });
   }
-  if (callback) return callback(nextState);
-  return nextState;
+
+  callback({
+    ...composeNextState(state, response),
+    response,
+  });
 }
 
 export function handleResponseError(response, data, method) {
