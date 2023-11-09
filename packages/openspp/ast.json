@@ -541,8 +541,7 @@
       "name": "enroll",
       "params": [
         "registrant_id",
-        "program_id",
-        "callback"
+        "program_id"
       ],
       "docs": {
         "description": "enroll registrant to program from OpenSPP",
@@ -590,14 +589,13 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "unenroll",
       "params": [
         "registrant_id",
-        "program_id",
-        "callback"
+        "program_id"
       ],
       "docs": {
         "description": "unenroll registrant from program from OpenSPP",
@@ -645,7 +643,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
