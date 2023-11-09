@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor openspp",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings test/**/*.test.js",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings test/**/*.test.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
