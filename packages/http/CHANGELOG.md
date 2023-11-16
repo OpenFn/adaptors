@@ -1,5 +1,12 @@
 # @openfn/language-http
 
+## 5.1.0
+
+### Minor Changes
+
+- 8e2b79c: Clean up `state.response.request` by returning only
+  `{ method, path, host, protocol, _headers }`
+
 ## 5.0.4
 
 ### Patch Changes
