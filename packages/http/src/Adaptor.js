@@ -95,6 +95,8 @@ function handleResponse(state, response) {
     response.status,
     '✓'
   );
+  const { method, path, host, protocol, _headers } = response.request;
+  response.request = { method, path, host, protocol, _headers };
 
   const compatibleResp = {
     ...response,
