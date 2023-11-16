@@ -531,7 +531,7 @@ export function getPrograms(offset = 0, callback = false) {
 }
 
 /**
- * get programs list from OpenSPP
+ * get programs list for specific registrant from OpenSPP
  * @public
  * @example
  * getEnrolledPrograms("IND_Q4VGGZPF")
@@ -575,14 +575,13 @@ export function getEnrolledPrograms(registrant_id, callback = false) {
 }
 
 /**
- * enroll registrant to program from OpenSPP
+ * enroll registrant to program in OpenSPP
  * @public
  * @example
  * enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @function
  * @param {string} registrant_id - registrant_id of group / individual wanted to enroll
  * @param {string} program_id - program_id of program
- * @param {function} callback - An optional callback function
  */
 export function enroll(registrant_id, program_id) {
   return async state => {
@@ -620,14 +619,13 @@ export function enroll(registrant_id, program_id) {
 }
 
 /**
- * unenroll registrant from program from OpenSPP
+ * unenroll registrant from program in OpenSPP
  * @public
  * @example
  * unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @function
  * @param {string} registrant_id - registrant_id of group / individual wanted to unenroll
  * @param {string} program_id - program_id of program
- * @param {function} callback - An optional callback function
  */
 export function unenroll(registrant_id, program_id) {
   return async state => {
@@ -658,6 +656,311 @@ export function unenroll(registrant_id, program_id) {
       return state;
     }
   };
+}
+
+/**
+ * create new individual for OpenSPP
+ * @public
+ * @example
+ * createIndividual({ name: "Individual 1" })
+ * @function
+ * @param {object} data - registrant create data
+ * @param {function} callback - An optional callback function
+ * @returns {Operation}
+ */
+export function createIndividual(data, callback=false) {
+  return async state => {
+    try {
+      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
+        throw new Error(`${data} is not a create object!`);
+      }
+      if (!data.name) {
+        throw new Error(`"name" is a required parameter!`);
+      }
+      data.is_registrant = true;
+      data.is_group = false;
+      let individualId = await sppConnector.create('res.partner', data);
+      let res = await sppConnector.searchRead(
+        'res.partner',
+        [['id', '=', individualId]],
+        ['registrant_id'],
+        { limit: 1 }
+      );
+      let individualRegistrantId = res[0].registrant_id;
+      console.log(`ℹ Individual created with registrant ID: ${individualRegistrantId}`);
+      let nextState = composeNextState(state, individualRegistrantId);
+      if (callback) {
+        return callback(nextState);
+      }
+      return nextState;
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+      return state;
+    }
+  }
+}
+
+/**
+ * create new group for OpenSPP
+ * @public
+ * @example
+ * createGroup({ name: "Group 1" })
+ * @function
+ * @param {object} data - registrant create data
+ * @param {function} callback - An optional callback function
+ * @returns {Operation}
+ */
+export function createGroup(data, callback=false) {
+  return async state => {
+    try {
+      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
+        throw new Error(`${data} is not a create object!`);
+      }
+      if (!data.name) {
+        throw new Error(`"name" is a required parameter!`);
+      }
+      data.is_registrant = true;
+      data.is_group = true;
+      let groupId = await sppConnector.create('res.partner', data);
+      let res = await sppConnector.searchRead(
+        'res.partner',
+        [['id', '=', groupId]],
+        ['registrant_id'],
+        { limit: 1 }
+      );
+      let groupRegistrantId = res[0].registrant_id;
+      console.log(`ℹ Group created with registrant ID: ${groupRegistrantId}`);
+      let nextState = composeNextState(state, groupRegistrantId);
+      if (callback) {
+        return callback(nextState);
+      }
+      return nextState;
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+      return state;
+    }
+  }
+}
+
+/**
+ * update group for OpenSPP
+ * @public
+ * @example
+ * updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
+ * @function
+ * @param {string} group_id - group registrant id
+ * @param {object} data - registrant update data
+ * @returns {Operation}
+ */
+export function updateGroup(group_id, data) {
+  return async state => {
+    try {
+      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
+        throw new Error(`${data} is not an update object!`);
+      }
+      let res = await sppConnector.searchRead(
+        'res.partner',
+        [
+          ['registrant_id', '=', group_id],
+          ['is_registrant', '=', true],
+          ['is_group', '=', true],
+        ],
+        ['id'],
+        { limit: 1, order: 'id desc' },
+      );
+      if (res.length === 0) {
+        throw new Error(`Group with registrant id: ${group_id} does not exists!`);
+      }
+      let groupId = res[0].id;
+      await sppConnector.update(
+        'res.partner',
+        groupId,
+        data
+      );
+      console.log(`ℹ Group ${group_id} updated!`);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+    } finally {
+      return state;
+    }
+  }
+}
+
+/**
+ * update individual for OpenSPP
+ * @public
+ * @example
+ * updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
+ * @function
+ * @param {string} individual_id - individual registrant id
+ * @param {object} data - registrant update data
+ * @returns {Operation}
+ */
+export function updateIndividual(individual_id, data) {
+  return async state => {
+    try {
+      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
+        throw new Error(`${data} is not an update object!`);
+      }
+      let res = await sppConnector.searchRead(
+        'res.partner',
+        [
+          ['registrant_id', '=', individual_id],
+          ['is_registrant', '=', true],
+          ['is_group', '=', false],
+        ],
+        ['id'],
+        { limit: 1, order: 'id desc' },
+      );
+      if (res.length === 0) {
+        throw new Error(`Individual with registrant id: ${individual_id} does not exists!`);
+      }
+      let individualId = res[0].id;
+      await sppConnector.update(
+        'res.partner',
+        individualId,
+        data
+      );
+      console.log(`ℹ Individual ${individual_id} updated!`);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+    } finally {
+      return state;
+    }
+  }
+}
+
+/**
+ * add individual to group in OpenSPP
+ * @public
+ * @example
+ * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
+ * @function
+ * @param {string} group_id - group registrant id
+ * @param {string} individual_id - individual registrant id
+ * @param {string} role - individual role in group
+ * @returns {Operation}
+ */
+export function addToGroup(group_id, individual_id, role='') {
+  return async state => {
+    try {
+      let roleId = [];
+      if (role.length > 0) {
+        roleId = await sppConnector.search(
+          'g2p.group.membership.kind',
+          [['name', '=', role]]
+        );
+        if (roleId.length === 0) {
+          roleId = [await sppConnector.create(
+            'g2p.group.membership.kind',
+            { name: role }
+          )];
+        }
+      }
+      let res = await sppConnector.searchRead(
+        'g2p.group.membership',
+        [
+          ['group.registrant_id', '=', group_id],
+          ['individual.registrant_id', '=', individual_id],
+          ['is_ended', '=', false],
+        ],
+        ['id', 'kind'],
+        { limit: 1 },
+      );
+      if (res.length === 0) {
+        let individual = await sppConnector.searchRead(
+          'res.partner',
+          [
+            ['registrant_id', '=', individual_id],
+            ['is_registrant', '=', true],
+            ['is_group', '=', false],
+          ],
+          ['id'],
+          { limit: 1 },
+        );
+        let group = await sppConnector.searchRead(
+          'res.partner',
+          [
+            ['registrant_id', '=', group_id],
+            ['is_registrant', '=', true],
+            ['is_group', '=', true],
+          ],
+          ['id'],
+          { limit: 1 },
+        );
+        if (individual.length === 0 || group.length === 0) {
+          throw new Error(`Individual or Group does not exist!`);
+        }
+        await sppConnector.create(
+          'g2p.group.membership',
+          {
+            individual: individual[0].id,
+            group: group[0].id,
+            kind: [[6, 0, roleId]],
+          }
+        );
+      } else {
+        let groupMembershipIds = res.map( i => i.id );
+        await sppConnector.update(
+          'g2p.group.membership',
+          groupMembershipIds,
+          { kind: [[6, 0, roleId]] },
+        );
+      }
+      if (role.length > 0) {
+        console.log(`ℹ Individual ${individual_id} added to group ${group_id} with role ${role}!`);
+      } else {
+        console.log(`ℹ Individual ${individual_id} added to group ${group_id}!`);
+      }
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+    } finally {
+      return state;
+    }
+  }
+}
+
+/**
+ * remove individual from group in OpenSPP
+ * @public
+ * @example
+ * removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+ * @function
+ * @param {string} group_id - group registrant id
+ * @param {string} individual_id - individual registrant id
+ * @returns {Operation}
+ */
+export function removeFromGroup(group_id, individual_id) {
+  return async state => {
+    try {
+      let res = await sppConnector.searchRead(
+        'g2p.group.membership',
+        [
+          ['group.registrant_id', '=', group_id],
+          ['individual.registrant_id', '=', individual_id],
+          ['is_ended', '=', false],
+        ],
+        ['id'],
+      );
+      if (res.length > 0) {
+        let groupMembershipIds = res.map( i => i.id );
+        let now = new Date();
+        let sppDateTimeNowString =
+          `${now.getUTCFullYear()}-${now.getUTCMonth() + 1}-${now.getUTCDate()} `
+          + `${now.getUTCHours()}:${now.getUTCMinutes()}:${now.getUTCSeconds()}`;
+        await sppConnector.update(
+          'g2p.group.membership',
+          groupMembershipIds,
+          { ended_date: sppDateTimeNowString }
+        );
+      }
+      console.log(`ℹ Individual ${individual_id} membership to group ${group_id} is ended!`);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+    } finally {
+      return state;
+    }
+  }
 }
 
 export {
