@@ -1,5 +1,11 @@
 # @openfn/language-openspp
 
+## 1.1.1
+
+### Patch Changes
+
+- 48b4e97: update `spp date time now string` format
+
 ## 1.1.0
 
 - Create OpenSPP adaptor with these functions:
