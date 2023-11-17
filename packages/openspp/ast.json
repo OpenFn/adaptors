@@ -491,7 +491,7 @@
         "callback"
       ],
       "docs": {
-        "description": "get programs list from OpenSPP",
+        "description": "get programs list for specific registrant from OpenSPP",
         "tags": [
           {
             "title": "public",
@@ -544,7 +544,7 @@
         "program_id"
       ],
       "docs": {
-        "description": "enroll registrant to program from OpenSPP",
+        "description": "enroll registrant to program in OpenSPP",
         "tags": [
           {
             "title": "public",
@@ -577,19 +577,10 @@
               "name": "string"
             },
             "name": "program_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "unenroll",
@@ -598,7 +589,7 @@
         "program_id"
       ],
       "docs": {
-        "description": "unenroll registrant from program from OpenSPP",
+        "description": "unenroll registrant from program in OpenSPP",
         "tags": [
           {
             "title": "public",
@@ -631,6 +622,42 @@
               "name": "string"
             },
             "name": "program_id"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createIndividual",
+      "params": [
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "create new individual for OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createIndividual({ name: \"Individual 1\" })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "registrant create data",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
           },
           {
             "title": "param",
@@ -640,10 +667,293 @@
               "name": "function"
             },
             "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
+    },
+    {
+      "name": "createGroup",
+      "params": [
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "create new group for OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createGroup({ name: \"Group 1\" })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "registrant create data",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "An optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateGroup",
+      "params": [
+        "group_id",
+        "data"
+      ],
+      "docs": {
+        "description": "update group for OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "updateGroup(\"GRP_B2BRHJN2\", { name: \"Group 1\" })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "group registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "group_id"
+          },
+          {
+            "title": "param",
+            "description": "registrant update data",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateIndividual",
+      "params": [
+        "individual_id",
+        "data"
+      ],
+      "docs": {
+        "description": "update individual for OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "updateIndividual(\"IND_8DUQL4M4\", { name: \"Individual 1\" })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "individual registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "individual_id"
+          },
+          {
+            "title": "param",
+            "description": "registrant update data",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "addToGroup",
+      "params": [
+        "group_id",
+        "individual_id",
+        "role"
+      ],
+      "docs": {
+        "description": "add individual to group in OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"Head\")"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "group registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "group_id"
+          },
+          {
+            "title": "param",
+            "description": "individual registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "individual_id"
+          },
+          {
+            "title": "param",
+            "description": "individual role in group",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "role"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "removeFromGroup",
+      "params": [
+        "group_id",
+        "individual_id"
+      ],
+      "docs": {
+        "description": "remove individual from group in OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "removeFromGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "group registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "group_id"
+          },
+          {
+            "title": "param",
+            "description": "individual registrant id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "individual_id"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
