@@ -1,6 +1,7 @@
 import {
   execute as commonExecute,
   composeNextState,
+  dateFns,
 } from '@openfn/language-common';
 
 import pkg from 'odoo-await';
@@ -904,9 +905,7 @@ export function removeFromGroup(group_id, individual_id) {
       if (res.length > 0) {
         let groupMembershipIds = res.map( i => i.id );
         let now = new Date();
-        let sppDateTimeNowString =
-          `${now.getUTCFullYear()}-${now.getUTCMonth() + 1}-${now.getUTCDate()} `
-          + `${now.getUTCHours()}:${now.getUTCMinutes()}:${now.getUTCSeconds()}`;
+        let sppDateTimeNowString = dateFns.format(now, 'y-M-d H:m:s');
         await sppConnector.update(
           'g2p.group.membership',
           groupMembershipIds,
