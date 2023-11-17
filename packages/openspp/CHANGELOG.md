@@ -1,6 +1,6 @@
 # @openfn/language-openspp
 
-## 1.0.1
+## 1.1.0
 
 - Create OpenSPP adaptor with these functions:
   - getGroup(): get existing group information
