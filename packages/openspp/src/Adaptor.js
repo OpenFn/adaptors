@@ -109,7 +109,7 @@ async function createProgramMembership(registrant_id, program_id) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroup(registrant_id, callback = false) {
+export function getGroup(registrant_id, callback=(s) => s) {
   return async state => {
     let defaultDomain = [
       ['is_registrant', '=', true],
@@ -137,11 +137,7 @@ export function getGroup(registrant_id, callback = false) {
       }
       console.log(`ℹ Group ${registrant_id} found!`);
       let nextState = composeNextState(state, group[0]);
-      if (callback) {
-        return callback(nextState);
-      } else {
-        return nextState;
-      }
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -159,7 +155,7 @@ export function getGroup(registrant_id, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getIndividual(registrant_id, callback = false) {
+export function getIndividual(registrant_id, callback=(s) => s) {
   return async state => {
     let defaultDomain = [
       ['is_registrant', '=', true],
@@ -189,11 +185,7 @@ export function getIndividual(registrant_id, callback = false) {
       }
       console.log(`ℹ Individual with id=${registrant_id} found!`);
       let nextState = composeNextState(state, individual[0]);
-      if (callback) {
-        return callback(nextState);
-      } else {
-        return nextState;
-      }
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -212,7 +204,7 @@ export function getIndividual(registrant_id, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroupMembers(registrant_id, offset = 0, callback = false) {
+export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
   return async state => {
     try {
       let group_id = await sppConnector.search('res.partner', [
@@ -257,10 +249,7 @@ export function getGroupMembers(registrant_id, offset = 0, callback = false) {
       }
       console.log(`ℹ Household ${registrant_id} members found!`);
       let nextState = composeNextState(state, members);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -279,7 +268,7 @@ export function getGroupMembers(registrant_id, offset = 0, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getServicePoint(name, offset = 0, callback = false) {
+export function getServicePoint(name, offset = 0, callback=(s) => s) {
   return async state => {
     let defaultDomain = [['name', '=', name]];
     let defaultFields = [
@@ -311,10 +300,7 @@ export function getServicePoint(name, offset = 0, callback = false) {
       }
       console.log(`ℹ Agent ${name} found!`);
       let nextState = composeNextState(state, agents);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -333,7 +319,7 @@ export function getServicePoint(name, offset = 0, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchGroup(domain, offset = 0, callback = false) {
+export function searchGroup(domain, offset = 0, callback=(s) => s) {
   return async state => {
     let defaultDomain = [
       ['is_registrant', '=', true],
@@ -370,10 +356,7 @@ export function searchGroup(domain, offset = 0, callback = false) {
       }
       console.log(`ℹ Group with domain=${domain} found!`);
       let nextState = composeNextState(state, groups);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -392,7 +375,7 @@ export function searchGroup(domain, offset = 0, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchIndividual(domain, offset = 0, callback = false) {
+export function searchIndividual(domain, offset = 0, callback=(s) => s) {
   return async state => {
     let defaultDomain = [
       ['is_registrant', '=', true],
@@ -429,10 +412,7 @@ export function searchIndividual(domain, offset = 0, callback = false) {
       }
       console.log(`ℹ Individual with domain=${domain} found!`);
       let nextState = composeNextState(state, individuals);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -450,7 +430,7 @@ export function searchIndividual(domain, offset = 0, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getProgram(program_id, callback = false) {
+export function getProgram(program_id, callback=(s) => s) {
   return async state => {
     let defaultDomain = [['program_id', '=', program_id]];
     let defaultFields = [
@@ -475,10 +455,7 @@ export function getProgram(program_id, callback = false) {
       }
       console.log(`ℹ Program ${program_id} found!`);
       let nextState = composeNextState(state, program[0]);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -496,7 +473,7 @@ export function getProgram(program_id, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getPrograms(offset = 0, callback = false) {
+export function getPrograms(offset = 0, callback=(s) => s) {
   return async state => {
     let defaultDomain = [];
     let defaultFields = ['name', 'program_id'];
@@ -519,10 +496,7 @@ export function getPrograms(offset = 0, callback = false) {
       }
       console.log(`ℹ Program(s) found!`);
       let nextState = composeNextState(state, programs);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -540,7 +514,7 @@ export function getPrograms(offset = 0, callback = false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getEnrolledPrograms(registrant_id, callback = false) {
+export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
   return async state => {
     let defaultDomain = [['partner_id.registrant_id', '=', registrant_id]];
     let defaultFields = ['program_id'];
@@ -563,10 +537,7 @@ export function getEnrolledPrograms(registrant_id, callback = false) {
         { limit: program_ids.length }
       );
       let nextState = composeNextState(state, programs);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -668,7 +639,7 @@ export function unenroll(registrant_id, program_id) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function createIndividual(data, callback=false) {
+export function createIndividual(data, callback=(s) => s) {
   return async state => {
     try {
       if (typeof data !== 'object' || Array.isArray(data) || data === null) {
@@ -689,10 +660,7 @@ export function createIndividual(data, callback=false) {
       let individualRegistrantId = res[0].registrant_id;
       console.log(`ℹ Individual created with registrant ID: ${individualRegistrantId}`);
       let nextState = composeNextState(state, individualRegistrantId);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
@@ -710,7 +678,7 @@ export function createIndividual(data, callback=false) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function createGroup(data, callback=false) {
+export function createGroup(data, callback=(s) => s) {
   return async state => {
     try {
       if (typeof data !== 'object' || Array.isArray(data) || data === null) {
@@ -731,10 +699,7 @@ export function createGroup(data, callback=false) {
       let groupRegistrantId = res[0].registrant_id;
       console.log(`ℹ Group created with registrant ID: ${groupRegistrantId}`);
       let nextState = composeNextState(state, groupRegistrantId);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
+      return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
