@@ -902,7 +902,7 @@ export function removeFromGroup(group_id, individual_id) {
       if (res.length > 0) {
         const groupMembershipIds = res.map( i => i.id );
         const now = new Date();
-        const sppDateTimeNowString = dateFns.format(now, 'y-M-d H:m:s');
+        const sppDateTimeNowString = dateFns.format(now, 'y-M-d HH:mm:ss');
         await sppConnector.update(
           'g2p.group.membership',
           groupMembershipIds,
