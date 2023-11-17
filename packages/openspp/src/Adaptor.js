@@ -642,9 +642,6 @@ export function unenroll(registrant_id, program_id) {
 export function createIndividual(data, callback=(s) => s) {
   return async state => {
     try {
-      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
-        throw new Error(`${data} is not a create object!`);
-      }
       if (!data.name) {
         throw new Error(`"name" is a required parameter!`);
       }
@@ -681,9 +678,6 @@ export function createIndividual(data, callback=(s) => s) {
 export function createGroup(data, callback=(s) => s) {
   return async state => {
     try {
-      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
-        throw new Error(`${data} is not a create object!`);
-      }
       if (!data.name) {
         throw new Error(`"name" is a required parameter!`);
       }
