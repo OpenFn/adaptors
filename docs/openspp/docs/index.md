@@ -2,7 +2,13 @@
 
 <dl>
 <dt>
-    <a href="#enroll">enroll(registrant_id, program_id, callback)</a></dt>
+    <a href="#addToGroup">addToGroup(group_id, individual_id, role)</a></dt>
+<dt>
+    <a href="#createGroup">createGroup(data, callback)</a></dt>
+<dt>
+    <a href="#createIndividual">createIndividual(data, callback)</a></dt>
+<dt>
+    <a href="#enroll">enroll(registrant_id, program_id)</a></dt>
 <dt>
     <a href="#getEnrolledPrograms">getEnrolledPrograms(registrant_id, callback)</a></dt>
 <dt>
@@ -18,17 +24,84 @@
 <dt>
     <a href="#getServicePoint">getServicePoint(name, [offset], callback)</a></dt>
 <dt>
+    <a href="#removeFromGroup">removeFromGroup(group_id, individual_id)</a></dt>
+<dt>
     <a href="#searchGroup">searchGroup(domain, [offset], callback)</a></dt>
 <dt>
     <a href="#searchIndividual">searchIndividual(domain, [offset], callback)</a></dt>
 <dt>
-    <a href="#unenroll">unenroll(registrant_id, program_id, callback)</a></dt>
+    <a href="#unenroll">unenroll(registrant_id, program_id)</a></dt>
+<dt>
+    <a href="#updateGroup">updateGroup(group_id, data)</a></dt>
+<dt>
+    <a href="#updateIndividual">updateIndividual(individual_id, data)</a></dt>
 </dl>
+
+## addToGroup
+
+addToGroup(group_id, individual_id, role) ⇒ <code>Operation</code>
+add individual to group in OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| group_id | <code>string</code> | group registrant id |
+| individual_id | <code>string</code> | individual registrant id |
+| role | <code>string</code> | individual role in group |
+
+**Example**  
+```js
+addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
+```
+
+* * *
+
+## createGroup
+
+createGroup(data, callback) ⇒ <code>Operation</code>
+create new group for OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | registrant create data |
+| callback | <code>function</code> | An optional callback function |
+
+**Example**  
+```js
+createGroup({ name: "Group 1" })
+```
+
+* * *
+
+## createIndividual
+
+createIndividual(data, callback) ⇒ <code>Operation</code>
+create new individual for OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | registrant create data |
+| callback | <code>function</code> | An optional callback function |
+
+**Example**  
+```js
+createIndividual({ name: "Individual 1" })
+```
+
+* * *
 
 ## enroll
 
-enroll(registrant_id, program_id, callback)
-enroll registrant to program from OpenSPP
+enroll(registrant_id, program_id)
+enroll registrant to program in OpenSPP
 
 **Kind**: global function  
 **Access**: public  
@@ -37,7 +110,6 @@ enroll registrant to program from OpenSPP
 | --- | --- | --- |
 | registrant_id | <code>string</code> | registrant_id of group / individual wanted to enroll |
 | program_id | <code>string</code> | program_id of program |
-| callback | <code>function</code> | An optional callback function |
 
 **Example**  
 ```js
@@ -49,7 +121,7 @@ enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 ## getEnrolledPrograms
 
 getEnrolledPrograms(registrant_id, callback) ⇒ <code>Operation</code>
-get programs list from OpenSPP
+get programs list for specific registrant from OpenSPP
 
 **Kind**: global function  
 **Access**: public  
@@ -188,6 +260,26 @@ getServicePoint("000117")
 
 * * *
 
+## removeFromGroup
+
+removeFromGroup(group_id, individual_id) ⇒ <code>Operation</code>
+remove individual from group in OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| group_id | <code>string</code> | group registrant id |
+| individual_id | <code>string</code> | individual registrant id |
+
+**Example**  
+```js
+removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+```
+
+* * *
+
 ## searchGroup
 
 searchGroup(domain, [offset], callback) ⇒ <code>Operation</code>
@@ -232,8 +324,8 @@ searchIndividual([["registrant_id", "=", "IND_Q4VGGZPF"]])
 
 ## unenroll
 
-unenroll(registrant_id, program_id, callback)
-unenroll registrant from program from OpenSPP
+unenroll(registrant_id, program_id)
+unenroll registrant from program in OpenSPP
 
 **Kind**: global function  
 **Access**: public  
@@ -242,11 +334,50 @@ unenroll registrant from program from OpenSPP
 | --- | --- | --- |
 | registrant_id | <code>string</code> | registrant_id of group / individual wanted to unenroll |
 | program_id | <code>string</code> | program_id of program |
-| callback | <code>function</code> | An optional callback function |
 
 **Example**  
 ```js
 unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
+```
+
+* * *
+
+## updateGroup
+
+updateGroup(group_id, data) ⇒ <code>Operation</code>
+update group for OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| group_id | <code>string</code> | group registrant id |
+| data | <code>object</code> | registrant update data |
+
+**Example**  
+```js
+updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
+```
+
+* * *
+
+## updateIndividual
+
+updateIndividual(individual_id, data) ⇒ <code>Operation</code>
+update individual for OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| individual_id | <code>string</code> | individual registrant id |
+| data | <code>object</code> | registrant update data |
+
+**Example**  
+```js
+updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
 ```
 
 * * *
