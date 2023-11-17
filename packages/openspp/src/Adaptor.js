@@ -112,12 +112,12 @@ async function createProgramMembership(registrant_id, program_id) {
  */
 export function getGroup(registrant_id, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [
+    const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', true],
       ['registrant_id', '=', registrant_id],
     ];
-    let defaultFields = [
+    const defaultFields = [
       'name',
       'address',
       'phone',
@@ -126,7 +126,7 @@ export function getGroup(registrant_id, callback=(s) => s) {
       'registrant_id',
     ];
     try {
-      let group = await sppConnector.searchRead(
+      const group = await sppConnector.searchRead(
         'res.partner',
         defaultDomain,
         defaultFields,
@@ -137,7 +137,7 @@ export function getGroup(registrant_id, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Group ${registrant_id} found!`);
-      let nextState = composeNextState(state, group[0]);
+      const nextState = composeNextState(state, group[0]);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -158,12 +158,12 @@ export function getGroup(registrant_id, callback=(s) => s) {
  */
 export function getIndividual(registrant_id, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [
+    const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', false],
       ['registrant_id', '=', registrant_id],
     ];
-    let defaultFields = [
+    const defaultFields = [
       'name',
       'address',
       'phone',
@@ -174,7 +174,7 @@ export function getIndividual(registrant_id, callback=(s) => s) {
       'birthdate',
     ];
     try {
-      let individual = await sppConnector.searchRead(
+      const individual = await sppConnector.searchRead(
         'res.partner',
         defaultDomain,
         defaultFields,
@@ -185,7 +185,7 @@ export function getIndividual(registrant_id, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Individual with id=${registrant_id} found!`);
-      let nextState = composeNextState(state, individual[0]);
+      const nextState = composeNextState(state, individual[0]);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -208,7 +208,7 @@ export function getIndividual(registrant_id, callback=(s) => s) {
 export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
   return async state => {
     try {
-      let group_id = await sppConnector.search('res.partner', [
+      const group_id = await sppConnector.search('res.partner', [
         ['is_group', '=', true],
         ['is_registrant', '=', true],
         ['registrant_id', '=', registrant_id],
@@ -217,11 +217,11 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
         console.log(`✗ Error: Group id=${registrant_id} not found!`);
         return state;
       }
-      let defaultDomain = [
+      const defaultDomain = [
         ['is_ended', '=', false],
         ['group', '=', group_id[0]],
       ];
-      let defaultFields = [
+      const defaultFields = [
         'individual',
         'kind',
         'start_date',
@@ -229,14 +229,14 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
         'individual_birthdate',
         'individual_gender',
       ];
-      let options = {
+      const options = {
         limit: 100,
         order: 'id desc',
       };
       if (offset > 0) {
         options.offset = offset;
       }
-      let members = await sppConnector.searchRead(
+      const members = await sppConnector.searchRead(
         'g2p.group.membership',
         defaultDomain,
         defaultFields,
@@ -249,7 +249,7 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Household ${registrant_id} members found!`);
-      let nextState = composeNextState(state, members);
+      const nextState = composeNextState(state, members);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -271,8 +271,8 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
  */
 export function getServicePoint(name, offset = 0, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [['name', '=', name]];
-    let defaultFields = [
+    const defaultDomain = [['name', '=', name]];
+    const defaultFields = [
       'name',
       'area_id',
       'service_type_ids',
@@ -281,7 +281,7 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
       'is_contract_active',
       'is_disabled',
     ];
-    let options = {
+    const options = {
       limit: 100,
       order: 'id desc',
     };
@@ -289,7 +289,7 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
       options.offset = offset;
     }
     try {
-      let agents = await sppConnector.searchRead(
+      const agents = await sppConnector.searchRead(
         'spp.service.point',
         defaultDomain,
         defaultFields,
@@ -300,7 +300,7 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Agent ${name} found!`);
-      let nextState = composeNextState(state, agents);
+      const nextState = composeNextState(state, agents);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -322,12 +322,12 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
  */
 export function searchGroup(domain, offset = 0, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [
+    const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', true],
     ];
-    let defaultOrder = 'id desc';
-    let defaultFields = ['name', 'registrant_id'];
+    const defaultOrder = 'id desc';
+    const defaultFields = ['name', 'registrant_id'];
     let isDomain = true;
     for (const element of domain) {
       if (!Array.isArray(element)) {
@@ -338,14 +338,14 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
     if (!isDomain) {
       domain = [domain];
     }
-    let finalDomain = [...domain, ...defaultDomain];
-    let options = {
+    const finalDomain = [...domain, ...defaultDomain];
+    const options = {
       limit: 100,
       offset: offset,
       order: defaultOrder,
     };
     try {
-      let groups = await sppConnector.searchRead(
+      const groups = await sppConnector.searchRead(
         'res.partner',
         finalDomain,
         defaultFields,
@@ -356,7 +356,7 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Group with domain=${domain} found!`);
-      let nextState = composeNextState(state, groups);
+      const nextState = composeNextState(state, groups);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -378,12 +378,12 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
  */
 export function searchIndividual(domain, offset = 0, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [
+    const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', false],
     ];
-    let defaultOrder = 'id desc';
-    let defaultFields = ['name', 'registrant_id'];
+    const defaultOrder = 'id desc';
+    const defaultFields = ['name', 'registrant_id'];
     let isDomain = true;
     for (const element of domain) {
       if (!Array.isArray(element)) {
@@ -394,14 +394,14 @@ export function searchIndividual(domain, offset = 0, callback=(s) => s) {
     if (!isDomain) {
       domain = [domain];
     }
-    let finalDomain = [...domain, ...defaultDomain];
-    let options = {
+    const finalDomain = [...domain, ...defaultDomain];
+    const options = {
       limit: 100,
       offset: offset,
       order: defaultOrder,
     };
     try {
-      let individuals = await sppConnector.searchRead(
+      const individuals = await sppConnector.searchRead(
         'res.partner',
         finalDomain,
         defaultFields,
@@ -412,7 +412,7 @@ export function searchIndividual(domain, offset = 0, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Individual with domain=${domain} found!`);
-      let nextState = composeNextState(state, individuals);
+      const nextState = composeNextState(state, individuals);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -433,8 +433,8 @@ export function searchIndividual(domain, offset = 0, callback=(s) => s) {
  */
 export function getProgram(program_id, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [['program_id', '=', program_id]];
-    let defaultFields = [
+    const defaultDomain = [['program_id', '=', program_id]];
+    const defaultFields = [
       'name',
       'program_id',
       'eligible_beneficiaries_count',
@@ -442,9 +442,9 @@ export function getProgram(program_id, callback=(s) => s) {
       'state',
       'target_type',
     ];
-    let options = { limit: 1 };
+    const options = { limit: 1 };
     try {
-      let program = await sppConnector.searchRead(
+      const program = await sppConnector.searchRead(
         'g2p.program',
         defaultDomain,
         defaultFields,
@@ -455,7 +455,7 @@ export function getProgram(program_id, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Program ${program_id} found!`);
-      let nextState = composeNextState(state, program[0]);
+      const nextState = composeNextState(state, program[0]);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -476,16 +476,16 @@ export function getProgram(program_id, callback=(s) => s) {
  */
 export function getPrograms(offset = 0, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [];
-    let defaultFields = ['name', 'program_id'];
-    let defaultOrder = 'id';
-    let options = {
+    const defaultDomain = [];
+    const defaultFields = ['name', 'program_id'];
+    const defaultOrder = 'id';
+    const options = {
       limit: 100,
       offset: offset,
       order: defaultOrder,
     };
     try {
-      let programs = await sppConnector.searchRead(
+      const programs = await sppConnector.searchRead(
         'g2p.program',
         defaultDomain,
         defaultFields,
@@ -496,7 +496,7 @@ export function getPrograms(offset = 0, callback=(s) => s) {
         return state;
       }
       console.log(`ℹ Program(s) found!`);
-      let nextState = composeNextState(state, programs);
+      const nextState = composeNextState(state, programs);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -517,8 +517,8 @@ export function getPrograms(offset = 0, callback=(s) => s) {
  */
 export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
   return async state => {
-    let defaultDomain = [['partner_id.registrant_id', '=', registrant_id]];
-    let defaultFields = ['program_id'];
+    const defaultDomain = [['partner_id.registrant_id', '=', registrant_id]];
+    const defaultFields = ['program_id'];
     try {
       let program_ids = await sppConnector.searchRead(
         'g2p.program_membership',
@@ -531,13 +531,13 @@ export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
       }
       console.log(`ℹ Enrolled program(s) found!`);
       program_ids = program_ids.map(i => i.program_id[0]);
-      let programs = await sppConnector.searchRead(
+      const programs = await sppConnector.searchRead(
         'g2p.program',
         [['id', 'in', program_ids]],
         defaultFields,
         { limit: program_ids.length }
       );
-      let nextState = composeNextState(state, programs);
+      const nextState = composeNextState(state, programs);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -557,20 +557,20 @@ export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
  */
 export function enroll(registrant_id, program_id) {
   return async state => {
-    let domain = [
+    const domain = [
       ['partner_id.registrant_id', '=', registrant_id],
       ['program_id.program_id', '=', program_id],
     ];
-    let fields = ['partner_id', 'program_id', 'state'];
+    const fields = ['partner_id', 'program_id', 'state'];
     try {
-      let programMember = await sppConnector.searchRead(
+      const programMember = await sppConnector.searchRead(
         'g2p.program_membership',
         domain,
         fields,
         { limit: 1 }
       );
       if (programMember.length > 0) {
-        let membership = programMember[0];
+        const membership = programMember[0];
         if (membership.state !== 'enrolled') {
           await sppConnector.update('g2p.program_membership', membership.id, {
             state: 'enrolled',
@@ -601,20 +601,20 @@ export function enroll(registrant_id, program_id) {
  */
 export function unenroll(registrant_id, program_id) {
   return async state => {
-    let domain = [
+    const domain = [
       ['partner_id.registrant_id', '=', registrant_id],
       ['program_id.program_id', '=', program_id],
     ];
-    let fields = ['partner_id', 'program_id', 'state'];
+    const fields = ['partner_id', 'program_id', 'state'];
     try {
-      let programMember = await sppConnector.searchRead(
+      const programMember = await sppConnector.searchRead(
         'g2p.program_membership',
         domain,
         fields,
         { limit: 1 }
       );
       if (programMember.length > 0 && programMember[0].state === 'enrolled') {
-        let membership = programMember[0];
+        const membership = programMember[0];
         await sppConnector.update('g2p.program_membership', membership.id, {
           state: 'not_eligible',
         });
@@ -648,16 +648,16 @@ export function createIndividual(data, callback=(s) => s) {
       }
       data.is_registrant = true;
       data.is_group = false;
-      let individualId = await sppConnector.create('res.partner', data);
-      let res = await sppConnector.searchRead(
+      const individualId = await sppConnector.create('res.partner', data);
+      const res = await sppConnector.searchRead(
         'res.partner',
         [['id', '=', individualId]],
         ['registrant_id'],
         { limit: 1 }
       );
-      let individualRegistrantId = res[0].registrant_id;
+      const individualRegistrantId = res[0].registrant_id;
       console.log(`ℹ Individual created with registrant ID: ${individualRegistrantId}`);
-      let nextState = composeNextState(state, individualRegistrantId);
+      const nextState = composeNextState(state, individualRegistrantId);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -684,16 +684,16 @@ export function createGroup(data, callback=(s) => s) {
       }
       data.is_registrant = true;
       data.is_group = true;
-      let groupId = await sppConnector.create('res.partner', data);
-      let res = await sppConnector.searchRead(
+      const groupId = await sppConnector.create('res.partner', data);
+      const res = await sppConnector.searchRead(
         'res.partner',
         [['id', '=', groupId]],
         ['registrant_id'],
         { limit: 1 }
       );
-      let groupRegistrantId = res[0].registrant_id;
+      const groupRegistrantId = res[0].registrant_id;
       console.log(`ℹ Group created with registrant ID: ${groupRegistrantId}`);
-      let nextState = composeNextState(state, groupRegistrantId);
+      const nextState = composeNextState(state, groupRegistrantId);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -715,10 +715,7 @@ export function createGroup(data, callback=(s) => s) {
 export function updateGroup(group_id, data) {
   return async state => {
     try {
-      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
-        throw new Error(`${data} is not an update object!`);
-      }
-      let res = await sppConnector.searchRead(
+      const res = await sppConnector.searchRead(
         'res.partner',
         [
           ['registrant_id', '=', group_id],
@@ -731,7 +728,7 @@ export function updateGroup(group_id, data) {
       if (res.length === 0) {
         throw new Error(`Group with registrant id: ${group_id} does not exists!`);
       }
-      let groupId = res[0].id;
+      const groupId = res[0].id;
       await sppConnector.update(
         'res.partner',
         groupId,
@@ -762,7 +759,7 @@ export function updateIndividual(individual_id, data) {
       if (typeof data !== 'object' || Array.isArray(data) || data === null) {
         throw new Error(`${data} is not an update object!`);
       }
-      let res = await sppConnector.searchRead(
+      const res = await sppConnector.searchRead(
         'res.partner',
         [
           ['registrant_id', '=', individual_id],
@@ -775,7 +772,7 @@ export function updateIndividual(individual_id, data) {
       if (res.length === 0) {
         throw new Error(`Individual with registrant id: ${individual_id} does not exists!`);
       }
-      let individualId = res[0].id;
+      const individualId = res[0].id;
       await sppConnector.update(
         'res.partner',
         individualId,
@@ -817,7 +814,7 @@ export function addToGroup(group_id, individual_id, role='') {
           )];
         }
       }
-      let res = await sppConnector.searchRead(
+      const res = await sppConnector.searchRead(
         'g2p.group.membership',
         [
           ['group.registrant_id', '=', group_id],
@@ -828,7 +825,7 @@ export function addToGroup(group_id, individual_id, role='') {
         { limit: 1 },
       );
       if (res.length === 0) {
-        let individual = await sppConnector.searchRead(
+        const individual = await sppConnector.searchRead(
           'res.partner',
           [
             ['registrant_id', '=', individual_id],
@@ -838,7 +835,7 @@ export function addToGroup(group_id, individual_id, role='') {
           ['id'],
           { limit: 1 },
         );
-        let group = await sppConnector.searchRead(
+        const group = await sppConnector.searchRead(
           'res.partner',
           [
             ['registrant_id', '=', group_id],
@@ -860,7 +857,7 @@ export function addToGroup(group_id, individual_id, role='') {
           }
         );
       } else {
-        let groupMembershipIds = res.map( i => i.id );
+        const groupMembershipIds = res.map( i => i.id );
         await sppConnector.update(
           'g2p.group.membership',
           groupMembershipIds,
@@ -893,7 +890,7 @@ export function addToGroup(group_id, individual_id, role='') {
 export function removeFromGroup(group_id, individual_id) {
   return async state => {
     try {
-      let res = await sppConnector.searchRead(
+      const res = await sppConnector.searchRead(
         'g2p.group.membership',
         [
           ['group.registrant_id', '=', group_id],
@@ -903,9 +900,9 @@ export function removeFromGroup(group_id, individual_id) {
         ['id'],
       );
       if (res.length > 0) {
-        let groupMembershipIds = res.map( i => i.id );
-        let now = new Date();
-        let sppDateTimeNowString = dateFns.format(now, 'y-M-d H:m:s');
+        const groupMembershipIds = res.map( i => i.id );
+        const now = new Date();
+        const sppDateTimeNowString = dateFns.format(now, 'y-M-d H:m:s');
         await sppConnector.update(
           'g2p.group.membership',
           groupMembershipIds,
