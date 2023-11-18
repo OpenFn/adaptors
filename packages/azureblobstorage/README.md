@@ -33,8 +33,7 @@ Assume you have a simple `state.json` file as follows:
 }
 ```
 
-If you create an simple OpenFn job, as shown below, to run via the OpenFn CLI.
-Add this content to a file `job.js`.
+Create a file `job.js`, as shown below, to run with the OpenFn CLI.
 
 ```js
 const data = state.data;
