@@ -32,7 +32,7 @@ export function execute(...operations) {
   };
 }
 
-// setupClient function for Azure Blob Storage
+// Create client for Azure Blob Storage
 function createClient(state) {
   const { accountName, accountKey } = state.configuration;
   const blobStorageUrl = `https://${accountName}.blob.core.windows.net`;
@@ -41,6 +41,7 @@ function createClient(state) {
   return state;
 }
 
+// Destroy client
 function teardownClient(state) {
   if (state.client) {
     // Perform any other cleanup or disconnection logic if required
@@ -76,9 +77,9 @@ function getBlockBlobClient(state, containerName, blobName) {
 export function createContainer(containerName) {
   return async (state) => {
     const containerClient = getContainerClient(state, containerName);
-    console.log(`Creating container '${containerName}'...`);
+    console.info(`Creating container '${containerName}'`);
     const response = await containerClient.create();
-    console.log(`Container '${containerName}' created successfully.`);
+    console.debug(`Container '${containerName}' created successfully.`);
     const nextState = composeNextState(state, response);
     return nextState;
   };
@@ -98,9 +99,10 @@ export function createContainer(containerName) {
 export function checkBlobExists(containerName, blobName) {
   return async (state) => {
     const blockBlobClient = getBlockBlobClient(state, containerName, blobName);
+    console.info(`Checking the existence of ${blobName} in container '${containerName}'`);
     const blobExists = await blockBlobClient.exists();
     let blobContainer = containerName; // renaming the property for consistency
-    console.log(`Blob '${blobName}' in container '${blobContainer}' exists: ${blobExists}`);
+    console.debug(`Blob '${blobName}' in container '${blobContainer}' exists: ${blobExists}`);
     const nextState = composeNextState(state, { blobName, blobContainer, blobExists });
     return nextState;
   };
@@ -121,9 +123,9 @@ export function checkBlobExists(containerName, blobName) {
 export function uploadBlob(containerName, blobName, content, uploadOptions) {
   return async (state) => {    
     const blockBlobClient = getBlockBlobClient(state, containerName, blobName);
-    console.log(`Uploading blob '${blobName}' to container '${containerName}'...`);
+    console.info(`Uploading blob '${blobName}' to container '${containerName}'`);
     const response = await blockBlobClient.upload(content, content.length, uploadOptions);
-    console.log(`Blob '${blobName}' successfully uploaded.`);
+    console.debug(`Blob '${blobName}' successfully uploaded`);
     const nextState = composeNextState(state, response);
     return nextState;
   };
@@ -143,9 +145,10 @@ export function uploadBlob(containerName, blobName, content, uploadOptions) {
 export function downloadBlobAsString(containerName, blobName) {
   return async (state) => {
     const blockBlobClient = getBlockBlobClient(state, containerName, blobName);
+    console.info(`Downloading ${blobName} from ${containerName}`);
     const response = await blockBlobClient.downloadToBuffer();
     const content = response.toString();
-    console.log(`Downloaded ${blobName} from ${containerName}`);
+    console.debug(`Downloaded ${blobName} as string from ${containerName}`);
     const nextState = composeNextState(state, { content });
     return nextState;
   };
@@ -165,12 +168,12 @@ export function downloadBlobAsString(containerName, blobName) {
 export async function downloadBlobAsJSON(containerName, blobName) {
   return async (state) => {
     const blockBlobClient = getBlockBlobClient(state, containerName, blobName);
+    console.info(`Downloading ${blobName} from ${containerName}`);
     const response = await blockBlobClient.downloadToBuffer();
-    console.log("fuck\nfuck\nfuck\nfuck\nfuck\nfuck\nfuck\nfuck\nfuck\nfuck\n");
     const contentBuffer = response.readableStreamBody;
     const jsonContent = JSON.parse(contentBuffer.toString());
+    console.debug(`Downloaded ${blobName} as JSON from ${containerName}`);
     const nextState = composeNextState(state, jsonContent);
-    console.log(`Downloaded and parsed ${blobName} as JSON from ${containerName}`);
     return nextState;
   };
 }
@@ -189,7 +192,9 @@ export async function downloadBlobAsJSON(containerName, blobName) {
 export function getBlobProperties(containerName, blobName) {
   return async (state) => {
     const blockBlobClient = getBlockBlobClient(state, containerName, blobName);
+    console.info(`Fetching properties of ${blobName} from ${containerName}`);
     const properties = await blockBlobClient.getProperties();
+    console.debug(`Successfully fetched properties of ${blobName}:\n${properties}`);
     const nextState = composeNextState(state, { properties });
     return nextState;
   };
