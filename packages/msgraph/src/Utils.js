@@ -4,6 +4,11 @@ import { Readable, Writable } from 'node:stream';
 import { composeNextState, asData } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
+// should be built out of this file
+export const setRequestFunction = (mockFetch) => {
+  fetch = mockFetch
+}
+
 export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {
     const errorString = [
