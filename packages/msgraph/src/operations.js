@@ -5,6 +5,14 @@ import { operation } from '@openfn/language-common'
 import * as impl from './impl';
 import { request } from './Utils';
 
+// overide the request handler
+// Difficult: request itself has quite a bit of logic that's worth testing
+// including side effects
+// Really I only want to mock out hte actual fetch
+export const _setMocks = () => {
+
+}
+
 /**
  * Create some resource in msgraph
  * @public
