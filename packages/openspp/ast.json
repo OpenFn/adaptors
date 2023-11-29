@@ -110,7 +110,7 @@
       "name": "getGroupMembers",
       "params": [
         "spp_id",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -141,16 +141,16 @@
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -230,7 +230,7 @@
       "name": "searchGroup",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -248,7 +248,7 @@
           },
           {
             "title": "example",
-            "description": "searchGroup([[\"spp_id\", \"ilike\", \"GRP\"]], 100)",
+            "description": "searchGroup([[\"spp_id\", \"ilike\", \"GRP\"]], { offset: 100 }})",
             "caption": "search group by domain with offset"
           },
           {
@@ -272,16 +272,16 @@
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -308,7 +308,7 @@
       "name": "searchIndividual",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -326,7 +326,7 @@
           },
           {
             "title": "example",
-            "description": "searchIndividual([[\"spp_id\", \"ilike\", \"IND\"]], 100)",
+            "description": "searchIndividual([[\"spp_id\", \"ilike\", \"IND\"]], { offset: 100 })",
             "caption": "search individual by domain with offset"
           },
           {
@@ -350,16 +350,16 @@
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -438,7 +438,7 @@
     {
       "name": "getPrograms",
       "params": [
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -468,8 +468,8 @@
                 "name": "number"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -978,7 +978,7 @@
       "name": "searchServicePoint",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -996,7 +996,7 @@
           },
           {
             "title": "example",
-            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]], 3)",
+            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]], { offset: 100 })",
             "caption": "search with offset"
           },
           {
@@ -1015,16 +1015,16 @@
           },
           {
             "title": "param",
-            "description": "offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -1104,7 +1104,7 @@
       "name": "searchArea",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -1122,7 +1122,7 @@
           },
           {
             "title": "example",
-            "description": "searchArea([[\"kind\", \"=\", 1]], 1)",
+            "description": "searchArea([[\"kind\", \"=\", 1]], { offset: 10 }})",
             "caption": "search with offset"
           },
           {
@@ -1141,16 +1141,16 @@
           },
           {
             "title": "param",
-            "description": "offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",

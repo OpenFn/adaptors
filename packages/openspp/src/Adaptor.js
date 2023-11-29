@@ -73,6 +73,20 @@ const resolveDomain = (domain) => {
 return domain;
 }
 
+const resolveOptions = (options) => {
+  let res = {
+    limit: 100,
+    offset: 0,
+    order: 'id desc',
+  };
+  for (const key of Object.keys(options)) {
+    if (['limit', 'offset', 'order'].includes(key)) {
+      res[key] = options[key];
+    }
+  }
+  return res;
+}
+
 /**
  * Create a brand new program membership for registrant.
  * @example
@@ -217,11 +231,11 @@ export function getIndividual(spp_id, callback=(s) => s) {
  * getGroupMembers("GRP_Q4VGGZPF")
  * @function
  * @param {string} spp_id - The name of the group
- * @param {number} [offset=0] - Offset searching
+ * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroupMembers(spp_id, offset = 0, callback=(s) => s) {
+export function getGroupMembers(spp_id, options={}, callback=(s) => s) {
   return async state => {
     try {
       const group_id = await sppConnector.search('res.partner', [
@@ -245,13 +259,7 @@ export function getGroupMembers(spp_id, offset = 0, callback=(s) => s) {
         'individual_birthdate',
         'individual_gender',
       ];
-      const options = {
-        limit: 100,
-        order: 'id desc',
-      };
-      if (offset > 0) {
-        options.offset = offset;
-      }
+      options = resolveOptions(options);
       const members = await sppConnector.searchRead(
         'g2p.group.membership',
         defaultDomain,
@@ -321,30 +329,25 @@ export function getServicePoint(spp_id, callback=(s) => s) {
  * @example <caption>search group by domain</caption>
  * searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
  * @example <caption>search group by domain with offset</caption>
- * searchGroup([["spp_id", "ilike", "GRP"]], 100)
+ * searchGroup([["spp_id", "ilike", "GRP"]], { offset: 100 }})
  * @example <caption>search group by complex domain for more accuracy</caption>
  * searchGroup([["address", "!=", false], ["phone", "!=", false]])
  * @function
  * @param {Array} domain - searching domain
- * @param {number} [offset=0] - Offset searching
+ * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchGroup(domain, offset = 0, callback=(s) => s) {
+export function searchGroup(domain, options={}, callback=(s) => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', true],
     ];
-    const defaultOrder = 'id desc';
     const defaultFields = ['name', 'spp_id'];
     domain = resolveDomain(domain);
     const finalDomain = [...domain, ...defaultDomain];
-    const options = {
-      limit: 100,
-      offset: offset,
-      order: defaultOrder,
-    };
+    options = resolveOptions(options);
     try {
       const groups = await sppConnector.searchRead(
         'res.partner',
@@ -372,30 +375,25 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
  * @example <caption>search individual by domain</caption>
  * searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
  * @example <caption>search individual by domain with offset</caption>
- * searchIndividual([["spp_id", "ilike", "IND"]], 100)
+ * searchIndividual([["spp_id", "ilike", "IND"]], { offset: 100 })
  * @example <caption>search individual by complex domain for more accuracy</caption>
  * searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
  * @function
  * @param {Array} domain - searching domain
- * @param {number} [offset=0] - Offset searching
+ * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchIndividual(domain, offset = 0, callback=(s) => s) {
+export function searchIndividual(domain, options={}, callback=(s) => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', false],
     ];
-    const defaultOrder = 'id desc';
     const defaultFields = ['name', 'spp_id'];
     domain = resolveDomain(domain);
     const finalDomain = [...domain, ...defaultDomain];
-    const options = {
-      limit: 100,
-      offset: offset,
-      order: defaultOrder,
-    };
+    options = resolveOptions(options);
     try {
       const individuals = await sppConnector.searchRead(
         'res.partner',
@@ -466,20 +464,15 @@ export function getProgram(program_id, callback=(s) => s) {
  * @example
  * getPrograms(100)
  * @function
- * @param {number} [offset=0] - offset from start
+ * @param {number} [options={}] - offset from start
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getPrograms(offset = 0, callback=(s) => s) {
+export function getPrograms(options={}, callback=(s) => s) {
   return async state => {
     const defaultDomain = [];
     const defaultFields = ['name', 'program_id'];
-    const defaultOrder = 'id';
-    const options = {
-      limit: 100,
-      offset: offset,
-      order: defaultOrder,
-    };
+    options = resolveOptions(options);
     try {
       const programs = await sppConnector.searchRead(
         'g2p.program',
@@ -924,14 +917,14 @@ export function removeFromGroup(group_id, individual_id) {
  * @example <caption>search without offset</caption>
  * searchServicePoint([["name", "ilike", "agent 1"]])
  * @example <caption>search with offset</caption>
- * searchServicePoint([["name", "ilike", "agent 1"]], 3)
+ * searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
  * @function
  * @param {Array} domain - searching domain
- * @param {number} [offset=0] - offset searching
+ * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchServicePoint(domain, offset=0, callback=(s) => s) {
+export function searchServicePoint(domain, options={}, callback=(s) => s) {
   return async state => {
     try {
       domain = resolveDomain(domain);
@@ -947,11 +940,7 @@ export function searchServicePoint(domain, offset=0, callback=(s) => s) {
           'is_contract_active',
           'is_disabled',
         ],
-        {
-          limit: 100,
-          offset: offset,
-          order: 'id desc'
-        },
+        resolveOptions(options),
       );
       for (let servicePoint of servicePoints) {
         servicePoint.program_ids = servicePoint.program_id;
@@ -1016,14 +1005,14 @@ export function getArea(spp_id, callback=(s) => s) {
  * @example <caption>search without offset</caption>
  * searchArea([["code", "=", "10732"]])
  * @example <caption>search with offset</caption>
- * searchArea([["kind", "=", 1]], 1)
+ * searchArea([["kind", "=", 1]], { offset: 10 }})
  * @function
  * @param {Array} domain - searching domain
- * @param {number} [offset=0] - offset searching
+ * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchArea(domain, offset=0, callback=(s) => s) {
+export function searchArea(domain, options={}, callback=(s) => s) {
   return async state => {
     try {
       domain = resolveDomain(domain);
@@ -1038,11 +1027,7 @@ export function searchArea(domain, offset=0, callback=(s) => s) {
           'area_level',
           'kind'
         ],
-        {
-          limit: 100,
-          offset: offset,
-          order: 'id desc'
-        },
+        resolveOptions(options),
       );
       if (areas.length === 0) {
         console.log(`⚠ Warning: Area with domain=${domain} not found!`);
