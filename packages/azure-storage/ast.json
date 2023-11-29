@@ -1,108 +1,14 @@
 {
   "operations": [
     {
-      "name": "createContainer",
-      "params": [
-        "containerName"
-      ],
-      "docs": {
-        "description": "Create a new container in Azure Blob Storage.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "createContainer('mycontainer')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Name of the container to create.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "containerName"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "checkBlobExists",
-      "params": [
-        "containerName",
-        "blobName"
-      ],
-      "docs": {
-        "description": "Check if a blob exists in Azure Blob Storage.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "checkBlobExists('mycontainer', 'myblob.txt')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Name of the container containing the blob.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "containerName"
-          },
-          {
-            "title": "param",
-            "description": "Name of the blob to check.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "blobName"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "uploadBlob",
       "params": [
-        "containerName",
         "blobName",
         "content",
-        "uploadOptions"
+        "uploadOptions",
+        "createContainer",
+        "overwrite",
+        "containerName"
       ],
       "docs": {
         "description": "Upload content to Azure Blob Storage.",
@@ -114,21 +20,12 @@
           },
           {
             "title": "example",
-            "description": "uploadBlob('mycontainer', 'myblob.txt', 'Hello, Azure Blob Storage!')"
+            "description": "uploadBlob('mycontainer', 'myblob.txt', {foo:\"bar\"}, { blobHTTPHeaders: { blobContentType: 'application/json' } })"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "Name of the container where the blob will be uploaded.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "containerName"
           },
           {
             "title": "param",
@@ -158,6 +55,33 @@
             "name": "uploadOptions"
           },
           {
+            "title": "param",
+            "description": "Create the container if it does not exist.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "createContainer"
+          },
+          {
+            "title": "param",
+            "description": "Overwrite the blob if it already exists.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "overwrite"
+          },
+          {
+            "title": "param",
+            "description": "Name of the container where the blob will be uploaded.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "containerName"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -170,10 +94,11 @@
       "valid": true
     },
     {
-      "name": "downloadBlobAsString",
+      "name": "downloadBlob",
       "params": [
-        "containerName",
-        "blobName"
+        "blobName",
+        "options",
+        "containerName"
       ],
       "docs": {
         "description": "Download a blob from Azure Blob Storage as a string.",
@@ -185,21 +110,12 @@
           },
           {
             "title": "example",
-            "description": "downloadBlobAsString('mycontainer', 'myblob.txt')"
+            "description": "downloadBlob('mycontainer', 'myblob.txt', { as: 'string' })"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "Name of the container containing the blob.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "containerName"
           },
           {
             "title": "param",
@@ -211,39 +127,13 @@
             "name": "blobName"
           },
           {
-            "title": "returns",
-            "description": null,
+            "title": "param",
+            "description": "Download options: `{as : 'string' | 'json'}`",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "downloadBlobAsJSON",
-      "params": [
-        "containerName",
-        "blobName"
-      ],
-      "docs": {
-        "description": "Download a blob from Azure Blob Storage and parse it as JSON.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "downloadBlobAsJSON('mycontainer', 'mydata.json')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
+              "name": "object"
+            },
+            "name": "options"
           },
           {
             "title": "param",
@@ -253,15 +143,6 @@
               "name": "string"
             },
             "name": "containerName"
-          },
-          {
-            "title": "param",
-            "description": "Name of the blob to download.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "blobName"
           },
           {
             "title": "returns",
@@ -278,8 +159,8 @@
     {
       "name": "getBlobProperties",
       "params": [
-        "containerName",
-        "blobName"
+        "blobName",
+        "containerName"
       ],
       "docs": {
         "description": "Get properties of a blob in Azure Blob Storage.",
@@ -300,21 +181,21 @@
           },
           {
             "title": "param",
-            "description": "Name of the container containing the blob.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "containerName"
-          },
-          {
-            "title": "param",
             "description": "Name of the blob to get properties for.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "blobName"
+          },
+          {
+            "title": "param",
+            "description": "Name of the container containing the blob.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "containerName"
           },
           {
             "title": "returns",

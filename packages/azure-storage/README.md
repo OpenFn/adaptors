@@ -1,17 +1,19 @@
-# language-azureblobstorage <img src='assets/sq-256x256.png' width="30" height="30"/>
+# language-azure-storage <img src='assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the Azure
-Blob Storage API.
+Storage APIs. At present, this adaptor only supports the Azure Blob Storage,
+API, but could be expanded for future Azure Storage services (e.g., Files,
+Tables, Queues, etc.).
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/azureblobstorage-docs)
+View the [docs site](https://docs.openfn.org/adaptors/packages/azure-storage-docs)
 for full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/azureblobstorage-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/azure-storage-configuration-schema/)
 for required and optional `configuration` properties.
 
 ### An example showing multiple capabilties of this adaptor
@@ -61,19 +63,21 @@ let uploadOptions = {
 
 // Do all the things
 execute(
-  createContainer(container),
-  uploadBlob(container, blobFullName, content, uploadOptions),
-  checkBlobExists(container, blobFullName),
-  downloadBlobAsJSON(container, blobFullName),
-  downloadBlobAsString(container, blobFullName),
-  getBlobProperties(container, blobFullName)
+  fn(state => {
+    // By default, functions use container name from state.configuration
+    state.configuration.containerName = container;
+    return state; 
+  }),
+  uploadBlob(blobFullName, content, uploadOptions, true),
+  downloadBlob(blobFullName, {as: 'json'}),
+  getBlobProperties(blobFullName)
 );
 ```
 
 Run the job as follows:
 
 ```bash
-openfn job -a azureblobstorage -s state.json -O
+openfn job -a azure-storage -s state.json -O
 ```
 
 ## Development

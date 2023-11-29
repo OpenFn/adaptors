@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-azureblobstorage",
+  "name": "@openfn/language-azure-storage",
   "version": "0.0.1",
-  "description": "OpenFn adaptor for Azure Blob Storage",
+  "description": "OpenFn adaptor for Azure Storage",
   "type": "module",
   "exports": {
     ".": {
@@ -11,7 +11,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor azureblobstorage",
+    "build": "pnpm clean && build-adaptor azure-storage",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
