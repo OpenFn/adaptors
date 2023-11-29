@@ -58,26 +58,42 @@ async function login(state) {
 }
 
 /**
+ * resolve input domain
+ * @example
+ * resolveDomain([['name', 'like', 'test']])
+ * @private
+ * @param {Array} domain - input domain
+ */
+const resolveDomain = (domain) => {
+ for (const element of domain) {
+   if (!Array.isArray(element) && !['|', '&', '!'].includes(element)) {
+     return [domain];
+   }
+ }
+return domain;
+}
+
+/**
  * Create a brand new program membership for registrant.
  * @example
  * createProgramMembership("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @private
- * @param {string} registrant_id - registrant_id of group / individual wanted to unenroll
+ * @param {string} spp_id - spp_id of group / individual wanted to unenroll
  * @param {string} program_id - program_id of program
  */
-async function createProgramMembership(registrant_id, program_id) {
+async function createProgramMembership(spp_id, program_id) {
   try {
     let registrant = await sppConnector.searchRead(
       'res.partner',
       [
         ['is_registrant', '=', true],
-        ['registrant_id', '=', registrant_id],
+        ['spp_id', '=', spp_id],
       ],
       ['id'],
       { limit: 1 }
     );
     if (registrant.length === 0) {
-      throw new Error(`Registrant ${registrant_id} not exists!`);
+      throw new Error(`Registrant ${spp_id} not exists!`);
     }
     registrant = registrant[0].id;
     let program = await sppConnector.searchRead(
@@ -106,16 +122,16 @@ async function createProgramMembership(registrant_id, program_id) {
  * @example
  * getGroup("GRP_Q4VGGZPF")
  * @function
- * @param {string} registrant_id - The registrant_id of the group
+ * @param {string} spp_id - The spp_id of the group
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroup(registrant_id, callback=(s) => s) {
+export function getGroup(spp_id, callback=(s) => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', true],
-      ['registrant_id', '=', registrant_id],
+      ['spp_id', '=', spp_id],
     ];
     const defaultFields = [
       'name',
@@ -123,7 +139,7 @@ export function getGroup(registrant_id, callback=(s) => s) {
       'phone',
       'kind',
       'registration_date',
-      'registrant_id',
+      'spp_id',
     ];
     try {
       const group = await sppConnector.searchRead(
@@ -133,10 +149,10 @@ export function getGroup(registrant_id, callback=(s) => s) {
         { limit: 1, order: 'id desc' }
       );
       if (group.length === 0) {
-        console.log(`✗ Error: Group ${registrant_id} not found!`);
+        console.log(`✗ Error: Group ${spp_id} not found!`);
         return state;
       }
-      console.log(`ℹ Group ${registrant_id} found!`);
+      console.log(`ℹ Group ${spp_id} found!`);
       const nextState = composeNextState(state, group[0]);
       return callback(nextState);
     } catch (err) {
@@ -152,22 +168,22 @@ export function getGroup(registrant_id, callback=(s) => s) {
  * @example
  * getIndividual("IND_Q4VGGZPF")
  * @function
- * @param {string} registrant_id - The registrant_id of the individual
+ * @param {string} spp_id - The spp_id of the individual
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getIndividual(registrant_id, callback=(s) => s) {
+export function getIndividual(spp_id, callback=(s) => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
       ['is_group', '=', false],
-      ['registrant_id', '=', registrant_id],
+      ['spp_id', '=', spp_id],
     ];
     const defaultFields = [
       'name',
       'address',
       'phone',
-      'registrant_id',
+      'spp_id',
       'gender',
       'email',
       'category_id',
@@ -181,10 +197,10 @@ export function getIndividual(registrant_id, callback=(s) => s) {
         { limit: 1, order: 'id desc' }
       );
       if (individual.length === 0) {
-        console.log(`✗ Error: Individual with id=${registrant_id} not found!`);
+        console.log(`✗ Error: Individual with id=${spp_id} not found!`);
         return state;
       }
-      console.log(`ℹ Individual with id=${registrant_id} found!`);
+      console.log(`ℹ Individual with id=${spp_id} found!`);
       const nextState = composeNextState(state, individual[0]);
       return callback(nextState);
     } catch (err) {
@@ -200,21 +216,21 @@ export function getIndividual(registrant_id, callback=(s) => s) {
  * @example
  * getGroupMembers("GRP_Q4VGGZPF")
  * @function
- * @param {string} registrant_id - The name of the group
+ * @param {string} spp_id - The name of the group
  * @param {number} [offset=0] - Offset searching
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
+export function getGroupMembers(spp_id, offset = 0, callback=(s) => s) {
   return async state => {
     try {
       const group_id = await sppConnector.search('res.partner', [
         ['is_group', '=', true],
         ['is_registrant', '=', true],
-        ['registrant_id', '=', registrant_id],
+        ['spp_id', '=', spp_id],
       ]);
       if (group_id.length === 0) {
-        console.log(`✗ Error: Group id=${registrant_id} not found!`);
+        console.log(`✗ Error: Group id=${spp_id} not found!`);
         return state;
       }
       const defaultDomain = [
@@ -244,11 +260,11 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
       );
       if (!members) {
         console.log(
-          `⚠ Warning: Household ${registrant_id} not having members!`
+          `⚠ Warning: Household ${spp_id} not having members!`
         );
         return state;
       }
-      console.log(`ℹ Household ${registrant_id} members found!`);
+      console.log(`ℹ Household ${spp_id} members found!`);
       const nextState = composeNextState(state, members);
       return callback(nextState);
     } catch (err) {
@@ -262,16 +278,14 @@ export function getGroupMembers(registrant_id, offset = 0, callback=(s) => s) {
  * get service points information from OpenSPP
  * @public
  * @example
- * getServicePoint("000117")
+ * getServicePoint("SVP_8P4KP4RT")
  * @function
- * @param {string} name - The number of the agent
- * @param {number} [offset=0] - Offset searching
+ * @param {string} spp_id - The spp_id of the agent
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getServicePoint(name, offset = 0, callback=(s) => s) {
+export function getServicePoint(spp_id, callback=(s) => s) {
   return async state => {
-    const defaultDomain = [['name', '=', name]];
     const defaultFields = [
       'name',
       'area_id',
@@ -281,25 +295,17 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
       'is_contract_active',
       'is_disabled',
     ];
-    const options = {
-      limit: 100,
-      order: 'id desc',
-    };
-    if (offset > 0) {
-      options.offset = offset;
-    }
     try {
       const agents = await sppConnector.searchRead(
         'spp.service.point',
-        defaultDomain,
+        [['spp_id', '=', spp_id]],
         defaultFields,
-        options
       );
       if (agents.length === 0) {
-        console.log(`⚠ Warning: Agent ${name} not found!`);
+        console.log(`⚠ Warning: Agent ${spp_id} not found!`);
         return state;
       }
-      console.log(`ℹ Agent ${name} found!`);
+      console.log(`ℹ Agent ${spp_id} found!`);
       const nextState = composeNextState(state, agents);
       return callback(nextState);
     } catch (err) {
@@ -312,10 +318,14 @@ export function getServicePoint(name, offset = 0, callback=(s) => s) {
 /**
  * get groups from OpenSPP
  * @public
- * @example
- * searchGroup([["registrant_id", "=", "GRP_Q4VGGZPF"]])
+ * @example <caption>search group by domain</caption>
+ * searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
+ * @example <caption>search group by domain with offset</caption>
+ * searchGroup([["spp_id", "ilike", "GRP"]], 100)
+ * @example <caption>search group by complex domain for more accuracy</caption>
+ * searchGroup([["address", "!=", false], ["phone", "!=", false]])
  * @function
- * @param {string} domain - searching domain
+ * @param {Array} domain - searching domain
  * @param {number} [offset=0] - Offset searching
  * @param {function} callback - An optional callback function
  * @returns {Operation}
@@ -327,17 +337,8 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
       ['is_group', '=', true],
     ];
     const defaultOrder = 'id desc';
-    const defaultFields = ['name', 'registrant_id'];
-    let isDomain = true;
-    for (const element of domain) {
-      if (!Array.isArray(element)) {
-        isDomain = false;
-        break;
-      }
-    }
-    if (!isDomain) {
-      domain = [domain];
-    }
+    const defaultFields = ['name', 'spp_id'];
+    domain = resolveDomain(domain);
     const finalDomain = [...domain, ...defaultDomain];
     const options = {
       limit: 100,
@@ -368,10 +369,14 @@ export function searchGroup(domain, offset = 0, callback=(s) => s) {
 /**
  * get individuals from OpenSPP
  * @public
- * @example
- * searchIndividual([["registrant_id", "=", "IND_Q4VGGZPF"]])
+ * @example <caption>search individual by domain</caption>
+ * searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
+ * @example <caption>search individual by domain with offset</caption>
+ * searchIndividual([["spp_id", "ilike", "IND"]], 100)
+ * @example <caption>search individual by complex domain for more accuracy</caption>
+ * searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
  * @function
- * @param {string} domain - searching domain
+ * @param {Array} domain - searching domain
  * @param {number} [offset=0] - Offset searching
  * @param {function} callback - An optional callback function
  * @returns {Operation}
@@ -383,17 +388,8 @@ export function searchIndividual(domain, offset = 0, callback=(s) => s) {
       ['is_group', '=', false],
     ];
     const defaultOrder = 'id desc';
-    const defaultFields = ['name', 'registrant_id'];
-    let isDomain = true;
-    for (const element of domain) {
-      if (!Array.isArray(element)) {
-        isDomain = false;
-        break;
-      }
-    }
-    if (!isDomain) {
-      domain = [domain];
-    }
+    const defaultFields = ['name', 'spp_id'];
+    domain = resolveDomain(domain);
     const finalDomain = [...domain, ...defaultDomain];
     const options = {
       limit: 100,
@@ -511,13 +507,13 @@ export function getPrograms(offset = 0, callback=(s) => s) {
  * @example
  * getEnrolledPrograms("IND_Q4VGGZPF")
  * @function
- * @param {string} registrant_id - registrant_id of group / individual wanted to search
+ * @param {string} spp_id - spp_id of group / individual wanted to search
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
+export function getEnrolledPrograms(spp_id, callback=(s) => s) {
   return async state => {
-    const defaultDomain = [['partner_id.registrant_id', '=', registrant_id]];
+    const defaultDomain = [['partner_id.spp_id', '=', spp_id]];
     const defaultFields = ['program_id'];
     try {
       let program_ids = await sppConnector.searchRead(
@@ -552,13 +548,13 @@ export function getEnrolledPrograms(registrant_id, callback=(s) => s) {
  * @example
  * enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @function
- * @param {string} registrant_id - registrant_id of group / individual wanted to enroll
+ * @param {string} spp_id - spp_id of group / individual wanted to enroll
  * @param {string} program_id - program_id of program
  */
-export function enroll(registrant_id, program_id) {
+export function enroll(spp_id, program_id) {
   return async state => {
     const domain = [
-      ['partner_id.registrant_id', '=', registrant_id],
+      ['partner_id.spp_id', '=', spp_id],
       ['program_id.program_id', '=', program_id],
     ];
     const fields = ['partner_id', 'program_id', 'state'];
@@ -577,10 +573,10 @@ export function enroll(registrant_id, program_id) {
           });
         }
         console.log(
-          `ℹ Registrant ${registrant_id} enrolled into Program ${program_id}`
+          `ℹ Registrant ${spp_id} enrolled into Program ${program_id}`
         );
       } else {
-        await createProgramMembership(registrant_id, program_id);
+        await createProgramMembership(spp_id, program_id);
       }
     } catch (err) {
       console.log(`✗ Error: ${err}`);
@@ -596,13 +592,13 @@ export function enroll(registrant_id, program_id) {
  * @example
  * unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
  * @function
- * @param {string} registrant_id - registrant_id of group / individual wanted to unenroll
+ * @param {string} spp_id - spp_id of group / individual wanted to unenroll
  * @param {string} program_id - program_id of program
  */
-export function unenroll(registrant_id, program_id) {
+export function unenroll(spp_id, program_id) {
   return async state => {
     const domain = [
-      ['partner_id.registrant_id', '=', registrant_id],
+      ['partner_id.spp_id', '=', spp_id],
       ['program_id.program_id', '=', program_id],
     ];
     const fields = ['partner_id', 'program_id', 'state'];
@@ -620,7 +616,7 @@ export function unenroll(registrant_id, program_id) {
         });
       }
       console.log(
-        `ℹ Registrant ${registrant_id} not enroll into Program ${program_id}`
+        `ℹ Registrant ${spp_id} not enroll into Program ${program_id}`
       );
       return state;
     } catch (err) {
@@ -652,10 +648,10 @@ export function createIndividual(data, callback=(s) => s) {
       const res = await sppConnector.searchRead(
         'res.partner',
         [['id', '=', individualId]],
-        ['registrant_id'],
+        ['spp_id'],
         { limit: 1 }
       );
-      const individualRegistrantId = res[0].registrant_id;
+      const individualRegistrantId = res[0].spp_id;
       console.log(`ℹ Individual created with registrant ID: ${individualRegistrantId}`);
       const nextState = composeNextState(state, individualRegistrantId);
       return callback(nextState);
@@ -688,10 +684,10 @@ export function createGroup(data, callback=(s) => s) {
       const res = await sppConnector.searchRead(
         'res.partner',
         [['id', '=', groupId]],
-        ['registrant_id'],
+        ['spp_id'],
         { limit: 1 }
       );
-      const groupRegistrantId = res[0].registrant_id;
+      const groupRegistrantId = res[0].spp_id;
       console.log(`ℹ Group created with registrant ID: ${groupRegistrantId}`);
       const nextState = composeNextState(state, groupRegistrantId);
       return callback(nextState);
@@ -718,7 +714,7 @@ export function updateGroup(group_id, data) {
       const res = await sppConnector.searchRead(
         'res.partner',
         [
-          ['registrant_id', '=', group_id],
+          ['spp_id', '=', group_id],
           ['is_registrant', '=', true],
           ['is_group', '=', true],
         ],
@@ -762,7 +758,7 @@ export function updateIndividual(individual_id, data) {
       const res = await sppConnector.searchRead(
         'res.partner',
         [
-          ['registrant_id', '=', individual_id],
+          ['spp_id', '=', individual_id],
           ['is_registrant', '=', true],
           ['is_group', '=', false],
         ],
@@ -790,8 +786,12 @@ export function updateIndividual(individual_id, data) {
 /**
  * add individual to group in OpenSPP
  * @public
- * @example
+ * @example <caption>create a new head for group</caption>
  * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
+ * @example <caption>create a new ordinary member for group</caption>
+ * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+ * @example <caption>create a new member with new role for group</caption>
+ * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
  * @function
  * @param {string} group_id - group registrant id
  * @param {string} individual_id - individual registrant id
@@ -817,8 +817,8 @@ export function addToGroup(group_id, individual_id, role='') {
       const res = await sppConnector.searchRead(
         'g2p.group.membership',
         [
-          ['group.registrant_id', '=', group_id],
-          ['individual.registrant_id', '=', individual_id],
+          ['group.spp_id', '=', group_id],
+          ['individual.spp_id', '=', individual_id],
           ['is_ended', '=', false],
         ],
         ['id', 'kind'],
@@ -828,7 +828,7 @@ export function addToGroup(group_id, individual_id, role='') {
         const individual = await sppConnector.searchRead(
           'res.partner',
           [
-            ['registrant_id', '=', individual_id],
+            ['spp_id', '=', individual_id],
             ['is_registrant', '=', true],
             ['is_group', '=', false],
           ],
@@ -838,7 +838,7 @@ export function addToGroup(group_id, individual_id, role='') {
         const group = await sppConnector.searchRead(
           'res.partner',
           [
-            ['registrant_id', '=', group_id],
+            ['spp_id', '=', group_id],
             ['is_registrant', '=', true],
             ['is_group', '=', true],
           ],
@@ -893,8 +893,8 @@ export function removeFromGroup(group_id, individual_id) {
       const res = await sppConnector.searchRead(
         'g2p.group.membership',
         [
-          ['group.registrant_id', '=', group_id],
-          ['individual.registrant_id', '=', individual_id],
+          ['group.spp_id', '=', group_id],
+          ['individual.spp_id', '=', individual_id],
           ['is_ended', '=', false],
         ],
         ['id'],
@@ -913,6 +913,146 @@ export function removeFromGroup(group_id, individual_id) {
     } catch (err) {
       console.log(`✗ Error: ${err}`);
     } finally {
+      return state;
+    }
+  }
+}
+
+/**
+ * searching for service point in OpenSPP
+ * @public
+ * @example <caption>search without offset</caption>
+ * searchServicePoint([["name", "ilike", "agent 1"]])
+ * @example <caption>search with offset</caption>
+ * searchServicePoint([["name", "ilike", "agent 1"]], 3)
+ * @function
+ * @param {Array} domain - searching domain
+ * @param {number} [offset=0] - offset searching
+ * @param {function} callback - An optional callback function
+ * @returns {Operation}
+ */
+export function searchServicePoint(domain, offset=0, callback=(s) => s) {
+  return async state => {
+    try {
+      domain = resolveDomain(domain);
+        let servicePoints = await sppConnector.searchRead(
+        'spp.service.point',
+        domain,
+        [
+          'name',
+          'area_id',
+          'service_type_ids',
+          'program_id',
+          'phone_sanitized',
+          'is_contract_active',
+          'is_disabled',
+        ],
+        {
+          limit: 100,
+          offset: offset,
+          order: 'id desc'
+        },
+      );
+      for (let servicePoint of servicePoints) {
+        servicePoint.program_ids = servicePoint.program_id;
+        delete servicePoint.program_id;
+      }
+      if (servicePoints.length === 0) {
+        console.log(`⚠ Warning: Service point with domain=${domain} not found!`);
+        return state;
+      }
+      console.log(`ℹ Service point with domain=${domain} found!`);
+      const nextState = composeNextState(state, servicePoints);
+      return callback(nextState);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+      return state;
+    }
+  }
+}
+
+/**
+ * get area by id in OpenSPP
+ * @public
+ * @example
+ * getArea("LOC_7M92NLDH")
+ * @function
+ * @param {string} spp_id - spp_id of area
+ * @param {function} callback - An optional callback function
+ * @returns {Operation}
+ */
+export function getArea(spp_id, callback=(s) => s) {
+  return async state => {
+    try {
+      const area = await sppConnector.searchRead(
+        'spp.area',
+        [['spp_id', '=', spp_id]],
+        [
+          'parent_id',
+          'name',
+          'code',
+          'altnames',
+          'area_level',
+          'kind'
+        ],
+      );
+      if (area.length === 0) {
+        console.log(`⚠ Warning: Area ${spp_id} not found!`);
+        return state;
+      }
+      console.log(`ℹ Area ${spp_id} found!`);
+      const nextState = composeNextState(state, area);
+      return callback(nextState);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
+      return state;
+    }
+  }
+}
+
+/**
+ * searching for service point in OpenSPP
+ * @public
+ * @example <caption>search without offset</caption>
+ * searchArea([["code", "=", "10732"]])
+ * @example <caption>search with offset</caption>
+ * searchArea([["kind", "=", 1]], 1)
+ * @function
+ * @param {Array} domain - searching domain
+ * @param {number} [offset=0] - offset searching
+ * @param {function} callback - An optional callback function
+ * @returns {Operation}
+ */
+export function searchArea(domain, offset=0, callback=(s) => s) {
+  return async state => {
+    try {
+      domain = resolveDomain(domain);
+        const areas = await sppConnector.searchRead(
+        'spp.area',
+        domain,
+        [
+          'parent_id',
+          'name',
+          'code',
+          'altnames',
+          'area_level',
+          'kind'
+        ],
+        {
+          limit: 100,
+          offset: offset,
+          order: 'id desc'
+        },
+      );
+      if (areas.length === 0) {
+        console.log(`⚠ Warning: Area with domain=${domain} not found!`);
+        return state;
+      }
+      console.log(`ℹ Area with domain=${domain} found!`);
+      const nextState = composeNextState(state, areas);
+      return callback(nextState);
+    } catch (err) {
+      console.log(`✗ Error: ${err}`);
       return state;
     }
   }
