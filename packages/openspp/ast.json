@@ -3,7 +3,7 @@
     {
       "name": "getGroup",
       "params": [
-        "registrant_id",
+        "spp_id",
         "callback"
       ],
       "docs": {
@@ -25,12 +25,12 @@
           },
           {
             "title": "param",
-            "description": "The registrant_id of the group",
+            "description": "The spp_id of the group",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -56,7 +56,7 @@
     {
       "name": "getIndividual",
       "params": [
-        "registrant_id",
+        "spp_id",
         "callback"
       ],
       "docs": {
@@ -78,12 +78,12 @@
           },
           {
             "title": "param",
-            "description": "The registrant_id of the individual",
+            "description": "The spp_id of the individual",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -109,8 +109,8 @@
     {
       "name": "getGroupMembers",
       "params": [
-        "registrant_id",
-        "offset",
+        "spp_id",
+        "options",
         "callback"
       ],
       "docs": {
@@ -137,20 +137,20 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -176,8 +176,7 @@
     {
       "name": "getServicePoint",
       "params": [
-        "name",
-        "offset",
+        "spp_id",
         "callback"
       ],
       "docs": {
@@ -190,7 +189,7 @@
           },
           {
             "title": "example",
-            "description": "getServicePoint(\"000117\")"
+            "description": "getServicePoint(\"SVP_8P4KP4RT\")"
           },
           {
             "title": "function",
@@ -199,25 +198,12 @@
           },
           {
             "title": "param",
-            "description": "The number of the agent",
+            "description": "The spp_id of the agent",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "name"
-          },
-          {
-            "title": "param",
-            "description": "Offset searching",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "offset",
-            "default": "0"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -244,7 +230,7 @@
       "name": "searchGroup",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -257,7 +243,18 @@
           },
           {
             "title": "example",
-            "description": "searchGroup([[\"registrant_id\", \"=\", \"GRP_Q4VGGZPF\"]])"
+            "description": "searchGroup([[\"spp_id\", \"=\", \"GRP_Q4VGGZPF\"]])",
+            "caption": "search group by domain"
+          },
+          {
+            "title": "example",
+            "description": "searchGroup([[\"spp_id\", \"ilike\", \"GRP\"]], { offset: 100 }})",
+            "caption": "search group by domain with offset"
+          },
+          {
+            "title": "example",
+            "description": "searchGroup([[\"address\", \"!=\", false], [\"phone\", \"!=\", false]])",
+            "caption": "search group by complex domain for more accuracy"
           },
           {
             "title": "function",
@@ -269,22 +266,22 @@
             "description": "searching domain",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "Array"
             },
             "name": "domain"
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -311,7 +308,7 @@
       "name": "searchIndividual",
       "params": [
         "domain",
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -324,7 +321,18 @@
           },
           {
             "title": "example",
-            "description": "searchIndividual([[\"registrant_id\", \"=\", \"IND_Q4VGGZPF\"]])"
+            "description": "searchIndividual([[\"spp_id\", \"=\", \"IND_Q4VGGZPF\"]])",
+            "caption": "search individual by domain"
+          },
+          {
+            "title": "example",
+            "description": "searchIndividual([[\"spp_id\", \"ilike\", \"IND\"]], { offset: 100 })",
+            "caption": "search individual by domain with offset"
+          },
+          {
+            "title": "example",
+            "description": "searchIndividual([[\"address\", \"!=\", false], [\"birthdate\", \"=\", false]])",
+            "caption": "search individual by complex domain for more accuracy"
           },
           {
             "title": "function",
@@ -336,22 +344,22 @@
             "description": "searching domain",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "Array"
             },
             "name": "domain"
           },
           {
             "title": "param",
-            "description": "Offset searching",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "object"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -430,7 +438,7 @@
     {
       "name": "getPrograms",
       "params": [
-        "offset",
+        "options",
         "callback"
       ],
       "docs": {
@@ -460,8 +468,8 @@
                 "name": "number"
               }
             },
-            "name": "offset",
-            "default": "0"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "param",
@@ -487,7 +495,7 @@
     {
       "name": "getEnrolledPrograms",
       "params": [
-        "registrant_id",
+        "spp_id",
         "callback"
       ],
       "docs": {
@@ -509,12 +517,12 @@
           },
           {
             "title": "param",
-            "description": "registrant_id of group / individual wanted to search",
+            "description": "spp_id of group / individual wanted to search",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -540,7 +548,7 @@
     {
       "name": "enroll",
       "params": [
-        "registrant_id",
+        "spp_id",
         "program_id"
       ],
       "docs": {
@@ -562,12 +570,12 @@
           },
           {
             "title": "param",
-            "description": "registrant_id of group / individual wanted to enroll",
+            "description": "spp_id of group / individual wanted to enroll",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -585,7 +593,7 @@
     {
       "name": "unenroll",
       "params": [
-        "registrant_id",
+        "spp_id",
         "program_id"
       ],
       "docs": {
@@ -607,12 +615,12 @@
           },
           {
             "title": "param",
-            "description": "registrant_id of group / individual wanted to unenroll",
+            "description": "spp_id of group / individual wanted to unenroll",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "registrant_id"
+            "name": "spp_id"
           },
           {
             "title": "param",
@@ -856,7 +864,18 @@
           },
           {
             "title": "example",
-            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"Head\")"
+            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"Head\")",
+            "caption": "create a new head for group"
+          },
+          {
+            "title": "example",
+            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")",
+            "caption": "create a new ordinary member for group"
+          },
+          {
+            "title": "example",
+            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"new-role-name\")",
+            "caption": "create a new member with new role for group"
           },
           {
             "title": "function",
@@ -942,6 +961,205 @@
               "name": "string"
             },
             "name": "individual_id"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "searchServicePoint",
+      "params": [
+        "domain",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "searching for service point in OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]])",
+            "caption": "search without offset"
+          },
+          {
+            "title": "example",
+            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]], { offset: 100 })",
+            "caption": "search with offset"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "searching domain",
+            "type": {
+              "type": "NameExpression",
+              "name": "Array"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "param",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "An optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getArea",
+      "params": [
+        "spp_id",
+        "callback"
+      ],
+      "docs": {
+        "description": "get area by id in OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getArea(\"LOC_7M92NLDH\")"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "spp_id of area",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "spp_id"
+          },
+          {
+            "title": "param",
+            "description": "An optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "searchArea",
+      "params": [
+        "domain",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "searching for service point in OpenSPP",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchArea([[\"code\", \"=\", \"10732\"]])",
+            "caption": "search without offset"
+          },
+          {
+            "title": "example",
+            "description": "searchArea([[\"kind\", \"=\", 1]], { offset: 10 }})",
+            "caption": "search with offset"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "searching domain",
+            "type": {
+              "type": "NameExpression",
+              "name": "Array"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "param",
+            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "An optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",

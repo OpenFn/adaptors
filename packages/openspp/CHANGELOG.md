@@ -1,5 +1,17 @@
 # @openfn/language-openspp
 
+## 1.2.0
+
+### Changes
+
+- 05defd2: add new functions, correcting docstring and add more examples
+  - correcting docstring input parameters type
+  - changing getServicePoint() from get by name into get by unique id
+  - add more examples in docstring
+  - getArea(): get existing area by id
+  - searchArea(): search existing area by domain
+  - searchServicePoint(): search existing service point by domain
+
 ## 1.1.1
 
 ### Patch Changes
