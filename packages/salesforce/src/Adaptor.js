@@ -24,8 +24,13 @@ import { expandReferences as newExpandReferences } from '@openfn/language-common
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
 
-// use a dynamic import because any-ascii doesn't play well with the CLI
-const anyAscii = import('any-ascii');
+// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
+// Note that technically we should await this, but in practice the module will be loaded
+// before execute is called
+let anyAscii;
+import('any-ascii').then(m => {
+  anyAscii = m.default;
+});
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
