@@ -8,29 +8,35 @@
 <dt>
     <a href="#createIndividual">createIndividual(data, callback)</a></dt>
 <dt>
-    <a href="#enroll">enroll(registrant_id, program_id)</a></dt>
+    <a href="#enroll">enroll(spp_id, program_id)</a></dt>
 <dt>
-    <a href="#getEnrolledPrograms">getEnrolledPrograms(registrant_id, callback)</a></dt>
+    <a href="#getArea">getArea(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getGroup">getGroup(registrant_id, callback)</a></dt>
+    <a href="#getEnrolledPrograms">getEnrolledPrograms(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getGroupMembers">getGroupMembers(registrant_id, [offset], callback)</a></dt>
+    <a href="#getGroup">getGroup(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getIndividual">getIndividual(registrant_id, callback)</a></dt>
+    <a href="#getGroupMembers">getGroupMembers(spp_id, [options], callback)</a></dt>
+<dt>
+    <a href="#getIndividual">getIndividual(spp_id, callback)</a></dt>
 <dt>
     <a href="#getProgram">getProgram(program_id, callback)</a></dt>
 <dt>
-    <a href="#getPrograms">getPrograms([offset], callback)</a></dt>
+    <a href="#getPrograms">getPrograms([options], callback)</a></dt>
 <dt>
-    <a href="#getServicePoint">getServicePoint(name, [offset], callback)</a></dt>
+    <a href="#getServicePoint">getServicePoint(spp_id, callback)</a></dt>
 <dt>
     <a href="#removeFromGroup">removeFromGroup(group_id, individual_id)</a></dt>
 <dt>
-    <a href="#searchGroup">searchGroup(domain, [offset], callback)</a></dt>
+    <a href="#searchArea">searchArea(domain, [options], callback)</a></dt>
 <dt>
-    <a href="#searchIndividual">searchIndividual(domain, [offset], callback)</a></dt>
+    <a href="#searchGroup">searchGroup(domain, [options], callback)</a></dt>
 <dt>
-    <a href="#unenroll">unenroll(registrant_id, program_id)</a></dt>
+    <a href="#searchIndividual">searchIndividual(domain, [options], callback)</a></dt>
+<dt>
+    <a href="#searchServicePoint">searchServicePoint(domain, [options], callback)</a></dt>
+<dt>
+    <a href="#unenroll">unenroll(spp_id, program_id)</a></dt>
 <dt>
     <a href="#updateGroup">updateGroup(group_id, data)</a></dt>
 <dt>
@@ -51,9 +57,17 @@ add individual to group in OpenSPP
 | individual_id | <code>string</code> | individual registrant id |
 | role | <code>string</code> | individual role in group |
 
-**Example**  
+**Example** *(create a new head for group)*  
 ```js
 addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
+```
+**Example** *(create a new ordinary member for group)*  
+```js
+addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+```
+**Example** *(create a new member with new role for group)*  
+```js
+addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
 ```
 
 * * *
@@ -100,7 +114,7 @@ createIndividual({ name: "Individual 1" })
 
 ## enroll
 
-enroll(registrant_id, program_id)
+enroll(spp_id, program_id)
 enroll registrant to program in OpenSPP
 
 **Kind**: global function  
@@ -108,7 +122,7 @@ enroll registrant to program in OpenSPP
 
 | Param | Type | Description |
 | --- | --- | --- |
-| registrant_id | <code>string</code> | registrant_id of group / individual wanted to enroll |
+| spp_id | <code>string</code> | spp_id of group / individual wanted to enroll |
 | program_id | <code>string</code> | program_id of program |
 
 **Example**  
@@ -118,9 +132,29 @@ enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 
 * * *
 
+## getArea
+
+getArea(spp_id, callback) ⇒ <code>Operation</code>
+get area by id in OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| spp_id | <code>string</code> | spp_id of area |
+| callback | <code>function</code> | An optional callback function |
+
+**Example**  
+```js
+getArea("LOC_7M92NLDH")
+```
+
+* * *
+
 ## getEnrolledPrograms
 
-getEnrolledPrograms(registrant_id, callback) ⇒ <code>Operation</code>
+getEnrolledPrograms(spp_id, callback) ⇒ <code>Operation</code>
 get programs list for specific registrant from OpenSPP
 
 **Kind**: global function  
@@ -128,7 +162,7 @@ get programs list for specific registrant from OpenSPP
 
 | Param | Type | Description |
 | --- | --- | --- |
-| registrant_id | <code>string</code> | registrant_id of group / individual wanted to search |
+| spp_id | <code>string</code> | spp_id of group / individual wanted to search |
 | callback | <code>function</code> | An optional callback function |
 
 **Example**  
@@ -140,7 +174,7 @@ getEnrolledPrograms("IND_Q4VGGZPF")
 
 ## getGroup
 
-getGroup(registrant_id, callback) ⇒ <code>Operation</code>
+getGroup(spp_id, callback) ⇒ <code>Operation</code>
 get group information from OpenSPP
 
 **Kind**: global function  
@@ -148,7 +182,7 @@ get group information from OpenSPP
 
 | Param | Type | Description |
 | --- | --- | --- |
-| registrant_id | <code>string</code> | The registrant_id of the group |
+| spp_id | <code>string</code> | The spp_id of the group |
 | callback | <code>function</code> | An optional callback function |
 
 **Example**  
@@ -160,7 +194,7 @@ getGroup("GRP_Q4VGGZPF")
 
 ## getGroupMembers
 
-getGroupMembers(registrant_id, [offset], callback) ⇒ <code>Operation</code>
+getGroupMembers(spp_id, [options], callback) ⇒ <code>Operation</code>
 get group members information from OpenSPP
 
 **Kind**: global function  
@@ -168,8 +202,8 @@ get group members information from OpenSPP
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| registrant_id | <code>string</code> |  | The name of the group |
-| [offset] | <code>number</code> | <code>0</code> | Offset searching |
+| spp_id | <code>string</code> |  | The name of the group |
+| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
 **Example**  
@@ -181,7 +215,7 @@ getGroupMembers("GRP_Q4VGGZPF")
 
 ## getIndividual
 
-getIndividual(registrant_id, callback) ⇒ <code>Operation</code>
+getIndividual(spp_id, callback) ⇒ <code>Operation</code>
 get individual information from OpenSPP
 
 **Kind**: global function  
@@ -189,7 +223,7 @@ get individual information from OpenSPP
 
 | Param | Type | Description |
 | --- | --- | --- |
-| registrant_id | <code>string</code> | The registrant_id of the individual |
+| spp_id | <code>string</code> | The spp_id of the individual |
 | callback | <code>function</code> | An optional callback function |
 
 **Example**  
@@ -221,7 +255,7 @@ getProgram("PROG_2023_00000001")
 
 ## getPrograms
 
-getPrograms([offset], callback) ⇒ <code>Operation</code>
+getPrograms([options], callback) ⇒ <code>Operation</code>
 get programs list from OpenSPP
 
 **Kind**: global function  
@@ -229,7 +263,7 @@ get programs list from OpenSPP
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [offset] | <code>number</code> | <code>0</code> | offset from start |
+| [options] | <code>number</code> | <code>{}</code> | offset from start |
 | callback | <code>function</code> |  | An optional callback function |
 
 **Example**  
@@ -241,21 +275,20 @@ getPrograms(100)
 
 ## getServicePoint
 
-getServicePoint(name, [offset], callback) ⇒ <code>Operation</code>
+getServicePoint(spp_id, callback) ⇒ <code>Operation</code>
 get service points information from OpenSPP
 
 **Kind**: global function  
 **Access**: public  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| name | <code>string</code> |  | The number of the agent |
-| [offset] | <code>number</code> | <code>0</code> | Offset searching |
-| callback | <code>function</code> |  | An optional callback function |
+| Param | Type | Description |
+| --- | --- | --- |
+| spp_id | <code>string</code> | The spp_id of the agent |
+| callback | <code>function</code> | An optional callback function |
 
 **Example**  
 ```js
-getServicePoint("000117")
+getServicePoint("SVP_8P4KP4RT")
 ```
 
 * * *
@@ -280,9 +313,34 @@ removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
 
 * * *
 
+## searchArea
+
+searchArea(domain, [options], callback) ⇒ <code>Operation</code>
+searching for service point in OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| domain | <code>Array</code> |  | searching domain |
+| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
+| callback | <code>function</code> |  | An optional callback function |
+
+**Example** *(search without offset)*  
+```js
+searchArea([["code", "=", "10732"]])
+```
+**Example** *(search with offset)*  
+```js
+searchArea([["kind", "=", 1]], { offset: 10 }})
+```
+
+* * *
+
 ## searchGroup
 
-searchGroup(domain, [offset], callback) ⇒ <code>Operation</code>
+searchGroup(domain, [options], callback) ⇒ <code>Operation</code>
 get groups from OpenSPP
 
 **Kind**: global function  
@@ -290,20 +348,28 @@ get groups from OpenSPP
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| domain | <code>string</code> |  | searching domain |
-| [offset] | <code>number</code> | <code>0</code> | Offset searching |
+| domain | <code>Array</code> |  | searching domain |
+| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example**  
+**Example** *(search group by domain)*  
 ```js
-searchGroup([["registrant_id", "=", "GRP_Q4VGGZPF"]])
+searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
+```
+**Example** *(search group by domain with offset)*  
+```js
+searchGroup([["spp_id", "ilike", "GRP"]], { offset: 100 }})
+```
+**Example** *(search group by complex domain for more accuracy)*  
+```js
+searchGroup([["address", "!=", false], ["phone", "!=", false]])
 ```
 
 * * *
 
 ## searchIndividual
 
-searchIndividual(domain, [offset], callback) ⇒ <code>Operation</code>
+searchIndividual(domain, [options], callback) ⇒ <code>Operation</code>
 get individuals from OpenSPP
 
 **Kind**: global function  
@@ -311,20 +377,53 @@ get individuals from OpenSPP
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| domain | <code>string</code> |  | searching domain |
-| [offset] | <code>number</code> | <code>0</code> | Offset searching |
+| domain | <code>Array</code> |  | searching domain |
+| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example**  
+**Example** *(search individual by domain)*  
 ```js
-searchIndividual([["registrant_id", "=", "IND_Q4VGGZPF"]])
+searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
+```
+**Example** *(search individual by domain with offset)*  
+```js
+searchIndividual([["spp_id", "ilike", "IND"]], { offset: 100 })
+```
+**Example** *(search individual by complex domain for more accuracy)*  
+```js
+searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
+```
+
+* * *
+
+## searchServicePoint
+
+searchServicePoint(domain, [options], callback) ⇒ <code>Operation</code>
+searching for service point in OpenSPP
+
+**Kind**: global function  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| domain | <code>Array</code> |  | searching domain |
+| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
+| callback | <code>function</code> |  | An optional callback function |
+
+**Example** *(search without offset)*  
+```js
+searchServicePoint([["name", "ilike", "agent 1"]])
+```
+**Example** *(search with offset)*  
+```js
+searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
 ```
 
 * * *
 
 ## unenroll
 
-unenroll(registrant_id, program_id)
+unenroll(spp_id, program_id)
 unenroll registrant from program in OpenSPP
 
 **Kind**: global function  
@@ -332,7 +431,7 @@ unenroll registrant from program in OpenSPP
 
 | Param | Type | Description |
 | --- | --- | --- |
-| registrant_id | <code>string</code> | registrant_id of group / individual wanted to unenroll |
+| spp_id | <code>string</code> | spp_id of group / individual wanted to unenroll |
 | program_id | <code>string</code> | program_id of program |
 
 **Example**  
