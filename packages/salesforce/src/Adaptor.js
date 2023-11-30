@@ -18,12 +18,14 @@ import {
   field,
   chunk,
 } from '@openfn/language-common';
-import anyAscii from 'any-ascii';
 
 import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
 
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
+
+// use a dynamic import because any-ascii doesn't play well with the CLI
+const anyAscii = import('any-ascii');
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
