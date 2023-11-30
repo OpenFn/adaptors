@@ -18,6 +18,7 @@ import {
   field,
   chunk,
 } from '@openfn/language-common';
+import anyAscii from 'any-ascii';
 
 import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
 
@@ -757,6 +758,22 @@ function cleanupState(state) {
  */
 export function steps(...operations) {
   return flatten(operations);
+}
+
+/**
+ * Transliterates unicode characters to their best ASCII representation
+ * @public
+ * @example
+ * fn((state) => {
+ *   const s = toUTF8("άνθρωποι");
+ *   console.log(s); // anthropoi
+ *   return state;
+ * });
+ * @param {string} input - A string with inicode characters
+ * @returns {String} - ASCII representation of input string
+ */
+export function toUTF8(input) {
+  return anyAscii(input);
 }
 
 // Note that we expose the entire axios package to the user here.
