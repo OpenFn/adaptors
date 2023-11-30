@@ -851,7 +851,7 @@
           },
           {
             "title": "param",
-            "description": "A string with inicode characters",
+            "description": "A string with unicode characters",
             "type": {
               "type": "NameExpression",
               "name": "string"
