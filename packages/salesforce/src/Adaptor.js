@@ -769,7 +769,7 @@ export function steps(...operations) {
  *   console.log(s); // anthropoi
  *   return state;
  * });
- * @param {string} input - A string with inicode characters
+ * @param {string} input - A string with unicode characters
  * @returns {String} - ASCII representation of input string
  */
 export function toUTF8(input) {
