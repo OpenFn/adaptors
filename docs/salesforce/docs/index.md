@@ -34,6 +34,8 @@
 <dt>
     <a href="#steps">steps()</a></dt>
 <dt>
+    <a href="#toUTF8">toUTF8(input)</a></dt>
+<dt>
     <a href="#update">update(sObject, attrs)</a></dt>
 <dt>
     <a href="#upsert">upsert(sObject, externalId, attrs)</a></dt>
@@ -370,6 +372,30 @@ steps(
   createIf(params),
   update(params)
 )
+```
+
+* * *
+
+## toUTF8
+
+toUTF8(input) ⇒ <code>String</code>
+Transliterates unicode characters to their best ASCII representation
+
+**Kind**: global function  
+**Returns**: <code>String</code> - - ASCII representation of input string  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>string</code> | A string with unicode characters |
+
+**Example**  
+```js
+fn((state) => {
+  const s = toUTF8("άνθρωποι");
+  console.log(s); // anthropoi
+  return state;
+});
 ```
 
 * * *
