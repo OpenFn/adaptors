@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.3.0
+
+### Minor Changes
+
+- 1d5b62f: Add `toUTF8` function
+
 ## 4.2.2
 
 ### Patch Changes
