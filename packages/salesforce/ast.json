@@ -831,6 +831,44 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "toUTF8",
+      "params": [
+        "input"
+      ],
+      "docs": {
+        "description": "Transliterates unicode characters to their best ASCII representation",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "A string with unicode characters",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "input"
+          },
+          {
+            "title": "returns",
+            "description": "ASCII representation of input string",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
