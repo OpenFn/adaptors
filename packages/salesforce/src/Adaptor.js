@@ -24,6 +24,14 @@ import { expandReferences as newExpandReferences } from '@openfn/language-common
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
 
+// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
+// Note that technically we should await this, but in practice the module will be loaded
+// before execute is called
+let anyAscii = undefined;
+import('any-ascii').then(m => {
+  anyAscii = m.default;
+});
+
 /**
  * Adds a lookup relation or 'dome insert' to a record.
  * @public
@@ -757,6 +765,22 @@ function cleanupState(state) {
  */
 export function steps(...operations) {
   return flatten(operations);
+}
+
+/**
+ * Transliterates unicode characters to their best ASCII representation
+ * @public
+ * @example
+ * fn((state) => {
+ *   const s = toUTF8("άνθρωποι");
+ *   console.log(s); // anthropoi
+ *   return state;
+ * });
+ * @param {string} input - A string with unicode characters
+ * @returns {String} - ASCII representation of input string
+ */
+export function toUTF8(input) {
+  return anyAscii(input);
 }
 
 // Note that we expose the entire axios package to the user here.
