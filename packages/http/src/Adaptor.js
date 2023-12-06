@@ -331,7 +331,7 @@ export function parseXML(body, script) {
 }
 
 /**
- * The parseXML2JSON function takes an XML string and converts it to a JSON object.
+ * The xml2json function takes an XML string and converts it to a JSON object.
  *
  * @param {string} xml - Pass in the xml string that we want to parse
  * @param {object} options - Specify the options for the parsestring function
@@ -339,17 +339,21 @@ export function parseXML(body, script) {
  * @returns {Operation}
  */
 
-export function parseXML2JSON(xml, options, callback) {
+export function xml2json(xml, options, callback) {
   return state => {
     const resolvedXml = expandReferences(xml)(state);
     const resolvedOptions = expandReferences(options)(state);
 
+    let response = null;
     parseString(resolvedXml, resolvedOptions, (err, result) => {
       if (err) {
         console.log(err, 'error');
       }
-      console.dir(JSON.stringify(result, null, 2));
+      console.dir(JSON.stringify(result));
+      response = result;
     });
+
+    return composeNextState(state, { body: response });
   };
 }
 
