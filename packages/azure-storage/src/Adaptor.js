@@ -3,6 +3,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
+import { expandReferences } from '@openfn/language-common/util';
 
 let client = undefined;
 
@@ -66,16 +67,26 @@ function resolveContainerName(state, containerName) {
  * @param {string} blobName - Name of the blob to create or replace.
  * @param {string} content - Content to upload.
  * @param {object} uploadOptions - See BlockBlobUploadOptions in Azure Blob Storage docs
- * @param {boolean} createContainer - Create the container if it does not exist.
- * @param {boolean} overwrite - Overwrite the blob if it already exists.
- * @param {string} containerName - Name of the container where the blob will be uploaded.
+ * @param {Object} [options={}] - Additional options for the upload process.
+//  * @param {boolean} [options.createContainer=false] - Whether to create the container if it doesn't exist.
+//  * @param {boolean} [options.overwrite=false] - Whether to overwrite an existing blob with the same name.
+//  * @param {string} [options.containerName] - Container name. Overrides state.configuration.
  * @returns {Operation}
  */
-export function uploadBlob(blobName, content, uploadOptions, createContainer = false, overwrite = true, containerName = null) {
+export function uploadBlob(blobName, content, uploadOptions, options = {}) {
   return async (state) => {
+    
+    const [resolvedBlobName, resolvedContent, resolvedUploadOptions, resolvedOptions] = expandReferences(state, blobName, content, uploadOptions, options)
+
+    const {
+      createContainer = false,
+      overwrite = false,
+      containerName
+    } = resolvedOptions;
+
     const container = resolveContainerName(state, containerName);
-    const containerClient = client.getContainerClient(container);
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const containerClient = client.getContainerClient(container); 
+    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
 
     if (createContainer === true) {
       const containerExists = await containerClient.exists();
@@ -89,12 +100,24 @@ export function uploadBlob(blobName, content, uploadOptions, createContainer = f
     if (overwrite === false) {
       const blobExists = await blockBlobClient.exists();
       if (blobExists === true) {
-        throw new Error(`Blob '${blobName}' already exists in container '${container}'.`);
+        throw new Error(`Blob '${resolvedBlobName}' already exists in container '${container}'.`);
       }
     }
-    console.debug(`Uploading blob '${blobName}' to container '${container}'`);
-    const response = await blockBlobClient.upload(content, content.length, uploadOptions);
-    console.log(`Blob '${blobName}' successfully uploaded`);
+
+    content = resolvedContent;
+    if (typeof content === 'object') {
+      content = JSON.stringify(resolvedContent);
+    }
+
+    console.debug(`Uploading blob '${resolvedBlobName}' to container '${container}'`);
+    console.debug(`Content: '${content}', length: '${content.length}'`);
+    response = await blockBlobClient.upload(content, content.length, resolvedUploadOptions);
+    console.log(`Blob '${resolvedBlobName}' successfully uploaded`);
+    
+    // blobName and containerName are not returned in the response
+    response.blobName = resolvedBlobName;
+    response.containerName = container;
+
     const nextState = composeNextState(state, response);
     return nextState;
   };
@@ -102,36 +125,43 @@ export function uploadBlob(blobName, content, uploadOptions, createContainer = f
 
 
 /**
- * Download a blob from Azure Blob Storage as a string.
+ * Download a blob from Azure Blob Storage.
  * @public
  * @example
- * downloadBlob('mycontainer', 'myblob.txt', { as: 'string' })
+ * downloadBlob('mycontainer', 'myblob.txt', { downloadAs: 'string' })
  * @function
  * @param {string} blobName - Name of the blob to download.
- * @param {object} options - Download options: `{as : 'string' | 'json'}`
- * @param {string} containerName - Name of the container containing the blob.
+ * @param {Object} [options={}] - Additional options for the download process.
  * @returns {Operation}
  */
-export function downloadBlob(blobName, options = { as: 'string' }, containerName = null) {
+export function downloadBlob(blobName, options = {}) {
   return async (state) => {
+    
+    const [resolvedBlobName, resolvedOptions] = expandReferences(state, blobName, options)
+
+    const {
+      downloadAs = 'string',
+      containerName
+    } = resolvedOptions;
+
     const container = resolveContainerName(state, containerName);
     const containerClient = client.getContainerClient(container);
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-    console.debug(`Downloading ${blobName} from ${container}`);
+    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
+    console.debug(`Downloading ${resolvedBlobName} from ${container}`);
     const response = await blockBlobClient.downloadToBuffer();
 
     let content;
-    if (options.as === 'string') {
+    if (downloadAs === 'string') {
       content = response.toString();
-      console.log(`Downloaded ${blobName} as string from ${container}`);
-    } else if (options.as === 'json') {
+      console.log(`Downloaded ${resolvedBlobName} as string from ${container}`);
+    } else if (downloadAs === 'json') {
       content = JSON.parse(response.toString());
-      console.log(`Downloaded ${blobName} as JSON from ${container}`);
+      console.log(`Downloaded ${resolvedBlobName} as JSON from ${container}`);
     } else {
-      throw new Error(`Unsupported download option: ${options.as}`);
+      throw new Error(`Unsupported download option: ${downloadAs}`);
     }
 
-    // TODO: consider how to handle other options.as values (e.g., 'stream')
+    // TODO: consider how to handle other options.downloadAs values (e.g., 'stream')
 
     const nextState = composeNextState(state, { content });
     return nextState;
@@ -146,24 +176,29 @@ export function downloadBlob(blobName, options = { as: 'string' }, containerName
  * getBlobProperties('mycontainer', 'myblob.txt')
  * @function
  * @param {string} blobName - Name of the blob to get properties for.
- * @param {string} containerName - Name of the container containing the blob.
+ * @param {string} options - Additional options for the getBlobProperties process.
  * @returns {Operation}
  */
-export function getBlobProperties(blobName, containerName = null) {
-  
+export function getBlobProperties(blobName, options = {}) {
   return async (state) => {
+
+    const [resolvedBlobName, resolvedOptions] = expandReferences(state, blobName, options)
+
+    const {
+      containerName
+    } = resolvedOptions;
+
     const container = resolveContainerName(state, containerName);
     const containerClient = client.getContainerClient(container);
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-    console.debug(`Fetching properties of ${blobName} from ${container}`);
+    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
+    console.debug(`Fetching properties of ${resolvedBlobName} from ${container}`);
     const properties = await blockBlobClient.getProperties();
-    console.log(`Successfully fetched properties of ${blobName}:\n${properties}`);
+    console.log(`Successfully fetched properties of ${resolvedBlobName}:\n${properties}`);
     const nextState = composeNextState(state, { properties });
     return nextState;
   };
 }
 
-// TODO: Decide which functions to publish from @openfn/language-common
 export {
   dataPath,
   dataValue,

@@ -30,47 +30,39 @@ Assume you have a simple `state.json` file as follows:
   },
   "configuration": {
       "accountName": "myaccountname",
-      "accountKey": "myaccountkey"
+      "accountKey": "myaccountkey",
+      "containerName": "mycontainer"
   }
 }
 ```
 
-Create a file `job.js`, as shown below, to run with the OpenFn CLI.
+Create a file `job.js`, as shown below, to run with the OpenFn CLI. This
+example uploads the blob with a year/month partitioning scheme, then
+downloads the same blob and fetches the blob properties. It would be extremely
+unusual to perform all of these actions in a single job.
 
 ```js
-const data = state.data;
-const container = "mycontainer";
-const src = "com.example";
-const id = "0e82962a-6ed0-4a88-92c1-51ae785b4126";
-const year = "2023";
-const month = "11";
+uploadBlob(
+  state => {
+    const date = new Date();
+    const id = '0e82962a-6ed0-4a88-92c1-51ae785b4126';
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${id}.json`;
+  },
+  state.data,
+  {
+    blobHTTPHeaders: { blobContentType: 'application/json' }
+  },
+  { createContainer: true, overwrite: true }
+);
 
-// Generate a full name for the blob based on a date-based partitioning
-// scheme, as might be common in populating a data lake.
-const blobBaseName = `${id}.json`;
-const blobFullName = `${year}/${month}/${src}/${blobBaseName}`;
-const content =  JSON.stringify(data);
+downloadBlob(
+   dataValue('blobName');
+);
 
-// You can attach metadata as K/V pairs to objects that you upload.
-// The keys and values must be strings.
-let metadata = data;
-
-// Set the content type and attach metadata
-let uploadOptions = {
-    blobHTTPHeaders: {blobContentType: 'application/json'},
-    metadata: metadata
-};
-
-// Do all the things
-execute(
-  fn(state => {
-    // By default, functions use container name from state.configuration
-    state.configuration.containerName = container;
-    return state; 
-  }),
-  uploadBlob(blobFullName, content, uploadOptions, true),
-  downloadBlob(blobFullName, {as: 'json'}),
-  getBlobProperties(blobFullName)
+getBlobProperties(
+ state => {
+    return state.references[1].blobName;
+  }
 );
 ```
 

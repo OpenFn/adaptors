@@ -13,6 +13,13 @@
       "description": "Azure Account Key",
       "writeOnly": true,
       "examples": ["zzUx5rA4BZkjPet8ztLTEll7azF65Sez7WxGKsJv5B+rp/dby8ARgYpEVe93xFCQDqGBi3FUlxjP+ASt4uepZg=="]
+    },
+    "containerName": {
+      "title": "Container Name",
+      "type": "string",
+      "description": "Name of Azure Blob Storage Container",
+      "writeOnly": true,
+      "examples": ["mycontainername"]
     }
   },
   "type": "object",
