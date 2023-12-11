@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "accountName": {
+      "title": "Account Name",
+      "type": "string",
+      "description": "Azure Storage Account Name",
+      "examples": ["examplestorageaccount01"]
+    },
+    "accountKey": {
+      "title": "Account Key",
+      "type": "string",
+      "description": "Azure Account Key",
+      "writeOnly": true,
+      "examples": ["zzUx5rA4BZkjPet8ztLTEll7azF65Sez7WxGKsJv5B+rp/dby8ARgYpEVe93xFCQDqGBi3FUlxjP+ASt4uepZg=="]
+    },
+    "containerName": {
+      "title": "Container Name",
+      "type": "string",
+      "description": "Name of Azure Blob Storage Container",
+      "writeOnly": true,
+      "examples": ["mycontainername"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["accountName", "accountKey"]
+}
