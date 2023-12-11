@@ -61,7 +61,7 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
 
-  packages/azureblobstorage:
+  packages/azure-storage:
     dependencies:
       '@azure/storage-blob':
         specifier: ^12.15.0
