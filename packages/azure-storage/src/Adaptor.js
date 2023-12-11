@@ -122,20 +122,21 @@ export function uploadBlob(blobName, content, uploadOptions, options = {}) {
       }
     }
 
-    if (typeof resolvedContent === 'object') {
+    let finalContent = resolvedContent;
+    if (typeof finalContent === 'object') {
       console.debug(`Converting '${resolvedBlobName}' content to string`);
-      resolvedContent = JSON.stringify(resolvedContent);
+      finalContent = JSON.stringify(finalContent);
     }
 
     console.debug(
       `Uploading blob '${resolvedBlobName}' to container '${container}'`
     );
     console.debug(
-      `Content: '${resolvedContent}', length: '${resolvedContent.length}'`
+      `Content: '${finalContent}', length: '${finalContent.length}'`
     );
     response = await blockBlobClient.upload(
-      resolvedContent,
-      resolvedContent.length,
+      finalContent,
+      finalContent.length,
       resolvedUploadOptions
     );
     console.log(`Blob '${resolvedBlobName}' successfully uploaded`);
