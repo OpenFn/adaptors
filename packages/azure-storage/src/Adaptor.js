@@ -2,7 +2,10 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
+import {
+  BlobServiceClient,
+  StorageSharedKeyCredential,
+} from '@azure/storage-blob';
 import { expandReferences } from '@openfn/language-common/util';
 
 let client = undefined;
@@ -25,7 +28,7 @@ export function execute(...operations) {
     data: null,
   };
 
-  return (state) => {
+  return state => {
     return commonExecute(
       createClient,
       ...operations,
@@ -38,7 +41,10 @@ export function execute(...operations) {
 function createClient(state) {
   const { accountName, accountKey } = state.configuration;
   const blobStorageUrl = `https://${accountName}.blob.core.windows.net`;
-  const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
+  const sharedKeyCredential = new StorageSharedKeyCredential(
+    accountName,
+    accountKey
+  );
   client = new BlobServiceClient(blobStorageUrl, sharedKeyCredential);
   return state;
 }
@@ -51,10 +57,15 @@ function teardownClient(state) {
 function resolveContainerName(state, containerName) {
   if (containerName) {
     return containerName;
-  } else if (state.configuration.containerName && typeof state.configuration.containerName === 'string') {
+  } else if (
+    state.configuration.containerName &&
+    typeof state.configuration.containerName === 'string'
+  ) {
     return state.configuration.containerName;
   } else {
-    throw new Error('Container name is not defined and is not present in state.configuration.containerName');
+    throw new Error(
+      'Container name is not defined and is not present in state.configuration.containerName'
+    );
   }
 }
 
@@ -68,25 +79,30 @@ function resolveContainerName(state, containerName) {
  * @param {string} content - Content to upload.
  * @param {object} uploadOptions - See BlockBlobUploadOptions in Azure Blob Storage docs
  * @param {Object} [options={}] - Additional options for the upload process.
-//  * @param {boolean} [options.createContainer=false] - Whether to create the container if it doesn't exist.
-//  * @param {boolean} [options.overwrite=false] - Whether to overwrite an existing blob with the same name.
-//  * @param {string} [options.containerName] - Container name. Overrides state.configuration.
+ * @param {boolean} [options.createContainer=false] - Whether to create the container if it doesn't exist.
+ * @param {boolean} [options.overwrite=false] - Whether to overwrite an existing blob with the same name.
+ * @param {string} [options.containerName] - Container name. Overrides state.configuration.
  * @returns {Operation}
  */
 export function uploadBlob(blobName, content, uploadOptions, options = {}) {
-  return async (state) => {
-    
-    const [resolvedBlobName, resolvedContent, resolvedUploadOptions, resolvedOptions] = expandReferences(state, blobName, content, uploadOptions, options)
+  return async state => {
+    const [
+      resolvedBlobName,
+      resolvedContent,
+      resolvedUploadOptions,
+      resolvedOptions,
+    ] = expandReferences(state, blobName, content, uploadOptions, options);
 
     const {
       createContainer = false,
       overwrite = false,
-      containerName
+      containerName,
     } = resolvedOptions;
 
     const container = resolveContainerName(state, containerName);
-    const containerClient = client.getContainerClient(container); 
-    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
+    const containerClient = client.getContainerClient(container);
+    const blockBlobClient =
+      containerClient.getBlockBlobClient(resolvedBlobName);
 
     if (createContainer === true) {
       const containerExists = await containerClient.exists();
@@ -100,20 +116,30 @@ export function uploadBlob(blobName, content, uploadOptions, options = {}) {
     if (overwrite === false) {
       const blobExists = await blockBlobClient.exists();
       if (blobExists === true) {
-        throw new Error(`Blob '${resolvedBlobName}' already exists in container '${container}'.`);
+        throw new Error(
+          `Blob '${resolvedBlobName}' already exists in container '${container}'.`
+        );
       }
     }
 
-    content = resolvedContent;
-    if (typeof content === 'object') {
-      content = JSON.stringify(resolvedContent);
+    if (typeof resolvedContent === 'object') {
+      console.debug(`Converting '${resolvedBlobName}' content to string`);
+      resolvedContent = JSON.stringify(resolvedContent);
     }
 
-    console.debug(`Uploading blob '${resolvedBlobName}' to container '${container}'`);
-    console.debug(`Content: '${content}', length: '${content.length}'`);
-    response = await blockBlobClient.upload(content, content.length, resolvedUploadOptions);
+    console.debug(
+      `Uploading blob '${resolvedBlobName}' to container '${container}'`
+    );
+    console.debug(
+      `Content: '${resolvedContent}', length: '${resolvedContent.length}'`
+    );
+    response = await blockBlobClient.upload(
+      resolvedContent,
+      resolvedContent.length,
+      resolvedUploadOptions
+    );
     console.log(`Blob '${resolvedBlobName}' successfully uploaded`);
-    
+
     // blobName and containerName are not returned in the response
     response.blobName = resolvedBlobName;
     response.containerName = container;
@@ -122,7 +148,6 @@ export function uploadBlob(blobName, content, uploadOptions, options = {}) {
     return nextState;
   };
 }
-
 
 /**
  * Download a blob from Azure Blob Storage.
@@ -135,18 +160,19 @@ export function uploadBlob(blobName, content, uploadOptions, options = {}) {
  * @returns {Operation}
  */
 export function downloadBlob(blobName, options = {}) {
-  return async (state) => {
-    
-    const [resolvedBlobName, resolvedOptions] = expandReferences(state, blobName, options)
+  return async state => {
+    const [resolvedBlobName, resolvedOptions] = expandReferences(
+      state,
+      blobName,
+      options
+    );
 
-    const {
-      downloadAs = 'string',
-      containerName
-    } = resolvedOptions;
+    const { downloadAs = 'string', containerName } = resolvedOptions;
 
     const container = resolveContainerName(state, containerName);
     const containerClient = client.getContainerClient(container);
-    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
+    const blockBlobClient =
+      containerClient.getBlockBlobClient(resolvedBlobName);
     console.debug(`Downloading ${resolvedBlobName} from ${container}`);
     const response = await blockBlobClient.downloadToBuffer();
 
@@ -168,7 +194,6 @@ export function downloadBlob(blobName, options = {}) {
   };
 }
 
-
 /**
  * Get properties of a blob in Azure Blob Storage.
  * @public
@@ -180,20 +205,26 @@ export function downloadBlob(blobName, options = {}) {
  * @returns {Operation}
  */
 export function getBlobProperties(blobName, options = {}) {
-  return async (state) => {
+  return async state => {
+    const [resolvedBlobName, resolvedOptions] = expandReferences(
+      state,
+      blobName,
+      options
+    );
 
-    const [resolvedBlobName, resolvedOptions] = expandReferences(state, blobName, options)
-
-    const {
-      containerName
-    } = resolvedOptions;
+    const { containerName } = resolvedOptions;
 
     const container = resolveContainerName(state, containerName);
     const containerClient = client.getContainerClient(container);
-    const blockBlobClient = containerClient.getBlockBlobClient(resolvedBlobName);
-    console.debug(`Fetching properties of ${resolvedBlobName} from ${container}`);
+    const blockBlobClient =
+      containerClient.getBlockBlobClient(resolvedBlobName);
+    console.debug(
+      `Fetching properties of ${resolvedBlobName} from ${container}`
+    );
     const properties = await blockBlobClient.getProperties();
-    console.log(`Successfully fetched properties of ${resolvedBlobName}:\n${properties}`);
+    console.log(
+      `Successfully fetched properties of ${resolvedBlobName}:\n${properties}`
+    );
     const nextState = composeNextState(state, { properties });
     return nextState;
   };
