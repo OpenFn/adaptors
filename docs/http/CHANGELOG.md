@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 5.1.1
+
+### Patch Changes
+
+- a8d655e: Update `parseXML` to use `expandReferences`
+
 ## 5.1.0
 
 ### Minor Changes
