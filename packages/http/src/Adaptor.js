@@ -17,7 +17,7 @@ import nodeRequest from 'request';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 import tough from 'tough-cookie';
-import { parseString } from 'xml2js';
+import { parseStringPromise } from 'xml2js';
 
 const { axios } = http;
 
@@ -312,7 +312,6 @@ export function del(path, params, callback) {
 export function parseXML(body, script) {
   return state => {
     const resolvedBody = expandReferences(body)(state);
-
     const $ = cheerio.load(resolvedBody);
     cheerioTableparser($);
 
@@ -334,7 +333,7 @@ export function parseXML(body, script) {
  * The xml2json function takes an XML string and converts it to a JSON object.
  *
  * @param {string} xml - Pass in the xml string that we want to parse
- * @param {object} options - Specify the options for the parsestring function
+ * @param {object} options - Specify the options for the parseStringPromise function
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -344,16 +343,14 @@ export function xml2json(xml, options, callback) {
     const resolvedXml = expandReferences(xml)(state);
     const resolvedOptions = expandReferences(options)(state);
 
-    let response = null;
-    parseString(resolvedXml, resolvedOptions, (err, result) => {
-      if (err) {
-        console.log(err, 'error');
-      }
-      console.dir(JSON.stringify(result));
-      response = result;
-    });
+    return parseStringPromise(resolvedXml, resolvedOptions).then(result => {
+      console.log('Done converting xml to json ✅');
 
-    return composeNextState(state, { body: response });
+      const nextState = { ...composeNextState(state, result), result };
+
+      if (callback) return callback(nextState);
+      return nextState;
+    });
   };
 }
 
