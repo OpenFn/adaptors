@@ -1,5 +1,12 @@
 # @openfn/language-godata
 
+## 3.4.0
+
+### Minor Changes
+
+- df4cfca: Switch from `'writeOnly: true'` to `'format: email'` in the godata
+  configuration schema.
+
 ## 3.3.1
 
 ### Patch Changes
