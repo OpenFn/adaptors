@@ -5,7 +5,7 @@
             "title": "Data Center",
             "type": "string",
             "description": "Mailchimp Data Center for your account",
-            "minLength": 3,
+            "minLength": 1,
             "examples": [
                 "us11",
                 "uk8",
@@ -16,7 +16,7 @@
             "title": "API Key",
             "type": "string",
             "description": "Mailchimp API Key",
-            "minLength": 32,
+            "minLength": 1,
             "examples": [
                 "0eb22c7b4a1c5bcd789379bf8a92902d-us13"
             ]
