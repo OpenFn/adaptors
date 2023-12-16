@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 0.7.2
+
+### Patch Changes
+
+- 1131c34: Remove regex pattern for validation and changed minLength to 1
+
 ## 0.7.1
 
 ### Patch Changes

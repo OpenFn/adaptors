@@ -5,23 +5,21 @@
             "title": "Data Center",
             "type": "string",
             "description": "Mailchimp Data Center for your account",
-            "minLength": 3,
+            "minLength": 1,
             "examples": [
                 "us11",
                 "uk8",
                 "in10"
-            ],
-            "pattern": "^[a-zA-Z]{2}\\d{1,2}$"
+            ]
         },
         "apiKey": {
             "title": "API Key",
             "type": "string",
             "description": "Mailchimp API Key",
-            "minLength": 32,
+            "minLength": 1,
             "examples": [
                 "0eb22c7b4a1c5bcd789379bf8a92902d-us13"
-            ],
-            "pattern": "^[a-zA-Z0-9]{20}-[a-zA-Z]{2}\\d{1,2}$"
+            ]
         }
     },
     "type": "object",

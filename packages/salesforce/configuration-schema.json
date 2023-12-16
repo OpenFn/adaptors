@@ -42,7 +42,6 @@
     "apiVersion": {
       "title": "API Version",
       "type": "string",
-      "pattern": "^[0-9]{2}\\.[0-9]$",
       "placeholder": "52.0",
       "description": "Salesforce API Version",
       "minLength": 1,
