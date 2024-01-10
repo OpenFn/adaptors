@@ -2,15 +2,10 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-
-import {
-  request as commonRequest,
-  expandReferences,
-} from '@openfn/language-common/util';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-import { addBasicAuth } from './Utils';
+import { request } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -32,71 +27,6 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(...operations)({ ...initialState, ...state });
-  };
-}
-
-function request(method, path, params, callback) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-
-    let body = resolvedParams?.body;
-    let headers = resolvedParams?.headers;
-
-    if (resolvedParams?.json) {
-      console.warn(
-        'DEPRECATION WARNING: Please migrate from `json` to `body`.'
-      );
-      body = resolvedParams.json;
-    }
-
-    if (resolvedParams?.form) {
-      let form = new FormData();
-      for (const [key, value] of Object.entries(resolvedParams.form)) {
-        form.append(key, value);
-      }
-      body = form;
-    }
-
-    const baseUrl = state.configuration?.baseUrl;
-
-    const auth = addBasicAuth(state.configuration, headers || {});
-
-    const maxRedirections =
-      resolvedParams?.maxRedirections ??
-      (resolvedParams?.followAllRedirects === false ? 0 : 5);
-
-    const tls = resolvedParams?.tls ?? resolvedParams?.agentOptions;
-
-    if (resolvedParams?.agentOptions) {
-      console.warn(
-        'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`.'
-      );
-    }
-
-    const options = {
-      ...resolvedParams,
-      ...auth,
-      baseUrl,
-      body,
-      tls,
-      maxRedirections,
-    };
-
-    return commonRequest(method, resolvedPath, options)
-      .then(response => {
-        const { method, url, body, code, duration } = response;
-        console.log(method, url, '-', code, 'in', duration + 'ms');
-
-        return {
-          ...composeNextState(state, body),
-          response,
-        };
-      })
-      .then(nextState => callback?.(nextState) ?? nextState);
   };
 }
 
