@@ -25,7 +25,7 @@ export function request(method, path, params, callback = s => s) {
     );
 
     let body = resolvedParams?.body;
-    let headers = resolvedParams?.headers;
+    let headers = resolvedParams?.headers ?? {};
 
     if (resolvedParams?.json) {
       console.warn(
@@ -44,7 +44,7 @@ export function request(method, path, params, callback = s => s) {
 
     const baseUrl = state.configuration?.baseUrl;
 
-    const auth = addBasicAuth(state.configuration, headers || {});
+    addBasicAuth(state.configuration, headers);
 
     const maxRedirections =
       resolvedParams?.maxRedirections ??
@@ -60,7 +60,7 @@ export function request(method, path, params, callback = s => s) {
 
     const options = {
       ...resolvedParams,
-      ...auth,
+      headers,
       baseUrl,
       body,
       tls,
