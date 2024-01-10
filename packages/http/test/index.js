@@ -86,6 +86,20 @@ describe('get()', () => {
   //     });
   // });
 
+  it('should get a string', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/greeting'))(state);
+
+    expect(result.data).to.eql('hello');
+  });
+
   it('should get JSON from a path', async () => {
     testServer
       .intercept({ path: '/json' })
@@ -101,8 +115,7 @@ describe('get()', () => {
 
     const result = await execute(get('/json'))(state);
 
-    const { data } = result;
-    expect(data).to.eql({ x: 23 });
+    expect(result.data).to.eql({ x: 23 });
   });
 
   it('should get JSON from a full url', async () => {
@@ -116,8 +129,24 @@ describe('get()', () => {
 
     const result = await execute(get('https://www.example.com/json'))(state);
 
-    const { data } = result;
-    expect(data).to.eql({ x: 24 });
+    expect(result.data).to.eql({ x: 24 });
+  });
+
+  it.only('should get JSON as a string if parseAs is set', async () => {
+    const jsonstring = JSON.stringify({ x: 23 });
+    testServer.intercept({ path: '/json' }).reply(200, jsonstring, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json', { parseAs: 'text' }))(state);
+
+    expect(result.data).to.eql(jsonstring);
   });
 
   it('should write the response to state', async () => {
@@ -236,23 +265,31 @@ describe('get()', () => {
     expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
   });
 
-  // TODO: I think this means the query object should be converted into a url?
-  // the response url should be the best way to see this
-  // But a gotcha! we can't seem to get the response url
-  it.skip('allows query strings to be set', async () => {
+  it('allows query strings to be set', async () => {
+    testServer
+      .intercept({
+        path: '/api/by-id?id=1',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        { ok: true },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
     const state = {
       configuration: {},
-      data: {},
     };
 
     const { data } = await execute(
-      get('https://www.example.com/api/showMeMyHeaders', { query: { id: 1 } })
+      get('https://www.example.com/api/by-id', { query: { id: 1 } })
     )(state);
 
-    expect(data.path).to.eql('/api/showMeMyHeaders');
-    expect(data.query).to.eql({ id: 1 });
-    // TODO how to test baseUrl? Do we want to test baseUrl
-    // expect(data[1]).to.haveOwnProperty('host', 'www.example.com');
+    expect(data).eql({ ok: true });
   });
 
   // TODO: calls the callback with nextState AFTER references are written
