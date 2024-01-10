@@ -76,7 +76,7 @@ const defaultOptions = {
 };
 
 /**
- * `request` is a a helper function that sends HTTP requests and returns the response
+ * `request` is a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
  * Use the error map to provide custom error messages or get hold of the response in case of errors.
  * @param method - The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.).
