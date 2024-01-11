@@ -80,6 +80,12 @@ export function request(method, path, params, callback = s => s) {
           response,
         };
       })
-      .then(callback);
+      .then(callback)
+      .catch(err => {
+        const log = generateResponseLog(err);
+        console.log(log);
+
+        throw err;
+      });
   };
 }

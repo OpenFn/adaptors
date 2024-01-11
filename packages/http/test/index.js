@@ -145,6 +145,7 @@ describe('get()', () => {
       body: { x: 31 },
       statusCode: 201,
       statusMessage: 'Created',
+      url: 'https://www.example.com/json',
     });
     assert.isNumber(duration);
     assert.isAtLeast(duration, 0);
@@ -316,15 +317,15 @@ describe('get()', () => {
       error = e;
     }
 
-    const { code, url, method, duration, name } = error;
+    const { statusCode, url, method, duration, name } = error;
     expect({
-      code,
+      statusCode,
       url,
       method,
       name,
     }).to.eql({
       name: 'Error',
-      code: 404,
+      statusCode: 404,
       url: 'https://www.example.com/api/404',
       method: 'GET',
     });
