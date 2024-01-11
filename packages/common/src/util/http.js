@@ -1,4 +1,6 @@
 import { Client, MockAgent } from 'undici';
+import { getReasonPhrase } from 'http-status-codes';
+import { Readable } from 'node:stream';
 
 const clients = new Map();
 
@@ -22,11 +24,19 @@ export const enableMockClient = baseUrl => {
   return client;
 };
 
-const assertOK = (response, errorMap, fullUrl) => {
+const assertOK = (response, errorMap, fullUrl, method, startTime) => {
   const errMapMessage = errorMap[response.statusCode];
 
-  if (errMapMessage || response.statusCode >= 400) {
-    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+  const isError =
+    typeof errMapMessage === 'boolean'
+      ? errMapMessage
+      : errMapMessage || response.statusCode >= 400;
+
+  if (isError) {
+    const statusText = getReasonPhrase(response.statusCode);
+    const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
+
+    const duration = Date.now() - startTime;
 
     const errMessage =
       typeof errMapMessage === 'function'
@@ -34,8 +44,11 @@ const assertOK = (response, errorMap, fullUrl) => {
         : errMapMessage || defaultErrorMesssage;
 
     const error = new Error(errMessage);
-    error.code = response.statusCode;
+    error.statusCode = response.statusCode;
+    error.statusMessage = statusText;
     error.url = fullUrl;
+    error.duration = duration;
+    error.method = method;
     throw error;
   }
 };
@@ -48,41 +61,42 @@ const parseUrl = (fullUrl, baseUrl) => {
       path: url.pathname,
     };
   } else {
-    return { baseUrl, path: fullUrl };
+    const path = fullUrl.startsWith('/') ? fullUrl : `/${fullUrl}`;
+    return { baseUrl, path };
   }
 };
 
-const defaultOptions = {
-  timeout: 300e3, // Default to 300 seconds
-  headers: {},
-  query: undefined,
-  body: undefined,
-  errors: {},
-  tls: {},
-  parseAs: 'auto',
-};
-
 /**
- * `request` is a a helper function that sends HTTP requests and returns the response
+ * `request` is a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
  * Use the error map to provide custom error messages or get hold of the response in case of errors.
  * @param method - The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.).
  * @param fullUrlOrPath - The full or partial URL for the request.
- * If a partial URL, it will be based on `options.baseUrl`.
  * @param [options] - The `options` parameter is an object that contains additional configuration
  * options for the request.
  * @returns an object with the following properties:
+ * - method: the request method
+ * - url: the request url
  * - code: the status code of the response
  * - headers: the headers of the response
  * - body: the body of the response
+ * - message: the status text of the response
+ * - duration: the response time
  */
 export async function request(method, fullUrlOrPath, options = {}) {
+  const startTime = Date.now();
   const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
 
-  const { headers, query, body, errors, timeout, tls, parseAs } = {
-    ...defaultOptions,
-    ...options,
-  };
+  const {
+    headers = {},
+    query = {},
+    body,
+    errors = {},
+    timeout = 300e3, // Default to 300 seconds,
+    tls = {},
+    parseAs = 'auto',
+    maxRedirections,
+  } = options;
 
   const client = getClient(baseUrl, { tls, timeout });
 
@@ -91,19 +105,55 @@ export async function request(method, fullUrlOrPath, options = {}) {
     query,
     method,
     headers,
-    body,
+    body: encodeRequestBody(body),
     throwOnError: false,
+    maxRedirections,
   });
 
-  assertOK(response, errors, fullUrlOrPath);
+  const statusText = getReasonPhrase(response.statusCode);
+
+  assertOK(response, errors, fullUrlOrPath, method, startTime);
 
   const responseBody = await readResponseBody(response, parseAs);
+  const endTime = Date.now();
+  const duration = endTime - startTime;
 
   return {
-    code: response.statusCode,
+    url: new URL(path, baseUrl).toString(),
+    method,
+    statusCode: response.statusCode,
+    statusMessage: statusText,
     headers: response.headers,
     body: responseBody,
+    duration,
   };
+}
+
+function encodeRequestBody(body) {
+  if (!body) {
+    return undefined;
+  }
+
+  if (
+    Buffer.isBuffer(body) ||
+    body instanceof Readable ||
+    typeof body === 'string'
+  ) {
+    return body;
+  }
+
+  if (typeof body === 'object') {
+    if (
+      Symbol.asyncIterator in Object(body) ||
+      Symbol.iterator in Object(body) ||
+      body instanceof FormData
+    ) {
+      return body;
+    }
+    return JSON.stringify(body);
+  }
+
+  throw new Error('Unsupported body type');
 }
 
 async function readResponseBody(response, parseAs) {
@@ -117,7 +167,7 @@ async function readResponseBody(response, parseAs) {
     case 'stream':
       return response.body;
     default:
-      return contentType === 'application/json'
+      return contentType && contentType.includes('application/json')
         ? response.body.json()
         : response.body.text();
   }
