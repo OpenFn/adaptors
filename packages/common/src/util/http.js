@@ -91,7 +91,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     headers = {},
     query = {},
     body,
-    errors,
+    errors = {},
     timeout = 300e3, // Default to 300 seconds,
     tls = {},
     parseAs = 'auto',
