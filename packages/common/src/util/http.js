@@ -66,16 +66,6 @@ const parseUrl = (fullUrl, baseUrl) => {
   }
 };
 
-const defaultOptions = {
-  timeout: 300e3, // Default to 300 seconds
-  headers: {},
-  query: undefined,
-  body: undefined,
-  errors: {},
-  tls: {},
-  parseAs: 'auto',
-};
-
 /**
  * `request` is a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
@@ -98,18 +88,15 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const { baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
 
   const {
-    headers,
-    query,
+    headers = {},
+    query = {},
     body,
     errors,
-    timeout,
-    tls,
-    parseAs,
+    timeout = 300e3, // Default to 300 seconds,
+    tls = {},
+    parseAs = 'auto',
     maxRedirections,
-  } = {
-    ...defaultOptions,
-    ...options,
-  };
+  } = options;
 
   const client = getClient(baseUrl, { tls, timeout });
 
@@ -118,7 +105,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     query,
     method,
     headers,
-    body: requestBodyType(body),
+    body: encodeRequestBody(body),
     throwOnError: false,
     maxRedirections,
   });
@@ -142,12 +129,16 @@ export async function request(method, fullUrlOrPath, options = {}) {
   };
 }
 
-function requestBodyType(body) {
+function encodeRequestBody(body) {
   if (!body) {
     return undefined;
   }
 
-  if (Buffer.isBuffer(body) || body instanceof Readable) {
+  if (
+    Buffer.isBuffer(body) ||
+    body instanceof Readable ||
+    typeof body === 'string'
+  ) {
     return body;
   }
 
@@ -160,10 +151,6 @@ function requestBodyType(body) {
       return body;
     }
     return JSON.stringify(body);
-  }
-
-  if (typeof body === 'string') {
-    return body;
   }
 
   throw new Error('Unsupported body type');

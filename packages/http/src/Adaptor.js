@@ -8,6 +8,19 @@ import cheerioTableparser from 'cheerio-tableparser';
 import { request } from './Utils';
 
 /**
+ * Options provided to the HTTP request
+ * @typedef {Object} RequestOptions
+ * @property {object|string} body - body data to append to the request
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Use a falsy message value to suppress errors for thiscode.
+ * @property {object} query - an object of query parameters. Will be encoded into the URL.
+ * @property {object} headers - an object of headers to append to the request
+ * @property {number} maxRedirections - Maximum number of times the request can be redirected
+ * @property {string} parseAs - parse the response body as json, text or stream. By default will use the response headers.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
@@ -40,7 +53,7 @@ export function execute(...operations) {
  * })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Query, Headers and Authentication parameters
+ * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -58,7 +71,7 @@ export function get(path, params, callback) {
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Authentication parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {operation}
  */
@@ -77,7 +90,7 @@ export function post(path, params, callback) {
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -95,7 +108,7 @@ export function put(path, params, callback) {
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -112,7 +125,7 @@ export function patch(path, params, callback) {
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
