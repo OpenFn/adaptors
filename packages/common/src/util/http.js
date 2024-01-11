@@ -26,7 +26,6 @@ export const enableMockClient = baseUrl => {
 
 const assertOK = (response, errorMap, fullUrl, method, startTime) => {
   const errMapMessage = errorMap[response.statusCode];
-  const statusText = getReasonPhrase(response.statusCode);
 
   const isError =
     typeof errMapMessage === 'boolean'
@@ -34,6 +33,7 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
+    const statusText = getReasonPhrase(response.statusCode);
     const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
 
     const duration = Date.now() - startTime;
