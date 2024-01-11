@@ -12,9 +12,9 @@ export function addBasicAuth(configuration = {}, headers) {
   }
 }
 
-function encodeFormBody() {
+function encodeFormBody(data) {
   const form = new FormData();
-  for (const [key, value] of Object.entries(resolvedParams.form)) {
+  for (const [key, value] of Object.entries(data)) {
     form.append(key, value);
   }
   return form;
