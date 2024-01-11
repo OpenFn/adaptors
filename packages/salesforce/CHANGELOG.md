@@ -1,5 +1,49 @@
 # @openfn/language-salesforce
 
+## 4.3.1
+
+### Patch Changes
+
+- 1131c34: Remove regex pattern for validation and changed minLength to 1
+
+## 4.3.0
+
+### Minor Changes
+
+- 1d5b62f: Add `toUTF8` function
+
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
+## 4.2.1
+
+### Patch Changes
+
+- 07debe9: Update bulkQuery to use bulkv2
+
+## 4.2.0
+
+### Minor Changes
+
+- fc58f1c: add options in bulkQuery
+
+## 4.1.0
+
+### Minor Changes
+
+- 1e3a083: add bulkQuery function
+
+## 4.0.8
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 4.0.7
 
 ### Patch Changes

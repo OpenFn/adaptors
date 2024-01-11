@@ -1,5 +1,38 @@
 # @openfn/language-sftp
 
+## 1.0.2
+
+### Patch Changes
+
+- a666a63: On error disconnect then throw
+
+## 1.0.1
+
+### Patch Changes
+
+- 771c814: - Properly disconnect on error
+  - Improve operation logs
+
+## 1.0.0
+
+### Major Changes
+
+- e52ba66: add `filter` option in `list()` function
+
+## 0.8.8
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
+## 0.8.7
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 0.8.6
 
 ### Patch Changes

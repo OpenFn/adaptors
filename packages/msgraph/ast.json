@@ -326,6 +326,135 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "uploadFile",
+      "params": [
+        "resource",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Upload a file to a drive",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "uploadFile(\n  state => ({\n    driveId: state.driveId,\n    folderId: state.folderId,\n    fileName: `Tracker.xlsx`,\n  }),\n  state => state.buffer\n);",
+            "caption": "Upload Excel file to a drive using `driveId` and `parantItemId`"
+          },
+          {
+            "title": "example",
+            "description": "uploadFile(\n  state => ({\n    siteId: state.siteId,\n    folderId: state.folderId,\n    fileName: `Report.xlsx`,\n  }),\n  state => state.buffer\n);",
+            "caption": "Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Resource Object",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "Drive Id",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.driveId"
+          },
+          {
+            "title": "param",
+            "description": "Site Id",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.driveId"
+          },
+          {
+            "title": "param",
+            "description": "Parent folder id",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.folderId"
+          },
+          {
+            "title": "param",
+            "description": "Resource content-type",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.contentType"
+          },
+          {
+            "title": "param",
+            "description": "Specify conflict behavior if file with the same name exists. Can be \"rename | fail | replace\"",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "String"
+              }
+            },
+            "name": "resource.onConflict"
+          },
+          {
+            "title": "param",
+            "description": "A buffer containing the file.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

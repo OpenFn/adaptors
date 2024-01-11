@@ -120,6 +120,7 @@ export function get(path, query, callback = false) {
 }
 
 export {
+  fn,
   alterState,
   dataPath,
   dataValue,

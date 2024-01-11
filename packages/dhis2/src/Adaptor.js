@@ -8,7 +8,6 @@ import {
   CONTENT_TYPES,
   generateUrl,
   handleResponse,
-  Log,
   nestArray,
   prettyJson,
   selectId,
@@ -55,7 +54,7 @@ export function execute(...operations) {
 function configMigrationHelper(state) {
   const { hostUrl, apiUrl } = state.configuration;
   if (!hostUrl) {
-    Log.warn(
+    console.warn(
       'DEPRECATION WARNING: Please migrate instance address from `apiUrl` to `hostUrl`.'
     );
     state.configuration.hostUrl = apiUrl;
@@ -82,7 +81,7 @@ axios.interceptors.response.use(
           responseData: response.data,
         };
 
-        Log.error(newError.message);
+        console.error(newError.message);
 
         return Promise.reject(newError);
       }
@@ -96,7 +95,7 @@ axios.interceptors.response.use(
         // eslint-disable-next-line no-param-reassign
         response = { ...response, data: JSON.parse(response.data) };
       } catch (error) {
-        Log.warn('Non-JSON response detected, unable to parse.');
+        console.warn('Non-JSON response detected, unable to parse.');
       }
     }
     return response;
@@ -107,7 +106,7 @@ axios.interceptors.response.use(
 
     const details = error.response?.data;
 
-    Log.error(error.message || "That didn't work.");
+    console.error(error.message || "That didn't work.");
 
     if (details) console.log(JSON.stringify(details, null, 2));
 
@@ -239,7 +238,7 @@ export function create(resourceType, data, options = {}, callback = false) {
       ...requestConfig,
     }).then(result => {
       const details = `with response ${JSON.stringify(result.data, null, 2)}`;
-      Log.success(`Created ${resolvedResourceType} ${details}`);
+      console.log(`Created ${resolvedResourceType} ${details}`);
 
       const { location } = result.headers;
       if (location) console.log(`Record available @ ${location}`);
@@ -412,7 +411,7 @@ export function update(
       data: resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Updated ${resolvedResourceType} at ${resolvedPath}`);
+      console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -461,7 +460,7 @@ export function get(resourceType, query, options = {}, callback = false) {
       responseType: 'json',
       ...requestConfig,
     }).then(result => {
-      Log.success(`Retrieved ${resolvedResourceType}`);
+      console.log(`Retrieved ${resolvedResourceType}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -528,7 +527,7 @@ export function upsert(
         }
       })
       .then(result => {
-        Log.success(`Performed a "composed upsert" on ${resourceType}`);
+        console.log(`Performed a "composed upsert" on ${resourceType}`);
         return handleResponse(result, state, callback);
       });
   };
@@ -675,7 +674,7 @@ export function patch(
       data: resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Patched ${resolvedResourceType} at ${resolvedPath}`);
+      console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };
@@ -724,7 +723,7 @@ export function destroy(
       resolvedData,
       ...requestConfig,
     }).then(result => {
-      Log.success(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
+      console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
   };

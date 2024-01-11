@@ -1,5 +1,32 @@
 # @openfn/language-http
 
+## 5.1.1
+
+### Patch Changes
+
+- a8d655e: Update `parseXML` to use `expandReferences`
+
+## 5.1.0
+
+### Minor Changes
+
+- 8e2b79c: Clean up `state.response.request` by returning only
+  `{ method, path, host, protocol, _headers }`
+
+## 5.0.4
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
 ## 5.0.2
 
 ### Patch Changes

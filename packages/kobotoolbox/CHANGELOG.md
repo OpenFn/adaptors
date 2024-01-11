@@ -1,5 +1,12 @@
 # @openfn/language-kobotoolbox
 
+## 2.1.0
+
+### Minor Changes
+
+- c85abf3: Removed the API version enum values in the credential configuration
+  json schema and added a placeholder
+
 ## 2.0.1
 
 ### Patch Changes

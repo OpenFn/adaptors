@@ -14,11 +14,23 @@
 import {
   execute as commonExecute,
   expandReferences,
+  composeNextState,
   field,
   chunk,
 } from '@openfn/language-common';
+
+import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
+
+// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
+// Note that technically we should await this, but in practice the module will be loaded
+// before execute is called
+let anyAscii = undefined;
+import('any-ascii').then(m => {
+  anyAscii = m.default;
+});
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -163,6 +175,131 @@ export function query(qs) {
         references: [result, ...state.references],
       };
     });
+  };
+}
+
+async function pollJobResult(conn, job, pollInterval, pollTimeout) {
+  let attempt = 0;
+
+  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
+
+  while (attempt < maxPollingAttempts) {
+    // Make an HTTP GET request to check the job status
+    const jobInfo = await conn
+      .request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .catch(error => {
+        console.log('Failed to fetch job information', error);
+      });
+
+    if (jobInfo && jobInfo.state === 'JobComplete') {
+      const response = await conn.request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Job result retrieved', response.length);
+      return response;
+    } else {
+      // Handle maxPollingAttempts
+      if (attempt + 1 === maxPollingAttempts) {
+        console.error(
+          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
+        );
+        throw new Error(`Polling time out. Job Id = ${job.id}`);
+      }
+      console.log(
+        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
+          jobInfo.state
+        }:`
+      );
+    }
+
+    // Wait for the polling interval before the next attempt
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
+    attempt++;
+  }
+}
+
+const defaultOptions = {
+  pollTimeout: 90000, // in ms
+  pollInterval: 3000, // in ms
+};
+
+/**
+ * Execute an SOQL Bulk Query.
+ * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
+ * Note that in an event of a query error,
+ * error logs will be printed but the operation will not throw the error.
+ * @public
+ * @example
+ * <caption>The results will be available on `state.data`</caption>
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example
+ * bulkQuery(
+ *   (state) =>
+ *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+ *   { pollTimeout: 10000, pollInterval: 6000 }
+ * );
+ * @function
+ * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {Function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
+export function bulkQuery(qs, options, callback) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const apiVersion = connection.version;
+
+    const { pollTimeout, pollInterval } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
+
+    console.log(`Executing query: ${resolvedQs}`);
+
+    const queryJob = await connection.request({
+      method: 'POST',
+      url: `/services/data/v${apiVersion}/jobs/query`,
+      body: JSON.stringify({
+        operation: 'query',
+        query: resolvedQs,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await pollJobResult(
+      connection,
+      queryJob,
+      pollInterval,
+      pollTimeout
+    );
+
+    const nextState = {
+      ...composeNextState(state, result),
+      result,
+    };
+    if (callback) return callback(nextState);
+
+    return nextState;
   };
 }
 
@@ -509,6 +646,19 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
+function setApiVersion(apiVersion) {
+  const apiVersionRegex = /^\d{2}\.\d$/;
+  let version = '52.0';
+  if (apiVersion && apiVersionRegex.test(apiVersion)) {
+    console.log('Using Salesforce API version', apiVersion);
+    version = apiVersion;
+  } else {
+    console.log('Invalid salesforce apiVersion', apiVersion);
+    console.log('Using Salesforce API version', version);
+  }
+
+  return version;
+}
 /**
  * Creates a connection.
  * @example
@@ -518,13 +668,21 @@ export function reference(position) {
  * @returns {State}
  */
 function createConnection(state) {
-  const { loginUrl } = state.configuration;
+  const { loginUrl, apiVersion } = state.configuration;
 
   if (!loginUrl) {
     throw new Error('loginUrl missing from configuration.');
   }
 
-  return { ...state, connection: new jsforce.Connection({ loginUrl }) };
+  return {
+    ...state,
+    connection: apiVersion
+      ? new jsforce.Connection({
+          loginUrl,
+          version: setApiVersion(apiVersion),
+        })
+      : new jsforce.Connection({ loginUrl }),
+  };
 }
 
 /**
@@ -607,6 +765,22 @@ function cleanupState(state) {
  */
 export function steps(...operations) {
   return flatten(operations);
+}
+
+/**
+ * Transliterates unicode characters to their best ASCII representation
+ * @public
+ * @example
+ * fn((state) => {
+ *   const s = toUTF8("άνθρωποι");
+ *   console.log(s); // anthropoi
+ *   return state;
+ * });
+ * @param {string} input - A string with unicode characters
+ * @returns {String} - ASCII representation of input string
+ */
+export function toUTF8(input) {
+  return anyAscii(input);
 }
 
 // Note that we expose the entire axios package to the user here.

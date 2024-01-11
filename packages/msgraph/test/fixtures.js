@@ -268,6 +268,62 @@ const fixtures = {
   },
   itemContent: 'a,b,c\n1,2,3\n4,5,6\n7,8,9',
   itemsResponse: itemsResponse,
+  submitXlsResponse: {
+    '@odata.context':
+      "https://graph.microsoft.com/v1.0/$metadata#sites('openfn.sharepoint.com')/drive/items/$entity",
+    '@microsoft.graph.downloadUrl':
+      'https://openfn.sharepoint.com/_layouts/15/download.aspx?UniqueId=bdff7734-5f46-4619-92e3-fc21cfa2766e&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvb3BlbmZub3JnLnNoYXJlcG9pbnQuY29tQDNiMjRlYWRiLTczNmUtNDhkYi1iMTQzLTIzYjM5OGQwYmJkMSIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2OTUxMDg1NTEiLCJleHAiOiIxNjk1MTEyMTUxIiwiZW5kcG9pbnR1cmwiOiJOQmt3U1NmUUwrSmwxbnJ4ZzNYQjFuNmZLMDdoZk1kazM0TXlsY3MzeWpnPSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTIwIiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJCWEd6aWs1b2ZrRzNhWU80ZWcxMnRBPT0iLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiT1RKbE9UZGpOakV0WmpBNE1pMDBaVFEzTFRsaVl6UXRNbVl5WkRNMVpEZ3pZbVEyIiwiYXBwX2Rpc3BsYXluYW1lIjoiR3JhcGggRXhwbG9yZXIiLCJnaXZlbl9uYW1lIjoiTXR1Y2hpIiwiZmFtaWx5X25hbWUiOiJFdmFuY2UiLCJzaWduaW5fc3RhdGUiOiJbXCJrbXNpXCJdIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJ0aWQiOiIzYjI0ZWFkYi03MzZlLTQ4ZGItYjE0My0yM2IzOThkMGJiZDEiLCJ1cG4iOiJtdHVjaGlAb3BlbmZuLm9yZyIsInB1aWQiOiIxMDAzMjAwMkMxNDY2RUYzIiwiY2FjaGVrZXkiOiIwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDJjMTQ2NmVmM0BsaXZlLmNvbSIsInNjcCI6Im15ZmlsZXMucmVhZCBhbGxzaXRlcy5yZWFkIGFsbHNpdGVzLndyaXRlIGFsbHByb2ZpbGVzLnJlYWQiLCJ0dCI6IjIiLCJpcGFkZHIiOiIyMC4xOTAuMTkwLjMyIn0.YdxTQHIQ51P3-qzELCCQDj1hK1NOIs5CNpCumkXCvTw&ApiVersion=2.0',
+    createdDateTime: '2023-09-19T07:29:12Z',
+    eTag: '"{BDFF7734-5F46-4619-92E3-FC21CFA2766E},1"',
+    id: '01LUM6XOBUO7732RS7DFDJFY74EHH2E5TO',
+    lastModifiedDateTime: '2023-09-19T07:29:12Z',
+    name: '2023_09_19T07_29_09_369Z.xls',
+    webUrl:
+      'https://openfn.sharepoint.com/_layouts/15/Doc.aspx?sourcedoc=%7BBDFF7734-5F46-4619-92E3-FC21CFA2766E%7D&file=2023_09_19T07_29_09_369Z.xls&action=default&mobileredirect=true',
+    cTag: '"c:{BDFF7734-5F46-4619-92E3-FC21CFA2766E},1"',
+    size: 16723,
+    createdBy: {
+      application: {
+        id: 'de8bc8b5-d9f9-48b1-a8ad-b748da725064',
+        displayName: 'Graph Explorer',
+      },
+      user: {
+        id: '4ebe0c0b-8287-4ec6-b696-c8d19dd80cd1',
+        displayName: 'Mtuchi',
+      },
+    },
+    lastModifiedBy: {
+      application: {
+        id: 'de8bc8b5-d9f9-48b1-a8ad-b748da725064',
+        displayName: 'Graph Explorer',
+      },
+      user: {
+        id: '4ebe0c0b-8287-4ec6-b696-c8d19dd80cd1',
+        displayName: 'Mtuchi',
+      },
+    },
+    parentReference: {
+      driveType: 'documentLibrary',
+      driveId:
+        'b!YXzpkoLwR06bxC8tNdg71m_tbJHRabRCidsOal0ceoPnhcvgl2T7T4CwSehkvqHN',
+      id: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
+      path: '/drive/root:/BC Exception Reports',
+      siteId: '92e97c61-f082-4e47-9bc4-2f2d35d83bd6',
+    },
+    file: {
+      mimeType: 'application/vnd.ms-excel',
+      hashes: {
+        quickXorHash: 'hLOXP3xQXS0NN1JeRe+JqtTjogM=',
+      },
+    },
+    fileSystemInfo: {
+      createdDateTime: '2023-09-19T07:29:12Z',
+      lastModifiedDateTime: '2023-09-19T07:29:12Z',
+    },
+    shared: {
+      scope: 'users',
+    },
+  },
 };
 
 export { fixtures };

@@ -5,11 +5,15 @@ import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
+import { request } from 'undici';
+
 import { expandReferences as newExpandReferences } from './util';
 
 export * as beta from './beta';
 export * as http from './http';
 export * as dateFns from './dateFns';
+
+const schemaCache = {};
 
 /**
  * Execute a sequence of operations.
@@ -667,3 +671,109 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
 //     return array.find(a => a[uid] === id);
 //   });
 // }
+
+const ajvVersions = {};
+
+// We need to import different versions of AJV depending on the schema
+// version - which is handled by this function
+const getAjvVersion = async schema => {
+  if (/^https?:\/\/json-schema.org\/draft\/2019/.test(schema)) {
+    if (!ajvVersions['2019']) {
+      const Ajv = (await import('ajv/dist/2019.js')).default;
+      ajvVersions['2019'] = new Ajv();
+    }
+    return ajvVersions['2019'];
+  }
+  if (/^https?:\/\/json-schema.org\/draft\/2020/.test(schema)) {
+    if (!ajvVersions['2020']) {
+      const Ajv = (await import('ajv/dist/2020.js')).default;
+      ajvVersions['2020'] = new Ajv();
+    }
+    return ajvVersions['2020'];
+  }
+
+  if (!ajvVersions['default']) {
+    const Ajv = (await import('ajv')).default;
+    ajvVersions['default'] = new Ajv();
+  }
+
+  return ajvVersions['default'];
+};
+
+/**
+ * Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
+ * Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
+ * Data can be passed directly or loaded as a JSON path from state.
+ * By default, schema is loaded from `state.schema` and data from `state.data`.
+ * @param {string|object} schema - The schema, path or URL to validate against
+ * @param {string|object} data - The data or path to validate
+ * @example <caption>Validate `state.data` with `state.schema`</caption>
+ * validate()
+ * @example <caption>Validate form data at `state.form` with a schema from a URL</caption>
+ * validate("https://www.example.com/schema/record", "form")
+ * @example <caption>Validate the each item in `state.records` with a schema from a URL</caption>
+ * each("records[*]", validate("https://www.example.com/schema/record"))
+ * @returns {Operation}
+ */
+export function validate(schema = 'schema', data = 'data') {
+  return async state => {
+    if (!state.validationErrors) {
+      state.validationErrors = [];
+    }
+
+    const resolvedData = resolveData();
+    const resolvedSchema = await resolveSchema();
+    // TODO: warn if the schema doesn't have an id? Does it matter? Maybe, if you're using multiple id-less schemas
+    const schemaId = resolvedSchema.$id || 'schema';
+    if (!schemaCache[schemaId]) {
+      const ajv = await getAjvVersion(resolvedSchema.$schema);
+      schemaCache[schemaId] = ajv.compile(resolvedSchema);
+    }
+
+    const validate = schemaCache[schemaId];
+
+    if (!validate(resolvedData)) {
+      state.validationErrors.push({
+        data: state.data,
+        errors: validate.errors,
+      });
+    }
+    return state;
+
+    // Schema can be a url, jsonpath or object; or a function resolving to any of these
+    async function resolveSchema() {
+      // TODO hmm, I don't really want to expand schema if it's an object
+      const [schemaOrUrl] = newExpandReferences(state, schema);
+
+      if (typeof schemaOrUrl === 'string') {
+        try {
+          // Check if the schema is a URL - in which case we fetch it
+          const url = new URL(schemaOrUrl);
+          const response = await request(url);
+          return response.body.json();
+        } catch (e) {
+          if (e instanceof TypeError) {
+            // URL throws a TypeError if it's not a valid url, so we'll treat the string as a json path instead
+            return JSONPath({ path: schemaOrUrl, json: state })[0];
+          } else {
+            // error fetching the url
+            console.error('Error fetching schema from ', schemaOrUrl);
+            console.error(e);
+          }
+        }
+      }
+      // schema is an object
+      return schemaOrUrl;
+    }
+
+    // data can be a jsonpath or object; or function resolving to any of these
+    function resolveData() {
+      const [d] = newExpandReferences(state, data);
+
+      if (typeof d === 'string') {
+        return JSONPath({ path: d, json: state })[0];
+      }
+      return d;
+    }
+  };
+}

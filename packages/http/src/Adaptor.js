@@ -146,7 +146,8 @@ export function del(path, params, callback) {
  */
 export function parseXML(body, script) {
   return state => {
-    const $ = cheerio.load(body);
+    const resolvedBody = expandReferences(body)(state);
+    const $ = cheerio.load(resolvedBody);
     cheerioTableparser($);
 
     if (script) {
@@ -158,7 +159,7 @@ export function parseXML(body, script) {
         return composeNextState(state, { body: result });
       }
     } else {
-      return composeNextState(state, { body: body });
+      return composeNextState(state, { body: resolvedBody });
     }
   };
 }
