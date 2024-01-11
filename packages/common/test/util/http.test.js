@@ -405,14 +405,14 @@ describe('options', () => {
   it('should use errorMap with function', async () => {
     client
       .intercept({
-        path: '/api/noAccess',
+        path: '/api/no-access',
         method: 'GET',
       })
       .reply(404, { error: 'Not Found' });
 
     let error = null;
     try {
-      await request('GET', 'https://www.example.com/api/noAccess', {
+      await request('GET', 'https://www.example.com/api/no-access', {
         errors: {
           404: response => (response.context ? 'No Access' : 'Not Found'),
         },
@@ -427,20 +427,20 @@ describe('options', () => {
   it('should throw by default if a 404', async () => {
     client
       .intercept({
-        path: '/api/noAccess',
+        path: '/api/no-access',
         method: 'GET',
       })
       .reply(404, { error: 'Not Found' });
 
     let error = null;
     try {
-      await request('GET', 'https://www.example.com/api/noAccess');
+      await request('GET', 'https://www.example.com/api/no-access');
     } catch (err) {
       error = err;
     }
 
     expect(error.message).to.eql(
-      'GET https://www.example.com/api/noAccess - 404 Not Found'
+      'GET to https://www.example.com/api/no-access returned 404: Not Found'
     );
   });
 
@@ -470,7 +470,7 @@ describe('options', () => {
   it('should throw and use errorMap string value', async () => {
     client
       .intercept({
-        path: '/api/noAccess',
+        path: '/api/no-access',
         method: 'GET',
       })
       .reply(
@@ -483,7 +483,7 @@ describe('options', () => {
 
     let error = null;
     try {
-      await request('GET', 'https://www.example.com/api/noAccess', {
+      await request('GET', 'https://www.example.com/api/no-access', {
         errors: {
           404: 'No Access',
         },
@@ -498,7 +498,7 @@ describe('options', () => {
   it('should throw and use default values', async () => {
     client
       .intercept({
-        path: '/api/noAccess',
+        path: '/api/no-access',
         method: 'GET',
       })
       .reply(
@@ -511,12 +511,12 @@ describe('options', () => {
 
     let error = null;
     try {
-      await await request('GET', 'https://www.example.com/api/noAccess');
+      await await request('GET', 'https://www.example.com/api/no-access');
     } catch (err) {
       error = err;
     }
     expect(error.message).to.eql(
-      'GET https://www.example.com/api/noAccess - 405 Method Not Allowed'
+      'GET to https://www.example.com/api/no-access returned 405: Method Not Allowed'
     );
   });
 });

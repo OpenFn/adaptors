@@ -34,9 +34,9 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
-    const defaultErrorMesssage = `${method} ${fullUrl} - ${response.statusCode} ${statusText}`;
+    const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
 
-    const duration = startTime - Date.now();
+    const duration = Date.now() - startTime;
 
     const errMessage =
       typeof errMapMessage === 'function'
@@ -44,7 +44,8 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
         : errMapMessage || defaultErrorMesssage;
 
     const error = new Error(errMessage);
-    error.code = response.statusCode;
+    error.statusCode = response.statusCode;
+    error.statusMessage = statusText;
     error.url = fullUrl;
     error.duration = duration;
     error.method = method;
