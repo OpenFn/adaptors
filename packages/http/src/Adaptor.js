@@ -14,7 +14,6 @@ import { request } from './Utils';
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Use a falsy message value to suppress errors for thiscode.
  * @property {object} query - an object of query parameters. Will be encoded into the URL.
  * @property {object} headers - an object of headers to append to the request
- * @property {number} maxRedirections - Maximum number of times the request can be redirected
  * @property {string} parseAs - parse the response body as json, text or stream. By default will use the response headers.
  * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
  * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
