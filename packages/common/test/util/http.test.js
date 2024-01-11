@@ -292,7 +292,7 @@ describe('request function', () => {
     const result = await request('TEST', 'https://www.example.com/api');
 
     expect(result.body).to.eql({});
-    expect(result.code).to.eql(200);
+    expect(result.statusCode).to.eql(200);
   });
   it('should use baseUrl from options', async () => {
     client
@@ -306,7 +306,7 @@ describe('request function', () => {
       baseUrl: 'https://www.example.com',
     });
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
   });
   it('should accept an absolute url', async () => {
     client
@@ -318,7 +318,7 @@ describe('request function', () => {
 
     const response = await request('GET', 'https://www.example.com/api');
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
   });
   it('should send data', async () => {
     const data = {
@@ -339,7 +339,7 @@ describe('request function', () => {
       body: data,
     });
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
   });
 });
 
@@ -362,8 +362,9 @@ describe('options', () => {
       }
     );
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
   });
+
   it('should throw 204 if response match using errorMap', async () => {
     client
       .intercept({
@@ -385,6 +386,7 @@ describe('options', () => {
 
     expect(error.message).to.eql('No Content');
   });
+
   it('should use errorMap with function', async () => {
     client
       .intercept({
@@ -406,6 +408,7 @@ describe('options', () => {
 
     expect(error.message).to.eql('Not Found');
   });
+
   it('should throw by default if a 404', async () => {
     client
       .intercept({
@@ -425,6 +428,7 @@ describe('options', () => {
       'GET https://www.example.com/api/noAccess - 404 Not Found'
     );
   });
+
   it('should encode keys and values of query', async () => {
     let request;
     client
@@ -447,6 +451,7 @@ describe('options', () => {
       id: '2',
     });
   });
+
   it('should throw and use errorMap string value', async () => {
     client
       .intercept({
@@ -474,6 +479,7 @@ describe('options', () => {
 
     expect(error.message).to.eql('No Access');
   });
+
   it('should throw and use default values', async () => {
     client
       .intercept({
@@ -517,11 +523,12 @@ describe('helpers', () => {
         }
       );
 
-    const { body, code } = await get('https://www.example.com/api');
+    const { body, statusCode } = await get('https://www.example.com/api');
 
     expect(body).to.eql({});
-    expect(code).to.eql(200);
+    expect(statusCode).to.eql(200);
   });
+
   it('should send a post', async () => {
     const data = {
       hello: 'world',
@@ -538,11 +545,15 @@ describe('helpers', () => {
         },
       });
 
-    const { code, body } = await post('https://www.example.com/api', data);
+    const { statusCode, body } = await post(
+      'https://www.example.com/api',
+      data
+    );
 
-    expect(code).to.eql(200);
+    expect(statusCode).to.eql(200);
     expect(body).to.eql(data);
   });
+
   it('should send a DELETE', async () => {
     client
       .intercept({
@@ -559,9 +570,9 @@ describe('helpers', () => {
         }
       );
 
-    const { body, code } = await del('https://www.example.com/api');
+    const { body, statusCode } = await del('https://www.example.com/api');
 
     expect(body).to.eql({});
-    expect(code).to.eql(200);
+    expect(statusCode).to.eql(200);
   });
 });
