@@ -1,4 +1,8 @@
 // override build config with an extra entry point
 export default path => ({
-  entry: [`${path}/src/index.js`, `${path}/src/metadata.js`, `${path}/src/util.js`],
+  entry: {
+    index: `${path}/src/index.js`,
+    metadata: `${path}/src/metadata.js`,
+    util: `${path}/src/util/index.js`,
+  },
 });

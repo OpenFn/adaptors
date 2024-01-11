@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { expandReferences, normalizeOauthConfig } from '../src/util';
+import { expandReferences, normalizeOauthConfig } from '../../src/util/index.js';
 
 describe('util expandReferences', () => {
   it('should not modify string references', () => {

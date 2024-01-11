@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n   query: {foo: 'bar', a: 1},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
@@ -38,7 +38,7 @@
             "description": "Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -80,7 +80,7 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -101,7 +101,7 @@
             "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -143,7 +143,7 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -164,7 +164,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -206,7 +206,7 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -227,7 +227,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -290,7 +290,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -1084,6 +1084,59 @@
             "type": {
               "type": "NameExpression",
               "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "chunk",
+      "params": [
+        "array",
+        "chunkSize"
+      ],
+      "docs": {
+        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array to be chunked",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "array"
+          },
+          {
+            "title": "param",
+            "description": "The maxiumum size of each chunks",
+            "type": {
+              "type": "NameExpression",
+              "name": "Integer"
+            },
+            "name": "chunkSize"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
             }
           }
         ]
