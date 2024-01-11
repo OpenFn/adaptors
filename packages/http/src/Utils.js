@@ -28,9 +28,7 @@ export function request(method, path, params, callback = s => s) {
     let headers = resolvedParams?.headers ?? {};
 
     if (resolvedParams?.json) {
-      console.warn(
-        'DEPRECATION WARNING: Please migrate from `json` to `body`.'
-      );
+      console.warn('DEPRECATION WARNING: Please migrate from `json` to `body`');
       body = resolvedParams.json;
     }
 
@@ -54,7 +52,7 @@ export function request(method, path, params, callback = s => s) {
 
     if (resolvedParams?.agentOptions) {
       console.warn(
-        'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`.'
+        'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`'
       );
     }
 
@@ -69,8 +67,10 @@ export function request(method, path, params, callback = s => s) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
-        const { method, url, body, code, duration } = response;
-        console.log(method, url, '-', code, 'in', duration + 'ms');
+        const { method, body, statusCode, duration } = response;
+        // TODO this ought to be unit testable
+        // also maybe I DO need the url to come out of common?
+        console.log(method, path, '-', statusCode, 'in', duration + 'ms');
 
         return {
           ...composeNextState(state, body),

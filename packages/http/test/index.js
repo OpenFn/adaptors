@@ -7,18 +7,6 @@ const jsonHeaders = { 'Content-Type': 'application/json' };
 
 const testServer = enableMockClient('https://www.example.com');
 
-function stdGet(state) {
-  return execute(get('https://www.example.com/api/fake', {}))(state).then(
-    nextState => {
-      const { data, references } = nextState;
-      expect(data).to.haveOwnProperty('code', '200');
-      expect(data).to.haveOwnProperty('body', 'the response');
-
-      expect(references).to.eql([{ triggering: 'event' }]);
-    }
-  );
-}
-
 describe('execute()', () => {
   it('executes each operation in sequence', () => {
     let state = {};
@@ -55,37 +43,6 @@ describe('execute()', () => {
 });
 
 describe('get()', () => {
-  // before(() => {
-  //   testServer
-  //     .intercept({
-  //       path: '/api/showMeMyHeaders?id=1',
-  //       method: 'GET',
-  //     })
-  //     .reply(200, req => req, {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-
-  //   testServer
-  //     .intercept({
-  //       path: '/api/fake-callback',
-  //       method: 'GET',
-  //     })
-  //     .reply(200, req => ({ ...req, id: 3 }), {
-  //       headers: { 'Content-Type': 'application/json' },
-  //     });
-
-  //   testServer
-  //     .intercept({
-  //       path: '/api/fake-promise',
-  //       method: 'GET',
-  //     })
-  //     .reply(200, req => ({ ...req, id: 3 }), {
-  //       headers: { 'Content-Type': 'application/json' },
-  //     });
-  // });
-
   it('should get a string', async () => {
     testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
 
@@ -114,6 +71,22 @@ describe('get()', () => {
     };
 
     const result = await execute(get('/json'))(state);
+
+    expect(result.data).to.eql({ x: 23 });
+  });
+
+  it('should interpret a response as json with parseAs', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(200, JSON.stringify({ x: 23 }));
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json', { parseAs: 'json' }))(state);
 
     expect(result.data).to.eql({ x: 23 });
   });
@@ -291,21 +264,35 @@ describe('get()', () => {
     expect(data).eql({ ok: true });
   });
 
-  // TODO: calls the callback with nextState AFTER references are written
-  // (which by the way doesn't feel right?)
-  it.skip('accepts callbacks and calls them with nextState', async () => {
+  it('pass state to the callback', async () => {
+    testServer
+      .intercept({
+        path: '/api/callback',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        { id: 3 },
+        {
+          headers: jsonHeaders,
+        }
+      );
+
     const state = {
       configuration: { baseUrl: 'https://www.example.com' },
       data: {},
     };
 
-    const { data } = await execute(
-      get('api/fake-callback', {}, state => {
+    let callbackState;
+
+    const finalState = await execute(
+      get('api/callback', {}, state => {
+        callbackState = state;
         return state;
       })
     )(state);
 
-    expect(data.id).to.eql(3);
+    expect(callbackState).to.eql(finalState);
   });
 
   it('should throw for a 404 response', async () => {
@@ -329,8 +316,20 @@ describe('get()', () => {
       error = e;
     }
 
-    // TODO we should do deeper testing of the thrown error!
-    expect(error.code).to.eql(404);
+    const { code, url, method, duration, name } = error;
+    expect({
+      code,
+      url,
+      method,
+      name,
+    }).to.eql({
+      name: 'Error',
+      code: 404,
+      url: 'https://www.example.com/api/404',
+      method: 'GET',
+    });
+
+    assert.isNumber(duration);
   });
 
   it('should suppress 404 errors through the error map', async () => {
@@ -399,77 +398,36 @@ describe('get()', () => {
 });
 
 describe('post', () => {
-  before(() => {
+  it('post a JSON object', async () => {
+    let req;
+
     testServer
       .intercept({
-        path: '/api/csv-reader',
+        path: '/api/json',
         method: 'POST',
       })
-      .reply(200, ({ body }) => body, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .persist();
-  });
+      .reply(200, r => {
+        req = r;
+        return 'ok';
+      });
 
-  it('should make an http request from inside the parseCSV callback', async function () {
-    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
-    const state = { references: [], data: [], apiResponses: [] };
+    const state = {};
 
-    const resultingState = await parseCsv(
-      csv,
-      { chunkSize: 2 },
-      (state, rows) =>
-        post(
-          'https://www.example.com/api/csv-reader',
-          {
-            body: rows,
-          },
-          state => {
-            state.apiResponses.push(...state.response.body);
-            return state;
-          }
-        )(state)
-    )(state);
-
-    expect(resultingState.apiResponses).to.eql([
-      { id: '1', name: 'taylor' },
-      { id: '2', name: 'mtuchi' },
-      { id: '3', name: 'joe' },
-      { id: '4', name: 'stu' },
-      { id: '5', name: 'elias' },
-    ]);
-  });
-
-  it('can set JSON on the request body', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'POST',
-      })
-      .reply(200, { name: 'test', age: 24 });
-
-    const state = {
-      configuration: {},
-      data: { name: 'test', age: 24 },
-    };
-
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-json', {
-        body: state.data,
-        parseAs: 'json',
+    await execute(
+      post('https://www.example.com/api/json', {
+        body: { name: 'tony stark', age: 24 },
       })
     )(state);
-    expect(finalState.data).to.eql({ name: 'test', age: 24 });
+
+    expect(req.body).to.equal(JSON.stringify({ name: 'tony stark', age: 24 }));
   });
 
-  it('can send plain jSON as formdata', async () => {
+  it('should send plain jSON as formdata', async () => {
     let form;
     let entries = [];
     testServer
       .intercept({
-        path: '/api/fake-formData',
+        path: '/api/form-data',
         method: 'POST',
       })
       .reply(200, res => {
@@ -490,7 +448,7 @@ describe('post', () => {
     };
 
     const { data } = await execute(
-      post('https://www.example.com/api/fake-formData', {
+      post('https://www.example.com/api/form-data', {
         form: formData,
       })
     )({});
@@ -500,10 +458,36 @@ describe('post', () => {
     expect(entries.length).to.equal(3);
   });
 
+  it('can override error codes on the request', async () => {
+    testServer
+      .intercept({
+        path: '/api/custom-success-codes',
+        method: 'POST',
+      })
+      .reply(502);
+
+    const state = {
+      configuration: {},
+      data: {
+        id: 'a',
+        parent: 'b',
+        mobile_phone: 'c',
+      },
+    };
+    const { response } = await execute(
+      post('https://www.example.com/api/custom-success-codes', {
+        body: state => state.data,
+        errors: { 502: false },
+      })
+    )(state);
+
+    expect(response.statusCode).to.eq(502);
+  });
+
   it('can be called inside an each block', async () => {
     testServer
       .intercept({
-        path: '/api/fake-json',
+        path: '/api/json',
         method: 'POST',
       })
       .reply(200, ({ body }) => body)
@@ -523,7 +507,7 @@ describe('post', () => {
       each(
         '$.things[*]',
         post(
-          'https://www.example.com/api/fake-json',
+          'https://www.example.com/api/json',
           {
             body: state => state.data,
           },
@@ -584,71 +568,79 @@ describe('post', () => {
     ]);
   });
 
-  it('can set successCodes on the request', async () => {
+  it('should make an http request from inside the parseCSV callback', async function () {
     testServer
       .intercept({
-        path: '/api/fake-custom-success-codes',
+        path: '/api/csv-reader',
         method: 'POST',
       })
-      .reply(302, ({ body }) => ({ body, code: 302 }));
-
-    const state = {
-      configuration: {},
-      data: {
-        id: 'fake_id',
-        parent: 'fake_parent',
-        mobile_phone: 'fake_phone',
-      },
-    };
-    const { data } = await execute(
-      post('https://www.example.com/api/fake-custom-success-codes', {
-        body: state => state.data,
-        errors: { 302: false },
-        parseAs: 'json',
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
+      .persist();
+
+    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
+    const state = { references: [], data: [], apiResponses: [] };
+
+    const resultingState = await parseCsv(
+      csv,
+      { chunkSize: 2 },
+      (state, rows) =>
+        post(
+          'https://www.example.com/api/csv-reader',
+          {
+            body: rows,
+          },
+          state => {
+            state.apiResponses.push(...state.response.body);
+            return state;
+          }
+        )(state)
     )(state);
 
-    expect(data.code).to.eq(302);
+    expect(resultingState.apiResponses).to.eql([
+      { id: '1', name: 'taylor' },
+      { id: '2', name: 'mtuchi' },
+      { id: '3', name: 'joe' },
+      { id: '4', name: 'stu' },
+      { id: '5', name: 'elias' },
+    ]);
   });
 });
 
 describe('put', () => {
-  before(() => {
+  it('should send a put request with json', async () => {
+    let req;
+    const body = { x: 1, y: 2 };
+
     testServer
       .intercept({
         path: '/api/fake-items/6',
         method: 'PUT',
       })
-      .reply(
-        200,
-        { name: 'New name' },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  });
+      .reply(200, r => {
+        req = r;
+        return 'ok';
+      });
 
-  it('sends a put request', async () => {
-    const state = {
-      configuration: {},
-      data: { name: 'New name' },
-    };
-    const { data, response } = await execute(
+    const state = {};
+
+    const { response } = await execute(
       put('https://www.example.com/api/fake-items/6', {
-        body: state.data,
+        body,
       })
     )(state);
 
     expect(response.statusCode).to.eql(200);
-    expect(data).to.eql({ name: 'New name' });
+    expect(req.body).to.equal(JSON.stringify(body));
   });
 
   it('can be called inside an each block', async () => {
     testServer
       .intercept({
-        path: '/api/fake-json',
+        path: '/api/json',
         method: 'put',
       })
       .reply(200, ({ body }) => body)
@@ -670,7 +662,7 @@ describe('put', () => {
       each(
         '$.things[*]',
         put(
-          '/api/fake-json',
+          '/api/json',
           {
             body: state => state.data,
           },
@@ -691,36 +683,30 @@ describe('put', () => {
 });
 
 describe('patch', () => {
-  before(() => {
+  it('should send a patch request with json', async () => {
+    let req;
+    const body = { x: 1, y: 2 };
+
     testServer
       .intercept({
-        path: '/api/fake-items/6',
+        path: '/api/items/7',
         method: 'PATCH',
       })
-      .reply(
-        200,
-        { name: 'New name', id: 6 },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  });
+      .reply(200, r => {
+        req = r;
+        return 'ok';
+      });
 
-  it('sends a patch request', async () => {
-    const state = {
-      configuration: {},
-      data: { name: 'New name', id: 6 },
-    };
-    const { data, response } = await execute(
-      patch('https://www.example.com/api/fake-items/6', {
-        body: state.data,
+    const state = {};
+
+    const { response } = await execute(
+      patch('https://www.example.com/api/items/7', {
+        body,
       })
     )(state);
 
     expect(response.statusCode).to.eql(200);
-    expect(data).to.eql({ id: 6, name: 'New name' });
+    expect(req.body).to.equal(JSON.stringify(body));
   });
 
   it('can be called inside an each block', async () => {
@@ -769,33 +755,24 @@ describe('patch', () => {
 });
 
 describe('delete', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/api/fake-del-items/6',
-        method: 'DELETE',
-      })
-      .reply(
-        204,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  });
+  before(() => {});
 
   it('sends a delete request', async () => {
+    testServer
+      .intercept({
+        path: '/api/items/6',
+        method: 'DELETE',
+      })
+      .reply(204);
+
     const state = {
       configuration: {},
       data: {},
     };
-    const { data, response } = await execute(
-      del('https://www.example.com/api/fake-del-items/6')
+    const { response } = await execute(
+      del('https://www.example.com/api/items/6')
     )(state);
 
-    expect(data).to.eql({});
     expect(response.statusCode).to.eql(204);
   });
 
