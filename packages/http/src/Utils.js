@@ -12,6 +12,14 @@ export function addBasicAuth(configuration = {}, headers) {
   }
 }
 
+function encodeFormBody() {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(resolvedParams.form)) {
+    form.append(key, value);
+  }
+  return form;
+}
+
 export function generateResponseLog(response) {
   const { method, url, statusCode, duration } = response;
   return `${method} ${url} - ${statusCode} in ${duration}ms`;
@@ -29,17 +37,13 @@ export function request(method, path, params, callback = s => s) {
 
     if (resolvedParams.json) {
       console.warn(
-        'WARNING: The `json` option has been deprecated. Use `body` instead.'
+        'WARNING: The `json` option has been deprecated. Use `body` instead'
       );
       body = resolvedParams.json;
     }
 
     if (resolvedParams.form) {
-      let form = new FormData();
-      for (const [key, value] of Object.entries(resolvedParams.form)) {
-        form.append(key, value);
-      }
-      body = form;
+      body = encodeFormBody(resolvedParams.form);
     }
 
     const baseUrl = state.configuration?.baseUrl;
@@ -54,7 +58,7 @@ export function request(method, path, params, callback = s => s) {
 
     if (resolvedParams.agentOptions) {
       console.warn(
-        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead.'
+        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead'
       );
     }
 
