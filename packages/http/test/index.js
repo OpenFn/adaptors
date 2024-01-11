@@ -132,7 +132,7 @@ describe('get()', () => {
     expect(result.data).to.eql({ x: 24 });
   });
 
-  it.only('should get JSON as a string if parseAs is set', async () => {
+  it('should get JSON as a string if parseAs is set', async () => {
     const jsonstring = JSON.stringify({ x: 23 });
     testServer.intercept({ path: '/json' }).reply(200, jsonstring, {
       headers: { 'Content-Type': 'application/json' },
@@ -168,11 +168,10 @@ describe('get()', () => {
     const { duration, ...responseWithoutDuration } = response;
     expect(responseWithoutDuration).to.eql({
       method: 'GET',
-      url: '/json', // TODO this is not a url!
       headers: { 'content-type': 'application/json' },
       body: { x: 31 },
-      code: 201,
-      message: 'Created',
+      statusCode: 201,
+      statusMessage: 'Created',
     });
     assert.isNumber(duration);
     assert.isAtLeast(duration, 0);
@@ -329,6 +328,8 @@ describe('get()', () => {
     } catch (e) {
       error = e;
     }
+
+    // TODO we should do deeper testing of the thrown error!
     expect(error.code).to.eql(404);
   });
 
@@ -351,7 +352,7 @@ describe('get()', () => {
       })
     )(state);
 
-    expect(response.code).to.eql(404);
+    expect(response.statusCode).to.eql(404);
   });
 
   it('can be called inside an each block', async () => {
@@ -640,7 +641,7 @@ describe('put', () => {
       })
     )(state);
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
     expect(data).to.eql({ name: 'New name' });
   });
 
@@ -718,7 +719,7 @@ describe('patch', () => {
       })
     )(state);
 
-    expect(response.code).to.eql(200);
+    expect(response.statusCode).to.eql(200);
     expect(data).to.eql({ id: 6, name: 'New name' });
   });
 
@@ -795,7 +796,7 @@ describe('delete', () => {
     )(state);
 
     expect(data).to.eql({});
-    expect(response.code).to.eql(204);
+    expect(response.statusCode).to.eql(204);
   });
 
   it('can be called inside an each block', async () => {

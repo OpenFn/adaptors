@@ -21,7 +21,7 @@ const httpServer = http.createServer((req, res) => {
       break;
     case '/new-location-1':
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ url: req.url, res: 'Done redirecting!' }));
+      res.end(JSON.stringify({ ok: true }));
       break;
     default:
       res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -93,7 +93,7 @@ describe('Integration tests', () => {
       })
     )(state);
 
-    expect(response.url).to.eql('/new-location-1');
+    expect(response.body).to.eql({ ok: true });
   });
 
   it('should pass if certs are added to the request', async () => {
