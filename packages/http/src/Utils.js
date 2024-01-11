@@ -27,12 +27,14 @@ export function request(method, path, params, callback = s => s) {
 
     let { body, headers = {} } = resolvedParams;
 
-    if (resolvedParams?.json) {
-      console.warn('DEPRECATION WARNING: Please migrate from `json` to `body`');
+    if (resolvedParams.json) {
+      console.warn(
+        'WARNING: The `json` option has been deprecated. Use `body` instead.'
+      );
       body = resolvedParams.json;
     }
 
-    if (resolvedParams?.form) {
+    if (resolvedParams.form) {
       let form = new FormData();
       for (const [key, value] of Object.entries(resolvedParams.form)) {
         form.append(key, value);
@@ -52,7 +54,7 @@ export function request(method, path, params, callback = s => s) {
 
     if (resolvedParams.agentOptions) {
       console.warn(
-        'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`'
+        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead.'
       );
     }
 
