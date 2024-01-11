@@ -131,6 +131,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const duration = endTime - startTime;
 
   return {
+    url: new URL(path, baseUrl).toString(),
     method,
     statusCode: response.statusCode,
     statusMessage: statusText,

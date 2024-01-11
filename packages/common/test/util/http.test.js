@@ -26,6 +26,7 @@ describe('request function', () => {
         })
         .persist();
     });
+
     it('Handles null body', async () => {
       await request('POST', 'https://www.example.com/test-body', {
         body: null,
@@ -137,6 +138,7 @@ describe('request function', () => {
       });
     });
   });
+
   describe('parseAs', () => {
     it('should auto parse as json', async () => {
       client
@@ -160,6 +162,7 @@ describe('request function', () => {
 
       expect(result.body).to.eql({ name: 'mutchi' });
     });
+
     it('should auto parse as text by default', async () => {
       client
         .intercept({
@@ -174,6 +177,7 @@ describe('request function', () => {
 
       expect(result.body).to.eql(JSON.stringify({ name: 'joe' }));
     });
+
     it('should auto parse as text in any other case', async () => {
       client
         .intercept({
@@ -190,6 +194,7 @@ describe('request function', () => {
 
       expect(result.body).to.eql('hello world');
     });
+
     it('should force as json', async () => {
       client
         .intercept({
@@ -206,6 +211,7 @@ describe('request function', () => {
 
       expect(result.body).to.eql({ name: 'aissa' });
     });
+
     it('should force as json even if content type is string', async () => {
       client
         .intercept({
@@ -230,6 +236,7 @@ describe('request function', () => {
 
       expect(result.body).to.eql({ name: 'aissa' });
     });
+
     it('should force as stream', async () => {
       client
         .intercept({
@@ -247,6 +254,7 @@ describe('request function', () => {
       //TODO - Better technique for testing stream
       expect(await result.body.json()).to.eql({ name: 'iam stream' });
     });
+
     it('should parse as json if content type is json', async () => {
       client
         .intercept({
@@ -294,6 +302,7 @@ describe('request function', () => {
     expect(result.body).to.eql({});
     expect(result.statusCode).to.eql(200);
   });
+
   it('should use baseUrl from options', async () => {
     client
       .intercept({
@@ -306,8 +315,12 @@ describe('request function', () => {
       baseUrl: 'https://www.example.com',
     });
 
+    console.log(response);
+
     expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api');
   });
+
   it('should accept an absolute url', async () => {
     client
       .intercept({
@@ -319,7 +332,9 @@ describe('request function', () => {
     const response = await request('GET', 'https://www.example.com/api');
 
     expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api');
   });
+
   it('should send data', async () => {
     const data = {
       hello: 'world',
