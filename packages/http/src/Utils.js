@@ -4,16 +4,12 @@ import {
   expandReferences,
 } from '@openfn/language-common/util';
 
-export function addBasicAuth(configuration, headers) {
-  const username = configuration?.username;
-  const password = configuration?.password;
+export function addBasicAuth(configuration = {}, headers) {
+  const { username, password } = configuration;
   if (username && password) {
     const base64Encode = btoa(`${username}:${password}`);
     headers['Authorization'] = `Basic ${base64Encode}`;
-
-    return headers;
   }
-  return null;
 }
 
 export function generateResponseLog(response) {
@@ -23,14 +19,13 @@ export function generateResponseLog(response) {
 
 export function request(method, path, params, callback = s => s) {
   return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
+    const [resolvedPath, resolvedParams = {}] = expandReferences(
       state,
       path,
       params
     );
 
-    let body = resolvedParams?.body;
-    let headers = resolvedParams?.headers ?? {};
+    let { body, headers = {} } = resolvedParams;
 
     if (resolvedParams?.json) {
       console.warn('DEPRECATION WARNING: Please migrate from `json` to `body`');
@@ -50,12 +45,12 @@ export function request(method, path, params, callback = s => s) {
     addBasicAuth(state.configuration, headers);
 
     const maxRedirections =
-      resolvedParams?.maxRedirections ??
-      (resolvedParams?.followAllRedirects === false ? 0 : 5);
+      resolvedParams.maxRedirections ??
+      (resolvedParams.followAllRedirects === false ? 0 : 5);
 
-    const tls = resolvedParams?.tls ?? resolvedParams?.agentOptions;
+    const tls = resolvedParams.tls ?? resolvedParams.agentOptions;
 
-    if (resolvedParams?.agentOptions) {
+    if (resolvedParams.agentOptions) {
       console.warn(
         'DEPRECATION WARNING: Please migrate https certificate options from `agentOptions` to `tls`'
       );

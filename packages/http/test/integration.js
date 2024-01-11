@@ -118,12 +118,12 @@ describe('Integration tests', () => {
     expect(response.body).to.eql('Hello, HTTPS World!');
   });
 
-  it('should fail if certs are not  added to the request', async () => {
+  it('should fail if certs are not added to the request', async () => {
     const state = {
       configuration: {
         // Important!!
         // We have to use a different domain here to generate a fresh
-        // unidici client inside the adatapor
+        // unidici client inside the adaptor
         // Otherwise it'll just re-use the credentials from the previous calls
         baseUrl: `https://127.0.0.1:${httpsServer.address().port}`,
       },
