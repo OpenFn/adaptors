@@ -16,6 +16,11 @@ export function addBasicAuth(configuration, headers) {
   return null;
 }
 
+export function generateResponseLog(response) {
+  const { method, url, statusCode, duration } = response;
+  return `${method} ${url} - ${statusCode} in ${duration}ms`;
+}
+
 export function request(method, path, params, callback = s => s) {
   return state => {
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -67,13 +72,11 @@ export function request(method, path, params, callback = s => s) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
-        const { method, body, statusCode, duration } = response;
-        // TODO this ought to be unit testable
-        // also maybe I DO need the url to come out of common?
-        console.log(method, path, '-', statusCode, 'in', duration + 'ms');
+        const log = generateResponseLog(response);
+        console.log(log);
 
         return {
-          ...composeNextState(state, body),
+          ...composeNextState(state, response.body),
           response,
         };
       })
