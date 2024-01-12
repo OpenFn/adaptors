@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.1",
+    "@openfn/language-common": "^1.12.0",
     "odoo-await": "^3.4.1"
   },
   "devDependencies": {

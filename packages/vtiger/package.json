@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.1",
+    "@openfn/language-common": "^1.12.0",
     "lodash-fp": "^0.10.4",
     "md5": "^2.3.0",
     "request": "^2.88.2"
