@@ -1,6 +1,7 @@
 import jsdoc2md from 'jsdoc-to-markdown';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { writeFile, mkdir } from 'node:fs/promises';
 import resolvePath from '../util/resolve-path';
 
@@ -33,8 +34,10 @@ export default async (lang: string) => {
     return 0;
   });
 
+  const helper = path.resolve('../../tools/build/src/util/hbs-helpers.js');
   const renderOpts = {
     template: `${template}`,
+    helper,
     data: templateData,
     separators: true,
     'name-format': false,
