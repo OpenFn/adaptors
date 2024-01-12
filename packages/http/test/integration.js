@@ -4,7 +4,7 @@ import https from 'https';
 
 import { execute, get, post } from '../src';
 
-import { ca, key, cert } from './helpers/certs.js';
+import { ca, key, cert } from './helpers/certs';
 
 const port = 8080;
 const httpServer = http.createServer((req, res) => {
