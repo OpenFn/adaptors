@@ -30,7 +30,7 @@ importers:
   packages/asana:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -67,7 +67,7 @@ importers:
         specifier: ^12.15.0
         version: 12.15.0
       '@openfn/language-common':
-        specifier: ^1.11.1
+        specifier: ^1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -101,7 +101,7 @@ importers:
   packages/beyonic:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -144,7 +144,7 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0
       '@openfn/language-common':
-        specifier: workspace:1.11.1
+        specifier: workspace:1.12.0
         version: link:../common
       csv-parse:
         specifier: ^4.16.3
@@ -202,7 +202,7 @@ importers:
   packages/cartodb:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -248,10 +248,10 @@ importers:
   packages/commcare:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.11.1
+        specifier: workspace:1.12.0
         version: link:../common
       '@openfn/language-http':
-        specifier: workspace:^5.0.4
+        specifier: workspace:^6.0.0
         version: link:../http
       JSONPath:
         specifier: ^0.10.0
@@ -361,7 +361,7 @@ importers:
   packages/dhis2:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: workspace:^1.12.0
         version: link:../common
       axios:
         specifier: ^0.24.0
@@ -404,7 +404,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -444,7 +444,7 @@ importers:
   packages/facebook:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.10.0
+        specifier: ^1.12.0
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -484,7 +484,7 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: workspace:^1.12.0
         version: link:../common
       undici:
         specifier: ^5.22.1
@@ -518,7 +518,7 @@ importers:
   packages/godata:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -558,7 +558,7 @@ importers:
   packages/googlehealthcare:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.10.0
+        specifier: ^1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -592,7 +592,7 @@ importers:
   packages/googlesheets:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^1.12.0
         version: link:../common
       googleapis:
         specifier: 100.0.0
@@ -629,7 +629,7 @@ importers:
   packages/hive:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       hive-driver:
         specifier: 0.2.0
@@ -663,7 +663,7 @@ importers:
   packages/http:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.11.1
+        specifier: workspace:^1.12.0
         version: link:../common
       cheerio:
         specifier: 1.0.0-rc.12
@@ -700,7 +700,7 @@ importers:
   packages/khanacademy:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       qs:
         specifier: ^6.11.0
@@ -740,7 +740,7 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: workspace:^1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -774,7 +774,7 @@ importers:
   packages/magpi:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.8.1
+        specifier: workspace:^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -829,7 +829,7 @@ importers:
         specifier: ^3.0.80
         version: 3.0.80
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -869,7 +869,7 @@ importers:
   packages/mailgun:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       form-data:
         specifier: ^4.0.0
@@ -915,7 +915,7 @@ importers:
   packages/maximo:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       base-64:
         specifier: ^0.1.0
@@ -970,7 +970,7 @@ importers:
   packages/medicmobile:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       lodash:
         specifier: ^4.17.21
@@ -1013,7 +1013,7 @@ importers:
   packages/mogli:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1068,7 +1068,7 @@ importers:
   packages/mongodb:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       mongodb:
         specifier: ^3.7.3
@@ -1142,7 +1142,7 @@ importers:
   packages/mssql:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.11.1
+        specifier: workspace:1.12.0
         version: link:../common
       tedious:
         specifier: 15.1.0
@@ -1176,7 +1176,7 @@ importers:
   packages/mysql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       json-sql:
         specifier: ^0.3.10
@@ -1262,7 +1262,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -1296,7 +1296,7 @@ importers:
   packages/openfn:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       axios:
         specifier: ^0.21.1
@@ -1336,7 +1336,7 @@ importers:
   packages/openhim:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1394,7 +1394,7 @@ importers:
   packages/openmrs:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       superagent:
         specifier: ^8.0.9
@@ -1434,7 +1434,7 @@ importers:
   packages/openspp:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       odoo-await:
         specifier: ^3.4.1
@@ -1471,7 +1471,7 @@ importers:
   packages/postgresql:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       pg:
         specifier: ^8.3.2
@@ -1511,7 +1511,7 @@ importers:
   packages/primero:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       cheerio:
         specifier: ^1.0.0-rc.10
@@ -1569,7 +1569,7 @@ importers:
   packages/progres:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -1609,7 +1609,7 @@ importers:
   packages/rapidpro:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -1646,7 +1646,7 @@ importers:
   packages/resourcemap:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1732,7 +1732,7 @@ importers:
   packages/sftp:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.11.1
+        specifier: 1.12.0
         version: link:../common
       lodash:
         specifier: ^4.17.19
@@ -1781,7 +1781,7 @@ importers:
   packages/smpp:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1818,7 +1818,7 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       request:
         specifier: ^2.88.2
@@ -1855,7 +1855,7 @@ importers:
   packages/telerivet:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1898,7 +1898,7 @@ importers:
   packages/template:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
     devDependencies:
       '@openfn/buildtools':
@@ -1932,7 +1932,7 @@ importers:
   packages/twilio:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       twilio:
         specifier: ^3.83.2
@@ -1969,7 +1969,7 @@ importers:
   packages/vtiger:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       lodash-fp:
         specifier: ^0.10.4
@@ -2015,7 +2015,7 @@ importers:
   packages/zoho:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
+        specifier: ^1.12.0
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
