@@ -1,4 +1,4 @@
-import { execute, get, post, put, patch, del, fn } from '../src';
+import { execute, request, get, post, put, patch, del, fn } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
@@ -39,6 +39,22 @@ describe('execute()', () => {
       })
       .then(done)
       .catch(done);
+  });
+});
+
+describe('request()', () => {
+  it('should get a string', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(request('GET', '/greeting'))(state);
+
+    expect(result.data).to.eql('hello');
   });
 });
 

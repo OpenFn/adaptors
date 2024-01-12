@@ -5,7 +5,7 @@ import {
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-import { request } from './Utils';
+import { request as sendRequest } from './Utils';
 
 /**
  * Options provided to the HTTP request
@@ -43,6 +43,25 @@ export function execute(...operations) {
 }
 
 /**
+ * Make a HTTP request
+ * @public
+ * @example
+ * get('/myEndpoint', {
+ *   query: {foo: 'bar', a: 1},
+ *   headers: {'content-type': 'application/json'},
+ * })
+ * @function
+ * @param {string} method - The HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} params - Query, Headers and Authentication parameters
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ */
+export function request(method, path, params, callback) {
+  return sendRequest(method, path, params, callback);
+}
+
+/**
  * Make a GET request
  * @public
  * @example
@@ -57,7 +76,7 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function get(path, params, callback) {
-  return request('GET', path, params, callback);
+  return sendRequest('GET', path, params, callback);
 }
 
 /**
@@ -76,7 +95,7 @@ export function get(path, params, callback) {
  */
 
 export function post(path, params, callback) {
-  return request('POST', path, params, callback);
+  return sendRequest('POST', path, params, callback);
 }
 
 /**
@@ -94,7 +113,7 @@ export function post(path, params, callback) {
  * @returns {Operation}
  */
 export function put(path, params, callback) {
-  return request('PUT', path, params, callback);
+  return sendRequest('PUT', path, params, callback);
 }
 
 /**
@@ -112,7 +131,7 @@ export function put(path, params, callback) {
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
-  return request('PATCH', path, params, callback);
+  return sendRequest('PATCH', path, params, callback);
 }
 
 /**
@@ -129,7 +148,7 @@ export function patch(path, params, callback) {
  * @returns {Operation}
  */
 export function del(path, params, callback) {
-  return request('DELETE', path, params, callback);
+  return sendRequest('DELETE', path, params, callback);
 }
 
 /**
