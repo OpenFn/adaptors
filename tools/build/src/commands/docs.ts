@@ -39,6 +39,11 @@ export default async (lang: string) => {
     template: `${template}`,
     helper,
     data: templateData,
+    partial: [
+      path.resolve('../../tools/build/src/partials/body.hbs'),
+      path.resolve('../../tools/build/src/partials/description.hbs'),
+      path.resolve('../../tools/build/src/partials/link.hbs'),
+    ],
     separators: true,
     'name-format': false,
     'no-gfm': false,

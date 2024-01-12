@@ -7,7 +7,7 @@
 {{/if~}}
 <dt>
     {{#if name}}{{#sig no-gfm=true ~}}
-<a href="#{{toLowerCase anchorName}}">
+<a href="#{{toLowerCase (anchorName)}}">
 {{~{@codeOpen}~}}
 {{#if @prefix}}{{@prefix}} {{/if~}}
 {{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
