@@ -4,6 +4,17 @@ import { Readable } from 'node:stream';
 
 const clients = new Map();
 
+export const makeBasicAuthHeader = (username, password) => {
+  const buff = Buffer.from(`${username}:${password}`);
+  const credentials = buff.toString('base64');
+  return { Authorization: `Basic ${credentials}` };
+};
+
+export const logResponse = response => {
+  const { method, url, statusCode, duration } = response;
+  console.log(`${method} ${url} - ${statusCode} in ${duration}ms`);
+};
+
 const getClient = (baseUrl, options) => {
   const { tls, timeout } = options;
   if (!clients.has(baseUrl)) {

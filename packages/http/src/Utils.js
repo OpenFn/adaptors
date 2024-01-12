@@ -2,13 +2,14 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   expandReferences,
+  logResponse,
+  makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
 export function addBasicAuth(configuration = {}, headers) {
   const { username, password } = configuration;
   if (username && password) {
-    const base64Encode = btoa(`${username}:${password}`);
-    headers['Authorization'] = `Basic ${base64Encode}`;
+    Object.assign(headers, makeBasicAuthHeader(username, password));
   }
 }
 
@@ -18,11 +19,6 @@ function encodeFormBody(data) {
     form.append(key, value);
   }
   return form;
-}
-
-export function generateResponseLog(response) {
-  const { method, url, statusCode, duration } = response;
-  return `${method} ${url} - ${statusCode} in ${duration}ms`;
 }
 
 export function request(method, path, params, callback = s => s) {
@@ -73,8 +69,7 @@ export function request(method, path, params, callback = s => s) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
-        const log = generateResponseLog(response);
-        console.log(log);
+        logResponse(response);
 
         return {
           ...composeNextState(state, response.body),
@@ -83,8 +78,7 @@ export function request(method, path, params, callback = s => s) {
       })
       .then(callback)
       .catch(err => {
-        const log = generateResponseLog(err);
-        console.log(log);
+        logResponse(err);
 
         throw err;
       });

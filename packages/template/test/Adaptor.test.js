@@ -1,13 +1,16 @@
 import { expect } from 'chai';
+import { enableMockClient } from '@openfn/language-common/util';
+
 import { execute, create, dataValue } from '../src/Adaptor.js';
 
-import MockAgent from './mockAgent.js';
-import { setGlobalDispatcher } from 'undici';
-
-setGlobalDispatcher(MockAgent);
+// This creates a mock client which acts like a fake server.
+// It enables pattern-matching on the request object and custom responses
+// For the full mock API see
+// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
+const testServer = enableMockClient('https://fake.server.com');
 
 describe('execute', () => {
-  it('executes each operation in sequence', done => {
+  it('executes each operation in sequence', async () => {
     const state = {};
     const operations = [
       state => {
@@ -21,25 +24,35 @@ describe('execute', () => {
       },
     ];
 
-    execute(...operations)(state)
-      .then(finalState => {
-        expect(finalState).to.eql({ counter: 3 });
-      })
-      .then(done)
-      .catch(done);
+    const finalState = await execute(...operations)(state);
+
+    expect(finalState).to.eql({ counter: 3 });
   });
 
-  it('assigns references, data to the initialState', () => {
+  it('assigns references and data to the initialState', async () => {
     const state = {};
 
-    execute()(state).then(finalState => {
-      expect(finalState).to.eql({ references: [], data: null });
-    });
+    const finalState = await execute()(state);
+
+    expect(finalState).to.eql({ references: [], data: null });
   });
 });
 
 describe('create', () => {
   it('makes a post request to the right endpoint', async () => {
+    // Setup a mock endpoint
+    testServer
+      .intercept({
+        path: '/api/patients',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      // Set the reply from this endpoint
+      // The body will be returned to state.data
+      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -66,7 +79,14 @@ describe('create', () => {
     });
   });
 
-  it('throws an error for a 404', async () => {
+  it('throws an error if the service returns 403', async () => {
+    testServer
+      .intercept({
+        path: '/api/noAccess',
+        method: 'POST',
+      })
+      .reply(403);
+
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -81,10 +101,17 @@ describe('create', () => {
       return error;
     });
 
-    expect(error.message).to.eql('Page not found');
+    expect(error.statusMessage).to.eql('Forbidden');
   });
 
-  it('handles and throws different kinds of errors', async () => {
+  it('handles and throws mapped errors', async () => {
+    testServer
+      .intercept({
+        path: '/api/blah',
+        method: 'POST',
+      })
+      .reply(404);
+
     const state = {
       configuration: {
         baseUrl: 'https://fake.server.com',
@@ -93,12 +120,12 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(
-      create('!@#$%^&*', { name: 'taylor' })
-    )(state).catch(error => {
+    const error = await execute(create('blah', { name: 'taylor' }))(
+      state
+    ).catch(error => {
       return error;
     });
-    
-    expect(error.message).to.eql('Server error');
+
+    expect(error.message).to.eql('Page not found');
   });
 });

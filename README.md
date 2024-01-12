@@ -133,23 +133,22 @@ export function yourFunctionName(arguments) {
 ```
 
 The logic is where you will prepare your API request. Build the URL, passing in
-any arguments if needed. Next, return the fetch request, making sure you set the
-Authorization, passing in any secrets from `state.configuration`.
+any arguments if needed. Then, using a helper function in common, return the
+fetch request, making sure you set the Authorization, passing in any secrets
+from `state.configuration`.
 
 ```js
+import { get } from '@openfn/language-common/util';
+
 export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
   return state => {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`;
 
-    return (
-      fetch(url, {
-        headers: {
-          Authorization: `${state.configuration.username}:${state.configuration.password}`,
-        },
-      })
-        .then(response => response.json())
-        .then(data => ({ ...state, data }));
-    );
+    const headers = {
+      Authorization: `${state.configuration.username}:${state.configuration.password}`,
+    };
+    const result = await get(url, { headers });
+    return { ...state, data: result.body };
   };
 }
 ```
@@ -185,7 +184,7 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
 
 Import your newly defined function
 
-```
+```js
 import { functionName } from '../src/Adaptor.js';
 ```
 
@@ -194,7 +193,7 @@ to see how state should be passed to it).
 
 Make an assertion to check the result.
 
-```
+```js
 it('should xyz', async () => {
 const state = {
   configuration: {},
