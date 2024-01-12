@@ -38,7 +38,7 @@
             "description": "Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -101,7 +101,7 @@
             "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -164,7 +164,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -227,7 +227,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -290,7 +290,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },

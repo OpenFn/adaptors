@@ -291,6 +291,25 @@ Examples:
 pnpm -C packages/salesforce build --watch
 ```
 
+### Docs
+
+Docs are generated from the JSDoc annotations in adaptors. They are output as
+markdown files in the `./docs` directly and not checked in to source control.
+
+The markdown output can be customised by overriding the built-in handlebars
+templates in jsoc2md.
+
+- Find the template you want to customise in [j2sdoc2md source()
+  https://github.com/jsdoc2md/dmd/tree/master/partials) (this can be tricky)
+- Copy the template contents
+- Paste into a file with the same name (this is important) in
+  `tools/build/src/partials`
+- Edit `tools/build/src/commands/docs.ts` and add the path to your new template
+  to jsdoc2md's `renderOpts` (see how the other .hbs files are loaded in)
+- Make your changes
+- Run `pnpm build docs` from root (or just one adaptor folder) and inspect the
+  generated `docs/index/md` file.
+
 ## Metadata
 
 Check the Wiki for the metadata creation guide:
