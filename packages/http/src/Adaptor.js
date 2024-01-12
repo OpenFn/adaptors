@@ -47,10 +47,14 @@ export function execute(...operations) {
  * Make a HTTP request
  * @public
  * @example
- * get('/myEndpoint', {
- *   query: {foo: 'bar', a: 1},
- *   headers: {'content-type': 'application/json'},
- * })
+ * request(
+ *   'GET',
+ *   '/myEndpoint',
+ *    {
+ *      query: {foo: 'bar', a: 1},
+ *      headers: {'content-type': 'application/json'},
+ *    }
+ * )
  * @function
  * @param {string} method - The HTTP method to use
  * @param {string} path - Path to resource
