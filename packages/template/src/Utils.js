@@ -3,11 +3,14 @@
  * you should add them here
  */
 
-import { request, makeBasicAuthHeader } from '@openfn/language-common/util';
+import {
+  request as commonRequest,
+  makeBasicAuthHeader,
+} from '@openfn/language-common/util';
 
 // This helper function will call out to the backend service
 // And add authorisation headers
-const request = (state, method, path, data) => {
+export const request = (state, method, path, data) => {
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
   const { baseUrl, username, password } = state.configuration;
@@ -38,8 +41,7 @@ const request = (state, method, path, data) => {
   };
 
   // Build the url base on the baseUrl in config and the path provided
-  const url = `${baseUrl}/api/1/$${path}`;
-
+  const url = `${baseUrl}/api/${path}`;
   // Make the actual request
-  return request(method, url, options);
+  return commonRequest(method, url, options);
 };

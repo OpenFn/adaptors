@@ -49,7 +49,7 @@ export function execute(...operations) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function create(resource, data, callback = () => {}) {
+export function create(resource, data, callback = s => s) {
   return async state => {
     // Parameters like resource and data might be passed as functions, which
     // allow us to lazily evaluate state references
@@ -65,15 +65,14 @@ export function create(resource, data, callback = () => {}) {
     // See src/Utils.js for the request implementation
     const response = await request(
       state,
-      'post',
+      'POST',
       resolvedResource,
-      resolvedData,
-      options
+      resolvedData
     );
 
     // Write the result to state.data, update the references array,  and save response metadata
     const nextState = {
-      ...composeNextState(state, response.data),
+      ...composeNextState(state, response.body),
       response,
     };
 
