@@ -1,0 +1,36 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+      # TODO remove before publishing
+      - autodeploy
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.17.1'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.8
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # TODO remove dry run before merging
+      - run:
+          pnpm publish -r --report-summary --publish-branch main --dry-run
+          --access=public
+
+      - run: pnpm run generate-slack-report
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
