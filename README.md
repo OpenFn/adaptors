@@ -238,38 +238,23 @@ Commit the changeset to the repo when you're ready.
 
 ## Releases
 
-To release, run this from the root:
+New releases will be published to npm automatically when merging into the `main`
+branch`.
 
-```
-pnpm changeset version
-```
+Version numbers should be bumped with `changeset` and git tags should be pushed
+to the release branch BEFORE merging.
 
-This will bump all changed packages and update their release notes.
+1. Run `pnpm changeset version` from root to bump versions
+1. Run `pnpm install`
+1. Commit the new version numbers
+1. Run `pnpm changeset tag` to generate tags
+1. Push tags `git push --tags`
 
-Then install packages and commit changes with:
+Rememebr tags may need updating if commits come in after the tags are first
+generated.
 
-```
-pnpm install
-```
-
-Build the adaptors with:
-
-```
-pnpm -r run build
-```
-
-To publish the release, run:
-
-```
-pnpm changeset publish
-```
-
-And finally, push the tags to Github so that the source code can be browsed for
-each new release with:
-
-```
-git push --follow-tags
-```
+When ready, merge the branch to main and a Github Action will trigger the
+release.
 
 ## Build tooling
 
