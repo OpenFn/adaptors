@@ -2,10 +2,7 @@ name: CI
 
 # Runs when a pull request is created or its head is updated
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
-on:
-  pull_request:
-  push:
-    branches: [main]
+on: pull_request
 
 jobs:
   build:
@@ -14,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [18.17.1]
 
     steps:
       - uses: actions/checkout@v3
