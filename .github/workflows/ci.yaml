@@ -6,7 +6,6 @@ on:
   pull_request:
     branches-ignore:
       - main
-      - autodeploy
 
 jobs:
   build:
