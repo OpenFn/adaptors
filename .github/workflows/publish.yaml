@@ -31,6 +31,6 @@ jobs:
           pnpm publish -r --report-summary --publish-branch main --dry-run
           --access=public
 
-      - run: pnpm run generate-slack-report
+      - run: pnpm slack:notify
         env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
