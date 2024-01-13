@@ -13,7 +13,7 @@ const getMessage = changes => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `🧩 *New adaptors releases*`,
+        text: `🧩 *New adaptors releases* ✨`,
       },
     },
   ];
