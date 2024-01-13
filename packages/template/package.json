@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-template",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "The standard template for building OpenFn adaptors",
   "type": "module",
   "exports": {

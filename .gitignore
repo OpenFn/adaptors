@@ -116,3 +116,6 @@ dist
 .fuse_*
 
 .vscode/
+
+
+/pnpm-publish-summary.json
