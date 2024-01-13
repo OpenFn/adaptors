@@ -55,7 +55,11 @@ if (file) {
 
     slack.chat.postMessage({
       ...message,
-      channel: SLACK_DEV,
+      channel: DEVS,
+    });
+    slack.chat.postMessage({
+      ...message,
+      channel: IMPLEMENTATION,
     });
 
     console.log();
