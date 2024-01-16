@@ -12,7 +12,9 @@ export const makeBasicAuthHeader = (username, password) => {
 
 export const logResponse = response => {
   const { method, url, statusCode, duration } = response;
-  console.log(`${method} ${url} - ${statusCode} in ${duration}ms`);
+  if (method && url && duration && statusCode) {
+    console.log(`${method} ${url} - ${statusCode} in ${duration}ms`);
+  }
 };
 
 const getClient = (baseUrl, options) => {
