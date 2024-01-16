@@ -7,9 +7,69 @@ import {
   get,
   post,
   del,
+  parseUrl,
 } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
+
+describe.only('parseUrl', () => {
+  it('should work with a url as a path', () => {
+    const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/a/b/c');
+    expect(url).to.eql('https://www.example.org/a/b/c');
+  });
+
+  it('should work with a path and valid base', () => {
+    const { url, baseUrl, path } = parseUrl('a/b/c', 'https://www.example.org');
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/a/b/c');
+    expect(url).to.eql('https://www.example.org/a/b/c');
+  });
+
+  it('should work with a path with a leading slash and valid base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      '/a/b/c',
+      'https://www.example.org'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/a/b/c');
+    expect(url).to.eql('https://www.example.org/a/b/c');
+  });
+
+  it('should work with a path with a leading slash and a base with a trailing slash', () => {
+    const { url, baseUrl, path } = parseUrl(
+      '/a/b/c',
+      'https://www.example.org/'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/a/b/c');
+    expect(url).to.eql('https://www.example.org/a/b/c');
+  });
+
+  it('should work with path and url base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'a/b/c',
+      'https://www.example.org/api'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
+  it('should throw if base has no protocol', () => {
+    try {
+      parseUrl('/a/b/c', 'www.example.org');
+    } catch (e) {
+      expect(e.message).to.eql('Invalid URL');
+    }
+  });
+});
 
 describe('request function', () => {
   it('should make a successful arbitary request', async () => {
