@@ -143,7 +143,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const statusText = getReasonPhrase(response.statusCode);
 
-  assertOK(response, errors, fullUrlOrPath, method, startTime);
+  assertOK(response, errors, url, method, startTime);
 
   const responseBody = await readResponseBody(response, parseAs);
   const endTime = Date.now();
