@@ -1,7 +1,6 @@
 import { Client, MockAgent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
-import { resolve } from 'node:url';
 
 const clients = new Map();
 
@@ -67,27 +66,23 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
   }
 };
 
-export const parseUrl = (path = '', baseUrl) => {
+export const parseUrl = (pathOrUrl = '', baseUrl) => {
   let fullUrl;
 
   // We handle our own URL parsing rather than leaning on node:url
   // because we are non-strict about the baseURL (ie, we do not ignore the path)
-  if (URL.canParse(path)) {
-    fullUrl = path;
+  if (URL.canParse(pathOrUrl)) {
+    fullUrl = pathOrUrl;
   } else if (baseUrl) {
     // ensure the base url ends with a /
-    if (!baseUrl.endsWith('/')) {
-      baseUrl += '/';
-    }
+    const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
     // ensure the path does not start with /
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
+    const path = pathOrUrl.startsWith('/') ? pathOrUrl.substring(1) : pathOrUrl;
 
-    fullUrl = baseUrl + path;
+    fullUrl = base + path;
   } else {
     // let this throw
-    URL.parse(path);
+    URL.parse(pathOrUrl);
   }
 
   const url = new URL(fullUrl);
