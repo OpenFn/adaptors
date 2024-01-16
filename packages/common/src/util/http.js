@@ -67,16 +67,11 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
 };
 
 const parseUrl = (fullUrl, baseUrl) => {
-  if (/^https?:\/\//.test(fullUrl)) {
-    const url = new URL(fullUrl);
-    return {
-      baseUrl: url.origin,
-      path: url.pathname,
-    };
-  } else {
-    const path = fullUrl.startsWith('/') ? fullUrl : `/${fullUrl}`;
-    return { baseUrl, path };
-  }
+  const url = new URL(fullUrl, baseUrl);
+  return {
+    baseUrl: url.origin,
+    path: url.pathname,
+  };
 };
 
 /**
