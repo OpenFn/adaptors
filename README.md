@@ -235,6 +235,9 @@ Look in the `.changesets` folder to see your change.
 
 Commit the changeset to the repo when you're ready.
 
+Note that the`template` adaptor should ideally never have its version
+increased - it should be locked at `1.0.0`.
+
 ## Releases
 
 New releases will be published to npm automatically when merging into the `main`
