@@ -71,7 +71,7 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
 
   // We handle our own URL parsing rather than leaning on node:url
   // because we are non-strict about the baseURL (ie, we do not ignore the path)
-  if (URL.canParse(pathOrUrl)) {
+  if (/https?:\/\//.test(pathOrUrl)) {
     fullUrl = pathOrUrl;
   } else if (baseUrl) {
     // ensure the base url ends with a /
@@ -82,7 +82,7 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
     fullUrl = base + path;
   } else {
     // let this throw
-    URL.parse(pathOrUrl);
+    new URL(pathOrUrl);
   }
 
   const url = new URL(fullUrl);
