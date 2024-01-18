@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 0.4.2
+
+### Patch Changes
+
+- 6afba70: Fix sendSMS
+
 ## 0.4.1
 
 ### Patch Changes

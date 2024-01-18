@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.1.2
+
+### Patch Changes
+
+- 6afba70: Fix variable reference in submitRecord
+
 ## 1.1.1
 
 ### Patch Changes
