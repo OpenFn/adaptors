@@ -22,7 +22,7 @@ export const createEntity = (name, type, props = {}, children) => {
         this.children = name ? {} : [];
       }
       if (name) {
-        if (isArray(this.children)) {
+        if (Array.isArray(this.children)) {
           throw new Error('Cannot add a named entity to child array');
         }
         this.children[name] = e;

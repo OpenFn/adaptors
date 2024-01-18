@@ -8,9 +8,17 @@
   },
   "rules": {
     "no-unused-vars": "warn",
-    "no-param-reassign": "error"
+    "no-param-reassign": "error",
+    "no-undef": "error"
   },
   "env": {
     "node": true
+  },
+  "globals": {
+    "FormData": "readonly",
+    "Map": "readonly",
+    "Symbol": "readonly",
+    "ReadableStream": "readonly",
+    "Promise": "readonly"
   }
 }

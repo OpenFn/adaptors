@@ -1,6 +1,7 @@
 import {
   execute as commonExecute,
   composeNextState,
+  expandReferences,
 } from '@openfn/language-common';
 import cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';

@@ -155,7 +155,7 @@ export function findDocuments(params) {
             state.client.close();
           } else {
             console.log(`Found ${docs.length} documents in the collection`);
-            console.log(JSON.stringify(result, null, 2));
+            console.log(JSON.stringify(docs, null, 2));
             const nextState = composeNextState(state, docs);
             if (callback) resolve(callback(nextState));
             resolve(nextState);

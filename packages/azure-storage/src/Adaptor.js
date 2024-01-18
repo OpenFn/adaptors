@@ -134,7 +134,7 @@ export function uploadBlob(blobName, content, uploadOptions, options = {}) {
     console.debug(
       `Content: '${finalContent}', length: '${finalContent.length}'`
     );
-    response = await blockBlobClient.upload(
+    const response = await blockBlobClient.upload(
       finalContent,
       finalContent.length,
       resolvedUploadOptions
