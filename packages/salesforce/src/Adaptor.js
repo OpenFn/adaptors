@@ -782,7 +782,52 @@ export function steps(...operations) {
 export function toUTF8(input) {
   return anyAscii(input);
 }
+/**
+ * Send REST API request with given HTTP request info, with connected session information.
+ *
+ * @param {String} path - URL to send HTTP request
+ * @param {Object} options - HTTP API request options
+ * @param {String} options.method - HTTP method URL to send HTTP request
+ * @param {Object} [options.headers] - HTTP request headers in hash object (key-value)
+ * @param {Object} [options.body] - HTTP request body
+ * @param {Function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
 
+export function request(path, options, callback) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = newExpandReferences(
+      state,
+      path,
+      options
+    );
+    const {
+      method = 'GET',
+      body,
+      headers = { 'content-type': 'application/json' },
+    } = resolvedOptions;
+
+    const requestOptions = {
+      url: resolvedPath,
+      method,
+      headers,
+      body: JSON.stringify(body),
+    };
+
+    await connection.request(requestOptions).then(response => {
+      const nextState = {
+        ...composeNextState(state, response),
+        response,
+      };
+
+      if (callback) return callback(nextState);
+      return nextState;
+    });
+
+    return state;
+  };
+}
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
 
