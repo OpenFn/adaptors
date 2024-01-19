@@ -782,9 +782,15 @@ export function steps(...operations) {
 export function toUTF8(input) {
   return anyAscii(input);
 }
+
 /**
  * Send REST API request with given HTTP request info, with connected session information.
  *
+ * @example
+ * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
+ *   method: 'POST',
+ *   body: { inputs: [{}] },
+ * });
  * @param {String} path - URL to send HTTP request
  * @param {Object} options - HTTP API request options
  * @param {String} options.method - HTTP method URL to send HTTP request
@@ -793,7 +799,6 @@ export function toUTF8(input) {
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-
 export function request(path, options, callback) {
   return async state => {
     const { connection } = state;
