@@ -13,17 +13,21 @@ export const makeBasicAuthHeader = (username, password) => {
 export const logResponse = response => {
   const { method, url, statusCode, duration } = response;
   if (method && url && duration && statusCode) {
-    console.log(`${method} ${url} - ${statusCode} in ${duration}ms`);
+    const message = `${method} ${url} - ${statusCode} in ${duration}ms`;
+    if (response instanceof Error) {
+      console.error(message);
+      console.error('response body: ');
+      console.error(response.body || '[no body]');
+    } else {
+      console.log(message);
+    }
   }
 };
 
 const getClient = (baseUrl, options) => {
-  const { tls, timeout } = options;
+  const { tls } = options;
   if (!clients.has(baseUrl)) {
-    clients.set(
-      baseUrl,
-      new Client(baseUrl, { bodyTimeout: timeout, connect: tls })
-    );
+    clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
   }
   return clients.get(baseUrl);
 };
@@ -37,7 +41,7 @@ export const enableMockClient = baseUrl => {
   return client;
 };
 
-const assertOK = (response, errorMap, fullUrl, method, startTime) => {
+const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   const errMapMessage = errorMap[response.statusCode];
 
   const isError =
@@ -46,6 +50,8 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
+    const body = await readResponseBody(response);
+
     const statusText = getReasonPhrase(response.statusCode);
     const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
 
@@ -62,6 +68,8 @@ const assertOK = (response, errorMap, fullUrl, method, startTime) => {
     error.url = fullUrl;
     error.duration = duration;
     error.method = method;
+    error.body = body;
+    error.headers = response.headers;
     throw error;
   }
 };
@@ -124,7 +132,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  const client = getClient(baseUrl, { tls, timeout });
+  const client = getClient(baseUrl, { tls });
 
   const response = await client.request({
     path,
@@ -134,11 +142,13 @@ export async function request(method, fullUrlOrPath, options = {}) {
     body: encodeRequestBody(body),
     throwOnError: false,
     maxRedirections,
+    bodyTimeout: timeout,
+    headersTimeout: timeout,
   });
 
   const statusText = getReasonPhrase(response.statusCode);
 
-  assertOK(response, errors, url, method, startTime);
+  await assertOK(response, errors, url, method, startTime);
 
   const responseBody = await readResponseBody(response, parseAs);
   const endTime = Date.now();
