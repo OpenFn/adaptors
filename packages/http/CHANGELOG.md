@@ -33,9 +33,11 @@
 - Convert `agentOptions` to `tls`.The values should be the same.
 - Convert `responseType` to `parseAs`. Note that this is really only useful for
   JSON, and only needed if the server does not include a content-type response
-  heade.r
-- The `authorisation` property is no longer needed, use state.configuration. The
-  `data` paramter is now `body`.
+  header.
+- Convert `formData` to `form`.The values should be the same.
+- The `authentication` or `auth` property is no longer needed, use
+  `state.configuration`.
+- The `data` parameter is now `body`.
 
 ### Patch Changes
 
