@@ -164,7 +164,7 @@ export function fetchSurveyData(params) {
  */
 export function submitRecord(jsonData) {
   return state => {
-    const jsonBody = expandReferences(data)(state);
+    const jsonBody = expandReferences(jsonData)(state);
     const body = js2xmlparser('form', jsonBody);
 
     const { username, password, apiUrl } = state.configuration;

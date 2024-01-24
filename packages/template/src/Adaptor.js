@@ -2,9 +2,12 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util'
+import { expandReferences } from '@openfn/language-common/util';
 import { request } from './Utils';
 
+// TODO You can override the execute function to run code at the start
+//      and end of job execution. This is useful for initialising and destroying
+//      client objects. In this example we need it to create the references array.
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
@@ -32,6 +35,9 @@ export function execute(...operations) {
   };
 }
 
+// TODO this is example Opeartions which might create a resource on
+//      on a fictional service. It demonstrates best practice for how
+//      Operations should be written
 /**
  * Create some resource in some system
  * @public
@@ -39,37 +45,41 @@ export function execute(...operations) {
  * create("patient", {"name": "Bukayo"})
  * @function
  * @param {string} resource - The type of entity that will be created
- * @param {object} data - The data to create the new resource
+ * @param {object} data - The data to create the new resource from
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function create(resource, data, callback) {
-  return state => {
-    const [resolvedResource, resolvedData] = expandReferences(state, resource, data); 
+export function create(resource, data, callback = s => s) {
+  return async state => {
+    // Parameters like resource and data might be passed as functions, which
+    // allow us to lazily evaluate state references
+    // The expand function will either return the provided values back to us,
+    // or evaluate them first
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resource,
+      data
+    );
 
-    const { baseUrl, username, password } = state.configuration;
+    // Make the request to the service
+    // See src/Utils.js for the request implementation
+    const response = await request(
+      state,
+      'POST',
+      resolvedResource,
+      resolvedData
+    );
 
-    const url = `${baseUrl}/api/${resolvedResource}`;
-    const auth = { username, password };
-
-    const options = {
-      auth,
-      body: resolvedData,
-      method: 'POST',
+    // Write the result to state.data, update the references array,  and save response metadata
+    const nextState = {
+      ...composeNextState(state, response.body),
+      response,
     };
 
-    return request(url, options).then(response => {
-      const nextState = {
-        ...composeNextState(state, response.data),
-        response,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
-    });
+    // Invoke the callback (if passed) before returning
+    return callback(nextState);
   };
 }
-
-export { request } from './Utils';
 
 // TODO: Decide which functions to publish from @openfn/language-common
 export {

@@ -7,7 +7,7 @@
 {{/if~}}
 <dt>
     {{#if name}}{{#sig no-gfm=true ~}}
-<a href="#{{{anchorName}}}">
+<a href="#{{toLowerCase (anchorName)}}">
 {{~{@codeOpen}~}}
 {{#if @prefix}}{{@prefix}} {{/if~}}
 {{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
@@ -22,7 +22,7 @@
 {{/if~}}
 {{/globals~}}
 
-{{>global-index-kinds kind="typedef" title="Typedefs" ~}}
+{{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
 
 {{/if~}}
 {{#orphans ~}}

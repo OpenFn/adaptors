@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.8.1",
+    "@openfn/language-common": "^1.12.0",
     "base-64": "^0.1.0",
     "request": "^2.88.2",
     "utf8": "^2.1.2"

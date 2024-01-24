@@ -1,5 +1,11 @@
 # @openfn/language-resourcemap
 
+## 0.3.2
+
+### Patch Changes
+
+- 6afba70: Fix submitSite
+
 ## 0.3.1
 
 ### Patch Changes

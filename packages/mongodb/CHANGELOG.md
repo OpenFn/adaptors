@@ -1,5 +1,11 @@
 # @openfn/language-mongodb
 
+## 2.0.1
+
+### Patch Changes
+
+- 6afba70: Fix findDocuments
+
 ## 2.0.0
 
 ### Major Changes

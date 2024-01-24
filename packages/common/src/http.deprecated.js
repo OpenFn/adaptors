@@ -1,8 +1,26 @@
+/**
+ * === DEPRECATION NOTICE ===
+ *
+ * These common HTTP utils have been deprecated in favour of the new functions in util/http.js
+ *
+ * To ease migration onto the new APIs, these functions will be left in place and will continue to work.
+ *
+ * ===========================
+ */
+
 import { expandReferences, splitKeys } from './Adaptor';
 import axios from 'axios';
 import https from 'https';
 
 export { axios };
+
+const printDeprecationNotice = name => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn(
+      `The common.http.¬${name} function has been deprecated. This adaptor should migrate to use common.util.http instead.`
+    );
+  }
+};
 
 /**
  * Recursively resolves objects that have resolvable values (functions), but
@@ -67,6 +85,7 @@ function withAgent(params) {
  */
 export function get(requestParams) {
   return state => {
+    printDeprecationNotice('get');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'get', ...withAgent(params) });
@@ -96,6 +115,7 @@ export function get(requestParams) {
  */
 export function post(requestParams) {
   return state => {
+    printDeprecationNotice('post');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'post', ...withAgent(params) });
@@ -115,6 +135,7 @@ export function post(requestParams) {
  */
 function del(requestParams) {
   return state => {
+    printDeprecationNotice('del');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'delete', ...withAgent(params) });
@@ -136,6 +157,7 @@ export { del as delete };
  */
 export function head(requestParams) {
   return state => {
+    printDeprecationNotice('head');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'head', ...withAgent(params) });
@@ -156,6 +178,7 @@ export function head(requestParams) {
  */
 export function put(requestParams) {
   return state => {
+    printDeprecationNotice('put');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'put', ...withAgent(params) });
@@ -176,6 +199,7 @@ export function put(requestParams) {
  */
 export function patch(requestParams) {
   return state => {
+    printDeprecationNotice('patch');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'patch', ...withAgent(params) });
@@ -195,6 +219,7 @@ export function patch(requestParams) {
  */
 export function options(requestParams) {
   return state => {
+    printDeprecationNotice('options');
     const params = expandRequestReferences(requestParams)(state);
 
     return axios({ method: 'options', ...withAgent(params) });
