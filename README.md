@@ -133,23 +133,22 @@ export function yourFunctionName(arguments) {
 ```
 
 The logic is where you will prepare your API request. Build the URL, passing in
-any arguments if needed. Next, return the fetch request, making sure you set the
-Authorization, passing in any secrets from `state.configuration`.
+any arguments if needed. Then, using a helper function in common, return the
+fetch request, making sure you set the Authorization, passing in any secrets
+from `state.configuration`.
 
 ```js
+import { get } from '@openfn/language-common/util';
+
 export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
   return state => {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`;
 
-    return (
-      fetch(url, {
-        headers: {
-          Authorization: `${state.configuration.username}:${state.configuration.password}`,
-        },
-      })
-        .then(response => response.json())
-        .then(data => ({ ...state, data }));
-    );
+    const headers = {
+      Authorization: `${state.configuration.username}:${state.configuration.password}`,
+    };
+    const result = await get(url, { headers });
+    return { ...state, data: result.body };
   };
 }
 ```
@@ -185,7 +184,7 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
 
 Import your newly defined function
 
-```
+```js
 import { functionName } from '../src/Adaptor.js';
 ```
 
@@ -194,7 +193,7 @@ to see how state should be passed to it).
 
 Make an assertion to check the result.
 
-```
+```js
 it('should xyz', async () => {
 const state = {
   configuration: {},
@@ -236,6 +235,9 @@ Look in the `.changesets` folder to see your change.
 
 Commit the changeset to the repo when you're ready.
 
+Note that the`template` adaptor should ideally never have its version
+increased - it should be locked at `1.0.0`.
+
 ## Releases
 
 New releases will be published to npm automatically when merging into the `main`
@@ -275,6 +277,25 @@ Examples:
 ```
 pnpm -C packages/salesforce build --watch
 ```
+
+### Docs
+
+Docs are generated from the JSDoc annotations in adaptors. They are output as
+markdown files in the `./docs` directly and not checked in to source control.
+
+The markdown output can be customised by overriding the built-in handlebars
+templates in jsoc2md.
+
+- Find the template you want to customise in [j2sdoc2md source()
+  https://github.com/jsdoc2md/dmd/tree/master/partials) (this can be tricky)
+- Copy the template contents
+- Paste into a file with the same name (this is important) in
+  `tools/build/src/partials`
+- Edit `tools/build/src/commands/docs.ts` and add the path to your new template
+  to jsdoc2md's `renderOpts` (see how the other .hbs files are loaded in)
+- Make your changes
+- Run `pnpm build docs` from root (or just one adaptor folder) and inspect the
+  generated `docs/index/md` file.
 
 ## Metadata
 

@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "axios": "^0.21.2",
-    "@openfn/language-common": "^1.8.1"
+    "@openfn/language-common": "^1.12.0"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",

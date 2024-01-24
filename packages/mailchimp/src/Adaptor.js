@@ -210,14 +210,10 @@ export function addMember(params, callback = s => s) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function updateMember(
-  params = { listId, subscriberHash, member },
-  callback = s => s
-) {
+export function updateMember(params, callback = s => s) {
   return state => {
     const requiredParams = ['listId', 'subscriberHash'];
     const [resolvedParams] = expandReferences(state, params);
-    assertKeys(resolvedParams, requiredParams);
 
     const { listId, subscriberHash, member } = resolvedParams;
 

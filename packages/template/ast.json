@@ -35,7 +35,7 @@
           },
           {
             "title": "param",
-            "description": "The data to create the new resource",
+            "description": "The data to create the new resource from",
             "type": {
               "type": "NameExpression",
               "name": "object"

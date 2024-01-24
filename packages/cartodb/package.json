@@ -22,7 +22,7 @@
   "dependencies": {
     "JSONPath": "^0.10.0",
     "json-sql": "^0.3.8",
-    "@openfn/language-common": "^1.8.1",
+    "@openfn/language-common": "^1.12.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^3.7.0"
   },

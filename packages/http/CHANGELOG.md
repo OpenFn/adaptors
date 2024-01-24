@@ -1,5 +1,49 @@
 # @openfn/language-http
 
+## 6.0.0
+
+### Major Changes
+
+- f741086: The axios library has been removed and the operation API simplified.
+
+### New features
+
+- Error mapping. Provide custom errors to response status codes, eg, Eg:
+  `{errors: {404: "You don't have access"}}`
+- parseAs option. Overrides the default response type. Eg: `{parseAs: "json"}`
+- Request logging. All requests are now logged to stdout.
+- tls options. Pass SSL certificates using the `tls` option on any request.
+
+### Breaking changes
+
+- Removed `axios` export
+- Axios options on `get`, `post`, `put`, `patch`, and `del` are no longer
+  supported (unless otherwise stated). This includes `gzip`,`qs`, `formData`,
+  `successCodes`, `transformResponse`, `data` and other options.
+- `keepCookie` has been removed
+- Option params `json` and `agentOptions` have been deprecated. They still work,
+  but you should use `body` and `tls` instead (the behaviour should be the same)
+
+### Migration Guide
+
+- Use `query` instead of `params` or `qs` parameters to a request.
+- Convert succcessCodes to the `errorMap`. Ie, `successCodes: [200, 404]`
+  becomes `errorMap: { 404: false }`
+- Instead of `transformResponse`, use the callback parameter.
+- Convert `agentOptions` to `tls`.The values should be the same.
+- Convert `responseType` to `parseAs`. Note that this is really only useful for
+  JSON, and only needed if the server does not include a content-type response
+  header.
+- Convert `formData` to `form`.The values should be the same.
+- The `authentication` or `auth` property is no longer needed, use
+  `state.configuration`.
+- The `data` parameter is now `body`.
+
+### Patch Changes
+
+- Updated dependencies [7f52699]
+  - @openfn/language-common@1.12.0
+
 ## 5.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 0.7.3
+
+### Patch Changes
+
+- 6afba70: Fix updateMember()
+
 ## 0.7.2
 
 ### Patch Changes

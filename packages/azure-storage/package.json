@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-azure-storage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn adaptor for Azure Storage",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.11.1",
+    "@openfn/language-common": "^1.12.0",
     "@azure/storage-blob": "^12.15.0"
   },
   "devDependencies": {

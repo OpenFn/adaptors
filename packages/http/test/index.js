@@ -1,41 +1,13 @@
-import {
-  execute,
-  get,
-  post,
-  put,
-  patch,
-  del,
-  alterState,
-  request,
-} from '../src';
+import { execute, request, get, post, put, patch, del, fn } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
-import { expect } from 'chai';
-import nock from 'nock';
-import { setUrl } from '../src/Utils';
+import { enableMockClient } from '@openfn/language-common/util';
+import { expect, assert } from 'chai';
 
-function stdGet(state) {
-  return execute(get('https://www.example.com/api/fake', {}))(state).then(
-    nextState => {
-      const { data, references } = nextState;
-      expect(data).to.haveOwnProperty('httpStatus', 'OK');
-      expect(data).to.haveOwnProperty('message', 'the response');
+const jsonHeaders = { 'Content-Type': 'application/json' };
 
-      expect(references).to.eql([{ triggering: 'event' }]);
-    }
-  );
-}
+const testServer = enableMockClient('https://www.example.com');
 
-function clientReq(method, state) {
-  return execute(method('https://www.example.com/api/fake', {}))(state).then(
-    nextState => {
-      const { data, references } = nextState;
-      expect(data).to.eql({ httpStatus: 'OK', message: 'the response' });
-      expect(references).to.eql([{ a: 1 }]);
-    }
-  );
-}
-
-describe('The execute() function', () => {
+describe('execute()', () => {
   it('executes each operation in sequence', () => {
     let state = {};
     let operations = [
@@ -58,8 +30,6 @@ describe('The execute() function', () => {
   it('assigns references, data to the initialState', done => {
     let state = {};
 
-    let finalState = execute()(state);
-
     execute()(state)
       .then(finalState => {
         expect(finalState).to.eql({
@@ -72,162 +42,150 @@ describe('The execute() function', () => {
   });
 });
 
-describe('setUrl', () => {
-  it('handles no slashes on either baseUrl or path', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = 'users/5';
+describe('request()', () => {
+  it('should get a string', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
 
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
 
-  it('handles a trailing slash on baseUrl and a leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = '/users/5';
+    const result = await execute(request('GET', '/greeting'))(state);
 
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-
-  it('handles a trailing slash on baseUrl, no leading slash on path', () => {
-    const configuration = { baseUrl: 'https://www.test.com/' };
-    const path = 'users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-
-  it('handles a leading slash on path, nothing on baseUrl', () => {
-    const configuration = { baseUrl: 'https://www.test.com' };
-    const path = '/users/5';
-
-    expect(setUrl(configuration, path)).to.eql('https://www.test.com/users/5');
-  });
-});
-
-const testServer = nock('https://www.example.com');
-
-describe('The client', () => {
-  before(() => {
-    testServer.get('/api/fake').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-
-    testServer.post('/api/fake').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-
-    testServer.put('/api/fake').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-
-    testServer.patch('/api/fake').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-
-    testServer.delete('/api/fake').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-
-  after(() => {
-    nock.cleanAll();
-  });
-  const stdState = {
-    configuration: null,
-    data: { a: 1 },
-  };
-
-  it('works with GET', () => {
-    let state = stdState;
-    clientReq(get, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(post, state);
-  });
-
-  it('works with PATCH', () => {
-    let state = stdState;
-    clientReq(patch, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(put, state);
-  });
-
-  it('works with POST', () => {
-    let state = stdState;
-    clientReq(del, state);
+    expect(result.data).to.eql('hello');
   });
 });
 
 describe('get()', () => {
-  before(() => {
-    testServer.get('/api/fake').times(4).reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
+  it('should get a string', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
 
-    testServer
-      .get('/api/showMeMyHeaders')
-      .times(3)
-      .reply(200, function (url, body) {
-        return [url, this.req.headers];
-      });
-
-    testServer
-      .get('/api/showMeMyHeaders?id=1')
-      .reply(200, function (url, body) {
-        return [url, this.req.headers];
-      });
-
-    testServer
-      .get('/api/fake-endpoint')
-      .matchHeader('followAllRedirects', true)
-      .reply(301, undefined, {
-        Location: 'https://www.example.com/api/fake-endpoint-2',
-      })
-      .get('/api/fake-endpoint-2')
-      .reply(302, undefined, {
-        Location: 'https://www.example.com/api/fake-endpoint-3',
-      })
-      .get('/api/fake-endpoint-3')
-      .reply(200, function (url, body) {
-        return { url };
-      });
-
-    testServer.get('/api/fake-cookies').reply(
-      200,
-      function (url, body) {
-        return { url };
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
       },
-      { 'Set-Cookie': ['tasty_cookie=choco'] }
-    );
+    };
 
-    testServer.get('/api/fake-callback').reply(200, function (url, body) {
-      return { url, id: 3 };
-    });
+    const result = await execute(get('/greeting'))(state);
 
-    testServer.get('/api/fake-promise').reply(200, function (url, body) {
-      return new Promise((resolve, reject) => {
-        resolve({ url, id: 3 });
-      });
-    });
-
-    testServer.get('/api/badAuth').times(2).reply(404);
-    testServer.get('/api/crashDummy').times(2).reply(500);
+    expect(result.data).to.eql('hello');
   });
 
-  it('prepares nextState properly', () => {
-    let state = {
+  it('should get JSON from a path', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(200, JSON.stringify({ x: 23 }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+    const state = {
       configuration: {
-        username: 'hello',
-        password: 'there',
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json'))(state);
+
+    expect(result.data).to.eql({ x: 23 });
+  });
+
+  it('should interpret a response as json with parseAs', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(200, JSON.stringify({ x: 23 }));
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json', { parseAs: 'json' }))(state);
+
+    expect(result.data).to.eql({ x: 23 });
+  });
+
+  it('should get JSON from a full url', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(200, JSON.stringify({ x: 24 }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+    const state = {};
+
+    const result = await execute(get('https://www.example.com/json'))(state);
+
+    expect(result.data).to.eql({ x: 24 });
+  });
+
+  it('should get JSON as a string if parseAs is set', async () => {
+    const jsonstring = JSON.stringify({ x: 23 });
+    testServer.intercept({ path: '/json' }).reply(200, jsonstring, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json', { parseAs: 'text' }))(state);
+
+    expect(result.data).to.eql(jsonstring);
+  });
+
+  it('should write the response to state', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(201, JSON.stringify({ x: 31 }), {
+        headers: jsonHeaders,
+      });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    const result = await execute(get('/json'))(state);
+
+    const { response } = result;
+    const { duration, ...responseWithoutDuration } = response;
+    expect(responseWithoutDuration).to.eql({
+      method: 'GET',
+      headers: { 'content-type': 'application/json' },
+      body: { x: 31 },
+      statusCode: 201,
+      statusMessage: 'Created',
+      url: 'https://www.example.com/json',
+    });
+    assert.isNumber(duration);
+    assert.isAtLeast(duration, 0);
+  });
+
+  it('preserves state and writes to references', async () => {
+    testServer
+      .intercept({
+        path: '/api/fake',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {
+          body: 'response',
+        },
+        {
+          headers: jsonHeaders,
+        }
+      );
+
+    const state = {
+      counter: 0,
+      configuration: {
         baseUrl: 'https://www.example.com',
       },
       data: {
@@ -235,229 +193,192 @@ describe('get()', () => {
       },
     };
 
-    return execute(
-      alterState(state => {
-        state.counter = 1;
+    const result = await execute(
+      fn(state => {
+        state.counter += 1;
         return state;
       }),
       get('/api/fake', {}),
-      alterState(state => {
-        state.counter = 2;
+      fn(state => {
+        state.counter += 1;
         return state;
       })
-    )(state).then(nextState => {
-      const { data, references, counter } = nextState;
-      expect(data).to.haveOwnProperty('httpStatus', 'OK');
-      expect(data).to.haveOwnProperty('message', 'the response');
-      expect(references).to.eql([{ triggering: 'event' }]);
-      expect(counter).to.eql(2);
-    });
+    )(state);
+
+    const { data, references, counter, response } = result;
+    expect(response).to.exist;
+    expect(data).to.eql({ body: 'response' });
+    expect(references).to.eql([{ triggering: 'event' }]);
+    expect(counter).to.eql(2);
   });
 
-  it('works without a baseUrl', () => {
-    let state = {
-      configuration: {
-        username: 'hello',
-        password: 'there',
-      },
-      data: { triggering: 'event' },
-    };
-    return stdGet(state);
-  });
+  it('sends headers with the request', async () => {
+    testServer
+      .intercept({
+        path: '/api/showMeMyHeaders',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
 
-  it('works with an empty set of credentials', () => {
-    let state = {
-      configuration: {},
-      data: { triggering: 'event' },
-    };
-    return stdGet(state);
-  });
-
-  it('works with no credentials (null)', () => {
-    let state = {
-      configuration: null,
-      data: {
-        triggering: 'event',
-      },
-    };
-    return stdGet(state);
-  });
-
-  it('accepts headers', async () => {
     const state = {
-      configuration: {
-        username: 'hello',
-        password: 'there',
-      },
       data: { triggering: 'event' },
     };
 
-    const finalState = await execute(
+    const { data } = await execute(
       get('https://www.example.com/api/showMeMyHeaders', {
         headers: { 'x-openfn': 'testing' },
       })
     )(state);
 
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
-
-    expect(finalState.data[1]).to.haveOwnProperty('x-openfn', 'testing');
-
-    expect(finalState.data[1]).to.haveOwnProperty(
-      'authorization',
-      'Basic aGVsbG86dGhlcmU='
-    );
-
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
-
-    expect(finalState.references).to.eql([{ triggering: 'event' }]);
+    expect(data).to.eql({ 'x-openfn': 'testing' });
   });
 
-  it('accepts authentication for http basic auth', async () => {
+  it('encodes configuration into basic auth header', async () => {
+    testServer
+      .intercept({
+        path: '/api/auth',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
+
     const state = {
       configuration: {
+        baseUrl: 'https://www.example.com',
         username: 'hello',
         password: 'there',
       },
-      data: { triggering: 'event' },
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/showMeMyHeaders')
-    )(state);
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
-    expect(finalState.data[1]).to.haveOwnProperty(
-      'authorization',
-      'Basic aGVsbG86dGhlcmU='
-    );
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
-  });
+    const { data } = await execute(get('/api/auth'))(state);
 
-  it('can enable gzip', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const finalState = await execute(
-      get('https://www.example.com/api/showMeMyHeaders', { gzip: true })
-    )(state);
-
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders');
-
-    expect(finalState.data[1]).to.haveOwnProperty(
-      'accept-encoding',
-      'gzip, deflate'
-    );
-
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
+    expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
   });
 
   it('allows query strings to be set', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const finalState = await execute(
-      get('https://www.example.com/api/showMeMyHeaders', { query: { id: 1 } })
-    )(state);
-
-    expect(finalState.data[0]).to.eql('/api/showMeMyHeaders?id=1');
-
-    expect(finalState.data[1]).to.haveOwnProperty('host', 'www.example.com');
-  });
-
-  it('can follow redirects', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const finalState = await execute(
-      get('https://www.example.com/api/fake-endpoint', {
-        headers: { followAllRedirects: true },
+    testServer
+      .intercept({
+        path: '/api/by-id?id=1',
+        method: 'GET',
       })
-    )(state);
-    expect(finalState.data.url).to.eql('/api/fake-endpoint-3');
-  });
+      .reply(
+        200,
+        { ok: true },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-  it('can keep and reuse cookies', async () => {
     const state = {
       configuration: {},
-      data: {},
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/fake-cookies', {
-        keepCookie: true,
+    const { data } = await execute(
+      get('https://www.example.com/api/by-id', { query: { id: 1 } })
+    )(state);
+
+    expect(data).eql({ ok: true });
+  });
+
+  it('pass state to the callback', async () => {
+    testServer
+      .intercept({
+        path: '/api/callback',
+        method: 'GET',
       })
-    )(state);
+      .reply(
+        200,
+        { id: 3 },
+        {
+          headers: jsonHeaders,
+        }
+      );
 
-    expect(finalState.data.__cookie).to.eql('tasty_cookie=choco');
-  });
-
-  it('accepts callbacks and calls them with nextState', async () => {
     const state = {
-      configuration: {},
+      configuration: { baseUrl: 'https://www.example.com' },
       data: {},
     };
 
+    let callbackState;
+
     const finalState = await execute(
-      get('https://www.example.com/api/fake-callback', {}, state => {
+      get('api/callback', {}, state => {
+        callbackState = state;
         return state;
       })
     )(state);
 
-    expect(finalState.data.id).to.eql(3);
+    expect(callbackState).to.eql(finalState);
   });
 
-  it('returns a promise that contains nextState', async () => {
+  it('should throw for a 404 response', async () => {
+    testServer
+      .intercept({
+        path: '/api/404',
+        method: 'GET',
+      })
+      .reply(404);
+
     const state = {
       configuration: {},
       data: {},
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/fake-promise', {})
-    )(state).then(state => state);
-    expect(finalState.data.id).to.eql(3);
+    let error;
+
+    try {
+      await execute(get('https://www.example.com/api/404'))(state);
+    } catch (e) {
+      error = e;
+    }
+
+    const { statusCode, url, method, duration, name } = error;
+    expect({
+      statusCode,
+      url,
+      method,
+      name,
+    }).to.eql({
+      name: 'Error',
+      statusCode: 404,
+      url: 'https://www.example.com/api/404',
+      method: 'GET',
+    });
+
+    assert.isNumber(duration);
   });
 
-  it('allows successCodes to be specified via options', async () => {
+  it('should suppress 404 errors through the error map', async () => {
+    testServer
+      .intercept({
+        path: '/api/404',
+        method: 'GET',
+      })
+      .reply(404);
+
     const state = {
       configuration: {},
       data: {},
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/badAuth', {
-        options: { successCodes: [404] },
+    const { response } = await execute(
+      get('https://www.example.com/api/404', {
+        errors: { 404: false },
       })
     )(state);
 
-    expect(finalState.response.status).to.eql(404);
-  });
-
-  it('throws an error for a non-2XX response', async () => {
-    const state = {
-      configuration: {},
-      data: {},
-    };
-
-    const error = await execute(get('https://www.example.com/api/crashDummy'))(
-      state
-    ).catch(error => error);
-
-    expect(error.response.status).to.eql(500);
+    expect(response.statusCode).to.eql(404);
   });
 
   it('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .get('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'GET',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -473,19 +394,17 @@ describe('get()', () => {
       each(
         '$.things[*]',
         get(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -496,136 +415,100 @@ describe('get()', () => {
 });
 
 describe('post', () => {
-  before(() => {
-    testServer.post('/api/fake-json').reply(200, function (url, body) {
-      return body;
-    });
-
-    testServer.post('/api/fake-form').reply(200, function (url, body) {
-      return body;
-    });
-
-    testServer.post('/api/fake-formData').reply(200, function (url, body) {
-      return body;
-    });
+  it('post a JSON object', async () => {
+    let req;
 
     testServer
-      .post('/api/csv-reader')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
+      .intercept({
+        path: '/api/json',
+        method: 'POST',
+      })
+      .reply(200, r => {
+        req = r;
+        return 'ok';
       });
 
-    testServer
-      .post('/api/fake-custom-success-codes')
-      .reply(302, function (url, body) {
-        return { ...body, statusCode: 302 };
-      });
-  });
+    const state = {};
 
-  it('should make an http request from inside the parseCSV callback', async function () {
-    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
-    const state = { references: [], data: [], apiResponses: [] };
-
-    const resultingState = await parseCsv(
-      csv,
-      { chunkSize: 2 },
-      (state, rows) =>
-        post(
-          'https://www.example.com/api/csv-reader',
-          {
-            body: rows,
-          },
-          state => {
-            state.apiResponses.push(...state.response.data);
-            return state;
-          }
-        )(state)
-    )(state);
-
-    expect(resultingState.apiResponses).to.eql([
-      { id: '1', name: 'taylor' },
-      { id: '2', name: 'mtuchi' },
-      { id: '3', name: 'joe' },
-      { id: '4', name: 'stu' },
-      { id: '5', name: 'elias' },
-    ]);
-  });
-
-  it('can set JSON on the request body', async () => {
-    const state = {
-      configuration: {},
-      data: { name: 'test', age: 24 },
-    };
-
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-json', { body: state.data })
-    )(state);
-    expect(finalState.data).to.eql({ name: 'test', age: 24 });
-  });
-
-  it('can set data via Form param on the request body', async () => {
-    let form = {
-      username: 'fake',
-      password: 'fake_pass',
-    };
-    const state = {
-      configuration: {},
-      data: form,
-    };
-
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-form', {
-        form: state => state.data,
+    await execute(
+      post('https://www.example.com/api/json', {
+        body: { name: 'tony stark', age: 24 },
       })
     )(state);
 
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="username"\r\n\r\nfake'
-    );
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="password"\r\n\r\nfake_pass'
-    );
+    expect(req.body).to.equal(JSON.stringify({ name: 'tony stark', age: 24 }));
   });
 
-  it('can set FormData on the request body', async () => {
+  it('should send plain jSON as formdata', async () => {
+    let form;
+    let entries = [];
+    testServer
+      .intercept({
+        path: '/api/form-data',
+        method: 'POST',
+      })
+      .reply(200, res => {
+        // What we receive in the mock should be formdata
+        // note that we should also have a bunch of headers,
+        // but they seem to be missing
+        form = res.body;
+        for (const [key, value] of form.entries()) {
+          entries.push({ [key]: value });
+        }
+        return 'ok';
+      });
+
     let formData = {
       id: 'fake_id',
       parent: 'fake_parent',
       mobile_phone: 'fake_phone',
     };
 
+    const { data } = await execute(
+      post('https://www.example.com/api/form-data', {
+        form: formData,
+      })
+    )({});
+
+    expect(data).to.equal('ok');
+    expect(form instanceof FormData).to.equal(true);
+    expect(entries.length).to.equal(3);
+  });
+
+  it('can override error codes on the request', async () => {
+    testServer
+      .intercept({
+        path: '/api/custom-success-codes',
+        method: 'POST',
+      })
+      .reply(502);
+
     const state = {
       configuration: {},
-      data: formData,
+      data: {
+        id: 'a',
+        parent: 'b',
+        mobile_phone: 'c',
+      },
     };
-
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-formData', {
-        formData: state => {
-          return state.data;
-        },
+    const { response } = await execute(
+      post('https://www.example.com/api/custom-success-codes', {
+        body: state => state.data,
+        errors: { 502: false },
       })
     )(state);
 
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="id"\r\n\r\nfake_id'
-    );
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="parent"\r\n\r\nfake_parent'
-    );
-    expect(finalState.data.body).to.contain(
-      'Content-Disposition: form-data; name="mobile_phone"\r\n\r\nfake_phone'
-    );
+    expect(response.statusCode).to.eq(502);
   });
 
   it('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .post('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/json',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -641,12 +524,12 @@ describe('post', () => {
       each(
         '$.things[*]',
         post(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
@@ -661,12 +544,13 @@ describe('post', () => {
   });
 
   it('can be called inside an each with old "json" request config', async () => {
-    nock('https://www.repeat.com')
-      .post('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -682,12 +566,12 @@ describe('post', () => {
       each(
         '$.things[*]',
         post(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             json: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
@@ -701,61 +585,88 @@ describe('post', () => {
     ]);
   });
 
-  it('can set successCodes on the request', async () => {
-    let data = {
-      id: 'fake_id',
-      parent: 'fake_parent',
-      mobile_phone: 'fake_phone',
-    };
-    const state = {
-      configuration: {},
-      data,
-    };
-    const finalState = await execute(
-      post('https://www.example.com/api/fake-custom-success-codes', {
-        data: state => {
-          return state.data;
-        },
-        options: { successCodes: [302] },
+  it('should make an http request from inside the parseCSV callback', async function () {
+    testServer
+      .intercept({
+        path: '/api/csv-reader',
+        method: 'POST',
       })
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .persist();
+
+    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
+    const state = { references: [], data: [], apiResponses: [] };
+
+    const resultingState = await parseCsv(
+      csv,
+      { chunkSize: 2 },
+      (state, rows) =>
+        post(
+          'https://www.example.com/api/csv-reader',
+          {
+            body: rows,
+          },
+          state => {
+            state.apiResponses.push(...state.response.body);
+            return state;
+          }
+        )(state)
     )(state);
 
-    expect(finalState.data.statusCode).to.eq(302);
+    expect(resultingState.apiResponses).to.eql([
+      { id: '1', name: 'taylor' },
+      { id: '2', name: 'mtuchi' },
+      { id: '3', name: 'joe' },
+      { id: '4', name: 'stu' },
+      { id: '5', name: 'elias' },
+    ]);
   });
 });
 
 describe('put', () => {
-  before(() => {
-    testServer.put('/api/fake-items/6').reply(200, function (url, body) {
-      return { body, statusCode: 200 };
-    });
-  });
+  it('should send a put request with json', async () => {
+    let req;
+    const body = { x: 1, y: 2 };
 
-  it('sends a put request', async () => {
-    const state = {
-      configuration: {},
-      data: { name: 'New name' },
-    };
-    const finalState = await execute(
+    testServer
+      .intercept({
+        path: '/api/fake-items/6',
+        method: 'PUT',
+      })
+      .reply(200, r => {
+        req = r;
+        return 'ok';
+      });
+
+    const state = {};
+
+    const { response } = await execute(
       put('https://www.example.com/api/fake-items/6', {
-        body: state.data,
+        body,
       })
     )(state);
 
-    expect(finalState.data.statusCode).to.eql(200);
-    expect(finalState.data.body).to.eql({ name: 'New name' });
+    expect(response.statusCode).to.eql(200);
+    expect(req.body).to.equal(JSON.stringify(body));
   });
 
   it('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .put('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/json',
+        method: 'put',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
-      configuration: {},
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
       things: [
         { name: 'a', age: 42 },
         { name: 'b', age: 83 },
@@ -768,19 +679,17 @@ describe('put', () => {
       each(
         '$.things[*]',
         put(
-          'https://www.repeat.com/api/fake-json',
+          '/api/json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -791,37 +700,45 @@ describe('put', () => {
 });
 
 describe('patch', () => {
-  before(() => {
-    testServer.patch('/api/fake-items/6').reply(200, function (url, body) {
-      return { body, statusCode: 200 };
-    });
-  });
+  it('should send a patch request with json', async () => {
+    let req;
+    const body = { x: 1, y: 2 };
 
-  it('sends a patch request', async () => {
-    const state = {
-      configuration: {},
-      data: { name: 'New name', id: 6 },
-    };
-    const finalState = await execute(
-      patch('https://www.example.com/api/fake-items/6', {
-        body: state.data,
+    testServer
+      .intercept({
+        path: '/api/items/7',
+        method: 'PATCH',
+      })
+      .reply(200, r => {
+        req = r;
+        return 'ok';
+      });
+
+    const state = {};
+
+    const { response } = await execute(
+      patch('https://www.example.com/api/items/7', {
+        body,
       })
     )(state);
 
-    expect(finalState.data.statusCode).to.eql(200);
-    expect(finalState.data.body).to.eql({ id: 6, name: 'New name' });
+    expect(response.statusCode).to.eql(200);
+    expect(req.body).to.equal(JSON.stringify(body));
   });
 
   it('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .patch('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'PATCH',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
-      configuration: {},
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
       things: [
         { name: 'a', age: 42 },
         { name: 'b', age: 83 },
@@ -834,19 +751,17 @@ describe('patch', () => {
       each(
         '$.things[*]',
         patch(
-          'https://www.repeat.com/api/fake-json',
-          {
-            body: state => state.data,
-          },
+          '/api/fake-json',
+          state => ({
+            body: state.data,
+          }),
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -857,35 +772,35 @@ describe('patch', () => {
 });
 
 describe('delete', () => {
-  before(() => {
-    testServer.delete('/api/fake-del-items/6').reply(204, function (url, body) {
-      return { ...body };
-    });
-  });
+  before(() => {});
 
   it('sends a delete request', async () => {
+    testServer
+      .intercept({
+        path: '/api/items/6',
+        method: 'DELETE',
+      })
+      .reply(204);
+
     const state = {
       configuration: {},
       data: {},
     };
-    const finalState = await execute(
-      del('https://www.example.com/api/fake-del-items/6', {
-        options: {
-          successCodes: [204],
-        },
-      })
+    const { response } = await execute(
+      del('https://www.example.com/api/items/6')
     )(state);
 
-    expect(finalState.data).to.eql({});
+    expect(response.statusCode).to.eql(204);
   });
 
   it('can be called inside an each block', async () => {
-    nock('https://www.repeat.com')
-      .delete('/api/fake-json')
-      .times(3)
-      .reply(200, function (url, body) {
-        return body;
-      });
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'DELETE',
+      })
+      .reply(200, ({ body }) => body)
+      .persist();
 
     const state = {
       configuration: {},
@@ -901,19 +816,17 @@ describe('delete', () => {
       each(
         '$.things[*]',
         del(
-          'https://www.repeat.com/api/fake-json',
+          'https://www.example.com/api/fake-json',
           {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.config.data);
+            next.replies.push(next.response.body);
             return next;
           }
         )
       )
     )(state);
-
-    console.log(finalState.replies);
 
     expect(finalState.replies).to.eql([
       '{"name":"a","age":42}',
@@ -923,70 +836,49 @@ describe('delete', () => {
   });
 });
 
-describe('the old request operation', () => {
+describe('tls', () => {
   before(() => {
     testServer
-      .post('/api/oldEndpoint?hi=there')
-      .reply(200, function (url, body) {
-        return body;
-      });
-  });
-
-  it('sends a post request', async () => {
-    const state = {
-      configuration: {},
-      data: { a: 1 },
-    };
-    const finalState = await execute(
-      request({
-        method: 'post',
-        url: 'https://www.example.com/api/oldEndpoint',
-        json: { a: 1 },
-        qs: { hi: 'there' },
+      .intercept({
+        path: '/api/sslCertCheck',
+        method: 'POST',
       })
-    )(state);
-
-    expect(finalState).to.eql({ a: 1 });
-  });
-});
-
-describe('The `agentOptions` param', () => {
-  before(() => {
-    testServer
-      .post('/api/sslCertCheck')
-      .times(3)
-      .reply(200, (url, body) => body);
+      .reply(200, ({ body }) => body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .persist();
   });
 
   it('gets expanded and still works', async () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 1 },
     };
 
     const finalState = await execute(
-      alterState(state => {
+      fn(state => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', {
+      post('https://www.example.com/api/sslCertCheck', state => ({
         body: state.data,
-        agentOptions: state => state.httpsOptions,
-      })
+        agentOptions: state.httpsOptions,
+      }))
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 
   it('lets the user create an https agent with a cert', async () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 1 },
@@ -995,42 +887,45 @@ describe('The `agentOptions` param', () => {
     const finalState = await execute(
       post('https://www.example.com/api/sslCertCheck', {
         body: state => state.data,
-        agentOptions: { ca: state.configuration.privateKey },
+        tls: { ca: state.configuration.privateKey },
       })
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 
   it('lets the user define a cert earlier and use it later', async () => {
     const state = {
       configuration: {
         label: 'my custom SSL cert',
-        prublicKey: 'something@mamadou.org',
+        publicKey: 'something@mamadou.org',
         privateKey: 'abc123',
       },
       data: { a: 2 },
     };
 
     const finalState = await execute(
-      alterState(state => {
+      fn(state => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
       post('https://www.example.com/api/sslCertCheck', {
         body: state => state.data,
-        agentOptions: state => state.httpsOptions,
+        tls: state => state.httpsOptions,
       })
     )(state);
 
     expect(finalState.data).to.eql({ a: 2 });
-    expect(finalState.response.config.httpsAgent.options.ca).to.eql('abc123');
   });
 });
 
 describe('reject unauthorized allows for bad certs', () => {
   before(() => {
-    testServer.get('/api/insecureStuff').reply(200, 'all my secrets!');
+    testServer
+      .intercept({
+        path: '/api/insecureStuff',
+        method: 'GET',
+      })
+      .reply(200, 'all my secrets!');
   });
 
   it('lets the user send requests while ignoring SSL', async () => {
@@ -1046,9 +941,6 @@ describe('reject unauthorized allows for bad certs', () => {
       })
     )(state);
 
-    expect(finalState.data.body).to.eql('all my secrets!');
-    expect(
-      finalState.response.config.httpsAgent.options.rejectUnauthorized
-    ).to.eql(false);
+    expect(finalState.data).to.eql('all my secrets!');
   });
 });
