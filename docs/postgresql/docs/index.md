@@ -2,34 +2,34 @@
 
 <dl>
 <dt>
-    <a href="#describeTable">describeTable(tableName, [options], callback)</a></dt>
+    <a href="#describetable">describeTable(tableName, [options], callback)</a></dt>
 <dt>
-    <a href="#findValue">findValue([filter])</a></dt>
+    <a href="#findvalue">findValue([filter])</a></dt>
 <dt>
     <a href="#insert">insert(table, record, [options], callback)</a></dt>
 <dt>
-    <a href="#insertMany">insertMany(table, records, [options], callback)</a></dt>
+    <a href="#insertmany">insertMany(table, records, [options], callback)</a></dt>
 <dt>
-    <a href="#insertTable">insertTable(tableName, columns, [options], callback)</a></dt>
+    <a href="#inserttable">insertTable(tableName, columns, [options], callback)</a></dt>
 <dt>
-    <a href="#modifyTable">modifyTable(tableName, columns, [options], callback)</a></dt>
+    <a href="#modifytable">modifyTable(tableName, columns, [options], callback)</a></dt>
 <dt>
     <a href="#sql">sql(sqlQuery, [options], callback)</a></dt>
 <dt>
     <a href="#upsert">upsert(table, uuid, record, [options], callback)</a></dt>
 <dt>
-    <a href="#upsertIf">upsertIf(logical, table, uuid, record, [options], callback)</a></dt>
+    <a href="#upsertif">upsertIf(logical, table, uuid, record, [options], callback)</a></dt>
 <dt>
-    <a href="#upsertMany">upsertMany(table, uuid, data, [options], callback)</a></dt>
+    <a href="#upsertmany">upsertMany(table, uuid, data, [options], callback)</a></dt>
 </dl>
+
 
 ## describeTable
 
 describeTable(tableName, [options], callback) ⇒ <code>Operation</code>
+
 List the columns of a table in a database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -49,10 +49,9 @@ describeTable('clinic_visits')
 ## findValue
 
 findValue([filter]) ⇒ <code>value</code>
+
 Fetch a uuid key given a condition
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -77,10 +76,9 @@ findValue({
 ## insert
 
 insert(table, record, [options], callback) ⇒ <code>Operation</code>
+
 Insert a record
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -103,10 +101,9 @@ insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true }
 ## insertMany
 
 insertMany(table, records, [options], callback) ⇒ <code>Operation</code>
+
 Insert many records, using the keys of the first as the column template
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -129,10 +126,9 @@ insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", l
 ## insertTable
 
 insertTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+
 Create a table in database when given an array of columns and a table_name.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -160,10 +156,9 @@ insertTable('table_name', state => state.data.map(
 ## modifyTable
 
 modifyTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+
 Alter an existing table in the database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -191,10 +186,9 @@ modifyTable('table_name', state => state.data.map(
 ## sql
 
 sql(sqlQuery, [options], callback) ⇒ <code>Operation</code>
+
 Execute an SQL statement
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -214,10 +208,9 @@ sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
 ## upsert
 
 upsert(table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+
 Insert or update a record using ON CONFLICT UPDATE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -246,10 +239,9 @@ upsert(
 ## upsertIf
 
 upsertIf(logical, table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -280,10 +272,9 @@ upsertIf(
 ## upsertMany
 
 upsertMany(table, uuid, data, [options], callback) ⇒ <code>Operation</code>
+
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

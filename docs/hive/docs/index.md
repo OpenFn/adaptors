@@ -1,10 +1,9 @@
 ## query
 
 query(qs, options, callback) ⇒ <code>Operation</code>
+
 Execute an SQL statement
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

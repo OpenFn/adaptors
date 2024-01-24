@@ -2,21 +2,21 @@
 
 <dl>
 <dt>
-    <a href="#alterState">alterState(func)</a></dt>
+    <a href="#alterstate">alterState(func)</a></dt>
 <dt>
-    <a href="#arrayToString">arrayToString(arr, separator)</a></dt>
+    <a href="#arraytostring">arrayToString(arr, separator)</a></dt>
 <dt>
-    <a href="#asData">asData(data, state)</a></dt>
+    <a href="#asdata">asData(data, state)</a></dt>
 <dt>
     <a href="#chunk">chunk(array, chunkSize)</a></dt>
 <dt>
     <a href="#combine">combine(operations)</a></dt>
 <dt>
-    <a href="#composeNextState">composeNextState(state, response)</a></dt>
+    <a href="#composenextstate">composeNextState(state, response)</a></dt>
 <dt>
-    <a href="#dataPath">dataPath(path)</a></dt>
+    <a href="#datapath">dataPath(path)</a></dt>
 <dt>
-    <a href="#dataValue">dataValue(path)</a></dt>
+    <a href="#datavalue">dataValue(path)</a></dt>
 <dt>
     <a href="#del">del(requestParams)</a></dt>
 <dt>
@@ -24,11 +24,9 @@
 <dt>
     <a href="#each">each(dataSource, operation)</a></dt>
 <dt>
-    <a href="#expandReferences">expandReferences(value, [skipFilter])</a></dt>
+    <a href="#expandreferences">expandReferences(value, [skipFilter])</a></dt>
 <dt>
-    <a href="#expandReferences">expandReferences()</a></dt>
-<dt>
-    <a href="#expandRequestReferences">expandRequestReferences(value)</a></dt>
+    <a href="#expandrequestreferences">expandRequestReferences(value)</a></dt>
 <dt>
     <a href="#field">field(key, value)</a></dt>
 <dt>
@@ -40,15 +38,15 @@
 <dt>
     <a href="#head">head(requestParams)</a></dt>
 <dt>
-    <a href="#humanProper">humanProper(str)</a></dt>
+    <a href="#humanproper">humanProper(str)</a></dt>
 <dt>
     <a href="#index">index()</a></dt>
 <dt>
     <a href="#join">join(targetPath, sourcePath, targetKey)</a></dt>
 <dt>
-    <a href="#jsonValue">jsonValue(obj, path)</a></dt>
+    <a href="#jsonvalue">jsonValue(obj, path)</a></dt>
 <dt>
-    <a href="#lastReferenceValue">lastReferenceValue(path)</a></dt>
+    <a href="#lastreferencevalue">lastReferenceValue(path)</a></dt>
 <dt>
     <a href="#map">map(path, operation, state)</a></dt>
 <dt>
@@ -56,7 +54,7 @@
 <dt>
     <a href="#options">options(requestParams)</a></dt>
 <dt>
-    <a href="#parseCsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
+    <a href="#parsecsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
 <dt>
     <a href="#patch">patch(requestParams)</a></dt>
 <dt>
@@ -64,29 +62,32 @@
 <dt>
     <a href="#put">put(requestParams)</a></dt>
 <dt>
-    <a href="#referencePath">referencePath(path)</a></dt>
+    <a href="#referencepath">referencePath(path)</a></dt>
 <dt>
-    <a href="#scrubEmojis">scrubEmojis(text, replacementChars)</a></dt>
+    <a href="#request">request(method, fullUrlOrPath, [options])</a></dt>
+<dt>
+    <a href="#scrubemojis">scrubEmojis(text, replacementChars)</a></dt>
 <dt>
     <a href="#source">source(path)</a></dt>
 <dt>
-    <a href="#sourceValue">sourceValue(path)</a></dt>
+    <a href="#sourcevalue">sourceValue(path)</a></dt>
 <dt>
-    <a href="#splitKeys">splitKeys(obj, keys)</a></dt>
+    <a href="#splitkeys">splitKeys(obj, keys)</a></dt>
 <dt>
-    <a href="#toArray">toArray(arg)</a></dt>
+    <a href="#toarray">toArray(arg)</a></dt>
 <dt>
     <a href="#validate">validate(schema, data)</a></dt>
 <dt>
-    <a href="#withAgent">withAgent(params)</a></dt>
+    <a href="#withagent">withAgent(params)</a></dt>
 </dl>
+
 
 ## alterState
 
 alterState(func) ⇒ <code>Operation</code>
+
 alias for "fn()"
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -98,10 +99,9 @@ alias for "fn()"
 ## arrayToString
 
 arrayToString(arr, separator) ⇒ <code>string</code>
+
 Turns an array into a string, separated by X.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -120,14 +120,13 @@ field("destination_string__c", function(state) {
 ## asData
 
 asData(data, state) ⇒ <code>array</code>
+
 Simple switcher allowing other expressions to use either a JSONPath or
 object literals as a data source.
 - JSONPath referencing a point in `state`
 - Object Literal of the data itself.
 - Function to be called with state.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -144,10 +143,9 @@ asData('$.key'| key | callback)
 ## chunk
 
 chunk(array, chunkSize) ⇒ <code>Object</code>
+
 Chunks an array into an array of arrays, each with no more than a certain size.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -164,10 +162,9 @@ chunk([1,2,3,4,5], 2)
 ## combine
 
 combine(operations) ⇒ <code>Operation</code>
+
 Combines two operations into one
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -186,10 +183,9 @@ combine(
 ## composeNextState
 
 composeNextState(state, response) ⇒ <code>State</code>
+
 Prepares next state
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -206,10 +202,9 @@ composeNextState(state, response)
 ## dataPath
 
 dataPath(path) ⇒ <code>string</code>
+
 Ensures a path points at the data.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -225,12 +220,11 @@ dataPath('key')
 ## dataValue
 
 dataValue(path) ⇒ <code>Operation</code>
+
 Picks out a single value from the source data object—usually `state.data`.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -246,11 +240,10 @@ dataValue('key')
 ## del
 
 del(requestParams) ⇒ <code>Operation</code>
+
 Make a DELETE request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -268,6 +261,7 @@ delete({
 ## each
 
 each(dataSource, operation) ⇒ <code>Operation</code>
+
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
@@ -277,8 +271,6 @@ of the JSONPath provided.
 It also ensures the results of an operation make their way back into
 the state's references.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -299,6 +291,7 @@ each("$.[*]",
 ## each
 
 each(dataSource, operation) ⇒ <code>Operation</code>
+
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
@@ -308,8 +301,6 @@ of the JSONPath provided.
 It also ensures the results of an operation make their way back into
 the state's references.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -329,10 +320,9 @@ each("$.[*]",
 ## expandReferences
 
 expandReferences(value, [skipFilter]) ⇒ <code>Operation</code>
+
 Recursively resolves objects that have resolvable values (functions).
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -342,28 +332,13 @@ Recursively resolves objects that have resolvable values (functions).
 
 * * *
 
-## expandReferences
-
-expandReferences()
-General-purpose utility functions
-
-These are designed more for use in adaptor code than job code
-(but we could choose to export util from common)
-
-None of these functions are operation factories
-
-**Kind**: global function  
-
-* * *
-
 ## expandRequestReferences
 
 expandRequestReferences(value) ⇒ <code>Operation</code>
+
 Recursively resolves objects that have resolvable values (functions), but
 omits HTTP request specific modules like `FormData`.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -375,10 +350,9 @@ omits HTTP request specific modules like `FormData`.
 ## field
 
 field(key, value) ⇒ <code>Field</code>
+
 Returns a key, value pair in an array.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -395,10 +369,9 @@ field('destination_field_name__c', 'value')
 ## fields
 
 fields(fields) ⇒ <code>Object</code>
+
 Zips key value pairs into an object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -414,10 +387,9 @@ fields(list_of_fields)
 ## fn
 
 fn(func) ⇒ <code>Operation</code>
+
 Creates a custom step (or operation) for more flexible job writing.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -436,11 +408,10 @@ fn(state => {
 ## get
 
 get(requestParams) ⇒ <code>Operation</code>
+
 Make a GET request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -459,11 +430,10 @@ Make a GET request
 ## head
 
 head(requestParams) ⇒ <code>Operation</code>
+
 Make a HEAD request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -481,10 +451,9 @@ head({
 ## humanProper
 
 humanProper(str) ⇒ <code>string</code>
+
 Substitutes underscores for spaces and proper-cases a string
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -500,11 +469,10 @@ field("destination_string__c", humanProper(state.data.path_to_string))
 ## index
 
 index() ⇒ <code>DataSource</code>
+
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
 
-**Kind**: global function  
-**Access**: public  
 **Example**  
 ```js
 index()
@@ -515,10 +483,9 @@ index()
 ## join
 
 join(targetPath, sourcePath, targetKey) ⇒ <code>Operation</code>
+
 Adds data from a target object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -536,12 +503,11 @@ join('$.key','$.data','newKey')
 ## jsonValue
 
 jsonValue(obj, path) ⇒ <code>Operation</code>
+
 Picks out a single value from a JSON object.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -558,10 +524,9 @@ jsonValue({ a:1 }, 'a')
 ## lastReferenceValue
 
 lastReferenceValue(path) ⇒ <code>Operation</code>
+
 Picks out the last reference value from source data.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -577,14 +542,13 @@ lastReferenceValue('key')
 ## map
 
 map(path, operation, state) ⇒ <code>State</code>
+
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
 an operation.
 The operation will receive a slice of the data based of each item
 of the JSONPath provided.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -606,10 +570,9 @@ map("$.[*]",
 ## merge
 
 merge(dataSource, fields) ⇒ <code>DataSource</code>
+
 Merges fields into each item in an array.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -631,11 +594,10 @@ merge(
 ## options
 
 options(requestParams) ⇒ <code>Operation</code>
+
 Make a OPTIONS request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -653,6 +615,7 @@ options({
 ## parseCsv
 
 parseCsv(csvData, [parsingOptions], [callback]) ⇒ <code>Operation</code>
+
 Takes a CSV file string or stream and parsing options as input, and returns a promise that
 resolves to the parsed CSV data as an array of objects.
 Options for `parsingOptions` include:
@@ -667,9 +630,7 @@ Options for `parsingOptions` include:
 - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
 - `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -683,11 +644,10 @@ Options for `parsingOptions` include:
 ## patch
 
 patch(requestParams) ⇒ <code>Operation</code>
+
 Make a PATCH request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -706,11 +666,10 @@ patch({
 ## post
 
 post(requestParams) ⇒ <code>Operation</code>
+
 Make a POST request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -740,11 +699,10 @@ alterState((state) => {
 ## put
 
 put(requestParams) ⇒ <code>Operation</code>
+
 Make a PUT request
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -763,10 +721,9 @@ put({
 ## referencePath
 
 referencePath(path) ⇒ <code>string</code>
+
 Ensures a path points at references.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -779,13 +736,38 @@ referencePath('key')
 
 * * *
 
+## request
+
+request(method, fullUrlOrPath, [options]) ⇒
+
+`request` is a helper function that sends HTTP requests and returns the response
+body, headers, and status code.
+Use the error map to provide custom error messages or get hold of the response in case of errors.
+
+**Returns**: an object with the following properties:
+- method: the request method
+- url: the request url
+- code: the status code of the response
+- headers: the headers of the response
+- body: the body of the response
+- message: the status text of the response
+- duration: the response time  
+
+| Param | Description |
+| --- | --- |
+| method | The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.). |
+| fullUrlOrPath | The full or partial URL for the request. |
+| [options] | The `options` parameter is an object that contains additional configuration options for the request. |
+
+
+* * *
+
 ## scrubEmojis
 
 scrubEmojis(text, replacementChars) ⇒ <code>string</code>
+
 Replaces emojis in a string.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -802,12 +784,11 @@ scrubEmojis('Dove🕊️⭐ 29')
 ## source
 
 source(path) ⇒ <code>Array.&lt;(String\|Object)&gt;</code>
+
 Picks out a value from source data.
 Will return whatever JSONPath returns, which will always be an array.
 If you need a single value use `sourceValue` instead.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -823,12 +804,11 @@ source('$.key')
 ## sourceValue
 
 sourceValue(path) ⇒ <code>Operation</code>
+
 Picks out a single value from source data.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -844,13 +824,12 @@ sourceValue('$.key')
 ## splitKeys
 
 splitKeys(obj, keys) ⇒ <code>Array.&lt;Object&gt;</code>
+
 Splits an object into two objects based on a list of keys.
 The first object contains the keys that are not in the list,
 and the second contains the keys that are.
 
-**Kind**: global function  
 **Returns**: <code>Array.&lt;Object&gt;</code> - - Tuple of objects, first object contains keys not in list, second contains keys that are.  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -863,11 +842,10 @@ and the second contains the keys that are.
 ## toArray
 
 toArray(arg) ⇒ <code>array</code>
+
 Ensures primitive data types are wrapped in an array.
 Does not affect array objects.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -885,12 +863,12 @@ each(function(state) {
 ## validate
 
 validate(schema, data) ⇒ <code>Operation</code>
+
 Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
 Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
 Data can be passed directly or loaded as a JSON path from state.
 By default, schema is loaded from `state.schema` and data from `state.data`.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -915,9 +893,9 @@ each("records[*]", validate("https://www.example.com/schema/record"))
 ## withAgent
 
 withAgent(params) ⇒ <code>Operation</code>
+
 Creates an https agent for axios from the agentOptions key passed in params.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -8,19 +8,20 @@
 <dt>
     <a href="#execute">execute(operations)</a></dt>
 <dt>
-    <a href="#findDocuments">findDocuments(params)</a></dt>
+    <a href="#finddocuments">findDocuments(params)</a></dt>
 <dt>
-    <a href="#insertDocuments">insertDocuments(params)</a></dt>
+    <a href="#insertdocuments">insertDocuments(params)</a></dt>
 <dt>
-    <a href="#updateDocument">updateDocument(params)</a></dt>
+    <a href="#updatedocument">updateDocument(params)</a></dt>
 </dl>
+
 
 ## connect
 
 connect(state) ⇒ <code>State</code>
+
 Connects to a mongoDb instance
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -36,9 +37,9 @@ connect(state)
 ## disconnect
 
 disconnect(state) ⇒ <code>State</code>
+
 Removes connection from the state.
 
-**Kind**: global function  
 
 | Param | Type |
 | --- | --- |
@@ -54,10 +55,10 @@ disconnect(state)
 ## execute
 
 execute(operations) ⇒ <code>Operation</code>
+
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -76,9 +77,9 @@ execute(
 ## findDocuments
 
 findDocuments(params) ⇒ <code>State</code>
+
 Find documents in a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -98,9 +99,9 @@ findDocuments({
 ## insertDocuments
 
 insertDocuments(params) ⇒ <code>State</code>
+
 Inserts documents into a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -120,9 +121,9 @@ insertDocuments({
 ## updateDocument
 
 updateDocument(params) ⇒ <code>State</code>
+
 Updates document (optionally upserting) into a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -4,16 +4,16 @@
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
-    <a href="#getMappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
+    <a href="#getmappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
 </dl>
+
 
 ## get
 
 get(path, query, callback) ⇒ <code>Operation</code>
+
 Get a resource in OCL
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -45,10 +45,9 @@ get(
 ## getMappings
 
 getMappings(ownerId, repositoryId, [options], callback) ⇒ <code>Operation</code>
+
 Get a source repository in OCL
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

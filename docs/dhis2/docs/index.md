@@ -4,7 +4,7 @@
 <dt>
     <a href="#attr">attr(attribute, value)</a></dt>
 <dt>
-    <a href="#configMigrationHelper">configMigrationHelper(state)</a></dt>
+    <a href="#configmigrationhelper">configMigrationHelper(state)</a></dt>
 <dt>
     <a href="#create">create(resourceType, data, [options], [callback])</a></dt>
 <dt>
@@ -14,7 +14,7 @@
 <dt>
     <a href="#dv">dv(dataElement, value)</a></dt>
 <dt>
-    <a href="#findAttributeValue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a></dt>
+    <a href="#findattributevalue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a></dt>
 <dt>
     <a href="#get">get(resourceType, query, [options], [callback])</a></dt>
 <dt>
@@ -22,20 +22,20 @@
 <dt>
     <a href="#request">request(configuration, axiosRequest)</a></dt>
 <dt>
-    <a href="#selectId">selectId(resourceType)</a></dt>
+    <a href="#selectid">selectId(resourceType)</a></dt>
 <dt>
     <a href="#update">update(resourceType, path, data, [options], [callback])</a></dt>
 <dt>
     <a href="#upsert">upsert(resourceType, query, data, [options], [callback])</a></dt>
 </dl>
 
+
 ## attr
 
 attr(attribute, value) ⇒ <code>object</code>
+
 Converts an attribute ID and value into a DSHI2 attribute object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -52,10 +52,10 @@ attr('w75KJ2mc4zz', 'Elias')
 ## configMigrationHelper
 
 configMigrationHelper(state) ⇒ <code>object</code>
+
 Migrates `apiUrl` to `hostUrl` if `hostUrl` is `blank`.
 For `OpenFn.org` users with the `old-style configuration`.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -71,11 +71,9 @@ configMigrationHelper(state)
 ## create
 
 create(resourceType, data, [options], [callback]) ⇒ <code>Operation</code>
+
 Create a record
 
-**Kind**: global function  
-**Access**: public  
-**Magic**: resourceType $.children.resourceTypes[*]  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -202,10 +200,9 @@ create('enrollments', {
 ## destroy
 
 destroy(resourceType, path, [data], [options], [callback]) ⇒ <code>Operation</code>
+
 Delete a record. A generic helper function to delete an object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -225,10 +222,9 @@ destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
 ## discover
 
 discover(httpMethod, endpoint) ⇒ <code>Operation</code>
+
 Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -245,10 +241,9 @@ discover('post', '/trackedEntityInstances')
 ## dv
 
 dv(dataElement, value) ⇒ <code>object</code>
+
 Converts a dataElement and value into a DSHI2 dataValue object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -265,10 +260,9 @@ dv('f7n9E0hX8qk', 12)
 ## findAttributeValue
 
 findAttributeValue(trackedEntityInstance, attributeDisplayName) ⇒ <code>string</code>
+
 Gets an attribute value by its case-insensitive display name
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -285,12 +279,11 @@ findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
 ## get
 
 get(resourceType, query, [options], [callback]) ⇒ <code>Operation</code>
+
 Get data. Generic helper method for getting data of any kind from DHIS2.
 - This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - state  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -325,12 +318,11 @@ get('trackedEntityInstances', {
 ## patch
 
 patch(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
+
 Patch a record. A generic helper function to send partial updates on one or more object properties.
 - You are not required to send the full body of object properties.
 - This is useful for cases where you don't want or need to update all properties on a object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -350,12 +342,12 @@ patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
 ## request
 
 request(configuration, axiosRequest) ⇒ <code>Promise</code>
+
 The request client takes configuration from state and an axios request object
 then (1) logs the method and URL, (2) applies standard headers and auth
 before spreading the rest of the axios configuration, and (3) executes an
 axios request.
 
-**Kind**: global function  
 **Returns**: <code>Promise</code> - a promise that will resolve to either a response object or an error object.  
 
 | Param | Type | Description |
@@ -369,9 +361,9 @@ axios request.
 ## selectId
 
 selectId(resourceType) ⇒ <code>string</code>
+
 Determines the attribute name for a DHIS2 system ID given a resource type.
 
-**Kind**: global function  
 
 | Param | Type |
 | --- | --- |
@@ -383,11 +375,10 @@ Determines the attribute name for a DHIS2 system ID given a resource type.
 ## update
 
 update(resourceType, path, data, [options], [callback]) ⇒ <code>Operation</code>
+
 Update data. A generic helper function to update a resource object of any type.
 Updating an object requires to send `all required fields` or the `full body`
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -546,14 +537,13 @@ update('enrollments', 'CmsHzercTBa' {
 ## upsert
 
 upsert(resourceType, query, data, [options], [callback]) ⇒ <code>Operation</code>
+
 Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
 
-**Kind**: global function  
 **Throws**:
 
 - <code>RangeError</code> - Throws range error
 
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

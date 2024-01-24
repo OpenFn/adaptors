@@ -4,20 +4,20 @@
 <dt>
     <a href="#create">create(path, params, callback)</a></dt>
 <dt>
-    <a href="#createTransactionBundle">createTransactionBundle(params, callback)</a></dt>
+    <a href="#createtransactionbundle">createTransactionBundle(params, callback)</a></dt>
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
-    <a href="#getClaim">getClaim(claimId, query, callback)</a></dt>
+    <a href="#getclaim">getClaim(claimId, query, callback)</a></dt>
 </dl>
+
 
 ## create
 
 create(path, params, callback) ⇒ <code>Operation</code>
+
 Creates a resource in a destination system using a POST request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -35,10 +35,9 @@ create("Bundle", {...state.data: type: "collection"})
 ## createTransactionBundle
 
 createTransactionBundle(params, callback) ⇒ <code>Operation</code>
+
 Creates a transactionBundle for HAPI FHIR
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -72,10 +71,9 @@ createTransactionBundle({
 ## get
 
 get(path, query, callback) ⇒ <code>Operation</code>
+
 Get a resource in a FHIR system
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -97,10 +95,9 @@ get('Patient');
 ## getClaim
 
 getClaim(claimId, query, callback) ⇒ <code>Operation</code>
+
 Get Claim in a FHIR system
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -118,10 +115,10 @@ getClaim({ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
 ## request
 
 request ⇒
+
 This is an asynchronous function that sends a request to a specified URL with optional parameters
 and headers, and returns the response data in JSON format.
 
-**Kind**: global constant  
 **Returns**: The `request` function is returning the parsed JSON data from the response of the HTTP
 request made to the specified `url` with the given `params` and `method`. If there is an error in
 the response, the function will throw an error.  

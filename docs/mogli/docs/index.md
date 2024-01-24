@@ -2,19 +2,20 @@
 
 <dl>
 <dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
+    <a href="#cleanupstate">cleanupState(state)</a></dt>
 <dt>
     <a href="#lookup">lookup(relationshipName, externalID, path)</a></dt>
 <dt>
     <a href="#relationship">relationship(relationshipName, externalID, dataSource)</a></dt>
 </dl>
 
+
 ## cleanupState
 
 cleanupState(state) ⇒ <code>State</code>
+
 Removes unserializable keys from the state.
 
-**Kind**: global function  
 
 | Param | Type |
 | --- | --- |
@@ -26,9 +27,9 @@ Removes unserializable keys from the state.
 ## lookup
 
 lookup(relationshipName, externalID, path) ⇒ <code>object</code>
+
 Adds a lookup or 'dome insert' to a record.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -46,9 +47,9 @@ lookup("relationship_name__r", "externalID on related object", "$.path")
 ## relationship
 
 relationship(relationshipName, externalID, dataSource) ⇒ <code>object</code>
+
 Adds a lookup or 'dome insert' to a record.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

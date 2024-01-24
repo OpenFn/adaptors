@@ -2,19 +2,20 @@
 
 <dl>
 <dt>
-    <a href="#getDeploymentInfo">getDeploymentInfo(params, callback)</a></dt>
+    <a href="#getdeploymentinfo">getDeploymentInfo(params, callback)</a></dt>
 <dt>
-    <a href="#getForms">getForms(params, callback)</a></dt>
+    <a href="#getforms">getForms(params, callback)</a></dt>
 <dt>
-    <a href="#getSubmissions">getSubmissions(params, callback)</a></dt>
+    <a href="#getsubmissions">getSubmissions(params, callback)</a></dt>
 </dl>
+
 
 ## getDeploymentInfo
 
 getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
+
 Get deployment information for a specific form
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -34,10 +35,9 @@ getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
 ## getForms
 
 getForms(params, callback) ⇒ <code>Operation</code>
+
 Make a request to get the list of forms
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -57,9 +57,9 @@ getForms({}, state => {
 ## getSubmissions
 
 getSubmissions(params, callback) ⇒ <code>Operation</code>
+
 Get submissions for a specific form
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

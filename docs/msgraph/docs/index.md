@@ -6,24 +6,24 @@
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
-    <a href="#getDrive">getDrive(specifier, name, [callback])</a></dt>
+    <a href="#getdrive">getDrive(specifier, name, [callback])</a></dt>
 <dt>
-    <a href="#getFile">getFile(pathOrId, options, [callback])</a></dt>
+    <a href="#getfile">getFile(pathOrId, options, [callback])</a></dt>
 <dt>
-    <a href="#getFolder">getFolder(pathOrId, options, [callback])</a></dt>
+    <a href="#getfolder">getFolder(pathOrId, options, [callback])</a></dt>
 <dt>
-    <a href="#sheetToBuffer">sheetToBuffer(rows, options)</a></dt>
+    <a href="#sheettobuffer">sheetToBuffer(rows, options)</a></dt>
 <dt>
-    <a href="#uploadFile">uploadFile(resource, data, callback)</a></dt>
+    <a href="#uploadfile">uploadFile(resource, data, callback)</a></dt>
 </dl>
+
 
 ## create
 
 create(resource, data, callback) ⇒ <code>Operation</code>
+
 Create some resource in msgraph
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -41,10 +41,9 @@ create("applications", {"displayName": "My App"})
 ## get
 
 get(path, query, callback) ⇒ <code>Operation</code>
+
 Make a GET request to msgraph resource
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -62,13 +61,12 @@ get('sites/root/lists')
 ## getDrive
 
 getDrive(specifier, name, [callback]) ⇒ <code>Operation</code>
+
 Get a Drive or SharePoint document library. The drive metadata will be written
 to state.drives, where it can be used by other adaptor functions.
 Pass { id } to get a drive by id or { id, owner } to get default drive for
 some parent resource, like a group
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -90,10 +88,9 @@ getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
 ## getFile
 
 getFile(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+
 Get file metadata or file content.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -115,10 +112,9 @@ getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
 ## getFolder
 
 getFolder(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+
 Get the contents or metadata of a folder.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -140,10 +136,10 @@ getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
 ## request
 
 request ⇒
+
 This is an asynchronous function that sends a request to a specified URL with optional parameters
 and headers, and returns the response data in JSON format.
 
-**Kind**: global constant  
 **Returns**: The `request` function is returning the parsed JSON data from the response of the HTTP
 request made to the specified `url` with the given `params` and `method`. If there is an error in
 the response, the function will throw an error.  
@@ -159,13 +155,12 @@ the response, the function will throw an error.
 ## sheetToBuffer
 
 sheetToBuffer(rows, options) ⇒
+
 The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
 and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
 buffer.
 
-**Kind**: global function  
 **Returns**: a buffer containing the Excel file in `state.buffer`.  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -187,10 +182,9 @@ sheetToBuffer('$.data[*]', {
 ## uploadFile
 
 uploadFile(resource, data, callback) ⇒ <code>Operation</code>
+
 Upload a file to a drive
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -1,10 +1,9 @@
 ## load
 
 load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
+
 Load files to BigQuery
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

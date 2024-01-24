@@ -1,9 +1,9 @@
 ## encounter
 
 encounter(encounterData) ⇒ <code>Operation</code>
+
 Create an encounter
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

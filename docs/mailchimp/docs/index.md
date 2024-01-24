@@ -2,43 +2,44 @@
 
 <dl>
 <dt>
-    <a href="#addMember">addMember(params, [callback])</a></dt>
+    <a href="#addmember">addMember(params, [callback])</a></dt>
 <dt>
-    <a href="#archiveMember">archiveMember(params, [callback])</a></dt>
+    <a href="#archivemember">archiveMember(params, [callback])</a></dt>
 <dt>
-    <a href="#deleteMember">deleteMember(params, [callback])</a></dt>
+    <a href="#deletemember">deleteMember(params, [callback])</a></dt>
 <dt>
     <a href="#get">get(path, query, [callback])</a></dt>
 <dt>
-    <a href="#listAudienceInfo">listAudienceInfo(query, [callback])</a></dt>
+    <a href="#listaudienceinfo">listAudienceInfo(query, [callback])</a></dt>
 <dt>
-    <a href="#listAudiences">listAudiences(query, [callback])</a></dt>
+    <a href="#listaudiences">listAudiences(query, [callback])</a></dt>
 <dt>
-    <a href="#listBatches">listBatches(params, [callback])</a></dt>
+    <a href="#listbatches">listBatches(params, [callback])</a></dt>
 <dt>
-    <a href="#listMembers">listMembers(params, [callback])</a></dt>
+    <a href="#listmembers">listMembers(params, [callback])</a></dt>
 <dt>
     <a href="#post">post(path, body, query, [callback])</a></dt>
 <dt>
     <a href="#request">request(method, path, options, [callback])</a></dt>
 <dt>
-    <a href="#startBatch">startBatch(params, [callback])</a></dt>
+    <a href="#startbatch">startBatch(params, [callback])</a></dt>
 <dt>
-    <a href="#tagMembers">tagMembers(params, [callback])</a></dt>
+    <a href="#tagmembers">tagMembers(params, [callback])</a></dt>
 <dt>
-    <a href="#updateMember">updateMember(params, [callback])</a></dt>
+    <a href="#updatemember">updateMember(params, [callback])</a></dt>
 <dt>
-    <a href="#updateMemberTags">updateMemberTags(params, [callback])</a></dt>
+    <a href="#updatemembertags">updateMemberTags(params, [callback])</a></dt>
 <dt>
-    <a href="#upsertMembers">upsertMembers(params, [callback])</a></dt>
+    <a href="#upsertmembers">upsertMembers(params, [callback])</a></dt>
 </dl>
+
 
 ## addMember
 
 addMember(params, [callback]) ⇒ <code>Operation</code>
+
 addMember to a list
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -51,9 +52,9 @@ addMember to a list
 ## archiveMember
 
 archiveMember(params, [callback]) ⇒ <code>Operation</code>
+
 archiveMember in a list
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -66,9 +67,9 @@ archiveMember in a list
 ## deleteMember
 
 deleteMember(params, [callback]) ⇒ <code>Operation</code>
+
 Permanently delete a member from a list
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -81,9 +82,9 @@ Permanently delete a member from a list
 ## get
 
 get(path, query, [callback]) ⇒ <code>Operation</code>
+
 The get function is used to make a GET request to the Mailchimp API.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -101,10 +102,10 @@ get('/account-exports');
 ## listAudienceInfo
 
 listAudienceInfo(query, [callback]) ⇒ <code>Operation</code>
+
 Get information about a specific list in your Mailchimp account.
 Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -117,9 +118,9 @@ Results include list members who have signed up but haven't confirmed their subs
 ## listAudiences
 
 listAudiences(query, [callback]) ⇒ <code>Operation</code>
+
 Get information about all lists in the account.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -132,9 +133,9 @@ Get information about all lists in the account.
 ## listBatches
 
 listBatches(params, [callback]) ⇒ <code>Operation</code>
+
 listBatches
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -147,9 +148,9 @@ listBatches
 ## listMembers
 
 listMembers(params, [callback]) ⇒ <code>Operation</code>
+
 listMembers
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -162,9 +163,9 @@ listMembers
 ## post
 
 post(path, body, query, [callback]) ⇒ <code>Operation</code>
+
 The post function is used to make a POST request to the Mailchimp API.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -183,9 +184,9 @@ post('/accounts-export', {include_stages:[]});
 ## request
 
 request(method, path, options, [callback]) ⇒ <code>Operation</code>
+
 Make an HTTP request to Mailchimp API
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -208,9 +209,9 @@ request('POST','/accounts-export', {include_stages:[]});
 ## startBatch
 
 startBatch(params, [callback]) ⇒ <code>Operation</code>
+
 Start a batch with a list of operations.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -227,9 +228,9 @@ startBatch(params)
 ## tagMembers
 
 tagMembers(params, [callback]) ⇒ <code>Operation</code>
+
 Tag members with a particular tag
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -260,9 +261,9 @@ tagMembers((state) => ({
 ## updateMember
 
 updateMember(params, [callback]) ⇒ <code>Operation</code>
+
 updateMember
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -275,9 +276,9 @@ updateMember
 ## updateMemberTags
 
 updateMemberTags(params, [callback]) ⇒ <code>Operation</code>
+
 updateMemberTags
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -290,9 +291,9 @@ updateMemberTags
 ## upsertMembers
 
 upsertMembers(params, [callback]) ⇒ <code>Operation</code>
+
 Add or update a list members
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

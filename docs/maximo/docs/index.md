@@ -9,12 +9,13 @@
     <a href="#update75">update75(params)</a></dt>
 </dl>
 
+
 ## fetch
 
 fetch(params) ⇒ <code>Operation</code>
+
 Make a GET request and POST it somewhere else
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -37,9 +38,9 @@ fetch({
 ## update
 
 update(params) ⇒ <code>Operation</code>
+
 Make an update in Maximo 7.6 and beyond
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -57,9 +58,9 @@ execute(
 ## update75
 
 update75(params) ⇒ <code>Operation</code>
+
 Make an upadte in Maximo 7.5
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

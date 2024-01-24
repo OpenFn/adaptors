@@ -2,18 +2,18 @@
 
 <dl>
 <dt>
-    <a href="#fetchSurveyData">fetchSurveyData(params)</a></dt>
+    <a href="#fetchsurveydata">fetchSurveyData(params)</a></dt>
 <dt>
-    <a href="#submitRecord">submitRecord(jsonData)</a></dt>
+    <a href="#submitrecord">submitRecord(jsonData)</a></dt>
 </dl>
+
 
 ## fetchSurveyData
 
 fetchSurveyData(params) ⇒ <code>Operation</code>
+
 Make a POST request to fetch Magpi data and POST it somewhere else
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -33,10 +33,9 @@ fetchSurveyData({
 ## submitRecord
 
 submitRecord(jsonData) ⇒ <code>Operation</code>
+
 Submit a record for a form/survey which already exists in a Magpi user account
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

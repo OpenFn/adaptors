@@ -1,9 +1,9 @@
 ## send
 
 send(sendData) ⇒ <code>Operation</code>
+
 Send a message
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

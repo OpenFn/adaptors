@@ -1,9 +1,9 @@
 ## submitSite
 
 submitSite(eventData) ⇒ <code>Operation</code>
+
 Create an event
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

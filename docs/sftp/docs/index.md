@@ -2,24 +2,24 @@
 
 <dl>
 <dt>
-    <a href="#getCSV">getCSV(filePath, [parsingOptions])</a></dt>
+    <a href="#getcsv">getCSV(filePath, [parsingOptions])</a></dt>
 <dt>
-    <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
+    <a href="#getjson">getJSON(filePath, encoding)</a></dt>
 <dt>
     <a href="#list">list(dirPath, filter, [callback])</a></dt>
 <dt>
-    <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
+    <a href="#normalizecsvarray">normalizeCSVarray(options, callback)</a></dt>
 <dt>
-    <a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
+    <a href="#putcsv">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
 </dl>
+
 
 ## getCSV
 
 getCSV(filePath, [parsingOptions]) ⇒ <code>Operation</code>
+
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -39,10 +39,9 @@ getCSV(
 ## getJSON
 
 getJSON(filePath, encoding) ⇒ <code>Operation</code>
+
 Fetch a json file from an FTP server
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -62,10 +61,9 @@ getJSON(
 ## list
 
 list(dirPath, filter, [callback]) ⇒ <code>Operation</code>
+
 List files present in a directory
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -102,10 +100,9 @@ list(
 ## normalizeCSVarray
 
 normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
+
 Convert JSON array of strings into a normalized object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -122,10 +119,9 @@ normalizeCSVarray({ delimiter: ';', noheader: true });
 ## putCSV
 
 putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
+
 Convert JSON to CSV and upload to an FTP server
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

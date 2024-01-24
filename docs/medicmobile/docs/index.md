@@ -2,20 +2,20 @@
 
 <dl>
 <dt>
-    <a href="#changesApi">changesApi(params, callback)</a></dt>
+    <a href="#changesapi">changesApi(params, callback)</a></dt>
 <dt>
-    <a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
+    <a href="#fetchsubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
 <dt>
-    <a href="#pickFormData">pickFormData(formId)</a></dt>
+    <a href="#pickformdata">pickFormData(formId)</a></dt>
 </dl>
+
 
 ## changesApi
 
 changesApi(params, callback) ⇒ <code>Operation</code>
+
 Access the CouchDB Changes API
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -32,10 +32,9 @@ changesApi(params, callback)
 ## fetchSubmissions
 
 fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
+
 Access form submissions and post them as JSON.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -57,10 +56,9 @@ fetchSubmissions(
 ## pickFormData
 
 pickFormData(formId) ⇒ <code>Operation</code>
+
 Select submissions for a specific form
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -6,7 +6,7 @@
 <dt>
     <a href="#get">get(path, params, callback)</a></dt>
 <dt>
-    <a href="#parseXML">parseXML(body, script)</a></dt>
+    <a href="#parsexml">parseXML(body, script)</a></dt>
 <dt>
     <a href="#patch">patch(path, params, callback)</a></dt>
 <dt>
@@ -14,21 +14,21 @@
 <dt>
     <a href="#put">put(path, params, callback)</a></dt>
 <dt>
-    <a href="#request">request(params)</a></dt>
+    <a href="#request">request(method, path, params, callback)</a></dt>
 </dl>
+
 
 ## del
 
 del(path, params, callback) ⇒ <code>Operation</code>
+
 Make a DELETE request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
@@ -43,24 +43,22 @@ del(`/myendpoint/${state => state.data.id}`, {
 ## get
 
 get(path, params, callback) ⇒ <code>Operation</code>
+
 Make a GET request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Query, Headers and Authentication parameters |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
 get('/myEndpoint', {
-   query: {foo: 'bar', a: 1},
-   headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
- })
+  query: {foo: 'bar', a: 1},
+  headers: {'content-type': 'application/json'},
+})
 ```
 
 * * *
@@ -68,10 +66,9 @@ get('/myEndpoint', {
 ## parseXML
 
 parseXML(body, script) ⇒ <code>Operation</code>
+
 Parse XML with the Cheerio parser
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -90,15 +87,14 @@ parseXML(body, function($){
 ## patch
 
 patch(path, params, callback) ⇒ <code>Operation</code>
+
 Make a PATCH request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
@@ -106,7 +102,6 @@ Make a PATCH request
 patch('/myEndpoint', {
    body: {'foo': 'bar'},
    headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
  })
 ```
 
@@ -115,15 +110,14 @@ patch('/myEndpoint', {
 ## post
 
 post(path, params, callback) ⇒ <code>operation</code>
+
 Make a POST request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Authentication parameters |
+| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
@@ -131,7 +125,6 @@ Make a POST request
 post('/myEndpoint', {
    body: {'foo': 'bar'},
    headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
  })
 ```
 
@@ -140,15 +133,14 @@ post('/myEndpoint', {
 ## put
 
 put(path, params, callback) ⇒ <code>Operation</code>
+
 Make a PUT request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
+| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
@@ -156,7 +148,6 @@ Make a PUT request
 put('/myEndpoint', {
    body: {'foo': 'bar'},
    headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
  })
 ```
 
@@ -164,19 +155,51 @@ put('/myEndpoint', {
 
 ## request
 
-request(params) ⇒ <code>Operation</code>
-Make a request using the 'request' node module. This module is deprecated.
+request(method, path, params, callback) ⇒ <code>Operation</code>
 
-**Kind**: global function  
+Make a HTTP request
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Query, Headers and Authentication parameters |
+| method | <code>string</code> | The HTTP method to use |
+| path | <code>string</code> | Path to resource |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
-request(params);
+request(
+  'GET',
+  '/myEndpoint',
+   {
+     query: {foo: 'bar', a: 1},
+     headers: {'content-type': 'application/json'},
+   }
+)
 ```
+
+* * *
+
+## RequestOptions
+
+RequestOptions : <code>Object</code>
+
+Options provided to the HTTP request
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |
+| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
+| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. |
+| headers | <code>object</code> | An object of headers to append to the request. |
+| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
+| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
+
 
 * * *
 

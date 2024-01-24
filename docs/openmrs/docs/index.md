@@ -4,36 +4,36 @@
 <dt>
     <a href="#create">create(resourceType, data, [callback])</a></dt>
 <dt>
-    <a href="#createEncounter">createEncounter(data, [callback])</a></dt>
+    <a href="#createencounter">createEncounter(data, [callback])</a></dt>
 <dt>
-    <a href="#createPatient">createPatient(data, [callback])</a></dt>
+    <a href="#createpatient">createPatient(data, [callback])</a></dt>
 <dt>
     <a href="#get">get(path, query, [callback])</a></dt>
 <dt>
-    <a href="#getEncounter">getEncounter(uuid, [callback])</a></dt>
+    <a href="#getencounter">getEncounter(uuid, [callback])</a></dt>
 <dt>
-    <a href="#getEncounters">getEncounters(query, [callback])</a></dt>
+    <a href="#getencounters">getEncounters(query, [callback])</a></dt>
 <dt>
-    <a href="#getPatient">getPatient(uuid, [callback])</a></dt>
+    <a href="#getpatient">getPatient(uuid, [callback])</a></dt>
 <dt>
     <a href="#post">post(path, data, [callback])</a></dt>
 <dt>
-    <a href="#searchPatient">searchPatient(query, [callback])</a></dt>
+    <a href="#searchpatient">searchPatient(query, [callback])</a></dt>
 <dt>
-    <a href="#searchPerson">searchPerson(query, [callback])</a></dt>
+    <a href="#searchperson">searchPerson(query, [callback])</a></dt>
 <dt>
     <a href="#update">update(resourceType, path, data, [callback])</a></dt>
 <dt>
     <a href="#upsert">upsert(resourceType, query, data, [callback])</a></dt>
 </dl>
 
+
 ## create
 
 create(resourceType, data, [callback]) ⇒ <code>Operation</code>
+
 Create a record
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -68,9 +68,9 @@ create("person", {
 ## createEncounter
 
 createEncounter(data, [callback]) ⇒ <code>Operation</code>
+
 Creates an encounter
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -99,9 +99,9 @@ createEncounter({
 ## createPatient
 
 createPatient(data, [callback]) ⇒ <code>Operation</code>
+
 Creates a new patient
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -138,9 +138,9 @@ createPatient({
 ## get
 
 get(path, query, [callback]) ⇒ <code>Operation</code>
+
 Make a get request to any OpenMRS endpoint
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -161,9 +161,9 @@ get("patient", {
 ## getEncounter
 
 getEncounter(uuid, [callback]) ⇒ <code>Operation</code>
+
 Gets encounter matching a uuid
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -180,9 +180,9 @@ getEncounter("123")
 ## getEncounters
 
 getEncounters(query, [callback]) ⇒ <code>Operation</code>
+
 Gets encounters matching params
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -199,9 +199,9 @@ getEncounters({patient: "123", fromdate: "2023-05-18"})
 ## getPatient
 
 getPatient(uuid, [callback]) ⇒ <code>Operation</code>
+
 Gets patient matching a uuid
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -222,9 +222,9 @@ getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
 ## post
 
 post(path, data, [callback]) ⇒ <code>Operation</code>
+
 Make a post request to any OpenMRS endpoint
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -245,9 +245,9 @@ post(
 ## searchPatient
 
 searchPatient(query, [callback]) ⇒ <code>Operation</code>
+
 Fetch all non-retired patients that match any specified parameters
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -264,9 +264,9 @@ searchPatient({ q: Sarah })
 ## searchPerson
 
 searchPerson(query, [callback]) ⇒ <code>Operation</code>
+
 Fetch all non-retired persons that match any specified parameters
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -283,11 +283,10 @@ searchPerson({ q: Sarah })
 ## update
 
 update(resourceType, path, data, [callback]) ⇒ <code>Operation</code>
+
 Update data. A generic helper function to update a resource object of any type.
 Updating an object requires to send `all required fields` or the `full body`
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -306,14 +305,13 @@ update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate
 ## upsert
 
 upsert(resourceType, query, data, [callback]) ⇒ <code>Operation</code>
+
 Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
 
-**Kind**: global function  
 **Throws**:
 
 - <code>RangeError</code> - Throws range error
 
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

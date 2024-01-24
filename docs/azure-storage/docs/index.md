@@ -2,20 +2,20 @@
 
 <dl>
 <dt>
-    <a href="#downloadBlob">downloadBlob(blobName, [options])</a></dt>
+    <a href="#downloadblob">downloadBlob(blobName, [options])</a></dt>
 <dt>
-    <a href="#getBlobProperties">getBlobProperties(blobName, options)</a></dt>
+    <a href="#getblobproperties">getBlobProperties(blobName, options)</a></dt>
 <dt>
-    <a href="#uploadBlob">uploadBlob(blobName, content, uploadOptions, [options])</a></dt>
+    <a href="#uploadblob">uploadBlob(blobName, content, uploadOptions, [options])</a></dt>
 </dl>
+
 
 ## downloadBlob
 
 downloadBlob(blobName, [options]) ⇒ <code>Operation</code>
+
 Download a blob from Azure Blob Storage.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -32,10 +32,9 @@ downloadBlob('mycontainer', 'myblob.txt', { downloadAs: 'string' })
 ## getBlobProperties
 
 getBlobProperties(blobName, options) ⇒ <code>Operation</code>
+
 Get properties of a blob in Azure Blob Storage.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -52,10 +51,9 @@ getBlobProperties('mycontainer', 'myblob.txt')
 ## uploadBlob
 
 uploadBlob(blobName, content, uploadOptions, [options]) ⇒ <code>Operation</code>
+
 Upload content to Azure Blob Storage.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |

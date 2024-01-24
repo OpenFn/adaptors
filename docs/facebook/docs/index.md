@@ -1,10 +1,9 @@
 ## postMessage
 
 postMessage(params) ⇒ <code>Operation</code>
+
 Post a message
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

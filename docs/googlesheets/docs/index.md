@@ -1,11 +1,10 @@
 ## appendValues
 
 appendValues(params) ⇒ <code>Operation</code>
+
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

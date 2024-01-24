@@ -1,10 +1,9 @@
 ## send
 
 send(params)
+
 Create an event
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -2,22 +2,22 @@
 
 <dl>
 <dt>
-    <a href="#addContact">addContact(params, callback)</a></dt>
+    <a href="#addcontact">addContact(params, callback)</a></dt>
 <dt>
-    <a href="#sendBroadcast">sendBroadcast(params, callback)</a></dt>
+    <a href="#sendbroadcast">sendBroadcast(params, callback)</a></dt>
 <dt>
-    <a href="#startFlow">startFlow(params, callback)</a></dt>
+    <a href="#startflow">startFlow(params, callback)</a></dt>
 <dt>
-    <a href="#upsertContact">upsertContact(params, callback)</a></dt>
+    <a href="#upsertcontact">upsertContact(params, callback)</a></dt>
 </dl>
+
 
 ## addContact
 
 addContact(params, callback) ⇒ <code>Operation</code>
+
 Adds a new contact to RapidPro
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -38,10 +38,9 @@ addContact({
 ## sendBroadcast
 
 sendBroadcast(params, callback) ⇒ <code>Operation</code>
+
 Sends a message to a list of contacts and/or URNs
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -62,10 +61,9 @@ sendBroadcast({
 ## startFlow
 
 startFlow(params, callback) ⇒ <code>Operation</code>
+
 Start a RapidPro flow for a number of contacts
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -86,10 +84,9 @@ startFlow({
 ## upsertContact
 
 upsertContact(params, callback) ⇒ <code>Operation</code>
+
 Upserts a contact to RapidPro by URN
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

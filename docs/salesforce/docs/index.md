@@ -4,19 +4,19 @@
 <dt>
     <a href="#bulk">bulk(sObject, operation, options, fun)</a></dt>
 <dt>
-    <a href="#bulkQuery">bulkQuery(qs, options, callback)</a></dt>
+    <a href="#bulkquery">bulkQuery(qs, options, callback)</a></dt>
 <dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
+    <a href="#cleanupstate">cleanupState(state)</a></dt>
 <dt>
     <a href="#create">create(sObject, attrs)</a></dt>
 <dt>
-    <a href="#createConnection">createConnection(state)</a></dt>
+    <a href="#createconnection">createConnection(state)</a></dt>
 <dt>
-    <a href="#createIf">createIf(logical, sObject, attrs)</a></dt>
+    <a href="#createif">createIf(logical, sObject, attrs)</a></dt>
 <dt>
     <a href="#describe">describe(sObject)</a></dt>
 <dt>
-    <a href="#describeAll">describeAll()</a></dt>
+    <a href="#describeall">describeAll()</a></dt>
 <dt>
     <a href="#destroy">destroy(sObject, attrs, options)</a></dt>
 <dt>
@@ -34,22 +34,22 @@
 <dt>
     <a href="#steps">steps()</a></dt>
 <dt>
-    <a href="#toUTF8">toUTF8(input)</a></dt>
+    <a href="#toutf8">toUTF8(input)</a></dt>
 <dt>
     <a href="#update">update(sObject, attrs)</a></dt>
 <dt>
     <a href="#upsert">upsert(sObject, externalId, attrs)</a></dt>
 <dt>
-    <a href="#upsertIf">upsertIf(logical, sObject, externalId, attrs)</a></dt>
+    <a href="#upsertif">upsertIf(logical, sObject, externalId, attrs)</a></dt>
 </dl>
+
 
 ## bulk
 
 bulk(sObject, operation, options, fun) ⇒ <code>Operation</code>
+
 Create and execute a bulk job.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -72,13 +72,12 @@ bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeou
 ## bulkQuery
 
 bulkQuery(qs, options, callback) ⇒ <code>Operation</code>
+
 Execute an SOQL Bulk Query.
 This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -106,9 +105,9 @@ bulkQuery(
 ## cleanupState
 
 cleanupState(state) ⇒ <code>State</code>
+
 Removes unserializable keys from the state.
 
-**Kind**: global function  
 
 | Param | Type |
 | --- | --- |
@@ -124,10 +123,9 @@ cleanupState(state)
 ## create
 
 create(sObject, attrs) ⇒ <code>Operation</code>
+
 Create a new object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -147,9 +145,9 @@ create('obj_name', {
 ## createConnection
 
 createConnection(state) ⇒ <code>State</code>
+
 Creates a connection.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -165,10 +163,9 @@ createConnection(state)
 ## createIf
 
 createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
+
 Create a new object if conditions are met.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -189,10 +186,9 @@ createIf(true, 'obj_name', {
 ## describe
 
 describe(sObject) ⇒ <code>Operation</code>
+
 Outputs basic information about an sObject to `STDOUT`.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -208,10 +204,9 @@ describe('obj_name')
 ## describeAll
 
 describeAll() ⇒ <code>Operation</code>
+
 Outputs basic information about available sObjects.
 
-**Kind**: global function  
-**Access**: public  
 **Example**  
 ```js
 describeAll()
@@ -222,10 +217,9 @@ describeAll()
 ## destroy
 
 destroy(sObject, attrs, options) ⇒ <code>Operation</code>
+
 Delete records of an object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -246,9 +240,9 @@ destroy('obj_name', [
 ## execute
 
 execute(operations) ⇒ <code>State</code>
+
 Executes an operation.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -260,9 +254,9 @@ Executes an operation.
 ## login
 
 login(state) ⇒ <code>State</code>
+
 Performs a login.
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -278,12 +272,11 @@ login(state)
 ## query
 
 query(qs) ⇒ <code>Operation</code>
+
 Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -299,10 +292,9 @@ query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ## reference
 
 reference(position) ⇒ <code>State</code>
+
 Get a reference ID by an index.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -318,10 +310,9 @@ reference(0)
 ## relationship
 
 relationship(relationshipName, externalId, dataSource) ⇒ <code>object</code>
+
 Adds a lookup relation or 'dome insert' to a record.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -342,10 +333,9 @@ Fixed Value:
 ## retrieve
 
 retrieve(sObject, id, callback) ⇒ <code>Operation</code>
+
 Retrieves a Salesforce sObject(s).
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -363,9 +353,9 @@ retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ## steps
 
 steps() ⇒ <code>Array</code>
+
 Flattens an array of operations.
 
-**Kind**: global function  
 **Example**  
 ```js
 steps(
@@ -379,11 +369,10 @@ steps(
 ## toUTF8
 
 toUTF8(input) ⇒ <code>String</code>
+
 Transliterates unicode characters to their best ASCII representation
 
-**Kind**: global function  
 **Returns**: <code>String</code> - - ASCII representation of input string  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -403,10 +392,9 @@ fn((state) => {
 ## update
 
 update(sObject, attrs) ⇒ <code>Operation</code>
+
 Update an object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -426,13 +414,9 @@ update('obj_name', {
 ## upsert
 
 upsert(sObject, externalId, attrs) ⇒ <code>Operation</code>
+
 Upsert an object.
 
-**Kind**: global function  
-**Access**: public  
-**Magic**: sObject - $.children[?(!@.meta.system)].name  
-**Magic**: externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name  
-**Magic**: attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -453,10 +437,9 @@ upsert('obj_name', 'ext_id', {
 ## upsertIf
 
 upsertIf(logical, sObject, externalId, attrs) ⇒ <code>Operation</code>
+
 Upsert if conditions are met.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

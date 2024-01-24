@@ -2,24 +2,24 @@
 
 <dl>
 <dt>
-    <a href="#createTask">createTask(params, callback)</a></dt>
+    <a href="#createtask">createTask(params, callback)</a></dt>
 <dt>
-    <a href="#getTask">getTask(taskGid, params, callback)</a></dt>
+    <a href="#gettask">getTask(taskGid, params, callback)</a></dt>
 <dt>
-    <a href="#getTasks">getTasks(projectGid, params, callback)</a></dt>
+    <a href="#gettasks">getTasks(projectGid, params, callback)</a></dt>
 <dt>
-    <a href="#updateTask">updateTask(taskGid, params, callback)</a></dt>
+    <a href="#updatetask">updateTask(taskGid, params, callback)</a></dt>
 <dt>
-    <a href="#upsertTask">upsertTask(projectGid, params, callback)</a></dt>
+    <a href="#upserttask">upsertTask(projectGid, params, callback)</a></dt>
 </dl>
+
 
 ## createTask
 
 createTask(params, callback) ⇒ <code>Operation</code>
+
 Create a task.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -40,10 +40,9 @@ createTask(
 ## getTask
 
 getTask(taskGid, params, callback) ⇒ <code>Operation</code>
+
 Get a single task of a given project.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -64,10 +63,9 @@ getTask("taskGid",
 ## getTasks
 
 getTasks(projectGid, params, callback) ⇒ <code>Operation</code>
+
 Get the list of tasks for a given project.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -88,10 +86,9 @@ getTasks("projectGid",
 ## updateTask
 
 updateTask(taskGid, params, callback) ⇒ <code>Operation</code>
+
 Update a specific task.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -113,10 +110,9 @@ updateTask("taskGid",
 ## upsertTask
 
 upsertTask(projectGid, params, callback) ⇒ <code>Operation</code>
+
 Update or create a task.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

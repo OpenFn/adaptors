@@ -6,19 +6,20 @@
 <dt>
     <a href="#query">query(options)</a></dt>
 <dt>
-    <a href="#sqlString">sqlString(queryString)</a></dt>
+    <a href="#sqlstring">sqlString(queryString)</a></dt>
 <dt>
     <a href="#upsert">upsert(table, fields)</a></dt>
 <dt>
-    <a href="#upsertMany">upsertMany(table, data)</a></dt>
+    <a href="#upsertmany">upsertMany(table, data)</a></dt>
 </dl>
+
 
 ## insert
 
 insert(table, fields) ⇒ <code>Operation</code>
+
 Insert a record
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -39,9 +40,9 @@ execute(
 ## query
 
 query(options) ⇒ <code>Operation</code>
+
 Execute a SQL statement
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -59,9 +60,9 @@ execute(
 ## sqlString
 
 sqlString(queryString) ⇒ <code>Operation</code>
+
 Execute a SQL statement
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -79,9 +80,9 @@ execute(
 ## upsert
 
 upsert(table, fields) ⇒ <code>Operation</code>
+
 Insert or Update a record if matched
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -102,10 +103,9 @@ execute(
 ## upsertMany
 
 upsertMany(table, data) ⇒ <code>Operation</code>
+
 Insert or update multiple records using ON DUPLICATE KEY
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

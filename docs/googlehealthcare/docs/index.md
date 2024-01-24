@@ -1,10 +1,9 @@
 ## createFhirResource
 
 createFhirResource([fhirStore], resource, callback) ⇒ <code>Operation</code>
+
 Create some resource in Google Cloud Healthcare
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

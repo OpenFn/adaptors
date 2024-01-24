@@ -2,54 +2,54 @@
 
 <dl>
 <dt>
-    <a href="#addToGroup">addToGroup(group_id, individual_id, role)</a></dt>
+    <a href="#addtogroup">addToGroup(group_id, individual_id, role)</a></dt>
 <dt>
-    <a href="#createGroup">createGroup(data, callback)</a></dt>
+    <a href="#creategroup">createGroup(data, callback)</a></dt>
 <dt>
-    <a href="#createIndividual">createIndividual(data, callback)</a></dt>
+    <a href="#createindividual">createIndividual(data, callback)</a></dt>
 <dt>
     <a href="#enroll">enroll(spp_id, program_id)</a></dt>
 <dt>
-    <a href="#getArea">getArea(spp_id, callback)</a></dt>
+    <a href="#getarea">getArea(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getEnrolledPrograms">getEnrolledPrograms(spp_id, callback)</a></dt>
+    <a href="#getenrolledprograms">getEnrolledPrograms(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getGroup">getGroup(spp_id, callback)</a></dt>
+    <a href="#getgroup">getGroup(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getGroupMembers">getGroupMembers(spp_id, [options], callback)</a></dt>
+    <a href="#getgroupmembers">getGroupMembers(spp_id, [options], callback)</a></dt>
 <dt>
-    <a href="#getIndividual">getIndividual(spp_id, callback)</a></dt>
+    <a href="#getindividual">getIndividual(spp_id, callback)</a></dt>
 <dt>
-    <a href="#getProgram">getProgram(program_id, callback)</a></dt>
+    <a href="#getprogram">getProgram(program_id, callback)</a></dt>
 <dt>
-    <a href="#getPrograms">getPrograms([options], callback)</a></dt>
+    <a href="#getprograms">getPrograms([options], callback)</a></dt>
 <dt>
-    <a href="#getServicePoint">getServicePoint(spp_id, callback)</a></dt>
+    <a href="#getservicepoint">getServicePoint(spp_id, callback)</a></dt>
 <dt>
-    <a href="#removeFromGroup">removeFromGroup(group_id, individual_id)</a></dt>
+    <a href="#removefromgroup">removeFromGroup(group_id, individual_id)</a></dt>
 <dt>
-    <a href="#searchArea">searchArea(domain, [options], callback)</a></dt>
+    <a href="#searcharea">searchArea(domain, [options], callback)</a></dt>
 <dt>
-    <a href="#searchGroup">searchGroup(domain, [options], callback)</a></dt>
+    <a href="#searchgroup">searchGroup(domain, [options], callback)</a></dt>
 <dt>
-    <a href="#searchIndividual">searchIndividual(domain, [options], callback)</a></dt>
+    <a href="#searchindividual">searchIndividual(domain, [options], callback)</a></dt>
 <dt>
-    <a href="#searchServicePoint">searchServicePoint(domain, [options], callback)</a></dt>
+    <a href="#searchservicepoint">searchServicePoint(domain, [options], callback)</a></dt>
 <dt>
     <a href="#unenroll">unenroll(spp_id, program_id)</a></dt>
 <dt>
-    <a href="#updateGroup">updateGroup(group_id, data)</a></dt>
+    <a href="#updategroup">updateGroup(group_id, data)</a></dt>
 <dt>
-    <a href="#updateIndividual">updateIndividual(individual_id, data)</a></dt>
+    <a href="#updateindividual">updateIndividual(individual_id, data)</a></dt>
 </dl>
+
 
 ## addToGroup
 
 addToGroup(group_id, individual_id, role) ⇒ <code>Operation</code>
+
 add individual to group in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -75,10 +75,9 @@ addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
 ## createGroup
 
 createGroup(data, callback) ⇒ <code>Operation</code>
+
 create new group for OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -95,10 +94,9 @@ createGroup({ name: "Group 1" })
 ## createIndividual
 
 createIndividual(data, callback) ⇒ <code>Operation</code>
+
 create new individual for OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -115,10 +113,9 @@ createIndividual({ name: "Individual 1" })
 ## enroll
 
 enroll(spp_id, program_id)
+
 enroll registrant to program in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -135,10 +132,9 @@ enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 ## getArea
 
 getArea(spp_id, callback) ⇒ <code>Operation</code>
+
 get area by id in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -155,10 +151,9 @@ getArea("LOC_7M92NLDH")
 ## getEnrolledPrograms
 
 getEnrolledPrograms(spp_id, callback) ⇒ <code>Operation</code>
+
 get programs list for specific registrant from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -175,10 +170,9 @@ getEnrolledPrograms("IND_Q4VGGZPF")
 ## getGroup
 
 getGroup(spp_id, callback) ⇒ <code>Operation</code>
+
 get group information from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -195,10 +189,9 @@ getGroup("GRP_Q4VGGZPF")
 ## getGroupMembers
 
 getGroupMembers(spp_id, [options], callback) ⇒ <code>Operation</code>
+
 get group members information from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -216,10 +209,9 @@ getGroupMembers("GRP_Q4VGGZPF")
 ## getIndividual
 
 getIndividual(spp_id, callback) ⇒ <code>Operation</code>
+
 get individual information from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -236,10 +228,9 @@ getIndividual("IND_Q4VGGZPF")
 ## getProgram
 
 getProgram(program_id, callback) ⇒ <code>Operation</code>
+
 get program information from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -256,10 +247,9 @@ getProgram("PROG_2023_00000001")
 ## getPrograms
 
 getPrograms([options], callback) ⇒ <code>Operation</code>
+
 get programs list from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -276,10 +266,9 @@ getPrograms(100)
 ## getServicePoint
 
 getServicePoint(spp_id, callback) ⇒ <code>Operation</code>
+
 get service points information from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -296,10 +285,9 @@ getServicePoint("SVP_8P4KP4RT")
 ## removeFromGroup
 
 removeFromGroup(group_id, individual_id) ⇒ <code>Operation</code>
+
 remove individual from group in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -316,10 +304,9 @@ removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
 ## searchArea
 
 searchArea(domain, [options], callback) ⇒ <code>Operation</code>
+
 searching for service point in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -341,10 +328,9 @@ searchArea([["kind", "=", 1]], { offset: 10 }})
 ## searchGroup
 
 searchGroup(domain, [options], callback) ⇒ <code>Operation</code>
+
 get groups from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -370,10 +356,9 @@ searchGroup([["address", "!=", false], ["phone", "!=", false]])
 ## searchIndividual
 
 searchIndividual(domain, [options], callback) ⇒ <code>Operation</code>
+
 get individuals from OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -399,10 +384,9 @@ searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
 ## searchServicePoint
 
 searchServicePoint(domain, [options], callback) ⇒ <code>Operation</code>
+
 searching for service point in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -424,10 +408,9 @@ searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
 ## unenroll
 
 unenroll(spp_id, program_id)
+
 unenroll registrant from program in OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -444,10 +427,9 @@ unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 ## updateGroup
 
 updateGroup(group_id, data) ⇒ <code>Operation</code>
+
 update group for OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -464,10 +446,9 @@ updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
 ## updateIndividual
 
 updateIndividual(individual_id, data) ⇒ <code>Operation</code>
+
 update individual for OpenSPP
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

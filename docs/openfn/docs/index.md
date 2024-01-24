@@ -1,10 +1,9 @@
 ## request
 
 request(options, callback) ⇒ <code>Operation</code>
+
 Make a POST request
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

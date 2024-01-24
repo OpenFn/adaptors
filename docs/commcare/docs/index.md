@@ -2,21 +2,22 @@
 
 <dl>
 <dt>
-    <a href="#clientPost">clientPost(formData)</a></dt>
+    <a href="#clientpost">clientPost(formData)</a></dt>
 <dt>
-    <a href="#fetchReportData">fetchReportData(reportId, params, postUrl)</a></dt>
+    <a href="#fetchreportdata">fetchReportData(reportId, params, postUrl)</a></dt>
 <dt>
     <a href="#submit">submit(formData)</a></dt>
 <dt>
-    <a href="#submitXls">submitXls(formData, params)</a></dt>
+    <a href="#submitxls">submitXls(formData, params)</a></dt>
 </dl>
+
 
 ## clientPost
 
 clientPost(formData) ⇒ <code>State</code>
+
 Performs a post request
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -32,11 +33,10 @@ clientPost(formData)
 ## fetchReportData
 
 fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
+
 Make a GET request to CommCare's Reports API
 and POST the response to somewhere else.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -54,10 +54,9 @@ fetchReportData(reportId, params, postUrl)
 ## submit
 
 submit(formData) ⇒ <code>Operation</code>
+
 Submit form data
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -83,10 +82,9 @@ submit(
 ## submitXls
 
 submitXls(formData, params) ⇒ <code>Operation</code>
+
 Convert form data to xls then submit.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |

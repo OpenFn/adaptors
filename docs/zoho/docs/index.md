@@ -1,9 +1,9 @@
 ## addRow
 
 addRow(db, table, rowData) ⇒ <code>Operation</code>
+
 To add a row data to a database table
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |

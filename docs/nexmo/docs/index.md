@@ -1,10 +1,9 @@
 ## sendSMS
 
 sendSMS(from, toNumber, message) ⇒ <code>Operation</code>
+
 Sends an SMS message to a specific phone number
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
