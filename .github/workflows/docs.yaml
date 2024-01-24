@@ -1,6 +1,10 @@
 name: Build & deploy adaptor documentation
 
 on:
+  workflow_run:
+    workflows: [Publish]
+    types:
+      - completed
   push:
     branches: [main]
 
