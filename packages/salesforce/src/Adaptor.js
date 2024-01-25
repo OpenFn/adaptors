@@ -668,21 +668,66 @@ function setApiVersion(apiVersion) {
  * @returns {State}
  */
 function createConnection(state) {
-  const { loginUrl, apiVersion } = state.configuration;
+  const {
+    loginUrl,
+    username,
+    password,
+    apiVersion,
+    instanceUrl,
+    accessToken,
+    clientId,
+    clientSecret,
+    redirectUri,
+  } = state.configuration;
 
   if (!loginUrl) {
     throw new Error('loginUrl missing from configuration.');
   }
 
+  const conn = new jsforce.Connection({
+    oauth2: {
+      // you can change loginUrl to connect to sandbox or prerelease env.
+      // loginUrl : 'https://test.salesforce.com',
+      clientId,
+      clientSecret,
+      redirectUri,
+    },
+  });
+
+  conn.login(username, password, function (err, userInfo) {
+    if (err) {
+      console.error(err);
+      return err;
+    }
+    // Now you can get the access token and instance URL information.
+    // Save them to establish connection next time.
+    console.log(conn.accessToken);
+    console.log(conn.instanceUrl);
+    // logged in user property
+    console.log('User ID: ' + userInfo.id);
+    console.log('Org ID: ' + userInfo.organizationId);
+    // ...
+  });
+
   return {
     ...state,
-    connection: apiVersion
-      ? new jsforce.Connection({
-          loginUrl,
-          version: setApiVersion(apiVersion),
-        })
-      : new jsforce.Connection({ loginUrl }),
+    connection: conn,
   };
+
+  // return {
+  //   ...state,
+  //   connection: new jsforce.Connection({ instanceUrl, accessToken }),
+  // };
+
+  // return {
+  //   ...state,
+  //   connection: apiVersion
+  //     ? new jsforce.Connection({
+  //         loginUrl,
+  //         version: setApiVersion(apiVersion),
+  //       })
+  //     : new jsforce.Connection({ loginUrl }),
+  // };
 }
 
 /**
@@ -733,7 +778,7 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      login,
+      // login,
       ...flatten(operations),
       cleanupState
     )({ ...initialState, ...state });
