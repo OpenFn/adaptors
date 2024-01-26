@@ -668,66 +668,17 @@ function setApiVersion(apiVersion) {
  * @returns {State}
  */
 function createConnection(state) {
-  const {
-    loginUrl,
-    username,
-    password,
-    apiVersion,
-    instanceUrl,
-    accessToken,
-    clientId,
-    clientSecret,
-    redirectUri,
-  } = state.configuration;
+  const { loginUrl, instanceUrl } = state.configuration;
 
-  if (!loginUrl) {
-    throw new Error('loginUrl missing from configuration.');
+  if (loginUrl) {
+    return createBasicAuthConnection(state);
+  } else if (instanceUrl) {
+    return createAccessTokenConnection(state);
+  } else {
+    throw new Error(
+      'Invalid configuration. Provide either loginUrl for basic auth or instanceUrl for accessToken auth.'
+    );
   }
-
-  const conn = new jsforce.Connection({
-    oauth2: {
-      // you can change loginUrl to connect to sandbox or prerelease env.
-      // loginUrl : 'https://test.salesforce.com',
-      clientId,
-      clientSecret,
-      redirectUri,
-    },
-  });
-
-  conn.login(username, password, function (err, userInfo) {
-    if (err) {
-      console.error(err);
-      return err;
-    }
-    // Now you can get the access token and instance URL information.
-    // Save them to establish connection next time.
-    console.log(conn.accessToken);
-    console.log(conn.instanceUrl);
-    // logged in user property
-    console.log('User ID: ' + userInfo.id);
-    console.log('Org ID: ' + userInfo.organizationId);
-    // ...
-  });
-
-  return {
-    ...state,
-    connection: conn,
-  };
-
-  // return {
-  //   ...state,
-  //   connection: new jsforce.Connection({ instanceUrl, accessToken }),
-  // };
-
-  // return {
-  //   ...state,
-  //   connection: apiVersion
-  //     ? new jsforce.Connection({
-  //         loginUrl,
-  //         version: setApiVersion(apiVersion),
-  //       })
-  //     : new jsforce.Connection({ loginUrl }),
-  // };
 }
 
 /**
@@ -754,6 +705,65 @@ function login(state) {
       // })
       .then(() => state)
   );
+}
+async function createBasicAuthConnection(state) {
+  const { loginUrl, apiVersion, username, password, securityToken } =
+    state.configuration;
+
+  if (!loginUrl || !username || !password) {
+    throw new Error(
+      'Incomplete configuration for basic authentication. Provide loginUrl, username, password, and securityToken if required.'
+    );
+  }
+
+  const connectionOptions = { loginUrl };
+
+  if (apiVersion) {
+    connectionOptions.version = setApiVersion(apiVersion);
+  }
+
+  const connection = new jsforce.Connection(connectionOptions);
+
+  console.info(`Logging in as ${username}.`);
+  await connection.login(
+    username,
+    securityToken ? password + securityToken : password
+  );
+  // NOTE: Uncomment this to debug connection issues.
+  // .then(response => {
+  //   console.log(connection);
+  //   console.log(response);
+  //   return state;
+  // })
+
+  return {
+    ...state,
+    connection,
+  };
+}
+
+function createAccessTokenConnection(state) {
+  const { apiVersion, instanceUrl, accessToken } = state.configuration;
+
+  if (!instanceUrl || !accessToken) {
+    throw new Error(
+      'instanceUrl and accessToken are required for OAuth authentication.'
+    );
+  }
+
+  const connectionOptions = {
+    instanceUrl,
+    accessToken,
+  };
+
+  if (apiVersion) {
+    connectionOptions.version = setApiVersion(apiVersion);
+  }
+
+  return {
+    ...state,
+    connection: new jsforce.Connection(connectionOptions),
+  };
 }
 
 /**
