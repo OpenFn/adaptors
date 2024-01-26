@@ -718,17 +718,18 @@ async function createBasicAuthConnection(state) {
 
 function createAccessTokenConnection(state) {
   console.log('Attempting to connect with OAuth');
-  const { apiVersion, instanceUrl, accessToken } = state.configuration;
+  const { apiVersion, other_params, access_token } = state.configuration;
+  const { instance_url } = other_params;
 
-  if (!instanceUrl || !accessToken) {
+  if (!instance_url || !access_token) {
     throw new Error(
-      'instanceUrl and accessToken are required for OAuth authentication.'
+      'instance_url and access_token are required for OAuth authentication.'
     );
   }
 
   const connectionOptions = {
-    instanceUrl,
-    accessToken,
+    instanceUrl: instance_url,
+    accessToken: access_token,
   };
 
   if (apiVersion) {
@@ -750,9 +751,9 @@ function createAccessTokenConnection(state) {
  * @returns {State}
  */
 function createConnection(state) {
-  const { accessToken } = state.configuration;
+  const { access_token } = state.configuration;
 
-  return accessToken
+  return access_token
     ? createAccessTokenConnection(state)
     : createBasicAuthConnection(state);
 }
