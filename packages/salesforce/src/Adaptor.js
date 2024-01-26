@@ -659,54 +659,18 @@ function setApiVersion(apiVersion) {
 
   return version;
 }
+
 /**
- * Creates a connection.
+ * Establish a connection to Salesforce using username and password.
  * @example
- * createConnection(state)
+ * createBasicAuthConnection(state)
  * @function
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-function createConnection(state) {
-  const { loginUrl, instanceUrl } = state.configuration;
-
-  if (loginUrl) {
-    return createBasicAuthConnection(state);
-  } else if (instanceUrl) {
-    return createAccessTokenConnection(state);
-  } else {
-    throw new Error(
-      'Invalid configuration. Provide either loginUrl for basic auth or instanceUrl for accessToken auth.'
-    );
-  }
-}
-
-/**
- * Performs a login.
- * @example
- * login(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function login(state) {
-  const { username, password, securityToken } = state.configuration;
-  let { connection } = state;
-  console.info(`Logging in as ${username}.`);
-
-  return (
-    connection
-      .login(username, password + securityToken)
-      // NOTE: Uncomment this to debug connection issues.
-      // .then(response => {
-      //   console.log(connection);
-      //   console.log(response);
-      //   return state;
-      // })
-      .then(() => state)
-  );
-}
 async function createBasicAuthConnection(state) {
+  console.log('Attempting to connect with Basic Auth');
+
   const { loginUrl, apiVersion, username, password, securityToken } =
     state.configuration;
 
@@ -725,6 +689,7 @@ async function createBasicAuthConnection(state) {
   const connection = new jsforce.Connection(connectionOptions);
 
   console.info(`Logging in as ${username}.`);
+
   await connection.login(
     username,
     securityToken ? password + securityToken : password
@@ -742,7 +707,17 @@ async function createBasicAuthConnection(state) {
   };
 }
 
+/**
+ * Establish a connection to Salesforce using Access Token.
+ * @example
+ * createAccessTokenConnection(state)
+ * @function
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+
 function createAccessTokenConnection(state) {
+  console.log('Attempting to connect with OAuth');
   const { apiVersion, instanceUrl, accessToken } = state.configuration;
 
   if (!instanceUrl || !accessToken) {
@@ -767,6 +742,22 @@ function createAccessTokenConnection(state) {
 }
 
 /**
+ * Creates a connection.
+ * @example
+ * createConnection(state)
+ * @function
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+function createConnection(state) {
+  const { accessToken } = state.configuration;
+
+  return accessToken
+    ? createAccessTokenConnection(state)
+    : createBasicAuthConnection(state);
+}
+
+/**
  * Executes an operation.
  * @function
  * @param {Operation} operations - Operations
@@ -788,7 +779,6 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      // login,
       ...flatten(operations),
       cleanupState
     )({ ...initialState, ...state });
