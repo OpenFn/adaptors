@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$comment": "OAuth2",
     "properties": {
-        "accessToken": {
+        "access_token": {
             "title": "Access Token",
             "type": "string",
             "description": "Your Salesforce OAuth2 token",
@@ -12,21 +12,30 @@
                 "00DU0000000Krrw!AQgAQG7lgt2Eq9yaOy_sU9e4pSwcoUTm7YGkGWTnltn0dJBkjdNhmOhdRtMMuakaO9GjXToh5b_enUIcjOGm5uU.mFhxR.R4"
             ]
         },
-        "instanceUrl": {
-            "title": "Instance URL",
-            "type": "string",
-            "description": "Your Salesforce instance URL",
-            "writeOnly": true,
-            "minLength": 1,
-            "examples": [
-                "https://na1.salesforce.com"
+        "other_oparams": {
+            "type": "object",
+            "properties": {
+                "instance_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "title": "Instance URL",
+                    "description": "Your Salesforce instance URL",
+                    "writeOnly": true,
+                    "minLength": 1,
+                    "examples": [
+                        "https://na1.salesforce.com"
+                    ]
+                }
+            },
+            "required": [
+                "instance_url"
             ]
         }
     },
     "type": "object",
     "additionalProperties": true,
     "required": [
-        "accessToken",
-        "instanceUrl"
+        "access_token",
+        "other_oparams"
     ]
 }
