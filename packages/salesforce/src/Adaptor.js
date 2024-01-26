@@ -784,22 +784,23 @@ export function toUTF8(input) {
 }
 
 /**
- * Send REST API request with given HTTP request info, with connected session information.
+ * Send a HTTP request using connected session information.
  *
  * @example
  * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
  *   method: 'POST',
  *   body: { inputs: [{}] },
  * });
- * @param {String} path - URL to send HTTP request
- * @param {Object} options - HTTP API request options
- * @param {String} options.method - HTTP method URL to send HTTP request
- * @param {Object} [options.headers] - HTTP request headers in hash object (key-value)
- * @param {Object} [options.body] - HTTP request body
- * @param {Function} callback - A callback to execute once the record is retrieved
+ * @param {String} url - Relative or absolute URL to request from
+ * @param {Object} options - Request options
+ * @param {String} options.method - HTTP method to use. Defaults to GET
+ * @param {Object} [options.headers] - Object of request headers
+ * @param {Object} [options.body] - Request body
+ * @param {Function} callback - A callback to execute once the request is complete
  * @returns {Operation}
  */
-export function request(path, options, callback) {
+
+export function request(path, options, callback = s => s) {
   return async state => {
     const { connection } = state;
     const [resolvedPath, resolvedOptions] = newExpandReferences(
@@ -820,17 +821,11 @@ export function request(path, options, callback) {
       body: JSON.stringify(body),
     };
 
-    await connection.request(requestOptions).then(response => {
-      const nextState = {
-        ...composeNextState(state, response),
-        response,
-      };
+    const result = await connection.request(requestOptions);
 
-      if (callback) return callback(nextState);
-      return nextState;
-    });
+    const nextState = composeNextState(state, result);
 
-    return state;
+    return callback(nextState);
   };
 }
 // Note that we expose the entire axios package to the user here.
