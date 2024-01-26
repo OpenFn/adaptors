@@ -163,7 +163,9 @@ export function query(qs) {
 
     return connection.query(resolvedQs, function (err, result) {
       if (err) {
-        return console.error(err);
+        const { message, errorCode } = err;
+        console.error(`${errorCode}: ${message}`);
+        throw err;
       }
 
       console.log(
@@ -646,34 +648,26 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
-function setApiVersion(state, connectionOptions) {
+function getConnection(state, options) {
   const { apiVersion } = state.configuration;
 
   const apiVersionRegex = /^\d{2}\.\d$/;
 
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
     console.log('Using Salesforce API version', apiVersion);
-    return { ...connectionOptions, version: apiVersion };
+    options.version = apiVersion;
   } else {
     console.log('apiVersion is not defined');
     console.log('We recommend using Salesforce API version 52.0 or latest');
-    return connectionOptions;
   }
+
+  return new jsforce.Connection(options);
 }
 
-/**
- * Establish a connection to Salesforce using username and password.
- * @function createBasicAuthConnection
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
 async function createBasicAuthConnection(state) {
   const { loginUrl, username, password, securityToken } = state.configuration;
 
-  const connectionOptions = setApiVersion(state, { loginUrl });
-
-  const connection = new jsforce.Connection(connectionOptions);
+  const connection = getConnection(state, { loginUrl });
 
   await connection
     .login(username, securityToken ? password + securityToken : password)
@@ -690,24 +684,14 @@ async function createBasicAuthConnection(state) {
   };
 }
 
-/**
- * Establish a connection to Salesforce using Access Token.
- * @function createAccessTokenConnection
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-
 function createAccessTokenConnection(state) {
   const { other_params, access_token } = state.configuration;
   const { instance_url } = other_params;
 
-  const connectionOptions = setApiVersion(state, {
+  const connection = getConnection(state, {
     instanceUrl: instance_url,
     accessToken: access_token,
   });
-
-  const connection = new jsforce.Connection(connectionOptions);
 
   console.log(`Connected with ${connection._sessionType} session type`);
 
@@ -759,7 +743,6 @@ export function execute(...operations) {
     )({ ...initialState, ...state });
   };
 }
-
 /**
  * Removes unserializable keys from the state.
  * @example
