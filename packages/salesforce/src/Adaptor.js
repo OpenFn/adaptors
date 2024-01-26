@@ -646,60 +646,43 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
-function setApiVersion(apiVersion) {
+function setApiVersion(state, connectionOptions) {
+  const { apiVersion } = state.configuration;
+
   const apiVersionRegex = /^\d{2}\.\d$/;
-  let version = '52.0';
+
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
     console.log('Using Salesforce API version', apiVersion);
-    version = apiVersion;
+    return { ...connectionOptions, version: apiVersion };
   } else {
-    console.log('Invalid salesforce apiVersion', apiVersion);
-    console.log('Using Salesforce API version', version);
+    console.log('apiVersion is not defined');
+    console.log('We recommend using Salesforce API version 52.0 or latest');
+    return connectionOptions;
   }
-
-  return version;
 }
 
 /**
  * Establish a connection to Salesforce using username and password.
- * @example
- * createBasicAuthConnection(state)
- * @function
+ * @function createBasicAuthConnection
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
 async function createBasicAuthConnection(state) {
-  console.log('Attempting to connect with Basic Auth');
+  const { loginUrl, username, password, securityToken } = state.configuration;
 
-  const { loginUrl, apiVersion, username, password, securityToken } =
-    state.configuration;
-
-  if (!loginUrl || !username || !password) {
-    throw new Error(
-      'Incomplete configuration for basic authentication. Provide loginUrl, username, password, and securityToken if required.'
-    );
-  }
-
-  const connectionOptions = { loginUrl };
-
-  if (apiVersion) {
-    connectionOptions.version = setApiVersion(apiVersion);
-  }
+  const connectionOptions = setApiVersion(state, { loginUrl });
 
   const connection = new jsforce.Connection(connectionOptions);
 
-  console.info(`Logging in as ${username}.`);
+  await connection
+    .login(username, securityToken ? password + securityToken : password)
+    .catch(e => {
+      console.error(`Failed to connect to salesforce as ${username}`);
+      throw e;
+    });
 
-  await connection.login(
-    username,
-    securityToken ? password + securityToken : password
-  );
-  // NOTE: Uncomment this to debug connection issues.
-  // .then(response => {
-  //   console.log(connection);
-  //   console.log(response);
-  //   return state;
-  // })
+  console.info(`Connected to salesforce as ${username}.`);
 
   return {
     ...state,
@@ -709,44 +692,35 @@ async function createBasicAuthConnection(state) {
 
 /**
  * Establish a connection to Salesforce using Access Token.
- * @example
- * createAccessTokenConnection(state)
- * @function
+ * @function createAccessTokenConnection
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
 
 function createAccessTokenConnection(state) {
-  console.log('Attempting to connect with OAuth');
-  const { apiVersion, other_params, access_token } = state.configuration;
+  const { other_params, access_token } = state.configuration;
   const { instance_url } = other_params;
 
-  if (!instance_url || !access_token) {
-    throw new Error(
-      'instance_url and access_token are required for OAuth authentication.'
-    );
-  }
-
-  const connectionOptions = {
+  const connectionOptions = setApiVersion(state, {
     instanceUrl: instance_url,
     accessToken: access_token,
-  };
+  });
 
-  if (apiVersion) {
-    connectionOptions.version = setApiVersion(apiVersion);
-  }
+  const connection = new jsforce.Connection(connectionOptions);
+
+  console.log(`Connected with ${connection._sessionType} session type`);
 
   return {
     ...state,
-    connection: new jsforce.Connection(connectionOptions),
+    connection,
   };
 }
 
 /**
- * Creates a connection.
- * @example
- * createConnection(state)
- * @function
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
