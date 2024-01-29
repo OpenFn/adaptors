@@ -789,12 +789,13 @@ export function toUTF8(input) {
  * @example
  * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
  *   method: 'POST',
- *   body: { inputs: [{}] },
+ *   json: { inputs: [{}] },
  * });
  * @param {String} url - Relative or absolute URL to request from
  * @param {Object} options - Request options
  * @param {String} options.method - HTTP method to use. Defaults to GET
  * @param {Object} [options.headers] - Object of request headers
+ * @param {Object} [options.json] - A JSON string request body
  * @param {Object} [options.body] - Request body
  * @param {Function} callback - A callback to execute once the request is complete
  * @returns {Operation}
@@ -810,6 +811,7 @@ export function request(path, options, callback = s => s) {
     );
     const {
       method = 'GET',
+      json,
       body,
       headers = { 'content-type': 'application/json' },
     } = resolvedOptions;
@@ -818,7 +820,7 @@ export function request(path, options, callback = s => s) {
       url: resolvedPath,
       method,
       headers,
-      body: JSON.stringify(body),
+      body: json ? JSON.stringify(json) : body,
     };
 
     const result = await connection.request(requestOptions);
