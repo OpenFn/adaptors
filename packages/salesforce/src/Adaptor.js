@@ -164,7 +164,7 @@ export function query(qs) {
     return connection.query(resolvedQs, function (err, result) {
       if (err) {
         const { message, errorCode } = err;
-        console.error(`${errorCode}: ${message}`);
+        console.log(`Error ${errorCode}: ${message}`);
         throw err;
       }
 
