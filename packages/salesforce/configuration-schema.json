@@ -55,7 +55,6 @@
   "required": [
     "loginUrl",
     "username",
-    "password",
-    "securityToken"
+    "password"
   ]
 }

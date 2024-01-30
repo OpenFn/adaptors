@@ -163,7 +163,9 @@ export function query(qs) {
 
     return connection.query(resolvedQs, function (err, result) {
       if (err) {
-        return console.error(err);
+        const { message, errorCode } = err;
+        console.log(`Error ${errorCode}: ${message}`);
+        throw err;
       }
 
       console.log(
@@ -646,69 +648,72 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
-function setApiVersion(apiVersion) {
+function getConnection(state, options) {
+  const { apiVersion } = state.configuration;
+
   const apiVersionRegex = /^\d{2}\.\d$/;
-  let version = '52.0';
+
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
     console.log('Using Salesforce API version', apiVersion);
-    version = apiVersion;
+    options.version = apiVersion;
   } else {
-    console.log('Invalid salesforce apiVersion', apiVersion);
-    console.log('Using Salesforce API version', version);
+    console.log('apiVersion is not defined');
+    console.log('We recommend using Salesforce API version 52.0 or latest');
   }
 
-  return version;
+  return new jsforce.Connection(options);
 }
-/**
- * Creates a connection.
- * @example
- * createConnection(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function createConnection(state) {
-  const { loginUrl, apiVersion } = state.configuration;
 
-  if (!loginUrl) {
-    throw new Error('loginUrl missing from configuration.');
-  }
+async function createBasicAuthConnection(state) {
+  const { loginUrl, username, password, securityToken } = state.configuration;
+
+  const connection = getConnection(state, { loginUrl });
+
+  await connection
+    .login(username, securityToken ? password + securityToken : password)
+    .catch(e => {
+      console.error(`Failed to connect to salesforce as ${username}`);
+      throw e;
+    });
+
+  console.info(`Connected to salesforce as ${username}.`);
 
   return {
     ...state,
-    connection: apiVersion
-      ? new jsforce.Connection({
-          loginUrl,
-          version: setApiVersion(apiVersion),
-        })
-      : new jsforce.Connection({ loginUrl }),
+    connection,
+  };
+}
+
+function createAccessTokenConnection(state) {
+  const { other_params, access_token } = state.configuration;
+  const { instance_url } = other_params;
+
+  const connection = getConnection(state, {
+    instanceUrl: instance_url,
+    accessToken: access_token,
+  });
+
+  console.log(`Connected with ${connection._sessionType} session type`);
+
+  return {
+    ...state,
+    connection,
   };
 }
 
 /**
- * Performs a login.
- * @example
- * login(state)
- * @function
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-function login(state) {
-  const { username, password, securityToken } = state.configuration;
-  let { connection } = state;
-  console.info(`Logging in as ${username}.`);
+function createConnection(state) {
+  const { access_token } = state.configuration;
 
-  return (
-    connection
-      .login(username, password + securityToken)
-      // NOTE: Uncomment this to debug connection issues.
-      // .then(response => {
-      //   console.log(connection);
-      //   console.log(response);
-      //   return state;
-      // })
-      .then(() => state)
-  );
+  return access_token
+    ? createAccessTokenConnection(state)
+    : createBasicAuthConnection(state);
 }
 
 /**
@@ -733,13 +738,11 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      login,
       ...flatten(operations),
       cleanupState
     )({ ...initialState, ...state });
   };
 }
-
 /**
  * Removes unserializable keys from the state.
  * @example
