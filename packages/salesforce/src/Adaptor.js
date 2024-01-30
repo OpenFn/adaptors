@@ -829,7 +829,6 @@ export function request(path, options, callback = s => s) {
 }
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
-import { head } from 'lodash';
 
 export { axios };
 
