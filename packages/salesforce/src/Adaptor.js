@@ -783,6 +783,50 @@ export function toUTF8(input) {
   return anyAscii(input);
 }
 
+/**
+ * Send a HTTP request using connected session information.
+ *
+ * @example
+ * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
+ *   method: 'POST',
+ *   json: { inputs: [{}] },
+ * });
+ * @param {String} url - Relative or absolute URL to request from
+ * @param {Object} options - Request options
+ * @param {String} [options.method] - HTTP method to use. Defaults to GET
+ * @param {Object} [options.headers] - Object of request headers
+ * @param {Object} [options.json] - A JSON Object request body
+ * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @param {Function} callback - A callback to execute once the request is complete
+ * @returns {Operation}
+ */
+
+export function request(path, options, callback = s => s) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = newExpandReferences(
+      state,
+      path,
+      options
+    );
+    const { method = 'GET', json, body, headers } = resolvedOptions;
+
+    const requestOptions = {
+      url: resolvedPath,
+      method,
+      headers: json
+        ? { 'content-type': 'application/json', ...headers }
+        : headers,
+      body: json ? JSON.stringify(json) : body,
+    };
+
+    const result = await connection.request(requestOptions);
+
+    const nextState = composeNextState(state, result);
+
+    return callback(nextState);
+  };
+}
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
 
