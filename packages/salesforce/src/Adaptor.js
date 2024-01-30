@@ -793,10 +793,10 @@ export function toUTF8(input) {
  * });
  * @param {String} url - Relative or absolute URL to request from
  * @param {Object} options - Request options
- * @param {String} options.method - HTTP method to use. Defaults to GET
+ * @param {String} [options.method] - HTTP method to use. Defaults to GET
  * @param {Object} [options.headers] - Object of request headers
- * @param {Object} [options.json] - A JSON string request body
- * @param {Object} [options.body] - Request body
+ * @param {Object} [options.json] - A JSON Object request body
+ * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
  * @param {Function} callback - A callback to execute once the request is complete
  * @returns {Operation}
  */
@@ -809,17 +809,14 @@ export function request(path, options, callback = s => s) {
       path,
       options
     );
-    const {
-      method = 'GET',
-      json,
-      body,
-      headers = { 'content-type': 'application/json' },
-    } = resolvedOptions;
+    const { method = 'GET', json, body, headers } = resolvedOptions;
 
     const requestOptions = {
       url: resolvedPath,
       method,
-      headers,
+      headers: json
+        ? { 'content-type': 'application/json', ...headers }
+        : headers,
       body: json ? JSON.stringify(json) : body,
     };
 
@@ -832,6 +829,7 @@ export function request(path, options, callback = s => s) {
 }
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
+import { head } from 'lodash';
 
 export { axios };
 
