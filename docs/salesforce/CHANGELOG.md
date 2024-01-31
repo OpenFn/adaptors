@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 4.4.0
+
+### Minor Changes
+
+- 632b585: Add `OAuth` support
+- a12f434: Add `request(path, opts, cb)` function
+
 ## 4.3.1
 
 ### Patch Changes

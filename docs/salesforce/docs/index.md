@@ -10,8 +10,6 @@
 <dt>
     <a href="#create">create(sObject, attrs)</a></dt>
 <dt>
-    <a href="#createconnection">createConnection(state)</a></dt>
-<dt>
     <a href="#createif">createIf(logical, sObject, attrs)</a></dt>
 <dt>
     <a href="#describe">describe(sObject)</a></dt>
@@ -22,13 +20,13 @@
 <dt>
     <a href="#execute">execute(operations)</a></dt>
 <dt>
-    <a href="#login">login(state)</a></dt>
-<dt>
     <a href="#query">query(qs)</a></dt>
 <dt>
     <a href="#reference">reference(position)</a></dt>
 <dt>
     <a href="#relationship">relationship(relationshipName, externalId, dataSource)</a></dt>
+<dt>
+    <a href="#request">request(url, options, callback)</a></dt>
 <dt>
     <a href="#retrieve">retrieve(sObject, id, callback)</a></dt>
 <dt>
@@ -142,24 +140,6 @@ create('obj_name', {
 
 * * *
 
-## createConnection
-
-createConnection(state) ⇒ <code>State</code>
-
-Creates a connection.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-createConnection(state)
-```
-
-* * *
-
 ## createIf
 
 createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
@@ -251,24 +231,6 @@ Executes an operation.
 
 * * *
 
-## login
-
-login(state) ⇒ <code>State</code>
-
-Performs a login.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-login(state)
-```
-
-* * *
-
 ## query
 
 query(qs) ⇒ <code>Operation</code>
@@ -326,6 +288,33 @@ Data Sourced Value:
  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
 Fixed Value:
  relationship("relationship_name__r", "externalID on related object", "hello world")
+```
+
+* * *
+
+## request
+
+request(url, options, callback) ⇒ <code>Operation</code>
+
+Send a HTTP request using connected session information.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | Relative or absolute URL to request from |
+| options | <code>Object</code> | Request options |
+| [options.method] | <code>String</code> | HTTP method to use. Defaults to GET |
+| [options.headers] | <code>Object</code> | Object of request headers |
+| [options.json] | <code>Object</code> | A JSON Object request body |
+| [options.body] | <code>String</code> | HTTP body (in POST/PUT/PATCH methods) |
+| callback | <code>function</code> | A callback to execute once the request is complete |
+
+**Example**  
+```js
+request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
+  method: 'POST',
+  json: { inputs: [{}] },
+});
 ```
 
 * * *
