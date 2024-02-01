@@ -12,23 +12,15 @@
                 "00DU0000000Krrw!AQgAQG7lgt2Eq9yaOy_sU9e4pSwcoUTm7YGkGWTnltn0dJBkjdNhmOhdRtMMuakaO9GjXToh5b_enUIcjOGm5uU.mFhxR.R4"
             ]
         },
-        "other_oparams": {
-            "type": "object",
-            "properties": {
-                "instance_url": {
-                    "type": "string",
-                    "format": "uri",
-                    "title": "Instance URL",
-                    "description": "Your Salesforce instance URL",
-                    "writeOnly": true,
-                    "minLength": 1,
-                    "examples": [
-                        "https://na1.salesforce.com"
-                    ]
-                }
-            },
-            "required": [
-                "instance_url"
+        "instance_url": {
+            "type": "string",
+            "format": "uri",
+            "title": "Instance URL",
+            "description": "Your Salesforce instance URL",
+            "writeOnly": true,
+            "minLength": 1,
+            "examples": [
+                "https://na1.salesforce.com"
             ]
         }
     },
@@ -36,6 +28,6 @@
     "additionalProperties": true,
     "required": [
         "access_token",
-        "other_oparams"
+        "instance_url"
     ]
 }
