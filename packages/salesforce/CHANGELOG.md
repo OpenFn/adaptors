@@ -1,6 +1,15 @@
 # @openfn/language-salesforce
 
+## 4.5.0
+
+### Minor Changes
+
+- 0d2b478: Remove `instance_url` under `other_params` and put it at the root
+  level of the configuration schema
+
 ## 4.4.0
+
+Deprecated because it does not work with Lightning
 
 ### Minor Changes
 

@@ -685,8 +685,7 @@ async function createBasicAuthConnection(state) {
 }
 
 function createAccessTokenConnection(state) {
-  const { other_params, access_token } = state.configuration;
-  const { instance_url } = other_params;
+  const { instance_url, access_token } = state.configuration;
 
   const connection = getConnection(state, {
     instanceUrl: instance_url,
