@@ -127,5 +127,3 @@ export function request(method, path, params, callback = s => s) {
       });
   };
 }
-
-

@@ -3,8 +3,12 @@ import {
   expandReferences,
 } from '@openfn/language-common';
 import request from 'superagent';
-import { Log, handleError, handleResponse } from './Utils';
-
+import {
+  Log,
+  handleError,
+  handleResponse,
+  request as sendRequest,
+} from './Utils';
 
 let agent = null;
 
@@ -61,23 +65,7 @@ async function login(state) {
  * @returns {Operation}
  */
 export function getPatient(uuid, callback = false) {
-  return state => {
-    Log.info(`Searching for patient with uuid: ${uuid}`);
-    const { instanceUrl } = state.configuration;
-    const defaultQuery = { v: 'full', limit: 1 };
-    const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
-
-    return agent
-      .get(url)
-      .accept('json')
-      .query(defaultQuery)
-      .then(response => {
-        Log.success(`Found patient.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest('GET', `/ws/rest/v1/patient/${uuid}`, {}, callback);
 }
 
 /**
@@ -102,24 +90,12 @@ export function getPatient(uuid, callback = false) {
  * @returns {Operation}
  */
 export function createEncounter(data, callback = false) {
-  return state => {
-    const { instanceUrl } = state.configuration;
-    const body = expandReferences(data)(state);
-    const url = `${instanceUrl}/ws/rest/v1/encounter`;
-
-    Log.info(`Creating an encounter.`);
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(body)
-      .then(response => {
-        Log.success(`Created an encounter.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  sendRequest(
+    'POST',
+    '/ws/rest/v1/encounter',
+    { body: data, headers: { 'content-type': 'application/json' } },
+    callback
+  );
 }
 
 /**
