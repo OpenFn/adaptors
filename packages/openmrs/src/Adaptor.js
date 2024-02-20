@@ -112,18 +112,7 @@ export function createEncounter(data, callback = false) {
  * @returns {Operation}
  */
 export function get(path, query, callback = false) {
-  return state => {
-    const { instanceUrl } = state.configuration;
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedQuery = expandReferences(query)(state);
-    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
-
-    return agent
-      .get(urlPath)
-      .query(resolvedQuery)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
-  };
+  return sendRequest('GET', `/ws/rest/v1/${path}`, { query: query }, callback);
 }
 
 /**
@@ -140,20 +129,7 @@ export function get(path, query, callback = false) {
  * @returns {Operation}
  */
 export function post(path, data, callback = false) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-    const { instanceUrl } = state.configuration;
-
-    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
-
-    return agent
-      .post(urlPath)
-      .type('json')
-      .send(resolvedData)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
-  };
+  return sendRequest('POST', `/ws/rest/v1/${path}`, { body: data,  headers: { 'content-type': 'application/json' } }, callback);
 }
 
 /**
