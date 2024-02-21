@@ -1,16 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
-import request from 'superagent';
-import {
-  Log,
-  handleError,
-  handleResponse,
-  request as sendRequest,
-} from './Utils';
-
-let agent = null;
+import { execute as commonExecute } from '@openfn/language-common';
+import { request as sendRequest } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -25,32 +14,14 @@ let agent = null;
  * @returns {Operation}
  */
 export function execute(...operations) {
-  agent = null;
-
   const initialState = {
     references: [],
     data: null,
   };
 
   return state => {
-    return commonExecute(login, ...operations)({ ...initialState, ...state });
+    return commonExecute(...operations)({ ...initialState, ...state });
   };
-}
-
-/**
- * Logs in to OpenMRS, gets a session token.
- * @example
- *  login(state)
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-async function login(state) {
-  const { instanceUrl, username, password } = state.configuration;
-  agent = request.agent();
-  await agent.get(`${instanceUrl}/ws/rest/v1/session`).auth(username, password);
-
-  return state;
 }
 
 /**
@@ -90,7 +61,7 @@ export function getPatient(uuid, callback = false) {
  * @returns {Operation}
  */
 export function createEncounter(data, callback = false) {
-  sendRequest(
+  return sendRequest(
     'POST',
     '/ws/rest/v1/encounter',
     { body: data, headers: { 'content-type': 'application/json' } },
@@ -112,7 +83,7 @@ export function createEncounter(data, callback = false) {
  * @returns {Operation}
  */
 export function get(path, query, callback = false) {
-  return sendRequest('GET', `/ws/rest/v1/${path}`, { query: query }, callback);
+  return sendRequest('GET', `/ws/rest/v1/${path}`, { query }, callback);
 }
 
 /**
@@ -129,7 +100,12 @@ export function get(path, query, callback = false) {
  * @returns {Operation}
  */
 export function post(path, data, callback = false) {
-  return sendRequest('POST', `/ws/rest/v1/${path}`, { body: data,  headers: { 'content-type': 'application/json' } }, callback);
+  return sendRequest(
+    'POST',
+    `/ws/rest/v1/${path}`,
+    { body: data, headers: { 'content-type': 'application/json' } },
+    callback
+  );
 }
 
 /**
@@ -142,34 +118,7 @@ export function post(path, data, callback = false) {
  * @returns {Operation}
  */
 export function searchPatient(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    Log.info(`Searching for patient with name: ${qs.q}`);
-    const { instanceUrl } = state.configuration;
-
-    const url = `${instanceUrl}/ws/rest/v1/patient`;
-
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        const data = response.body;
-        const count = data.results.length;
-
-        if (count > 0) {
-          Log.success(
-            `Search successful. Returned ${count} patient${
-              count > 1 ? 's' : ''
-            }.`
-          );
-          return handleResponse(response, state, callback);
-        } else {
-          Log.warn(`${count} records were found.`);
-        }
-      })
-      .catch(handleError);
-  };
+  return sendRequest('GET', '/ws/rest/v1/patient', { query }, callback);
 }
 
 /**
@@ -182,35 +131,7 @@ export function searchPatient(query, callback = false) {
  * @returns {Operation}
  */
 export function searchPerson(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    Log.info(`Searching for person with name: ${qs.q}`);
-
-    const { instanceUrl } = state.configuration;
-
-    const url = `${instanceUrl}/ws/rest/v1/person`;
-
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        const data = response.body;
-        const count = data.results.length;
-
-        if (count > 0) {
-          Log.success(
-            `Search successful. Returned ${count} person${
-              count > 1 ? 's' : ''
-            }.`
-          );
-          return handleResponse(response, state, callback);
-        } else {
-          Log.warn(`${count} records were found.`);
-        }
-      })
-      .catch(handleError);
-  };
+  return sendRequest('GET', '/ws/rest/v1/person', { query }, callback);
 }
 
 /**
@@ -243,24 +164,12 @@ export function searchPerson(query, callback = false) {
  * @returns {Operation}
  */
 export function createPatient(data, callback = false) {
-  return state => {
-    const body = expandReferences(data)(state);
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/patient`;
-
-    Log.info(`Creating a patient.`);
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(body)
-      .then(response => {
-        Log.success(`Created a new patient.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest(
+    'POST',
+    '/ws/rest/v1/patient',
+    { body: data, headers: { 'content-type': 'application/json' } },
+    callback
+  );
 }
 
 /**
@@ -273,22 +182,7 @@ export function createPatient(data, callback = false) {
  * @returns {Operation}
  */
 export function getEncounter(uuid, callback = false) {
-  return state => {
-    Log.info(`Searching for encounter with uuid: ${uuid}`);
-    const { instanceUrl } = state.configuration;
-
-    const url = `${instanceUrl}/ws/rest/v1/encounter/${uuid}`;
-
-    return agent
-      .get(url)
-      .accept('json')
-      .then(response => {
-        Log.success(`Found an encounter.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest('GET', `/ws/rest/v1/encounter/${uuid}`, {}, callback);
 }
 
 /**
@@ -301,24 +195,7 @@ export function getEncounter(uuid, callback = false) {
  * @returns {Operation}
  */
 export function getEncounters(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/encounter`;
-
-    Log.info(`Searching for encounters: ${JSON.stringify(qs, null, 2)}`);
-
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        Log.success(`Found an encounter.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest('GET', '/ws/rest/v1/encounter', { query }, callback);
 }
 
 /**
@@ -350,32 +227,12 @@ export function getEncounters(query, callback = false) {
  * });
  */
 export function create(resourceType, data, callback = false) {
-  return state => {
-    Log.info(`Preparing create operation...`);
-
-    const resolvedData = expandReferences(data)(state);
-    const resolvedResourceType = expandReferences(resourceType)(state);
-
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}`;
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(resolvedData)
-      .then(response => {
-        const details = `with response ${JSON.stringify(
-          response.body,
-          null,
-          2
-        )}`;
-
-        Log.success(`Created ${resolvedResourceType} ${details}`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest(
+    'POST',
+    `/ws/rest/v1/${resourceType}`,
+    { body: data, headers: { 'content-type': 'application/json' } },
+    callback
+  );
 }
 
 /**
@@ -392,28 +249,12 @@ export function create(resourceType, data, callback = false) {
  * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
 export function update(resourceType, path, data, callback = false) {
-  return state => {
-    Log.info(`Preparing update operation...`);
-
-    const { instanceUrl } = state.configuration;
-
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-
-    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}/${resolvedPath}`;
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(resolvedData)
-      .then(response => {
-        Log.success(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
+  return sendRequest(
+    'POST',
+    `/ws/rest/v1/${resourceType}/${path}`,
+    { body: data, headers: { 'content-type': 'application/json' } },
+    callback
+  );
 }
 
 /**
@@ -454,33 +295,12 @@ export function upsert(
   data, // data supplied to the `create/update`
   callback = false // callback for the upsert itself.
 ) {
-  return state => {
-    Log.info(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-
-    return get(
-      resourceType,
-      query
-    )(state)
-      .then(resp => {
-        const resources = resp.data.body.results;
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          return create(resourceType, data)(state);
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          const path = resources[0]['uuid'];
-          return update(resourceType, path, data)(state);
-        }
-      })
-      .then(result => {
-        Log.success(`Performed a "composed upsert" on ${resourceType}`);
-        return handleResponse(result, state, callback);
-      });
-  };
+  return sendRequest(
+    'GET',
+    `/ws/rest/v1/${resourceType}`,
+    { body: data, query },
+    callback
+  );
 }
 
 export {
