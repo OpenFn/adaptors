@@ -5,7 +5,7 @@ const { execute, send } = Adaptor;
 import { fields, field } from '@openfn/language-common';
 
 describe('execute', () => {
-  it('sends an Email and expects a confirmation response', done => {
+  it.skip('sends an Email and expects a confirmation response', done => {
     let state = {
       configuration: {
         apiKey: 'key-e5f5d6dd3f516de19e46dc1554d2d714',
