@@ -36,6 +36,7 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function getPatient(uuid, callback = false) {
+  console.log(`Searching for patient with uuid: ${uuid}`);
   return sendRequest('GET', `/ws/rest/v1/patient/${uuid}`, {}, callback);
 }
 
@@ -61,6 +62,7 @@ export function getPatient(uuid, callback = false) {
  * @returns {Operation}
  */
 export function createEncounter(data, callback = false) {
+  console.log(`Creating an encounter.`)
   return sendRequest(
     'POST',
     '/ws/rest/v1/encounter',
@@ -83,6 +85,7 @@ export function createEncounter(data, callback = false) {
  * @returns {Operation}
  */
 export function get(path, query, callback = false) {
+  console.log(`Preparing get operation...`);
   return sendRequest('GET', `/ws/rest/v1/${path}`, { query }, callback);
 }
 
@@ -100,6 +103,7 @@ export function get(path, query, callback = false) {
  * @returns {Operation}
  */
 export function post(path, data, callback = false) {
+  console.log(`Preparing post operation...`);
   return sendRequest(
     'POST',
     `/ws/rest/v1/${path}`,
@@ -118,6 +122,7 @@ export function post(path, data, callback = false) {
  * @returns {Operation}
  */
 export function searchPatient(query, callback = false) {
+console.log(`Searching for patient with name: ${query?.q}`);
   return sendRequest('GET', '/ws/rest/v1/patient', { query }, callback);
 }
 
@@ -131,6 +136,7 @@ export function searchPatient(query, callback = false) {
  * @returns {Operation}
  */
 export function searchPerson(query, callback = false) {
+  console.log(`Searching for person with name: ${query?.q}`);
   return sendRequest('GET', '/ws/rest/v1/person', { query }, callback);
 }
 
@@ -164,6 +170,7 @@ export function searchPerson(query, callback = false) {
  * @returns {Operation}
  */
 export function createPatient(data, callback = false) {
+  console.log(`Creating a patient.`);
   return sendRequest(
     'POST',
     '/ws/rest/v1/patient',
@@ -182,6 +189,7 @@ export function createPatient(data, callback = false) {
  * @returns {Operation}
  */
 export function getEncounter(uuid, callback = false) {
+  console.log(`Searching for encounter with uuid: ${uuid}`);
   return sendRequest('GET', `/ws/rest/v1/encounter/${uuid}`, {}, callback);
 }
 
@@ -195,6 +203,7 @@ export function getEncounter(uuid, callback = false) {
  * @returns {Operation}
  */
 export function getEncounters(query, callback = false) {
+  console.log(`Searching for encounters: ${JSON.stringify(query, null, 2)}`);
   return sendRequest('GET', '/ws/rest/v1/encounter', { query }, callback);
 }
 
@@ -227,6 +236,7 @@ export function getEncounters(query, callback = false) {
  * });
  */
 export function create(resourceType, data, callback = false) {
+  console.log(`Preparing create operation...`);
   return sendRequest(
     'POST',
     `/ws/rest/v1/${resourceType}`,
@@ -249,6 +259,7 @@ export function create(resourceType, data, callback = false) {
  * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
 export function update(resourceType, path, data, callback = false) {
+  console.log(`Preparing update operation...`);
   return sendRequest(
     'POST',
     `/ws/rest/v1/${resourceType}/${path}`,
