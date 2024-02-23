@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { request as sendRequest } from './Utils';
 
 /**
@@ -62,7 +65,7 @@ export function getPatient(uuid, callback = false) {
  * @returns {Operation}
  */
 export function createEncounter(data, callback = false) {
-  console.log(`Creating an encounter.`)
+  console.log(`Creating an encounter.`);
   return sendRequest(
     'POST',
     '/ws/rest/v1/encounter',
@@ -122,7 +125,7 @@ export function post(path, data, callback = false) {
  * @returns {Operation}
  */
 export function searchPatient(query, callback = false) {
-console.log(`Searching for patient with name: ${query?.q}`);
+  console.log(`Searching for patient with name: ${query?.q}`);
   return sendRequest('GET', '/ws/rest/v1/patient', { query }, callback);
 }
 
@@ -306,12 +309,35 @@ export function upsert(
   data, // data supplied to the `create/update`
   callback = false // callback for the upsert itself.
 ) {
-  return sendRequest(
-    'GET',
-    `/ws/rest/v1/${resourceType}`,
-    { body: data, query },
-    callback
-  );
+  return state => {
+    console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+    return sendRequest(
+      'GET',
+      `/ws/rest/v1/${resourceType}`,
+      { query },
+      callback
+    )(state)
+      .then(resp => {
+        const resource = resp.data.results;
+        if (resource.length > 1) {
+          throw new RangeError(
+            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+          );
+        } else if (resource.length === 0) {
+          return create(resourceType, data, callback)(state);
+        } else {
+          const path = resource[0]?.uuid;
+          return update(resourceType, path, data, callback)(state);
+        }
+      })
+      .then(result => {
+        console.log(`Performed a "composed upsert" on ${resourceType}`);
+        const { body } = result;
+        const nextState = composeNextState(state, { body });
+        if (callback) return callback(nextState);
+        return nextState;
+      });
+  };
 }
 
 export {
