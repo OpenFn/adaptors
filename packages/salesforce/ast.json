@@ -221,6 +221,11 @@
             "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
           },
           {
+            "title": "example",
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
+            "caption": "Query more records if next records are available"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
