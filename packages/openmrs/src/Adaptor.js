@@ -1,8 +1,6 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-} from '@openfn/language-common';
-import { request as sendRequest } from './Utils';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -38,9 +36,19 @@ export function execute(...operations) {
  * getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
  * @returns {Operation}
  */
-export function getPatient(uuid, callback = false) {
-  console.log(`Searching for patient with uuid: ${uuid}`);
-  return sendRequest('GET', `/ws/rest/v1/patient/${uuid}`, {}, callback);
+export function getPatient(uuid, callback = s => s) {
+  return async state => {
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Searching for patient with uuid: ${resolvedUuid}`);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/patient/${resolvedUuid}`
+    );
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -64,14 +72,21 @@ export function getPatient(uuid, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function createEncounter(data, callback = false) {
-  console.log(`Creating an encounter.`);
-  return sendRequest(
-    'POST',
-    '/ws/rest/v1/encounter',
-    { body: data, headers: { 'content-type': 'application/json' } },
-    callback
-  );
+export function createEncounter(data, callback = s => s) {
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+    // console.log({resolvedResource});
+    console.log(`Creating an encounter.`);
+    const response = await request(
+      state,
+      'POST',
+      '/ws/rest/v1/encounter',
+      resolvedData
+    );
+
+    console.log(`Created encounter with new UUID: ${response.body.id}`);
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -87,9 +102,30 @@ export function createEncounter(data, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function get(path, query, callback = false) {
-  console.log(`Preparing get operation...`);
-  return sendRequest('GET', `/ws/rest/v1/${path}`, { query }, callback);
+export function get(path, query, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedQuery = {}] = expandReferences(
+      state,
+      path,
+      query
+    );
+
+    console.log(`Preparing get operation...`);
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/${resolvedResource}`,
+      {},
+      resolvedQuery
+    );
+    if (response.statusCode === 200) {
+      console.log(`Get operation successful for ${resolvedResource}...`);
+    } else {
+      console.log(`Get operation failed for ${resolvedResource} ...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -105,14 +141,29 @@ export function get(path, query, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function post(path, data, callback = false) {
-  console.log(`Preparing post operation...`);
-  return sendRequest(
-    'POST',
-    `/ws/rest/v1/${path}`,
-    { body: data, headers: { 'content-type': 'application/json' } },
-    callback
-  );
+export function post(path, data, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      path,
+      data
+    );
+    console.log(`Preparing post operation...`);
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}`,
+      resolvedData
+    );
+
+    if (response.statusCode === 201) {
+      console.log(`Successfully posted operation for ${resolvedResource}...`);
+    } else {
+      console.log(`Posting operation failed for ${resolvedResource} ...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -124,9 +175,28 @@ export function post(path, data, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPatient(query, callback = false) {
-  console.log(`Searching for patient with name: ${query?.q}`);
-  return sendRequest('GET', '/ws/rest/v1/patient', { query }, callback);
+export function searchPatient(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery = {}] = expandReferences(state, query);
+
+    console.log(`Searching for patient with name: ${resolvedQuery?.q}`);
+    const response = await request(
+      'GET',
+      '/ws/rest/v1/patient',
+      {},
+      resolvedQuery
+    );
+
+    if (response.statusCode === 200) {
+      console.log(`Successfully got patient with name ${resolvedQuery?.q}...`);
+    } else {
+      console.log(
+        `Search operation failed for patient with name ${resolvedQuery?.q} ...`
+      );
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -138,9 +208,28 @@ export function searchPatient(query, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPerson(query, callback = false) {
-  console.log(`Searching for person with name: ${query?.q}`);
-  return sendRequest('GET', '/ws/rest/v1/person', { query }, callback);
+export function searchPerson(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery = {}] = expandReferences(state, query);
+
+    console.log(`Searching for person with name: ${resolvedQuery?.q}`);
+    const response = await request(
+      'GET',
+      '/ws/rest/v1/person',
+      {},
+      resolvedQuery
+    );
+
+    if (response.statusCode === 200) {
+      console.log(`Successfully got person with name ${resolvedQuery?.q}...`);
+    } else {
+      console.log(
+        `Search operation failed for person with name ${resolvedQuery?.q} ...`
+      );
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -172,14 +261,21 @@ export function searchPerson(query, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function createPatient(data, callback = false) {
-  console.log(`Creating a patient.`);
-  return sendRequest(
-    'POST',
-    '/ws/rest/v1/patient',
-    { body: data, headers: { 'content-type': 'application/json' } },
-    callback
-  );
+export function createPatient(data, callback = s => s) {
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+    console.log(`Creating a patient.`);
+
+    const response = await request('POST', '/ws/rest/v1/person', resolvedData);
+
+    if (response.statusCode === 201) {
+      console.log(`Successfully created a patient...`);
+    } else {
+      console.log(`Failed to create a patient...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -191,9 +287,28 @@ export function createPatient(data, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounter(uuid, callback = false) {
-  console.log(`Searching for encounter with uuid: ${uuid}`);
-  return sendRequest('GET', `/ws/rest/v1/encounter/${uuid}`, {}, callback);
+export function getEncounter(uuid, callback = s => s) {
+  return async state => {
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Searching for encounter with uuid: ${resolvedUuid}`);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/${resolvedUuid}`
+    );
+    if (response.statusCode === 200) {
+      console.log(
+        `Successfully searched for encounter with uuid: ${resolvedUuid}...`
+      );
+    } else {
+      console.log(
+        `Search operation failed for encounter with uuid: ${resolvedUuid} ...`
+      );
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -205,9 +320,26 @@ export function getEncounter(uuid, callback = false) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounters(query, callback = false) {
-  console.log(`Searching for encounters: ${JSON.stringify(query, null, 2)}`);
-  return sendRequest('GET', '/ws/rest/v1/encounter', { query }, callback);
+export function getEncounters(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    console.log(`Searching for encounters: ${resolvedQuery}`);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/`,
+      {},
+      resolvedQuery
+    );
+    if (response.statusCode === 200) {
+      console.log(`Successfully searched for encounters ...`);
+    } else {
+      console.log(`Search operation failed for encounters ...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -238,14 +370,29 @@ export function getEncounters(query, callback = false) {
  *   ],
  * });
  */
-export function create(resourceType, data, callback = false) {
-  console.log(`Preparing create operation...`);
-  return sendRequest(
-    'POST',
-    `/ws/rest/v1/${resourceType}`,
-    { body: data, headers: { 'content-type': 'application/json' } },
-    callback
-  );
+export function create(resourceType, data, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      data
+    );
+    console.log(`Preparing create operation...`);
+
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}`,
+      resolvedData
+    );
+    if (response.statusCode === 201) {
+      console.log(`Successfully created operation ...`);
+    } else {
+      console.log(`Failed to create operation ...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -261,14 +408,30 @@ export function create(resourceType, data, callback = false) {
  * @example <caption>a person</caption>
  * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
-export function update(resourceType, path, data, callback = false) {
-  console.log(`Preparing update operation...`);
-  return sendRequest(
-    'POST',
-    `/ws/rest/v1/${resourceType}/${path}`,
-    { body: data, headers: { 'content-type': 'application/json' } },
-    callback
-  );
+export function update(resourceType, path, data, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedPath, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      path,
+      data
+    );
+    console.log(`Preparing update operation...`);
+
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
+      resolvedData
+    );
+    if (response.statusCode === 201) {
+      console.log(`Successfully updated operation ...`);
+    } else {
+      console.log(`Failed to update operation ...`);
+    }
+
+    return prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -307,16 +470,18 @@ export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
-  callback = false // callback for the upsert itself.
+  callback = s => s // callback for the upsert itself.
 ) {
-  return state => {
+  return async state => {
+    const [resolvedResource, resolvedData, resolvedQuery = {}] =
+      expandReferences(state, resourceType, data, query);
     console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-    return sendRequest(
+    return await request(
       'GET',
-      `/ws/rest/v1/${resourceType}`,
-      { query },
-      callback
-    )(state)
+      `/ws/rest/v1/${resolvedResource}`,
+      {},
+      resolvedQuery
+    )
       .then(resp => {
         const resource = resp.data.results;
         if (resource.length > 1) {
@@ -324,16 +489,16 @@ export function upsert(
             `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
           );
         } else if (resource.length === 0) {
-          return create(resourceType, data, callback)(state);
+          return create(resourceType, resolvedData)(state);
         } else {
           const path = resource[0]?.uuid;
-          return update(resourceType, path, data, callback)(state);
+          return update(resourceType, path, resolvedData)(state);
         }
       })
       .then(result => {
         console.log(`Performed a "composed upsert" on ${resourceType}`);
         const { body } = result;
-        const nextState = composeNextState(state, { body });
+        const nextState = prepareNextState(state, body);
         if (callback) return callback(nextState);
         return nextState;
       });
