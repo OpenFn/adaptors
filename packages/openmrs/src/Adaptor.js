@@ -181,6 +181,7 @@ export function searchPatient(query, callback = s => s) {
 
     console.log(`Searching for patient with name: ${resolvedQuery?.q}`);
     const response = await request(
+      state,
       'GET',
       '/ws/rest/v1/patient',
       {},
@@ -214,6 +215,7 @@ export function searchPerson(query, callback = s => s) {
 
     console.log(`Searching for person with name: ${resolvedQuery?.q}`);
     const response = await request(
+      state,
       'GET',
       '/ws/rest/v1/person',
       {},
@@ -266,7 +268,12 @@ export function createPatient(data, callback = s => s) {
     const [resolvedData] = expandReferences(state, data);
     console.log(`Creating a patient.`);
 
-    const response = await request('POST', '/ws/rest/v1/person', resolvedData);
+    const response = await request(
+      state,
+      'POST',
+      '/ws/rest/v1/person',
+      resolvedData
+    );
 
     if (response.statusCode === 201) {
       console.log(`Successfully created a patient...`);
@@ -424,7 +431,7 @@ export function update(resourceType, path, data, callback = s => s) {
       `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
       resolvedData
     );
-    if (response.statusCode === 201) {
+    if (response.statusCode === 200) {
       console.log(`Successfully updated operation ...`);
     } else {
       console.log(`Failed to update operation ...`);
@@ -477,26 +484,26 @@ export function upsert(
       expandReferences(state, resourceType, data, query);
     console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
     return await request(
+      state,
       'GET',
       `/ws/rest/v1/${resolvedResource}`,
       {},
       resolvedQuery
     )
       .then(resp => {
-        const resource = resp.data.results;
+        const resource = resp.body.results;
         if (resource.length > 1) {
           throw new RangeError(
             `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
           );
         } else if (resource.length === 0) {
-          return create(resourceType, resolvedData)(state);
+          return create(resolvedResource, resolvedData)(state);
         } else {
           const path = resource[0]?.uuid;
-          return update(resourceType, path, resolvedData)(state);
+          return update(resolvedResource, path, resolvedData)(state);
         }
       })
       .then(result => {
-        console.log(`Performed a "composed upsert" on ${resourceType}`);
         const { body } = result;
         const nextState = prepareNextState(state, body);
         if (callback) return callback(nextState);
