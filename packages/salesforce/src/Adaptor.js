@@ -150,33 +150,82 @@ export function retrieve(sObject, id, callback) {
  * error logs will be printed but the operation will not throw the error.
  * @public
  * @example
- * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example <caption>Query more records if next records are available</caption>
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
  * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {boolean} [options.autoFetch] - Fetch next records if available.
+ * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs) {
-  return state => {
-    const { connection } = state;
-    const resolvedQs = expandReferences(qs)(state);
-    console.log(`Executing query: ${resolvedQs}`);
+export function query(qs, options, callback = s => s) {
+  return async state => {
+    let done = false;
+    let qResult = null;
+    let result = [];
 
-    return connection.query(resolvedQs, function (err, result) {
-      if (err) {
-        const { message, errorCode } = err;
-        console.log(`Error ${errorCode}: ${message}`);
-        throw err;
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+
+    console.log(`Executing query: ${resolvedQs}`);
+    try {
+      qResult = await connection.query(resolvedQs);
+    } catch (err) {
+      const { message, errorCode } = err;
+      console.log(`Error ${errorCode}: ${message}`);
+      throw err;
+    }
+
+    if (qResult.totalSize > 0) {
+      console.log('Total records', qResult.totalSize);
+
+      while (!done) {
+        result.push(qResult);
+
+        if (qResult.done) {
+          done = true;
+        } else if (autoFetch) {
+          console.log(
+            'Fetched records so far',
+            result.map(ref => ref.records).flat().length
+          );
+          console.log('Fetching next records...');
+          try {
+            qResult = await connection.request({ url: qResult.nextRecordsUrl });
+          } catch (err) {
+            const { message, errorCode } = err;
+            console.log(`Error ${errorCode}: ${message}`);
+            throw err;
+          }
+        } else {
+          done = true;
+        }
       }
 
       console.log(
-        'Results retrieved and pushed to position [0] of the references array.'
+        'Done ✔ retrieved records',
+        result.map(ref => ref.records).flat().length
       );
+    } else {
+      console.log('No records found.');
+    }
 
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
-    });
+    console.log(
+      'Results retrieved and pushed to position [0] of the references array.'
+    );
+
+    const nextState = {
+      ...state,
+      references: [result, ...state.references],
+    };
+    return callback(nextState);
   };
 }
 
