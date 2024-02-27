@@ -167,9 +167,10 @@ export function del(path, params, callback) {
  * @function
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
+ * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function parseXML(body, script) {
+export function parseXML(body, script, callback = s => s) {
   return state => {
     const resolvedBody = expandReferences(body)(state);
     const $ = cheerio.load(resolvedBody);
@@ -179,12 +180,12 @@ export function parseXML(body, script) {
       const result = script($);
       try {
         const r = JSON.parse(result);
-        return composeNextState(state, r);
+        return callback(composeNextState(state, r));
       } catch (e) {
-        return composeNextState(state, { body: result });
+        return callback(composeNextState(state, { body: result }));
       }
     } else {
-      return composeNextState(state, { body: resolvedBody });
+      return callback(composeNextState(state, { body: resolvedBody }));
     }
   };
 }
