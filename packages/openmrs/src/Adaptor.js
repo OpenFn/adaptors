@@ -504,10 +504,8 @@ export function upsert(
         }
       })
       .then(result => {
-        const { body } = result;
-        const nextState = prepareNextState(state, body);
-        if (callback) return callback(nextState);
-        return nextState;
+        const { body } = result.response;
+        return prepareNextState(state, body, callback);
       });
   };
 }
