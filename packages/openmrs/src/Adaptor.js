@@ -40,14 +40,21 @@ export function getPatient(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
     console.log(`Searching for patient with uuid: ${resolvedUuid}`);
+    try {
+      const response = await request(
+        state,
+        'GET',
+        `/ws/rest/v1/patient/${resolvedUuid}`
+      );
+      console.log(
+        `Searching for patient with uuid: ${resolvedUuid} was successful`
+      );
 
-    const response = await request(
-      state,
-      'GET',
-      `/ws/rest/v1/patient/${resolvedUuid}`
-    );
-
-    return prepareNextState(state, response, callback);
+      return prepareNextState(state, response, callback);
+    } catch (e) {
+      console.log(`Searching for patient with uuid: ${resolvedUuid} failed`);
+      throw e;
+    }
   };
 }
 
@@ -75,17 +82,20 @@ export function getPatient(uuid, callback = s => s) {
 export function createEncounter(data, callback = s => s) {
   return async state => {
     const [resolvedData] = expandReferences(state, data);
-    // console.log({resolvedResource});
     console.log(`Creating an encounter.`);
-    const response = await request(
-      state,
-      'POST',
-      '/ws/rest/v1/encounter',
-      resolvedData
-    );
-
-    console.log(`Created encounter with new UUID: ${response.body.id}`);
-    return prepareNextState(state, response, callback);
+    try {
+      const response = await request(
+        state,
+        'POST',
+        '/ws/rest/v1/encounter',
+        resolvedData
+      );
+      console.log(`Successfully created an encounter...`);
+      return prepareNextState(state, response, callback);
+    } catch (e) {
+      console.log(`Failed to create an encounter...`);
+      throw e;
+    }
   };
 }
 
@@ -111,20 +121,20 @@ export function get(path, query, callback = s => s) {
     );
 
     console.log(`Preparing get operation...`);
-    const response = await request(
-      state,
-      'GET',
-      `/ws/rest/v1/${resolvedResource}`,
-      {},
-      resolvedQuery
-    );
-    if (response.statusCode === 200) {
+    try {
+      const response = await request(
+        state,
+        'GET',
+        `/ws/rest/v1/${resolvedResource}`,
+        {},
+        resolvedQuery
+      );
       console.log(`Get operation successful for ${resolvedResource}...`);
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (e) {
       console.log(`Get operation failed for ${resolvedResource} ...`);
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -149,20 +159,19 @@ export function post(path, data, callback = s => s) {
       data
     );
     console.log(`Preparing post operation...`);
-    const response = await request(
-      state,
-      'POST',
-      `/ws/rest/v1/${resolvedResource}`,
-      resolvedData
-    );
-
-    if (response.statusCode === 201) {
-      console.log(`Successfully posted operation for ${resolvedResource}...`);
-    } else {
-      console.log(`Posting operation failed for ${resolvedResource} ...`);
+    try {
+      const response = await request(
+        state,
+        'POST',
+        `/ws/rest/v1/${resolvedResource}`,
+        resolvedData
+      );
+      console.log(`Post operation successful for ${resolvedResource}...`);
+      return prepareNextState(state, response, callback);
+    } catch (e) {
+      console.log(`Post operation failed for ${resolvedResource} ...`);
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -180,23 +189,24 @@ export function searchPatient(query, callback = s => s) {
     const [resolvedQuery = {}] = expandReferences(state, query);
 
     console.log(`Searching for patient with name: ${resolvedQuery?.q}`);
-    const response = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {},
-      resolvedQuery
-    );
-
-    if (response.statusCode === 200) {
-      console.log(`Successfully got patient with name ${resolvedQuery?.q}...`);
-    } else {
+    try {
+      const response = await request(
+        state,
+        'GET',
+        '/ws/rest/v1/patient',
+        {},
+        resolvedQuery
+      );
+      console.log(
+        `Search operation successful for patient with name ${resolvedQuery?.q}...`
+      );
+      return prepareNextState(state, response, callback);
+    } catch (error) {
       console.log(
         `Search operation failed for patient with name ${resolvedQuery?.q} ...`
       );
+      throw error;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -214,23 +224,24 @@ export function searchPerson(query, callback = s => s) {
     const [resolvedQuery = {}] = expandReferences(state, query);
 
     console.log(`Searching for person with name: ${resolvedQuery?.q}`);
-    const response = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/person',
-      {},
-      resolvedQuery
-    );
-
-    if (response.statusCode === 200) {
-      console.log(`Successfully got person with name ${resolvedQuery?.q}...`);
-    } else {
-      console.log(
-        `Search operation failed for person with name ${resolvedQuery?.q} ...`
+    try {
+      const response = await request(
+        state,
+        'GET',
+        '/ws/rest/v1/person',
+        {},
+        resolvedQuery
       );
+      console.log(
+        `Search operation successful for person with name ${resolvedQuery?.q}...`
+      );
+      return prepareNextState(state, response, callback);
+    } catch (error) {
+      console.log(
+        `Failed searching for person with name ${resolvedQuery?.q} ...`
+      );
+      throw error;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -267,21 +278,19 @@ export function createPatient(data, callback = s => s) {
   return async state => {
     const [resolvedData] = expandReferences(state, data);
     console.log(`Creating a patient.`);
-
-    const response = await request(
-      state,
-      'POST',
-      '/ws/rest/v1/person',
-      resolvedData
-    );
-
-    if (response.statusCode === 201) {
+    try {
+      const response = await request(
+        state,
+        'POST',
+        '/ws/rest/v1/patient',
+        resolvedData
+      );
       console.log(`Successfully created a patient...`);
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (error) {
       console.log(`Failed to create a patient...`);
+      throw error;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -298,23 +307,22 @@ export function getEncounter(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
     console.log(`Searching for encounter with uuid: ${resolvedUuid}`);
-
-    const response = await request(
-      state,
-      'GET',
-      `/ws/rest/v1/encounter/${resolvedUuid}`
-    );
-    if (response.statusCode === 200) {
+    try {
+      const response = await request(
+        state,
+        'GET',
+        `/ws/rest/v1/encounter/${resolvedUuid}`
+      );
       console.log(
         `Successfully searched for encounter with uuid: ${resolvedUuid}...`
       );
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (e) {
       console.log(
         `Search operation failed for encounter with uuid: ${resolvedUuid} ...`
       );
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -331,21 +339,20 @@ export function getEncounters(query, callback = s => s) {
   return async state => {
     const [resolvedQuery] = expandReferences(state, query);
     console.log(`Searching for encounters: ${resolvedQuery}`);
-
-    const response = await request(
-      state,
-      'GET',
-      `/ws/rest/v1/encounter/`,
-      {},
-      resolvedQuery
-    );
-    if (response.statusCode === 200) {
+    try {
+      const response = await request(
+        state,
+        'GET',
+        `/ws/rest/v1/encounter`,
+        {},
+        resolvedQuery
+      );
       console.log(`Successfully searched for encounters ...`);
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (e) {
       console.log(`Search operation failed for encounters ...`);
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -386,19 +393,19 @@ export function create(resourceType, data, callback = s => s) {
     );
     console.log(`Preparing create operation...`);
 
-    const response = await request(
-      state,
-      'POST',
-      `/ws/rest/v1/${resolvedResource}`,
-      resolvedData
-    );
-    if (response.statusCode === 201) {
+    try {
+      const response = await request(
+        state,
+        'POST',
+        `/ws/rest/v1/${resolvedResource}`,
+        resolvedData
+      );
       console.log(`Successfully created operation ...`);
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (e) {
       console.log(`Failed to create operation ...`);
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -424,20 +431,19 @@ export function update(resourceType, path, data, callback = s => s) {
       data
     );
     console.log(`Preparing update operation...`);
-
-    const response = await request(
-      state,
-      'POST',
-      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
-      resolvedData
-    );
-    if (response.statusCode === 200) {
+    try {
+      const response = await request(
+        state,
+        'POST',
+        `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
+        resolvedData
+      );
       console.log(`Successfully updated operation ...`);
-    } else {
+      return prepareNextState(state, response, callback);
+    } catch (e) {
       console.log(`Failed to update operation ...`);
+      throw e;
     }
-
-    return prepareNextState(state, response, callback);
   };
 }
 
@@ -494,7 +500,7 @@ export function upsert(
         const resource = resp.body.results;
         if (resource.length > 1) {
           throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+            `Cannot upsert on non-unique attribute. The operation found more than one records for your request.`
           );
         } else if (resource.length === 0) {
           return create(resolvedResource, resolvedData)(state);
