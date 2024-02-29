@@ -327,7 +327,7 @@ export function bulk(sObject, operation, options, records) {
     const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
 
     const [resolvedSObject, resolvedOperation, resolvedRecords] =
-      expandReferences(state, sObject, operation, records);
+      newExpandReferences(state, sObject, operation, records);
 
     if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
@@ -336,10 +336,10 @@ export function bulk(sObject, operation, options, records) {
       return state;
     }
 
-    if (records.length > 10000)
+    if (resolvedRecords.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(records, 10000);
+    const chunkedBatches = chunk(resolvedRecords, 10000);
 
     return Promise.all(
       chunkedBatches.map(
