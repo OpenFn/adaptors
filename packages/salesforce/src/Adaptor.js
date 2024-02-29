@@ -318,26 +318,27 @@ export function bulkQuery(qs, options, callback) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
- * @param {Function} fun - A function which takes state and returns an array.
+ * @param {Function} array - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, fun) {
   return state => {
     const { connection } = state;
     const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
-    const finalAttrs = fun(state);
+    
+    const [sObject, operation, options, records] = expandReferences(state, sObject, operation, options, records);
 
-    if (allowNoOp && finalAttrs.length === 0) {
+    if (allowNoOp && records.length === 0) {
       console.info(
         `No items in ${sObject} array. Skipping bulk ${operation} operation.`
       );
       return state;
     }
 
-    if (finalAttrs.length > 10000)
+    if (records.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(finalAttrs, 10000);
+    const chunkedBatches = chunk(records, 10000);
 
     return Promise.all(
       chunkedBatches.map(
