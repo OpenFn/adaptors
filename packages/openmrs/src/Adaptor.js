@@ -39,22 +39,21 @@ export function execute(...operations) {
 export function getPatient(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
-    console.log(`Searching for patient with uuid: ${resolvedUuid}`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        `/ws/rest/v1/patient/${resolvedUuid}`
-      );
-      console.log(
-        `Searching for patient with uuid: ${resolvedUuid} was successful`
-      );
+    console.log(`Fetching patient by uuid: ${resolvedUuid}`);
 
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Searching for patient with uuid: ${resolvedUuid} failed`);
-      throw e;
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/patient/${resolvedUuid}`
+    );
+
+    console.log(response);
+
+    if (response.statusCode === 200) {
+      console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
     }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -82,20 +81,18 @@ export function getPatient(uuid, callback = s => s) {
 export function createEncounter(data, callback = s => s) {
   return async state => {
     const [resolvedData] = expandReferences(state, data);
+
     console.log(`Creating an encounter.`);
-    try {
-      const response = await request(
-        state,
-        'POST',
-        '/ws/rest/v1/encounter',
-        resolvedData
-      );
-      console.log(`Successfully created an encounter...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Failed to create an encounter...`);
-      throw e;
-    }
+
+    const response = await request(
+      state,
+      'POST',
+      '/ws/rest/v1/encounter',
+      resolvedData
+    );
+
+    console.log(`Created encounter with new UUID: ${response.body.id}`);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -114,27 +111,29 @@ export function createEncounter(data, callback = s => s) {
  */
 export function get(path, query, callback = s => s) {
   return async state => {
-    const [resolvedResource, resolvedQuery = {}] = expandReferences(
+    const [resolvedPath, resolvedQuery = {}] = expandReferences(
       state,
       path,
       query
     );
 
-    console.log(`Preparing get operation...`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        `/ws/rest/v1/${resolvedResource}`,
-        {},
-        resolvedQuery
-      );
-      console.log(`Get operation successful for ${resolvedResource}...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Get operation failed for ${resolvedResource} ...`);
-      throw e;
-    }
+    console.log(`Sending an HTTP GET to ${resolvedPath}`);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/${resolvedPath}`,
+      {},
+      resolvedQuery
+    );
+
+    // TODO: later decide if we want to throw for no-results.
+    // (This could be introduced as an option for this function.)
+    // if (response.body.results.length == 0) {
+    //   throw `Get operation returned no results for ${resolvedResource}.`;
+    // }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -153,34 +152,27 @@ export function get(path, query, callback = s => s) {
  */
 export function post(path, data, callback = s => s) {
   return async state => {
-    const [resolvedResource, resolvedData] = expandReferences(
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
+
+    console.log(`Sending an HTTP post to ${resolvedPath}`);
+
+    const response = await request(
       state,
-      path,
-      data
+      'POST',
+      `/ws/rest/v1/${resolvedPath}`,
+      resolvedData
     );
-    console.log(`Preparing post operation...`);
-    try {
-      const response = await request(
-        state,
-        'POST',
-        `/ws/rest/v1/${resolvedResource}`,
-        resolvedData
-      );
-      console.log(`Post operation successful for ${resolvedResource}...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Post operation failed for ${resolvedResource} ...`);
-      throw e;
-    }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Fetch all non-retired patients that match any specified parameters
  * @example
- * searchPatient({ q: Sarah })
+ * searchPatient({ q: Sarah, limit: 2 })
  * @function
- * @param {object} query - Object with query for the patient
+ * @param {object} query - A query object with a query string "q" and an optional limit "limit".
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
@@ -188,32 +180,30 @@ export function searchPatient(query, callback = s => s) {
   return async state => {
     const [resolvedQuery = {}] = expandReferences(state, query);
 
-    console.log(`Searching for patient with name: ${resolvedQuery?.q}`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        '/ws/rest/v1/patient',
-        {},
-        resolvedQuery
-      );
-      console.log(
-        `Search operation successful for patient with name ${resolvedQuery?.q}...`
-      );
-      return prepareNextState(state, response, callback);
-    } catch (error) {
-      console.log(
-        `Search operation failed for patient with name ${resolvedQuery?.q} ...`
-      );
-      throw error;
+    console.log('Searching for patient with query:', resolvedQuery);
+
+    const response = await request(
+      state,
+      'GET',
+      '/ws/rest/v1/patient',
+      {},
+      resolvedQuery
+    );
+
+    if (response.body.results.length == 0) {
+      throw `Search operation failed to find patient with query string: ${resolvedQuery?.q}`;
+    } else {
+      console.log(`Found patient with query string: ${resolvedQuery?.q}.`);
     }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Fetch all non-retired persons that match any specified parameters
  * @example
- * searchPerson({ q: Sarah })
+ * searchPerson({ q: Hunter, limit: 3 })
  * @function
  * @param {object} query - object with query for the person
  * @param {function} [callback] - Optional callback to handle the response
@@ -223,25 +213,23 @@ export function searchPerson(query, callback = s => s) {
   return async state => {
     const [resolvedQuery = {}] = expandReferences(state, query);
 
-    console.log(`Searching for person with name: ${resolvedQuery?.q}`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        '/ws/rest/v1/person',
-        {},
-        resolvedQuery
-      );
-      console.log(
-        `Search operation successful for person with name ${resolvedQuery?.q}...`
-      );
-      return prepareNextState(state, response, callback);
-    } catch (error) {
-      console.log(
-        `Failed searching for person with name ${resolvedQuery?.q} ...`
-      );
-      throw error;
+    console.log(`Searching for person with query:`, resolvedQuery);
+
+    const response = await request(
+      state,
+      'GET',
+      '/ws/rest/v1/person',
+      {},
+      resolvedQuery
+    );
+
+    if (response.body.results.length == 0) {
+      throw `Search operation failed to find person with query string: ${resolvedQuery?.q}`;
+    } else {
+      console.log(`Found person with query string: ${resolvedQuery?.q}.`);
     }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -278,19 +266,19 @@ export function createPatient(data, callback = s => s) {
   return async state => {
     const [resolvedData] = expandReferences(state, data);
     console.log(`Creating a patient.`);
-    try {
-      const response = await request(
-        state,
-        'POST',
-        '/ws/rest/v1/patient',
-        resolvedData
-      );
-      console.log(`Successfully created a patient...`);
-      return prepareNextState(state, response, callback);
-    } catch (error) {
-      console.log(`Failed to create a patient...`);
-      throw error;
-    }
+
+    const response = await request(
+      state,
+      'POST',
+      '/ws/rest/v1/person',
+      resolvedData
+    );
+
+    console.log(
+      `Successfully created a patient with UUID: ${response?.body?.uuid}`
+    );
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -306,30 +294,26 @@ export function createPatient(data, callback = s => s) {
 export function getEncounter(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
-    console.log(`Searching for encounter with uuid: ${resolvedUuid}`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        `/ws/rest/v1/encounter/${resolvedUuid}`
-      );
-      console.log(
-        `Successfully searched for encounter with uuid: ${resolvedUuid}...`
-      );
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(
-        `Search operation failed for encounter with uuid: ${resolvedUuid} ...`
-      );
-      throw e;
-    }
+    console.log(`Fetching encounter with UUID: ${resolvedUuid}`);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/${resolvedUuid}`
+    );
+
+    console.log(
+      `Successfully retrieved for encounter with UUID: ${resolvedUuid}`
+    );
+
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Gets encounters matching params
  * @example
- * getEncounters({patient: "123", fromdate: "2023-05-18"})
+ * getEncounters({ patient: "123", fromdate: "2023-05-18" })
  * @function
  * @param {object} query - Object for the patient
  * @param {function} [callback] - Optional callback to handle the response
@@ -338,21 +322,23 @@ export function getEncounter(uuid, callback = s => s) {
 export function getEncounters(query, callback = s => s) {
   return async state => {
     const [resolvedQuery] = expandReferences(state, query);
-    console.log(`Searching for encounters: ${resolvedQuery}`);
-    try {
-      const response = await request(
-        state,
-        'GET',
-        `/ws/rest/v1/encounter`,
-        {},
-        resolvedQuery
-      );
-      console.log(`Successfully searched for encounters ...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Search operation failed for encounters ...`);
-      throw e;
+    console.log('Fetching encounters by query', resolvedQuery);
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/`,
+      {},
+      resolvedQuery
+    );
+
+    // TODO - we could also argue that this should NOT throw.
+    if (response.body.results.length == 0) {
+      throw `Fetch encounters returned zero results`;
     }
+
+    console.log(`Successfully retrieved encounter`);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -391,21 +377,18 @@ export function create(resourceType, data, callback = s => s) {
       resourceType,
       data
     );
-    console.log(`Preparing create operation...`);
+    console.log('Preparing to create', resolvedResource);
 
-    try {
-      const response = await request(
-        state,
-        'POST',
-        `/ws/rest/v1/${resolvedResource}`,
-        resolvedData
-      );
-      console.log(`Successfully created operation ...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Failed to create operation ...`);
-      throw e;
-    }
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}`,
+      resolvedData
+    );
+
+    console.log('Successfully created', resolvedResource);
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -430,20 +413,18 @@ export function update(resourceType, path, data, callback = s => s) {
       path,
       data
     );
-    console.log(`Preparing update operation...`);
-    try {
-      const response = await request(
-        state,
-        'POST',
-        `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
-        resolvedData
-      );
-      console.log(`Successfully updated operation ...`);
-      return prepareNextState(state, response, callback);
-    } catch (e) {
-      console.log(`Failed to update operation ...`);
-      throw e;
-    }
+    console.log('Preparing to update', resolvedResource);
+
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
+      resolvedData
+    );
+
+    console.log('Successfully updated', resolvedResource);
+
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -488,7 +469,12 @@ export function upsert(
   return async state => {
     const [resolvedResource, resolvedData, resolvedQuery = {}] =
       expandReferences(state, resourceType, data, query);
-    console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+
+    console.log(
+      "Preparing composed upsert (via 'get' then 'create' OR 'update') on",
+      resolvedResource
+    );
+
     return await request(
       state,
       'GET',
@@ -500,11 +486,13 @@ export function upsert(
         const resource = resp.body.results;
         if (resource.length > 1) {
           throw new RangeError(
-            `Cannot upsert on non-unique attribute. The operation found more than one records for your request.`
+            `Found more than one record for your request; cannot upsert on non-unique attribute.`
           );
         } else if (resource.length === 0) {
+          console.log(`No ${resolvedResource} found.`);
           return create(resolvedResource, resolvedData)(state);
         } else {
+          console.log(`One ${resolvedResource} found.`);
           const path = resource[0]?.uuid;
           return update(resolvedResource, path, resolvedData)(state);
         }

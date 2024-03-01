@@ -17,10 +17,6 @@ export function request(state, method, path, data, params) {
   const { instanceUrl, username, password } = state.configuration;
   const headers = makeBasicAuthHeader(username, password);
 
-  const errors = {
-    404: 'Page not found',
-  };
-
   const options = {
     body: data,
 
@@ -32,8 +28,6 @@ export function request(state, method, path, data, params) {
     query: params,
 
     parseAs: 'json',
-
-    errors,
   };
 
   const url = `${instanceUrl}${path}`;
