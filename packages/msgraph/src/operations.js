@@ -1,16 +1,63 @@
 
 // TODO this import maybe needs to be common/util
 // if the main export only exports operations
-import { operation } from '@openfn/language-common'
+import { operation, execute as commonExecute } from '@openfn/language-common'
 import * as impl from './impl';
 import { request } from './Utils';
 
-// overide the request handler
-// Difficult: request itself has quite a bit of logic that's worth testing
-// including side effects
-// Really I only want to mock out hte actual fetch
-export const _setMocks = () => {
+let customHandler;
 
+// TODO I'd quite like to exclude this from the  build?
+export const setRequestHandler = (fn) => {
+  customHandler = fn
+}
+
+// TODO need to work out the best pattern for this
+const getRequestHandler = () => {
+  return customHandler || request;
+}
+
+/**
+ * Execute a sequence of operations.
+ * Wraps `language-common/execute` to make working with this API easier.
+ * @example
+ * execute(
+ *   create('foo'),
+ *   delete('bar')
+ * )(state)
+ * @private
+ * @param {Operations} operations - Operations to be performed.
+ * @returns {Operation}
+ */
+export function execute(...operations) {
+  const initialState = {
+    references: [],
+    data: null,
+    drives: {},
+  };
+
+  const cleanup = finalState => {
+    if (finalState?.buffer) {
+      delete finalState.buffer;
+    }
+    if (finalState?.drives) {
+      delete finalState.drives;
+    }
+
+    return finalState;
+  };
+
+  return state => {
+    return commonExecute(...operations)({
+      ...initialState,
+      ...state,
+    })
+      .then(cleanup)
+      .catch(error => {
+        cleanup(state);
+        throw error;
+      });
+  };
 }
 
 /**
@@ -24,8 +71,8 @@ export const _setMocks = () => {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export const  create = operation((state, resource, data, callback) => {
-  return impl.create(state, request, resource, data, callback)
+export const create = operation((state, resource, data, callback) => {
+  return impl.create(state, getRequestHandler(), resource, data, callback)
 })
 
 /**
@@ -40,7 +87,7 @@ export const  create = operation((state, resource, data, callback) => {
  * @returns {Operation}
  */
 export function get(state, path, query, callback) {
-  return impl.get(state, request, path, query, callback)
+  return impl.get(state, getRequestHandler(), path, query, callback)
 }
 
 
@@ -61,6 +108,6 @@ export function get(state, path, query, callback) {
  * @param {function} [callback = s => s] (Optional) Callback function
  * @return {Operation}
  */
-export function getDrive(specifier, name, callback) {
-  return impl.getDrive(state, request, specifier, name, callback)
-}
+export const getDrive = operation((state, specifier, name, callback) => {
+  return impl.getDrive(state, getRequestHandler(), specifier, name, callback)
+})

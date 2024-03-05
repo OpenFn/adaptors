@@ -1,4 +1,4 @@
-import { execute as commonExecute } from '@openfn/language-common';
+// TODO all this is deprecated now..
 import { expandReferences } from '@openfn/language-common/util';
 
 import {
@@ -9,48 +9,48 @@ import {
   assertResources,
 } from './Utils';
 
-/**
- * Execute a sequence of operations.
- * Wraps `language-common/execute` to make working with this API easier.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
- * @private
- * @param {Operations} operations - Operations to be performed.
- * @returns {Operation}
- */
-export function execute(...operations) {
-  const initialState = {
-    references: [],
-    data: null,
-    drives: {},
-  };
+// /**
+//  * Execute a sequence of operations.
+//  * Wraps `language-common/execute` to make working with this API easier.
+//  * @example
+//  * execute(
+//  *   create('foo'),
+//  *   delete('bar')
+//  * )(state)
+//  * @private
+//  * @param {Operations} operations - Operations to be performed.
+//  * @returns {Operation}
+//  */
+// export function execute(...operations) {
+//   const initialState = {
+//     references: [],
+//     data: null,
+//     drives: {},
+//   };
 
-  const cleanup = finalState => {
-    if (finalState?.buffer) {
-      delete finalState.buffer;
-    }
-    if (finalState?.drives) {
-      delete finalState.drives;
-    }
+//   const cleanup = finalState => {
+//     if (finalState?.buffer) {
+//       delete finalState.buffer;
+//     }
+//     if (finalState?.drives) {
+//       delete finalState.drives;
+//     }
 
-    return finalState;
-  };
+//     return finalState;
+//   };
 
-  return state => {
-    return commonExecute(...operations)({
-      ...initialState,
-      ...state,
-    })
-      .then(cleanup)
-      .catch(error => {
-        cleanup(state);
-        throw error;
-      });
-  };
-}
+//   return state => {
+//     return commonExecute(...operations)({
+//       ...initialState,
+//       ...state,
+//     })
+//       .then(cleanup)
+//       .catch(error => {
+//         cleanup(state);
+//         throw error;
+//       });
+//   };
+// }
 
 /**
  * Get the contents or metadata of a folder.

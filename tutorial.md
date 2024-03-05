@@ -85,6 +85,7 @@ describe('getDrive', () => {
       drives: {}
     };
     
+    // We could add test assertions in the mock if we wanted
     const mockRequest = async () => fixtures.driveResponse;
 
     // Call the implementation with the mock

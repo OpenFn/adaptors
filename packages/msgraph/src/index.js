@@ -1,4 +1,2 @@
-import * as Adaptor from './Adaptor';
+import * as Adaptor from './operations';
 export default Adaptor;
-
-export * from './Adaptor';
