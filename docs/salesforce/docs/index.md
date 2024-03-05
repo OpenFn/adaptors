@@ -2,7 +2,7 @@
 
 <dl>
 <dt>
-    <a href="#bulk">bulk(sObject, operation, options, fun)</a></dt>
+    <a href="#bulk">bulk(sObject, operation, options, records)</a></dt>
 <dt>
     <a href="#bulkquery">bulkQuery(qs, options, callback)</a></dt>
 <dt>
@@ -44,7 +44,7 @@
 
 ## bulk
 
-bulk(sObject, operation, options, fun) ⇒ <code>Operation</code>
+bulk(sObject, operation, options, records) ⇒ <code>Operation</code>
 
 Create and execute a bulk job.
 
@@ -54,7 +54,7 @@ Create and execute a bulk job.
 | sObject | <code>String</code> | API name of the sObject. |
 | operation | <code>String</code> | The bulk operation to be performed |
 | options | <code>Object</code> | Options passed to the bulk api. |
-| fun | <code>function</code> | A function which takes state and returns an array. |
+| records | <code>function</code> | an array of records, or a function which returns an array. |
 
 **Example**  
 ```js
