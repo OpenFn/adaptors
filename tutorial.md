@@ -2,7 +2,7 @@
 
 A nice clean presentation about how I'm thinking about next gen adaptors.
 
-## Features
+### Features
 
 Here's what I've introduced
 
@@ -11,7 +11,7 @@ Here's what I've introduced
 * Real runtime/job tests
 * A pattern for mocking (probably better than demanding docker containers?)
 
-## Motivations
+### Motivations
 
 Here are the problems I'm trying to solve
 
@@ -21,7 +21,7 @@ Here are the problems I'm trying to solve
 * Encouraging good documentation _in the right place_
   * I see lots of problems of devs documenting the wrong functions, wasting time and energy
 
-## Examples
+### Examples
 
 I've started implementing this stuff in `msgraph` (and common) to see how it all comes together
 
@@ -29,7 +29,7 @@ I should really push this further and will try and spend some time on it before 
 
 Maybe `salesforce`, `dhis2` or `http` would be better examples?
 
-## Issues
+### Issues
 
 Here's what's not right yet:
 
@@ -42,7 +42,7 @@ Here's what's not right yet:
   - The setclient function on the adaptor is a bit awkward
   - Can we exclude the setClient function from the final build?
 
-## Operation Factories
+### Operation Factories
 
 Here's an operation factory
 ```js
@@ -56,7 +56,7 @@ Why is this good?
 - There's less complicated nesting of arrow functions
 - It's clear and explicit that this is an Operation
 
-## Seperate the implementation
+### Seperate the implementation
 
 This makes it really easy to write unit tests against an implementation. You just pass a mock client in your tests.
 
@@ -96,7 +96,7 @@ describe('getDrive', () => {
 
 The ability to mock the implementation like this also enables real runtime testing
 
-## Real runtime tests
+### Real runtime tests
 
 I really hate the existing test syntax we use right now. What I actually want to do is write a job and pass it to the actual run time so execution.
 
@@ -108,7 +108,7 @@ First, we create an example job in a source file
 ```js
 // examples.get-drive.js
 /**
- * A simple test job which gets a drive
+ * A simple test job which gets a drive by id
  */
 getDrive((
   state) => ({ id: state.id }), // get the drive id from state
@@ -158,7 +158,7 @@ Note: there is an alternative to all this for real runtime tests. It should be p
 
 I think it's a lot harder to map and mock the different request URLs, but it may be a viable option.
 
-## Examples
+### Examples
 
 There's one other benefit of this approach.
 
@@ -168,7 +168,7 @@ But we should also be able to load these in docusaurus and present them in docs.
 
 Surley we can take advantage of this?
 
-## Future Work & Gripes
+### Future Work & Gripes
 
 Here's some other stuff we need to look at
 
@@ -194,7 +194,7 @@ Here's some other stuff we need to look at
   - Or, a clear policy for what constitutes a major version bump
   - Configuration schema is a big sticking point here
 
-## Documentation
+### Documentation
 
 This is probably a different consideration. But basically I want to rip the doc site up and start again.
 
