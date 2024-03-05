@@ -37,6 +37,10 @@ Here's what's not right yet:
 * Expanding references. I'd really like to standardise and simplify this further
   - jsdoc path vs dataValue() vs open function
   - I am sure that you can just make expand references read '$a.b.c' as a jsonpath
+* I'm not totally sold on some parts of the mocking pattern
+  - Getting mock data feels a bit hard (although there may be an answer to that here somewhere)
+  - The setclient function on the adaptor is a bit awkward
+  - Can we exclude the setClient function from the final build?
 
 ## Operation Factories
 

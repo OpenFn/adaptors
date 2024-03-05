@@ -2,7 +2,8 @@
 // ie, everything you can call from job code
 import { JSONPath } from 'jsonpath-plus';
 
-import { operation, asData } from './Adaptor';
+import { asData } from './Adaptor';
+import { operation } from './util';
 
 /**
  * Creates a custom step (or operation) for more flexible job writing.

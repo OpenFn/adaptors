@@ -1,13 +1,12 @@
+import { execute as commonExecute } from '@openfn/language-common'
+import { operation } from '@openfn/language-common/util'
 
-// TODO this import maybe needs to be common/util
-// if the main export only exports operations
-import { operation, execute as commonExecute } from '@openfn/language-common'
 import * as impl from './impl';
-import { request } from './Utils';
+import { request } from './utils';
 
 let customHandler;
 
-// TODO I'd quite like to exclude this from the  build?
+// TODO I'd quite like to exclude this from the build?
 export const setRequestHandler = (fn) => {
   customHandler = fn
 }
@@ -20,14 +19,6 @@ const getRequestHandler = () => {
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
- * @private
- * @param {Operations} operations - Operations to be performed.
- * @returns {Operation}
  */
 export function execute(...operations) {
   const initialState = {
@@ -61,7 +52,7 @@ export function execute(...operations) {
 }
 
 /**
- * Create some resource in msgraph
+ * Create some resource in msgraph.
  * @public
  * @example
  * create("applications", {"displayName": "My App"})
@@ -86,16 +77,16 @@ export const create = operation((state, resource, data, callback) => {
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function get(state, path, query, callback) {
+export const get = operation((state, path, query, callback) => {
   return impl.get(state, getRequestHandler(), path, query, callback)
-}
+})
 
 
 /**
  * Get a Drive or SharePoint document library. The drive metadata will be written
  * to state.drives, where it can be used by other adaptor functions.
  * Pass { id } to get a drive by id or { id, owner } to get default drive for
- * some parent resource, like a group
+ * some parent resource, like a group.
  * @public
  * @example <caption>Get a drive by ID</caption>
  * getDrive({ id: "YXzpkoLwR06bxC8tNdg71m" })
@@ -111,3 +102,91 @@ export function get(state, path, query, callback) {
 export const getDrive = operation((state, specifier, name, callback) => {
   return impl.getDrive(state, getRequestHandler(), specifier, name, callback)
 })
+
+/**
+ * Get the contents or metadata of a folder.
+ * @public
+ * @example <caption>Get a folder by ID</caption>
+ * getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
+ * @example <caption>Get a folder for a named drive by id</caption>
+ * getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
+ * @param {string} pathOrId - A path to a folder or folder id
+ * @param {object} options - (Optional) Query parameters
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
+export const getFolder = operation((state, pathOrId, options, callback) => {
+  return impl.getFolder(state, getRequestHandler(), pathOrId, options, callback)
+});
+
+
+/**
+ * Get file metadata or file content.
+ * @public
+ * @example <caption>Get a file by ID</caption>
+ * getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
+ * @example <caption>Get a file for a named drive by id</caption>
+ * getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
+ * @param {string} pathOrId - A path to a file or file id
+ * @param {object} options - (Optional) Query parameters
+ * @param {function} [callback = s => s] (Optional) Callback function
+ * @return {Operation}
+ */
+export const getFile = operation((state, pathOrId, options, callback) => {
+  return impl.getFile(state, getRequestHandler(), pathOrId, options, callback)
+});
+
+/**
+ * Upload a file to a drive.
+ * @public
+ * @example
+ * <caption>Upload Excel file to a drive using `driveId` and `parantItemId`</caption>
+ * uploadFile(
+ *   state => ({
+ *     driveId: state.driveId,
+ *     folderId: state.folderId,
+ *     fileName: `Tracker.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
+ * @example
+ * <caption>Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`</caption>
+ * uploadFile(
+ *   state => ({
+ *     siteId: state.siteId,
+ *     folderId: state.folderId,
+ *     fileName: `Report.xlsx`,
+ *   }),
+ *   state => state.buffer
+ * );
+ * @function
+ * @param {Object} resource - Resource Object
+ * @param {String} [resource.driveId] - Drive Id
+ * @param {String} [resource.driveId] - Site Id
+ * @param {String} [resource.folderId] - Parent folder id
+ * @param {String} [resource.contentType] - Resource content-type
+ * @param {String} [resource.onConflict] - Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace"
+ * @param {Object} data - A buffer containing the file.
+ * @param {Function} callback - Optional callback function
+ * @returns {Operation}
+ */
+export const uploadFile = operation((state, resource, data, callback) => {
+  return impl.uploadFile(state, getRequestHandler(), pathOrId, options, callback)
+});
+
+export { request, sheetToBuffer } from './utils';
+
+export {
+  dataPath,
+  dataValue,
+  dateFns,
+  each,
+  field,
+  fields,
+  fn,
+  lastReferenceValue,
+  merge,
+  sourceValue,
+  parseCsv,
+} from '@openfn/language-common';
+
