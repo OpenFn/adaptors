@@ -2,19 +2,13 @@
 
 A nice clean presentation about how I'm thinking about next gen adaptors.
 
-## TODO
-
-Immediate short-term todos, ideally before nairobi
-
-- examples as tests
-
 ## Features
 
 Here's what I've introduced
 
 * Operation factories
-* operation/implementation split
-* real runtime/job tests
+* Operation/implementation split
+* Real runtime/job tests
 * A pattern for mocking (probably better than demanding docker containers?)
 
 ## Motivations
@@ -24,7 +18,7 @@ Here are the problems I'm trying to solve
 * Some sort of capacity for useful unit tests
   * They're good for development, maintenance and preventing regressions
 * Clarity over what an operation is, and why it matters
-* Encouraging good documetnation _in the right place_
+* Encouraging good documentation _in the right place_
   * I see lots of problems of devs documenting the wrong functions, wasting time and energy
 
 ## Examples
@@ -39,7 +33,7 @@ Maybe `salesforce`, `dhis2` or `http` would be better examples?
 
 Here's what's not right yet:
 
-* Basically I think this adds formality and complication. Does any of this acutally make adaptor writing easier?
+* I worry that this adds formality and complication. Does any of this acutally make adaptor writing easier?
 * Expanding references. I'd really like to standardise and simplify this further
   - jsdoc path vs dataValue() vs open function
   - I am sure that you can just make expand references read '$a.b.c' as a jsonpath
@@ -47,7 +41,7 @@ Here's what's not right yet:
 ## Operation Factories
 
 Here's an operation factory
-```
+```js
 export const get = operation((state, url, auth, callback) => {
    // code goes here
    return state
@@ -96,7 +90,79 @@ describe('getDrive', () => {
 });
 ```
 
+The ability to mock the implementation like this also enables real runtime testing
+
 ## Real runtime tests
+
+I really hate the existing test syntax we use right now. What I actually want to do is write a job and pass it to the actual run time so execution.
+
+So I've implemented this!
+
+
+First, we create an example job in a source file
+
+```js
+// examples.get-drive.js
+/**
+ * A simple test job which gets a drive
+ */
+getDrive((
+  state) => ({ id: state.id }), // get the drive id from state
+  "default", // drive name
+  (state) => ({ ...state, savedDrives: state.drives }) // alias savedDrives onto state (it gets removed by the adaptor)
+)
+
+```
+
+(we can also do this inline in a unit test in a string)
+
+In a unit test, we can:
+* Load this example source
+* Load the adaptor module
+* Set a mock client/request object in the adaptor
+* Pass the source, input state and adaptor into the actual runtime and compiler
+
+That gives us a test that looks like this:
+```js
+describe('examples', () => {
+  it('get-drive', async () => {
+    // Load our example code
+    const source = loadExample('get-drive')
+
+    // Set up some input state
+    const state = {
+      id: 'xxx',
+    };
+
+    // Set up the mock
+    Adaptor.setRequestHandler(async (url) => {
+      // Return some mock data (perhaps as a pre-saved fixture, or we define it in-line)
+      return { ... }
+    })
+
+    // Compile and run the job against this adaptor
+    const finalState = await execute(source, Adaptor, state)
+
+    // Assert on the result state
+    expect(finalState).to.eql({ ...});
+  })
+});
+```
+What's nice about this pattern is that we can run test assertions on the mock handler function as well on the result state
+
+Note: there is an alternative to all this for real runtime tests. It should be possible to mock out the http requests with undici. I think?  Surely at some level of abstraction we can do it.
+
+I think it's a lot harder to map and mock the different request URLs, but it may be a viable option.
+
+## Examples
+
+There's one other benefit of this approach.
+
+The files in examples.js are just jobs. Regular jobs which you can run through the CLI (given the correct input state and credentials).
+
+But we should also be able to load these in docusaurus and present them in docs. They're real, runnable, testable execution examples.
+
+Surley we can take advantage of this?
 
 ## Future Work & Gripes
 
@@ -104,11 +170,6 @@ Here's some other stuff we need to look at
 
 * A really good way to "record" a "curl" to the datasource
   - I almost see a CLI command `openfn record` which will run a job (probably written against common.http) and save the final `state.data` (or something) to a json file in the right format to be used by the mock. maybe there's a map of `'path.json': data` So you write a job to populate your mock data, then just run it to save the data into the monorepo, then run the unit tests which should run against the mock data.
-
-* Can unit tests also be examples?
-  - My feeling is that if you save the job code to a file like "get-transactions.js", and that file is a fully runnable job (run it from the cli with state!), you can also load that into the website (somehow) as an example
-  - I am not sure how you setup the mock - I guess that happens in the test file. We can append a magic string or something, do something to prep the client for mocking
-  - I am also not sure where documentation goes - I guess in a comment at the top
 
 * Logging
   - Well I've already hooked up and adaptor logger. So console.log should be fine right? Adaptor logging should already be better
