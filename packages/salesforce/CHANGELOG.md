@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.5.1
+
+### Patch Changes
+
+- fa3e28fe: refactor bulk() to use newExpandReferences
+
 ## 4.5.0
 
 ### Minor Changes

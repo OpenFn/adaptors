@@ -342,7 +342,7 @@
         "sObject",
         "operation",
         "options",
-        "fun"
+        "records"
       ],
       "docs": {
         "description": "Create and execute a bulk job.",
@@ -390,12 +390,12 @@
           },
           {
             "title": "param",
-            "description": "A function which takes state and returns an array.",
+            "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
               "name": "Function"
             },
-            "name": "fun"
+            "name": "records"
           },
           {
             "title": "returns",

@@ -318,26 +318,28 @@ export function bulkQuery(qs, options, callback) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
- * @param {Function} fun - A function which takes state and returns an array.
+ * @param {Function} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
-export function bulk(sObject, operation, options, fun) {
+export function bulk(sObject, operation, options, records) {
   return state => {
     const { connection } = state;
     const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
-    const finalAttrs = fun(state);
 
-    if (allowNoOp && finalAttrs.length === 0) {
+    const [resolvedSObject, resolvedOperation, resolvedRecords] =
+      newExpandReferences(state, sObject, operation, records);
+
+    if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
-        `No items in ${sObject} array. Skipping bulk ${operation} operation.`
+        `No items in ${resolvedSObject} array. Skipping bulk ${resolvedOperation} operation.`
       );
       return state;
     }
 
-    if (finalAttrs.length > 10000)
+    if (resolvedRecords.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(finalAttrs, 10000);
+    const chunkedBatches = chunk(resolvedRecords, 10000);
 
     return Promise.all(
       chunkedBatches.map(
@@ -347,10 +349,14 @@ export function bulk(sObject, operation, options, fun) {
             const interval = pollInterval || 6000;
 
             console.info(
-              `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
+              `Creating bulk ${resolvedOperation} job for ${resolvedSObject} with ${chunkedBatch.length} records`
             );
 
-            const job = connection.bulk.createJob(sObject, operation, options);
+            const job = connection.bulk.createJob(
+              resolvedSObject,
+              resolvedOperation,
+              options
+            );
 
             job.on('error', err => reject(err));
 
