@@ -16,6 +16,7 @@
         "@openfn/simple-ast": "0.4.1",
         "@types/node": "18.17.5",
         "esno": "0.16.3",
+        "inquirer": "^9.2.15",
         "ts-node": "10.9.1",
         "tsup": "6.3.0",
         "typescript": "4.8.4",

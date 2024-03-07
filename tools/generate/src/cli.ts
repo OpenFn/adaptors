@@ -2,8 +2,10 @@ import generateAdaptor from './generate-adaptor';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
+import promptForBranchChange from './prompt-branch-change';
 
 const generate = async (args: any) => {
+    await promptForBranchChange(args);
   await generateAdaptor(args);
 };
 
