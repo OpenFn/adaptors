@@ -3,17 +3,28 @@ import { operation } from '@openfn/language-common/util'
 
 import * as impl from './impl';
 import { request } from './utils';
+import { enable, mockRoute } from './mock/mock';
 
+// TODO this may be deprecated now ?
+// I don't think we need it for this adaptor, which is nice!
 let customHandler;
-
-// TODO I'd quite like to exclude this from the build?
-export const setRequestHandler = (fn) => {
-  customHandler = fn
-}
-
-// TODO need to work out the best pattern for this
 const getRequestHandler = () => {
   return customHandler || request;
+}
+
+/** Alternative, standardised, mock handler */
+
+// The runtime itself will call this to flick the whole thing into mock mode
+export const enableMock = (state) => {
+  enable(state)
+}
+
+// Every adator uses this API to override mock mode
+// The pattern is adaptor-specific
+// data is whatever you want the client to return
+// TODO: alias to addMockRule ?
+export const mock = (pattern, data, options = {}) => {
+  return mockRoute(pattern, data, options)
 }
 
 /**
@@ -45,7 +56,7 @@ export function execute(...operations) {
     })
       .then(cleanup)
       .catch(error => {
-        cleanup(state);
+         cleanup(state);
         throw error;
       });
   };
@@ -63,6 +74,9 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export const create = operation((state, resource, data, callback) => {
+  // this pattern isn't so helpful for a http adaptor, the mock client
+  // isn't needed
+  // going to save it for now because I think it's still good for eg salesforce, postgres 
   return impl.create(state, getRequestHandler(), resource, data, callback)
 })
 
@@ -93,7 +107,7 @@ export const get = operation((state, path, query, callback) => {
  * @example <caption>Get the default drive for a site</caption>
  * getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
  * @param specifier {Object} - A definition of the drive to retrieve
- *    - id {string} - The ID of the resource or owner.
+ *    - id {string} - The ID{ defa} of the resource or owner.
  *    - owner {string} - The type of drive owner (e.g. sites, groups).
  * @param {string} name - The local name of the drive used to write to state.drives, ie, state.drives[name]
  * @param {function} [callback = s => s] (Optional) Callback function

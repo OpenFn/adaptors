@@ -41,6 +41,7 @@ Here's what's not right yet:
   - Getting mock data feels a bit hard (although there may be an answer to that here somewhere)
   - The setclient function on the adaptor is a bit awkward
   - Can we exclude the setClient function from the final build?
+* When the client is abstracted out (like in msgraph), it can beh ar to know what it is. You look at `impl.js` and you see request, you don't know what it is. So it's actually kinda hard to use. hmm. 
 
 ### Operation Factories
 
