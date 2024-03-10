@@ -9,7 +9,7 @@ Here's what I've introduced
 * Operation factories
 * Operation/implementation split
 * Real runtime/job tests
-* A pattern for mocking (probably better than demanding docker containers?)
+* A pattern for mocking which SHOULD enable a live playground (!!) and maybe easier adaptor creation
 
 ### Motivations
 
@@ -20,14 +20,13 @@ Here are the problems I'm trying to solve
 * Clarity over what an operation is, and why it matters
 * Encouraging good documentation _in the right place_
   * I see lots of problems of devs documenting the wrong functions, wasting time and energy
+* (new) If we had a live playground on docs.openfn.org, how would we handle adaptors?
 
 ### Examples
 
 I've started implementing this stuff in `msgraph` (and common) to see how it all comes together
 
-I should really push this further and will try and spend some time on it before I fly.
-
-Maybe `salesforce`, `dhis2` or `http` would be better examples?
+I urgently need to start on `salesforce` to explore client-based mocking
 
 ### Issues
 
@@ -37,15 +36,12 @@ Here's what's not right yet:
 * Expanding references. I'd really like to standardise and simplify this further
   - jsdoc path vs dataValue() vs open function
   - I am sure that you can just make expand references read '$a.b.c' as a jsonpath
-* I'm not totally sold on some parts of the mocking pattern
-  - Getting mock data feels a bit hard (although there may be an answer to that here somewhere)
-  - The setclient function on the adaptor is a bit awkward
-  - Can we exclude the setClient function from the final build?
-* When the client is abstracted out (like in msgraph), it can beh ar to know what it is. You look at `impl.js` and you see request, you don't know what it is. So it's actually kinda hard to use. hmm. 
+* When the client is abstracted out (like in msgraph), it can be hard to know what it is. You look at `impl.js` and you see request, you don't know what it is. So it's actually kinda hard to use. hmm. 
+* Maybe the impl pattern makes less sense with the new mocking pattern? Depends how salesforce looks
 
 ### Operation Factories
 
-Here's an operation factory
+Here's an operation factorybeh ar
 ```js
 export const get = operation((state, url, auth, callback) => {
    // code goes here
@@ -73,7 +69,7 @@ export const create = operation((state, resource, data, callback) => {
 
 Note the extra `request` argument!
 
-I can now unit test the implementation:
+I can now unit test the implementation really cleanly:
 
 ```js
 describe('getDrive', () => {
@@ -97,12 +93,76 @@ describe('getDrive', () => {
 
 The ability to mock the implementation like this also enables real runtime testing
 
+### Mocking as first-class adaptor code
+
+What if each adaptor was able to run in a mock mode. In this mode it will mock out the client entirely and return mock data. A default data suite is included, but can be overridden.
+
+This works pretty great with undici, I think it should work nicely with client based adaptors too.
+
+First, the adaptor to expose an `enableMock` function, which is called with state (for config) and optionally some mock data. If mockdata is not provided, defaults will be used.
+
+Later, the runtime could call `enableMock` in certain circumstances (like a live playground).
+
+```js
+// mock.js (exported by index.js)
+export const enableMock = (state, routes = {}) => {
+  // setup undici to mock at the http level
+  mockAgent = new MockAgent();
+  mockAgent.disableNetConnect();
+
+  mockPool = mockAgent.get('https://graph.microsoft.com');
+
+  const mockRoutes = {
+    ...defaultRoutes,
+    ...routes
+  }
+
+  setupMockRoutes()
+}
+
+// name: { pattern, data, options }
+const defaultRoutes = {
+  'drives': { pattern: /\/drives\//, data: fixtures.driveResponse }
+}
+```
+
+Mocks work based on routing. Obvious with HTTP but I think we can do it with clients too (patterns confirm to` client.<fn>`)
+
+Each adaptor is responsible for implementing  its own mock in whatever way makes sense. We will provide strong patterns and utilitie.
+
+Now, if you want to write unit tests against this mock, you can do so
+```js
+it('with default mock', async () => {
+  const state = { ... };
+  Adaptor.enableMock(state);
+
+  const result = await Adaptor.getDrive({ id: 'abc' })(state)
+  expect(result.drives).to.eql({ default: fixtures.driveResponse })
+})
+
+it('with custom mock', async () => {
+  const state = { ... };
+
+  Adaptor.enableMock(defaultState, {
+    'drives': {
+      pattern: patterns.drives,
+      data: { x: 22 },
+      options: { once: true }
+    }
+  });
+
+  const result = await Adaptor.getDrive({ id: 'abc' })(state)
+  expect(result.drives).to.eql({ default: fixtures.driveResponse })
+})
+```
+
+Important detail: the mock should be considered frozen when activated. If you want to change mock data, call `enable` again
+
 ### Real runtime tests
 
 I really hate the existing test syntax we use right now. What I actually want to do is write a job and pass it to the actual run time so execution.
 
 So I've implemented this!
-
 
 First, we create an example job in a source file
 
@@ -124,12 +184,15 @@ getDrive((
 In a unit test, we can:
 * Load this example source
 * Load the adaptor module
-* Set a mock client/request object in the adaptor
+* Use mock data from above (works great)
 * Pass the source, input state and adaptor into the actual runtime and compiler
 
 That gives us a test that looks like this:
 ```js
 describe('examples', () => {
+  // setup our mock with whatever data we want
+  Adaptor.enableMock({ configuration });
+
   it('get-drive', async () => {
     // Load our example code
     const source = loadExample('get-drive')
@@ -138,12 +201,6 @@ describe('examples', () => {
     const state = {
       id: 'xxx',
     };
-
-    // Set up the mock
-    Adaptor.setRequestHandler(async (url) => {
-      // Return some mock data (perhaps as a pre-saved fixture, or we define it in-line)
-      return { ... }
-    })
 
     // Compile and run the job against this adaptor
     const finalState = await execute(source, Adaptor, state)

@@ -18,15 +18,6 @@ const getRequestHandler = () => {
 export const enableMock = (state, routes) => {
   return enable(state, routes);
 }
-
-// Every adator uses this API to override mock mode
-// The pattern is adaptor-specific
-// data is whatever you want the client to return
-// TODO: alias to addMockRule ?
-export const mock = (pattern, data, options = {}) => {
-  return mockRoute(pattern, data, options)
-}
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
