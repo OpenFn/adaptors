@@ -15,8 +15,8 @@ const getRequestHandler = () => {
 /** Alternative, standardised, mock handler */
 
 // The runtime itself will call this to flick the whole thing into mock mode
-export const enableMock = (state) => {
-  enable(state)
+export const enableMock = (state, routes) => {
+  return enable(state, routes);
 }
 
 // Every adator uses this API to override mock mode

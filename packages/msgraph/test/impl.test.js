@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as impl from '../src/impl';
-import { fixtures } from './fixtures';
+import { fixtures } from '../src/mock/fixtures';
 
 describe('getDrive', () => {
   // look how simple this unit test is now

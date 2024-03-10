@@ -13,10 +13,14 @@ import Adaptor from '../src/index.js'
 
 const defaultState = { configuration: {resource: 'x'}, drives: {}};
 
-Adaptor.enableMock(defaultState);
 
 // Test all the default mock behaviours
 describe('default values', () => {
+  before(() => {
+    Adaptor.enableMock(defaultState);
+  });
+
+  // These can all use the default mock
   it('getDrive', async () => {
     const state = { ...defaultState };
 
@@ -32,19 +36,17 @@ describe('default values', () => {
   })
 })
 
-// TODO this doesn't work with Undici :(
-// Which means we don't have sufficient control of the mock
-describe.skip('custom values', () => {
+describe('custom values', () => {
   it('getDrive', async () => {
-    const state = { ...defaultState };
+    Adaptor.enableMock(defaultState, {
+      'drives': {
+        pattern: patterns.drives,
+        data: { x: 22 },
+        options: { once: true }
+      }
+    });
 
-    // This should override the default mock... (forever)
-    // This is annoying, I think the first mock to bind is the winner in case of a conflict
-    // That doesn't suit me!
-    // A shame because this is actually a really nice pattern
-    Adaptor.mock(patterns.drives, {
-      x: 22
-    })
+    const state = { ...defaultState };
 
     const result = await Adaptor.getDrive({ id: 'b!YXzpkoLwR06bxC8tNdg71m_' })(state)
     expect(result.drives).to.eql({ default:  { x: 22 } })

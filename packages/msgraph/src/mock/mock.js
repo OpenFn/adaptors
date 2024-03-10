@@ -9,26 +9,8 @@ import { fixtures } from './fixtures';
  * We need to document this in a way that the playground can use
  */
 
-// first step: mock with default data each msgraph function
-
-// ok that's fun, it's a http client
-
-// So this DOES use undici. So I think I can just write interceptors, rght?
-
 let mockAgent;
 let mockPool;
-
-// TODO this was copied out of util but it should be a common helper
-// actually we don't need this
-// export function getBaseUrl(state) {
-//   const{ resource, apiVersion} = state.configuration
-//   // if (isValidHttpUrl(resource)) return resource;
-
-//   const pathSuffix = apiVersion
-//     ? `${apiVersion}/${resource}`
-//     : `v1.0/${resource}`;
-//   return `https://graph.microsoft.com/${pathSuffix}`;
-// }
 
 // To make custom overrides easier, export some stanadard patterns
 export const patterns = {
@@ -37,7 +19,14 @@ export const patterns = {
   drives: /\/drives\//
 }
 
-export const enable = (state) => {
+// name: { pattern, data, options }
+const defaultRoutes = {
+  'drives': { pattern: patterns.drives, data: fixtures.driveResponse }
+}
+
+export const enable = (state, routes = {}) => {
+  // TODO if an agent already exists, should we destroy it?
+
   // set the global dispacher on undici
   mockAgent = new MockAgent();
   
@@ -48,37 +37,25 @@ export const enable = (state) => {
 
   mockPool = mockAgent.get('https://graph.microsoft.com');
 
-  enableDefaultRoutes();
-}
+  const mockRoutes = {
+    ...defaultRoutes,
+    ...routes
+  }
 
-// export const reset = (state) => {
-//   return enable(state)
-// }
-
-export const disable = () => {
-  throw "unimplemented"
-}
-
-/**
- * The problems with this are:
- * 1) When I register a persistent route, there's no way
- *    to disable it
- * 2) The first route to bind will always win, so custom
- *    overrides basically don't work.
- * Bugger.
- */
-export const enableDefaultRoutes = () => {
-  mockRoute(patterns.drives, fixtures.driveResponse)
+  // Set up all the mock routes
+  for (const name in mockRoutes) {
+    const { pattern, data, options } = mockRoutes[name];
+    mockRoute(pattern, data, options)
+  }
 }
 
 // API to enable a particular path to be mocked
 export const mockRoute = (path, data, options = {}) => {
-
-const jsonResponse = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+  const jsonResponse = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
   const { method = 'GET', headers, once = false } = options
   const scope = mockPool.intercept({
