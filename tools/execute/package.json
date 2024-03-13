@@ -1,0 +1,15 @@
+{
+  "name": "@openfn/test-execute",
+  "version": "1.0.0",
+  "description": "Unit test helper to run jobs from source",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openfn/compiler": "^0.0.32",
+    "@openfn/runtime": "^1.0.0"
+  }
+}
