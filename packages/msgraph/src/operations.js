@@ -3,16 +3,7 @@ import { operation } from '@openfn/language-common/util'
 
 import * as impl from './impl';
 import { request } from './utils';
-import { enable, mockRoute } from './mock/mock';
-
-// TODO this may be deprecated now ?
-// I don't think we need it for this adaptor, which is nice!
-let customHandler;
-const getRequestHandler = () => {
-  return customHandler || request;
-}
-
-/** Alternative, standardised, mock handler */
+import { enable } from './mock/mock';
 
 // The runtime itself will call this to flick the whole thing into mock mode
 export const enableMock = (state, routes) => {
@@ -65,10 +56,7 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export const create = operation((state, resource, data, callback) => {
-  // this pattern isn't so helpful for a http adaptor, the mock client
-  // isn't needed
-  // going to save it for now because I think it's still good for eg salesforce, postgres 
-  return impl.create(state, getRequestHandler(), resource, data, callback)
+  return impl.create(state, request, resource, data, callback)
 })
 
 /**
@@ -83,7 +71,7 @@ export const create = operation((state, resource, data, callback) => {
  * @returns {Operation}
  */
 export const get = operation((state, path, query, callback) => {
-  return impl.get(state, getRequestHandler(), path, query, callback)
+  return impl.get(state, request, path, query, callback)
 })
 
 
@@ -105,7 +93,7 @@ export const get = operation((state, path, query, callback) => {
  * @return {Operation}
  */
 export const getDrive = operation((state, specifier, name, callback) => {
-  return impl.getDrive(state, getRequestHandler(), specifier, name, callback)
+  return impl.getDrive(state, request, specifier, name, callback)
 })
 
 /**
@@ -121,7 +109,7 @@ export const getDrive = operation((state, specifier, name, callback) => {
  * @return {Operation}
  */
 export const getFolder = operation((state, pathOrId, options, callback) => {
-  return impl.getFolder(state, getRequestHandler(), pathOrId, options, callback)
+  return impl.getFolder(state, request, pathOrId, options, callback)
 });
 
 
@@ -138,7 +126,7 @@ export const getFolder = operation((state, pathOrId, options, callback) => {
  * @return {Operation}
  */
 export const getFile = operation((state, pathOrId, options, callback) => {
-  return impl.getFile(state, getRequestHandler(), pathOrId, options, callback)
+  return impl.getFile(state, request, pathOrId, options, callback)
 });
 
 /**
@@ -176,7 +164,7 @@ export const getFile = operation((state, pathOrId, options, callback) => {
  * @returns {Operation}
  */
 export const uploadFile = operation((state, resource, data, callback) => {
-  return impl.uploadFile(state, getRequestHandler(), pathOrId, options, callback)
+  return impl.uploadFile(state, request, pathOrId, options, callback)
 });
 
 export { request, sheetToBuffer } from './utils';
