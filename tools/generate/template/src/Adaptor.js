@@ -35,7 +35,7 @@ export function execute(...operations) {
   };
 }
 
-// TODO this is example Opeartions which might create a resource on
+// TODO this is example Operations which might create a resource on
 //      on a fictional service. It demonstrates best practice for how
 //      Operations should be written
 /**

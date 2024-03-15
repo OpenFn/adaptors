@@ -77,19 +77,10 @@ please make one and assign yourself.
   repo into `/repo/openfn/adaptors`, then in your `.bashrc` file, add
   `export OPENFN_ADAPTORS_REPO=/repo/openfn/adaptors`.
 
-- Create a copy of the adaptor [template](packages/template), and rename it.
-  `cp -R packages/template packages/youradaptorname`
+- Generate your own adaptor.
+  `pnpm generate youradaptorname`
 
-- Open package.json, and update the `name`, `description` and `build` from
-  `template` to your `youradaptorname`. Update the version.
-
-- Update the top-level changelog comment `# @openfn/language-template` to
-  `# @openfn/language-youradaptorname` and delete the remaining example content.
-  Delete ast.json, then run `pnpm clean` (this will remove the dist, types and
-  docs folders).
-
-- Update your adaptor's README.md to use your new adaptor name (we'll come back
-  to this later to update the sample operation)
+- Install your dependencies `pnpm install`
 
 #### 2. Create a job with the operation you'd like to add, and run it so it fails
 
@@ -158,7 +149,7 @@ export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
   This defines required parameters and their expected values for configuring the
   adaptor's authentication and authorization settings.
 
-  1. Open the configuration file of the newly copied template,
+  1. Open the configuration file of the newly generated adaptor,
      `configuration-schema.json`.
   2. Specify the required parameters and their data types (these will be any
      values in state.configuration you are using in your adaptor function).
@@ -235,7 +226,7 @@ Look in the `.changesets` folder to see your change.
 
 Commit the changeset to the repo when you're ready.
 
-Note that the`template` adaptor should ideally never have its version
+Note that the newly generated adaptor should ideally never have its version
 increased - it should be locked at `1.0.0`.
 
 ## Releases
@@ -252,7 +243,7 @@ to the release branch BEFORE merging.
 1. Run `pnpm changeset tag` to generate tags
 1. Push tags `git push --tags`
 
-Rememebr tags may need updating if commits come in after the tags are first
+Remember tags may need updating if commits come in after the tags are first
 generated.
 
 When ready, merge the branch to main and a Github Action will trigger the
@@ -283,7 +274,7 @@ pnpm -C packages/salesforce build --watch
 Docs are generated from the JSDoc annotations in adaptors. They are output as
 markdown files in the `./docs` directly and not checked in to source control.
 
-The markdown output can be customised by overriding the built-in handlebars
+The markdown output can be customized by overriding the built-in handlebars
 templates in jsoc2md.
 
 - Find the template you want to customise in [j2sdoc2md source()
@@ -323,7 +314,7 @@ You can run these from the repo root or from the adaptor folder.
 ## Migration Guide
 
 Any old adaptors should be copied/cloned into this repo, with all build, lint
-and git artefacts removed and the package.json updated.
+and git artifacts removed and the package.json updated.
 
 This checklist walks you through the process.
 
