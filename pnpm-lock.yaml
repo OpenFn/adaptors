@@ -626,6 +626,34 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
 
+  packages/hello:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      mocha:
+        specifier: 9.2.2
+        version: 9.2.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.23.0
+
   packages/hive:
     dependencies:
       '@openfn/language-common':
@@ -1895,40 +1923,6 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0
 
-  packages/template:
-    dependencies:
-      '@openfn/language-common':
-        specifier: ^1.12.0
-        version: link:../common
-    devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
-      '@openfn/simple-ast':
-        specifier: 0.4.1
-        version: 0.4.1
-      assertion-error:
-        specifier: 2.0.0
-        version: 2.0.0
-      chai:
-        specifier: 4.3.6
-        version: 4.3.6
-      deep-eql:
-        specifier: 4.1.1
-        version: 4.1.1
-      esno:
-        specifier: ^0.16.3
-        version: 0.16.3
-      mocha:
-        specifier: 9.2.2
-        version: 9.2.2
-      rimraf:
-        specifier: 3.0.2
-        version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.22.1
-
   packages/twilio:
     dependencies:
       '@openfn/language-common':
@@ -2108,40 +2102,6 @@ importers:
       yargs:
         specifier: 17.6.0
         version: 17.6.0
-
-  tools/generate/template:
-    dependencies:
-      '@openfn/language-common':
-        specifier: ^1.12.0
-        version: link:../../../packages/common
-    devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../build
-      '@openfn/simple-ast':
-        specifier: 0.4.1
-        version: 0.4.1
-      assertion-error:
-        specifier: 2.0.0
-        version: 2.0.0
-      chai:
-        specifier: 4.3.6
-        version: 4.3.6
-      deep-eql:
-        specifier: 4.1.1
-        version: 4.1.1
-      esno:
-        specifier: ^0.16.3
-        version: 0.16.3
-      mocha:
-        specifier: 9.2.2
-        version: 9.2.2
-      rimraf:
-        specifier: 3.0.2
-        version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.23.0
 
   tools/import-tests:
     dependencies:
@@ -5223,10 +5183,10 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       assertion-error: 1.1.0
-      check-error: 1.0.2
+      check-error: 1.0.3
       deep-eql: 3.0.1
-      get-func-name: 2.0.0
-      loupe: 2.3.6
+      get-func-name: 2.0.2
+      loupe: 2.3.7
       pathval: 1.1.1
       type-detect: 4.0.8
     dev: true

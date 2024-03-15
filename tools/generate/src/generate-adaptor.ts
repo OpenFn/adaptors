@@ -23,9 +23,12 @@ const generateAdaptor = async (adaptorName: string) => {
   await copyAndRename(templatePath, adaptorPath, adaptorName);
   console.log(`Adaptor "${adaptorName}" created successfully.`);
   console.log(
-    `Reminder: Please change the assets 🖼️  for your new adaptor "${adaptorName}".`
+    `Reminder: Change the assets 🖼️  for your new adaptor "${adaptorName}".`
   );
+  console.log(`Reminder: Run "pnpm install" to install your packages.`);
 };
+
+const fileMap = { package_json: 'package.json' };
 
 const copyAndRename = async (
   source: string,
@@ -39,7 +42,7 @@ const copyAndRename = async (
 
     const targetPath = path.join(
       target,
-      item.name.replace('template', adaptorName)
+      fileMap[item.name] ?? item.name.replace('template', adaptorName)
     );
 
     if (item.isDirectory()) {
@@ -48,6 +51,7 @@ const copyAndRename = async (
     } else if (item.isFile()) {
       let content = await fs.readFile(sourcePath, 'utf8');
       content = content.replace(/{{TEMPLATE}}/g, adaptorName);
+
       await fs.writeFile(targetPath, content);
     }
   }
