@@ -6,8 +6,25 @@ const generateAdaptor = async (adaptorName: string) => {
 
   const adaptorPath = path.resolve(`../../packages/${adaptorName}`);
 
+  try {
+    await fs.stat(adaptorPath);
+    console.error(`The adaptor path "${adaptorPath}" already exists.`);
+    process.exit(1);
+  } catch (error: any) {
+    if (error.code !== 'ENOENT') {
+      console.error(`An error occurred: ${error.message}`);
+      process.exit(1);
+    }
+  }
+
   await fs.mkdir(adaptorPath, { recursive: true });
+
+  console.log(`Creating new adaptor: ${adaptorName}`);
   await copyAndRename(templatePath, adaptorPath, adaptorName);
+  console.log(`Adaptor "${adaptorName}" created successfully.`);
+  console.log(
+    `Reminder: Please change the assets 🖼️  for your new adaptor "${adaptorName}".`
+  );
 };
 
 const copyAndRename = async (
@@ -16,7 +33,6 @@ const copyAndRename = async (
   adaptorName: string
 ) => {
   const items = await fs.readdir(source, { withFileTypes: true });
-  // console.log({items: await items});
 
   for (const item of items) {
     const sourcePath = path.join(source, item.name);
@@ -31,7 +47,7 @@ const copyAndRename = async (
       await copyAndRename(sourcePath, targetPath, adaptorName);
     } else if (item.isFile()) {
       let content = await fs.readFile(sourcePath, 'utf8');
-      content = content.replace(/template/g, adaptorName);
+      content = content.replace(/{{TEMPLATE}}/g, adaptorName);
       await fs.writeFile(targetPath, content);
     }
   }
