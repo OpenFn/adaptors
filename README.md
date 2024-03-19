@@ -10,11 +10,17 @@ adaptors, see [OpenFn Lightning](https://github.com/OpenFn/lightning).
 
 ## Getting Started
 
-_Note: This repo requires [pnpm](https://pnpm.io/installation) and
-[asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
-machine._
+_Note: [asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
+machine. Add the nodejs and pnpm plugin once asdf is installed globally._
 
 A few first time repo steps:
+
+```
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin-add pnpm
+```
+
+Then:
 
 ```
 asdf install # Install tool versions
@@ -77,8 +83,7 @@ please make one and assign yourself.
   repo into `/repo/openfn/adaptors`, then in your `.bashrc` file, add
   `export OPENFN_ADAPTORS_REPO=/repo/openfn/adaptors`.
 
-- Generate your own adaptor.
-  `pnpm generate youradaptorname`
+- Generate your own adaptor. `pnpm generate youradaptorname`
 
 - Install your dependencies `pnpm install`
 
