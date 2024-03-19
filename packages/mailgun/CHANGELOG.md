@@ -1,5 +1,11 @@
 # @openfn/language-mailgun
 
+## 0.4.4
+
+### Patch Changes
+
+- e7ff766: Update configuration-schema
+
 ## 0.4.3
 
 ### Patch Changes
