@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.5.2
+
+### Patch Changes
+
+- 2006e88: fix an issue with bulk jobs not closing
+
 ## 4.5.1
 
 ### Patch Changes
