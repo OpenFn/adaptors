@@ -1,12 +1,5 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-} from '@openfn/language-common';
-import cheerio from 'cheerio';
-import cheerioTableparser from 'cheerio-tableparser';
-
-import { request as sendRequest } from './Utils';
+import { execute as commonExecute } from '@openfn/language-common';
+import { request as sendRequest, xmlParser } from './Utils';
 
 /**
  * Options provided to the HTTP request
@@ -161,32 +154,28 @@ export function del(path, params, callback) {
  * Parse XML with the Cheerio parser
  * @public
  * @example
- *  parseXML(body, function($){
- *    return $("table[class=your_table]").parsetable(true, true, true);
- *  })
+ *  parseXML(
+ *   (state) => state.response,
+ *   ($) => {
+ *     return $("table[class=your_table]").parsetable(true, true, true);
+ *   }
+ * );
+ * @example <caption>Using parseXML with a callback</caption>
+ *  parseXML(
+ *   (state) => state.response,
+ *   ($) => {
+ *     return $("table[class=your_table]").parsetable(true, true, true);
+ *   },
+ *   (next) => ({ ...next, results: next.data.body })
+ * );
  * @function
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
+ * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function parseXML(body, script) {
-  return state => {
-    const resolvedBody = expandReferences(body)(state);
-    const $ = cheerio.load(resolvedBody);
-    cheerioTableparser($);
-
-    if (script) {
-      const result = script($);
-      try {
-        const r = JSON.parse(result);
-        return composeNextState(state, r);
-      } catch (e) {
-        return composeNextState(state, { body: result });
-      }
-    } else {
-      return composeNextState(state, { body: resolvedBody });
-    }
-  };
+export function parseXML(body, script, callback) {
+  return xmlParser(body, script, callback);
 }
 
 export {

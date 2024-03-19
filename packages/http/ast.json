@@ -392,7 +392,8 @@
       "name": "parseXML",
       "params": [
         "body",
-        "script"
+        "script",
+        "callback"
       ],
       "docs": {
         "description": "Parse XML with the Cheerio parser",
@@ -404,7 +405,12 @@
           },
           {
             "title": "example",
-            "description": "parseXML(body, function($){\n   return $(\"table[class=your_table]\").parsetable(true, true, true);\n })"
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  }\n);"
+          },
+          {
+            "title": "example",
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.body })\n);",
+            "caption": "Using parseXML with a callback"
           },
           {
             "title": "function",
@@ -428,6 +434,15 @@
               "name": "function"
             },
             "name": "script"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
