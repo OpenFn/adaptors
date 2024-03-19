@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 2006e88: await `job.close()`
+- 2006e88: fix an issue with bulk jobs not closing
 
 ## 4.5.1
 
