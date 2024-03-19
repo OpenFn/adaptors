@@ -361,14 +361,13 @@ export function bulk(sObject, operation, options, records) {
             job.on('error', err => reject(err));
 
             console.info('Creating batch for job.');
-            let batch;
-            batch = job.createBatch();
+            var batch = job.createBatch();
 
             console.info('Executing batch.');
             batch.execute(chunkedBatch);
 
-            batch.on('error', function (err) {
-              job.close();
+            batch.on('error', async function (err) {
+              await job.close();
               console.error('Request error:');
               reject(err);
             });
@@ -377,11 +376,11 @@ export function bulk(sObject, operation, options, records) {
               .on('queue', function (batchInfo) {
                 console.info(batchInfo);
                 const batchId = batchInfo.id;
-                batch = job.batch(batchId);
+                var batch = job.batch(batchId);
                 batch.poll(interval, timeout);
               })
-              .then(res => {
-                job.close();
+              .then(async res => {
+                await job.close();
                 const errors = res
                   .map((r, i) => ({ ...r, position: i + 1 }))
                   .filter(item => {
@@ -395,7 +394,6 @@ export function bulk(sObject, operation, options, records) {
 
                 if (failOnError && errors.length > 0) {
                   console.error('Errors detected:');
-
                   reject(JSON.stringify(errors, null, 2));
                 } else {
                   console.log('Result : ' + JSON.stringify(res, null, 2));
