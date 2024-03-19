@@ -6,7 +6,7 @@
 <dt>
     <a href="#get">get(path, params, callback)</a></dt>
 <dt>
-    <a href="#parsexml">parseXML(body, script)</a></dt>
+    <a href="#parsexml">parseXML(body, script, callback)</a></dt>
 <dt>
     <a href="#patch">patch(path, params, callback)</a></dt>
 <dt>
@@ -65,7 +65,7 @@ get('/myEndpoint', {
 
 ## parseXML
 
-parseXML(body, script) ⇒ <code>Operation</code>
+parseXML(body, script, callback) ⇒ <code>Operation</code>
 
 Parse XML with the Cheerio parser
 
@@ -74,12 +74,26 @@ Parse XML with the Cheerio parser
 | --- | --- | --- |
 | body | <code>String</code> | data string to be parsed |
 | script | <code>function</code> | script for extracting data |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
-parseXML(body, function($){
-   return $("table[class=your_table]").parsetable(true, true, true);
- })
+parseXML(
+  (state) => state.response,
+  ($) => {
+    return $("table[class=your_table]").parsetable(true, true, true);
+  }
+);
+```
+**Example** *(Using parseXML with a callback)*  
+```js
+ parseXML(
+  (state) => state.response,
+  ($) => {
+    return $("table[class=your_table]").parsetable(true, true, true);
+  },
+  (next) => ({ ...next, results: next.data.body })
+);
 ```
 
 * * *

@@ -20,7 +20,7 @@
 <dt>
     <a href="#execute">execute(operations)</a></dt>
 <dt>
-    <a href="#query">query(qs)</a></dt>
+    <a href="#query">query(qs, options, callback)</a></dt>
 <dt>
     <a href="#reference">reference(position)</a></dt>
 <dt>
@@ -233,7 +233,7 @@ Executes an operation.
 
 ## query
 
-query(qs) ⇒ <code>Operation</code>
+query(qs, options, callback) ⇒ <code>Operation</code>
 
 Execute an SOQL query.
 Note that in an event of a query error,
@@ -243,10 +243,17 @@ error logs will be printed but the operation will not throw the error.
 | Param | Type | Description |
 | --- | --- | --- |
 | qs | <code>String</code> | A query string. |
+| options | <code>Object</code> | Options passed to the bulk api. |
+| [options.autoFetch] | <code>boolean</code> | Fetch next records if available. |
+| callback | <code>function</code> | A callback to execute once the record is retrieved |
 
 **Example**  
 ```js
-query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+```
+**Example** *(Query more records if next records are available)*  
+```js
+query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
 ```
 
 * * *

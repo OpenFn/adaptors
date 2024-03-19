@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.6.0
+
+### Minor Changes
+
+- cfe1ccb: Add options and callback params in query function
+
 ## 4.5.2
 
 ### Patch Changes
