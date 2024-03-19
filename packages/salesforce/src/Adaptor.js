@@ -361,7 +361,8 @@ export function bulk(sObject, operation, options, records) {
             job.on('error', err => reject(err));
 
             console.info('Creating batch for job.');
-            var batch = job.createBatch();
+            let batch;
+            batch = job.createBatch();
 
             console.info('Executing batch.');
             batch.execute(chunkedBatch);
@@ -376,7 +377,7 @@ export function bulk(sObject, operation, options, records) {
               .on('queue', function (batchInfo) {
                 console.info(batchInfo);
                 const batchId = batchInfo.id;
-                var batch = job.batch(batchId);
+                batch = job.batch(batchId);
                 batch.poll(interval, timeout);
               })
               .then(res => {
