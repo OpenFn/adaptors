@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.5.2
+
+### Patch Changes
+
+- 2006e88: await `job.close()`
+
 ## 4.5.1
 
 ### Patch Changes
