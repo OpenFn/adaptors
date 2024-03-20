@@ -150,33 +150,82 @@ export function retrieve(sObject, id, callback) {
  * error logs will be printed but the operation will not throw the error.
  * @public
  * @example
- * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example <caption>Query more records if next records are available</caption>
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
  * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {boolean} [options.autoFetch] - Fetch next records if available.
+ * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs) {
-  return state => {
-    const { connection } = state;
-    const resolvedQs = expandReferences(qs)(state);
-    console.log(`Executing query: ${resolvedQs}`);
+export function query(qs, options, callback = s => s) {
+  return async state => {
+    let done = false;
+    let qResult = null;
+    let result = [];
 
-    return connection.query(resolvedQs, function (err, result) {
-      if (err) {
-        const { message, errorCode } = err;
-        console.log(`Error ${errorCode}: ${message}`);
-        throw err;
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+
+    console.log(`Executing query: ${resolvedQs}`);
+    try {
+      qResult = await connection.query(resolvedQs);
+    } catch (err) {
+      const { message, errorCode } = err;
+      console.log(`Error ${errorCode}: ${message}`);
+      throw err;
+    }
+
+    if (qResult.totalSize > 0) {
+      console.log('Total records', qResult.totalSize);
+
+      while (!done) {
+        result.push(qResult);
+
+        if (qResult.done) {
+          done = true;
+        } else if (autoFetch) {
+          console.log(
+            'Fetched records so far',
+            result.map(ref => ref.records).flat().length
+          );
+          console.log('Fetching next records...');
+          try {
+            qResult = await connection.request({ url: qResult.nextRecordsUrl });
+          } catch (err) {
+            const { message, errorCode } = err;
+            console.log(`Error ${errorCode}: ${message}`);
+            throw err;
+          }
+        } else {
+          done = true;
+        }
       }
 
       console.log(
-        'Results retrieved and pushed to position [0] of the references array.'
+        'Done ✔ retrieved records',
+        result.map(ref => ref.records).flat().length
       );
+    } else {
+      console.log('No records found.');
+    }
 
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
-    });
+    console.log(
+      'Results retrieved and pushed to position [0] of the references array.'
+    );
+
+    const nextState = {
+      ...state,
+      references: [result, ...state.references],
+    };
+    return callback(nextState);
   };
 }
 
@@ -318,26 +367,28 @@ export function bulkQuery(qs, options, callback) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
- * @param {Function} fun - A function which takes state and returns an array.
+ * @param {Function} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
-export function bulk(sObject, operation, options, fun) {
+export function bulk(sObject, operation, options, records) {
   return state => {
     const { connection } = state;
     const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
-    const finalAttrs = fun(state);
 
-    if (allowNoOp && finalAttrs.length === 0) {
+    const [resolvedSObject, resolvedOperation, resolvedRecords] =
+      newExpandReferences(state, sObject, operation, records);
+
+    if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
-        `No items in ${sObject} array. Skipping bulk ${operation} operation.`
+        `No items in ${resolvedSObject} array. Skipping bulk ${resolvedOperation} operation.`
       );
       return state;
     }
 
-    if (finalAttrs.length > 10000)
+    if (resolvedRecords.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(finalAttrs, 10000);
+    const chunkedBatches = chunk(resolvedRecords, 10000);
 
     return Promise.all(
       chunkedBatches.map(
@@ -347,10 +398,14 @@ export function bulk(sObject, operation, options, fun) {
             const interval = pollInterval || 6000;
 
             console.info(
-              `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
+              `Creating bulk ${resolvedOperation} job for ${resolvedSObject} with ${chunkedBatch.length} records`
             );
 
-            const job = connection.bulk.createJob(sObject, operation, options);
+            const job = connection.bulk.createJob(
+              resolvedSObject,
+              resolvedOperation,
+              options
+            );
 
             job.on('error', err => reject(err));
 
@@ -360,8 +415,8 @@ export function bulk(sObject, operation, options, fun) {
             console.info('Executing batch.');
             batch.execute(chunkedBatch);
 
-            batch.on('error', function (err) {
-              job.close();
+            batch.on('error', async function (err) {
+              await job.close();
               console.error('Request error:');
               reject(err);
             });
@@ -373,8 +428,8 @@ export function bulk(sObject, operation, options, fun) {
                 var batch = job.batch(batchId);
                 batch.poll(interval, timeout);
               })
-              .then(res => {
-                job.close();
+              .then(async res => {
+                await job.close();
                 const errors = res
                   .map((r, i) => ({ ...r, position: i + 1 }))
                   .filter(item => {
@@ -388,7 +443,6 @@ export function bulk(sObject, operation, options, fun) {
 
                 if (failOnError && errors.length > 0) {
                   console.error('Errors detected:');
-
                   reject(JSON.stringify(errors, null, 2));
                 } else {
                   console.log('Result : ' + JSON.stringify(res, null, 2));

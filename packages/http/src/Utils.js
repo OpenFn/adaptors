@@ -6,6 +6,9 @@ import {
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
+import * as cheerio from 'cheerio';
+import cheerioTableparser from 'cheerio-tableparser';
+
 export function addBasicAuth(configuration = {}, headers) {
   const { username, password } = configuration;
   if (username && password) {
@@ -82,5 +85,25 @@ export function request(method, path, params, callback = s => s) {
 
         throw err;
       });
+  };
+}
+
+export function xmlParser(body, script, callback = s => s) {
+  return state => {
+    const [resolvedBody] = expandReferences(state, body);
+    const $ = cheerio.load(resolvedBody);
+    cheerioTableparser($);
+
+    if (script) {
+      const result = script($);
+      try {
+        const r = JSON.parse(result);
+        return callback(composeNextState(state, r));
+      } catch (e) {
+        return callback(composeNextState(state, { body: result }));
+      }
+    } else {
+      return callback(composeNextState(state, { body: resolvedBody }));
+    }
   };
 }

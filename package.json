@@ -15,7 +15,8 @@
     "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
     "lint": "pnpm --filter \"./packages/**\" lint",
     "metadata": "pnpm -C tools/metadata cli",
-    "slack:notify": "cd tools/slack && pnpm notify"
+    "slack:notify": "cd tools/slack && pnpm notify",
+    "generate": "pnpm -C tools/generate cli generate"
   },
   "author": "Open Function Group",
   "license": "ISC",

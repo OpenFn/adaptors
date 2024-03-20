@@ -1,5 +1,5 @@
 {
-  "name": "@openfn/language-template",
+  "name": "@openfn/language-{{TEMPLATE}}",
   "version": "1.0.0",
   "description": "The standard template for building OpenFn adaptors",
   "type": "module",
@@ -11,7 +11,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor template",
+    "build": "pnpm clean && build-adaptor {{TEMPLATE}}",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -27,11 +27,9 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.12.0"
+    "@openfn/language-common":  "workspace:*"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

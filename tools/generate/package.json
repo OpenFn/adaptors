@@ -1,0 +1,25 @@
+{
+    "name": "@openfn/generate",
+    "private": true,
+    "type": "module",
+    "version": "1.0.1",
+    "description": "Helper functions for adaptor generator",
+    "main": "src/index.ts",
+    "license": "ISC",
+    "bin": {
+        "generate": "src/cli.ts"
+    },
+    "scripts": {
+        "cli": "esno src/cli.ts"
+    },
+    "dependencies": {
+        "@openfn/simple-ast": "0.4.1",
+        "@types/node": "18.17.5",
+        "esno": "0.16.3",
+        "inquirer": "^9.2.15",
+        "ts-node": "10.9.1",
+        "tsup": "6.3.0",
+        "typescript": "4.8.4",
+        "yargs": "17.6.0"
+    }
+}

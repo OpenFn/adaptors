@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 6.1.0
+
+### Minor Changes
+
+- cfe1ccb: Add callback support for parseXML
+
 ## 6.0.0
 
 ### Major Changes

@@ -204,7 +204,9 @@
     {
       "name": "query",
       "params": [
-        "qs"
+        "qs",
+        "options",
+        "callback"
       ],
       "docs": {
         "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
@@ -216,7 +218,12 @@
           },
           {
             "title": "example",
-            "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+          },
+          {
+            "title": "example",
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
+            "caption": "Query more records if next records are available"
           },
           {
             "title": "function",
@@ -233,6 +240,36 @@
             "name": "qs"
           },
           {
+            "title": "param",
+            "description": "Options passed to the bulk api.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Fetch next records if available.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.autoFetch"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the record is retrieved",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "callback"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -242,7 +279,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "bulkQuery",
@@ -342,7 +379,7 @@
         "sObject",
         "operation",
         "options",
-        "fun"
+        "records"
       ],
       "docs": {
         "description": "Create and execute a bulk job.",
@@ -390,12 +427,12 @@
           },
           {
             "title": "param",
-            "description": "A function which takes state and returns an array.",
+            "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
               "name": "Function"
             },
-            "name": "fun"
+            "name": "records"
           },
           {
             "title": "returns",

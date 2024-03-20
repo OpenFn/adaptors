@@ -1,5 +1,23 @@
 # @openfn/language-salesforce
 
+## 4.6.0
+
+### Minor Changes
+
+- cfe1ccb: Add options and callback params in query function
+
+## 4.5.2
+
+### Patch Changes
+
+- 2006e88: fix an issue with bulk jobs not closing
+
+## 4.5.1
+
+### Patch Changes
+
+- fa3e28fe: refactor bulk() to use newExpandReferences
+
 ## 4.5.0
 
 ### Minor Changes
