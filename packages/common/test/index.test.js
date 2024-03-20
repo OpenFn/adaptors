@@ -7,6 +7,7 @@ import {
   arrayToString,
   chunk,
   combine,
+  cursor,
   dataPath,
   dataValue,
   each,
@@ -29,6 +30,7 @@ import {
   toArray,
   validate,
 } from '../src/Adaptor';
+import { startOfToday } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -859,5 +861,29 @@ describe('validate', () => {
     const result = await validate()(state);
 
     expect(result.validationErrors).to.eql([]);
+  });
+});
+
+describe('cursor', () => {
+  it('should set a cursor on state', () => {
+    const state = {}
+    const result = cursor(1234)(state)
+    expect(result.cursor).to.eql(1234);
+  });
+
+  it('should set a cursorStart on state', () => {
+    const state = {}
+    const date = new Date();
+    const result = cursor('start')(state)
+    const resultDate = new Date(result.cursor)
+    expect(resultDate.toDateString()).to.eql(date.toDateString())
+  });
+
+  it('should set a cursor on state with a natural language timestamp', () => {
+    const state = {}
+
+    const date = startOfToday().toISOString()
+    const result = cursor('today')(state)
+    expect(result.cursor).to.eql(date);
   });
 });
