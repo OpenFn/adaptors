@@ -8,11 +8,12 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@openfn/generate",
     "@openfn/buildtools",
+    "@openfn/generate",
     "@openfn/metadata",
     "@openfn/migrate-adaptor",
     "@openfn/parse-jsdoc",
-    "@openfn/slack-notify"
+    "@openfn/slack-notify",
+    "import-tests"
   ]
 }
