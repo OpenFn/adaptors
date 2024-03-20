@@ -7,7 +7,7 @@ import { Readable } from 'node:stream';
 
 import { request } from 'undici';
 
-import { expandReferences as newExpandReferences } from './util';
+import { expandReferences as newExpandReferences, parseDate } from './util';
 
 export * as beta from './beta';
 export * as http from './http.deprecated';
@@ -776,4 +776,41 @@ export function validate(schema = 'schema', data = 'data') {
       return d;
     }
   };
+}
+
+// Note that we don't write cursorStart to state,
+// because it should not affect the next job
+
+let cursorStart;
+
+/**
+ * Sets a cursor value on state (writes to `state.cursor`).
+ * The first time this is called, a `cursorStart` key will be set on state,
+ * which you can use to set the final state.cursor ready for the next run.
+ * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`
+ * @public
+ * @example
+ * cursor((state) => state.cursor || 'today')
+ * @example
+ * cursor(22)
+ * @function
+ * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
+ * @returns {Operation}
+ */
+export function cursor(value) {
+  return (state) => {
+    if (!cursorStart) {
+      cursorStart = new Date().toISOString()
+    }
+
+    if (typeof value === 'string') {
+      state.cursor = parseDate(value, cursorStart)
+      console.log(`Setting cursor "${value}" to ${state.cursor}`)
+    } else {
+      state.cursor = value;
+      console.log(`Setting cursor to ${value}`)
+    }
+
+    return state;
+  }
 }
