@@ -4,12 +4,18 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { writeFile, mkdir } from 'node:fs/promises';
 import resolvePath from '../util/resolve-path';
+import extractExports from '../util/extract-exports';
 
 export default async (lang: string) => {
   const root = resolvePath(lang);
   console.log();
   console.log(`Building docs`);
   console.log();
+
+
+  // TODO proably need to do this for each file
+  const main = await fs.readFile(`${root}/src/Adaptor.js`, 'utf-8')
+  const exports = extractExports(main)
 
   const template = await fs.readFile(
     '../../tools/build/src/util/docs-template.hbs'
@@ -34,6 +40,8 @@ export default async (lang: string) => {
     return 0;
   });
 
+  templateData.push(...exports.map((e) => ({ id: e, common: true, name: e, scope: 'global', kind: "external" })))
+
   const helper = path.resolve('../../tools/build/src/util/hbs-helpers.js');
   const renderOpts = {
     template: `${template}`,
@@ -44,6 +52,7 @@ export default async (lang: string) => {
       path.resolve('../../tools/build/src/partials/body.hbs'),
       path.resolve('../../tools/build/src/partials/description.hbs'),
       path.resolve('../../tools/build/src/partials/link.hbs'),
+      path.resolve('../../tools/build/src/partials/members.hbs'),
     ],
     separators: true,
     'name-format': false,
@@ -94,12 +103,14 @@ export default async (lang: string) => {
     changelog: `${JSON.stringify(changelog)}`,
     functions: functions.sort(),
     'configuration-schema': configurationSchema,
+    commonExports: exports
   };
 
   const destinationDir = `${root}/docs`;
   const destination = `${destinationDir}/index.md`;
   await mkdir(destinationDir, { recursive: true });
   await writeFile(destination, docs);
+  await writeFile(`${destinationDir}/templateData.json`, JSON.stringify(templateData, null, 2));
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
   console.log(`... done! `, destination);

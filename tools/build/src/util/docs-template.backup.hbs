@@ -1,6 +1,7 @@
 {{#if (showMainIndex)~}}
 
 {{#globals kind="function" ~}}
+{{name}}
 {{#if @first~}}{{>heading-indent}}Functions
 
 <dl>
@@ -20,6 +21,7 @@
 {{#if @last~}}</dl>{{/if~}}
 {{/globals~}}
 
+
 {{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
 
 {{/if~}}
@@ -27,15 +29,12 @@
 {{!-- this calls my common fns helper --}}
 {{!-- but why does it dump the array and not iterate? --}}
 {{#commonFns ~}}
-
 {{#if @first~}}{{>heading-indent}}Common
 
-The following functions are exported from the common adaptor:
 <dl>
+The following functions are exported from common:
 {{/if~}}
-<dt>
-    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{name}}()</a>
-</dt>
+<dt>x</dt>
 {{#if @last~}}</dl>{{/if~}}
 {{/commonFns~}}
 
