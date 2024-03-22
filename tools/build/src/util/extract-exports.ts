@@ -10,7 +10,7 @@ export default (source: string) => {
 
   const externalFunctions = ast.body
     .filter(i => i.type == 'ExportNamedDeclaration')
-    .filter((i: any) => i.specifiers.length > 0)
+    .filter((i: any) => i.specifiers.length > 0 && i.source?.value)
     .filter((i: any) => i.source.value == '@openfn/language-common')
     .map((i: any) =>
       i.specifiers.map(s => {
