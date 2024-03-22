@@ -47,8 +47,6 @@ export function getPatient(uuid, callback = s => s) {
       `/ws/rest/v1/patient/${resolvedUuid}`
     );
 
-    console.log(response);
-
     if (response.statusCode === 200) {
       console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
     }
