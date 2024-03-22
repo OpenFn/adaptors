@@ -219,11 +219,7 @@ export function searchPerson(query, callback = s => s) {
       resolvedQuery
     );
 
-    if (response.body.results.length == 0) {
-      throw `Search operation failed to find person with query string: ${resolvedQuery?.q}`;
-    } else {
-      console.log(`Found person with query string: ${resolvedQuery?.q}.`);
-    }
+    console.log(`Found ${response.body.results.length} people`);
 
     return prepareNextState(state, response, callback);
   };
