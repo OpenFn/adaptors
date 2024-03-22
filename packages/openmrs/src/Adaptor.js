@@ -199,7 +199,7 @@ export function searchPatient(query, callback = s => s) {
 /**
  * Fetch all non-retired persons that match any specified parameters
  * @example
- * searchPerson({ q: Sarah, limit: 3 })
+ * searchPerson({ q: Sarah })
  * @function
  * @param {object} query - object with query for the person
  * @param {function} [callback] - Optional callback to handle the response
