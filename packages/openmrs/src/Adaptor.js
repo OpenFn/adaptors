@@ -328,12 +328,7 @@ export function getEncounters(query, callback = s => s) {
       resolvedQuery
     );
 
-    // TODO - we could also argue that this should NOT throw.
-    if (response.body.results.length == 0) {
-      throw `Fetch encounters returned zero results`;
-    }
-
-    console.log(`Successfully retrieved encounter`);
+    console.log(`Found ${response.body.results.length}} results`);
     return prepareNextState(state, response, callback);
   };
 }
