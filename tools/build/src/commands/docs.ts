@@ -41,7 +41,6 @@ export default async (lang: string) => {
   await fileSet.add([glob])
 
   // Extract exports from common and add them to the template data as externals
-  let exports = [];
   for (const f of fileSet.files) {
     const src = await fs.readFile(f, 'utf8')
     const exports = extractExports(src).map((e) => ({
@@ -115,15 +114,13 @@ export default async (lang: string) => {
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
     functions: functions.sort(),
-    'configuration-schema': configurationSchema,
-    commonExports: exports
+    'configuration-schema': configurationSchema
   };
 
   const destinationDir = `${root}/docs`;
   const destination = `${destinationDir}/index.md`;
   await mkdir(destinationDir, { recursive: true });
   await writeFile(destination, docs);
-  await writeFile(`${destinationDir}/templateData.json`, JSON.stringify(templateData, null, 2));
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
   console.log(`... done! `, destination);
