@@ -47,9 +47,7 @@ export function getPatient(uuid, callback = s => s) {
       `/ws/rest/v1/patient/${resolvedUuid}`
     );
 
-    if (response.statusCode === 200) {
-      console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
-    }
+    console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
 
     return prepareNextState(state, response, callback);
   };
@@ -168,9 +166,9 @@ export function post(path, data, callback = s => s) {
 /**
  * Fetch all non-retired patients that match any specified parameters
  * @example
- * searchPatient({ q: Sarah, limit: 2 })
+ * searchPatient({ q: Sarah})
  * @function
- * @param {object} query - A query object with a query string "q" and an optional limit "limit".
+ * @param {object} query - Object with query for the patient.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
@@ -201,7 +199,7 @@ export function searchPatient(query, callback = s => s) {
 /**
  * Fetch all non-retired persons that match any specified parameters
  * @example
- * searchPerson({ q: Hunter, limit: 3 })
+ * searchPerson({ q: Sarah, limit: 3 })
  * @function
  * @param {object} query - object with query for the person
  * @param {function} [callback] - Optional callback to handle the response
