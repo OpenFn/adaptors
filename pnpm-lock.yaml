@@ -2035,6 +2035,9 @@ importers:
       esno:
         specifier: 0.16.3
         version: 0.16.3
+      file-set:
+        specifier: ^5.1.3
+        version: 5.1.3
       jsdoc-to-markdown:
         specifier: 8.0.0
         version: 8.0.0
@@ -7090,6 +7093,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       array-back: 5.0.0
+      glob: 7.2.3
+    dev: false
+
+  /file-set@5.1.3:
+    resolution: {integrity: sha512-mQ6dqz+z59on3B50IGF3ujNGbZmY1TAeLHpNfhLEeNM6Lky31w3RUlbCyqZWQs0DuZJQU4R2qDuVd9ojyzadcg==}
+    engines: {node: '>=12.17'}
+    dependencies:
+      array-back: 6.2.2
       glob: 7.2.3
     dev: false
 

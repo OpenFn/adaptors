@@ -1,19 +1,18 @@
 
 import * as acorn from 'acorn';
 
-
 export default (source: string) => {
   const ast = acorn.parse(source, {
     sourceType: 'module',
-    ecmaVersion: 10,
+    ecmaVersion: 'latest',
     locations: false,
   });
 
   const externalFunctions = ast.body
     .filter(i => i.type == 'ExportNamedDeclaration')
-    .filter(i => i.specifiers.length > 0)
-    .filter(i => i.source.value == '@openfn/language-common')
-    .map(i =>
+    .filter((i: any) => i.specifiers.length > 0)
+    .filter((i: any) => i.source.value == '@openfn/language-common')
+    .map((i: any) =>
       i.specifiers.map(s => {
         return s.exported.name;
       })
