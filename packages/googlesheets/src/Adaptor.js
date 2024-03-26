@@ -1,8 +1,11 @@
 import {
   execute as commonExecute,
-  expandReferences,
+  composeNextState,
 } from '@openfn/language-common';
-import { normalizeOauthConfig } from '@openfn/language-common/util';
+import {
+  normalizeOauthConfig,
+  expandReferences,
+} from '@openfn/language-common/util';
 import { google } from 'googleapis';
 
 /**
@@ -60,9 +63,10 @@ export function appendValues(params) {
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.credentials = { access_token: accessToken };
 
-    const { spreadsheetId, range, values } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const { spreadsheetId, range, values } = resolvedParams;
 
-    var sheets = google.sheets('v4');
+    let sheets = google.sheets('v4');
 
     return new Promise((resolve, reject) => {
       sheets.spreadsheets.values.append(
@@ -90,6 +94,56 @@ export function appendValues(params) {
         }
       );
     });
+  };
+}
+
+/**
+ * Batch Updates values in a Spreadsheet.
+ * @param {string} spreadsheetId The spreadsheet ID.
+ * @param {string} range The range of values to update.
+ * @param {object} valueInputOption Value update options.
+ * @param {array} values A 2d array of values to update.
+ * @return {obj} spreadsheet information
+ */
+export function batchUpdateValues(
+  spreadsheetId,
+  range,
+  valueInputOption,
+  values
+) {
+  return async state => {
+    const { accessToken } = state.configuration;
+
+    const [resolvedSheetId, resolvedRange, resolvedInputOpts, resolvedValues] =
+      expandReferences(state, spreadsheetId, range, valueInputOption, values);
+
+    const auth = new google.auth.OAuth2();
+    auth.credentials = { access_token: accessToken };
+
+    const service = google.sheets({ version: 'v4', auth });
+
+    const data = [
+      {
+        range: resolvedRange,
+        values: resolvedValues,
+      },
+    ];
+    // Additional ranges to update ...
+    const resource = {
+      data,
+      valueInputOption: resolvedInputOpts,
+    };
+    try {
+      const result = await service.spreadsheets.values.batchUpdate({
+        spreadsheetId: resolvedSheetId,
+        resource,
+      });
+      console.log('%d cells updated.', result.data.totalUpdatedCells);
+      return result;
+    } catch (err) {
+      // TODO (developer) - Handle exception
+      throw err;
+    }
   };
 }
 
