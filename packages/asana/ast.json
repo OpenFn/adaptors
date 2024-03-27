@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "getTask(\"taskGid\",\n {\n   opt_fields: \"name,notes,assignee\"\n })"
+            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
           },
           {
             "title": "function",
@@ -80,7 +80,7 @@
           },
           {
             "title": "example",
-            "description": "getTasks(\"projectGid\",\n {\n   opt_fields: \"name,notes,assignee\"\n })"
+            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
           },
           {
             "title": "function",
@@ -143,7 +143,7 @@
           },
           {
             "title": "example",
-            "description": "updateTask(\"taskGid\",\n {\n   name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n }\n)"
+            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});"
           },
           {
             "title": "function",
@@ -205,7 +205,7 @@
           },
           {
             "title": "example",
-            "description": "createTask(\n {\n   name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n }\n)"
+            "description": "createTask({\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n  projects: [\"1206933955023739\"],\n});"
           },
           {
             "title": "function",
@@ -259,7 +259,7 @@
           },
           {
             "title": "example",
-            "description": "upsertTask(\n \"1201382240880\",\n {\n   \"externalId\": \"name\",\n   \"data\": {\n     name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n   }\n\n }\n)"
+            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});"
           },
           {
             "title": "function",

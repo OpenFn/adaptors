@@ -1,7 +1,7 @@
-import { execute as commonExecute, http } from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request as sendRequest } from './Utils';
+import { request as commonRequest } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -49,7 +49,7 @@ export function getTask(taskGid, params, callback) {
       taskGid,
       params
     );
-    return sendRequest(
+    return commonRequest(
       state,
       `tasks/${resolvedTaskGid}`,
       { query: resolvedParams },
@@ -79,7 +79,7 @@ export function getTasks(projectGid, params, callback) {
       params
     );
 
-    return sendRequest(
+    return commonRequest(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: resolvedParams },
@@ -111,7 +111,7 @@ export function updateTask(taskGid, params, callback) {
       params
     );
 
-    return sendRequest(
+    return commonRequest(
       state,
       `tasks/${resolvedTaskGid}`,
       { body: { data: resolvedParams }, method: 'PUT' },
@@ -139,7 +139,7 @@ export function createTask(params, callback) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
 
-    return sendRequest(
+    return commonRequest(
       state,
       'tasks',
       { body: { data: resolvedParams }, method: 'POST' },
@@ -175,7 +175,7 @@ export function upsertTask(projectGid, params, callback) {
       params
     );
     const { externalId, data } = resolvedParams;
-    return sendRequest(
+    return commonRequest(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: { opt_fields: `${externalId}` } },
@@ -195,6 +195,39 @@ export function upsertTask(projectGid, params, callback) {
         }
       }
     );
+  };
+}
+
+export function createStoryForTask(taskGid, params, callback) {
+  return state => {
+    const [resolvedTaskGid, resolvedParams] = expandReferences(
+      state,
+      taskGid,
+      params
+    );
+
+    const { story, opt_pretty = false, opt_fields = [] } = resolvedParams;
+    return commonRequest(
+      state,
+      `tasks/${resolvedTaskGid}/stories`,
+      {
+        body: { data: story },
+        query: { opt_fields, opt_pretty },
+        method: 'POST',
+      },
+      callback
+    );
+  };
+}
+
+export function sendRequest(path, params, callback) {
+  return state => {
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+    return commonRequest(state, resolvedPath, resolvedParams, callback);
   };
 }
 
