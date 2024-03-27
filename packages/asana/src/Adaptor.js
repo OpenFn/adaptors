@@ -1,6 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-
 import { request as commonRequest } from './Utils';
 
 /**
@@ -198,7 +197,36 @@ export function upsertTask(projectGid, params, callback) {
   };
 }
 
-export function createStoryForTask(taskGid, params, callback) {
+/**
+ * Options provided to the createTaskStory request
+ * @typedef {Object} StoryOptions
+ * @property {object} story - The story to create, It represents an activity associated with an object in the Asana system.
+ * @property {string} [story.text] - The plain text of the comment to add. Cannot be used with html_text.
+ * @property {string} [story.html_text] - Opt In. HTML formatted text for a comment. This will not include the name of the creator.
+ * @property {boolean} [story.is_pinned] - Conditional. Whether the story should be pinned on the resource.
+ * @property {string} [story.sticker_naem] - The name of the sticker in this story. `null` if there is no sticker.
+ * @property {array} [opt_fields] - Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include.
+ * @property {boolean} [opt_pretty] - Opt In. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.
+ */
+
+/**
+ * Create a story to a specific task.
+ * @public
+ * @example
+ * createTaskStory("1206933955023739", {
+ *   story: {
+ *     text: "This is a comment",
+ *     html_text: "<body>This is a comment</body>",
+ *     is_pinned: false,
+ *   },
+ * });
+ * @function
+ * @param {string} taskGid - Globally unique identifier for the task
+ * @param {StoryOptions} params - Story parameters
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function createTaskStory(taskGid, params, callback) {
   return state => {
     const [resolvedTaskGid, resolvedParams] = expandReferences(
       state,
@@ -220,14 +248,42 @@ export function createStoryForTask(taskGid, params, callback) {
   };
 }
 
-export function sendRequest(path, params, callback) {
+/**
+ * Options provided to the Asana API request
+ * @typedef {Object} RequestOptions
+ * @property {object} body - Body data to append to the request.
+ * @property {object} query - An object of query parameters to be encoded into the URL.
+ * @property {string} method - The HTTP method to use
+ */
+
+/**
+ * Make a request in Asana API
+ * @public
+ * @example
+ * request("/asanaEndpoint", {
+ *   method: "POST",
+ *   query: { foo: "bar", a: 1 },
+ * });
+ * @function
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} params - Query, body and method parameters
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ */
+export function request(path, params, callback) {
   return state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
       params
     );
-    return commonRequest(state, resolvedPath, resolvedParams, callback);
+    const { body = {}, query = {}, method = 'GET' } = resolvedParams;
+    return commonRequest(
+      state,
+      resolvedPath,
+      { method, body, query },
+      callback
+    );
   };
 }
 
