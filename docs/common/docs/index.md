@@ -81,7 +81,6 @@
     <a href="#withagent">withAgent(params)</a></dt>
 </dl>
 
-
 ## alterState
 
 alterState(func) ⇒ <code>Operation</code>
