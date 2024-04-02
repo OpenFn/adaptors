@@ -781,7 +781,7 @@ export function validate(schema = 'schema', data = 'data') {
 // Note that we don't write cursorStart to state,
 // because it should not affect the next job
 
-let cursorStart;
+let cursorStart = undefined;
 
 /**
  * Sets a cursor value on state (writes to `state.cursor`).
