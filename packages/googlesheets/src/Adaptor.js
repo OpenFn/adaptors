@@ -8,6 +8,16 @@ import {
 } from '@openfn/language-common/util';
 import { google } from 'googleapis';
 
+let client;
+
+function createConnection(state) {
+  const { accessToken } = state.configuration;
+
+  const auth = new google.auth.OAuth2();
+  auth.credentials = { access_token: accessToken };
+
+  client = google.sheets({ version: 'v4', auth });
+}
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
@@ -31,7 +41,10 @@ export function execute(...operations) {
   return state => {
     // Note: we no longer need `steps` anymore since `commonExecute`
     // takes each operation as an argument.
-    return commonExecute(...operations)({
+    return commonExecute(
+      createConnection,
+      ...operations
+    )({
       ...initialState,
       ...state,
       configuration: normalizeOauthConfig(state.configuration),
@@ -105,17 +118,14 @@ export function appendValues(params) {
  * @param {array} values A 2d array of values to update.
  * @return {obj} spreadsheet information
  */
-export function batchUpdateValues(
-  spreadsheetId,
-  range,
-  valueInputOption,
-  values
-) {
+export function batchUpdateValues(params, callback = s => s) {
   return async state => {
     const { accessToken } = state.configuration;
 
-    const [resolvedSheetId, resolvedRange, resolvedInputOpts, resolvedValues] =
-      expandReferences(state, spreadsheetId, range, valueInputOption, values);
+    const [resolvedParams] = expandReferences(state, params);
+
+    const [spreadsheetId, range, valueInputOption = 'USER_ENTERED', values] =
+      resolvedParams;
 
     const auth = new google.auth.OAuth2();
     auth.credentials = { access_token: accessToken };
@@ -124,28 +134,63 @@ export function batchUpdateValues(
 
     const data = [
       {
-        range: resolvedRange,
-        values: resolvedValues,
+        range,
+        values,
       },
     ];
-    // Additional ranges to update ...
     const resource = {
       data,
-      valueInputOption: resolvedInputOpts,
+      valueInputOption,
     };
     try {
-      const result = await service.spreadsheets.values.batchUpdate({
-        spreadsheetId: resolvedSheetId,
+      const response = await service.spreadsheets.values.batchUpdate({
+        spreadsheetId,
         resource,
       });
-      console.log('%d cells updated.', result.data.totalUpdatedCells);
-      return result;
+      console.log('%d cells updated.', response.data.totalUpdatedCells);
+      return callback({ ...composeNextState(state, response.data), response });
     } catch (err) {
       // TODO (developer) - Handle exception
       throw err;
     }
   };
 }
+
+/**
+ * Gets cell values from a Spreadsheet.
+ * @param {string} spreadsheetId The spreadsheet ID.
+ * @param {string} range The sheet range.
+ * @return {obj} spreadsheet information
+ */
+export function getValues(spreadsheetId, range, callback = s => s) {
+  return async state => {
+    const { accessToken } = state.configuration;
+
+    const [resolvedSheetId, resolvedRange] = expandReferences(
+      state,
+      spreadsheetId,
+      range
+    );
+
+    const auth = new google.auth.OAuth2();
+    auth.credentials = { access_token: accessToken };
+
+    const service = google.sheets({ version: 'v4', auth });
+    try {
+      const response = await service.spreadsheets.values.get({
+        spreadsheetId: resolvedSheetId,
+        range: resolvedRange,
+      });
+      const numRows = response.data.values ? response.data.values.length : 0;
+      console.log(`${numRows} rows retrieved.`);
+      return callback({ ...composeNextState(state, response.data), response });
+    } catch (err) {
+      // TODO (developer) - Handle exception
+      throw err;
+    }
+  };
+}
+export { client as sheets };
 
 export {
   alterState,
