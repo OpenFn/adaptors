@@ -33,9 +33,6 @@ importers:
         specifier: ^1.12.0
         version: link:../common
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -70,9 +67,6 @@ importers:
         specifier: ^1.12.0
         version: link:../common
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -113,9 +107,6 @@ importers:
         specifier: ^8.0.0
         version: 8.0.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -168,9 +159,6 @@ importers:
         specifier: 0.5.0
         version: 0.5.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -217,9 +205,6 @@ importers:
         specifier: ^3.7.0
         version: 3.8.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -272,9 +257,6 @@ importers:
         specifier: https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz
         version: '@cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz'
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -333,9 +315,6 @@ importers:
         specifier: ^5.23.0
         version: 5.23.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -410,9 +389,6 @@ importers:
         specifier: ^2.72.0
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -450,9 +426,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -490,9 +463,6 @@ importers:
         specifier: ^5.22.1
         version: 5.22.1
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -524,9 +494,6 @@ importers:
         specifier: ^0.21.2
         version: 0.21.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -561,9 +528,6 @@ importers:
         specifier: ^1.12.0
         version: link:../common
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -598,9 +562,6 @@ importers:
         specifier: 100.0.0
         version: 100.0.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -635,9 +596,6 @@ importers:
         specifier: 0.2.0
         version: 0.2.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -672,9 +630,6 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -709,9 +664,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -743,9 +695,6 @@ importers:
         specifier: workspace:^1.12.0
         version: link:../common
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -795,9 +744,6 @@ importers:
         specifier: 0.5.0
         version: 0.5.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -841,9 +787,6 @@ importers:
         specifier: ^5.22.1
         version: 5.22.1
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -881,9 +824,6 @@ importers:
         specifier: ^6.0.0
         version: 6.1.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.3.2
         version: 0.3.2
@@ -927,9 +867,6 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -982,9 +919,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1034,9 +968,6 @@ importers:
         specifier: ^3.32.0
         version: 3.32.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1074,9 +1005,6 @@ importers:
         specifier: ^3.7.3
         version: 3.7.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1114,9 +1042,6 @@ importers:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
         version: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1148,9 +1073,6 @@ importers:
         specifier: 15.1.0
         version: 15.1.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1191,9 +1113,6 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -1231,9 +1150,6 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1265,9 +1181,6 @@ importers:
         specifier: 1.12.0
         version: link:../common
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -1302,9 +1215,6 @@ importers:
         specifier: ^0.21.1
         version: 0.21.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -1348,9 +1258,6 @@ importers:
         specifier: ^3.7.0
         version: 3.8.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1400,9 +1307,6 @@ importers:
         specifier: ^8.0.9
         version: 8.0.9
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -1440,9 +1344,6 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1480,9 +1381,6 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1526,9 +1424,6 @@ importers:
         specifier: ^2.72.0
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1575,9 +1470,6 @@ importers:
         specifier: ^0.21.2
         version: 0.21.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1615,9 +1507,6 @@ importers:
         specifier: ^0.21.2
         version: 0.21.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.1
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.3.0
         version: 0.3.2
@@ -1652,9 +1541,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1741,9 +1627,6 @@ importers:
         specifier: 9.0.4
         version: 9.0.4
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1787,9 +1670,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1824,9 +1704,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1867,9 +1744,6 @@ importers:
         specifier: ^3.7.0
         version: 3.8.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1904,9 +1778,6 @@ importers:
         specifier: ^3.83.2
         version: 3.83.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: ^0.4.1
         version: 0.4.1
@@ -1947,9 +1818,6 @@ importers:
         specifier: ^2.88.2
         version: 2.88.2
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
@@ -1993,9 +1861,6 @@ importers:
         specifier: ^3.7.0
         version: 3.8.3
     devDependencies:
-      '@openfn/buildtools':
-        specifier: workspace:^1.0.2
-        version: link:../../tools/build
       '@openfn/simple-ast':
         specifier: 0.4.1
         version: 0.4.1
