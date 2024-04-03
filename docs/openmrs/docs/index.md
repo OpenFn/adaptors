@@ -226,7 +226,7 @@ Gets encounters matching params
 
 **Example**  
 ```js
-getEncounters({patient: "123", fromdate: "2023-05-18"})
+getEncounters({ patient: "123", fromdate: "2023-05-18" })
 ```
 
 * * *
@@ -286,12 +286,12 @@ Fetch all non-retired patients that match any specified parameters
 
 | Param | Type | Description |
 | --- | --- | --- |
-| query | <code>object</code> | Object with query for the patient |
+| query | <code>object</code> | Object with query for the patient. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 **Example**  
 ```js
-searchPatient({ q: Sarah })
+searchPatient({ q: "Sarah"})
 ```
 
 * * *
@@ -310,7 +310,7 @@ Fetch all non-retired persons that match any specified parameters
 
 **Example**  
 ```js
-searchPerson({ q: Sarah })
+searchPerson({ q: "Sarah" })
 ```
 
 * * *
