@@ -3,7 +3,8 @@
     {
       "name": "appendValues",
       "params": [
-        "params"
+        "params",
+        "callback"
       ],
       "docs": {
         "description": "Add an array of rows to the spreadsheet.\nhttps://developers.google.com/sheets/api/samples/writing#append_values",
@@ -32,6 +33,42 @@
             "name": "params"
           },
           {
+            "title": "param",
+            "description": "The spreadsheet ID.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "params.spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "The range of values to update.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "params.range"
+          },
+          {
+            "title": "param",
+            "description": "A 2d array of values to update.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "array"
+              }
+            },
+            "name": "params.values"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -41,7 +78,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getValues",

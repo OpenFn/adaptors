@@ -21,6 +21,23 @@ function createConnection(state) {
   return state;
 }
 
+function removeConnection(state) {
+  client = undefined;
+  return state;
+}
+
+function logError(err) {
+  const { code, errors, response } = err;
+  if (code && errors && response) {
+    console.error('The API returned an error:', errors);
+
+    const { statusText, config } = response;
+    const { url, method, body } = config;
+    const message = `${method} ${url} - ${code}:${statusText} \nbody: ${body}`;
+
+    console.log(message);
+  }
+}
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
@@ -46,7 +63,8 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      ...operations
+      ...operations,
+      removeConnection
     )({
       ...initialState,
       ...state,
@@ -70,24 +88,19 @@ export function execute(...operations) {
  * })
  * @function
  * @param {Object} params - Data object to add to the spreadsheet.
+ * @param {string} [params.spreadsheetId] The spreadsheet ID.
+ * @param {string} [params.range] The range of values to update.
+ * @param {array} [params.values] A 2d array of values to update.
  * @returns {Operation}
  */
-export function appendValues(params) {
+export function appendValues(params, callback = s => s) {
   return state => {
-    const { accessToken } = state.configuration;
-
-    const oauth2Client = new google.auth.OAuth2();
-    oauth2Client.credentials = { access_token: accessToken };
-
     const [resolvedParams] = expandReferences(state, params);
     const { spreadsheetId, range, values } = resolvedParams;
 
-    let sheets = google.sheets('v4');
-
     return new Promise((resolve, reject) => {
-      sheets.spreadsheets.values.append(
+      client.spreadsheets.values.append(
         {
-          auth: oauth2Client,
           spreadsheetId,
           range,
           valueInputOption: 'USER_ENTERED',
@@ -99,13 +112,17 @@ export function appendValues(params) {
         },
         function (err, response) {
           if (err) {
-            console.log('The API returned an error:');
-            console.log(err);
+            logError(err);
             reject(err);
           } else {
             console.log('Success! Here is the response from Google:');
-            console.log(response);
-            resolve(state);
+            console.log(response.data);
+            resolve(
+              callback({
+                ...composeNextState(state, response.data),
+                response,
+              })
+            );
           }
         }
       );
@@ -160,7 +177,7 @@ export function batchUpdateValues(params, callback = s => s) {
       console.log('%d cells updated.', response.data.totalUpdatedCells);
       return callback({ ...composeNextState(state, response.data), response });
     } catch (err) {
-      // TODO (developer) - Handle exception
+      logError(err);
       throw err;
     }
   };
@@ -196,7 +213,7 @@ export function getValues(spreadsheetId, range, callback = s => s) {
 
       return callback(nextState);
     } catch (err) {
-      // TODO (developer) - Handle exception
+      logError(err);
       throw err;
     }
   };
