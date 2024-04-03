@@ -1,5 +1,14 @@
 # @openfn/language-openmrs
 
+## 3.0.0
+
+### Major Changes
+
+- cadff13b: - Remove superagent dependency.
+  - Rebase on new common http request helper.
+  - Remove login function as no longer needed.
+  - Update log output
+
 ## 2.0.8
 
 ### Patch Changes

@@ -1,44 +1,38 @@
 import { composeNextState } from '@openfn/language-common';
+import {
+  request as commonRequest,
+  makeBasicAuthHeader,
+  logResponse
+} from '@openfn/language-common/util';
 
-export const Log = {
-  success: message => console.log(`✓ Success at ${new Date()}:\n∟ ${message}`),
-  warn: message => console.log(`⚠ Warning at ${new Date()}:\n∟ ${message}`),
-  error: message => console.log(`✗ Error at ${new Date()}:\n∟ ${message}`),
-  info: message => console.log(`ℹ Info at ${new Date()}:\n∟ ${message}`),
+export const prepareNextState = (state, response, callback) => {
+  const { body, ...responseWithoutBody } = response
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+
+  return callback(nextState);
 };
 
-export function handleError(error) {
-  if (error.response) {
-    const { method, path } = error.response.req;
-    const { status } = error.response;
-    if (Object.keys(error.response.body).length === 0) {
-      throw new Error(
-        `Server responded with:  \n${JSON.stringify(error.response, null, 2)}`
-      );
-    }
+export function request(state, method, path, data, params) {
+  const { instanceUrl, username, password } = state.configuration;
+  const headers = makeBasicAuthHeader(username, password);
 
-    const errorString = [
-      `Request: ${method} ${path}`,
-      `Got: ${status}`,
-      'Body:',
-      JSON.stringify(error.response.body, null, 2),
-    ].join('\n');
+  const options = {
+    body: data,
 
-    throw new Error(errorString);
-  } else {
-    throw error;
-  }
-}
+    headers: {
+      ...headers,
+      'content-type': 'application/json',
+    },
 
-export function handleResponse(response, state, callback) {
-  const { body } = response;
-  const nextState = composeNextState(state, { body });
-  if (callback) return callback(nextState);
-  return nextState;
-}
+    query: params,
 
-const isArray = variable => !!variable && variable.constructor === Array;
+    parseAs: 'json',
+  };
 
-export function nestArray(data, key) {
-  return isArray(data) ? { [key]: data } : data;
+  const url = `${instanceUrl}${path}`;
+
+  return commonRequest(method, url, options).then(response => logResponse(response));
 }

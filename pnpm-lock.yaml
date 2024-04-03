@@ -1303,9 +1303,6 @@ importers:
       '@openfn/language-common':
         specifier: 1.12.0
         version: link:../common
-      superagent:
-        specifier: ^8.0.9
-        version: 8.0.9
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
