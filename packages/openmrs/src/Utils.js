@@ -2,6 +2,7 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
+  logResponse
 } from '@openfn/language-common/util';
 
 export const prepareNextState = (state, response, callback) => {
@@ -32,5 +33,5 @@ export function request(state, method, path, data, params) {
 
   const url = `${instanceUrl}${path}`;
 
-  return commonRequest(method, url, options);
+  return commonRequest(method, url, options).then(response => logResponse(response));
 }

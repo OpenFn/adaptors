@@ -22,6 +22,7 @@ export const logResponse = response => {
       console.log(message);
     }
   }
+  return response;
 };
 
 const getClient = (baseUrl, options) => {

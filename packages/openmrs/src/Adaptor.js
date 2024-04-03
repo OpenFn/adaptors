@@ -113,8 +113,6 @@ export function get(path, query, callback = s => s) {
       query
     );
 
-    console.log(`Sending an HTTP GET to ${resolvedPath}`);
-
     const response = await request(
       state,
       'GET',
@@ -149,8 +147,6 @@ export function get(path, query, callback = s => s) {
 export function post(path, data, callback = s => s) {
   return async state => {
     const [resolvedPath, resolvedData] = expandReferences(state, path, data);
-
-    console.log(`Sending an HTTP post to ${resolvedPath}`);
 
     const response = await request(
       state,
