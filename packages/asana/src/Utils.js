@@ -28,10 +28,10 @@ export function request(state, path, params, callback = s => s) {
   return commonRequest(method, path, options)
     .then(response => {
       logResponse(response);
-
+      const { body, ...responseWithoutBody } = response;
       return {
-        ...composeNextState(state, response.body?.data),
-        response,
+        ...composeNextState(state, body?.data),
+        response: responseWithoutBody,
       };
     })
     .then(callback)
