@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request as commonRequest } from './Utils';
+import { request as requestHelper } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -48,7 +48,7 @@ export function getTask(taskGid, params, callback) {
       taskGid,
       params
     );
-    return commonRequest(
+    return requestHelper(
       state,
       `tasks/${resolvedTaskGid}`,
       { query: resolvedParams },
@@ -78,7 +78,7 @@ export function getTasks(projectGid, params, callback) {
       params
     );
 
-    return commonRequest(
+    return requestHelper(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: resolvedParams },
@@ -110,7 +110,7 @@ export function updateTask(taskGid, params, callback) {
       params
     );
 
-    return commonRequest(
+    return requestHelper(
       state,
       `tasks/${resolvedTaskGid}`,
       { body: { data: resolvedParams }, method: 'PUT' },
@@ -138,7 +138,7 @@ export function createTask(params, callback) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
 
-    return commonRequest(
+    return requestHelper(
       state,
       'tasks',
       { body: { data: resolvedParams }, method: 'POST' },
@@ -168,13 +168,13 @@ export function createTask(params, callback) {
  */
 export function upsertTask(projectGid, params, callback) {
   return state => {
-    const [resolvedProjectGid, resolvedParams] = expandReferences(
+    const [resolvedProjectGid, { externalId, data }] = expandReferences(
       state,
       projectGid,
       params
     );
-    const { externalId, data } = resolvedParams;
-    return commonRequest(
+
+    return requestHelper(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: { opt_fields: `${externalId}` } },
@@ -228,14 +228,10 @@ export function upsertTask(projectGid, params, callback) {
  */
 export function createTaskStory(taskGid, params, callback) {
   return state => {
-    const [resolvedTaskGid, resolvedParams] = expandReferences(
-      state,
-      taskGid,
-      params
-    );
+    const [resolvedTaskGid, { story, opt_pretty = false, opt_fields = [] }] =
+      expandReferences(state, taskGid, params);
 
-    const { story, opt_pretty = false, opt_fields = [] } = resolvedParams;
-    return commonRequest(
+    return requestHelper(
       state,
       `tasks/${resolvedTaskGid}/stories`,
       {
@@ -253,7 +249,7 @@ export function createTaskStory(taskGid, params, callback) {
  * @typedef {Object} RequestOptions
  * @property {object} body - Body data to append to the request.
  * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {string} method - The HTTP method to use
+ * @property {string} method - The HTTP method to use. Defaults to `GET`
  */
 
 /**
@@ -272,13 +268,10 @@ export function createTaskStory(taskGid, params, callback) {
  */
 export function request(path, params, callback) {
   return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-    const { body = {}, query = {}, method = 'GET' } = resolvedParams;
-    return commonRequest(
+    const [resolvedPath, { body = {}, query = {}, method = 'GET' }] =
+      expandReferences(state, path, params);
+
+    return requestHelper(
       state,
       resolvedPath,
       { method, body, query },
