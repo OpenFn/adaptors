@@ -24,7 +24,6 @@
     "nexmo": "2.9.1"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^2.0.0",
     "chai": "^4.3.7",

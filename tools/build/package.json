@@ -14,7 +14,9 @@
   "dependencies": {
     "@openfn/simple-ast": "0.4.1",
     "@types/node": "18.17.5",
+    "acorn": "^8.11.3",
     "esno": "0.16.3",
+    "file-set": "^5.1.3",
     "jsdoc-to-markdown": "8.0.0",
     "ts-node": "10.9.1",
     "tsup": "6.3.0",

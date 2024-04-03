@@ -26,7 +26,6 @@
     "superagent": "^3.7.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.1.0",
     "chai": "^3.5.0",

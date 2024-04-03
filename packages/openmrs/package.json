@@ -28,7 +28,6 @@
     "@openfn/language-common": "1.12.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.1",
     "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
