@@ -6,9 +6,10 @@ import {
   normalizeOauthConfig,
   expandReferences,
 } from '@openfn/language-common/util';
+
 import { google } from 'googleapis';
 
-let client;
+let client = undefined;
 
 function createConnection(state) {
   const { accessToken } = state.configuration;
@@ -17,7 +18,9 @@ function createConnection(state) {
   auth.credentials = { access_token: accessToken };
 
   client = google.sheets({ version: 'v4', auth });
+  return state;
 }
+
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
@@ -112,38 +115,45 @@ export function appendValues(params) {
 
 /**
  * Batch Updates values in a Spreadsheet.
- * @param {string} spreadsheetId The spreadsheet ID.
- * @param {string} range The range of values to update.
- * @param {object} valueInputOption Value update options.
- * @param {array} values A 2d array of values to update.
- * @return {obj} spreadsheet information
+ * @example
+ * batchUpdateValues({
+ *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
+ *   range: 'Sheet1!A1:E1',
+ *   values: [
+ *     ['From expression', '$15', '2', '3/15/2016'],
+ *     ['Really now!', '$100', '1', '3/20/2016'],
+ *   ],
+ * })
+ * @function
+ * @param {Object} params - Data object to add to the spreadsheet.
+ * @param {string} [params.spreadsheetId] The spreadsheet ID.
+ * @param {string} [params.range] The range of values to update.
+ * @param {string} [params.valueInputOption] (Optional) Value update options. Defaults to 'USER_ENTERED'
+ * @param {array} [params.values] A 2d array of values to update.
+ * @returns {Operation} spreadsheet information
  */
 export function batchUpdateValues(params, callback = s => s) {
   return async state => {
-    const { accessToken } = state.configuration;
-
     const [resolvedParams] = expandReferences(state, params);
 
-    const [spreadsheetId, range, valueInputOption = 'USER_ENTERED', values] =
-      resolvedParams;
+    const {
+      spreadsheetId,
+      range,
+      valueInputOption = 'USER_ENTERED',
+      values,
+    } = resolvedParams;
 
-    const auth = new google.auth.OAuth2();
-    auth.credentials = { access_token: accessToken };
-
-    const service = google.sheets({ version: 'v4', auth });
-
-    const data = [
-      {
-        range,
-        values,
-      },
-    ];
     const resource = {
-      data,
+      data: [
+        {
+          range,
+          values,
+        },
+      ],
       valueInputOption,
     };
     try {
-      const response = await service.spreadsheets.values.batchUpdate({
+      const response = await client.spreadsheets.values.batchUpdate({
         spreadsheetId,
         resource,
       });
@@ -158,39 +168,39 @@ export function batchUpdateValues(params, callback = s => s) {
 
 /**
  * Gets cell values from a Spreadsheet.
+ * @public
+ * @example
+ * getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')
+ * @function
  * @param {string} spreadsheetId The spreadsheet ID.
  * @param {string} range The sheet range.
- * @return {obj} spreadsheet information
+ * @returns {Operation} spreadsheet information
  */
 export function getValues(spreadsheetId, range, callback = s => s) {
   return async state => {
-    const { accessToken } = state.configuration;
-
     const [resolvedSheetId, resolvedRange] = expandReferences(
       state,
       spreadsheetId,
       range
     );
 
-    const auth = new google.auth.OAuth2();
-    auth.credentials = { access_token: accessToken };
-
-    const service = google.sheets({ version: 'v4', auth });
     try {
-      const response = await service.spreadsheets.values.get({
+      const response = await client.spreadsheets.values.get({
         spreadsheetId: resolvedSheetId,
         range: resolvedRange,
       });
-      const numRows = response.data.values ? response.data.values.length : 0;
+      const numRows = response?.data?.values.length ?? 0;
       console.log(`${numRows} rows retrieved.`);
-      return callback({ ...composeNextState(state, response.data), response });
+
+      const nextState = { ...composeNextState(state, response.data), response };
+
+      return callback(nextState);
     } catch (err) {
       // TODO (developer) - Handle exception
       throw err;
     }
   };
 }
-export { client as sheets };
 
 export {
   alterState,

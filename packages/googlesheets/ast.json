@@ -42,6 +42,60 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "getValues",
+      "params": [
+        "spreadsheetId",
+        "range",
+        "callback"
+      ],
+      "docs": {
+        "description": "Gets cell values from a Spreadsheet.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The spreadsheet ID.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "The sheet range.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "range"
+          },
+          {
+            "title": "returns",
+            "description": "spreadsheet information",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],
