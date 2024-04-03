@@ -1,9 +1,6 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-  http,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import { request as requestHelper } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -35,10 +32,9 @@ export function execute(...operations) {
  * Get a single task of a given project.
  * @public
  * @example
- * getTask("taskGid",
- *  {
- *    opt_fields: "name,notes,assignee"
- *  })
+ * getTask("1206933955023739", {
+ *   opt_fields: "name,notes,assignee",
+ * });
  * @function
  * @param {string} taskGid - Globally unique identifier for the task
  * @param {object} params - Query params to include.
@@ -47,31 +43,17 @@ export function execute(...operations) {
  */
 export function getTask(taskGid, params, callback) {
   return state => {
-    const resolvedTaskGid = expandReferences(taskGid)(state);
-    const { opt_fields } = expandReferences(params)(state);
-
-    const { apiVersion, token } = state.configuration;
-
-    const url = `https://app.asana.com/api/${apiVersion}/tasks/${resolvedTaskGid}`;
-
-    const config = {
-      url,
-      headers: { Authorization: `Bearer ${token}` },
-      params: {
-        opt_fields,
-      },
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    const [resolvedTaskGid, resolvedParams] = expandReferences(
+      state,
+      taskGid,
+      params
+    );
+    return requestHelper(
+      state,
+      `tasks/${resolvedTaskGid}`,
+      { query: resolvedParams },
+      callback
+    );
   };
 }
 
@@ -79,10 +61,9 @@ export function getTask(taskGid, params, callback) {
  * Get the list of tasks for a given project.
  * @public
  * @example
- * getTasks("projectGid",
- *  {
- *    opt_fields: "name,notes,assignee"
- *  })
+ * getTasks("1206933955023739", {
+ *   opt_fields: "name,notes,assignee",
+ * });
  * @function
  * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - Query params to include.
@@ -91,31 +72,18 @@ export function getTask(taskGid, params, callback) {
  */
 export function getTasks(projectGid, params, callback) {
   return state => {
-    const resolvedProjectGid = expandReferences(projectGid)(state);
-    const { opt_fields } = expandReferences(params)(state);
+    const [resolvedProjectGid, resolvedParams] = expandReferences(
+      state,
+      projectGid,
+      params
+    );
 
-    const { apiVersion, token } = state.configuration;
-
-    const url = `https://app.asana.com/api/${apiVersion}/projects/${resolvedProjectGid}/tasks`;
-
-    const config = {
-      url,
-      headers: { Authorization: `Bearer ${token}` },
-      params: {
-        opt_fields,
-      },
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    return requestHelper(
+      state,
+      `projects/${resolvedProjectGid}/tasks`,
+      { query: resolvedParams },
+      callback
+    );
   };
 }
 
@@ -123,11 +91,11 @@ export function getTasks(projectGid, params, callback) {
  * Update a specific task.
  * @public
  * @example
- * updateTask("taskGid",
- *  {
- *    name: 'test', "approval_status": "pending", "assignee": "12345"
- *  }
- * )
+ * updateTask("1206933955023739", {
+ *   name: "test",
+ *   approval_status: "pending",
+ *   assignee: "12345",
+ * });
  * @function
  * @param {string} taskGid - Globally unique identifier for the task
  * @param {object} params - Body parameters
@@ -136,33 +104,18 @@ export function getTasks(projectGid, params, callback) {
  */
 export function updateTask(taskGid, params, callback) {
   return state => {
-    const resolvedTaskGid = expandReferences(taskGid)(state);
-    const resolvedParams = expandReferences(params)(state);
+    const [resolvedTaskGid, resolvedParams] = expandReferences(
+      state,
+      taskGid,
+      params
+    );
 
-    const { apiVersion, token } = state.configuration;
-
-    const url = `https://app.asana.com/api/${apiVersion}/tasks/${resolvedTaskGid}/`;
-
-    const config = {
-      url,
-      data: { data: resolvedParams },
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    return http
-      .put(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      })
-      .catch(e => {
-        console.log('Asana says:', e.response.data);
-        throw e;
-      });
+    return requestHelper(
+      state,
+      `tasks/${resolvedTaskGid}`,
+      { body: { data: resolvedParams }, method: 'PUT' },
+      callback
+    );
   };
 }
 
@@ -170,11 +123,12 @@ export function updateTask(taskGid, params, callback) {
  * Create a task.
  * @public
  * @example
- * createTask(
- *  {
- *    name: 'test', "approval_status": "pending", "assignee": "12345"
- *  }
- * )
+ * createTask({
+ *   name: "test",
+ *   approval_status: "pending",
+ *   assignee: "12345",
+ *   projects: ["1206933955023739"],
+ * });
  * @function
  * @param {object} params - Body parameters
  * @param {function} callback - (Optional) callback function
@@ -182,32 +136,14 @@ export function updateTask(taskGid, params, callback) {
  */
 export function createTask(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
 
-    const { apiVersion, token } = state.configuration;
-
-    const url = `https://app.asana.com/api/${apiVersion}/tasks/`;
-
-    const config = {
-      url,
-      data: { data: resolvedParams },
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    return http
-      .post(config)(state)
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response.data),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      })
-      .catch(e => {
-        console.log('Asana says:', e.response.data);
-        throw e;
-      });
+    return requestHelper(
+      state,
+      'tasks',
+      { body: { data: resolvedParams }, method: 'POST' },
+      callback
+    );
   };
 }
 
@@ -215,16 +151,15 @@ export function createTask(params, callback) {
  * Update or create a task.
  * @public
  * @example
- * upsertTask(
- *  "1201382240880",
- *  {
- *    "externalId": "name",
- *    "data": {
- *      name: 'test', "approval_status": "pending", "assignee": "12345"
- *    }
- *
- *  }
- * )
+ * upsertTask("1201382240880", {
+ *   externalId: "name",
+ *   data: {
+ *     name: "test",
+ *     approval_status: "pending",
+ *     projects: ["1201382240880"],
+ *     assignee: "12345",
+ *   },
+ * });
  * @function
  * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - an object with an externalId and some task data.
@@ -233,39 +168,124 @@ export function createTask(params, callback) {
  */
 export function upsertTask(projectGid, params, callback) {
   return state => {
-    const resolvedProjectGid = expandReferences(projectGid)(state);
-    const { externalId, data } = expandReferences(params)(state);
+    const [resolvedProjectGid, { externalId, data }] = expandReferences(
+      state,
+      projectGid,
+      params
+    );
 
-    const { apiVersion, token } = state.configuration;
-
-    const url = `https://app.asana.com/api/${apiVersion}/projects/${resolvedProjectGid}/tasks`;
-
-    const config = {
-      url,
-      headers: { Authorization: `Bearer ${token}` },
-      params: {
-        opt_fields: `${externalId}`,
-      },
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        const matchingTask = response.data.data.find(
+    return requestHelper(
+      state,
+      `projects/${resolvedProjectGid}/tasks`,
+      { query: { opt_fields: `${externalId}` } },
+      next => {
+        const matchingTask = next.data.find(
           task => task[externalId] === data[externalId]
         );
         if (matchingTask) {
           console.log('Matching task found. Performing update.');
           console.log('Data to update', data);
-          // projects and workspace ids should ne be included to update
-          delete data.projects;
-          delete data.workspace;
-          return updateTask(matchingTask.gid, data, callback)(state);
+          // projects and workspace ids should not be included to update
+          const { projects, workspace, ...remainingData } = data;
+          return updateTask(matchingTask.gid, remainingData, callback)(state);
         } else {
           console.log('No matching task found. Performing create.');
           return createTask(data, callback)(state);
         }
-      });
+      }
+    );
+  };
+}
+
+/**
+ * Options provided to the createTaskStory request
+ * @typedef {Object} StoryOptions
+ * @property {string} text - The plain text of the comment to add. Cannot be used with html_text.
+ * @property {string} html_text - Opt In. HTML formatted text for a comment. This will not include the name of the creator.
+ * @property {boolean} is_pinned - Default to `false`. Whether the story should be pinned on the resource.
+ * @property {string} sticker_name - The name of the sticker in this story. `null` if there is no sticker.
+ * @property {array} opt_fields - Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include.
+ * @property {boolean} opt_pretty - Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.
+ */
+
+/**
+ * Create a story to a specific task.
+ * @public
+ * @example <caption>Create a plain text comment</caption>
+ * createTaskStory("1206933955023739", {
+ *   text: "This is a comment",
+ * });
+ * @example <caption>Create a HTML formatted text comment</caption>
+ * createTaskStory("1206933955023739", {
+ *   html_text: "<body>This is a comment</body>",
+ * });
+ * @function
+ * @param {string} taskGid - Globally unique identifier for the task
+ * @param {StoryOptions} params - Story parameters
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function createTaskStory(taskGid, params, callback) {
+  return state => {
+    const [
+      resolvedTaskGid,
+      {
+        text,
+        html_text,
+        sticker_name,
+        is_pinned = false,
+        opt_pretty = false,
+        opt_fields = [],
+      },
+    ] = expandReferences(state, taskGid, params);
+
+    const story = { text, html_text, is_pinned, sticker_name };
+    return requestHelper(
+      state,
+      `tasks/${resolvedTaskGid}/stories`,
+      {
+        body: { data: story },
+        query: { opt_fields, opt_pretty },
+        method: 'POST',
+      },
+      callback
+    );
+  };
+}
+
+/**
+ * Options provided to the Asana API request
+ * @typedef {Object} RequestOptions
+ * @property {object} body - Body data to append to the request.
+ * @property {object} query - An object of query parameters to be encoded into the URL.
+ * @property {string} method - The HTTP method to use. Defaults to `GET`
+ */
+
+/**
+ * Make a request in Asana API
+ * @public
+ * @example
+ * request("/asanaEndpoint", {
+ *   method: "POST",
+ *   query: { foo: "bar", a: 1 },
+ * });
+ * @function
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} params - Query, body and method parameters
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ */
+export function request(path, params, callback) {
+  return state => {
+    const [resolvedPath, { body = {}, query = {}, method = 'GET' }] =
+      expandReferences(state, path, params);
+
+    return requestHelper(
+      state,
+      resolvedPath,
+      { method, body, query },
+      callback
+    );
   };
 }
 

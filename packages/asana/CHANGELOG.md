@@ -1,5 +1,13 @@
 # @openfn/language-asana
 
+## 3.1.0
+
+### Minor Changes
+
+- 673e41e8: - Add `createTaskStory()` function
+  - Replaced common `http` with a more efficient implementation from
+    `common/util` http
+
 ## 3.0.1
 
 ### Patch Changes

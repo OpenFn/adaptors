@@ -1,5 +1,13 @@
 # @openfn/language-googlesheets
 
+## 2.3.0
+
+### Minor Changes
+
+- 8405fc9a: - Add `getValues()` function
+  - Improve connection handling
+  - Improve error logs
+
 ## 2.2.2
 
 ### Patch Changes
