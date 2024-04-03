@@ -131,7 +131,7 @@ export function appendValues(params, callback = s => s) {
 }
 
 /**
- * Batch Updates values in a Spreadsheet.
+ * Batch update values in a Spreadsheet.
  * @example
  * batchUpdateValues({
  *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
