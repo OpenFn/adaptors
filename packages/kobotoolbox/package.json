@@ -28,7 +28,6 @@
     "@openfn/language-common": "workspace:^1.12.0"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",

@@ -31,7 +31,6 @@
     "nock": "^8.0.0",
     "sinon": "^1.17.2",
     "esno": "^0.16.3",
-    "@openfn/buildtools": "workspace:^1.0.1",
     "@openfn/simple-ast": "0.4.1",
     "rimraf": "^3.0.2"
   },
