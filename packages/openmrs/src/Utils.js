@@ -6,9 +6,10 @@ import {
 } from '@openfn/language-common/util';
 
 export const prepareNextState = (state, response, callback) => {
+  const { body, ...responseWithoutBody } = response
   const nextState = {
     ...composeNextState(state, response.body),
-    response,
+    response: responseWithoutBody,
   };
 
   return callback(nextState);
