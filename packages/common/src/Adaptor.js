@@ -782,6 +782,7 @@ export function validate(schema = 'schema', data = 'data') {
 // because it should not affect the next job
 
 let cursorStart = undefined;
+let cursorKey = 'cursor';
 
 // TODO timezones
 // All times should use UTC internally. But you can have strings parsed in a different time zone
@@ -798,7 +799,9 @@ let cursorStart = undefined;
  * cursor(22)
  * @function
  * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
- * @param {any} options - options to control the cursor. Options will persist after the first call.
+ * @param {object} options - options to control the cursor.
+ * @param {string} options.key - set the cursor key. Will persist through the whole run.
+ * @param {any} options.defaultValue - the value to use if value is falsy
  * @returns {Operation}
  */
 export function cursor(value, options = {}) {
@@ -807,10 +810,12 @@ export function cursor(value, options = {}) {
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
-      key = 'cursor', // the key to use on state. idk why you want to change this, but sure
-      
-      // timezone, // time zone as in UTC, GMT, PST? Or locale?
+      key, // the key to use on state
     } = options;
+
+    if (key) {
+      cursorKey = key;
+    }
 
     if (!cursorStart) {
       cursorStart = new Date().toISOString()
@@ -819,10 +824,10 @@ export function cursor(value, options = {}) {
     const cursor = resolvedValue ?? defaultValue;
 
     if (typeof cursor === 'string') {
-      state[key] = parseDate(cursor, cursorStart)
+      state[cursorKey] = parseDate(cursor, cursorStart)
       console.log(`Setting cursor "${cursor}" to ${new Date(state.cursor).toLocaleString()}`)
     } else {
-      state[key] = cursor;
+      state[cursorKey] = cursor;
       console.log(`Setting cursor to ${cursor}`)
     }
 
