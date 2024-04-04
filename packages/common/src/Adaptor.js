@@ -803,6 +803,7 @@ let cursorStart = undefined;
  */
 export function cursor(value, options) {
   return (state) => {
+    const [resolvedValue] = newExpandReferences(state, value);
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
@@ -815,7 +816,7 @@ export function cursor(value, options) {
       cursorStart = converter(new Date().toISOString())
     }
 
-    const cursor = value ?? defaultValue;
+    const cursor = resolvedValue ?? defaultValue;
 
     if (typeof cursor === 'string') {
       state[key] = parseDate(cursor, cursorStart)
