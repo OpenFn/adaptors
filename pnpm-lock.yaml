@@ -89,8 +89,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.23.0
+        specifier: ^5.28.4
+        version: 5.28.4
 
   packages/beyonic:
     dependencies:
@@ -460,8 +460,8 @@ importers:
         specifier: workspace:^1.12.0
         version: link:../common
       undici:
-        specifier: ^5.22.1
-        version: 5.22.1
+        specifier: ^5.28.4
+        version: 5.28.4
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
@@ -550,8 +550,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.22.1
+        specifier: ^5.28.4
+        version: 5.28.4
 
   packages/googlesheets:
     dependencies:
@@ -784,8 +784,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       undici:
-        specifier: ^5.22.1
-        version: 5.22.1
+        specifier: ^5.28.4
+        version: 5.28.4
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -1036,8 +1036,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^5.22.1
-        version: 5.22.1
+        specifier: ^5.28.4
+        version: 5.28.4
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
         version: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
@@ -1203,8 +1203,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.22.1
+        specifier: ^5.28.4
+        version: 5.28.4
 
   packages/openfn:
     dependencies:
@@ -1363,8 +1363,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.23.0
+        specifier: ^5.28.4
+        version: 5.28.4
 
   packages/postgresql:
     dependencies:
@@ -2951,6 +2951,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fastify/busboy@2.1.1:
+    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
+    engines: {node: '>=14'}
 
   /@google-cloud/bigquery@5.12.0:
     resolution: {integrity: sha512-UaIvvuKpyJhCRBkxEJXnJwvxOxkGoZHvSs9IsS0MNUS4YphcbWYOyzRMufV5gxdsr7XNSd+36Nj/n/7vyZiCqQ==}
@@ -4879,6 +4883,7 @@ packages:
     engines: {node: '>=10.16.0'}
     dependencies:
       streamsearch: 1.1.0
+    dev: false
 
   /cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
@@ -11670,6 +11675,7 @@ packages:
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
+    dev: false
 
   /string-escape@0.3.0:
     resolution: {integrity: sha512-AM292mtfvJCPzoKBbL3YQaZ+xwaWOlYfejTADVDfL0QM/cFEZ2LoU2M8XuEZkuRxqtv9ZTjfCj+OX+rlfFWeTg==}
@@ -12554,17 +12560,18 @@ packages:
     resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
     dev: false
 
-  /undici@5.22.1:
-    resolution: {integrity: sha512-Ji2IJhFXZY0x/0tVBXeQwgPlLWw13GVzpsWPQ3rV50IFMMof2I55PZZxtm4P6iNq+L5znYN9nSTAq0ZyE6lSJw==}
-    engines: {node: '>=14.0'}
-    dependencies:
-      busboy: 1.6.0
-
   /undici@5.23.0:
     resolution: {integrity: sha512-1D7w+fvRsqlQ9GscLBwcAJinqcZGHUKjbOmXdlE/v8BvEGXjeWAax+341q44EuTcHXXnfyKNbKRq4Lg7OzhMmg==}
     engines: {node: '>=14.0'}
     dependencies:
       busboy: 1.6.0
+    dev: false
+
+  /undici@5.28.4:
+    resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
+    engines: {node: '>=14.0'}
+    dependencies:
+      '@fastify/busboy': 2.1.1
 
   /union-value@1.0.1:
     resolution: {integrity: sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==}
@@ -13207,8 +13214,8 @@ packages:
     hasBin: true
     dev: false
 
-  github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
-    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/b8047f82680d95387cbe4596f55e24e4d0b128c6}
+  git@github.com+openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
+    resolution: {commit: b8047f82680d95387cbe4596f55e24e4d0b128c6, repo: git@github.com:openfn/language-common.git, type: git}
     name: language-common
     version: 0.3.0
     dependencies:
@@ -13225,6 +13232,6 @@ packages:
       cheerio-tableparser: 1.0.1
       csv-parse: 4.16.3
       import: 0.0.6
-      language-common: github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
+      language-common: git@github.com+openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
       request: 2.88.2
     dev: false
