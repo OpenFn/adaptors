@@ -801,7 +801,7 @@ let cursorStart = undefined;
  * @param {any} options - options to control the cursor. Options will persist after the first call.
  * @returns {Operation}
  */
-export function cursor(value, options) {
+export function cursor(value, options = {}) {
   return (state) => {
     const [resolvedValue] = newExpandReferences(state, value);
 
@@ -813,15 +813,14 @@ export function cursor(value, options) {
     } = options;
 
     if (!cursorStart) {
-      cursorStart = converter(new Date().toISOString())
+      cursorStart = new Date().toISOString()
     }
 
     const cursor = resolvedValue ?? defaultValue;
 
     if (typeof cursor === 'string') {
       state[key] = parseDate(cursor, cursorStart)
-      // TODO we should format the output more nicely
-      console.log(`Setting cursor "${cursor}" to ${new Date(state.cursor).toUTCString()}`)
+      console.log(`Setting cursor "${cursor}" to ${new Date(state.cursor).toLocaleString()}`)
     } else {
       state[key] = cursor;
       console.log(`Setting cursor to ${cursor}`)
