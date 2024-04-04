@@ -1,6 +1,6 @@
 import { startOfToday, startOfYesterday, subHours, subDays } from 'date-fns'
 
-// Helper function to parse a natural-langauge date string into an ISO date
+// Helper function to parse a natural-language date string into an ISO date
 export default (d, startDate) => {
   try {
     if (d === 'start') {

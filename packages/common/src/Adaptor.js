@@ -783,32 +783,47 @@ export function validate(schema = 'schema', data = 'data') {
 
 let cursorStart = undefined;
 
+// TODO timezones
+// All times should use UTC internally. But you can have strings parsed in a different time zone
+// Also,when we log a cursor time, we should log it in the timezone provided
 /**
- * Sets a cursor value on state (writes to `state.cursor`).
+ * Sets a cursor value on state (writes to `state.cursor`, or whatever value you set on options.key).
  * The first time this is called, a `cursorStart` key will be set on state,
- * which you can use to set the final state.cursor ready for the next run.
+ * which you can use to set the final state.cursor ready for the next run with `cursor('start')`
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`
  * @public
- * @example
- * cursor((state) => state.cursor || 'today')
- * @example
+ * @example <caption>use a cursor from state if present, or else use the default value</caption>
+ * cursor($.cursor, { defaultValue: 'today' })
+ * @example <caption>cursor for pagination</caption>
  * cursor(22)
  * @function
  * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
+ * @param {any} options - options to control the cursor. Options will persist after the first call.
  * @returns {Operation}
  */
-export function cursor(value) {
+export function cursor(value, options) {
   return (state) => {
+
+    const {
+      defaultValue, // if there is no cursor on state, this will be used
+      key = 'cursor', // the key to use on state. idk why you want to change this, but sure
+      
+      // timezone, // time zone as in UTC, GMT, PST? Or locale?
+    } = options;
+
     if (!cursorStart) {
-      cursorStart = new Date().toISOString()
+      cursorStart = converter(new Date().toISOString())
     }
 
-    if (typeof value === 'string') {
-      state.cursor = parseDate(value, cursorStart)
-      console.log(`Setting cursor "${value}" to ${state.cursor}`)
+    const cursor = value ?? defaultValue;
+
+    if (typeof cursor === 'string') {
+      state[key] = parseDate(cursor, cursorStart)
+      // TODO we should format the output more nicely
+      console.log(`Setting cursor "${cursor}" to ${new Date(state.cursor).toUTCString()}`)
     } else {
-      state.cursor = value;
-      console.log(`Setting cursor to ${value}`)
+      state[key] = cursor;
+      console.log(`Setting cursor to ${cursor}`)
     }
 
     return state;
