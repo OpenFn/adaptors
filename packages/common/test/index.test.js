@@ -886,4 +886,33 @@ describe('cursor', () => {
     const result = cursor('today')(state)
     expect(result.cursor).to.eql(date);
   });
+
+  it('should clear the cursor', () => {
+    const state = {
+      cursor: new Date()
+    }
+    const result = cursor()(state)
+    expect(result.cursor).to.eql(undefined)
+  });
+
+  it('should use a default value', () => {
+    const state = {}
+    const result = cursor(state.cursor, { defaultValue: 33 })(state)
+    expect(result.cursor).to.eql(33)
+  });
+
+  it('should use a custom key', () => {
+    const state = {}
+    const result = cursor(44, { key: 'page' })(state)
+    expect(result.page).to.eql(44)
+  });
+
+  it('should re-use a custom key', () => {
+    const state = {}
+    const result1 = cursor(44, { key: 'page' })(state)
+    expect(result1.page).to.eql(44)
+
+    const result2 = cursor(55)(state)
+    expect(result2.page).to.eql(55)
+  });
 });
