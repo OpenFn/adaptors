@@ -792,7 +792,7 @@ let cursorKey = 'cursor';
  * The first time this is called, a `cursorStart` key will be set on state,
  * which you can use to set the final state.cursor ready for the next run with `cursor('start')`
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
- * which will be converted into a UTC time relative to the current UTC time. Relative timezones 
+ * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
  * are not yet supported.
  * @public
  * @example <caption>use a cursor from state if present, or else use the default value</caption>
