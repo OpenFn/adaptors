@@ -778,26 +778,19 @@ export function validate(schema = 'schema', data = 'data') {
   };
 }
 
-// Note that we don't write cursorStart to state,
-// because it should not affect the next job
-
 let cursorStart = undefined;
 let cursorKey = 'cursor';
 
-// TODO timezones
-// All times should use UTC internally. But you can have strings parsed in a different time zone
-// Also,when we log a cursor time, we should log it in the timezone provided
 /**
- * Sets a cursor value on state (writes to `state.cursor`, or whatever value you set on options.key).
- * The first time this is called, a `cursorStart` key will be set on state,
- * which you can use to set the final state.cursor ready for the next run with `cursor('start')`
+ * Sets a cursor property on state.
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
  * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
  * are not yet supported.
+ * See the usage guide at @{link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
  * @public
- * @example <caption>use a cursor from state if present, or else use the default value</caption>
+ * @example <caption>Use a cursor from state if present, or else use the default value</caption>
  * cursor($.cursor, { defaultValue: 'today' })
- * @example <caption>cursor for pagination</caption>
+ * @example <caption>Use a pagination cursor</caption>
  * cursor(22)
  * @function
  * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
