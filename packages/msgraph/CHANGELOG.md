@@ -1,5 +1,17 @@
 # @openfn/language-msgraph
 
+## 0.5.0
+
+### Minor Changes
+
+- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+  more information.
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 0.4.0
 
 ### Minor Changes

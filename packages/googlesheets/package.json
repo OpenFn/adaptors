@@ -1,6 +1,10 @@
 {
   "name": "@openfn/language-googlesheets",
+<<<<<<< HEAD
   "version": "2.3.1",
+=======
+  "version": "2.4.0",
+>>>>>>> fd5916c1 (version bumps)
   "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -31,7 +35,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^1.12.0",
+    "@openfn/language-common": "workspace:^1.13.0",
     "googleapis": "100.0.0"
   },
   "devDependencies": {
