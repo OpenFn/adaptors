@@ -370,6 +370,7 @@ export function uploadFile(resource, data, callback) {
 export { request, sheetToBuffer } from './Utils';
 
 export {
+  cursor,
   dataPath,
   dataValue,
   dateFns,
