@@ -801,12 +801,12 @@ let cursorKey = 'cursor';
  */
 export function cursor(value, options = {}) {
   return (state) => {
-    const [resolvedValue] = newExpandReferences(state, value);
+    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, options);
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
       key, // the key to use on state
-    } = options;
+    } = resolvedOptions;
 
     if (key) {
       cursorKey = key;
