@@ -813,17 +813,18 @@ export function cursor(value, options = {}) {
     }
 
     if (!cursorStart) {
-      cursorStart = new Date().toISOString()
+      cursorStart = new Date().toISOString();
     }
 
     const cursor = resolvedValue ?? defaultValue;
 
     if (typeof cursor === 'string') {
-      state[cursorKey] = parseDate(cursor, cursorStart)
-      console.log(`Setting cursor "${cursor}" to ${new Date(state.cursor).toLocaleString()}`)
+      state[cursorKey] = parseDate(cursor, cursorStart);
+      const humanLocaleDate = state[cursorKey].toLocaleString(undefined, { timeZoneName: 'short' });
+      console.log(`Setting cursor "${cursor}" to ${humanLocaleDate}`);
     } else {
       state[cursorKey] = cursor;
-      console.log(`Setting cursor to ${cursor}`)
+      console.log(`Setting cursor to ${cursor}`);
     }
 
     return state;
