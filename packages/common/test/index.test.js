@@ -887,6 +887,14 @@ describe('cursor', () => {
     expect(result.cursor).to.eql(date);
   });
 
+  it('should not blow up if an arbitrary string is passed', () => {
+    const state = {}
+
+    const str = 'rock the cashbah'
+    const result = cursor(str)(state)
+    expect(result.cursor).to.eql(str);
+  });
+
   it('should clear the cursor', () => {
     const state = {
       cursor: new Date()
