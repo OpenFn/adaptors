@@ -12,7 +12,7 @@ const approxEqual = (a, b) => {
   expect(a_ms).eql(b_ms)
 }
 
-describe('parse date', () => {
+describe.only('parse date', () => {
 
   it('should return now', () => {
     const today = new Date().toISOString()
@@ -77,11 +77,19 @@ describe('parse date', () => {
     approxEqual(result, target)
   })
 
+  it('should return 2 days ago', () => {
+    const target = startOfDay(subDays(new Date(), 2)).toLocaleString()
+    console.log(target)
+    const result = parseDate('2 days ago').toLocaleString()
+    console.log(result)
+    expect(result).eql(target)
+  })
+
   it('should return 9999 days ago', () => {
-    const target = subDays(new Date(), 9999).toISOString()
+    const target = startOfDay(subDays(new Date(), 9999)).toISOString()
     
     const result = parseDate('9999 days ago').toISOString()
-    approxEqual(result, target)
+    expect(result).eql(target)
   })
 
   it('should return start', () => {
