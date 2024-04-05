@@ -6,23 +6,23 @@ export default (d, startDate) => {
     if (d === 'start') {
       return startDate;
     } else if (d === 'now' || d === 'end') {
-      return new Date().toISOString()
+      return new Date()
     }
     else if (d === 'today') {
-      return startOfToday().toISOString()
+      return startOfToday()
     }
     else if (d === 'yesterday') {
-      return startOfYesterday().toISOString()
+      return startOfYesterday()
     }
     else if (/(hours? ago)$/.test(d)) {
       // return the same minute n hours ago
       const [diff] = d.match(/\d+/)
-      return subHours(new Date(), diff).toISOString()
+      return subHours(new Date(), diff)
     }
     else if (/(days? ago)$/.test(d)) {
       // return the start of today - n days
       const [diff] = d.match(/\d+/)
-      return startOfToday(subDays(new Date(), diff)).toISOString()
+      return startOfToday(subDays(new Date(), diff))
     }
   } catch(e) {
     console.log(`Error converting ${d} into a date`)
