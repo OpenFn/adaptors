@@ -864,7 +864,7 @@ describe('validate', () => {
   });
 });
 
-describe('cursor', () => {
+describe.only('cursor', () => {
   it('should set a cursor on state', () => {
     const state = {}
     const result = cursor(1234)(state)
@@ -923,4 +923,13 @@ describe('cursor', () => {
     const result2 = cursor(55)(state)
     expect(result2.page).to.eql(55)
   });
+
+  // testing the log output is hard here, I've only verified it manally
+  it('should use an object', () => {
+    const state = {}
+    const c = { page: 22, next: 23 }
+    const result = cursor(c, { key: 'cursor' })(state)
+    expect(result.cursor).to.eql(c)
+  });
+
 });

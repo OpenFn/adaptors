@@ -827,7 +827,7 @@ export function cursor(value, options = {}) {
       }
     }
     state[cursorKey] = cursor;
-    console.log(`Setting cursor to ${cursor}`);
+    console.log('Setting cursor to:', cursor);
 
     return state;
   }
