@@ -864,7 +864,7 @@ describe('validate', () => {
   });
 });
 
-describe.only('cursor', () => {
+describe('cursor', () => {
   it('should set a cursor on state', () => {
     const state = {}
     const result = cursor(1234)(state)

@@ -6,6 +6,7 @@ import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
 import { request } from 'undici';
+import { format } from 'date-fns';
 
 import { expandReferences as newExpandReferences, parseDate } from './util';
 
@@ -821,8 +822,10 @@ export function cursor(value, options = {}) {
       const date = parseDate(cursor, cursorStart)
       if (date instanceof Date && date.toString !== "Invalid Date") {
         state[cursorKey] = date.toISOString();
-        const humanLocaleDate = date.toLocaleString(undefined, { timeZoneName: 'short' });
-        console.log(`Setting cursor "${cursor}" to: ${humanLocaleDate}`);
+        // Log the converted date in a very international, human-friendly format
+        // See https://date-fns.org/v3.6.0/docs/format
+        const formatted = format(date, 'HH:MM d MMM yyyy (OOO)')
+        console.log(`Setting cursor "${cursor}" to: ${formatted}`);
         return state;
       }
     }
