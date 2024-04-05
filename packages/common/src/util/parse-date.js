@@ -1,4 +1,4 @@
-import { startOfToday, startOfYesterday, subHours, subDays } from 'date-fns'
+import { startOfToday, startOfYesterday, subHours, subDays, startOfDay } from 'date-fns'
 
 // Helper function to parse a natural-language date string into an ISO date
 export default (d, startDate) => {
@@ -22,7 +22,7 @@ export default (d, startDate) => {
     else if (/(days? ago)$/.test(d)) {
       // return the start of today - n days
       const [diff] = d.match(/\d+/)
-      return startOfToday(subDays(new Date(), diff))
+      return startOfDay(subDays(new Date(), diff))
     }
   } catch(e) {
     console.log(`Error converting ${d} into a date`)
