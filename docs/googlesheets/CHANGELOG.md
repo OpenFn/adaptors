@@ -1,5 +1,11 @@
 # @openfn/language-googlesheets
 
+## 2.3.1
+
+### Patch Changes
+
+- 4594a324: add callback jsdocs
+
 ## 2.3.0
 
 ### Minor Changes

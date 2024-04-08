@@ -2,11 +2,11 @@
 
 <dl>
 <dt>
-    <a href="#appendvalues">appendValues(params)</a></dt>
+    <a href="#appendvalues">appendValues(params, callback)</a></dt>
 <dt>
-    <a href="#batchupdatevalues">batchUpdateValues(params)</a></dt>
+    <a href="#batchupdatevalues">batchUpdateValues(params, callback)</a></dt>
 <dt>
-    <a href="#getvalues">getValues(spreadsheetId, range)</a></dt>
+    <a href="#getvalues">getValues(spreadsheetId, range, callback)</a></dt>
 </dl>
 
 The following functions are exported from the common adaptor:
@@ -50,7 +50,7 @@ The following functions are exported from the common adaptor:
 
 ## appendValues
 
-appendValues(params) ⇒ <code>Operation</code>
+appendValues(params, callback) ⇒ <code>Operation</code>
 
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
@@ -62,6 +62,7 @@ https://developers.google.com/sheets/api/samples/writing#append_values
 | [params.spreadsheetId] | <code>string</code> | The spreadsheet ID. |
 | [params.range] | <code>string</code> | The range of values to update. |
 | [params.values] | <code>array</code> | A 2d array of values to update. |
+| callback | <code>function</code> | (Optional) Callback function |
 
 **Example**  
 ```js
@@ -79,7 +80,7 @@ appendValues({
 
 ## batchUpdateValues
 
-batchUpdateValues(params) ⇒ <code>Operation</code>
+batchUpdateValues(params, callback) ⇒ <code>Operation</code>
 
 Batch update values in a Spreadsheet.
 
@@ -92,6 +93,7 @@ Batch update values in a Spreadsheet.
 | [params.range] | <code>string</code> | The range of values to update. |
 | [params.valueInputOption] | <code>string</code> | (Optional) Value update options. Defaults to 'USER_ENTERED' |
 | [params.values] | <code>array</code> | A 2d array of values to update. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
@@ -109,7 +111,7 @@ batchUpdateValues({
 
 ## getValues
 
-getValues(spreadsheetId, range) ⇒ <code>Operation</code>
+getValues(spreadsheetId, range, callback) ⇒ <code>Operation</code>
 
 Gets cell values from a Spreadsheet.
 
@@ -119,6 +121,7 @@ Gets cell values from a Spreadsheet.
 | --- | --- | --- |
 | spreadsheetId | <code>string</code> | The spreadsheet ID. |
 | range | <code>string</code> | The sheet range. |
+| callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
 ```js
