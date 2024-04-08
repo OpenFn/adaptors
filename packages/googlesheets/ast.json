@@ -69,6 +69,15 @@
             "name": "params.values"
           },
           {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -123,6 +132,15 @@
             "name": "range"
           },
           {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
             "title": "returns",
             "description": "spreadsheet information",
             "type": {
@@ -132,7 +150,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

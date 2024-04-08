@@ -91,6 +91,7 @@ export function execute(...operations) {
  * @param {string} [params.spreadsheetId] The spreadsheet ID.
  * @param {string} [params.range] The range of values to update.
  * @param {array} [params.values] A 2d array of values to update.
+ * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
 export function appendValues(params, callback = s => s) {
@@ -147,6 +148,7 @@ export function appendValues(params, callback = s => s) {
  * @param {string} [params.range] The range of values to update.
  * @param {string} [params.valueInputOption] (Optional) Value update options. Defaults to 'USER_ENTERED'
  * @param {array} [params.values] A 2d array of values to update.
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation} spreadsheet information
  */
 export function batchUpdateValues(params, callback = s => s) {
@@ -191,6 +193,7 @@ export function batchUpdateValues(params, callback = s => s) {
  * @function
  * @param {string} spreadsheetId The spreadsheet ID.
  * @param {string} range The sheet range.
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation} spreadsheet information
  */
 export function getValues(spreadsheetId, range, callback = s => s) {
