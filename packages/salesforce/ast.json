@@ -209,7 +209,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThis function makes an API call to retrieve query results.\nIt is subject to rate limits imposed by the Salesforce API.\n`Maximum rows returned in SOQL query results`: </br>\nThis function will return `2,000` results per request (API v28.0+),\n`200` results (Previous API versions)",
         "tags": [
           {
             "title": "public",
@@ -232,7 +232,7 @@
           },
           {
             "title": "param",
-            "description": "A query string.",
+            "description": "A query string. Must be less than `4000` characters in WHERE clause",
             "type": {
               "type": "NameExpression",
               "name": "String"
@@ -258,7 +258,8 @@
                 "name": "boolean"
               }
             },
-            "name": "options.autoFetch"
+            "name": "options.autoFetch",
+            "default": "false"
           },
           {
             "title": "param",
@@ -268,6 +269,14 @@
               "name": "Function"
             },
             "name": "callback"
+          },
+          {
+            "title": "throws",
+            "description": "Throws an error if characters in SOQL WHERE clauses exceed `4,000` characters",
+            "type": {
+              "type": "NameExpression",
+              "name": "Error"
+            }
           },
           {
             "title": "returns",
@@ -338,7 +347,8 @@
                 "name": "integer"
               }
             },
-            "name": "options.pollTimeout"
+            "name": "options.pollTimeout",
+            "default": "90000"
           },
           {
             "title": "param",
@@ -350,7 +360,8 @@
                 "name": "integer"
               }
             },
-            "name": "options.pollInterval"
+            "name": "options.pollInterva",
+            "default": "3000"
           },
           {
             "title": "param",
@@ -360,6 +371,14 @@
               "name": "Function"
             },
             "name": "callback"
+          },
+          {
+            "title": "throws",
+            "description": "Throws an error if the execution exceeds the specified `pollTimeout` duration.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Error"
+            }
           },
           {
             "title": "returns",
@@ -433,6 +452,14 @@
               "name": "Function"
             },
             "name": "records"
+          },
+          {
+            "title": "throws",
+            "description": "Throws an error if the execution exceeds the specified `pollTimeout` duration.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Error"
+            }
           },
           {
             "title": "returns",

@@ -148,16 +148,23 @@ export function retrieve(sObject, id, callback) {
  * Execute an SOQL query.
  * Note that in an event of a query error,
  * error logs will be printed but the operation will not throw the error.
+ *
+ * This function makes an API call to retrieve query results.
+ * It is subject to rate limits imposed by the Salesforce API.
+ * `Maximum rows returned in SOQL query results`: </br>
+ * This function will return `2,000` results per request (API v28.0+),
+ * `200` results (Previous API versions)
  * @public
  * @example
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
  * @example <caption>Query more records if next records are available</caption>
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
- * @param {String} qs - A query string.
+ * @param {String} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {Object} options - Options passed to the bulk api.
- * @param {boolean} [options.autoFetch] - Fetch next records if available.
+ * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {Function} callback - A callback to execute once the record is retrieved
+ * @throws {Error} Throws an error if characters in SOQL WHERE clauses exceed `4,000` characters
  * @returns {Operation}
  */
 export function query(qs, options, callback = s => s) {
@@ -280,11 +287,6 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
   }
 }
 
-const defaultOptions = {
-  pollTimeout: 90000, // in ms
-  pollInterval: 3000, // in ms
-};
-
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -303,25 +305,18 @@ const defaultOptions = {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterva=3000] - Polling interval in milliseconds.
  * @param {Function} callback - A callback to execute once the record is retrieved
+ * @throws {Error} Throws an error if the execution exceeds the specified `pollTimeout` duration.
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
   return async state => {
     const { connection } = state;
-    const [resolvedQs, resolvedOptions] = newExpandReferences(
-      state,
-      qs,
-      options
-    );
+    const [resolvedQs, { pollTimeout = 90000, pollInterval = 3000 }] =
+      newExpandReferences(state, qs, options);
     const apiVersion = connection.version;
-
-    const { pollTimeout, pollInterval } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
 
     console.log(`Executing query: ${resolvedQs}`);
 
@@ -368,6 +363,7 @@ export function bulkQuery(qs, options, callback) {
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
  * @param {Function} records - an array of records, or a function which returns an array.
+ * @throws {Error} Throws an error if the execution exceeds the specified `pollTimeout` duration.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
@@ -849,7 +845,7 @@ export function toUTF8(input) {
  * });
  * @param {String} url - Relative or absolute URL to request from
  * @param {Object} options - Request options
- * @param {String} [options.method] - HTTP method to use. Defaults to GET
+ * @param {String} [options.method=GET] - HTTP method to use. Defaults to GET
  * @param {Object} [options.headers] - Object of request headers
  * @param {Object} [options.json] - A JSON Object request body
  * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
