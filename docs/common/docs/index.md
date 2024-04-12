@@ -208,7 +208,7 @@ Sets a cursor property on state.
 Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
 which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
 are not yet supported.
-See the usage guide at @{link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
+See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors](https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors)
 
 
 | Param | Type | Description |
