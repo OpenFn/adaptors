@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {

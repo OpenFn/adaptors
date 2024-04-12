@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 6.2.0
+
+### Minor Changes
+
+- Add cursor() function
+
 ## 6.1.0
 
 ### Minor Changes
