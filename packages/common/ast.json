@@ -1319,7 +1319,7 @@
         "options"
       ],
       "docs": {
-        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones \nare not yet supported.\nSee the usage guide at @{link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones \nare not yet supported.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
         "tags": [
           {
             "title": "public",

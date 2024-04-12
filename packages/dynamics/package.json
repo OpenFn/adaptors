@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dynamics",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "A Microsoft Dynamics Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.13.0",
+    "@openfn/language-common": "1.13.1",
     "request": "^2.72.0"
   },
   "devDependencies": {

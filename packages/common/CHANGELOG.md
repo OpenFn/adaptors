@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.13.1
+
+### Patch Changes
+
+- Fix jsdoc link
+
 ## 1.13.0
 
 ### Minor Changes

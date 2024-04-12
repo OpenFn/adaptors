@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openfn",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "description": "An (experimental) adaptor for accessing the OpenFn web API",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.13.0",
+    "@openfn/language-common": "1.13.1",
     "axios": "^0.21.1"
   },
   "devDependencies": {

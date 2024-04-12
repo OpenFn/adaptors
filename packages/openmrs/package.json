@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openmrs",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "OpenMRS Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.13.0"
+    "@openfn/language-common": "1.13.1"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
