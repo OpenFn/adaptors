@@ -151,13 +151,14 @@ export function getDeploymentInfo(params, callback) {
 }
 
 export {
-  fn,
   alterState,
+  cursor,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
   http,
   lastReferenceValue,
   merge,

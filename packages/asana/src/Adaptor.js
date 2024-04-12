@@ -291,6 +291,7 @@ export function request(path, params, callback) {
 
 export {
   alterState,
+  cursor,
   dataPath,
   dataValue,
   dateFns,

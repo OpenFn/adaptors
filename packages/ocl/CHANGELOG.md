@@ -1,5 +1,12 @@
 # @openfn/language-ocl
 
+## 1.1.8
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 1.1.7
 
 ### Patch Changes

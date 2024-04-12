@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.13.0
+
+### Minor Changes
+
+- 1ad86651: Added cursor() helper
+
 ## 1.12.0
 
 ### Minor Changes

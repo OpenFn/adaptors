@@ -17,7 +17,7 @@ export { axios };
 const printDeprecationNotice = name => {
   if (process.env.NODE_ENV !== 'production') {
     console.warn(
-      `The common.http.¬${name} function has been deprecated. This adaptor should migrate to use common.util.http instead.`
+      `The common.http.${name} function has been deprecated. This adaptor should migrate to use common.util.http instead.`
     );
   }
 };

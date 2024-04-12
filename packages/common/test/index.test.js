@@ -7,6 +7,7 @@ import {
   arrayToString,
   chunk,
   combine,
+  cursor,
   dataPath,
   dataValue,
   each,
@@ -29,6 +30,7 @@ import {
   toArray,
   validate,
 } from '../src/Adaptor';
+import { startOfToday } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -860,4 +862,74 @@ describe('validate', () => {
 
     expect(result.validationErrors).to.eql([]);
   });
+});
+
+describe('cursor', () => {
+  it('should set a cursor on state', () => {
+    const state = {}
+    const result = cursor(1234)(state)
+    expect(result.cursor).to.eql(1234);
+  });
+
+  it('should set a cursorStart on state', () => {
+    const state = {}
+    const date = new Date();
+    const result = cursor('start')(state)
+    const resultDate = new Date(result.cursor)
+    expect(resultDate.toDateString()).to.eql(date.toDateString())
+  });
+
+  it('should set a cursor on state with a natural language timestamp', () => {
+    const state = {}
+
+    const date = startOfToday().toISOString()
+    const result = cursor('today')(state)
+    expect(result.cursor).to.eql(date);
+  });
+
+  it('should not blow up if an arbitrary string is passed', () => {
+    const state = {}
+
+    const str = 'rock the cashbah'
+    const result = cursor(str)(state)
+    expect(result.cursor).to.eql(str);
+  });
+
+  it('should clear the cursor', () => {
+    const state = {
+      cursor: new Date()
+    }
+    const result = cursor()(state)
+    expect(result.cursor).to.eql(undefined)
+  });
+
+  it('should use a default value', () => {
+    const state = {}
+    const result = cursor(state.cursor, { defaultValue: 33 })(state)
+    expect(result.cursor).to.eql(33)
+  });
+
+  it('should use a custom key', () => {
+    const state = {}
+    const result = cursor(44, { key: 'page' })(state)
+    expect(result.page).to.eql(44)
+  });
+
+  it('should re-use a custom key', () => {
+    const state = {}
+    const result1 = cursor(44, { key: 'page' })(state)
+    expect(result1.page).to.eql(44)
+
+    const result2 = cursor(55)(state)
+    expect(result2.page).to.eql(55)
+  });
+
+  // testing the log output is hard here, I've only verified it manally
+  it('should use an object', () => {
+    const state = {}
+    const c = { page: 22, next: 23 }
+    const result = cursor(c, { key: 'cursor' })(state)
+    expect(result.cursor).to.eql(c)
+  });
+
 });

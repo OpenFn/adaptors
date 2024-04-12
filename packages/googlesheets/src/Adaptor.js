@@ -39,7 +39,7 @@ function logError(err) {
   }
 }
 /**
- * Execute a sequence of operations.
+ * Execute a sequence of oper.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
@@ -225,6 +225,7 @@ export function getValues(spreadsheetId, range, callback = s => s) {
 export {
   alterState,
   combine,
+  cursor,
   dataPath,
   dataValue,
   each,
