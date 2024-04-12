@@ -1,5 +1,12 @@
 # @openfn/language-nexmo
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
 ## 0.4.4
 
 ### Patch Changes
