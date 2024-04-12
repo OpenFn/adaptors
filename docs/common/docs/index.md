@@ -14,6 +14,8 @@
 <dt>
     <a href="#composenextstate">composeNextState(state, response)</a></dt>
 <dt>
+    <a href="#cursor">cursor(value, options)</a></dt>
+<dt>
     <a href="#datapath">dataPath(path)</a></dt>
 <dt>
     <a href="#datavalue">dataValue(path)</a></dt>
@@ -194,6 +196,35 @@ Prepares next state
 **Example**  
 ```js
 composeNextState(state, response)
+```
+
+* * *
+
+## cursor
+
+cursor(value, options) ⇒ <code>Operation</code>
+
+Sets a cursor property on state.
+Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
+which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
+are not yet supported.
+See the usage guide at @{link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>any</code> | the cursor value. Usually an ISO date, natural language date, or page number |
+| options | <code>object</code> | options to control the cursor. |
+| options.key | <code>string</code> | set the cursor key. Will persist through the whole run. |
+| options.defaultValue | <code>any</code> | the value to use if value is falsy |
+
+**Example** *(Use a cursor from state if present, or else use the default value)*  
+```js
+cursor($.cursor, { defaultValue: 'today' })
+```
+**Example** *(Use a pagination cursor)*  
+```js
+cursor(22)
 ```
 
 * * *

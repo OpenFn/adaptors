@@ -23,6 +23,9 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
 </dt>
 <dt>

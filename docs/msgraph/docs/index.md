@@ -20,6 +20,9 @@
 The following functions are exported from the common adaptor:
 <dl>
 <dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
 </dt>
 <dt>
