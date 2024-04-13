@@ -30,6 +30,7 @@ function createConnection(state) {
       database,
       encrypt: true,
       rowCollectionOnRequestCompletion: true,
+      trustServerCertificate: true,
     },
   };
 
