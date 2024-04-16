@@ -4,20 +4,7 @@
     "server": {
       "title": "Server URL",
       "description": "The database instance server URL or IP address",
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "hostname"
-        },
-        {
-          "type": "string",
-          "format": "ipv4"
-        },
-        {
-          "type": "string",
-          "format": "uri"
-        }
-      ],
+      "type": "string",
       "minLength": 1,
       "examples": [
         "something.database.windows.net",
