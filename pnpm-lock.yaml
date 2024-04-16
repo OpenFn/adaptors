@@ -13207,8 +13207,8 @@ packages:
     hasBin: true
     dev: false
 
-  github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
-    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/b8047f82680d95387cbe4596f55e24e4d0b128c6}
+  git@github.com+openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
+    resolution: {commit: b8047f82680d95387cbe4596f55e24e4d0b128c6, repo: git@github.com:openfn/language-common.git, type: git}
     name: language-common
     version: 0.3.0
     dependencies:
@@ -13225,6 +13225,6 @@ packages:
       cheerio-tableparser: 1.0.1
       csv-parse: 4.16.3
       import: 0.0.6
-      language-common: github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
+      language-common: git@github.com+openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
       request: 2.88.2
     dev: false
