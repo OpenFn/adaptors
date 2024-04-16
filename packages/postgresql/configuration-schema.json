@@ -6,16 +6,8 @@
       "type": "string",
       "description": "Postgres instance host URL or IP address",
       "minLength": 1,
-      "anyOf": [
-        {
-          "format": "uri"
-        },
-        {
-          "format": "ipv4"
-        }
-      ],
       "examples": [
-        "https://some-host.compute-1.amazonaws.com",
+        "some-host.compute-1.amazonaws.com",
         "201.220.61.246"
       ]
     },
@@ -76,7 +68,8 @@
   "additionalProperties": true,
   "required": [
     "host",
-    "port",
-    "database"
+    "user",
+    "database",
+    "password"
   ]
 }
