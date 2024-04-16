@@ -1,5 +1,12 @@
 # @openfn/language-mssql
 
+## 4.2.0
+
+### Minor Changes
+
+- 2964fc8d: - Add `cursor()` function
+  - Update `configuration-schema.json`
+
 ## 4.1.10
 
 ### Patch Changes

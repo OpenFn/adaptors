@@ -2,7 +2,6 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
-import { resolve as resolveUrl } from 'url';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -14,7 +13,16 @@ import { Connection, Request } from 'tedious';
  * @returns {State}
  */
 function createConnection(state) {
-  const { server, userName, password, database } = state.configuration;
+  const {
+    server,
+    userName,
+    password,
+    database,
+    port = 1433,
+    encrypt = true,
+    rowCollectionOnRequestCompletion = true,
+    trustServerCertificate = true,
+  } = state.configuration;
 
   if (!server) {
     throw new Error('server missing from configuration.');
@@ -27,13 +35,15 @@ function createConnection(state) {
     },
     server,
     options: {
+      port,
       database,
-      encrypt: true,
-      rowCollectionOnRequestCompletion: true,
+      encrypt,
+      rowCollectionOnRequestCompletion,
+      trustServerCertificate,
     },
   };
 
-  var connection = new Connection(config);
+  const connection = new Connection(config);
 
   // Attempt to connect and execute queries if connection goes through
   return new Promise((resolve, reject) => {
@@ -790,6 +800,7 @@ export {
   fn,
   http,
   lastReferenceValue,
+  cursor,
   merge,
   sourceValue,
 } from '@openfn/language-common';

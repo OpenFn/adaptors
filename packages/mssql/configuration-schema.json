@@ -1,14 +1,14 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "properties": {
     "server": {
       "title": "Server URL",
-      "type": "string",
       "description": "The database instance server URL or IP address",
-      "format": "uri",
+      "type": "string",
       "minLength": 1,
       "examples": [
-        "something.database.windows.net"
+        "something.database.windows.net",
+        "192.168.12.10"
       ]
     },
     "database": {
@@ -38,9 +38,42 @@
       "examples": [
         "@super(!)Password"
       ]
+    },
+    "port": {
+      "type": "integer",
+      "default": 1433,
+      "examples": [
+        1432
+      ]
+    },
+    "encrypt": {
+      "type": "boolean",
+      "default": true,
+      "examples": [
+        false
+      ]
+    },
+    "rowCollectionOnRequestCompletion": {
+      "type": "boolean",
+      "default": true,
+      "examples": [
+        false
+      ]
+    },
+    "trustServerCertificate": {
+      "type": "boolean",
+      "default": true,
+      "examples": [
+        false
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["server", "database"]
+  "required": [
+    "server",
+    "database",
+    "userName",
+    "password"
+  ]
 }
