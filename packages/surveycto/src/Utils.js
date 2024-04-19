@@ -18,7 +18,8 @@ const buildUrl = (configuration = {}, path) => {
   return `https://${servername}.surveycto.com/api/${apiVersion}${path}`;
 };
 
-export const formDate = date => Math.floor(new Date(date).getTime() / 1000);
+export const makeSurveyCTODate = date =>
+  Math.floor(new Date(date).getTime() / 1000);
 
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;

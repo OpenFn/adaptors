@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { requestHelper, formDate } from './Utils';
+import { requestHelper, makeSurveyCTODate } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -94,7 +94,7 @@ export function fetchSubmissions(
           'content-type': contentType,
         },
         query: {
-          date: formDate(date),
+          date: makeSurveyCTODate(date),
           r: status,
         },
       },
