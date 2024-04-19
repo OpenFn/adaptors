@@ -1695,11 +1695,8 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.12.0
+        specifier: workspace:^1.12.0
         version: link:../common
-      request:
-        specifier: ^2.88.2
-        version: 2.88.2
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -1719,9 +1716,6 @@ importers:
       mocha:
         specifier: ^10.1.0
         version: 10.1.0
-      nock:
-        specifier: ^13.2.9
-        version: 13.2.9
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
