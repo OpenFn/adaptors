@@ -1,4 +1,4 @@
-import { execute as commonExecute, dateFns } from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { requestHelper, formDate } from './Utils';
 
@@ -75,13 +75,14 @@ export function fetchSubmissions(formId, options, callback = s => s) {
       options
     );
 
-    const {
-      date,
-      format,
-      timestamp,
-      status: r,
-    } = {
-      ...{ date: 0, format: 'json', timestamp: 'milliseconds' },
+    const defaultOptions = {
+      date: 0,
+      format: 'json',
+      timestamp: 'milliseconds',
+    };
+
+    const { date, format, timestamp, status } = {
+      ...defaultOptions,
       ...resolvedOptions,
     };
 
@@ -93,7 +94,7 @@ export function fetchSubmissions(formId, options, callback = s => s) {
       {
         query: {
           date: formDate(date, timestamp),
-          r,
+          r: status,
         },
       },
       callback
