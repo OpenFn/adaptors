@@ -37,16 +37,16 @@ export function execute(...operations) {
  * Fetch form submissions
  * @example <caption>Using state lazy load</caption>
  * fetchSubmissions($.formId || 'test', { date: '2024-04-18' });
- * @example
+ * @example <caption> With huma readable date</caption>
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
- * @example
+ * @example <caption> Formatting the results to CSV String</caption>
  * fetchSubmissions('test', { date: '2024-04-20', format: 'csv' });
- * @example
+ * @example <caption> With reviewStatus filter</caption>
  * fetchSubmissions('test', {
  *   date: '2024-04-18',
  *   status: 'approved|rejected',
  * });
- * @example
+ * @example <caption> With access to the callback</caption>
  * fetchSubmissions(
  *   'test',
  *   {
