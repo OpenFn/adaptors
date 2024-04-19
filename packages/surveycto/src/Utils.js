@@ -1,51 +1,24 @@
 import { composeNextState, dateFns } from '@openfn/language-common';
 import {
   request as commonRequest,
-  makeBasicAuthHeader,
   logResponse,
+  makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
-const { isValid, parse, format } = dateFns;
-
-export const prepareNextState = (state, response, callback) => {
-  const { body, ...responseWithoutBody } = response;
-  const nextState = {
-    ...composeNextState(state, response.body),
-    response: responseWithoutBody,
-  };
-
-  return callback(nextState);
+const addBasicAuth = (configuration = {}, headers) => {
+  const { username, password } = configuration;
+  if (username && password) {
+    Object.assign(headers, makeBasicAuthHeader(username, password));
+  }
 };
 
-export function request(state, method, path, data, params) {
-  const {
-    instanceName,
-    username,
-    password,
-    apiVersion = 'v1',
-  } = state.configuration;
-  const headers = makeBasicAuthHeader(username, password);
+const buildUrl = (configuration = {}, path) => {
+  const { servername, apiVersion = 'v1' } = configuration;
+  if (!servername) throw 'Please specify servername in your credentials';
+  return `https://${servername}.surveycto.com/api/${apiVersion}${path}`;
+};
 
-  console.log(params);
-  const options = {
-    body: data,
-
-    headers: {
-      ...headers,
-      'content-type': 'application/json',
-    },
-
-    query: params,
-
-    parseAs: 'json',
-  };
-
-  const url = `https://${instanceName}.surveycto.com/api/${apiVersion}${path}`;
-
-  return commonRequest(method, url, options).then(response =>
-    logResponse(response)
-  );
-}
+const { isValid, parse, format } = dateFns;
 
 const isNormalDate = dateString => {
   // Attempt to parse the date with the expected format
@@ -70,3 +43,42 @@ const dateToTimestamp = (date, timestamp) => {
 
 export const formDate = (date, timestamp) =>
   isNormalDate(date) ? date : dateToTimestamp(date, timestamp);
+
+export const prepareNextState = (state, response, callback) => {
+  const { body, ...responseWithoutBody } = response;
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+
+  return callback(nextState);
+};
+
+export const requestHelper = (state, path, params, callback = s => s) => {
+  let {
+    body,
+    headers = { 'content-type': 'application/json' },
+    method = 'GET',
+    query,
+  } = params;
+
+  addBasicAuth(state.configuration, headers);
+  const url = buildUrl(state.configuration, path);
+  const options = {
+    body,
+    headers,
+    query,
+    parseAs: 'json',
+  };
+
+  return commonRequest(method, url, options)
+    .then(response => {
+      logResponse(response);
+      return prepareNextState(state, response, callback);
+    })
+    .then(callback)
+    .catch(err => {
+      logResponse(err);
+      throw err;
+    });
+};
