@@ -1,4 +1,4 @@
-import { composeNextState, dateFns } from '@openfn/language-common';
+import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
@@ -32,7 +32,7 @@ export const prepareNextState = (state, response, callback) => {
 
 export const requestHelper = (state, path, params, callback = s => s) => {
   let {
-    body,
+    body = {},
     headers = { 'content-type': 'application/json' },
     method = 'GET',
     query,
@@ -40,11 +40,11 @@ export const requestHelper = (state, path, params, callback = s => s) => {
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
+
   const options = {
     body,
     headers,
     query,
-    parseAs: 'json',
   };
 
   return commonRequest(method, url, options)
@@ -52,7 +52,6 @@ export const requestHelper = (state, path, params, callback = s => s) => {
       logResponse(response);
       return prepareNextState(state, response, callback);
     })
-    .then(callback)
     .catch(err => {
       logResponse(err);
       throw err;

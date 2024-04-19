@@ -35,10 +35,8 @@ export function execute(...operations) {
 
 /**
  * Fetch form submissions
- * @example
- * fetchSubmissions('test', { date: '2024-04-18' });
  * @example <caption>Using state lazy load</caption>
- * fetchSubmissions($.formId, { date: '2024-04-18' });
+ * fetchSubmissions($.formId || 'test', { date: '2024-04-18' });
  * @example
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
  * @example
@@ -66,30 +64,35 @@ export function execute(...operations) {
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function fetchSubmissions(formId, options, callback = s => s) {
+export function fetchSubmissions(
+  formId,
+  options = { date: 0, format: 'json' },
+  callback = s => s
+) {
   return state => {
-    const [resovledFormId, resolvedOptions] = expandReferences(
+    const [resovledFormId, { date, format, status }] = expandReferences(
       state,
       formId,
       options
     );
 
-    const defaultOptions = {
-      date: 0,
-      format: 'json',
-    };
+    const path =
+      format === 'csv'
+        ? `/forms/data/csv/${resovledFormId}`
+        : `/forms/data/wide/${format}/${resovledFormId}`;
 
-    const { date, format, status } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
+    const contentType =
+      format === 'csv' ? 'text/plain;charset=UTF-8' : 'application/json';
 
-    console.log(`Fetching form submissions by formId: ${resovledFormId}`);
+    console.log(`Fetching '${resovledFormId}' submissions for: ${date}`);
 
     return requestHelper(
       state,
-      `/forms/data/wide/${format}/${resovledFormId}`,
+      path,
       {
+        headers: {
+          'content-type': contentType,
+        },
         query: {
           date: formDate(date),
           r: status,
@@ -122,19 +125,15 @@ export function fetchSubmissions(formId, options, callback = s => s) {
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function request(path, params, callback) {
+export function request(path, params, callback = s => s) {
   return state => {
-    const [
-      resolvedPath,
-      { body = {}, query = {}, method = 'GET', headers = {} },
-    ] = expandReferences(state, path, params);
-
-    return requestHelper(
+    const [resolvedPath, resolvedParams] = expandReferences(
       state,
-      resolvedPath,
-      { method, body, query, headers },
-      callback
+      path,
+      params
     );
+
+    return requestHelper(state, resolvedPath, resolvedParams, callback);
   };
 }
 
