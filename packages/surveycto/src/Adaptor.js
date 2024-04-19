@@ -30,7 +30,6 @@ export function execute(...operations) {
  * @typedef {Object} FormSubmissionOptions
  * @property {string} [date=0] - Form completion or submission date. Default to `0` which will return all submission data
  * @property {string} [format='json'] - Form response type, It can be in `csv` or `json`. Default to `json`
- * @property {string} [timestamp='milliseconds'] - Form date format. Default to `milliseconds`
  * @property {string} status - (Opt)Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
@@ -43,7 +42,7 @@ export function execute(...operations) {
  * @example
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
  * @example
- * fetchSubmissions('test', { date: '2024-04-20', timestamp: 'seconds' });
+ * fetchSubmissions('test', { date: '2024-04-20', format: 'csv' });
  * @example
  * fetchSubmissions('test', {
  *   date: '2024-04-18',
@@ -78,10 +77,9 @@ export function fetchSubmissions(formId, options, callback = s => s) {
     const defaultOptions = {
       date: 0,
       format: 'json',
-      timestamp: 'milliseconds',
     };
 
-    const { date, format, timestamp, status } = {
+    const { date, format, status } = {
       ...defaultOptions,
       ...resolvedOptions,
     };
@@ -93,7 +91,7 @@ export function fetchSubmissions(formId, options, callback = s => s) {
       `/forms/data/wide/${format}/${resovledFormId}`,
       {
         query: {
-          date: formDate(date, timestamp),
+          date: formDate(date),
           r: status,
         },
       },

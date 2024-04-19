@@ -18,31 +18,7 @@ const buildUrl = (configuration = {}, path) => {
   return `https://${servername}.surveycto.com/api/${apiVersion}${path}`;
 };
 
-const { isValid, parse, format } = dateFns;
-
-const isNormalDate = dateString => {
-  // Attempt to parse the date with the expected format
-  const parsedDate = parse(dateString, 'MMM dd, yyyy h:mm:ss a', new Date(), {
-    strict: false,
-  });
-
-  // Check if the parsed date is valid and matches the input date string
-  return (
-    isValid(parsedDate) &&
-    format(parsedDate, 'MMM dd, yyyy h:mm:ss a') === dateString
-  );
-};
-
-const dateToTimestamp = (date, timestamp) => {
-  const parsedDate = new Date(date);
-  // Determine the format based on the timestamp parameter
-  const dateFormat = timestamp === 'seconds' ? 't' : 'T';
-
-  return format(parsedDate, dateFormat);
-};
-
-export const formDate = (date, timestamp) =>
-  isNormalDate(date) ? date : dateToTimestamp(date, timestamp);
+export const formDate = date => Math.floor(new Date(date).getTime() / 1000);
 
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
@@ -62,6 +38,7 @@ export const requestHelper = (state, path, params, callback = s => s) => {
     query,
   } = params;
 
+  console.log(query);
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
   const options = {
