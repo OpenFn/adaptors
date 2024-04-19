@@ -38,7 +38,6 @@ export const requestHelper = (state, path, params, callback = s => s) => {
     query,
   } = params;
 
-  console.log(query);
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
   const options = {
