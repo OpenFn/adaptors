@@ -29,13 +29,13 @@ export function execute(...operations) {
  * Options provided to the HTTP request
  * @typedef {Object} FormSubmissionOptions
  * @property {string} [date=0] - Form completion or submission date. Default to `0` which will return all submission data
- * @property {string} [format='json'] - Form response type, It can be in `csv` or `json`. Default to `json`
+ * @property {string} [format='json'] - Format the submission data typee, It can be in `csv` or `json`. Default to `json` (JSON response)
  * @property {string} status - (Opt)Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
 /**
  * Fetch form submissions
- * @example <caption>Using state lazy load</caption>
+ * @example
  * fetchSubmissions($.formId || 'test', { date: '2024-04-18' });
  * @example <caption> With huma readable date</caption>
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
@@ -60,32 +60,31 @@ export function execute(...operations) {
  * );
  * @function
  * @param {string} formId - Form id
- * @param {FormSubmissionOptions} options - Form submission date, timestamp, format, status parameters
+ * @param {FormSubmissionOptions} options - Form submission date, format, status parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function fetchSubmissions(
-  formId,
-  options = { date: 0, format: 'json' },
-  callback = s => s
-) {
+export function fetchSubmissions(formId, options, callback = s => s) {
   return state => {
-    const [resovledFormId, { date, format, status }] = expandReferences(
+    const [resolvedFormId, resolvedOptions] = expandReferences(
       state,
       formId,
       options
     );
 
+    const { date = 0, format = 'json', status } = resolvedOptions;
+
     const path =
       format === 'csv'
-        ? `/forms/data/csv/${resovledFormId}`
-        : `/forms/data/wide/${format}/${resovledFormId}`;
+        ? `/forms/data/csv/${resolvedFormId}`
+        : `/forms/data/wide/${format}/${resolvedFormId}`;
 
     const contentType =
       format === 'csv' ? 'text/plain;charset=UTF-8' : 'application/json';
 
-    console.log(`Fetching '${resovledFormId}' submissions for: ${date}`);
+    console.log(`Fetching '${resolvedFormId}' submissions for: ${date}`);
 
+    console.log(makeSurveyCTODate(date), 'From ada');
     return requestHelper(
       state,
       path,
