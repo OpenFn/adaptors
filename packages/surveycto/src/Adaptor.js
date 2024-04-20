@@ -76,15 +76,14 @@ export function fetchSubmissions(formId, options, callback = s => s) {
 
     const path =
       format === 'csv'
-        ? `/forms/data/csv/${resolvedFormId}`
-        : `/forms/data/wide/${format}/${resolvedFormId}`;
+        ? `forms/data/csv/${resolvedFormId}`
+        : `forms/data/wide/${format}/${resolvedFormId}`;
 
     const contentType =
       format === 'csv' ? 'text/plain;charset=UTF-8' : 'application/json';
 
     console.log(`Fetching '${resolvedFormId}' submissions for: ${date}`);
 
-    console.log(makeSurveyCTODate(date), 'From ada');
     return requestHelper(
       state,
       path,

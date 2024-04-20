@@ -15,7 +15,7 @@ const addBasicAuth = (configuration = {}, headers) => {
 const buildUrl = (configuration = {}, path) => {
   const { servername, apiVersion = 'v1' } = configuration;
   if (!servername) throw 'Please specify servername in your credentials';
-  return `https://${servername}.surveycto.com/api/${apiVersion}${path}`;
+  return `https://${servername}.surveycto.com/api/${apiVersion}/${path}`;
 };
 
 const isUnixTimestamp = timestamp => /^\d{10,13}$/.test(timestamp);
