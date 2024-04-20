@@ -785,7 +785,7 @@ let cursorKey = 'cursor';
 /**
  * Sets a cursor property on state.
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
- * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
+ * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones
  * are not yet supported.
  * See the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
  * @public
@@ -801,8 +801,12 @@ let cursorKey = 'cursor';
  * @returns {Operation}
  */
 export function cursor(value, options = {}) {
-  return (state) => {
-    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, options);
+  return state => {
+    const [resolvedValue, resolvedOptions] = newExpandReferences(
+      state,
+      value,
+      options
+    );
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
@@ -819,19 +823,19 @@ export function cursor(value, options = {}) {
 
     const cursor = resolvedValue ?? defaultValue;
     if (typeof cursor === 'string') {
-      const date = parseDate(cursor, cursorStart)
-      if (date instanceof Date && date.toString !== "Invalid Date") {
+      const date = parseDate(cursor, cursorStart);
+      if (date instanceof Date && date.toString !== 'Invalid Date') {
         state[cursorKey] = date.toISOString();
         // Log the converted date in a very international, human-friendly format
         // See https://date-fns.org/v3.6.0/docs/format
-        const formatted = format(date, 'HH:MM d MMM yyyy (OOO)')
+        const formatted = format(date, 'HH:MM d MMM yyyy (OOO)');
         console.log(`Setting cursor "${cursor}" to: ${formatted}`);
         return state;
       }
     }
     state[cursorKey] = cursor;
-    console.log('Setting cursor to:', cursor);
+    console.log(`Setting ${cursorKey} to:`, cursor);
 
     return state;
-  }
+  };
 }
