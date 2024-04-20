@@ -18,8 +18,10 @@ const buildUrl = (configuration = {}, path) => {
   return `https://${servername}.surveycto.com/api/${apiVersion}${path}`;
 };
 
+const isUnixTimestamp = timestamp => /^\d{10,13}$/.test(timestamp);
+
 export const makeSurveyCTODate = date =>
-  Math.floor(new Date(date).getTime() / 1000);
+  isUnixTimestamp(date) ? date : Math.floor(new Date(date).getTime() / 1000);
 
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
@@ -32,12 +34,7 @@ export const prepareNextState = (state, response, callback) => {
 };
 
 export const requestHelper = (state, path, params, callback = s => s) => {
-  let {
-    body = {},
-    headers = { 'content-type': 'application/json' },
-    method = 'GET',
-    query,
-  } = params;
+  let { body = {}, headers, method = 'GET', query } = params;
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
