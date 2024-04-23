@@ -29,43 +29,45 @@ export function execute(...operations) {
 }
 
 /**
- * Options provided to the HTTP request
- * @typedef {Object} FormSubmissionOptions
- * @property {string} [date=0] - A timestamp in seconds or millseconds or in `MMM dd, yyyy h:mm:ss a` format. Defaults to `0` which will request all data
- * @property {string} [format='json'] - Format the submission data typee, It can be in `csv` or `json`. Defaults to `json` (JSON response)
- * @property {string} status - (Opt)Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
+ * Options provided to `fetchSubmissions()`
+ * @typedef {Object} FetchSubmissionOptions
+ * @property {string} [date=0] - Fetches only submissions from this timestamp.
+ * All values will be converted to surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time) in the request.
+ * Unix and Epoch timestamps are supported, as well as ISO date representatons.
+ * If set to 0, all submissions will be retrieved.
+ * @property {string} [format=json] - Format the submission data type as  `csv` or `json`.
+ * @property {string} [status] - Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
 /**
  * Fetch form submissions
  * @example <caption>Fetch all form submissions</caption>
  * fetchSubmissions('test');
- * @example <caption> With `MMM dd, yyyy h:mm:ss a` date format</caption>
+ * @example <caption> With SurveyCTO date format (UTC)</caption>
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
- * @example <caption> With `unix timestamp` date format</caption>
- * fetchSubmissions('test', { date: '1444694400000' });
+ * @example <caption>Using a rolling cursor </caption>
+ * cursor((state) => state.cursor, { defaultValue: 'today' });
+ * fetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });
+ * cursor('now');
  * @example <caption> Formatting the results to CSV String</caption>
- * fetchSubmissions('test', { date: '1444694400000', format: 'csv' });
+ * fetchSubmissions('test', { format: 'csv' });
  * @example <caption> With reviewStatus filter</caption>
- * fetchSubmissions('test', {
- *   date: '1444694400',
- *   status: 'approved|rejected',
- * });
- * @example <caption> With access to the callback</caption>
+ * fetchSubmissions('test', { status: 'approved|rejected' });
+ * @example <caption> With a callback function</caption>
  * fetchSubmissions(
  *   'test',
  *   {
  *     date: 'Apr 18, 2024 6:26:21 AM',
- *     status: 'approved|rejected',
  *   },
  *   state => {
  *     console.log('Hello from the callback!');
  *     return state;
  *   }
  * );
+ * @public
  * @function
  * @param {string} formId - Form id
- * @param {FormSubmissionOptions} options - Form submission date, format, status parameters
+ * @param {FetchSubmissionOptions} options - Form submission date, format, status parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -112,13 +114,14 @@ export function fetchSubmissions(formId, options, callback = s => s) {
 }
 
 /**
- * Options provided to the SurveyCTO API request
+ * Options provided to request()
  * @typedef {Object} RequestOptions
- * @property {object} headers - An object of headers parameters.
- * @property {object} body - Body data to append to the request.
- * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {string} [method = GET] - The HTTP method to use. Defaults to `GET`
+ * @property {object} [headers] - An object of headers parameters.
+ * @property {object} [body] - Body data to append to the request.
+ * @property {object} [query] - An object of query parameters to be encoded into the URL.
+ * @property {string} [method = GET] - The HTTP method to use.
  */
+
 /**
  * Make a request in SurveyCTO API
  * @public
@@ -145,6 +148,23 @@ export function request(path, params, callback = s => s) {
   };
 }
 
+/**
+ * Sets `state.cursor` to a SurveyCTO `MMM dd, yyy h:mm:ss a` timestamp string.
+ * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
+ * which will be converted into timestamp strings.
+ * See the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
+ * @public
+ * @example <caption>Use a cursor from state if present, or else use the default value</caption>
+ * cursor('today')
+ * fetchSubmissions('test', { date: $.cursor });
+ * @function
+ * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
+ * @param {object} options - options to control the cursor.
+ * @param {string} options.key - set the cursor key. Will persist through the whole run.
+ * @param {any} options.defaultValue - the value to use if value is falsy
+ * @param {Function} options.format - custom formatter for the final cursor value
+ * @returns {Operation}
+ */
 export function cursor(value, options) {
   const opts = {
     format: convertDate,
