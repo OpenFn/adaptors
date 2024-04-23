@@ -165,7 +165,6 @@ function queryHandler(state, query, options, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-
 export function sql(sqlQuery, options, callback) {
   return state => {
     let { client } = state;
