@@ -61,7 +61,6 @@ export const dateRegex = /^(\w{3} \d{2}, \d{4} \d{2}:\d{2}(:\d{2})? (PM|AM))$/;
  * by the Date constructor.
  * Number values should be epoch or unix timestamps and will be converted to strings
  * @param {*} date a date in a string, number or Date format
- * @returns
  */
 export const convertDate = date => {
   // If it's already in the right format, return it
