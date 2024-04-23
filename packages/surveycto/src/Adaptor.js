@@ -1,6 +1,6 @@
 import {
   execute as commonExecute,
-  cursor as commonCorsor,
+  cursor as commonCursor,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { convertDate, requestHelper } from './Utils';
