@@ -165,6 +165,8 @@ function queryHandler(state, query, options, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
+
+// TODO this function is not properly async
 export function sql(sqlQuery, options, callback) {
   return state => {
     let { client } = state;
