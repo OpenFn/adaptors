@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { requestHelper, makeSurveyCTODate } from './Utils';
+import { requestHelper } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -28,22 +28,22 @@ export function execute(...operations) {
 /**
  * Options provided to the HTTP request
  * @typedef {Object} FormSubmissionOptions
- * @property {string} [date=0] - Form completion or submission date. Default to `0` which will return all submission data
+ * @property {string} [date=0] - A timestamp in seconds or millseconds or in `MMM dd, yyyy h:mm:ss a` format. Default to `0` which will request all data
  * @property {string} [format='json'] - Format the submission data typee, It can be in `csv` or `json`. Default to `json` (JSON response)
  * @property {string} status - (Opt)Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
 /**
  * Fetch form submissions
- * @example
- * fetchSubmissions($.formId || 'test', { date: '2024-04-18' });
- * @example <caption> With huma readable date</caption>
+ * @example <caption> With `MMM dd, yyyy h:mm:ss a` date format</caption>
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
+ * @example <caption> With `unix timestamp` date format</caption>
+ * fetchSubmissions('test', { date: '1444694400000' });
  * @example <caption> Formatting the results to CSV String</caption>
- * fetchSubmissions('test', { date: '2024-04-20', format: 'csv' });
+ * fetchSubmissions('test', { date: '1444694400000', format: 'csv' });
  * @example <caption> With reviewStatus filter</caption>
  * fetchSubmissions('test', {
- *   date: '2024-04-18',
+ *   date: '1444694400',
  *   status: 'approved|rejected',
  * });
  * @example <caption> With access to the callback</caption>
@@ -66,13 +66,8 @@ export function execute(...operations) {
  */
 export function fetchSubmissions(formId, options, callback = s => s) {
   return state => {
-    const [resolvedFormId, resolvedOptions] = expandReferences(
-      state,
-      formId,
-      options
-    );
-
-    const { date = 0, format = 'json', status } = resolvedOptions;
+    const [resolvedFormId, { date = 0, format = 'json', status }] =
+      expandReferences(state, formId, options);
 
     const path =
       format === 'csv'
@@ -92,7 +87,7 @@ export function fetchSubmissions(formId, options, callback = s => s) {
           'content-type': contentType,
         },
         query: {
-          date: makeSurveyCTODate(date),
+          date,
           r: status,
         },
       },
@@ -142,6 +137,7 @@ export {
   field,
   fields,
   cursor,
+  dateFns,
   dataPath,
   parseCsv,
   dataValue,

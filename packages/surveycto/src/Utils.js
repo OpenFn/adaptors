@@ -18,11 +18,6 @@ const buildUrl = (configuration = {}, path) => {
   return `https://${servername}.surveycto.com/api/${apiVersion}/${path}`;
 };
 
-const isUnixTimestamp = timestamp => /^\d{10,13}$/.test(timestamp);
-
-export const makeSurveyCTODate = date =>
-  isUnixTimestamp(date) ? date : Math.floor(new Date(date).getTime() / 1000);
-
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
