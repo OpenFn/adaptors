@@ -1697,6 +1697,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:^1.12.0
         version: link:../common
+      date-fns-tz:
+        specifier: ^3.1.3
+        version: 3.1.3(date-fns@3.6.0)
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -5623,9 +5626,21 @@ packages:
       assert-plus: 1.0.0
     dev: false
 
+  /date-fns-tz@3.1.3(date-fns@3.6.0):
+    resolution: {integrity: sha512-ZfbMu+nbzW0mEzC8VZrLiSWvUIaI3aRHeq33mTe7Y38UctKukgqPR4nTDwcwS4d64Gf8GghnVsroBuMY3eiTeA==}
+    peerDependencies:
+      date-fns: ^3.0.0
+    dependencies:
+      date-fns: 3.6.0
+    dev: false
+
   /date-fns@2.29.3:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
     engines: {node: '>=0.11'}
+    dev: false
+
+  /date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
     dev: false
 
   /date-time@3.1.0:

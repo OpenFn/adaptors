@@ -1,6 +1,9 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  cursor as commonCorsor,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { requestHelper } from './Utils';
+import { convertDate, requestHelper } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -74,10 +77,12 @@ export function fetchSubmissions(formId, options, callback = s => s) {
       options
     );
 
-    const { date, format, status } = {
-      ...{ date: 0, format: 'json' },
-      ...resolvedOptions,
-    };
+    let { date = 0, format = 'json', status } = resolvedOptions;
+
+    if (date) {
+      // Ensure the incoming date is in surveyCTO `MMM dd, yyy h:mm:ss a`
+      date = convertDate(date);
+    }
 
     const path =
       format === 'csv'
@@ -140,13 +145,20 @@ export function request(path, params, callback = s => s) {
   };
 }
 
+export function cursor(value, options) {
+  const opts = {
+    format: convertDate,
+    ...options,
+  };
+  return commonCursor(value, opts);
+}
+
 export {
   fn,
   chunk,
   merge,
   field,
   fields,
-  cursor,
   dateFns,
   dataPath,
   parseCsv,
