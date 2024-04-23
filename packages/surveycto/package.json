@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-surveycto",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "A SurveyCTO Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
