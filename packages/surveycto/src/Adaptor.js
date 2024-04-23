@@ -28,13 +28,15 @@ export function execute(...operations) {
 /**
  * Options provided to the HTTP request
  * @typedef {Object} FormSubmissionOptions
- * @property {string} [date=0] - A timestamp in seconds or millseconds or in `MMM dd, yyyy h:mm:ss a` format. Default to `0` which will request all data
- * @property {string} [format='json'] - Format the submission data typee, It can be in `csv` or `json`. Default to `json` (JSON response)
+ * @property {string} [date=0] - A timestamp in seconds or millseconds or in `MMM dd, yyyy h:mm:ss a` format. Defaults to `0` which will request all data
+ * @property {string} [format='json'] - Format the submission data typee, It can be in `csv` or `json`. Defaults to `json` (JSON response)
  * @property {string} status - (Opt)Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
 /**
  * Fetch form submissions
+ * @example <caption>Fetch all form submissions</caption>
+ * fetchSubmissions('test');
  * @example <caption> With `MMM dd, yyyy h:mm:ss a` date format</caption>
  * fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
  * @example <caption> With `unix timestamp` date format</caption>
@@ -66,8 +68,16 @@ export function execute(...operations) {
  */
 export function fetchSubmissions(formId, options, callback = s => s) {
   return state => {
-    const [resolvedFormId, { date = 0, format = 'json', status }] =
-      expandReferences(state, formId, options);
+    const [resolvedFormId, resolvedOptions] = expandReferences(
+      state,
+      formId,
+      options
+    );
+
+    const { date, format, status } = {
+      ...{ date: 0, format: 'json' },
+      ...resolvedOptions,
+    };
 
     const path =
       format === 'csv'
