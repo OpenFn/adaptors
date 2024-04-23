@@ -81,9 +81,13 @@ export const convertDate = date => {
   }
 
   // And return in the correct formatting (utc time)
-  return formatInTimeZone(
+  const formatted = formatInTimeZone(
     dateObj.toISOString(),
     'UTC',
     'MMM dd, yyy h:mm:ss a'
   );
+
+  console.log(`Converted timestamp "${date}" to "${formatted}" (UTC)`);
+
+  return formatted;
 };
