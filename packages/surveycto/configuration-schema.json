@@ -1,10 +1,10 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
-        "instanceName": {
-            "title": "Instance name",
+        "servername": {
+            "title": "Server Name",
             "type": "string",
-            "description": "Your Surveycto instance name",
+            "description": "Your Surveycto server name also known as instance name",
             "minLength": 1,
             "examples": [
                 "openfn_test"
@@ -13,7 +13,7 @@
         "username": {
             "title": "Username",
             "type": "string",
-            "description": "Your Surveycto instance username",
+            "description": "Your Surveycto server username",
             "minLength": 1,
             "examples": [
                 "someusername"
@@ -22,18 +22,28 @@
         "password": {
             "title": "Password",
             "type": "string",
-            "description": "Your Surveycto instance password",
+            "description": "Your Surveycto server password",
             "writeOnly": true,
             "minLength": 1,
             "examples": [
                 "@some(%)!Password"
+            ]
+        },
+        "apiVersion": {
+            "title": "API Version",
+            "type": "string",
+            "description": "The API version",
+            "default": "v1",
+            "examples": [
+                "v1",
+                "v2"
             ]
         }
     },
     "type": "object",
     "additionalProperties": true,
     "required": [
-        "instanceName",
+        "serverName",
         "username",
         "password"
     ]
