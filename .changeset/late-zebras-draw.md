@@ -1,7 +1,6 @@
 ---
-'@openfn/language-hive': patch
 '@openfn/language-mysql': patch
-'@openfn/language-postgresql': patch
 ---
 
-update `configuration-schema`
+- Change `host` format from `uri` to `string` in `configuration-schema.json`
+- Update required list to include `user` and `password`
