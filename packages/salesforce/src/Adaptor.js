@@ -149,11 +149,7 @@ export function retrieve(sObject, id, callback) {
  * Note that in an event of a query error,
  * error logs will be printed but the operation will not throw the error.
  *
- * This function makes an API call to retrieve query results.
- * It is subject to rate limits imposed by the Salesforce API.
- * `Maximum rows returned in SOQL query results`: </br>
- * This function will return `2,000` results per request (API v28.0+),
- * `200` results (Previous API versions)
+ * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
  * @public
  * @example
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
@@ -290,7 +286,7 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * Note: This function uses {@link https://developer.salesforce.com/docs/atlas.en-us.210.0.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_bulkapi.htm Bulk API v.2.0} which is available in API version 41.0 and later.
+ * The `bulkQuery()` uses {@link https://sforce.co/4b6kn6z Bulk API v.2.0} which is available in API version 41.0 and later.
  * @public
  * @example
  * <caption>The results will be available on `state.data`</caption>

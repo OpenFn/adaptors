@@ -209,7 +209,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThis function makes an API call to retrieve query results.\nIt is subject to rate limits imposed by the Salesforce API.\n`Maximum rows returned in SOQL query results`: </br>\nThis function will return `2,000` results per request (API v28.0+),\n`200` results (Previous API versions)",
+        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
         "tags": [
           {
             "title": "public",
@@ -298,7 +298,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nThe `bulkQuery()` uses {@link https://sforce.co/4b6kn6z Bulk API v.2.0} which is available in API version 41.0 and later.",
         "tags": [
           {
             "title": "public",
