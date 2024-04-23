@@ -290,8 +290,7 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * Note that in an event of a query error,
- * error logs will be printed but the operation will not throw the error.
+ * Note: This function uses {@link https://developer.salesforce.com/docs/atlas.en-us.210.0.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_bulkapi.htm Bulk API v.2.0} which is available in API version 41.0 and later.
  * @public
  * @example
  * <caption>The results will be available on `state.data`</caption>
