@@ -1,5 +1,13 @@
 # @openfn/language-postgresql
 
+## 4.1.11
+
+### Patch Changes
+
+- 02ab7a89: - Change `host` format from `uri or ipv4` to `string` in
+  `configuration-schema.json`
+  - Update required list to include `user`, `password` and `database`
+
 ## 4.1.10
 
 ### Patch Changes

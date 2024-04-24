@@ -1,5 +1,13 @@
 # @openfn/language-mysql
 
+## 1.4.11
+
+### Patch Changes
+
+- e9d0dac9: - Change `host` format from `uri` to `string` in
+  `configuration-schema.json`
+  - Update required list to include `user` and `password`
+
 ## 1.4.10
 
 ### Patch Changes

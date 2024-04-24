@@ -1,5 +1,12 @@
 # @openfn/language-mongodb
 
+## 2.0.2
+
+### Patch Changes
+
+- 38b3e8e0: Change `clusterHostname` format from `hostname` to `string` in
+  `configuration-schema.json`
+
 ## 2.0.1
 
 ### Patch Changes
