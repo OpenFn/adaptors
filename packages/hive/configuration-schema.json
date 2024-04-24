@@ -5,7 +5,7 @@
       "title": "Host URL",
       "type": "string",
       "description": "The database instance host URL",
-      "format": "uri",
+      "format": "string",
       "minLength": 1,
       "examples": [
         "some-host-url.compute-1.amazonaws.com"
@@ -54,7 +54,7 @@
   "additionalProperties": true,
   "required": [
     "host",
-    "port",
+    "database",
     "username",
     "password"
   ]

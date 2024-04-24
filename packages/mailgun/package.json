@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailgun",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "mailgun Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
