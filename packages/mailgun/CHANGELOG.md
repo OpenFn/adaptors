@@ -1,5 +1,12 @@
 # @openfn/language-mailgun
 
+## 0.4.5
+
+### Patch Changes
+
+- 02ab7a89: Change `host` format from `hostname` to `string` in
+  `configuration-schema.json`
+
 ## 0.4.4
 
 ### Patch Changes
