@@ -160,7 +160,6 @@ export function retrieve(sObject, id, callback) {
  * @param {Object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {Function} callback - A callback to execute once the record is retrieved
- * @throws {Error} Throws an error if characters in SOQL WHERE clauses exceed `4,000` characters
  * @returns {Operation}
  */
 export function query(qs, options, callback = s => s) {
@@ -301,9 +300,8 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterva=3000] - Polling interval in milliseconds.
+ * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @param {Function} callback - A callback to execute once the record is retrieved
- * @throws {Error} Throws an error if the execution exceeds the specified `pollTimeout` duration.
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
@@ -358,7 +356,6 @@ export function bulkQuery(qs, options, callback) {
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
  * @param {Function} records - an array of records, or a function which returns an array.
- * @throws {Error} Throws an error if the execution exceeds the specified `pollTimeout` duration.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
