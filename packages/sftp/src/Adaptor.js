@@ -3,6 +3,7 @@ import {
   composeNextState,
   parseCsv,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import Client from 'ssh2-sftp-client';
 import { isObjectEmpty, handleResponse } from './Utils';
 
@@ -82,10 +83,15 @@ function disconnect(state) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath, filter, callback) {
+export function list(dirPath, filter, callback = s => s) {
   return state => {
+    const [resolvedPath, resolvedFilter] = expandReferences(
+      state,
+      dirPath,
+      filter
+    );
     return sftp
-      .list(dirPath, filter)
+      .list(resolvedPath, resolvedFilter)
       .then(files => handleResponse(files, state, callback));
   };
 }
@@ -103,7 +109,7 @@ export function list(dirPath, filter, callback) {
  * @param {{readStreamOptions: object,delimiter: string,noheader: boolean, quote: string, trim: boolean, flatKeys: boolean, output: string}} [parsingOptions] - Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
  * @returns {Operation}
  */
-export function getCSV(filePath, parsingOptions = {}) {
+export function getCSV(filePath, parsingOptions = {}, callback = s => s) {
   const defaultOptions = {
     readStreamOptions: {
       encoding: null,
@@ -114,18 +120,23 @@ export function getCSV(filePath, parsingOptions = {}) {
 
   return state => {
     let results = [];
+    const [resolvedFilePath, resolvedParsingOpts] = expandReferences(
+      state,
+      filePath,
+      parsingOptions
+    );
 
     const { readStreamOptions, ...csvDefaultOptions } = defaultOptions;
-    const useParser = !isObjectEmpty(parsingOptions);
+    const useParser = !isObjectEmpty(resolvedParsingOpts);
 
     if (useParser) {
-      const stream = sftp.createReadStream(filePath, readStreamOptions);
-      return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
+      const stream = sftp.createReadStream(resolvedFilePath, readStreamOptions);
+      return parseCsv(stream, { ...csvDefaultOptions, ...resolvedParsingOpts })(
         state
       );
     } else {
       return sftp
-        .get(filePath)
+        .get(resolvedFilePath)
         .then(chunk => {
           results.push(chunk);
         })
