@@ -1,5 +1,13 @@
 # @openfn/language-dhis2
 
+## 4.0.4
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 4.0.3
 
 ### Patch Changes

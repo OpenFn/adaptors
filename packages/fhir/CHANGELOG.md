@@ -1,5 +1,13 @@
 # @openfn/language-fhir
 
+## 3.1.1
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 3.1.0
 
 ### Minor Changes

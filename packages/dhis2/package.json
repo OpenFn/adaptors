@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dhis2",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "DHIS2 Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -33,7 +33,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^1.12.0",
+    "@openfn/language-common": "workspace:^1.13.2",
     "axios": "^0.24.0",
     "lodash": "^4.17.21",
     "qs": "^6.11.0"
