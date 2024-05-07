@@ -11,7 +11,7 @@ import cheerioTableparser from 'cheerio-tableparser';
 
 export function addBasicAuth(configuration = {}, headers) {
   const { username, password } = configuration;
-  if (username && password && !('Authorization' in headers)) {
+  if (username && password && !headers.Authorization) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
 }
