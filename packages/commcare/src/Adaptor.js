@@ -1,16 +1,15 @@
-
-
 import {
   execute as commonExecute,
   http,
   expandReferences,
 } from '@openfn/language-common';
 import pkg from '@openfn/language-http';
-const { get, post } = pkg
-import request from 'superagent';
+const { get, post } = pkg;
+// import request from 'superagent';
 import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -31,10 +30,10 @@ export function execute(...operations) {
   };
 
   return state => {
-    state.configuration.authType = 'basic';
-    state.configuration.baseUrl = 'https://www.commcarehq.org/a/'.concat(
-      state.configuration.applicationName
-    );
+    // state.configuration.authType = 'basic';
+    // state.configuration.baseUrl = 'https://www.commcarehq.org/a/'.concat(
+    //   state.configuration.applicationName
+    // );
     return commonExecute(...operations)({ ...initialState, ...state });
   };
 }
@@ -84,16 +83,16 @@ function clientPost({ url, body, username, password }) {
  */
 export function submitXls(formData, params) {
   return state => {
-    const { applicationName, hostUrl, username, apiKey } = state.configuration;
+    const { applicationName, username, apiKey } = state.configuration;
 
     const json = expandReferences(formData)(state);
     const { case_type, search_field, create_new_cases } = params;
 
-    const url = (hostUrl || 'https://www.commcarehq.org').concat(
-      '/a/',
-      applicationName,
-      '/importer/excel/bulk_upload_api/'
-    );
+    // const url = (hostUrl || 'https://www.commcarehq.org').concat(
+    //   '/a/',
+    //   applicationName,
+    //   '/importer/excel/bulk_upload_api/'
+    // );
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(json);
@@ -112,22 +111,39 @@ export function submitXls(formData, params) {
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
 
-    console.log('Posting to url: '.concat(url));
-    return http
-      .post({
-        url,
+    // console.log('Posting to url: '.concat(url));
+
+    return async state => {
+      const response = await request(
+        state,
+        'POST',
+        `/a/${applicationName}/importer/excel/bulk_upload_api/`,
         data,
-        headers: {
+        '',
+        {
           ...data.getHeaders(),
           Authorization: `ApiKey ${username}:${apiKey}`,
         },
-      })(state)
-      .then(response => {
-        return { ...state, data: { body: response.data } };
-      })
-      .catch(err => {
-        throw { ...err, config: {}, request: {} };
-      });
+        'AUTH_TYPE_APIKEY'
+      );
+
+      return prepareNextState(state, response, s => s)
+    };
+    // return http
+    //   .post({
+    //     url,
+    //     data,
+    //     headers: {
+    //       ...data.getHeaders(),
+    //       Authorization: `ApiKey ${username}:${apiKey}`,
+    //     },
+    //   })(state)
+    //   .then(response => {
+    //     return { ...state, data: { body: response.data } };
+    //   })
+    //   .catch(err => {
+    //     throw { ...err, config: {}, request: {} };
+    //   });
   };
 }
 
