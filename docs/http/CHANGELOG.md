@@ -1,5 +1,15 @@
 # @openfn/language-http
 
+## 6.2.1
+
+### Patch Changes
+
+- Fixed an issue where the Authorization header could be overwritten if username
+  and password are set on config
+- Configuration schema: demoted `username` and `password` to optional
+- Configuration schema: Added `token`. This is not automated and must be
+  manually add to the HTTP headers.
+
 ## 6.2.0
 
 ### Minor Changes
