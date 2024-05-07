@@ -254,6 +254,29 @@ describe('get()', () => {
     expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
   });
 
+  it('does not override the Authorization header', async () => {
+    testServer
+      .intercept({
+        path: '/api/auth',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        username: 'hello',
+        password: 'there',
+      },
+    };
+
+    const { data } = await execute(
+      get('/api/auth', { headers: { Authorization: 'Bearer abc' } })
+    )(state);
+
+    expect(data.Authorization).to.eql('Bearer abc');
+  });
+
   it('allows query strings to be set', async () => {
     testServer
       .intercept({
