@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "1.13.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "ssh2-sftp-client": "9.0.4"
   },
   "devDependencies": {
