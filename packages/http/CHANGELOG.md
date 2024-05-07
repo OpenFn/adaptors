@@ -1,5 +1,12 @@
 # @openfn/language-http
 
+## 6.2.1
+
+### Patch Changes
+
+- Fixed an issue where the Authorization header could be overwritten if username
+  and password are set on config
+
 ## 6.2.0
 
 ### Minor Changes
