@@ -285,7 +285,8 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * The `bulkQuery()` uses {@link https://sforce.co/4b6kn6z Bulk API v.2.0} which is available in API version 41.0 and later.
+ * `bulkQuery()` uses {@link https://sforce.co/3y9phlc Bulk API v.2.0} which is available in API version 41.0 and later.
+ * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
  * @example
  * <caption>The results will be available on `state.data`</caption>
