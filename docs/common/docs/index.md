@@ -208,6 +208,8 @@ Sets a cursor property on state.
 Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
 which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
 are not yet supported.
+You can provide a formatter to customise the final cursor value, which is useful for normalising
+different inputs. The custom formatter runs after natural language date conversion.
 See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors](https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors)
 
 
@@ -217,6 +219,7 @@ See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-g
 | options | <code>object</code> | options to control the cursor. |
 | options.key | <code>string</code> | set the cursor key. Will persist through the whole run. |
 | options.defaultValue | <code>any</code> | the value to use if value is falsy |
+| options.format | <code>function</code> | custom formatter for the final cursor value |
 
 **Example** *(Use a cursor from state if present, or else use the default value)*  
 ```js
