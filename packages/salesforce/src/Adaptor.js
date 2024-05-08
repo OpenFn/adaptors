@@ -148,15 +148,17 @@ export function retrieve(sObject, id, callback) {
  * Execute an SOQL query.
  * Note that in an event of a query error,
  * error logs will be printed but the operation will not throw the error.
+ *
+ * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
  * @public
  * @example
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
  * @example <caption>Query more records if next records are available</caption>
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
- * @param {String} qs - A query string.
+ * @param {String} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {Object} options - Options passed to the bulk api.
- * @param {boolean} [options.autoFetch] - Fetch next records if available.
+ * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
@@ -284,12 +286,11 @@ const defaultOptions = {
   pollTimeout: 90000, // in ms
   pollInterval: 3000, // in ms
 };
-
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * Note that in an event of a query error,
- * error logs will be printed but the operation will not throw the error.
+ * `bulkQuery()` uses {@link https://sforce.co/3y9phlc Bulk API v.2.0} which is available in API version 41.0 and later.
+ * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
  * @example
  * <caption>The results will be available on `state.data`</caption>
@@ -303,8 +304,8 @@ const defaultOptions = {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
@@ -849,7 +850,7 @@ export function toUTF8(input) {
  * });
  * @param {String} url - Relative or absolute URL to request from
  * @param {Object} options - Request options
- * @param {String} [options.method] - HTTP method to use. Defaults to GET
+ * @param {String} [options.method=GET] - HTTP method to use. Defaults to GET
  * @param {Object} [options.headers] - Object of request headers
  * @param {Object} [options.json] - A JSON Object request body
  * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)

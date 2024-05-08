@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.6.5
+
+### Patch Changes
+
+- b1c915b0: Add documentation about Salesforce API limits to query and bulkQuery
+
 ## 4.6.4
 
 ### Patch Changes
