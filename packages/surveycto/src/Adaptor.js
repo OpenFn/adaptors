@@ -31,16 +31,15 @@ export function execute(...operations) {
 /**
  * Options provided to `fetchSubmissions()`
  * @typedef {Object} FetchSubmissionOptions
- * @property {string} [date=0] - Fetches only submissions from this timestamp.
- * All values will be converted to surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time) in the request.
- * Unix and Epoch timestamps are supported, as well as ISO date representatons.
- * If set to 0, all submissions will be retrieved.
+ * @property {string} [date=0] - Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved.
  * @property {string} [format=json] - Format the submission data type as  `csv` or `json`.
  * @property {string} [status] - Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
  */
 
 /**
- * Fetch form submissions
+ * Fetch form submissions.
+ *
+ * If a date filter is provided, it will be  converted internally to the surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time).
  * @example <caption>Fetch all form submissions</caption>
  * fetchSubmissions('test');
  * @example <caption> With SurveyCTO date format (UTC)</caption>
@@ -149,8 +148,8 @@ export function request(path, params, callback = s => s) {
 }
 
 /**
- * Sets `state.cursor` to a SurveyCTO `MMM dd, yyy h:mm:ss a` timestamp string.
- * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
+ * Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).
+ * This supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
  * which will be converted into timestamp strings.
  * See the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
  * @public
