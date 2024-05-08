@@ -54,7 +54,7 @@ function login(state) {
   const headers = {
     'content-type': 'application/json',
   };
-
+  console.log(url);
   return post(url, body, { headers }).then(response => {
     const auth = { Authorization: `Bearer ${response.body.token}` };
     return { ...state, configuration: { ...configuration, auth } };
@@ -86,19 +86,21 @@ function cleanupState(state) {
  * @returns {Operation}
  */
 export function getFHIR(path, params, callback) {
-  return state => {
+  return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
       params
     );
-
     const { baseUrl, auth } = state.configuration;
 
-    const url = `${baseUrl}/api/api_fhir_r4/${resolvedPath}/`;
-
+    const url = `${baseUrl}/api/api_fhir_r4/${resolvedPath}`;
     const headers = { ...auth };
-    const query = { format: 'json', ...resolvedParams };
+
+    let query;
+    if (resolvedParams) {
+      query = { format: 'json', ...resolvedParams };
+    }
 
     return get(url, { headers, query }).then(response => {
       const nextState = composeNextState(state, response.body);

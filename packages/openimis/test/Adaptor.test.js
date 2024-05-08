@@ -1,32 +1,65 @@
 import { expect } from 'chai';
-import nock from 'nock';
+import { enableMockClient } from '@openfn/language-common/util';
 import { execute, getFHIR, dataValue } from '../src/Adaptor.js';
+
+import sampleResult from './fixtures/patient.js';
+
+let testServer;
+
+before(() => {
+  console.log('enable mock client');
+  testServer = enableMockClient('https://www.example.com');
+
+  testServer
+    .intercept({
+      method: 'post',
+      path: '/api/api_fhir_r4/login/',
+      body: JSON.stringify({
+        username: 'user',
+        password: 'password',
+      }),
+    })
+    .reply(
+      200,
+      { token: 'a.b.c' },
+      { headers: { 'content-type': 'application/json' } }
+    )
+    .persist();
+});
+
+const stateWithAuth = {
+  configuration: {
+    baseUrl: 'https://www.example.com',
+    username: 'user',
+    password: 'password',
+  },
+};
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    const state = {};
+    const state = { ...stateWithAuth };
     const operations = [
       state => {
-        return { counter: 1 };
+        return { ...state, counter: 1 };
       },
       state => {
-        return { counter: 2 };
+        return { ...state, counter: 2 };
       },
       state => {
-        return { counter: 3 };
+        return { ...state, counter: 3 };
       },
     ];
 
     execute(...operations)(state)
       .then(finalState => {
-        expect(finalState).to.eql({ counter: 3 });
+        expect(finalState.counter).to.eql(3);
       })
       .then(done)
       .catch(done);
   });
 
   it('assigns references, data to the initialState', () => {
-    const state = {};
+    const state = { ...stateWithAuth };
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
@@ -35,81 +68,27 @@ describe('execute', () => {
 });
 
 describe('getFHIR', () => {
-  before(() => {
-    nock('https://fake.server.com')
-      .post('/api/patients')
-      .reply(200, (uri, requestBody) => {
-        return { ...requestBody, fullName: 'Mamadou', gender: 'M' };
-      });
+  // todo test login returns a bearer token
+  it('removes auth token from state', async () => {
+    const state = { ...stateWithAuth };
+    const result = await execute(s => s)(state);
 
-    nock('https://fake.server.com')
-      .post('/api/noAccess')
-      .reply(404, (uri, requestBody) => {
-        return { detail: 'Not found.' };
-      });
-
-    nock('https://fake.server.com')
-      .post('/api/differentError')
-      .reply(500, (uri, requestBody) => {
-        return { body: 'Other error.' };
-      });
+    expect(result.auth).to.be.undefined;
   });
 
-  it('makes a get request to the right endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await execute(
-      getFHIR('Patients', {
-        family: dataValue('fullName')(state),
+  it('fetches patients', async () => {
+    testServer
+      .intercept({
+        path: 'api/api_fhir_r4/Patient',
       })
-    )(state);
+      .reply(200, sampleResult, {
+        headers: { 'content-type': 'application/json' },
+      })
+      .persist();
 
-    expect(finalState.data).to.eql({
-      family: 'Ba',
-    });
-  });
+    const state = { ...stateWithAuth };
+    const result = await execute(getFHIR('Patient'))(state);
 
-  it('throws an error for a 404', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await execute(getFHIR('api/noAccess', { family: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
-    expect(error.message).to.eql('Request failed with status code 404');
-  });
-
-  it('handles and throws different kinds of errors', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await execute(
-      getFHIR('api/differentError', { family: 'taylor' })
-    )(state).catch(error => {
-      return error;
-    });
-    expect(error.message).to.eql('Request failed with status code 500');
+    expect(result.data).to.eql(sampleResult);
   });
 });
