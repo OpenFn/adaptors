@@ -1299,29 +1299,35 @@ importers:
         version: 1.12.0
 
   packages/openimis:
-    specifiers:
-      '@openfn/buildtools': workspace:^1.0.2
-      '@openfn/language-common': ^1.7.6
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: ^0.16.3
-      mocha: 9.2.2
-      nock: 12.0.3
-      rimraf: 3.0.2
     dependencies:
-      '@openfn/language-common': link:../common
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
     devDependencies:
-      '@openfn/buildtools': link:../../tools/build
-      '@openfn/simple-ast': 0.4.1
-      assertion-error: 2.0.0
-      chai: 4.3.6
-      deep-eql: 4.1.1
-      esno: 0.16.3
-      mocha: 9.2.2
-      nock: 12.0.3
-      rimraf: 3.0.2
+      '@openfn/simple-ast':
+        specifier: 0.4.1
+        version: 0.4.1
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      mocha:
+        specifier: 9.2.2
+        version: 9.2.2
+      nock:
+        specifier: 12.0.3
+        version: 12.0.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
 
   packages/openmrs:
     dependencies:

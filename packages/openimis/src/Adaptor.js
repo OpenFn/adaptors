@@ -1,11 +1,8 @@
 import {
   execute as commonExecute,
   composeNextState,
-  expandReferences,
-  http,
 } from '@openfn/language-common';
-
-const { axios } = http;
+import { get, post, expandReferences } from '@openfn/language-common/util';
 
 /**
  * Execute a sequence of operations.
@@ -46,23 +43,22 @@ export function execute(...operations) {
  * @returns {State} state - but with a "token" added to the configuration key.
  */
 function login(state) {
-  const { configuration } = state;
+  const { configuration = {} } = state;
   const { baseUrl, username, password } = configuration;
 
-  const params = {
-    url: `${baseUrl}/api/api_fhir_r4/login/`,
-    data: {
-      username,
-      password,
-    },
+  const url = `${baseUrl}/api/api_fhir_r4/login/`;
+  const body = {
+    username,
+    password,
+  };
+  const headers = {
+    'content-type': 'application/json',
   };
 
-  return http
-    .post(params)(state)
-    .then(response => {
-      const auth = { Authorization: `Bearer ${response.data.token}` };
-      return { ...state, configuration: { ...configuration, auth } };
-    });
+  return post(url, body, { headers }).then(response => {
+    const auth = { Authorization: `Bearer ${response.body.token}` };
+    return { ...state, configuration: { ...configuration, auth } };
+  });
 }
 
 /**
@@ -91,30 +87,26 @@ function cleanupState(state) {
  */
 export function getFHIR(path, params, callback) {
   return state => {
-    path = expandReferences(path)(state);
-    params = expandReferences(params)(state);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
 
     const { baseUrl, auth } = state.configuration;
 
-    const url = `${baseUrl}/api/api_fhir_r4/${path}/`;
+    const url = `${baseUrl}/api/api_fhir_r4/${resolvedPath}/`;
 
-    const config = {
-      url,
-      headers: { ...auth },
-      params: { format: 'json', ...params },
-    };
+    const headers = { ...auth };
+    const query = { format: 'json', ...resolvedParams };
 
-    return http
-      .get(config)(state)
-      .then(response => {
-        const nextState = composeNextState(state, response.data);
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    return get(url, { headers, query }).then(response => {
+      const nextState = composeNextState(state, response.body);
+      if (callback) return callback(nextState);
+      return nextState;
+    });
   };
 }
-
-export { axios };
 
 export {
   alterState,

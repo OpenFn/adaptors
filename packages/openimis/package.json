@@ -26,10 +26,9 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.6"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
