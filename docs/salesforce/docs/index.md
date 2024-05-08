@@ -153,17 +153,17 @@ bulkQuery(qs, options, callback) ⇒ <code>Operation</code>
 
 Execute an SOQL Bulk Query.
 This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
-Note that in an event of a query error,
-error logs will be printed but the operation will not throw the error.
+`bulkQuery()` uses [Bulk API v.2.0](https://sforce.co/3y9phlc) which is available in API version 41.0 and later.
+This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| qs | <code>String</code> | A query string. |
-| options | <code>Object</code> | Options passed to the bulk api. |
-| [options.pollTimeout] | <code>integer</code> | Polling timeout in milliseconds. |
-| [options.pollInterval] | <code>integer</code> | Polling interval in milliseconds. |
-| callback | <code>function</code> | A callback to execute once the record is retrieved |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| qs | <code>String</code> |  | A query string. |
+| options | <code>Object</code> |  | Options passed to the bulk api. |
+| [options.pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |
+| [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
+| callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
 **Example** *(The results will be available on &#x60;state.data&#x60;)*  
 ```js
@@ -319,13 +319,15 @@ Execute an SOQL query.
 Note that in an event of a query error,
 error logs will be printed but the operation will not throw the error.
 
+The Salesforce query API is subject to rate limits, [See for more details](https://sforce.co/3W9zyaQ).
 
-| Param | Type | Description |
-| --- | --- | --- |
-| qs | <code>String</code> | A query string. |
-| options | <code>Object</code> | Options passed to the bulk api. |
-| [options.autoFetch] | <code>boolean</code> | Fetch next records if available. |
-| callback | <code>function</code> | A callback to execute once the record is retrieved |
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| qs | <code>String</code> |  | A query string. Must be less than `4000` characters in WHERE clause |
+| options | <code>Object</code> |  | Options passed to the bulk api. |
+| [options.autoFetch] | <code>boolean</code> | <code>false</code> | Fetch next records if available. |
+| callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
 **Example**  
 ```js
@@ -386,15 +388,15 @@ request(url, options, callback) ⇒ <code>Operation</code>
 Send a HTTP request using connected session information.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| url | <code>String</code> | Relative or absolute URL to request from |
-| options | <code>Object</code> | Request options |
-| [options.method] | <code>String</code> | HTTP method to use. Defaults to GET |
-| [options.headers] | <code>Object</code> | Object of request headers |
-| [options.json] | <code>Object</code> | A JSON Object request body |
-| [options.body] | <code>String</code> | HTTP body (in POST/PUT/PATCH methods) |
-| callback | <code>function</code> | A callback to execute once the request is complete |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>String</code> |  | Relative or absolute URL to request from |
+| options | <code>Object</code> |  | Request options |
+| [options.method] | <code>String</code> | <code>GET</code> | HTTP method to use. Defaults to GET |
+| [options.headers] | <code>Object</code> |  | Object of request headers |
+| [options.json] | <code>Object</code> |  | A JSON Object request body |
+| [options.body] | <code>String</code> |  | HTTP body (in POST/PUT/PATCH methods) |
+| callback | <code>function</code> |  | A callback to execute once the request is complete |
 
 **Example**  
 ```js
