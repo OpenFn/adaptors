@@ -7,7 +7,6 @@ import sampleResult from './fixtures/patient.js';
 let testServer;
 
 before(() => {
-  console.log('enable mock client');
   testServer = enableMockClient('https://www.example.com');
 
   testServer
