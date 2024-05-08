@@ -1,5 +1,13 @@
 # @openfn/language-mailchimp
 
+## 0.7.4
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 0.7.3
 
 ### Patch Changes

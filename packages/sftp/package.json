@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-sftp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An SFTP language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -32,8 +32,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.13.1",
-    "lodash": "^4.17.19",
+    "@openfn/language-common": "1.13.2",
+    "lodash": "^4.17.21",
     "ssh2-sftp-client": "9.0.4"
   },
   "devDependencies": {

@@ -1,5 +1,13 @@
 # @openfn/language-ocl
 
+## 1.1.10
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 1.1.9
 
 ### Patch Changes
