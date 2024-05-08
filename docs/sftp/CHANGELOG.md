@@ -1,5 +1,13 @@
 # @openfn/language-sftp
 
+## 1.0.5
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 1.0.4
 
 ### Patch Changes

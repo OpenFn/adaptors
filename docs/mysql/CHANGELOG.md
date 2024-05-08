@@ -1,5 +1,12 @@
 # @openfn/language-mysql
 
+## 1.4.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 1.4.11
 
 ### Patch Changes
