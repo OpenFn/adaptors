@@ -282,6 +282,10 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
   }
 }
 
+const defaultOptions = {
+  pollTimeout: 90000, // in ms
+  pollInterval: 3000, // in ms
+};
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -308,9 +312,17 @@ async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 export function bulkQuery(qs, options, callback) {
   return async state => {
     const { connection } = state;
-    const [resolvedQs, { pollTimeout = 90000, pollInterval = 3000 }] =
-      newExpandReferences(state, qs, options);
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
     const apiVersion = connection.version;
+
+    const { pollTimeout, pollInterval } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
 
     console.log(`Executing query: ${resolvedQs}`);
 
