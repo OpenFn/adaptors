@@ -2,5 +2,4 @@
 '@openfn/language-salesforce': patch
 ---
 
-- add `query()` limits
-- improve `bulk()` and `bulkQuery()` function
+- Add documentation about Salesforce API limits to query and bulkQuery
