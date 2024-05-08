@@ -68,7 +68,26 @@ describe('execute', () => {
 });
 
 describe('getFHIR', () => {
-  // todo test login returns a bearer token
+  it('includes a bearer token in headers', async () => {
+    testServer
+      .intercept({
+        path: 'api/api_fhir_r4/Patient',
+        headers: {
+          Authorization: 'Bearer a.b.c',
+        },
+      })
+      .reply(200, {});
+
+    const state = { ...stateWithAuth };
+    let err;
+    try {
+      await execute(getFHIR('Patient'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err).to.be.undefined;
+  });
+
   it('removes auth token from state', async () => {
     const state = { ...stateWithAuth };
     const result = await execute(s => s)(state);
@@ -83,8 +102,7 @@ describe('getFHIR', () => {
       })
       .reply(200, sampleResult, {
         headers: { 'content-type': 'application/json' },
-      })
-      .persist();
+      });
 
     const state = { ...stateWithAuth };
     const result = await execute(getFHIR('Patient'))(state);
