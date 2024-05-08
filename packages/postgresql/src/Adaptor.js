@@ -1,8 +1,9 @@
 import {
   execute as commonExecute,
   composeNextState,
-  expandReferences,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+
 import pg from 'pg';
 import format from 'pg-format';
 
@@ -165,15 +166,21 @@ function queryHandler(state, query, options, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function sql(sqlQuery, options, callback) {
+export function sql(sqlQuery, options, callback = s => s) {
   return state => {
+    const { resolvedSqlQuery, resolvedOpts } = expandReferences(
+      state,
+      sqlQuery,
+      options
+    );
     let { client } = state;
 
+    console.log(resolvedSqlQuery);
     try {
-      const body = sqlQuery(state);
+      // const body = sqlQuery(state);
 
       console.log('Preparing to execute sql statement');
-      return queryHandler(state, body, options, callback);
+      return queryHandler(state, resolvedSqlQuery, resolvedOpts, callback);
     } catch (e) {
       client.end();
       throw e;
