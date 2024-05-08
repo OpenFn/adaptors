@@ -271,14 +271,6 @@
             "name": "callback"
           },
           {
-            "title": "throws",
-            "description": "Throws an error if characters in SOQL WHERE clauses exceed `4,000` characters",
-            "type": {
-              "type": "NameExpression",
-              "name": "Error"
-            }
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -298,7 +290,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\nThe `bulkQuery()` uses {@link https://sforce.co/4b6kn6z Bulk API v.2.0} which is available in API version 41.0 and later.",
+        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/3y9phlc Bulk API v.2.0} which is available in API version 41.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -360,7 +352,7 @@
                 "name": "integer"
               }
             },
-            "name": "options.pollInterva",
+            "name": "options.pollInterval",
             "default": "3000"
           },
           {
@@ -371,14 +363,6 @@
               "name": "Function"
             },
             "name": "callback"
-          },
-          {
-            "title": "throws",
-            "description": "Throws an error if the execution exceeds the specified `pollTimeout` duration.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Error"
-            }
           },
           {
             "title": "returns",
@@ -452,14 +436,6 @@
               "name": "Function"
             },
             "name": "records"
-          },
-          {
-            "title": "throws",
-            "description": "Throws an error if the execution exceeds the specified `pollTimeout` duration.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Error"
-            }
           },
           {
             "title": "returns",
