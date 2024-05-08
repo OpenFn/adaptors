@@ -85,7 +85,7 @@ function cleanupState(state) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getFHIR(path, params, callback) {
+export function getFHIR(path, params, callback = s => s) {
   return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
@@ -101,11 +101,10 @@ export function getFHIR(path, params, callback) {
     if (resolvedParams) {
       query = { format: 'json', ...resolvedParams };
     }
-    console.log(headers);
+
     return get(url, { headers, query }).then(response => {
       const nextState = composeNextState(state, response.body);
-      if (callback) return callback(nextState);
-      return nextState;
+      return callback(nextState);
     });
   };
 }
