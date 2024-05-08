@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailgun",
-  "version": "0.3.4",
+  "version": "0.4.5",
   "description": "mailgun Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist"
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -19,8 +20,9 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.6",
-    "mailgun-js": "^0.22.0",
+    "@openfn/language-common": "^1.12.0",
+    "form-data": "^4.0.0",
+    "mailgun.js": "^9.2.0",
     "sync-request": "^6.0.0"
   },
   "devDependencies": {
@@ -28,12 +30,11 @@
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
-    "mocha": "^9.2.2",
-    "sinon": "^1.17.2",
-    "superagent-mock": "^1.10.0",
     "esno": "^0.16.3",
-    "@openfn/buildtools": "workspace:^1.0.1",
-    "rimraf": "^3.0.2"
+    "mocha": "^9.2.2",
+    "rimraf": "^3.0.2",
+    "sinon": "^1.17.2",
+    "superagent-mock": "^1.10.0"
   },
   "repository": {
     "type": "git",
@@ -47,5 +48,8 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "types/index.d.ts"
+  "types": "types/index.d.ts",
+  "overrides": {
+    "optionator": "0.9.3"
+  }
 }

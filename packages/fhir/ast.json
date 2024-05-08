@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"/endpoint\", {\"foo\": \"bar\"})"
+            "description": "create(\"Bundle\", {...state.data: type: \"collection\"})"
           },
           {
             "title": "function",
@@ -79,7 +79,7 @@
           },
           {
             "title": "example",
-            "description": "createTransactionBundle( {\"entry\": [{...},, {...}]})"
+            "description": "createTransactionBundle({\n  resourceType: \"Bundle\",\n  type: \"transaction\",\n  entry: [\n    {\n      fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n      resource: {\n        resourceType: \"Patient\",\n        id: \"592442\",\n        name: [{ given: \"Caleb\", family: \"Cushing\" }],\n      },\n      request: {\n        method: \"POST\",\n        url: \"Patient\",\n      },\n    },\n  ],\n});"
           },
           {
             "title": "function",
@@ -94,6 +94,138 @@
               "name": "object"
             },
             "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get a resource in a FHIR system",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
+            "caption": "Get Claim from FHIR with optional query"
+          },
+          {
+            "title": "example",
+            "description": "get('Patient');",
+            "caption": "Get Patient from FHIR"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "data to get the new resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getClaim",
+      "params": [
+        "claimId",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get Claim in a FHIR system",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getClaim({ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "(optional) claim id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "claimId"
+          },
+          {
+            "title": "param",
+            "description": "(optinal) query parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
           },
           {
             "title": "param",

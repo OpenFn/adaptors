@@ -1,6 +1,79 @@
 {
   "operations": [
     {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a HTTP request",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request(\n  'GET',\n  '/myEndpoint',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "get",
       "params": [
         "path",
@@ -17,7 +90,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n   query: {foo: 'bar', a: 1},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
@@ -38,7 +111,7 @@
             "description": "Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -80,7 +153,7 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -101,7 +174,7 @@
             "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -143,7 +216,7 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -164,7 +237,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -206,7 +279,7 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n   authentication: {username: 'user', password: 'pass'}\n })"
+            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",
@@ -227,7 +300,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -290,7 +363,7 @@
             "description": "Body, Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
@@ -319,7 +392,8 @@
       "name": "parseXML",
       "params": [
         "body",
-        "script"
+        "script",
+        "callback"
       ],
       "docs": {
         "description": "Parse XML with the Cheerio parser",
@@ -331,7 +405,12 @@
           },
           {
             "title": "example",
-            "description": "parseXML(body, function($){\n   return $(\"table[class=your_table]\").parsetable(true, true, true);\n })"
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  }\n);"
+          },
+          {
+            "title": "example",
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.body })\n);",
+            "caption": "Using parseXML with a callback"
           },
           {
             "title": "function",
@@ -357,57 +436,13 @@
             "name": "script"
           },
           {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "parseCSV",
-      "params": [
-        "target",
-        "config"
-      ],
-      "docs": {
-        "description": "CSV-Parse for CSV conversion to JSON",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "parseCSV(\"/home/user/someData.csv\", {\n\t  quoteChar: '\"',\n\t  header: false,\n\t});"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
             "title": "param",
-            "description": "string or local file with CSV data",
+            "description": "(Optional) Callback function",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "function"
             },
-            "name": "target"
-          },
-          {
-            "title": "param",
-            "description": "csv-parse config object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "config"
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -1024,6 +1059,73 @@
       "valid": true
     },
     {
+      "name": "splitKeys",
+      "params": [
+        "obj",
+        "keys"
+      ],
+      "docs": {
+        "description": "Splits an object into two objects based on a list of keys.\nThe first object contains the keys that are not in the list,\nand the second contains the keys that are.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The object to split.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "obj"
+          },
+          {
+            "title": "param",
+            "description": "List of keys to split on.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "keys"
+          },
+          {
+            "title": "returns",
+            "description": "Tuple of objects, first object contains keys not in list, second contains keys that are.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "scrubEmojis",
       "params": [
         "text",
@@ -1075,6 +1177,219 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "chunk",
+      "params": [
+        "array",
+        "chunkSize"
+      ],
+      "docs": {
+        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array to be chunked",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "array"
+          },
+          {
+            "title": "param",
+            "description": "The maxiumum size of each chunks",
+            "type": {
+              "type": "NameExpression",
+              "name": "Integer"
+            },
+            "name": "chunkSize"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "parseCsv",
+      "params": [
+        "csvData",
+        "parsingOptions",
+        "callback"
+      ],
+      "docs": {
+        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A CSV string or a readable stream",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "String"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Stream"
+                }
+              ]
+            },
+            "name": "csvData"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options for converting CSV to JSON.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "parsingOptions"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones \nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }

@@ -1,8 +1,10 @@
-import jsdoc2md from 'jsdoc-to-markdown';
-import fs from 'node:fs/promises';
+import fs, { writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { writeFile, mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import jsdoc2md from 'jsdoc-to-markdown';
+import FileSet from 'file-set'
 import resolvePath from '../util/resolve-path';
+import extractExports from '../util/extract-exports';
 
 export default async (lang: string) => {
   const root = resolvePath(lang);
@@ -10,12 +12,14 @@ export default async (lang: string) => {
   console.log(`Building docs`);
   console.log();
 
+  const glob = `${root}/src/**/*.js`;
+
   const template = await fs.readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
   /* get template data */
   const templateData = jsdoc2md.getTemplateDataSync({
-    files: `${root}/src/**/*.js`,
+    files: glob,
   });
 
   // sort template data
@@ -33,16 +37,42 @@ export default async (lang: string) => {
     return 0;
   });
 
+  const fileSet = new FileSet()
+  await fileSet.add([glob])
+
+  // Extract exports from common and add them to the template data as externals
+  for (const f of fileSet.files) {
+    const src = await fs.readFile(f, 'utf8')
+    const exports = extractExports(src).map((e) => ({
+      id: e,
+      common: true,
+      name: e,
+      scope: 'global',
+      kind: "external"
+    }))
+    templateData.push(...exports)
+  }
+
+  const helper = path.resolve('../../tools/build/src/util/hbs-helpers.js');
   const renderOpts = {
     template: `${template}`,
+    helper,
     data: templateData,
+    partial: [
+      // TODO we should be able to automate this
+      path.resolve('../../tools/build/src/partials/body.hbs'),
+      path.resolve('../../tools/build/src/partials/description.hbs'),
+      path.resolve('../../tools/build/src/partials/link.hbs'),
+      path.resolve('../../tools/build/src/partials/members.hbs'),
+    ],
     separators: true,
     'name-format': false,
     'no-gfm': false,
     'example-lang': 'js',
     'member-index-format': 'list',
   };
-  console.log(`rendering all that good stuff..`);
+  
+  console.log('rendering jsdocs...');
   const docs = jsdoc2md.renderSync(renderOpts);
 
   const readme = await fs.readFile(`${root}/README.md`, 'utf8', (err, data) =>
@@ -84,7 +114,7 @@ export default async (lang: string) => {
     readme: `${JSON.stringify(readme)}`,
     changelog: `${JSON.stringify(changelog)}`,
     functions: functions.sort(),
-    'configuration-schema': configurationSchema,
+    'configuration-schema': configurationSchema
   };
 
   const destinationDir = `${root}/docs`;
@@ -94,6 +124,7 @@ export default async (lang: string) => {
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
   console.log(`... done! `, destination);
+  console.log()
 
   return;
 };

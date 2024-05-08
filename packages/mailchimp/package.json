@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailchimp",
-  "version": "0.3.5",
+  "version": "0.7.4",
   "description": "An OpenFn adaptor for use with Mailchimp",
   "main": "dist/index.cjs",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist"
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -20,19 +21,18 @@
   ],
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@openfn/language-common": "^1.7.6",
+    "@openfn/language-common": "^1.13.2",
     "axios": "^0.21.2",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "undici": "^5.28.4"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.1.0",
-    "chai": "^3.5.0",
+    "chai": "^4.3.6",
     "deep-eql": "^0.1.3",
     "esno": "^0.16.3",
     "mocha": "^7.2.0",
-    "nock": "^12.0.3",
     "rimraf": "^3.0.2"
   },
   "repository": {

@@ -7,7 +7,6 @@ import js2xmlparser from 'js2xmlparser';
 import request from 'request';
 import xml2js from 'xml2js';
 
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for magpi.
@@ -83,8 +82,8 @@ export function fetchSurveyData(params) {
           url: url,
           form: form,
         },
-        (error, response, body) => {
-          error = assembleError({ error, response });
+        (err, response, body) => {
+          const error = assembleError({ error: err, response });
           if (error) {
             console.log('Failed to fetch submission data.');
             console.log('Response body: ' + response.body);
@@ -127,8 +126,8 @@ export function fetchSurveyData(params) {
               url: postUrl,
               json: item,
             },
-            (error, response, postResponseBody) => {
-              error = assembleError({ error, response });
+            (err, response, postResponseBody) => {
+              const error = assembleError({ error: err, response });
               if (error) {
                 console.error('POST failed.');
                 throw error;
@@ -165,7 +164,7 @@ export function fetchSurveyData(params) {
  */
 export function submitRecord(jsonData) {
   return state => {
-    const jsonBody = expandReferences(data)(state);
+    const jsonBody = expandReferences(jsonData)(state);
     const body = js2xmlparser('form', jsonBody);
 
     const { username, password, apiUrl } = state.configuration;

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "OAuth2",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Google Cloud Healthcare access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "The API version",
+      "default": "v1",
+      "examples": [
+        "v1",
+        "v1beta1"
+      ]
+    }
+  },
+  "required": [
+    "access_token"
+  ]
+}

@@ -2,13 +2,13 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "host": {
-      "title": "Host URL",
+      "title": "Host",
       "type": "string",
-      "description": "Postgres instance host URL",
-      "format": "uri",
+      "description": "Postgres instance host URL or IP address",
       "minLength": 1,
       "examples": [
-        "some-host-url.compute-1.amazonaws.com"
+        "some-host.compute-1.amazonaws.com",
+        "201.220.61.246"
       ]
     },
     "port": {
@@ -66,5 +66,10 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["host", "port", "database"]
+  "required": [
+    "host",
+    "user",
+    "database",
+    "password"
+  ]
 }

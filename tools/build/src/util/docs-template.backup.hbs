@@ -1,0 +1,51 @@
+{{#if (showMainIndex)~}}
+
+{{#globals kind="function" ~}}
+{{name}}
+{{#if @first~}}{{>heading-indent}}Functions
+
+<dl>
+{{/if~}}
+<dt>
+    {{#if name}}{{#sig no-gfm=true ~}}
+<a href="#{{toLowerCase (anchorName)}}">
+{{~{@codeOpen}~}}
+{{#if @prefix}}{{@prefix}} {{/if~}}
+{{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
+{{~#if @methodSign}}{{#if (isEvent)}} {{@methodSign}}{{else}}{{@methodSign}}{{/if}}{{/if~}}
+{{{@codeClose}~}}
+</a>
+{{~/sig}}{{/if~}}
+</dt>
+{{!-- <dd>{{{md (inlineLinks description)}}}</dd> --}}
+{{#if @last~}}</dl>{{/if~}}
+{{/globals~}}
+
+
+{{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
+
+{{/if~}}
+
+{{!-- this calls my common fns helper --}}
+{{!-- but why does it dump the array and not iterate? --}}
+{{#commonFns ~}}
+{{#if @first~}}{{>heading-indent}}Common
+
+<dl>
+The following functions are exported from common:
+{{/if~}}
+<dt>x</dt>
+{{#if @last~}}</dl>{{/if~}}
+{{/commonFns~}}
+
+
+{{#orphans ~}}
+{{>heading-indent}}{{anchorName}}
+
+{{>sig-name}}
+
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+{{/orphans~}}

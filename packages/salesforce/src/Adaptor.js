@@ -14,11 +14,23 @@
 import {
   execute as commonExecute,
   expandReferences,
+  composeNextState,
   field,
   chunk,
 } from '@openfn/language-common';
+
+import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
+
+// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
+// Note that technically we should await this, but in practice the module will be loaded
+// before execute is called
+let anyAscii = undefined;
+import('any-ascii').then(m => {
+  anyAscii = m.default;
+});
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -138,31 +150,207 @@ export function retrieve(sObject, id, callback) {
  * error logs will be printed but the operation will not throw the error.
  * @public
  * @example
- * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example <caption>Query more records if next records are available</caption>
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
  * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {boolean} [options.autoFetch] - Fetch next records if available.
+ * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs) {
-  return state => {
-    const { connection } = state;
-    qs = expandReferences(qs)(state);
-    console.log(`Executing query: ${qs}`);
+export function query(qs, options, callback = s => s) {
+  return async state => {
+    let done = false;
+    let qResult = null;
+    let result = [];
 
-    return connection.query(qs, function (err, result) {
-      if (err) {
-        return console.error(err);
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+
+    console.log(`Executing query: ${resolvedQs}`);
+    try {
+      qResult = await connection.query(resolvedQs);
+    } catch (err) {
+      const { message, errorCode } = err;
+      console.log(`Error ${errorCode}: ${message}`);
+      throw err;
+    }
+
+    if (qResult.totalSize > 0) {
+      console.log('Total records', qResult.totalSize);
+
+      while (!done) {
+        result.push(qResult);
+
+        if (qResult.done) {
+          done = true;
+        } else if (autoFetch) {
+          console.log(
+            'Fetched records so far',
+            result.map(ref => ref.records).flat().length
+          );
+          console.log('Fetching next records...');
+          try {
+            qResult = await connection.request({ url: qResult.nextRecordsUrl });
+          } catch (err) {
+            const { message, errorCode } = err;
+            console.log(`Error ${errorCode}: ${message}`);
+            throw err;
+          }
+        } else {
+          done = true;
+        }
       }
 
       console.log(
-        'Results retrieved and pushed to position [0] of the references array.'
+        'Done ✔ retrieved records',
+        result.map(ref => ref.records).flat().length
       );
+    } else {
+      console.log('No records found.');
+    }
 
-      return {
-        ...state,
-        references: [result, ...state.references],
-      };
+    console.log(
+      'Results retrieved and pushed to position [0] of the references array.'
+    );
+
+    const nextState = {
+      ...state,
+      references: [result, ...state.references],
+    };
+    return callback(nextState);
+  };
+}
+
+async function pollJobResult(conn, job, pollInterval, pollTimeout) {
+  let attempt = 0;
+
+  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
+
+  while (attempt < maxPollingAttempts) {
+    // Make an HTTP GET request to check the job status
+    const jobInfo = await conn
+      .request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .catch(error => {
+        console.log('Failed to fetch job information', error);
+      });
+
+    if (jobInfo && jobInfo.state === 'JobComplete') {
+      const response = await conn.request({
+        method: 'GET',
+        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Job result retrieved', response.length);
+      return response;
+    } else {
+      // Handle maxPollingAttempts
+      if (attempt + 1 === maxPollingAttempts) {
+        console.error(
+          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
+        );
+        throw new Error(`Polling time out. Job Id = ${job.id}`);
+      }
+      console.log(
+        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
+          jobInfo.state
+        }:`
+      );
+    }
+
+    // Wait for the polling interval before the next attempt
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
+    attempt++;
+  }
+}
+
+const defaultOptions = {
+  pollTimeout: 90000, // in ms
+  pollInterval: 3000, // in ms
+};
+
+/**
+ * Execute an SOQL Bulk Query.
+ * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
+ * Note that in an event of a query error,
+ * error logs will be printed but the operation will not throw the error.
+ * @public
+ * @example
+ * <caption>The results will be available on `state.data`</caption>
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example
+ * bulkQuery(
+ *   (state) =>
+ *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+ *   { pollTimeout: 10000, pollInterval: 6000 }
+ * );
+ * @function
+ * @param {String} qs - A query string.
+ * @param {Object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval] - Polling interval in milliseconds.
+ * @param {Function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
+export function bulkQuery(qs, options, callback) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const apiVersion = connection.version;
+
+    const { pollTimeout, pollInterval } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
+
+    console.log(`Executing query: ${resolvedQs}`);
+
+    const queryJob = await connection.request({
+      method: 'POST',
+      url: `/services/data/v${apiVersion}/jobs/query`,
+      body: JSON.stringify({
+        operation: 'query',
+        query: resolvedQs,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+
+    const result = await pollJobResult(
+      connection,
+      queryJob,
+      pollInterval,
+      pollTimeout
+    );
+
+    const nextState = {
+      ...composeNextState(state, result),
+      result,
+    };
+    if (callback) return callback(nextState);
+
+    return nextState;
   };
 }
 
@@ -179,26 +367,28 @@ export function query(qs) {
  * @param {String} sObject - API name of the sObject.
  * @param {String} operation - The bulk operation to be performed
  * @param {Object} options - Options passed to the bulk api.
- * @param {Function} fun - A function which takes state and returns an array.
+ * @param {Function} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
-export function bulk(sObject, operation, options, fun) {
+export function bulk(sObject, operation, options, records) {
   return state => {
     const { connection } = state;
     const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
-    const finalAttrs = fun(state);
 
-    if (allowNoOp && finalAttrs.length === 0) {
+    const [resolvedSObject, resolvedOperation, resolvedRecords] =
+      newExpandReferences(state, sObject, operation, records);
+
+    if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
-        `No items in ${sObject} array. Skipping bulk ${operation} operation.`
+        `No items in ${resolvedSObject} array. Skipping bulk ${resolvedOperation} operation.`
       );
       return state;
     }
 
-    if (finalAttrs.length > 10000)
+    if (resolvedRecords.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(finalAttrs, 10000);
+    const chunkedBatches = chunk(resolvedRecords, 10000);
 
     return Promise.all(
       chunkedBatches.map(
@@ -208,10 +398,14 @@ export function bulk(sObject, operation, options, fun) {
             const interval = pollInterval || 6000;
 
             console.info(
-              `Creating bulk ${operation} job for ${sObject} with ${chunkedBatch.length} records`
+              `Creating bulk ${resolvedOperation} job for ${resolvedSObject} with ${chunkedBatch.length} records`
             );
 
-            const job = connection.bulk.createJob(sObject, operation, options);
+            const job = connection.bulk.createJob(
+              resolvedSObject,
+              resolvedOperation,
+              options
+            );
 
             job.on('error', err => reject(err));
 
@@ -221,8 +415,8 @@ export function bulk(sObject, operation, options, fun) {
             console.info('Executing batch.');
             batch.execute(chunkedBatch);
 
-            batch.on('error', function (err) {
-              job.close();
+            batch.on('error', async function (err) {
+              await job.close();
               console.error('Request error:');
               reject(err);
             });
@@ -234,8 +428,8 @@ export function bulk(sObject, operation, options, fun) {
                 var batch = job.batch(batchId);
                 batch.poll(interval, timeout);
               })
-              .then(res => {
-                job.close();
+              .then(async res => {
+                await job.close();
                 const errors = res
                   .map((r, i) => ({ ...r, position: i + 1 }))
                   .filter(item => {
@@ -249,7 +443,6 @@ export function bulk(sObject, operation, options, fun) {
 
                 if (failOnError && errors.length > 0) {
                   console.error('Errors detected:');
-
                   reject(JSON.stringify(errors, null, 2));
                 } else {
                   console.log('Result : ' + JSON.stringify(res, null, 2));
@@ -356,9 +549,9 @@ export function create(sObject, attrs) {
  */
 export function createIf(logical, sObject, attrs) {
   return state => {
-    logical = expandReferences(logical)(state);
+    const resolvedLogical = expandReferences(logical)(state);
 
-    if (logical) {
+    if (resolvedLogical) {
       const { connection } = state;
       const finalAttrs = expandReferences(attrs)(state);
       console.info(`Creating ${sObject}`, finalAttrs);
@@ -437,9 +630,9 @@ export function upsert(sObject, externalId, attrs) {
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
-    logical = expandReferences(logical)(state);
+    const resolvedLogical = expandReferences(logical)(state);
 
-    if (logical) {
+    if (resolvedLogical) {
       const { connection } = state;
       const finalAttrs = expandReferences(attrs)(state);
       console.info(
@@ -509,48 +702,71 @@ export function reference(position) {
   return state => state.references[position].id;
 }
 
+function getConnection(state, options) {
+  const { apiVersion } = state.configuration;
+
+  const apiVersionRegex = /^\d{2}\.\d$/;
+
+  if (apiVersion && apiVersionRegex.test(apiVersion)) {
+    console.log('Using Salesforce API version', apiVersion);
+    options.version = apiVersion;
+  } else {
+    console.log('apiVersion is not defined');
+    console.log('We recommend using Salesforce API version 52.0 or latest');
+  }
+
+  return new jsforce.Connection(options);
+}
+
+async function createBasicAuthConnection(state) {
+  const { loginUrl, username, password, securityToken } = state.configuration;
+
+  const connection = getConnection(state, { loginUrl });
+
+  await connection
+    .login(username, securityToken ? password + securityToken : password)
+    .catch(e => {
+      console.error(`Failed to connect to salesforce as ${username}`);
+      throw e;
+    });
+
+  console.info(`Connected to salesforce as ${username}.`);
+
+  return {
+    ...state,
+    connection,
+  };
+}
+
+function createAccessTokenConnection(state) {
+  const { instance_url, access_token } = state.configuration;
+
+  const connection = getConnection(state, {
+    instanceUrl: instance_url,
+    accessToken: access_token,
+  });
+
+  console.log(`Connected with ${connection._sessionType} session type`);
+
+  return {
+    ...state,
+    connection,
+  };
+}
+
 /**
- * Creates a connection.
- * @example
- * createConnection(state)
- * @function
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
 function createConnection(state) {
-  const { loginUrl } = state.configuration;
+  const { access_token } = state.configuration;
 
-  if (!loginUrl) {
-    throw new Error('loginUrl missing from configuration.');
-  }
-
-  return { ...state, connection: new jsforce.Connection({ loginUrl }) };
-}
-
-/**
- * Performs a login.
- * @example
- * login(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function login(state) {
-  const { username, password, securityToken } = state.configuration;
-  let { connection } = state;
-  console.info(`Logging in as ${username}.`);
-
-  return (
-    connection
-      .login(username, password + securityToken)
-      // NOTE: Uncomment this to debug connection issues.
-      // .then(response => {
-      //   console.log(connection);
-      //   console.log(response);
-      //   return state;
-      // })
-      .then(() => state)
-  );
+  return access_token
+    ? createAccessTokenConnection(state)
+    : createBasicAuthConnection(state);
 }
 
 /**
@@ -575,13 +791,11 @@ export function execute(...operations) {
     // takes each operation as an argument.
     return commonExecute(
       createConnection,
-      login,
       ...flatten(operations),
       cleanupState
     )({ ...initialState, ...state });
   };
 }
-
 /**
  * Removes unserializable keys from the state.
  * @example
@@ -609,6 +823,66 @@ export function steps(...operations) {
   return flatten(operations);
 }
 
+/**
+ * Transliterates unicode characters to their best ASCII representation
+ * @public
+ * @example
+ * fn((state) => {
+ *   const s = toUTF8("άνθρωποι");
+ *   console.log(s); // anthropoi
+ *   return state;
+ * });
+ * @param {string} input - A string with unicode characters
+ * @returns {String} - ASCII representation of input string
+ */
+export function toUTF8(input) {
+  return anyAscii(input);
+}
+
+/**
+ * Send a HTTP request using connected session information.
+ *
+ * @example
+ * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
+ *   method: 'POST',
+ *   json: { inputs: [{}] },
+ * });
+ * @param {String} url - Relative or absolute URL to request from
+ * @param {Object} options - Request options
+ * @param {String} [options.method] - HTTP method to use. Defaults to GET
+ * @param {Object} [options.headers] - Object of request headers
+ * @param {Object} [options.json] - A JSON Object request body
+ * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @param {Function} callback - A callback to execute once the request is complete
+ * @returns {Operation}
+ */
+
+export function request(path, options, callback = s => s) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = newExpandReferences(
+      state,
+      path,
+      options
+    );
+    const { method = 'GET', json, body, headers } = resolvedOptions;
+
+    const requestOptions = {
+      url: resolvedPath,
+      method,
+      headers: json
+        ? { 'content-type': 'application/json', ...headers }
+        : headers,
+      body: json ? JSON.stringify(json) : body,
+    };
+
+    const result = await connection.request(requestOptions);
+
+    const nextState = composeNextState(state, result);
+
+    return callback(nextState);
+  };
+}
 // Note that we expose the entire axios package to the user here.
 import axios from 'axios';
 

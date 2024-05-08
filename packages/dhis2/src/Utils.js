@@ -8,20 +8,6 @@ export const CONTENT_TYPES = {
   xls: 'application/vnd.ms-excel',
 };
 
-export class Log {
-  static success(message) {
-    return console.info(`✓ Success at ${new Date()}:\n`, message);
-  }
-
-  static warn(message) {
-    return console.warn(`⚠ Warning at ${new Date()}:\n`, message);
-  }
-
-  static error(message) {
-    return console.error(`✗ Error at ${new Date()}:\n`, message);
-  }
-}
-
 export function buildUrl(urlString, hostUrl, apiVersion) {
   const pathSuffix = apiVersion ? `/${apiVersion}${urlString}` : `${urlString}`;
   return hostUrl + '/api' + pathSuffix;

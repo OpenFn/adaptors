@@ -1,5 +1,88 @@
 # @openfn/language-mailchimp
 
+## 0.7.4
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 0.7.3
+
+### Patch Changes
+
+- 6afba70: Fix updateMember()
+
+## 0.7.2
+
+### Patch Changes
+
+- 1131c34: Remove regex pattern for validation and changed minLength to 1
+
+## 0.7.1
+
+### Patch Changes
+
+- 1f856c4: Update configuration schema
+- 48394f5: - fix ast docs warnings
+  - add status code log on request
+
+## 0.7.0
+
+### Minor Changes
+
+- 58fcea9: - Add chunk from common
+  - Improve error logs
+  - Return `state` in request finalState
+
+## 0.6.0
+
+### Minor Changes
+
+- 1582873: Add request, get and post functions
+
+## 0.5.0
+
+### Minor Changes
+
+- 8e39ee1: Add new functions
+
+  - addMember()
+  - listMembers()
+  - deleteMember()
+  - listAudiences()
+  - archiveMember()
+  - updateMemberTags()
+  - listAudienceInfo()
+
+## 0.4.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 0.4.0
+
+### Minor Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
 ## 0.3.5
 
 ### Patch Changes

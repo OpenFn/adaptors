@@ -7,7 +7,7 @@
 {{/if~}}
 <dt>
     {{#if name}}{{#sig no-gfm=true ~}}
-<a href="#{{{anchorName}}}">
+<a href="#{{toLowerCase (anchorName)}}">
 {{~{@codeOpen}~}}
 {{#if @prefix}}{{@prefix}} {{/if~}}
 {{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
@@ -18,14 +18,25 @@
 </dt>
 {{!-- <dd>{{{md (inlineLinks description)}}}</dd> --}}
 {{#if @last~}}</dl>
-
 {{/if~}}
 {{/globals~}}
-
-{{>global-index-kinds kind="typedef" title="Typedefs" ~}}
-
+{{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
 {{/if~}}
+
+{{#commonFns}}
+
+{{#if @first~}}
+The following functions are exported from the common adaptor:
+<dl>
+{{/if~}}
+<dt>
+    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{name}}()</a>
+</dt>{{#if @last}}</dl>
+{{/if}}
+{{/commonFns}}
+
 {{#orphans ~}}
+
 {{>heading-indent}}{{anchorName}}
 
 {{>sig-name}}

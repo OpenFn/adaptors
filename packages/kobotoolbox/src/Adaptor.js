@@ -1,5 +1,3 @@
-
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -48,7 +46,7 @@ export function execute(...operations) {
  */
 export function getForms(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { baseURL, apiVersion, username, password } = state.configuration;
 
@@ -57,7 +55,7 @@ export function getForms(params, callback) {
 
     const config = {
       url,
-      params,
+      params: resolvedParams,
       auth,
     };
 
@@ -86,17 +84,17 @@ export function getForms(params, callback) {
  */
 export function getSubmissions(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { baseURL, apiVersion, username, password } = state.configuration;
-    const { formId } = params;
+    const { formId } = resolvedParams;
 
     const url = `${baseURL}/api/${apiVersion}/assets/${formId}/data/?format=json`;
     const auth = { username, password };
 
     const config = {
       url,
-      params: params.query,
+      params: resolvedParams.query,
       auth,
     };
 
@@ -126,17 +124,17 @@ export function getSubmissions(params, callback) {
  */
 export function getDeploymentInfo(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { baseURL, apiVersion, username, password } = state.configuration;
-    const { formId } = params;
+    const { formId } = resolvedParams;
 
     const url = `${baseURL}/api/${apiVersion}/assets/${formId}/deployment/?format=json`;
     const auth = { username, password };
 
     const config = {
       url,
-      params: params.query,
+      params: resolvedParams.query,
       auth,
     };
 
@@ -153,13 +151,14 @@ export function getDeploymentInfo(params, callback) {
 }
 
 export {
-  fn,
   alterState,
+  cursor,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
   http,
   lastReferenceValue,
   merge,

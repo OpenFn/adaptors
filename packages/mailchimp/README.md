@@ -12,36 +12,6 @@ official
 [configuration-schema](https://docs.openfn.org/adaptors/packages/mailchimp-configuration-schema/)
 definition.
 
-#### sample expression with multiple operations
-
-```js
-upsertMembers({
-  listId: 'someId',
-  users: state =>
-    state.response.body.rows.map(u => ({
-      email: u.email,
-      status: u.allow_other_emails ? 'subscribed' : 'unsubscribed',
-      mergeFields: { FNAME: u.first_name, LNAME: u.last_name },
-    })),
-  options: {},
-});
-
-tagMembers({
-  listId: 'someId', // All Subscribers
-  tagId: 'someTag', // User
-  members: state => state.response.body.rows.map(u => u.email),
-});
-
-tagMembers({
-  listId: 'someId', // All Subscribers
-  tagId: 'someTag', // Other Emails Allowed
-  members: state =>
-    state.response.body.rows
-      .filter(u => u.allow_other_emails)
-      .map(u => u.email),
-});
-```
-
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the

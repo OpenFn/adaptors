@@ -1,146 +1,109 @@
-import FormData from 'form-data';
-import _ from 'lodash/fp';
-import safeStringify from 'fast-safe-stringify';
+import { composeNextState } from '@openfn/language-common';
+import {
+  request as commonRequest,
+  expandReferences,
+  logResponse,
+  makeBasicAuthHeader,
+} from '@openfn/language-common/util';
 
-const { isEmpty } = _;
+import * as cheerio from 'cheerio';
+import cheerioTableparser from 'cheerio-tableparser';
 
-export function setUrl(configuration, path) {
-  const baseUrl = configuration?.baseUrl;
-
-  if (isValidHttpUrl(path)) return path;
-
-  if (baseUrl)
-    return `${baseUrl.replace(/\/$/, '')}/${path.replace(/^\/+/g, '')}`;
-
-  return path;
-}
-
-function isValidHttpUrl(string) {
-  let url;
-
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
+export function addBasicAuth(configuration = {}, headers) {
+  const { username, password } = configuration;
+  if (username && password && !headers.Authorization) {
+    Object.assign(headers, makeBasicAuthHeader(username, password));
   }
-
-  return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-export function setAuth(configuration, manualAuth) {
-  if (manualAuth) return manualAuth;
-  else if (configuration && configuration.username)
-    return {
-      username: configuration.username,
-      password: configuration.password,
+function encodeFormBody(data) {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(data)) {
+    form.append(key, value);
+  }
+  return form;
+}
+
+export function request(method, path, params, callback = s => s) {
+  return state => {
+    const [resolvedPath, resolvedParams = {}] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    let { body, headers = {} } = resolvedParams;
+
+    if (resolvedParams.json) {
+      console.warn(
+        'WARNING: The `json` option has been deprecated. Use `body` instead'
+      );
+      body = resolvedParams.json;
+    }
+
+    if (resolvedParams.form) {
+      body = encodeFormBody(resolvedParams.form);
+    }
+
+    const baseUrl = state.configuration?.baseUrl;
+
+    addBasicAuth(state.configuration, headers);
+
+    const maxRedirections =
+      resolvedParams.maxRedirections ??
+      (resolvedParams.followAllRedirects === false ? 0 : 5);
+
+    const tls = resolvedParams.tls ?? resolvedParams.agentOptions;
+
+    if (resolvedParams.agentOptions) {
+      console.warn(
+        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead'
+      );
+    }
+
+    const options = {
+      ...resolvedParams,
+      headers,
+      baseUrl,
+      body,
+      tls,
+      maxRedirections,
     };
-  else return null;
-}
 
-export function assembleError({ response, error, params }) {
-  if (response) {
-    const customCodes = params?.options?.successCodes;
-    const status = response?.status || response?.statusCode;
+    return commonRequest(method, resolvedPath, options)
+      .then(response => {
+        logResponse(response);
 
-    if ((customCodes || [200, 201, 202]).indexOf(status) > -1) {
-      return false;
-    }
-  }
+        return {
+          ...composeNextState(state, response.body),
+          response,
+        };
+      })
+      .then(callback)
+      .catch(err => {
+        logResponse(err);
 
-  if (error) return error;
-
-  // NOTE: we provide a smaller error output here for readability.
-  // Power users can still access the http functions or axios for debugging.
-  delete response.request;
-  delete response.connection;
-  return new Error(safeStringify(response, null, 2));
-}
-
-export function tryJson(data) {
-  if (typeof data === 'string') {
-    try {
-      return JSON.parse(data);
-    } catch (e) {
-      return { body: data };
-    }
-  }
-  return data;
-}
-
-export function mapToAxiosConfig(requestConfig) {
-  let form = null;
-
-  const formData = requestConfig?.formData || requestConfig?.form;
-
-  let headers = requestConfig?.headers;
-
-  if (requestConfig?.gzip === true) {
-    headers = { ...headers, 'Accept-Encoding': 'gzip, deflate' };
-  }
-  if (!isEmpty(formData)) {
-    form = new FormData();
-    Object.entries(formData).forEach(element => {
-      form.append(element[0], element[1]);
-    });
-
-    const formHeaders = form.getHeaders();
-
-    headers = { ...headers, ...formHeaders };
-  }
-
-  if (requestConfig?.json) {
-    headers = { ...headers, 'Content-type': 'application/json' };
-    if (typeof requestConfig?.json === 'object') {
-      requestConfig = { ...requestConfig, body: requestConfig?.json };
-    }
-  }
-
-  const finalConfig = {
-    ...requestConfig,
-    url: requestConfig?.url ?? requestConfig?.uri,
-    // https:
-    //   requestConfig?.https ??
-    //   (requestConfig?.strictSSL &&
-    //     new https.Agent({ rejectUnauthorized: false })),
-    // method,
-    // baseURL,
-    // transformRequest,
-    // transformResponse,
-    headers,
-    params: {
-      ...requestConfig?.params,
-      ...requestConfig?.qs,
-      ...requestConfig?.query,
-    },
-    // paramsSerializer,
-    data: requestConfig?.data ?? (requestConfig?.body || form),
-    // timeouts,
-    // withCredentials,
-    // adapter,
-    auth: requestConfig?.auth ?? requestConfig?.authentication,
-    responseType: requestConfig?.responseType ?? 'json',
-    responseEncoding:
-      requestConfig?.responseEncoding ?? requestConfig?.encoding,
-    // xsrfCookieName,
-    // xsrfHeaderName,
-    // onUploadProgress,
-    // onDownloadProgress,
-    // maxContentLength,
-    // maxBodyLength,
-    validateStatus: status => {
-      const customCodes = requestConfig?.options?.successCodes;
-      if (customCodes) return customCodes.includes(status);
-      return status >= 200 && status < 300;
-    },
-    maxRedirects:
-      requestConfig?.maxRedirects ??
-      (requestConfig?.followAllRedirects === false ? 0 : 5),
-    // socketPath,
-    // httpAgent: requestConfig?.httpAgent ?? requestConfig?.agent,
-    // httpsAgent,
-    // proxy,
-    // cancelToken,
-    // decompress,
+        throw err;
+      });
   };
-  return finalConfig;
+}
+
+export function xmlParser(body, script, callback = s => s) {
+  return state => {
+    const [resolvedBody] = expandReferences(state, body);
+    const $ = cheerio.load(resolvedBody);
+    cheerioTableparser($);
+
+    if (script) {
+      const result = script($);
+      try {
+        const r = JSON.parse(result);
+        return callback(composeNextState(state, r));
+      } catch (e) {
+        return callback(composeNextState(state, { body: result }));
+      }
+    } else {
+      return callback(composeNextState(state, { body: resolvedBody }));
+    }
+  };
 }

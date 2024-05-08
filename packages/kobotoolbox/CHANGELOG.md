@@ -1,5 +1,51 @@
 # @openfn/language-kobotoolbox
 
+## 2.2.0
+
+### Minor Changes
+
+- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+  more information.
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
+## 2.1.0
+
+### Minor Changes
+
+- c85abf3: Removed the API version enum values in the credential configuration
+  json schema and added a placeholder
+
+## 2.0.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 2.0.0
+
+### Major Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
 ## 1.3.3
 
 ### Patch Changes

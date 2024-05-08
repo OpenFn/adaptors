@@ -3,7 +3,9 @@
     {
       "name": "list",
       "params": [
-        "dirPath"
+        "dirPath",
+        "filter",
+        "callback"
       ],
       "docs": {
         "description": "List files present in a directory",
@@ -15,7 +17,18 @@
           },
           {
             "title": "example",
-            "description": "list('/some/path/')"
+            "description": "list('/some/path/')",
+            "caption": "basic files listing"
+          },
+          {
+            "title": "example",
+            "description": "list('/some/path/', file=> {\n return /foo.\\.txt/.test(file.name);\n})",
+            "caption": "list files with filters"
+          },
+          {
+            "title": "example",
+            "description": "list(\n  \"/some/path/\",\n  (file) => /foo.\\.txt/.test(file.name),\n  (state) => {\n    const latestFile = state.data.filter(\n      (file) => file.modifyTime <= new Date()\n    );\n    return { ...state, latestFile };\n  }\n);",
+            "caption": "list files with filters and use callback"
           },
           {
             "title": "function",
@@ -24,12 +37,33 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to remote directory",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "dirPath"
+          },
+          {
+            "title": "param",
+            "description": "a filter function used to select return entries",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "filter"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -792,6 +826,80 @@
             "type": {
               "type": "NameExpression",
               "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "parseCsv",
+      "params": [
+        "csvData",
+        "parsingOptions",
+        "callback"
+      ],
+      "docs": {
+        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A CSV string or a readable stream",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "String"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Stream"
+                }
+              ]
+            },
+            "name": "csvData"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options for converting CSV to JSON.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "parsingOptions"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

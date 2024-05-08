@@ -42,6 +42,7 @@ const createHelper = (configuration = {}) => {
   };
 
   // Get a list of program ids
+  // eslint-disable-next-line no-unused-vars
   const getPrograms = () => {};
 
   const getTrackedEntityTypes = async () => {

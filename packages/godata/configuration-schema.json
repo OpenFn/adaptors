@@ -16,7 +16,7 @@
             "title": "Email",
             "type": "string",
             "description": "Your Godata login email",
-            "writeOnly": true,
+            "format": "email",
             "minLength": 1,
             "examples": [
                 "test@openfn.org"

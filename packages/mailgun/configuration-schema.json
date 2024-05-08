@@ -2,13 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
         "domain": {
-            "title": "Domain URL",
+            "title": "Domain Name",
             "type": "string",
-            "description": "Mailgun API domain URL",
-            "format": "uri",
+            "description": "Mailgun API Domain Name",
+            "format": "string",
             "minLength": 1,
             "examples": [
-                "https://mailgun.com/api/example"
+                "sandbox-123.mailgun.org"
             ]
         },
         "apiKey": {

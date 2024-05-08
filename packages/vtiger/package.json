@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-vtiger",
-  "version": "1.1.3",
+  "version": "1.2.1",
   "description": "A Vtiger Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist"
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -19,13 +20,12 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.7.6",
+    "@openfn/language-common": "^1.12.0",
     "lodash-fp": "^0.10.4",
     "md5": "^2.3.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^2.0.0",
     "chai": "^4.3.7",

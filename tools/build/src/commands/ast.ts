@@ -1,7 +1,8 @@
 import { exec } from 'node:child_process';
 import resolvePath from '../util/resolve-path';
+import type { Options } from '../pipeline';
 
-export default (lang: string) => {
+export default (lang: string, options: Options) => {
   const root = resolvePath(lang);
   console.log();
   console.log(`Building AST`);

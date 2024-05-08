@@ -43,13 +43,13 @@ export function execute(...operations) {
  * @returns {State}
  */
 function connect(state) {
-  const { clusterUrl, username, password } = state.configuration;
+  const { clusterHostname, username, password } = state.configuration;
 
   const uri = `mongodb+srv://${encodeURIComponent(
     username
   )}:${encodeURIComponent(
     password
-  )}@${clusterUrl}/test?retryWrites=true&w=majority`;
+  )}@${clusterHostname}/test?retryWrites=true&w=majority`;
 
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
@@ -155,7 +155,7 @@ export function findDocuments(params) {
             state.client.close();
           } else {
             console.log(`Found ${docs.length} documents in the collection`);
-            console.log(JSON.stringify(result, null, 2));
+            console.log(JSON.stringify(docs, null, 2));
             const nextState = composeNextState(state, docs);
             if (callback) resolve(callback(nextState));
             resolve(nextState);

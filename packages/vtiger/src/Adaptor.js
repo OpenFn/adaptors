@@ -43,22 +43,21 @@ export function execute(...operations) {
 }
 
 function challenge(state) {
-  const { hostUrl, username, accessToken } = state.configuration;
+  const { hostUrl, username } = state.configuration;
 
   console.info(`Challenging as ${username}...`);
 
   return new Promise((resolve, reject) => {
     request.get(
       `${hostUrl}/webservice.php?operation=getchallenge&username=${username}`,
-      function (error, response, body) {
-        error = assembleError({ response, error });
+      function (err, response, body) {
+        const error = assembleError({ response, error: err });
         if (error) {
           reject(error);
         } else {
           console.log('Challenge succeeded.');
-          // console.log(body)
-          body = JSON.parse(body);
-          resolve(body.result.token);
+          const parsedBody = JSON.parse(body);
+          resolve(parsedBody.result.token);
         }
       }
     );
@@ -84,16 +83,15 @@ export function login(state) {
           accessKey: md5(token + accessToken),
         },
       },
-      function (error, response, body) {
-        error = assembleError({ response, error });
+      function (err, response, body) {
+        const error = assembleError({ response, error: err });
         if (error) {
           console.log(response);
           reject(error);
         } else {
           console.log('Login succeeded.');
-          // console.log(body)
-          body = JSON.parse(body);
-          resolve(body);
+          const parsedBody = JSON.parse(body);
+          resolve(parsedBody);
         }
       }
     );
@@ -113,8 +111,8 @@ export function listTypes() {
           url: `${hostUrl}/webservice.php`,
           form: { operation: 'listTypes', sessionName },
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response, body) {
+          const error = assembleError({ response, error: err });
           if (error) {
             reject(error);
           } else {
@@ -155,8 +153,8 @@ export function postElement(params) {
           url: url,
           form: body,
         },
-        function (error, response, body) {
-          error = assembleError({ response, error });
+        function (err, response, body) {
+          const error = assembleError({ response, error: err });
           if (error) {
             console.log(response);
             reject(error);

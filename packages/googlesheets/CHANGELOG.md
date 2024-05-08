@@ -1,5 +1,67 @@
 # @openfn/language-googlesheets
 
+## 2.4.0
+
+### Minor Changes
+
+- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+  more information.
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
+## 2.3.1
+
+### Patch Changes
+
+- 4594a324: add callback jsdocs
+
+## 2.3.0
+
+### Minor Changes
+
+- 8405fc9a: - Add `getValues()` function
+  - Improve connection handling
+  - Improve error logs
+
+## 2.2.2
+
+### Patch Changes
+
+- aad9549: Ensure that standard OAuth2 credentials with snake-cased
+  "access_token" keys can be used for OAuth2-reliant adaptors
+- Updated dependencies [aad9549]
+  - @openfn/language-common@1.10.0
+
+## 2.2.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 2.2.0
+
+### Minor Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
 ## 2.1.6
 
 ### Patch Changes

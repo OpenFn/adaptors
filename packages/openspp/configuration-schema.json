@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (http://www.example.com)",
+      "format": "uri",
+      "minLength": 1,
+      "default": "http://localhost",
+      "examples": ["https://dev.newlogic-demo.com"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "default": "admin",
+      "examples": ["test@openfn.org"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "default": "admin",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    },
+    "database": {
+      "title": "Database Name",
+      "type": "string",
+      "default": "devel",
+      "description": "Database Name",
+      "examples": ["devel"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["password", "username", "database", "baseUrl"]
+}

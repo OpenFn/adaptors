@@ -60,10 +60,8 @@ export function submitSite(collection_id, submissionData) {
     const { username, password, baseUrl } = state.configuration;
 
     // /api/collections/:collection_id/sites.json
-    const url = resolveUrl(
-      baseUrl + '/',
-      'api/collections/' + collection_id + '/sites.json'
-    );
+    const url =
+      baseUrl + '/' + 'api/collections/' + collection_id + '/sites.json';
 
     return new Promise((resolve, reject) => {
       request.post(
@@ -79,8 +77,8 @@ export function submitSite(collection_id, submissionData) {
             'content-disposition': 'form-data; name=\\"site\\"',
           },
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
           } else {

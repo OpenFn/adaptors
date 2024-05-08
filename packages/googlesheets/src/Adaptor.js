@@ -1,13 +1,45 @@
 import {
   execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
+import {
+  normalizeOauthConfig,
   expandReferences,
-} from "@openfn/language-common";
-import { google } from "googleapis";
+} from '@openfn/language-common/util';
 
+import { google } from 'googleapis';
 
+let client = undefined;
 
+function createConnection(state) {
+  const { accessToken } = state.configuration;
+
+  const auth = new google.auth.OAuth2();
+  auth.credentials = { access_token: accessToken };
+
+  client = google.sheets({ version: 'v4', auth });
+  return state;
+}
+
+function removeConnection(state) {
+  client = undefined;
+  return state;
+}
+
+function logError(err) {
+  const { code, errors, response } = err;
+  if (code && errors && response) {
+    console.error('The API returned an error:', errors);
+
+    const { statusText, config } = response;
+    const { url, method, body } = config;
+    const message = `${method} ${url} - ${code}:${statusText} \nbody: ${body}`;
+
+    console.log(message);
+  }
+}
 /**
- * Execute a sequence of operations.
+ * Execute a sequence of oper.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
@@ -26,10 +58,18 @@ export function execute(...operations) {
 
   // why not here?
 
-  return (state) => {
+  return state => {
     // Note: we no longer need `steps` anymore since `commonExecute`
     // takes each operation as an argument.
-    return commonExecute(...operations)({ ...initialState, ...state });
+    return commonExecute(
+      createConnection,
+      ...operations,
+      removeConnection
+    )({
+      ...initialState,
+      ...state,
+      configuration: normalizeOauthConfig(state.configuration),
+    });
   };
 }
 
@@ -48,41 +88,42 @@ export function execute(...operations) {
  * })
  * @function
  * @param {Object} params - Data object to add to the spreadsheet.
+ * @param {string} [params.spreadsheetId] The spreadsheet ID.
+ * @param {string} [params.range] The range of values to update.
+ * @param {array} [params.values] A 2d array of values to update.
+ * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function appendValues(params) {
-  return (state) => {
-    const { accessToken } = state.configuration;
-
-    const oauth2Client = new google.auth.OAuth2();
-    oauth2Client.credentials = { access_token: accessToken };
-
-    const { spreadsheetId, range, values } = expandReferences(params)(state);
-
-    var sheets = google.sheets("v4");
+export function appendValues(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const { spreadsheetId, range, values } = resolvedParams;
 
     return new Promise((resolve, reject) => {
-      sheets.spreadsheets.values.append(
+      client.spreadsheets.values.append(
         {
-          auth: oauth2Client,
           spreadsheetId,
           range,
-          valueInputOption: "USER_ENTERED",
+          valueInputOption: 'USER_ENTERED',
           resource: {
             range,
-            majorDimension: "ROWS",
+            majorDimension: 'ROWS',
             values: values,
           },
         },
         function (err, response) {
           if (err) {
-            console.log("The API returned an error:");
-            console.log(err);
+            logError(err);
             reject(err);
           } else {
-            console.log("Success! Here is the response from Google:");
-            console.log(response);
-            resolve(state);
+            console.log('Success! Here is the response from Google:');
+            console.log(response.data);
+            resolve(
+              callback({
+                ...composeNextState(state, response.data),
+                response,
+              })
+            );
           }
         }
       );
@@ -90,9 +131,101 @@ export function appendValues(params) {
   };
 }
 
+/**
+ * Batch update values in a Spreadsheet.
+ * @example
+ * batchUpdateValues({
+ *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
+ *   range: 'Sheet1!A1:E1',
+ *   values: [
+ *     ['From expression', '$15', '2', '3/15/2016'],
+ *     ['Really now!', '$100', '1', '3/20/2016'],
+ *   ],
+ * })
+ * @function
+ * @param {Object} params - Data object to add to the spreadsheet.
+ * @param {string} [params.spreadsheetId] The spreadsheet ID.
+ * @param {string} [params.range] The range of values to update.
+ * @param {string} [params.valueInputOption] (Optional) Value update options. Defaults to 'USER_ENTERED'
+ * @param {array} [params.values] A 2d array of values to update.
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation} spreadsheet information
+ */
+export function batchUpdateValues(params, callback = s => s) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const {
+      spreadsheetId,
+      range,
+      valueInputOption = 'USER_ENTERED',
+      values,
+    } = resolvedParams;
+
+    const resource = {
+      data: [
+        {
+          range,
+          values,
+        },
+      ],
+      valueInputOption,
+    };
+    try {
+      const response = await client.spreadsheets.values.batchUpdate({
+        spreadsheetId,
+        resource,
+      });
+      console.log('%d cells updated.', response.data.totalUpdatedCells);
+      return callback({ ...composeNextState(state, response.data), response });
+    } catch (err) {
+      logError(err);
+      throw err;
+    }
+  };
+}
+
+/**
+ * Gets cell values from a Spreadsheet.
+ * @public
+ * @example
+ * getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')
+ * @function
+ * @param {string} spreadsheetId The spreadsheet ID.
+ * @param {string} range The sheet range.
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation} spreadsheet information
+ */
+export function getValues(spreadsheetId, range, callback = s => s) {
+  return async state => {
+    const [resolvedSheetId, resolvedRange] = expandReferences(
+      state,
+      spreadsheetId,
+      range
+    );
+
+    try {
+      const response = await client.spreadsheets.values.get({
+        spreadsheetId: resolvedSheetId,
+        range: resolvedRange,
+      });
+      const numRows = response?.data?.values.length ?? 0;
+      console.log(`${numRows} rows retrieved.`);
+
+      const nextState = { ...composeNextState(state, response.data), response };
+
+      return callback(nextState);
+    } catch (err) {
+      logError(err);
+      throw err;
+    }
+  };
+}
+
 export {
   alterState,
   combine,
+  cursor,
   dataPath,
   dataValue,
   each,
@@ -103,4 +236,4 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-} from "@openfn/language-common";
+} from '@openfn/language-common';

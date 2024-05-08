@@ -12,7 +12,7 @@
  * @returns {Entity}
  */
 export const createEntity = (name, type, props = {}, children) => {
-  const { label, datatype, value, ...meta } = props;
+  const { label, datatype, ...meta } = props;
 
   const e = {
     name, // basic identifier (should reflect the id or name in the datasource)
@@ -22,7 +22,7 @@ export const createEntity = (name, type, props = {}, children) => {
         this.children = name ? {} : [];
       }
       if (name) {
-        if (isArray(this.children)) {
+        if (Array.isArray(this.children)) {
           throw new Error('Cannot add a named entity to child array');
         }
         this.children[name] = e;

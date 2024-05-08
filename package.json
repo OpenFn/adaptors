@@ -4,7 +4,7 @@
   "description": "Monoerepo for openfn language adaptors",
   "type": "module",
   "private": "true",
-  "packageManager": "pnpm@7.14.0",
+  "packageManager": "pnpm@8.15.1",
   "scripts": {
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
@@ -12,8 +12,11 @@
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
     "test:imports": "cd tools/import-tests && pnpm test",
-    "test": "pnpm --filter \"./packages/**\" test && pnpm test:imports",
-    "metadata": "pnpm -C tools/metadata cli"
+    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "lint": "pnpm --filter \"./packages/**\" lint",
+    "metadata": "pnpm -C tools/metadata cli",
+    "slack:notify": "cd tools/slack && pnpm notify",
+    "generate": "pnpm -C tools/generate cli generate"
   },
   "author": "Open Function Group",
   "license": "ISC",
@@ -22,6 +25,7 @@
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
-    "@openfn/simple-ast": "0.4.1"
+    "@openfn/simple-ast": "0.4.1",
+    "eslint": "8.26.0"
   }
 }

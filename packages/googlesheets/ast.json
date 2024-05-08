@@ -3,7 +3,8 @@
     {
       "name": "appendValues",
       "params": [
-        "params"
+        "params",
+        "callback"
       ],
       "docs": {
         "description": "Add an array of rows to the spreadsheet.\nhttps://developers.google.com/sheets/api/samples/writing#append_values",
@@ -32,8 +33,116 @@
             "name": "params"
           },
           {
+            "title": "param",
+            "description": "The spreadsheet ID.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "params.spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "The range of values to update.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "params.range"
+          },
+          {
+            "title": "param",
+            "description": "A 2d array of values to update.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "array"
+              }
+            },
+            "name": "params.values"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
             "title": "returns",
             "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "getValues",
+      "params": [
+        "spreadsheetId",
+        "range",
+        "callback"
+      ],
+      "docs": {
+        "description": "Gets cell values from a Spreadsheet.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The spreadsheet ID.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "The sheet range.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "range"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "spreadsheet information",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -505,6 +614,92 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones \nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }

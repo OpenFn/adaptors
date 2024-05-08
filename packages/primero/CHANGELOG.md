@@ -1,5 +1,109 @@
 # @openfn/language-primero
 
+## 2.11.12
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 2.11.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 2.11.10
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
+## 2.11.9
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
+## 2.11.8
+
+### Patch Changes
+
+- Updated dependencies [c19efbe]
+  - @openfn/language-common@1.11.1
+
+## 2.11.7
+
+### Patch Changes
+
+- Updated dependencies [85c35b8]
+  - @openfn/language-common@1.11.0
+
+## 2.11.6
+
+### Patch Changes
+
+- Updated dependencies [df09270]
+  - @openfn/language-common@1.10.3
+
+## 2.11.5
+
+### Patch Changes
+
+- Updated dependencies [26a303e]
+  - @openfn/language-common@1.10.2
+
+## 2.11.4
+
+### Patch Changes
+
+- Updated dependencies [8c32eb3]
+  - @openfn/language-common@1.10.1
+
+## 2.11.3
+
+### Patch Changes
+
+- Updated dependencies [aad9549]
+  - @openfn/language-common@1.10.0
+
+## 2.11.2
+
+### Patch Changes
+
+- Updated dependencies [111807f]
+  - @openfn/language-common@1.9.0
+
+## 2.11.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 2.11.0
+
+### Minor Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
 ## 2.10.6
 
 ### Patch Changes

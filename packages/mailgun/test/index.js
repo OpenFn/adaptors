@@ -4,10 +4,11 @@ import Adaptor from '../src';
 const { execute, send } = Adaptor;
 import { fields, field } from '@openfn/language-common';
 
-describe('execute', () => {
+describe.skip('execute', () => {
   it('sends an Email and expects a confirmation response', done => {
     let state = {
       configuration: {
+        // TODO: this api key is expired and so this test is failing
         apiKey: 'key-e5f5d6dd3f516de19e46dc1554d2d714',
         domain: 'sandbox7b016987bd5f414aa72dcbc5c672f279.mailgun.org',
       },

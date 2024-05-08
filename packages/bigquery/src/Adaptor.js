@@ -1,4 +1,3 @@
-
 import 'regenerator-runtime/runtime.js';
 import {
   execute as commonExecute,
@@ -6,9 +5,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import fs from 'fs';
-import parse from 'csv-parse';
 import { BigQuery } from '@google-cloud/bigquery';
-import { resolve } from 'path';
 
 /**
  * Execute a sequence of operations.
@@ -105,7 +102,7 @@ export function load(
       return state;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       console.log('Google Big Query: loading files');
       return fs.readdir(dirPath, function (err, files) {
         //handling error
@@ -116,53 +113,8 @@ export function load(
       });
     }).then(() => {
       console.log('all done');
+      if (callback) return callback(state);
       return state;
-    });
-  };
-}
-
-/**
- * CSV-Parse for CSV conversion to JSON
- * @public
- * @example
- *  parseCSV("/home/user/someData.csv", {
- * 	  quoteChar: '"',
- * 	  header: false,
- * 	});
- * @function
- * @param {String} target - string or local file with CSV data
- * @param {Object} config - csv-parse config object
- * @returns {Operation}
- */
-export function parseCSV(target, config) {
-  return state => {
-    return new Promise((resolve, reject) => {
-      var csvData = [];
-
-      try {
-        fs.readFileSync(target);
-        fs.createReadStream(target)
-          .pipe(parse(config))
-          .on('data', csvrow => {
-            console.log(csvrow);
-            csvData.push(csvrow);
-          })
-          .on('end', () => {
-            console.log(csvData);
-            resolve(composeNextState(state, csvData));
-          });
-      } catch (err) {
-        var csvString;
-        if (typeof target === 'string') {
-          csvString = target;
-        } else {
-          csvString = expandReferences(target)(state);
-        }
-        csvData = parse(csvString, config, (err, output) => {
-          console.log(output);
-          resolve(composeNextState(state, output));
-        });
-      }
     });
   };
 }
@@ -179,4 +131,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  parseCsv,
 } from '@openfn/language-common';

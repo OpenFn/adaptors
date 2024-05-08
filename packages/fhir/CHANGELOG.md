@@ -1,5 +1,57 @@
 # @openfn/language-fhir
 
+## 3.1.1
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 3.1.0
+
+### Minor Changes
+
+- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
+
+## 3.0.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 3.0.0
+
+### Major Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
+## 2.0.0
+
+### Major Changes
+
+- d4b4094: - Update configuration schema,
+  - Add `get()` function
+  - Fix `create()` axios config
+  - Remove unused code
+  - Improve error handling
+  - Improve response handling
+
 ## 1.1.5
 
 ### Patch Changes

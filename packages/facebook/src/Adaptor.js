@@ -1,11 +1,10 @@
-
 import {
   execute as commonExecute,
   expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { normalizeOauthConfig } from '@openfn/language-common/util';
 import request from 'request';
-import { resolve as resolveUrl } from 'url';
 
 /**
  * Execute a sequence of operations.
@@ -29,6 +28,7 @@ export function execute(...operations) {
     return commonExecute(...operations)({
       ...initialState,
       ...state,
+      configuration: normalizeOauthConfig(state.configuration),
     });
   };
 }
@@ -79,8 +79,8 @@ export function postMessage(params) {
           headers,
           json: body,
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
             console.log(response);

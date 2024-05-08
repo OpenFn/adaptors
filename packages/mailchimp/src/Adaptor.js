@@ -1,13 +1,10 @@
-
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-} from '@openfn/language-common';
+import md5 from 'md5';
 import axios from 'axios';
 import client from '@mailchimp/mailchimp_marketing';
-import md5 from 'md5';
-import { resolve } from 'path';
+import { expandReferences } from '@openfn/language-common/util';
+import { execute as commonExecute } from '@openfn/language-common';
+
+import { handleResponse, getClient } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -28,67 +25,108 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({
+    return commonExecute(
+      createClient,
+      ...operations,
+      cleanupState
+    )({
       ...initialState,
       ...state,
     });
   };
 }
 
+function createClient(state) {
+  const { apiKey, server } = state.configuration;
+  const baseUrl = `https://${server}.api.mailchimp.com`;
+
+  // TODO: throws an error if apiKey not specified in configuration
+  // TODO: should we set a default server if server not defined?
+  const apiClient = getClient(baseUrl);
+  client.setConfig({ apiKey, server });
+  return { ...state, apiClient, client: client };
+}
+
+function cleanupState(state) {
+  if (state?.apiClient) delete state.apiClient;
+  if (state?.client) delete state.client;
+  return state;
+}
 /**
- * Add members to a particular audience
+ * Add or update a list members
  * @example
- * upsertMembers(params)
+ * upsertMembers((state) => ({
+ *   listId: "someId",
+ *   users: state.response.body.rows.map((u) => ({
+ *     email: u.email,
+ *     status: u.allow_other_emails ? "subscribed" : "unsubscribed",
+ *     mergeFields: { FNAME: u.first_name, LNAME: u.last_name },
+ *   })),
+ * }));
  * @function
  * @param {object} params - a listId, users, and options
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function upsertMembers(params) {
+// TODO: Add jsdoc for params ={ path, query, body}
+// TODO: Add examples
+export function upsertMembers(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { listId, users, options } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    // TODO: Add support for options
+    // TODO: rename users to members
+    const defaultOptions = {
+      update_existing: true,
+      sync_tags: false,
+    };
+    const { listId, users, options } = resolvedParams;
+    const opts = { ...defaultOptions, ...options };
 
-    client.setConfig({ apiKey, server });
+    const membersList = users.map(member => ({
+      email_address: member.email,
+      status: member.status,
+      merge_fields: member.mergeFields,
+      tags: member.tags,
+    }));
 
-    return Promise.all(
-      users.map(user =>
-        client.lists
-          .setListMember(listId, md5(user.email), {
-            email_address: user.email,
-            status_if_new: user.status,
-            merge_fields: user.mergeFields,
-          })
-          .then(response => {
-            state.references.push(response);
-          })
-      )
-    ).then(() => {
-      return state;
-    });
+    return state.client.lists
+      .batchListMembers(listId, {
+        ...opts,
+        members: membersList,
+      })
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
 /**
  * Tag members with a particular tag
  * @example
- * tagMembers(params)
+ * tagMembers((state) => ({
+ *   listId: "someId", // All Subscribers list
+ *   tagId: "someTag", // User tag
+ *   members: state.response.body.rows.map((u) => u.email),
+ * }));
+ * @example
+ * tagMembers((state) => ({
+ *   listId: "someId",
+ *   tagId: "someTag",
+ *   members: state.response.body.rows
+ *     .filter((u) => u.allow_other_emails)
+ *     .map((u) => u.email),
+ * }));
  * @function
  * @param {object} params - a tagId, members, and a list
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function tagMembers(params) {
+export function tagMembers(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { listId, tagId, members } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const { listId, tagId, members } = resolvedParams;
 
-    client.setConfig({ apiKey, server });
-
-    return client.lists
+    return state.client.lists
       .batchSegmentMembers({ members_to_add: members }, listId, tagId)
-      .then(response => {
-        const nextState = composeNextState(state, response);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
@@ -98,39 +136,297 @@ export function tagMembers(params) {
  * startBatch(params)
  * @function
  * @param {object} params - operations batch job
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function startBatch(params) {
+export function startBatch(params, callback = s => s) {
   return state => {
-    const { apiKey, server } = state.configuration;
-    const { operations } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const { operations } = resolvedParams;
 
-    client.setConfig({ apiKey, server });
-
-    return client.batches
+    return state.client.batches
       .start({ operations: [...operations] })
-      .then(response => {
-        console.log(response);
-        const nextState = composeNextState(state, response);
-        return nextState;
-      });
+      .then(response => handleResponse(response, state, callback));
   };
 }
 
-export function listBatches(params) {
+/**
+ * listBatches
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listBatches(params, callback = s => s) {
   return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    return state.client.batches
+      .list(resolvedParams)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * listMembers
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listMembers(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, ...otherParams } = resolvedParams;
+    return state.client.lists
+      .getListMembersInfo(listId, otherParams)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * addMember to a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function addMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, member } = resolvedParams;
+    return state.client.lists
+      .addListMember(listId, ...member)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * updateMember
+ * @function
+ * @param {object} params - a listId,subscriberHash and member
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function updateMember(params, callback = s => s) {
+  return state => {
+    const requiredParams = ['listId', 'subscriberHash'];
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash, member } = resolvedParams;
+
+    return state.client.lists
+      .updateListMember(listId, subscriberHash, member)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * updateMemberTags
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function updateMemberTags(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash, tags } = resolvedParams;
+    return state.client.lists
+      .updateListMemberTags(listId, subscriberHash, { tags: tags })
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * archiveMember in a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function archiveMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash } = resolvedParams;
+    return state.client.lists
+      .deleteListMember(listId, subscriberHash)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Permanently delete a member from a list
+ * @function
+ * @param {object} params - a listId, and options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function deleteMember(params, callback = s => s) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+
+    const { listId, subscriberHash } = resolvedParams;
+    return state.client.lists
+      .deleteListMemberPermanent(listId, subscriberHash)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Get information about all lists in the account.
+ * @function
+ * @param {object} query - Query parameters
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listAudiences(query, callback = s => s) {
+  return state => {
+    const [resolvedQuery] = expandReferences(state, query);
+
+    return state.client.lists
+      .getAllLists(resolvedQuery)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Get information about a specific list in your Mailchimp account.
+ * Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
+ * @function
+ * @param {object} query - listId and query parameters
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function listAudienceInfo(query, callback = s => s) {
+  return state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    const { listId, ...queries } = resolvedQuery;
+    return state.client.lists
+      .getList(listId, queries)
+      .then(response => handleResponse(response, state, callback));
+  };
+}
+
+// Default options for request()
+const defaultOptions = {
+  query: {},
+  body: undefined,
+};
+
+// Assert response
+const assertOK = (response, fullUrl) => {
+  if (response.status >= 400) {
+    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.status}`;
+
+    const error = new Error(defaultErrorMesssage);
+
+    error.url = fullUrl;
+    error.type = response.type;
+    error.title = response.title;
+    error.status = response.status;
+    error.detail = response.detail;
+    error.instance = response.instance;
+    error.errors = response.errors;
+
+    throw error;
+  }
+};
+/**
+ * Make an HTTP request to Mailchimp API
+ * @example <caption>Get list to all other resources available in the API</caption>
+ * request('GET','/');
+ * @example <caption>Create a new account export in your Mailchimp account</caption>
+ * request('POST','/accounts-export', {include_stages:[]});
+ * @function
+ * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
+ * @param {string} path - The endpoint of the api to which the request should be made.
+ * @param {Object} options - Additional options for the request (query, body only).
+ * @param {function} [callback] - (Optional) callback function to handle the response.
+ * @returns {Operation}
+ */
+export function request(method, path, options, callback) {
+  return async state => {
+    const apiVersion = '3.0';
     const { apiKey, server } = state.configuration;
 
-    client.setConfig({ apiKey, server });
+    const [resolvedMethod, resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      method,
+      path,
+      options
+    );
+    const { query, body } = { ...defaultOptions, ...resolvedOptions };
 
-    return client.batches.list().then(response => {
-      console.log(response);
-      const nextState = composeNextState(state, response);
-      return nextState;
+    const apiToken = Buffer.from(`openfn:${apiKey}`, 'utf-8').toString(
+      'base64'
+    );
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${apiToken}`,
+    };
+
+    const urlPath = `/${apiVersion}${resolvedPath}`;
+    const response = await state.apiClient.request({
+      method: resolvedMethod,
+      path: urlPath,
+      headers,
+      query,
+      body: body ? JSON.stringify(body) : undefined,
     });
+
+    console.log('Mailchimp says', response.statusCode);
+
+    const responseBody = await response.body.json();
+    assertOK(responseBody, `https://${server}.api.mailchimp.com${urlPath}`);
+
+    const nextState = {
+      ...state,
+      data: responseBody,
+      response: responseBody,
+    };
+    if (callback) return callback(nextState);
+
+    return nextState;
   };
 }
 
+/**
+ * The get function is used to make a GET request to the Mailchimp API.
+ * @example <caption>Get a list of account exports for a given account</caption>
+ * get('/account-exports');
+ * @function
+ * @param {string} path - The endpoint of the api to which the request should be made
+ * @param {object} query - An object containing query parameters to be included in the request
+ * @param {function} [callback] - (Optional) callback to handle the response
+ * @returns {Operation}
+ */
+export function get(path, query, callback) {
+  return request('GET', path, { query }, callback);
+}
+
+/**
+ * The post function is used to make a POST request to the Mailchimp API.
+ *
+ * @example <caption>Create a new account export in your Mailchimp account</caption>
+ * post('/accounts-export', {include_stages:[]});
+ * @function
+ * @param {string} path - The endpoint of the api to which the request should be made.
+ * @param {object} body - The data to be sent in the body of the request
+ * @param {object} query - An object containing query parameters to be included in the request
+ * @param {function} [callback] - (Optional) callback to handle the response
+ * @returns {Operation}
+ */
+export function post(path, body, query, callback) {
+  return request('POST', path, { body, query }, callback);
+}
+
+// TODO Remove axios export
 // Note that we expose the entire axios package to the user here.
 export { axios, md5 };
 
@@ -145,5 +441,6 @@ export {
   fields,
   lastReferenceValue,
   merge,
+  chunk,
   sourceValue,
 } from '@openfn/language-common';

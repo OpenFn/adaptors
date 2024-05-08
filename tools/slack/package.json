@@ -1,0 +1,15 @@
+{
+  "name": "@openfn/slack-notify",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Util to notify npm publish changes to slack",
+  "main": "src/index.js",
+  "scripts": {
+    "notify": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/web-api": "^6.8.1"
+  }
+}

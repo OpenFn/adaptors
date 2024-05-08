@@ -134,8 +134,8 @@ export function changesApi(params, callback) {
             headers,
             json: { doc_ids },
           },
-          function (error, response, body) {
-            error = assembleError({ response, error });
+          function (err, response, body) {
+            const error = assembleError({ response, error: err });
             if (error) {
               reject(error);
             } else {

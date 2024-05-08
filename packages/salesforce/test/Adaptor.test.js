@@ -6,6 +6,7 @@ import {
   createIf,
   upsert,
   upsertIf,
+  toUTF8,
   steps,
   each,
   field,
@@ -168,6 +169,22 @@ describe('Adaptor', () => {
         })
         .then(done)
         .catch(done);
+    });
+  });
+
+  describe('toUTF8', () => {
+    it('Transliterate unicode to ASCII representation', () => {
+      expect(toUTF8('άνθρωποι')).to.eql('anthropoi');
+      // Misc
+      expect(toUTF8('☆ ♯ ♰ ⚄ ⛌')).to.equal('* # + 5 X');
+      // Emojis
+      expect(toUTF8('👑 🌴')).to.eql(':crown: :palm_tree:');
+      // Letterlike
+      expect(toUTF8('№ ℳ ⅋ ⅍')).to.eql('No M & A/S');
+      // Ordinal coordinator
+      expect(toUTF8('Nhamaonha 6ª Classe 2023-10-09')).to.eql(
+        'Nhamaonha 6a Classe 2023-10-09'
+      );
     });
   });
 });

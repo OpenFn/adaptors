@@ -1,5 +1,62 @@
 # @openfn/language-dhis2
 
+## 4.0.4
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 4.0.3
+
+### Patch Changes
+
+- 222184d: remove Class Log and replaced
+
+  - `Log.success` with `console.log`
+  - `Log.warn` with `console.warn`
+  - `Log.error` with `console.error`
+
+## 4.0.2
+
+### Patch Changes
+
+- 1bd612e: improve error logs response
+
+## 4.0.1
+
+### Patch Changes
+
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
+
+## 4.0.0
+
+### Major Changes
+
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+  `each` block; add eslint
+
+  The packages receiving a major bump here exposed functions that didn't work as
+  expected inside `each` blocks. Users were previously wrapping these functions
+  inside their own custom `fn` blocks, and this change will ensure that they can
+  be used inside a standard each.
+
+  See https://github.com/OpenFn/adaptors/issues/275 for more details.
+
+### Patch Changes
+
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
+
+## 3.2.12
+
+### Patch Changes
+
+- 57742d1: improve logs output
+
 ## 3.2.11
 
 ### Patch Changes

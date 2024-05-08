@@ -6,21 +6,27 @@ or Typescript modules that provide helper functions to communicate with a
 specific external system.
 
 For a fully open source workflow automation platform that leverages these
-adaptors, see [OpenFn Lighnting](https://github.com/OpenFn/lightning).
+adaptors, see [OpenFn Lightning](https://github.com/OpenFn/lightning).
 
 ## Getting Started
 
-_Note: This repo requires [pnpm](https://pnpm.io/installation) and
-[asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
-machine._
+_Note: [asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
+machine. Add the nodejs and pnpm plugin once asdf is installed globally._
 
 A few first time repo steps:
 
 ```
-asdf install #Install tool versions
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin-add pnpm
+```
+
+Then:
+
+```
+asdf install # Install tool versions
 pnpm install
 pnpm build
-pnpm run setup #Run the setup command
+pnpm run setup
 ```
 
 ## Running scripts
@@ -62,86 +68,147 @@ please make one and assign yourself.
    the 'Review checklist'. Leave any notes for the reviewer in the 'Details'
    section.
 
-4. Mark the pull request as ready for review.
+4. Mark the pull request as ready for review, and assign @stuartc or
+   @taylordowns2000.
 
 ### Working with adaptors
 
-#### Create a new adaptor
+#### 1. Setup
 
-To create a new adaptor:
+- Make sure you have the OpenFn CLI tool installed
+  (`npm install -g @openfn/cli`). You'll need this to use and test your adaptor.
 
-1. Fork the repo and follow the [Getting Started](#getting-started) steps.
+- Tell the OpenFn CLI where this repo is by setting the `OPENFN_ADAPTORS_REPO`
+  environment variable to the local path. For example, if you've cloned this
+  repo into `/repo/openfn/adaptors`, then in your `.bashrc` file, add
+  `export OPENFN_ADAPTORS_REPO=/repo/openfn/adaptors`.
 
-2. Familiarize yourself with the API documentation for the third party system.
-   Determine if you'll need any packages from NPMjs (e.g.,
-   [`jsforce`](https://www.npmjs.com/package/jsforce) for Salesforce,
-   [`pg`](https://www.npmjs.com/package/pg) for direct interaction with a
-   Postgres database.)
+- Generate your own adaptor. `pnpm generate youradaptorname`
 
-3. Create a copy of the adaptor [template](packages/template) directory and
-   rename it with `cp -R packages/template packages/<< NEW ADAPTOR NAME >>`
+- Install your dependencies `pnpm install`
 
-4. Set your new package `name`, `version`, `description`, and `build`
+#### 2. Create a job with the operation you'd like to add, and run it so it fails
+
+- Create a tmp folder where you can test your operation manually by running a
+  job: `mkdir tmp`. Note: this tmp folder is included in .gitignore, so it will
+  not be pushed to github.
+- Create a job file `touch tmp/job.js` which calls the operation you would like
+  to add. For example, if you were adding an operation which gets the weather
+  forecast, it might look something like this:
+
+```
+getTodaysWeather(25.52, 13.41);
+```
+
+- Run your job with `openfn tmp/job.js -O -ma youradaptorname`
+
+  `-O` will output to your console
+
+  `-m` will run the job from the monorepo (see the setup notes in 1.)
+
+  `-a` this will specify the adaptor to run your job with
+
+- The job should fail - we haven't build the adaptor yet! Let's go do that.
+
+#### 3. Create your adaptor function
+
+- Head to `src/Adaptor.js`, and define your first function.
+
+Adaptor functions are invoked with several arguments, and return a function
+which accepts and returns state.
+
+They should look something like this:
+
+```js
+export function yourFunctionName(arguments) {
+  return state => {
+    // logic
+    return state;
+  };
+}
+```
+
+The logic is where you will prepare your API request. Build the URL, passing in
+any arguments if needed. Then, using a helper function in common, return the
+fetch request, making sure you set the Authorization, passing in any secrets
+from `state.configuration`.
+
+```js
+import { get } from '@openfn/language-common/util';
+
+export function getTodaysWeather(latitude = 25.52, longitude = 13.41) {
+  return state => {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m`;
+
+    const headers = {
+      Authorization: `${state.configuration.username}:${state.configuration.password}`,
+    };
+    const result = await get(url, { headers });
+    return { ...state, data: result.body };
+  };
+}
+```
+
+- Define the configuration schema in `configuration-schema.json`
+
+  This defines required parameters and their expected values for configuring the
+  adaptor's authentication and authorization settings.
+
+  1. Open the configuration file of the newly generated adaptor,
+     `configuration-schema.json`.
+  2. Specify the required parameters and their data types (these will be any
+     values in state.configuration you are using in your adaptor function).
+     Include descriptions that explain the purpose and usage of each parameter.
+  3. If certain parameters are optional, clearly indicate their optional status
+     and provide default values or instructions for their usage.
+  4. Validate the configuration against the schema to ensure that the provided
+     values match the expected structure and data types. This validation can be
+     done tools like
+     [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+
+1. Set your new package `name`, `version`, `description`, and `build`
    definitions in your new `package.json`.
 
-5. Run `git add package/<< NEW ADAPTOR NAME >>` to register the new directory
-   with PNPM.
+#### 4. Test it manually
 
-6. Add/remove packages from your `package.json` as required in step 1, then run
-   `pnpm install` to install the deps for the sample functions in your new
-   adaptor.
+- Make sure to run build again
+- Run your job `openfn tmp/job.js -O -ma youradaptorname`
+- Make sure it returns what you expect
+- You can delete this folder once you have finished testing your job manually
 
-7. Determine the best way to authenticate. Most adaptors _either_ provide some
-   sort of API token or basic auth header with each request, but some use a
-   "login" step which generates a JWT or some sort of short-lived token and then
-   use that token for all subsequent operations.
+#### 5. Write your unit tests
 
-8. Define the configuration schema
+Import your newly defined function
 
-   The configuration schema defines required parameters and their expected
-   values for configuring the adaptor's authentication and authorization
-   settings.
+```js
+import { functionName } from '../src/Adaptor.js';
+```
 
-   1. Open the configuration file of the newly copied template,
-      `configuration-schema.json`, to define the schema.
-   2. Specify the required parameters and their data types. Include descriptions
-      that explain the purpose and usage of each parameter.
-   3. If certain parameters are optional, clearly indicate their optional status
-      and provide default values or instructions for their usage.
-   4. Validate the configuration against the schema to ensure that the provided
-      values match the expected structure and data types. This validation can be
-      done tools like
-      [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+Describe your test, define state, call your operation (follow the example below
+to see how state should be passed to it).
 
-   [Here's an example of a configuration schema](packages/template/configuration-schema.json)
+Make an assertion to check the result.
 
-9. Implement your authentication method in your first function. Run jobs with:
+```js
+it('should xyz', async () => {
+const state = {
+  configuration: {},
+  data: {},
+};
 
-   ```
-   openfn ./tmp/expression.js \
-   -a ~/adaptors/packages/<< NEW ADAPTOR >>/src/Adaptor.js \
-   -s ./tmp/state.json \
-   -o ./tmp/output.json
-   ```
+const result = await getTodaysWeather()(state);
+```
 
-10. Consider how to handle "nextState" if what's returned by the API for a
-    particular function isn't particularly useful for your users.
+Run `pnpm test` to check your test is passing.
 
-11. Lock in the state-handling behavior of your first function with tests.
+Make sure to test your function with different arguments and values.
 
-12. Use your adaptor locally, or submit a PR against @openfn/adaptors to gain
-    general adoption and have your adaptor available on NPM. (See #Changesets
-    below.)
+#### 6. Add docs and write the tests
 
-#### Add or update functions
-
-To add or update functions in an existing adaptor:
-
-- Create or update adaptor functions.
 - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
-  comprehensive explanation of its purpose, parameters, return values, and usage
-  examples
-- Update the adaptor's `README.md`.
+  comprehensive explanation of the adaptor function's purpose, parameters,
+  return values, and usage examples
+- Update the adaptor's `README.md` to include a sample operation
 
 ## Changesets
 
@@ -164,40 +231,28 @@ Look in the `.changesets` folder to see your change.
 
 Commit the changeset to the repo when you're ready.
 
+Note that the newly generated adaptor should ideally never have its version
+increased - it should be locked at `1.0.0`.
+
 ## Releases
 
-To release, run this from the root:
+New releases will be published to npm automatically when merging into the `main`
+branch`.
 
-```
-pnpm changeset version
-```
+Version numbers should be bumped with `changeset` and git tags should be pushed
+to the release branch BEFORE merging.
 
-This will bump all changed packages and update their release notes.
+1. Run `pnpm changeset version` from root to bump versions
+1. Run `pnpm install`
+1. Commit the new version numbers
+1. Run `pnpm changeset tag` to generate tags
+1. Push tags `git push --tags`
 
-Then install packages and commit changes with:
+Remember tags may need updating if commits come in after the tags are first
+generated.
 
-```
-pnpm install
-```
-
-Build the adaptors with:
-
-```
-pnpm -r run build
-```
-
-To publish the release, run:
-
-```
-pnpm changeset publish
-```
-
-And finally, push the tags to Github so that the source code can be browsed for
-each new release with:
-
-```
-git push --follow-tags
-```
+When ready, merge the branch to main and a Github Action will trigger the
+release.
 
 ## Build tooling
 
@@ -205,10 +260,38 @@ The `build` command accepts a list of build steps as arguments: `ast`, `src`,
 `docs` and `dts`. Calling build on an adaptor with no arguments will build
 everything.
 
+Add `--watch` to watch the `src` for changes and rebuild this dist. This is
+useful when developing with the CLI.
+
 Each adaptor's build command should simply call `build-adaptor` with the package
 name.
 
 You can run `build --help` for more information.
+
+Examples:
+
+```
+pnpm -C packages/salesforce build --watch
+```
+
+### Docs
+
+Docs are generated from the JSDoc annotations in adaptors. They are output as
+markdown files in the `./docs` directly and not checked in to source control.
+
+The markdown output can be customized by overriding the built-in handlebars
+templates in jsoc2md.
+
+- Find the template you want to customise in [j2sdoc2md source()
+  https://github.com/jsdoc2md/dmd/tree/master/partials) (this can be tricky)
+- Copy the template contents
+- Paste into a file with the same name (this is important) in
+  `tools/build/src/partials`
+- Edit `tools/build/src/commands/docs.ts` and add the path to your new template
+  to jsdoc2md's `renderOpts` (see how the other .hbs files are loaded in)
+- Make your changes
+- Run `pnpm build docs` from root (or just one adaptor folder) and inspect the
+  generated `docs/index/md` file.
 
 ## Metadata
 
@@ -224,8 +307,8 @@ Use `populate-mock` to execute the `populate-mock-data.js` file and save the
 results into the meta/data dir. Unit tests will use this mock data.
 
 ```
-pnpm metadata generate <adaptorName> <path/to/config>
-pnpm metadata populate-mock <adaptorName> <path/to/config>
+pnpm metadata generate <adaptorName> <path/to/config> pnpm metadata
+populate-mock <adaptorName> <path/to/config>
 ```
 
 Config paths can point to JSON or JS files with a default export. They are
@@ -235,8 +318,8 @@ You can run these from the repo root or from the adaptor folder.
 
 ## Migration Guide
 
-Adaptors should be copied/cloned into this repo, with all build, lint and git
-artefacts removed and the package.json updated.
+Any old adaptors should be copied/cloned into this repo, with all build, lint
+and git artifacts removed and the package.json updated.
 
 This checklist walks you through the process.
 
@@ -246,7 +329,7 @@ pull-requests are merged or closed (maybe discuss with authors / responsibles)
 First, create a new branch for your work:
 
 ```
-git checkout -b migrate_<name>
+git checkout -b migrate\_<name>
 ```
 
 Then, copy the adaptor into `packages/<name>` (ignoring the `language-` prefix,
@@ -315,10 +398,11 @@ https://github.com/OpenFn/adaptors/tree/main/packages/<name>**
 The index.js file should be exactly this:
 
 ```
-import * as Adaptor from './Adaptor';
-export default Adaptor;
 
-export * from './Adaptor';
+import \* as Adaptor from './Adaptor'; export default Adaptor;
+
+export \* from './Adaptor';
+
 ```
 
 The first two lines export the Adaptor object as the default export from the
@@ -336,13 +420,15 @@ Replace this section with:
 ```
 ## Development
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the `Getting Started` guide inside to get set up.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
+`Getting Started` guide inside to get set up.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`
 
 Build the project using `pnpm build`.
 
 To just build the docs run `pnpm build docs`
+
 ```
 
 In addition, you may need to replace any references to `npm` with `pnpm`

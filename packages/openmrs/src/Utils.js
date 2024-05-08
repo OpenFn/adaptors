@@ -1,36 +1,38 @@
-export function setUrl(configuration, path) {
-  if (configuration && configuration.baseUrl)
-    return configuration.baseUrl + path;
-  else return path;
-}
+import { composeNextState } from '@openfn/language-common';
+import {
+  request as commonRequest,
+  makeBasicAuthHeader,
+  logResponse
+} from '@openfn/language-common/util';
 
-export function setAuth(configuration, manualAuth) {
-  if (manualAuth) return manualAuth;
-  else if (configuration && configuration.username)
-    return {
-      username: configuration.username,
-      password: configuration.password,
-      sendImmediately: configuration.authType != 'digest',
-    };
-  else return null;
-}
+export const prepareNextState = (state, response, callback) => {
+  const { body, ...responseWithoutBody } = response
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
 
-export function assembleError({ response, error, params }) {
-  if (response) {
-    const customCodes = params && params.options && params.options.successCodes;
-    if ((customCodes || [200, 201, 202]).indexOf(response.statusCode) > -1)
-      return false;
-  }
-  if (error) return error;
-  return new Error(
-    `Server responded with:  \n${JSON.stringify(response, null, 2)}`
-  );
-}
+  return callback(nextState);
+};
 
-export function tryJson(data) {
-  try {
-    return JSON.parse(data);
-  } catch (e) {
-    return { body: data };
-  }
+export function request(state, method, path, data, params) {
+  const { instanceUrl, username, password } = state.configuration;
+  const headers = makeBasicAuthHeader(username, password);
+
+  const options = {
+    body: data,
+
+    headers: {
+      ...headers,
+      'content-type': 'application/json',
+    },
+
+    query: params,
+
+    parseAs: 'json',
+  };
+
+  const url = `${instanceUrl}${path}`;
+
+  return commonRequest(method, url, options).then(response => logResponse(response));
 }

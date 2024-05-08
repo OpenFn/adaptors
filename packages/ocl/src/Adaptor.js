@@ -1,13 +1,8 @@
-
 import {
   execute as commonExecute,
-  composeNextState,
   expandReferences,
-  http,
 } from '@openfn/language-common';
-
-const { axios } = http;
-export { axios };
+import { buildMappingsUrl, handleResponse, request } from './Util';
 
 /**
  * Execute a sequence of operations.
@@ -36,166 +31,102 @@ export function execute(...operations) {
 }
 
 /**
- * Replaces source keys(data elements) to destination keys(data elements) with out changing state.data structure
+ * Get a source repository in OCL
  * @public
  * @example
- * mapp(state, state)
+ * getMappings(
+ *   "MSFOCG",
+ *   "lime-demo",
+ *   { page: 1, exact_match: "off", verbose: false },
+ *   (state) => {
+ *     // Add state oclMappings
+ *     const oclMappings = state.data;
+ *     return { ...state, data: {}, references: [], response: {}, oclMappings };
+ *   }
+ * );
  * @function
- * @param {Object}  state - Json object containing keys and data values;
- * @param {Object} [params] - E.g. `{users:"haftamuk", sources: "eCHIS-CODES", concepts: "fp_new_at_10_to_14" }
+ * @param {string} ownerId - An OCL user or organization
+ * @param {string} repositoryId - An OCL collection id or source id
+ * @param {{ownerType: string,repository: string,version: string, page: string }} [options] - Optional. `options`  which can be passed to  See more {@link https://api.openconceptlab.org/swagger/ on OCL swagger docs}
+ * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function map(state, params) {
-  /**
-   * In order to minimize web trafic, already accessed mapping
-   * information is put into this variable to
-   * reuse values for the consucutive keys.
-   */
-  const retrievedMapping = {};
+export function getMappings(ownerId, repositoryId, options, callback = false) {
+  return state => {
+    const resolvedOwnerId = expandReferences(ownerId)(state);
+    const resolvedRepositoryId = expandReferences(repositoryId)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
-  /****
-       - Iterate over current object concepts/keys
-          - check if current concept information is already requested
-             [True]
-                 -Resolve source concept from history
-                 Replace key of the json oobject ???
-             [false]
-                - Resolve source concepts
-                - add resolved source- destination concept pair to history collection
-                Replace key of the json oobject ???
-   */
+    const { baseUrl } = state.configuration;
 
-  dataString = JSON.stringify(state.data);
+    const defaultOptions = {
+      ownerType: 'orgs', // Default to orgs | orgs or users
+      ownerId: resolvedOwnerId,
+      repository: 'collections', // Default to collections, collections or sources
+      repositoryId: resolvedRepositoryId,
+      version: 'HEAD', // Default to HEAD, Eg: HEAD, 0.04
+      content: 'mappings',
+    };
 
-  Object.keys(state.data).forEach(function (key) {
-    // TO-DO Check if key exists in retrievedMapping before requesting OCL API
-    getMappingInfo(key);
-    // TO-DO use string replace for dataString
-  });
-}
-
-function getMappingInfo(params) {
-  const headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'User-Agent': 'Request',
-    'X-platform': 'Node',
-  };
-
-  return axios
-    .request({
-      method: 'GET',
-      url: 'https://app.openconceptlab.org/',
-
-      /**
-       * Do we have a mechanism to retrieve those from configuration
-       */
-      auth: {
-        username: ' ',
-        password: ' ',
-      },
-      /**
-       * Specify query parameters that may include OCL Data Source, MappingType, includion and exclusion values
-       */
-      params: '',
-      headers,
-    })
-    .then(result => {
-      const mapped_concepts = [];
-      const responseBody = JSON.parse(result.body);
-      for (concept in responseBody) {
-        mapped_concepts.push(concept.to_concept_code);
-      }
-      return mapped_concepts;
+    const urlParams = { ...defaultOptions, ...resolvedOptions };
+    const { url, query } = buildMappingsUrl({
+      baseUrl: baseUrl,
+      ...urlParams,
     });
+
+    return request(url, query).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
 }
 
-// /**
-//  * Creates a fictional resource in a fictional destination system using a POST request
-//  * @public
-//  * @example
-//  * create("/endpoint", {"foo": "bar"})
-//  * @function
-//  * @param {string} path - Path to resource
-//  * @param {object} params - data to create the new resource
-//  * @param {function} callback - (Optional) callback function
-//  * @returns {Operation}
-//  */
-// export function create (path, params, callback) {
-//   return state => {
-//     path = expandReferences(path)(state)
-//     params = expandReferences(params)(state)
+/**
+ * Get a resource in OCL
+ * @public
+ * @example
+ *  get(
+ *   "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
+ *   {
+ *     page: 1,
+ *     exact_match: "off",
+ *     limit: 200,
+ *     verbose: false,
+ *     sortDesc: "_score",
+ *   },
+ *   (state) => {
+ *     // Add state oclMappings
+ *     const oclMappings = state.data;
+ *     return { ...state, data: {}, references: [], response: {}, oclMappings };
+ *   }
+ * );
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} query - A query object that will limit what resources are retrieved when converted into request params.
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function get(path, query, callback = false) {
+  return state => {
+    const resolvedPath = expandReferences(path)(state);
+    const resolvedQuery = expandReferences(query)(state);
+    const { baseUrl } = state.configuration;
 
-//     const { baseUrl, username, password } = state.configuration
+    const url = `${baseUrl}/${resolvedPath}`;
 
-//     const url = `${baseUrl}/${path}`
-//     const auth = { username, password }
+    return request(url, resolvedQuery).then(response =>
+      handleResponse(response, state, callback)
+    );
+  };
+}
 
-//     const config = {
-//       url,
-//       body: params
-//     }
-
-//     return http
-//       .post(config)(state)
-//       .then(response => {
-//         const nextState = {
-//           ...composeNextState(state, response.data),
-//           response
-//         }
-//         if (callback) return callback(nextState)
-//         return nextState
-//       })
-//   }
-// }
-
-// /**
-//  * Create a fictional patient in a fictional universe with a fictional REST api
-//  * @public
-//  * @example
-//  * createPatient({"foo": "bar"})
-//  * @function
-//  * @param {object} params - data to create the new resource
-//  * @param {function} callback - (Optional) callback function
-//  * @returns {Operation}
-//  */
-// export function createPatient (params, callback) {
-//   return state => {
-//     params = expandReferences(params)(state)
-
-//     const { baseUrl, username, password } = state.configuration
-
-//     const url = `${baseUrl}/patient`
-//     const auth = { username, password }
-
-//     const config = {
-//       url,
-//       body: params,
-//       auth
-//     }
-
-//     return http
-//       .post(config)(state)
-//       .then(response => {
-//         const nextState = {
-//           ...composeNextState(state, response.data),
-//           response
-//         }
-//         if (callback) return callback(nextState)
-//         return nextState
-//       })
-//   }
-// }
-
-// What functions do you want from the common adaptor?
 export {
+  fn,
   alterState,
   dataPath,
   dataValue,
   each,
   field,
   fields,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
