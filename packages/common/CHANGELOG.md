@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.13.2
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+
 ## 1.13.1
 
 ### Patch Changes

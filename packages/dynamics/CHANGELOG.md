@@ -1,5 +1,12 @@
 # @openfn/language-dynamics
 
+## 0.4.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 0.4.10
 
 ### Patch Changes
