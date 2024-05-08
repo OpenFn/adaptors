@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.13.3
+
+### Patch Changes
+
+- 88f99a8f: cursor: support format option
+
 ## 1.13.2
 
 ### Patch Changes

@@ -932,4 +932,29 @@ describe('cursor', () => {
     expect(result.cursor).to.eql(c)
   });
 
+  it('should apply a custom formatter', () => {
+    const state = {};
+    const result = cursor('abc', {
+      format: (c) => c.toUpperCase()
+    })(state);
+    expect(result.cursor).to.eql('ABC')
+  })
+
+  it('should format "today"', () => {
+    const state = {};
+    const date = new Date().toDateString();
+    const result = cursor('today', {
+      format: (c) => c.toDateString()
+    })(state);
+    expect(result.cursor).to.eql(date)
+  })
+
+  it('should format a number to an arbitrary object', () => {
+    const state = {};
+    const result = cursor(3, {
+      format: (c) => ({ page: c })
+    })(state);
+    expect(result.cursor).to.eql({ page: 3 })
+  })
+
 });

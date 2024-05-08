@@ -6,7 +6,7 @@ import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
 import { request } from 'undici';
-import { format } from 'date-fns';
+import dateFns from 'date-fns';
 
 import { expandReferences as newExpandReferences, parseDate } from './util';
 
@@ -787,6 +787,8 @@ let cursorKey = 'cursor';
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
  * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
  * are not yet supported.
+ * You can provide a formatter to customise the final cursor value, which is useful for normalising
+ * different inputs. The custom formatter runs after natural language date conversion.
  * See the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
  * @public
  * @example <caption>Use a cursor from state if present, or else use the default value</caption>
@@ -798,15 +800,18 @@ let cursorKey = 'cursor';
  * @param {object} options - options to control the cursor.
  * @param {string} options.key - set the cursor key. Will persist through the whole run.
  * @param {any} options.defaultValue - the value to use if value is falsy
+ * @param {Function} options.format - custom formatter for the final cursor value
  * @returns {Operation}
  */
 export function cursor(value, options = {}) {
   return (state) => {
-    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, options);
+    const { format, ...optionsWithoutFormat } = options;
+    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, optionsWithoutFormat);
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
       key, // the key to use on state
+      // format // pulled out before reference resolution else or it'll be treated as a ref!
     } = resolvedOptions;
 
     if (key) {
@@ -821,16 +826,21 @@ export function cursor(value, options = {}) {
     if (typeof cursor === 'string') {
       const date = parseDate(cursor, cursorStart)
       if (date instanceof Date && date.toString !== "Invalid Date") {
-        state[cursorKey] = date.toISOString();
-        // Log the converted date in a very international, human-friendly format
-        // See https://date-fns.org/v3.6.0/docs/format
-        const formatted = format(date, 'HH:MM d MMM yyyy (OOO)')
+        state[cursorKey] = format?.(date) ?? date.toISOString();
+
+        const formatted = format
+          ? state[cursorKey]
+          // If no custom formatter is provided,
+          // Log the converted date in a very international, human-friendly format
+          // See https://date-fns.org/v3.6.0/docs/format
+          : dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
+
         console.log(`Setting cursor "${cursor}" to: ${formatted}`);
         return state;
       }
     }
-    state[cursorKey] = cursor;
-    console.log('Setting cursor to:', cursor);
+    state[cursorKey] = format?.(cursor) ?? cursor;
+    console.log('Setting cursor to:', state[cursorKey]);
 
     return state;
   }
