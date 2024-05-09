@@ -47,7 +47,7 @@ async function clientPost({ state, path, body }) {
     parseAs: 'text',
   });
 
-  return prepareNextState(state, response, s => s);
+  return prepareNextState(state, response);
 }
 
 /**
@@ -111,7 +111,7 @@ export function submitXls(formData, params) {
       authType: 'APIKEY',
     });
 
-    return prepareNextState(state, response, s => s);
+    return prepareNextState(state, response);
   };
 }
 
@@ -204,7 +204,7 @@ export function fetchReportData(reportId, params, postUrl) {
         delete result.response;
         console.log('fetchReportData succeeded.');
         console.log('Posted to: '.concat(postUrl));
-        return prepareNextState(state, {}, s => s);
+        return prepareNextState(state, {});
       });
   };
 }
