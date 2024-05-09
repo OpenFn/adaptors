@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.13.1",
+    "@openfn/language-common": "workspace*",
     "@openfn/language-http": "workspace:^6.0.0",
     "JSONPath": "^0.10.0",
     "form-data": "^4.0.0",

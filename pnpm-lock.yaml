@@ -233,7 +233,7 @@ importers:
   packages/commcare:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:1.13.1
+        specifier: workspace*
         version: link:../common
       '@openfn/language-http':
         specifier: workspace:^6.0.0
