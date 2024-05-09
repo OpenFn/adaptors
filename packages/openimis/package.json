@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-msgraph",
-  "version": "0.5.3",
-  "description": "Microsoft Graph Language Pack for OpenFn",
+  "name": "@openfn/language-openimis",
+  "version": "1.0.0",
+  "description": "An OpenIMIS adaptor for OpenFn",
   "type": "module",
   "exports": {
     ".": {
@@ -11,12 +11,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor msgraph",
+    "build": "pnpm clean && build-adaptor openimis",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -27,9 +26,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "undici": "^5.28.4",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",

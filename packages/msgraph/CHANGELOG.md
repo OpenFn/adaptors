@@ -1,5 +1,20 @@
 # @openfn/language-msgraph
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 0.5.2
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 0.5.1
 
 ### Patch Changes

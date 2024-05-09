@@ -1,5 +1,19 @@
 # @openfn/language-rapidpro
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 1.0.10
 
 ### Patch Changes

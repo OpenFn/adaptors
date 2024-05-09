@@ -18,6 +18,15 @@
         "@some(!)Password"
       ]
     },
+    "token": {
+      "title": "Token",
+      "type": "string",
+      "description": "Bearer token or API key. This should be added manually to the Authorization header.",
+      "writeOnly": true,
+      "examples": [
+        "00QCjAl4MlV-WPX"
+      ]
+    },
     "baseUrl": {
       "title": "Base URL",
       "anyOf": [
@@ -37,6 +46,5 @@
     }
   },
   "type": "object",
-  "additionalProperties": true,
-  "required": ["password", "username"]
+  "additionalProperties": true
 }

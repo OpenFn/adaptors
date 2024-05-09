@@ -1,5 +1,13 @@
 # @openfn/language-googlehealthcare
 
+## 1.0.1
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 1.0.0
 
 ### Major Changes
