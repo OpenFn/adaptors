@@ -3,9 +3,7 @@ import { expect } from 'chai';
 import Adaptor from '../src';
 const { execute, submit } = Adaptor;
 
-import request from 'superagent';
-import superagentMock from 'superagent-mock';
-import Fixtures, { fixtures } from './Fixtures'
+
 
 describe("execute", () => {
 
@@ -47,17 +45,4 @@ describe("execute", () => {
   })
 })
 
-describe("submit", () => {
-  let mockRequest
 
-  before(() => {
-    mockRequest = superagentMock(request, Fixtures)
-  })
-
-  it("submits a form and returns state")
-
-  after(() => {
-    mockRequest.unset()
-  })
-
-})
