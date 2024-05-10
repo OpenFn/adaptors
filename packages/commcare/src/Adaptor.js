@@ -71,14 +71,12 @@ async function clientPost({ state, path, body }) {
  */
 export function submitXls(formData, params) {
   return async state => {
-    const { applicationName, username, apiKey, hostUrl } = state.configuration;
+    const { applicationName, username, apiKey } = state.configuration;
 
     const [json] = expandReferences(state, formData);
     const { case_type, search_field, create_new_cases } = params;
 
     const path = `/a/${applicationName}/importer/excel/bulk_upload_api/`;
-
-    const url = (hostUrl || 'https://www.commcarehq.org').concat(path);
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(json);
@@ -96,8 +94,6 @@ export function submitXls(formData, params) {
     data.append('case_type', case_type);
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
-
-    console.log('Posting to url: '.concat(url));
 
     const response = await request({
       state,
@@ -144,14 +140,10 @@ export function submit(formData) {
       // it is what lives after www.commcarehq.org/a/...
       applicationName,
       appId,
-      hostUrl,
     } = state.configuration;
 
     const path = `/a/${applicationName}/receiver/${appId}/`;
 
-    const url = (hostUrl || 'https://www.commcarehq.org').concat(path);
-
-    console.log('Posting to url: '.concat(url));
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
 
@@ -175,13 +167,7 @@ export function fetchReportData(reportId, params, postUrl) {
   return async state => {
     const path = `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`;
 
-    console.log(
-      'getting from url: '.concat(
-        state.configuration.hostUrl,
-        `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`
-      )
-    );
-    console.log('with params: '.concat(params));
+    console.log('with params: '.concat(JSON.stringify(params)));
 
     return await request({
       state,
