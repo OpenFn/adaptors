@@ -169,7 +169,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
-    return await request({
+    return request({
       state,
       method: 'GET',
       path,

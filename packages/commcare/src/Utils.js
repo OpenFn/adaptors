@@ -47,7 +47,5 @@ export function request({
 
   const url = `${hostUrl}${path}`;
 
-  return commonRequest(method, url, options).then(response => {
-    return logResponse(response);
-  });
+  return commonRequest(method, url, options).then(logResponse);
 }
