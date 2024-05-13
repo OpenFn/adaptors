@@ -164,7 +164,7 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
-  return async state => {
+  return state => {
     const path = `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`;
 
     console.log('with params: '.concat(JSON.stringify(params)));
