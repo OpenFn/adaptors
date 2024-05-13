@@ -42,7 +42,6 @@ async function clientPost({ state, path, body }) {
     method: 'POST',
     path: path,
     data: body,
-    authType: 'basic',
     contentType: 'text/html',
     parseAs: 'text',
   });
@@ -104,7 +103,6 @@ export function submitXls(formData, params) {
         ...data.getHeaders(),
         Authorization: `ApiKey ${username}:${apiKey}`,
       },
-      authType: 'APIKEY',
     });
 
     return prepareNextState(state, response);
