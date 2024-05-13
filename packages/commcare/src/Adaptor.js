@@ -42,7 +42,7 @@ async function clientPost({ state, path, body }) {
     method: 'POST',
     path: path,
     data: body,
-    contentType: 'text/html',
+    contentType: 'text/xml',
     parseAs: 'text',
   });
 

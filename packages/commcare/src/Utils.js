@@ -22,7 +22,7 @@ export function request({
   data,
   params = {},
   header = {},
-  authType,
+  authType = 'basic',
   contentType = 'application/json',
   parseAs = 'json',
 }) {
