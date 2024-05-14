@@ -1,16 +1,9 @@
-
-
-import {
-  execute as commonExecute,
-  http,
-  expandReferences,
-} from '@openfn/language-common';
-import pkg from '@openfn/language-http';
-const { get, post } = pkg
-import request from 'superagent';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -31,36 +24,8 @@ export function execute(...operations) {
   };
 
   return state => {
-    state.configuration.authType = 'basic';
-    state.configuration.baseUrl = 'https://www.commcarehq.org/a/'.concat(
-      state.configuration.applicationName
-    );
     return commonExecute(...operations)({ ...initialState, ...state });
   };
-}
-
-/**
- * Performs a post request
- * @example
- *  clientPost(formData)
- * @function
- * @param {Object} formData - Form Data with auth params and body
- * @returns {State}
- */
-function clientPost({ url, body, username, password }) {
-  return new Promise((resolve, reject) => {
-    request
-      .post(url)
-      .auth(username, password)
-      .set('Content-Type', 'application/xml')
-      .send(body)
-      .end((error, res) => {
-        if (!!error || !res.ok) {
-          reject(error);
-        }
-        resolve(res);
-      });
-  });
 }
 
 /**
@@ -83,17 +48,13 @@ function clientPost({ url, body, username, password }) {
  * @returns {Operation}
  */
 export function submitXls(formData, params) {
-  return state => {
-    const { applicationName, hostUrl, username, apiKey } = state.configuration;
+  return async state => {
+    const { applicationName, username, apiKey } = state.configuration;
 
-    const json = expandReferences(formData)(state);
+    const [json] = expandReferences(state, formData);
     const { case_type, search_field, create_new_cases } = params;
 
-    const url = (hostUrl || 'https://www.commcarehq.org').concat(
-      '/a/',
-      applicationName,
-      '/importer/excel/bulk_upload_api/'
-    );
+    const path = `/a/${applicationName}/importer/excel/bulk_upload_api/`;
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(json);
@@ -112,22 +73,18 @@ export function submitXls(formData, params) {
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
 
-    console.log('Posting to url: '.concat(url));
-    return http
-      .post({
-        url,
-        data,
-        headers: {
-          ...data.getHeaders(),
-          Authorization: `ApiKey ${username}:${apiKey}`,
-        },
-      })(state)
-      .then(response => {
-        return { ...state, data: { body: response.data } };
-      })
-      .catch(err => {
-        throw { ...err, config: {}, request: {} };
-      });
+    const response = await request({
+      state,
+      method: 'POST',
+      path: path,
+      data,
+      header: {
+        ...data.getHeaders(),
+        Authorization: `ApiKey ${username}:${apiKey}`,
+      },
+    });
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -151,42 +108,32 @@ export function submitXls(formData, params) {
  * @returns {Operation}
  */
 export function submit(formData) {
-  return state => {
-    const jsonBody = expandReferences(formData)(state);
+  return async state => {
+    const [jsonBody] = expandReferences(state, formData);
     const body = js2xmlparser('data', jsonBody);
 
     const {
       // this should be called project URL.
       // it is what lives after www.commcarehq.org/a/...
       applicationName,
-      username,
-      password,
       appId,
-      hostUrl,
     } = state.configuration;
 
-    const url = (hostUrl || 'https://www.commcarehq.org').concat(
-      '/a/',
-      applicationName,
-      '/receiver/',
-      appId,
-      '/'
-    );
+    const path = `/a/${applicationName}/receiver/${appId}/`;
 
-    console.log('Posting to url: '.concat(url));
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
 
-    return clientPost({
-      url,
-      body,
-      username,
-      password,
-    }).then(response => {
-      console.log(`Server repsonded with a ${response.status}:`);
-      console.log(response);
-      return { ...state, references: [response, ...state.references] };
+    const response = await request({
+      state,
+      method: 'POST',
+      path: path,
+      data: body,
+      contentType: 'text/xml',
+      parseAs: 'text',
     });
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -203,29 +150,32 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
-  return http.get(`api/v0.5/configurablereportdata/${reportId}/`, {
-    query: function (state) {
-      console.log(
-        'getting from url: '.concat(
-          state.configuration.baseUrl,
-          `/api/v0.5/configurablereportdata/${reportId}/`
-        )
-      );
-      console.log('with params: '.concat(params));
-      return params;
-    },
-    callback: function (state) {
-      var reportData = state.response.body;
-      return post(postUrl, {
-        body: reportData,
-      })(state).then(function (state) {
-        delete state.response;
-        console.log('fetchReportData succeeded.');
-        console.log('Posted to: '.concat(postUrl));
-        return state;
-      });
-    },
-  });
+  return async state => {
+    const path = `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`;
+
+    console.log('with params: '.concat(JSON.stringify(params)));
+
+    const { body: reportData } = await request({
+      state,
+      method: 'GET',
+      path,
+      authType: 'basic',
+    });
+
+    const result = await request({
+      state,
+      method: 'POST',
+      path: postUrl,
+      params,
+      data: reportData,
+      authType: 'basic',
+    });
+
+    delete result.response;
+    console.log('fetchReportData succeeded.');
+    console.log('Posted to: '.concat(postUrl));
+    return prepareNextState(state, {});
+  };
 }
 
 export {
