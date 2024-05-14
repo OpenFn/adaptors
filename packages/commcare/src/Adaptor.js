@@ -29,27 +29,6 @@ export function execute(...operations) {
 }
 
 /**
- * Performs a post request
- * @example
- *  clientPost(formData)
- * @function
- * @param {Object} formData - Form Data with path and body
- * @returns {State}
- */
-async function clientPost({ state, path, body }) {
-  const response = await request({
-    state,
-    method: 'POST',
-    path: path,
-    data: body,
-    contentType: 'text/xml',
-    parseAs: 'text',
-  });
-
-  return prepareNextState(state, response);
-}
-
-/**
  * Convert form data to xls then submit.
  * @public
  * @example
@@ -145,7 +124,16 @@ export function submit(formData) {
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
 
-    return clientPost({ state, path, body });
+    const response = await request({
+      state,
+      method: 'POST',
+      path: path,
+      data: body,
+      contentType: 'text/xml',
+      parseAs: 'text',
+    });
+
+    return prepareNextState(state, response);
   };
 }
 
