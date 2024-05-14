@@ -30,7 +30,7 @@ const metadata = async (configuration = {}, helper) => {
 
   const attributes = (await helper.getAttributes()) ?? [];
   children.attributes =
-    attributes.attributes?.map(attr =>
+    attributes.trackedEntityAttributes?.map(attr =>
       createEntity(attr.id, 'attribute', {
         datatype: 'string',
         label: attr.displayName,
