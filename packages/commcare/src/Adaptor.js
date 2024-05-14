@@ -4,8 +4,6 @@ import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
-import pkg from '@openfn/language-http';
-const { get, post } = pkg;
 
 /**
  * Execute a sequence of operations.
