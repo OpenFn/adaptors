@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 4.0.5
+
+### Patch Changes
+
+- Fix attribute metadata
+
 ## 4.0.4
 
 ### Patch Changes
