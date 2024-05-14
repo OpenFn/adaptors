@@ -5,32 +5,6 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-/**
- * @private
- *  * @function
- * @param {string} path - Path to resource
- * @param {object} data - Object which defines data that will be used to create a given instance of resource
- * @param {string} contentType- Optional field for the header content-type
- * @param {string} parseAs- Optional for data response parse i.e json
- */
-export const post = async ({
-  path,
-  data,
-  contentType = 'application/json',
-  parseAs = 'json',
-}) => {
-  return async state => {
-    const response = await request({
-      method: 'POST',
-      path,
-      data,
-      contentType,
-      parseAs,
-    });
-    return prepareNextState(state, response);
-  };
-};
-
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
