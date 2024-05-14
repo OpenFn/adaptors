@@ -4,6 +4,8 @@ import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
+import pkg from '@openfn/language-http';
+const { get, post } = pkg;
 
 /**
  * Execute a sequence of operations.
@@ -162,34 +164,31 @@ export function submit(formData) {
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
-  return state => {
+  return async state => {
     const path = `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`;
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
-    return request({
+    const { body: reportData } = await request({
       state,
       method: 'GET',
       path,
       authType: 'basic',
-    })
-      .then(response => {
-        const reportData = response.body;
-        return request({
-          state,
-          method: 'POST',
-          path: postUrl,
-          params,
-          data: reportData,
-          authType: 'basic',
-        });
-      })
-      .then(result => {
-        delete result.response;
-        console.log('fetchReportData succeeded.');
-        console.log('Posted to: '.concat(postUrl));
-        return prepareNextState(state, {});
-      });
+    });
+
+    const result = await request({
+      state,
+      method: 'POST',
+      path: postUrl,
+      params,
+      data: reportData,
+      authType: 'basic',
+    });
+
+    delete result.response;
+    console.log('fetchReportData succeeded.');
+    console.log('Posted to: '.concat(postUrl));
+    return prepareNextState(state, {});
   };
 }
 
