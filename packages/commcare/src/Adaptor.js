@@ -49,7 +49,7 @@ export function execute(...operations) {
  */
 export function submitXls(formData, params) {
   return async state => {
-    const { applicationName, username, apiKey } = state.configuration;
+    const { applicationName } = state.configuration;
 
     const [json] = expandReferences(state, formData);
     const { case_type, search_field, create_new_cases } = params;
@@ -67,7 +67,10 @@ export function submitXls(formData, params) {
 
     const data = new FormData();
 
-    data.append('file', buffer, { filename: 'output.xls' });
+    data.append('file', buffer, {
+      filename: 'output.xls',
+      contentType: 'application/vnd.ms-excel',
+    });
     // data.append('file', fs.createReadStream('./out.xls'));
     data.append('case_type', case_type);
     data.append('search_field', search_field);
@@ -78,9 +81,8 @@ export function submitXls(formData, params) {
       method: 'POST',
       path: path,
       data,
-      header: {
+      headers: {
         ...data.getHeaders(),
-        Authorization: `ApiKey ${username}:${apiKey}`,
       },
     });
 
