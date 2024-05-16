@@ -38,20 +38,21 @@ export function request(configuration, path, opts) {
     method,
     data,
     params = {},
-    headers = {},
-    contentType = 'application/json',
+    headers: customHeaders = {},
+    contentType,
     parseAs = 'json',
   } = opts;
 
+  const headers = configureAuth(configuration, customHeaders);
+  if (contentType) {
+    headers['content-type'] = contentType;
+  }
+
   const options = {
     body: data,
-    headers: {
-      ...configureAuth(configuration),
-      'content-type': contentType,
-      ...headers,
-    },
+    headers,
     query: params,
-    parseAs: parseAs,
+    parseAs,
   };
 
   const url = `${hostUrl}${path}`;

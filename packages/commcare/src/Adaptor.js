@@ -1,9 +1,11 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import FormData from 'form-data';
+// import FormData from 'form-data';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
+
+import { Blob } from 'node:buffer';
 
 /**
  * Execute a sequence of operations.
@@ -67,9 +69,7 @@ export function submitXls(formData, params) {
 
     const data = new FormData();
 
-    data.append('file', buffer, {
-      filename: 'output.xls',
-    });
+    data.append('file', new Blob(buffer), 'output.xls');
     // data.append('file', fs.createReadStream('./out.xls'));
     data.append('case_type', case_type);
     data.append('search_field', search_field);
@@ -79,9 +79,6 @@ export function submitXls(formData, params) {
       const response = await request(state.configuration, path, {
         method: 'POST',
         data,
-        headers: {
-          ...data.getHeaders(),
-        },
       });
 
       return prepareNextState(state, response);
@@ -165,7 +162,7 @@ export function fetchReportData(reportId, params, postUrl) {
       method: 'POST',
       params,
       data: reportData,
-      authType: 'basic',
+      contentType: 'application/json',
     });
 
     delete result.response;
