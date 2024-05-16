@@ -29,6 +29,44 @@ export function execute(...operations) {
 }
 
 /**
+ * Make a get request to any commcare endpoint
+ * @public
+ * @example
+ * get(
+ *    "case"
+ *    {
+ *      limit: 1,
+ *      offset:0,
+ *    }
+ * )
+ * @function
+ * @param {string} path - Path to resource
+ * @param {Object} params - Optional request params such as limit and offset.
+ * @returns {Operation}
+ */
+export function get(path, params = {}) {
+  return async state => {
+    const { applicationName } = state.configuration;
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    const response = await request(
+      state.configuration,
+      `/a/${applicationName}/api/v0.5/${resolvedPath}`,
+      {
+        method: 'GET',
+        params: resolvedParams,
+      }
+    );
+
+    return prepareNextState(state, response);
+  };
+}
+
+/**
  * Convert form data to xls then submit.
  * @public
  * @example
@@ -158,14 +196,12 @@ export function fetchReportData(reportId, params, postUrl) {
 
     const { body: reportData } = await request(state.configuration, path, {
       method: 'GET',
-      authType: 'basic',
     });
 
     const result = await request(state.configuration, postUrl, {
       method: 'POST',
       params,
       data: reportData,
-      authType: 'basic',
     });
 
     delete result.response;

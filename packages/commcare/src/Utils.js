@@ -36,13 +36,14 @@ export function request(configuration, path, opts) {
 
   const {
     method,
-    data,
+    data = {},
     params = {},
     headers = {},
     contentType = 'application/json',
     parseAs = 'json',
   } = opts;
 
+  console.log({opts});
   const options = {
     body: data,
     headers: {
@@ -51,8 +52,10 @@ export function request(configuration, path, opts) {
       ...headers,
     },
     query: params,
-    parseAs: parseAs,
+    parseAs,
   };
+
+  console.log({options});
 
   const url = `${hostUrl}${path}`;
 
