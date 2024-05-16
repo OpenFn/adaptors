@@ -49,7 +49,7 @@ export function execute(...operations) {
  */
 export function submitXls(formData, params) {
   return async state => {
-    const { applicationName, username, apiKey } = state.configuration;
+    const { applicationName } = state.configuration;
 
     const [json] = expandReferences(state, formData);
     const { case_type, search_field, create_new_cases } = params;
@@ -67,20 +67,19 @@ export function submitXls(formData, params) {
 
     const data = new FormData();
 
-    data.append('file', buffer, { filename: 'output.xls' });
+    data.append('file', buffer, {
+      filename: 'output.xls',
+    });
     // data.append('file', fs.createReadStream('./out.xls'));
     data.append('case_type', case_type);
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
 
-    const response = await request({
-      state,
+    const response = await request(state.configuration, path, {
       method: 'POST',
-      path: path,
       data,
-      header: {
+      headers: {
         ...data.getHeaders(),
-        Authorization: `ApiKey ${username}:${apiKey}`,
       },
     });
 
@@ -124,10 +123,8 @@ export function submit(formData) {
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
 
-    const response = await request({
-      state,
+    const response = await request(state.configuration, path, {
       method: 'POST',
-      path: path,
       data: body,
       contentType: 'text/xml',
       parseAs: 'text',
@@ -155,17 +152,13 @@ export function fetchReportData(reportId, params, postUrl) {
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
-    const { body: reportData } = await request({
-      state,
+    const { body: reportData } = await request(state.configuration, path, {
       method: 'GET',
-      path,
       authType: 'basic',
     });
 
-    const result = await request({
-      state,
+    const result = await request(state.configuration, postUrl, {
       method: 'POST',
-      path: postUrl,
       params,
       data: reportData,
       authType: 'basic',
