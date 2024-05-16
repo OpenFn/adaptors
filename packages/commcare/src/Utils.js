@@ -7,18 +7,16 @@ import {
 } from '@openfn/language-common/util';
 
 export const configureAuth = (auth, headers = {}) => {
-  const configKeys = Object.keys(auth);
-
-  if (!configKeys.includes('apiKey') && !configKeys.includes('password')) {
-    throw new Error('No authorization credentials provided');
-  } else if (configKeys.includes('apiKey')) {
-    headers = {
+  if ('apiKey' in auth) {
+    Object.assign(headers, {
       Authorization: `ApiKey ${auth.username}:${auth.apiKey}`,
-    };
+    });
+  } else if ('password' in auth) {
+    Object.assign(headers, makeBasicAuthHeader(auth.username, auth.password));
   } else {
-    headers = {
-      ...makeBasicAuthHeader(auth.username, auth.password),
-    };
+    throw new Error(
+      'Invalid authorization credentials. Include an apiKey or password in state.configuration'
+    );
   }
 
   return headers;
@@ -34,22 +32,22 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
-export function request({
-  state,
-  method,
-  path,
-  data,
-  params = {},
-  headers = {},
-  contentType = 'application/json',
-  parseAs = 'json',
-}) {
-  const { hostUrl } = state.configuration;
+export function request(configuration, path, opts) {
+  const { hostUrl } = configuration;
+
+  const {
+    method,
+    data,
+    params = {},
+    headers = {},
+    contentType = 'application/json',
+    parseAs = 'json',
+  } = opts;
 
   const options = {
     body: data,
     headers: {
-      ...configureAuth(state.configuration),
+      ...configureAuth(configuration),
       'content-type': contentType,
       ...headers,
     },
