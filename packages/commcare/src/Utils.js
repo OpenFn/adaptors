@@ -31,19 +31,18 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
-export function request(configuration, path, opts) {
+export async function request(configuration, path, opts) {
   const { hostUrl } = configuration;
 
   const {
     method,
-    data = {},
+    data,
     params = {},
     headers: customHeaders = {},
     contentType,
     parseAs = 'json',
   } = opts;
 
-  console.log({opts});
   const headers = configureAuth(configuration, customHeaders);
   if (contentType) {
     headers['content-type'] = contentType;
@@ -54,10 +53,9 @@ export function request(configuration, path, opts) {
     headers,
     query: params,
     parseAs,
+    maxRedirections: 100,
+    baseUrl: hostUrl,
   };
 
-  console.log({options});
-
-  const url = `${hostUrl}${path}`;
-  return commonRequest(method, url, options).then(logResponse);
+  return commonRequest(method, path, options).then(logResponse);
 }

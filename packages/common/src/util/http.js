@@ -146,6 +146,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
+    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);

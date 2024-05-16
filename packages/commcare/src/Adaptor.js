@@ -54,16 +54,21 @@ export function get(path, params = {}) {
       params
     );
 
-    const response = await request(
-      state.configuration,
-      `/a/${applicationName}/api/v0.5/${resolvedPath}`,
-      {
-        method: 'GET',
-        params: resolvedParams,
-      }
-    );
+    try {
+      const response = await request(
+        state.configuration,
+        `/a/${applicationName}/api/v0.5/${resolvedPath}`,
+        {
+          method: 'GET',
+          params: resolvedParams,
+          contentType: 'application/json',
+        }
+      );
 
-    return prepareNextState(state, response);
+      return prepareNextState(state, response);
+    } catch (e) {
+      throw e.body ?? e;
+    }
   };
 }
 
@@ -192,6 +197,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
     const { body: reportData } = await request(state.configuration, path, {
       method: 'GET',
+      contentType: 'application/json',
     });
 
     const result = await request(state.configuration, postUrl, {

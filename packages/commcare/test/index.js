@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls } from '../src';
+import { execute, submitXls, get } from '../src';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -95,5 +95,52 @@ describe('SubmitXls', () => {
     expect(formdata.get('case_type')).to.equal('student');
     expect(formdata.get('search_field')).to.equal('external_id');
     expect(formdata.get('create_new_cases')).to.equal('on');
+  });
+});
+
+describe('getCases', () => {
+  it('should fetch cases', async () => {
+    const domain = 'my-domain';
+    const app = 'my-app';
+
+    let method;
+    let path;
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        // save out the form data that was upladed
+        method = req.method;
+        path=req.path;
+
+        // simulate a return from commcare
+        return { code: 200, message: 'success' };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        applicationName: domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(
+      get("case")
+    )(state);
+
+    // The response  should be on state.data
+    expect(data.code).to.equal(200);
+    expect(data.message).to.equal('success');
+
+    // And the adaptor should have uploaded a reasonable looking formdata object
+    expect(method).to.equal('GET');
+    expect(path).to.equal('/a/my-domain/api/v0.5/case');
+
   });
 });
