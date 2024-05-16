@@ -1,11 +1,10 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-// import FormData from 'form-data';
+import { Blob } from 'node:buffer';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
-import { request, prepareNextState } from './Utils';
 
-import { Blob } from 'node:buffer';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -69,8 +68,8 @@ export function submitXls(formData, params) {
 
     const data = new FormData();
 
-    data.append('file', new Blob(buffer), 'output.xls');
-    // data.append('file', fs.createReadStream('./out.xls'));
+    data.append('file', new Blob([buffer]), 'output.xls');
+    // data.append('file', fs.createReadStream('out.xls'));
     data.append('case_type', case_type);
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
