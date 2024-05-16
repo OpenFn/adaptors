@@ -38,19 +38,20 @@ export function request(configuration, path, opts) {
     method,
     data = {},
     params = {},
-    headers = {},
-    contentType = 'application/json',
+    headers: customHeaders = {},
+    contentType,
     parseAs = 'json',
   } = opts;
 
   console.log({opts});
+  const headers = configureAuth(configuration, customHeaders);
+  if (contentType) {
+    headers['content-type'] = contentType;
+  }
+
   const options = {
     body: data,
-    headers: {
-      ...configureAuth(configuration),
-      'content-type': contentType,
-      ...headers,
-    },
+    headers,
     query: params,
     parseAs,
   };
@@ -58,6 +59,5 @@ export function request(configuration, path, opts) {
   console.log({options});
 
   const url = `${hostUrl}${path}`;
-
   return commonRequest(method, url, options).then(logResponse);
 }
