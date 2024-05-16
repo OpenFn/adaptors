@@ -75,15 +75,19 @@ export function submitXls(formData, params) {
     data.append('search_field', search_field);
     data.append('create_new_cases', create_new_cases);
 
-    const response = await request(state.configuration, path, {
-      method: 'POST',
-      data,
-      headers: {
-        ...data.getHeaders(),
-      },
-    });
+    try {
+      const response = await request(state.configuration, path, {
+        method: 'POST',
+        data,
+        headers: {
+          ...data.getHeaders(),
+        },
+      });
 
-    return prepareNextState(state, response);
+      return prepareNextState(state, response);
+    } catch (e) {
+      throw e.body ?? e;
+    }
   };
 }
 
