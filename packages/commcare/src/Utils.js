@@ -56,6 +56,5 @@ export function request(configuration, path, opts) {
   };
 
   const url = `${hostUrl}${path}`;
-
   return commonRequest(method, url, options).then(logResponse);
 }
