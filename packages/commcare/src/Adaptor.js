@@ -69,7 +69,6 @@ export function submitXls(formData, params) {
 
     data.append('file', buffer, {
       filename: 'output.xls',
-      contentType: 'application/vnd.ms-excel',
     });
     // data.append('file', fs.createReadStream('./out.xls'));
     data.append('case_type', case_type);
