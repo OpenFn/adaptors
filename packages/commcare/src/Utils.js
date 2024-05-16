@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
