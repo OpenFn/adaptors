@@ -62,7 +62,18 @@ Creates a resource in a destination system using a POST request
 
 **Example**  
 ```js
-create("Bundle", {...state.data: type: "collection"})
+create("Bundle", {
+  entry: [
+    {
+      fullUrl: "", // Eg: Patient URL
+      resource: {}, // Resource data
+      search: {
+        mode: "match",
+      },
+    },
+  ],
+  type: "collection",
+});
 ```
 
 * * *

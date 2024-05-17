@@ -1,5 +1,12 @@
 # @openfn/language-fhir
 
+## 3.1.2
+
+### Patch Changes
+
+- 2b283549: - Update `create()` example
+  - Update required properties in configuration schema
+
 ## 3.1.1
 
 ### Patch Changes
