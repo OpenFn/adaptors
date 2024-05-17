@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"Bundle\", {...state.data: type: \"collection\"})"
+            "description": "create(\"Bundle\", {\n  entry: [\n    {\n      fullUrl: \"\", // Eg: Patient URL\n      resource: {}, // Resource data\n      search: {\n        mode: \"match\",\n      },\n    },\n  ],\n  type: \"collection\",\n});"
           },
           {
             "title": "function",
