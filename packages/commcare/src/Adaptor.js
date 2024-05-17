@@ -74,7 +74,6 @@ export function get(path, params = {}, callback = s => s) {
           contentType: 'application/json',
         }
       );
-      console.log({response});
 
       return prepareNextState(state, response, callback);
     } catch (e) {
