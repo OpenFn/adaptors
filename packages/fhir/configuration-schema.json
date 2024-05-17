@@ -7,7 +7,7 @@
             "type": "string",
             "description": "The baseUrl",
             "examples": [
-                "https://hapi.fhir.org/baseR4"
+                "https://hapi.fhir.org"
             ]
         },
         "apiPath": {
@@ -47,8 +47,7 @@
         }
     },
     "required": [
-        "resource",
-        "authType",
-        "token"
+        "baseUrl",
+        "apiPath"
     ]
 }
