@@ -108,12 +108,22 @@ describe('getCases', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        // save out the form data that was upladed
         method = req.method;
         path = req.path;
 
         // simulate a return from commcare
-        return { code: 200, message: 'success' };
+        return {
+          code: 200,
+          message: 'success',
+          meta: { limit: 2 },
+          objects: [
+            {
+              case_id: '12345',
+              properties: { case_type: 'pregnancy', case_name: 'Jane' },
+            },
+          ],
+         
+        };
       });
 
     const state = {
@@ -131,6 +141,9 @@ describe('getCases', () => {
     // The response  should be on state.data
     expect(data.code).to.equal(200);
     expect(data.message).to.equal('success');
+    expect(data.meta.limit).to.equal(2)
+    expect(data.objects[0]).to.haveOwnProperty('case_id');
+
 
     // And the adaptor should have uploaded a reasonable looking formdata object
     expect(method).to.equal('GET');
