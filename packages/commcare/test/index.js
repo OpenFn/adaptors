@@ -115,14 +115,12 @@ describe('getCases', () => {
         return {
           code: 200,
           message: 'success',
-          meta: { limit: 2 },
-          objects: [
+          data: [
             {
               case_id: '12345',
               properties: { case_type: 'pregnancy', case_name: 'Jane' },
             },
           ],
-         
         };
       });
 
@@ -141,9 +139,7 @@ describe('getCases', () => {
     // The response  should be on state.data
     expect(data.code).to.equal(200);
     expect(data.message).to.equal('success');
-    expect(data.meta.limit).to.equal(2)
-    expect(data.objects[0]).to.haveOwnProperty('case_id');
-
+    expect(data.data[0]).to.haveOwnProperty('case_id');
 
     // And the adaptor should have uploaded a reasonable looking formdata object
     expect(method).to.equal('GET');
