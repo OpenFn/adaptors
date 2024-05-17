@@ -107,7 +107,8 @@ describe('getCases', () => {
       .reply(200, () => {
         // simulate a return from commcare
         return {
-          data: [
+          meta: { limit: 1 },
+          objects: [
             {
               case_id: '12345',
               properties: { case_type: 'pregnancy', case_name: 'Jane' },
@@ -126,11 +127,10 @@ describe('getCases', () => {
       },
     };
 
-    const { data } = await execute(get('case'))(state);
+    const { data, response } = await execute(get('case'))(state);
 
-    // The response  should be on state.data
-
-    expect(data.data[0]).to.haveOwnProperty('case_id');
+    expect(data[0]).to.haveOwnProperty('case_id');
+    expect(response.meta.limit).to.equal(1);
   });
 
   it('should fetch a single case', async () => {
@@ -142,10 +142,13 @@ describe('getCases', () => {
       .reply(200, () => {
         // simulate a return from commcare
         return {
-          data: {
-            case_id: '12345',
-            properties: { case_type: 'pregnancy', case_name: 'Jane' },
-          },
+          meta: { limit: 5 },
+          objects: [
+            {
+              case_id: '12345',
+              properties: { case_type: 'pregnancy', case_name: 'Jane' },
+            },
+          ],
         };
       });
 
@@ -159,11 +162,10 @@ describe('getCases', () => {
       },
     };
 
-    const { data } = await execute(get('case/12345'))(state);
+    const { data, response } = await execute(get('case/12345'))(state);
 
-    // The response  should be on state.data
-
-    expect(data.data.case_id).to.equal('12345');
-    expect(data.data.properties.case_type).to.equal('pregnancy');
+    expect(data[0].case_id).to.equal('12345');
+    expect(data[0].properties.case_type).to.equal('pregnancy');
+    expect(response.meta.limit).to.equal(5);
   });
 });
