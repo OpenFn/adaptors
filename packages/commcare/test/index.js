@@ -132,4 +132,38 @@ describe('getCases', () => {
 
     expect(data.data[0]).to.haveOwnProperty('case_id');
   });
+
+  it('should fetch a single case', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case/12345`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        // simulate a return from commcare
+        return {
+          data: {
+            case_id: '12345',
+            properties: { case_type: 'pregnancy', case_name: 'Jane' },
+          },
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        applicationName: domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(get('case/12345'))(state);
+
+    // The response  should be on state.data
+
+    expect(data.data.case_id).to.equal('12345');
+    expect(data.data.properties.case_type).to.equal('pregnancy');
+  });
 });
