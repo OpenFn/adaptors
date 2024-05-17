@@ -146,6 +146,8 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
+    // If the request is redirected, undici requires the origin to be set (this affects commcare)
+    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);

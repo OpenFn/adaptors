@@ -30,6 +30,59 @@ export function execute(...operations) {
 }
 
 /**
+ * Make a get request to any commcare endpoint
+ * - The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.
+ * @public
+ * @example <caption>Get a list of cases</caption>
+ * get(
+ *    "case"
+ *    {
+ *      limit: 1,
+ *      offset:0,
+ *    }
+ * )
+ *  * @example <caption>Get a specific case </caption>
+ * get(
+ *    "case/12345"
+ *    {
+ *      limit: 1,
+ *      offset:0,
+ *    }
+ * )
+ * @function
+ * @param {string} path - Path to resource
+ * @param {Object} params - Optional request params such as limit and offset.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function get(path, params = {}, callback = s => s) {
+  return async state => {
+    const { applicationName } = state.configuration;
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    try {
+      const response = await request(
+        state.configuration,
+        `/a/${applicationName}/api/v0.5/${resolvedPath}`,
+        {
+          method: 'GET',
+          params: resolvedParams,
+          contentType: 'application/json',
+        }
+      );
+
+      return prepareNextState(state, response, callback);
+    } catch (e) {
+      throw e.body ?? e;
+    }
+  };
+}
+
+/**
  * Convert form data to xls then submit.
  * @public
  * @example
@@ -154,7 +207,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
     const { body: reportData } = await request(state.configuration, path, {
       method: 'GET',
-      authType: 'basic',
+      contentType: 'application/json',
     });
 
     const result = await request(state.configuration, postUrl, {

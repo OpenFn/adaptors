@@ -24,14 +24,14 @@ export const configureAuth = (auth, headers = {}) => {
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
-    response: responseWithoutBody,
+    ...composeNextState(state, body.objects ?? body),
+    response: {...responseWithoutBody, ...{meta:body.meta}},
   };
 
   return callback(nextState);
 };
 
-export function request(configuration, path, opts) {
+export async function request(configuration, path, opts) {
   const { hostUrl } = configuration;
 
   const {
@@ -53,8 +53,9 @@ export function request(configuration, path, opts) {
     headers,
     query: params,
     parseAs,
+    maxRedirections: 1,
+    baseUrl: hostUrl,
   };
 
-  const url = `${hostUrl}${path}`;
-  return commonRequest(method, url, options).then(logResponse);
+  return commonRequest(method, path, options).then(logResponse);
 }
