@@ -40,6 +40,9 @@ export function execute(...operations) {
  *      offset:0,
  *    }
  * )
+ * // The returned objects will be written into state.data,
+ * // and the meta object will be written to state.response
+ * // along with the status code and returned headers.
  * @function
  * @param {string} path - Path to resource
  * @param {Object} params - Optional request params such as limit and offset.
