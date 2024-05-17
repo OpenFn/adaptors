@@ -25,8 +25,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
     ...composeNextState(state, body.objects ? body.objects : response.body),
-    response: responseWithoutBody,
-    references: [body.meta || {}],
+    response: {...responseWithoutBody, ...{meta:body.meta}},
   };
 
   return callback(nextState);
