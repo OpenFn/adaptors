@@ -11,26 +11,36 @@
           "type": "null"
         }
       ],
-      "username": {
-        "title": "Username",
-        "type": "string",
-        "description": "Username",
-        "examples": ["test@openfn.org"]
-      },
-      "password": {
-        "title": "Password",
-        "type": "string",
-        "description": "Password",
-        "writeOnly": true,
-        "examples": ["@some(!)Str0ngp4ss0w0rd"]
-      },
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": [
+        "https://demo.openimis.org"
+      ]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": [
+        "test@openfn.org"
+      ]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": [
+        "@some(!)Str0ngp4ss0w0rd"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": [
+    "baseUrl",
+    "username",
+    "password"
+  ]
 }
