@@ -99,22 +99,14 @@ describe('SubmitXls', () => {
 
 describe('getCases', () => {
   it('should fetch cases', async () => {
-    let method;
-    let path;
-
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
       })
-      .reply(200, req => {
-        method = req.method;
-        path = req.path;
-
+      .reply(200, () => {
         // simulate a return from commcare
         return {
-          code: 200,
-          message: 'success',
           data: [
             {
               case_id: '12345',
@@ -137,12 +129,7 @@ describe('getCases', () => {
     const { data } = await execute(get('case'))(state);
 
     // The response  should be on state.data
-    expect(data.code).to.equal(200);
-    expect(data.message).to.equal('success');
-    expect(data.data[0]).to.haveOwnProperty('case_id');
 
-    // And the adaptor should have uploaded a reasonable looking formdata object
-    expect(method).to.equal('GET');
-    expect(path).to.equal('/a/my-domain/api/v0.5/case');
+    expect(data.data[0]).to.haveOwnProperty('case_id');
   });
 });
