@@ -52,9 +52,10 @@ export function execute(...operations) {
  * @function
  * @param {string} path - Path to resource
  * @param {Object} params - Optional request params such as limit and offset.
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function get(path, params = {}) {
+export function get(path, params = {}, callback = s => s) {
   return async state => {
     const { applicationName } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -74,7 +75,7 @@ export function get(path, params = {}) {
         }
       );
 
-      return prepareNextState(state, response);
+      return prepareNextState(state, response, callback);
     } catch (e) {
       throw e.body ?? e;
     }
