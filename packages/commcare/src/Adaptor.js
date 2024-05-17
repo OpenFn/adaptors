@@ -31,8 +31,9 @@ export function execute(...operations) {
 
 /**
  * Make a get request to any commcare endpoint
+ * - The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.
  * @public
- * @example
+ * @example <caption>Get a list of cases</caption>
  * get(
  *    "case"
  *    {
@@ -40,9 +41,14 @@ export function execute(...operations) {
  *      offset:0,
  *    }
  * )
- * // The returned objects will be written into state.data,
- * // and the meta object will be written to state.response
- * // along with the status code and returned headers.
+ *  * @example <caption>Get a specific case </caption>
+ * get(
+ *    "case/12345"
+ *    {
+ *      limit: 1,
+ *      offset:0,
+ *    }
+ * )
  * @function
  * @param {string} path - Path to resource
  * @param {Object} params - Optional request params such as limit and offset.
