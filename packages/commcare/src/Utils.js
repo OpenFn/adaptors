@@ -53,7 +53,7 @@ export async function request(configuration, path, opts) {
     headers,
     query: params,
     parseAs,
-    maxRedirections: 100,
+    maxRedirections: 1,
     baseUrl: hostUrl,
   };
 
