@@ -43,7 +43,7 @@
     "type": "object",
     "additionalProperties": true,
     "required": [
-        "serverName",
+        "servername",
         "username",
         "password"
     ]
