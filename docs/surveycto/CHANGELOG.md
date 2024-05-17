@@ -1,5 +1,11 @@
 # @openfn/language-surveycto
 
+## 2.1.1
+
+### Patch Changes
+
+- 6c588212: Fix `servername` typo in the `configuration-schema`
+
 ## 2.1.0
 
 ### Minor Changes
