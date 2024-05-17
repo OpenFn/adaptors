@@ -130,6 +130,7 @@ describe('getCases', () => {
     const { data, response } = await execute(get('case'))(state);
 
     expect(data[0]).to.haveOwnProperty('case_id');
+    expect(data.length).to.equal(1);
     expect(response.meta.limit).to.equal(1);
   });
 
@@ -142,13 +143,8 @@ describe('getCases', () => {
       .reply(200, () => {
         // simulate a return from commcare
         return {
-          meta: { limit: 5 },
-          objects: [
-            {
-              case_id: '12345',
-              properties: { case_type: 'pregnancy', case_name: 'Jane' },
-            },
-          ],
+          case_id: '12345',
+          properties: { case_type: 'pregnancy', case_name: 'Jane' },
         };
       });
 
@@ -162,10 +158,9 @@ describe('getCases', () => {
       },
     };
 
-    const { data, response } = await execute(get('case/12345'))(state);
+    const { data } = await execute(get('case/12345'))(state);
 
-    expect(data[0].case_id).to.equal('12345');
-    expect(data[0].properties.case_type).to.equal('pregnancy');
-    expect(response.meta.limit).to.equal(5);
+    expect(data.case_id).to.equal('12345');
+    expect(data.properties.case_type).to.equal('pregnancy');
   });
 });
