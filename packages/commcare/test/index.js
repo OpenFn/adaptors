@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { execute, submitXls, get } from '../src';
+import sinon from 'sinon';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -162,5 +163,48 @@ describe('getCases', () => {
 
     expect(data.case_id).to.equal('12345');
     expect(data.properties.case_type).to.equal('pregnancy');
+  });
+
+  it('should fetch cases and call the callback', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        // simulate a return from commcare
+        return {
+          meta: { limit: 1 },
+          objects: [
+            {
+              case_id: '12345',
+              properties: { case_type: 'pregnancy', case_name: 'Jane' },
+            },
+          ],
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        applicationName: domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const callback = sinon.spy();
+
+    await execute(get('case', {}, callback))(state);
+
+    expect(callback.calledOnce).to.be.true;
+    const callbackArg = callback.firstCall.args[0];
+    expect(callbackArg.data).to.deep.equal([
+      {
+        case_id: '12345',
+        properties: { case_type: 'pregnancy', case_name: 'Jane' },
+      },
+    ]);
   });
 });
