@@ -165,8 +165,6 @@ export function submit(formData) {
     const body = js2xmlparser('data', jsonBody);
 
     const {
-      // this should be called project URL.
-      // it is what lives after www.commcarehq.org/a/...
       domain,
       appId,
     } = state.configuration;
