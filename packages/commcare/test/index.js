@@ -71,7 +71,7 @@ describe('SubmitXls', () => {
     const state = {
       configuration: {
         hostUrl,
-        applicationName: domain,
+        domain,
         appId: app,
         username: 'user',
         password: 'password',
@@ -152,7 +152,7 @@ describe('getCases', () => {
     const state = {
       configuration: {
         hostUrl,
-        applicationName: domain,
+        domain,
         appId: app,
         username: 'user',
         password: 'password',
@@ -208,7 +208,7 @@ describe('getCases', () => {
     const state = {
       configuration: {
         hostUrl,
-        applicationName: domain,
+        domain,
         appId: app,
         username: 'user',
         password: 'password',
@@ -274,7 +274,7 @@ describe('getCases', () => {
     const state = {
       configuration: {
         hostUrl,
-        applicationName: domain,
+        domain,
         appId: app,
         username: 'user',
         password: 'password',
