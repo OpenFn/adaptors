@@ -57,7 +57,7 @@ export function execute(...operations) {
  */
 export function get(path, params = {}, callback = s => s) {
   return async state => {
-    const { applicationName } = state.configuration;
+    const { domain } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
@@ -67,7 +67,7 @@ export function get(path, params = {}, callback = s => s) {
     try {
       const response = await request(
         state.configuration,
-        `/a/${applicationName}/api/v0.5/${resolvedPath}`,
+        `/a/${domain}/api/v0.5/${resolvedPath}`,
         {
           method: 'GET',
           params: resolvedParams,
@@ -103,12 +103,12 @@ export function get(path, params = {}, callback = s => s) {
  */
 export function submitXls(formData, params) {
   return async state => {
-    const { applicationName } = state.configuration;
+    const { domain } = state.configuration;
 
     const [json] = expandReferences(state, formData);
     const { case_type, search_field, create_new_cases } = params;
 
-    const path = `/a/${applicationName}/importer/excel/bulk_upload_api/`;
+    const path = `/a/${domain}/importer/excel/bulk_upload_api/`;
 
     const workbook = xlsx.utils.book_new();
     const worksheet = xlsx.utils.json_to_sheet(json);
@@ -165,13 +165,11 @@ export function submit(formData) {
     const body = js2xmlparser('data', jsonBody);
 
     const {
-      // this should be called project URL.
-      // it is what lives after www.commcarehq.org/a/...
-      applicationName,
+      domain,
       appId,
     } = state.configuration;
 
-    const path = `/a/${applicationName}/receiver/${appId}/`;
+    const path = `/a/${domain}/receiver/${appId}/`;
 
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
@@ -201,7 +199,7 @@ export function submit(formData) {
  */
 export function fetchReportData(reportId, params, postUrl) {
   return async state => {
-    const path = `/a/${state.configuration.applicationName}/api/v0.5/configurablereportdata/${reportId}/`;
+    const path = `/a/${state.configuration.domain}/api/v0.5/configurablereportdata/${reportId}/`;
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
