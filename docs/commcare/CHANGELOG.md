@@ -1,5 +1,29 @@
 # @openfn/language-commcare
 
+## 2.0.0
+
+Rebase the commcare adaptor on the new HTTP helpers.
+
+### Major Changes
+
+- Remove superagents and language-http dependencies
+- configuration schema: change applicationName to domain to match commcare's
+  configuration.
+- remove the `clientPost` function
+
+### Minor Changes
+
+- Implemented a get function for all get requests in commcare
+- Create a generic post function that allows for posting JSON data
+- Standardize auth to use either basic or APIKey across all operations
+- configuration schema: add apiKey
+- configuration schema: demote username and appId are optional
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
 ## 1.6.14
 
 ### Patch Changes

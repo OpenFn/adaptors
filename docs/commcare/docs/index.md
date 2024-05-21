@@ -2,9 +2,11 @@
 
 <dl>
 <dt>
-    <a href="#clientpost">clientPost(formData)</a></dt>
-<dt>
     <a href="#fetchreportdata">fetchReportData(reportId, params, postUrl)</a></dt>
+<dt>
+    <a href="#get">get(path, params, [callback])</a></dt>
+<dt>
+    <a href="#post">post(path, data, params, [callback])</a></dt>
 <dt>
     <a href="#submit">submit(formData)</a></dt>
 <dt>
@@ -53,24 +55,6 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## clientPost
-
-clientPost(formData) ⇒ <code>State</code>
-
-Performs a post request
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formData | <code>Object</code> | Form Data with auth params and body |
-
-**Example**  
-```js
-clientPost(formData)
-```
-
-* * *
-
 ## fetchReportData
 
 fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
@@ -88,6 +72,66 @@ and POST the response to somewhere else.
 **Example**  
 ```js
 fetchReportData(reportId, params, postUrl)
+```
+
+* * *
+
+## get
+
+get(path, params, [callback]) ⇒ <code>Operation</code>
+
+Make a get request to any commcare endpoint
+- The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | <code>Object</code> | Optional request params such as limit and offset. |
+| [callback] | <code>function</code> | Optional callback to handle the response |
+
+**Example** *(Get a list of cases)*  
+```js
+get(
+   "case"
+   {
+     limit: 1,
+     offset:0,
+   }
+)
+ * @example <caption>Get a specific case </caption>
+get(
+   "case/12345"
+   {
+     limit: 1,
+     offset:0,
+   }
+)
+```
+
+* * *
+
+## post
+
+post(path, data, params, [callback]) ⇒ <code>Operation</code>
+
+Make a post request to commcare
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| data | <code>object</code> | Object or JSON which defines data that will be used to create a given instance of resource |
+| params | <code>Object</code> | Optional request params. |
+| [callback] | <code>function</code> | Optional callback to handle the response |
+
+**Example**  
+```js
+post(
+  "user",
+ {"username":"test",
+ "password":"somepassword"}
+);
 ```
 
 * * *
