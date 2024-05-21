@@ -1,5 +1,12 @@
 # @openfn/language-progres
 
+## 1.3.13
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
 ## 1.3.12
 
 ### Patch Changes
