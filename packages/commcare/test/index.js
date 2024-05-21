@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get } from '../src';
+import { execute, submitXls, get, post } from '../src';
 import sinon from 'sinon';
 
 const hostUrl = 'http://example.commcare.com';
@@ -318,5 +318,45 @@ describe('getCases', () => {
         xform_ids: ['xxxx'],
       },
     ]);
+  });
+});
+
+describe('createUser', () => {
+  it('should create a user', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/user`,
+        method: 'POST',
+      })
+      .reply(201, () => {
+        // simulate a return from commcare
+        return {
+          id: '123456',
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await execute(
+      post('user', {
+        username: 'person',
+        password: 'per1234',
+        first_name: 'Per',
+        last_name: 'Son',
+        default_phone_number: '+50253311399',
+        email: 'person@example.org',
+      })
+    )(state);
+
+    expect(data).to.haveOwnProperty('id');
+    expect(response.statusCode).to.equal(201);
   });
 });

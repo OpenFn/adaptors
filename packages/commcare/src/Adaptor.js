@@ -83,6 +83,50 @@ export function get(path, params = {}, callback = s => s) {
 }
 
 /**
+ * Make a post request to commcare
+ * @example
+ * post(
+ *   "user",
+ *  {"username":"test",
+ *  "password":"somepassword"}
+ * );
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} data - Object or JSON which defines data that will be used to create a given instance of resource
+ * @param {Object} params - Optional request params.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function post(path, data, params = {}, callback = s => s) {
+  return async state => {
+    const { domain } = state.configuration;
+    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
+    );
+
+    try {
+      const response = await request(
+        state.configuration,
+        `/a/${domain}/api/v0.5/${resolvedPath}`,
+        {
+          method: 'POST',
+          data: resolvedData,
+          params: resolvedParams,
+          contentType: 'application/json',
+        }
+      );
+
+      return prepareNextState(state, response, callback);
+    } catch (e) {
+      throw e.body.error ?? e;
+    }
+  };
+}
+
+/**
  * Convert form data to xls then submit.
  * @public
  * @example
@@ -164,10 +208,7 @@ export function submit(formData) {
     const [jsonBody] = expandReferences(state, formData);
     const body = js2xmlparser('data', jsonBody);
 
-    const {
-      domain,
-      appId,
-    } = state.configuration;
+    const { domain, appId } = state.configuration;
 
     const path = `/a/${domain}/receiver/${appId}/`;
 
