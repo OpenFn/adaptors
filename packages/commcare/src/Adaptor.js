@@ -88,8 +88,7 @@ export function get(path, params = {}, callback = s => s) {
  * post(
  *   "user",
  *  {"username":"test",
- *  "password":"somepassword"},
- *   (state) =< state.data
+ *  "password":"somepassword"}
  * );
  * @function
  * @param {string} path - Path to resource
