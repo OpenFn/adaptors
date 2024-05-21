@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace*",
+    "@openfn/language-common": "workspace:*",
     "JSONPath": "^0.10.0",
     "js2xmlparser": "^1.0.0",
     "lodash-fp": "^0.10.4",
