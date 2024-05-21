@@ -7,10 +7,15 @@
       "type": "string",
       "description": "Your Facebook API access token",
       "writeOnly": true,
-      "minLength": 1
+      "minLength": 1,
+      "examples": [
+        "EAAGm0PX4ZCpsBAEHuZBwZBZCDEZDZD7ZC8ZBZBt7MbZA7sVZA"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["access_token"]
+  "required": [
+    "access_token"
+  ]
 }

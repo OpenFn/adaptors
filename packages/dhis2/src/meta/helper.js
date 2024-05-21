@@ -53,9 +53,8 @@ const createHelper = (configuration = {}) => {
     return response.data;
   };
 
-  // get all the attriobutes for a trackedEntityInstanceType
   const getAttributes = async () => {
-    const url = generateUrl(configuration, {}, 'attributes');
+    const url = generateUrl(configuration, {}, 'trackedEntityAttributes');
 
     const response = await get(url);
 

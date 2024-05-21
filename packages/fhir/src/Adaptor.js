@@ -33,7 +33,18 @@ export function execute(...operations) {
  * Creates a resource in a destination system using a POST request
  * @public
  * @example
- * create("Bundle", {...state.data: type: "collection"})
+ * create("Bundle", {
+ *   entry: [
+ *     {
+ *       fullUrl: "", // Eg: Patient URL
+ *       resource: {}, // Resource data
+ *       search: {
+ *         mode: "match",
+ *       },
+ *     },
+ *   ],
+ *   type: "collection",
+ * });
  * @function
  * @param {string} path - Path to resource
  * @param {object} params - data to create the new resource
