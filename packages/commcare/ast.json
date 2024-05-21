@@ -1,6 +1,73 @@
 {
   "operations": [
     {
+      "name": "get",
+      "params": [
+        "path",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a get request to any commcare endpoint\n- The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get(\n   \"case\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)\n * @example <caption>Get a specific case </caption>\nget(\n   \"case/12345\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)",
+            "caption": "Get a list of cases"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional request params such as limit and offset.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "submitXls",
       "params": [
         "formData",

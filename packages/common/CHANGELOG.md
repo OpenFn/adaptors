@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.13.4
+
+### Patch Changes
+
+- 12f02ed5: http helpers: Ensure redirects append base url
+
 ## 1.13.3
 
 ### Patch Changes

@@ -35,6 +35,7 @@ const getClient = (baseUrl, options) => {
 
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
+  mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
   if (!clients.has(baseUrl)) {
     clients.set(baseUrl, client);
@@ -145,6 +146,8 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
+    // If the request is redirected, undici requires the origin to be set (this affects commcare)
+    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);

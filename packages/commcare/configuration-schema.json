@@ -11,13 +11,22 @@
                 "https://www.commcarehq.org"
             ]
         },
-        "applicationName": {
-            "title": "Application Name",
+        "domain": {
+            "title": "Domain",
             "type": "string",
-            "description": "The CommCare application name",
+            "description": "The CommCare domain name",
             "minLength": 1,
             "examples": [
                 "some-proof-of-concept"
+            ]
+        },
+        "apiKey": {
+            "title": "API Key",
+            "type": "string",
+            "description": "The CommCare API Key",
+            "minLength": 1,
+            "examples": [
+                "the-long-uuid-provided-by-commcare-that-authenticates-requests"
             ]
         },
         "appId": {
@@ -53,7 +62,6 @@
     "additionalProperties": true,
     "required": [
         "hostUrl",
-        "applicationName",
-        "appId"
+        "domain"
     ]
 }
