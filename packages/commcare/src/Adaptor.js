@@ -86,8 +86,10 @@ export function get(path, params = {}, callback = s => s) {
  * Make a post request to commcare
  * @example
  * post(
- *   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
- *   {}
+ *   "user",
+ *  {"username":"test",
+ *  "password":"somepassword"},
+ *   (state) =< state.data
  * );
  * @function
  * @param {string} path - Path to resource

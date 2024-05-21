@@ -321,7 +321,7 @@ describe('getCases', () => {
   });
 });
 
-describe('createUser', ()=>{
+describe('createUser', () => {
   it('should create a user', async () => {
     testServer
       .intercept({
@@ -331,8 +331,7 @@ describe('createUser', ()=>{
       .reply(201, () => {
         // simulate a return from commcare
         return {
-       
-        id:'123456'
+          id: '123456',
         };
       });
 
@@ -346,18 +345,18 @@ describe('createUser', ()=>{
       },
     };
 
-    const { data, response } = await execute(post('user',{
-      username: 'person',
-      password: 'per1234',
-      first_name: 'Per',
-      last_name: 'Son',
-      default_phone_number: '+50253311399',
-      email: 'person@example.org',
-    }))(state);
+    const { data, response } = await execute(
+      post('user', {
+        username: 'person',
+        password: 'per1234',
+        first_name: 'Per',
+        last_name: 'Son',
+        default_phone_number: '+50253311399',
+        email: 'person@example.org',
+      })
+    )(state);
 
     expect(data).to.haveOwnProperty('id');
     expect(response.statusCode).to.equal(201);
-
-
-  })
-})
+  });
+});
