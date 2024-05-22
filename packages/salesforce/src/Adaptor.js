@@ -317,7 +317,9 @@ export function bulkQuery(qs, options, callback) {
       qs,
       options
     );
-    const apiVersion = connection.version;
+
+    if (connection.version < 47.0)
+      throw new Error('bulkQuery requires API version 47.0 and later');
 
     const { pollTimeout, pollInterval } = {
       ...defaultOptions,
@@ -328,7 +330,7 @@ export function bulkQuery(qs, options, callback) {
 
     const queryJob = await connection.request({
       method: 'POST',
-      url: `/services/data/v${apiVersion}/jobs/query`,
+      url: `/services/data/v${connection.version}/jobs/query`,
       body: JSON.stringify({
         operation: 'query',
         query: resolvedQs,
