@@ -712,8 +712,8 @@ function getConnection(state, options) {
     console.log('Using Salesforce API version', apiVersion);
     options.version = apiVersion;
   } else {
-    console.log('apiVersion is not defined');
-    console.log('We recommend using Salesforce API version 52.0 or latest');
+    options.version = '52.0';
+    console.log('Using Salesforce API version 52.0');
   }
 
   return new jsforce.Connection(options);
