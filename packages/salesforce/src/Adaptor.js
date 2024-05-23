@@ -289,7 +289,7 @@ const defaultOptions = {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * `bulkQuery()` uses {@link https://sforce.co/3y9phlc Bulk API v.2.0} which is available in API version 41.0 and later.
+ * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
  * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
  * @example
@@ -317,7 +317,9 @@ export function bulkQuery(qs, options, callback) {
       qs,
       options
     );
-    const apiVersion = connection.version;
+
+    if (parseFloat(connection.version) < 47.0)
+      throw new Error('bulkQuery requires API version 47.0 and later');
 
     const { pollTimeout, pollInterval } = {
       ...defaultOptions,
@@ -328,7 +330,7 @@ export function bulkQuery(qs, options, callback) {
 
     const queryJob = await connection.request({
       method: 'POST',
-      url: `/services/data/v${apiVersion}/jobs/query`,
+      url: `/services/data/v${connection.version}/jobs/query`,
       body: JSON.stringify({
         operation: 'query',
         query: resolvedQs,
@@ -709,12 +711,11 @@ function getConnection(state, options) {
   const apiVersionRegex = /^\d{2}\.\d$/;
 
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
-    console.log('Using Salesforce API version', apiVersion);
     options.version = apiVersion;
   } else {
-    console.log('apiVersion is not defined');
-    console.log('We recommend using Salesforce API version 52.0 or latest');
+    options.version = '47.0';
   }
+  console.log('Using Salesforce API version:', options.version);
 
   return new jsforce.Connection(options);
 }
