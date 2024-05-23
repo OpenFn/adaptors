@@ -318,7 +318,7 @@ export function bulkQuery(qs, options, callback) {
       options
     );
 
-    if (connection.version < '47.0')
+    if (parseFloat(connection.version) < 47.0)
       throw new Error('bulkQuery requires API version 47.0 and later');
 
     const { pollTimeout, pollInterval } = {
