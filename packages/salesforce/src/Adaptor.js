@@ -318,7 +318,7 @@ export function bulkQuery(qs, options, callback) {
       options
     );
 
-    if (connection.version < 47.0)
+    if (connection.version < '47.0')
       throw new Error('bulkQuery requires API version 47.0 and later');
 
     const { pollTimeout, pollInterval } = {
@@ -711,12 +711,11 @@ function getConnection(state, options) {
   const apiVersionRegex = /^\d{2}\.\d$/;
 
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
-    console.log('Using Salesforce API version:', apiVersion);
     options.version = apiVersion;
   } else {
     options.version = '47.0';
-    console.log('Using Salesforce API version:', options.version);
   }
+  console.log('Using Salesforce API version:', options.version);
 
   return new jsforce.Connection(options);
 }
