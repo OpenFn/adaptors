@@ -153,7 +153,7 @@ bulkQuery(qs, options, callback) ⇒ <code>Operation</code>
 
 Execute an SOQL Bulk Query.
 This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
-`bulkQuery()` uses [Bulk API v.2.0](https://sforce.co/3y9phlc) which is available in API version 41.0 and later.
+`bulkQuery()` uses [Bulk API v.2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.
 This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 
 

@@ -1,5 +1,13 @@
 # @openfn/language-salesforce
 
+## 4.6.7
+
+### Patch Changes
+
+- 332225ec: - Set default API version to `47.0`
+  - In `bulkQuery` throw errors if API version is less than `47.0`
+  - Update `bulkQuery` jsdocs with a link to `Bulk API 2.0 Query`
+
 ## 4.6.6
 
 ### Patch Changes
