@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 6.2.2
+
+### Patch Changes
+
+- Automatically apply api/oauth tokens from config
+
 ## 6.2.1
 
 ### Patch Changes

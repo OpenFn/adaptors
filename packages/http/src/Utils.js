@@ -9,9 +9,16 @@ import {
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-export function addBasicAuth(configuration = {}, headers) {
-  const { username, password } = configuration;
-  if (username && password && !headers.Authorization) {
+export function addAuth(configuration = {}, headers) {
+  if (headers.Authorization) {
+    return;
+  }
+
+  const { username, password, access_token } = configuration;
+
+  if (access_token) {
+    Object.assign(headers, { Authorization: `Bearer ${access_token}` });
+  } else if (username && password) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
 }
@@ -47,7 +54,7 @@ export function request(method, path, params, callback = s => s) {
 
     const baseUrl = state.configuration?.baseUrl;
 
-    addBasicAuth(state.configuration, headers);
+    addAuth(state.configuration, headers);
 
     const maxRedirections =
       resolvedParams.maxRedirections ??
