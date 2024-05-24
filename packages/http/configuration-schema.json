@@ -5,27 +5,21 @@
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "examples": [
-        "test@openfn.org"
-      ]
+      "examples": ["test@openfn.org"]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "examples": [
-        "@some(!)Password"
-      ]
+      "examples": ["@some(!)Password"]
     },
     "token": {
       "title": "Token",
       "type": "string",
-      "description": "Bearer token or API key. This should be added manually to the Authorization header.",
+      "description": "Bearer token or API key",
       "writeOnly": true,
-      "examples": [
-        "00QCjAl4MlV-WPX"
-      ]
+      "examples": ["00QCjAl4MlV-WPX"]
     },
     "baseUrl": {
       "title": "Base URL",
@@ -40,9 +34,7 @@
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": [
-        "https://instance_name.surveycto.com"
-      ]
+      "examples": ["https://instance_name.surveycto.com"]
     }
   },
   "type": "object",
