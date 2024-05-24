@@ -14,10 +14,10 @@ export function addAuth(configuration = {}, headers) {
     return;
   }
 
-  const { username, password, token } = configuration;
+  const { username, password, access_token } = configuration;
 
-  if (token) {
-    Object.assign(headers, { Authorization: `Bearer ${token}` });
+  if (access_token) {
+    Object.assign(headers, { Authorization: `Bearer ${access_token}` });
   } else if (username && password) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
