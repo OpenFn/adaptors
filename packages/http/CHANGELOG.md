@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- Automatically apply api/oauth tokens"
+- Automatically apply api/oauth tokens from config
 
 ## 6.2.1
 
