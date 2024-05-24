@@ -17,7 +17,7 @@
     "access_token": {
       "title": "Access Token",
       "type": "string",
-      "description": "Bearer token or API key",
+      "description": "OAuth Access token, API key or other Bearer token",
       "writeOnly": true,
       "examples": ["00QCjAl4MlV-WPX"]
     },

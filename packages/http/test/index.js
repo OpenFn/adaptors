@@ -265,7 +265,7 @@ describe('get()', () => {
     const state = {
       configuration: {
         baseUrl: 'https://www.example.com',
-        token: '00QCjAl4MlV-WPX',
+        access_token: '00QCjAl4MlV-WPX',
       },
     };
 
