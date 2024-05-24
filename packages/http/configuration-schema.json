@@ -14,8 +14,8 @@
       "writeOnly": true,
       "examples": ["@some(!)Password"]
     },
-    "token": {
-      "title": "Token",
+    "access_token": {
+      "title": "Access Token",
       "type": "string",
       "description": "Bearer token or API key",
       "writeOnly": true,
