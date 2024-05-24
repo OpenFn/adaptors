@@ -233,10 +233,10 @@ describe('get()', () => {
     expect(data).to.eql({ 'x-openfn': 'testing' });
   });
 
-  it('encodes configuration into basic auth header', async () => {
+  it('sets up a basic auth header', async () => {
     testServer
       .intercept({
-        path: '/api/auth',
+        path: '/api/private',
         method: 'GET',
       })
       .reply(200, req => req.headers, { headers: jsonHeaders });
@@ -249,9 +249,29 @@ describe('get()', () => {
       },
     };
 
-    const { data } = await execute(get('/api/auth'))(state);
+    const { data } = await execute(get('/api/private'))(state);
 
     expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
+  });
+
+  it('sets up an oauth/token header', async () => {
+    testServer
+      .intercept({
+        path: '/api/private',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        token: '00QCjAl4MlV-WPX',
+      },
+    };
+
+    const { data } = await execute(get('/api/private'))(state);
+
+    expect(data.Authorization).to.eql('Bearer 00QCjAl4MlV-WPX');
   });
 
   it('does not override the Authorization header', async () => {
