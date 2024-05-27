@@ -39,7 +39,7 @@ export const authorize = state => {
           ...state,
           configuration: {
             ...state.configuration,
-            token: response.body.access_token,
+            access_token: response.body.access_token,
           },
         };
       }
@@ -62,12 +62,12 @@ export const prepareNextState = (state, response, callback = s => s) => {
 };
 
 export async function request(configuration, path, opts) {
-  const { baseUrl, token } = configuration;
+  const { baseUrl, access_token } = configuration;
 
   const { method, data, params = {}, parseAs = 'json' } = opts;
 
   const headers = {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${access_token}`,
     'User-Agent': `nodejs/${process.version} @openfn/language-satusehat`,
     'content-type': 'application/json',
   };

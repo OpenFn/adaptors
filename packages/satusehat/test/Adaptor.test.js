@@ -62,7 +62,7 @@ describe('execute', () => {
         baseUrl: 'https://fake.satusehat.server.com',
         clientId: 'someclientid',
         clientSecret: 'someclientsecret',
-        token: 'fake-token',
+        access_token: 'fake-token',
       },
       references: [],
       data: null,
