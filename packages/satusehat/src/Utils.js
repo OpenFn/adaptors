@@ -3,7 +3,7 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
-import pkg from '../package.json' assert { type: 'json' };
+import pkg from '../package.json';
 
 export const authorize = state => {
   const auth = state.configuration;
