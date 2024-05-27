@@ -28,6 +28,16 @@
       "examples": [
         "the-long-secret-key-provided-by-satusehat"
       ]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Satusehat access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "the-long-access-token-from-your-auth"
+      ]
     }
   },
   "type": "object",
