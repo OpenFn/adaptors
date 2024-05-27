@@ -3,12 +3,10 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
-import pkg from '../package.json' assert { type: 'json' };
 
-
-const generateUserAgent = ()=>{
- return  `nodejs/${process.version} @openfn/language-satusehat/${pkg.version}`
-}
+const generateUserAgent = () => {
+  return `nodejs/${process.version} @openfn/language-satusehat`;
+};
 
 export const authorize = state => {
   const auth = state.configuration;
