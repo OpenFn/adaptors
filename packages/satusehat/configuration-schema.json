@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "Satusehat base URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "https://www.satusehat.com"
+      ]
+    },
+    "client_id": {
+      "title": "Client Id",
+      "type": "string",
+      "minLength": 1,
+      "description": "Your Satusehat client id",
+      "examples": [
+        "the-long-uuid-provided-by-satusehat-for-your-organization"
+      ]
+    },
+    "client_secret": {
+      "title": "Client Secret",
+      "type": "string",
+      "description": "Client Secret",
+      "minLength": 1,
+      "examples": [
+        "the-long-secret-key-provided-by-satusehat"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "baseUrl",
+    "client_id",
+    "client_secret"
+  ]
+}
