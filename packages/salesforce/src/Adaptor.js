@@ -24,11 +24,11 @@ import { expandReferences as newExpandReferences } from '@openfn/language-common
 import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
 
-// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
-// Note that technically we should await this, but in practice the module will be loaded
-// before execute is called
 let anyAscii = undefined;
-import('any-ascii').then(m => {
+
+// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
+// This promise MUST be resolved by execute before a connection is created
+const loadAnyAscii = import('any-ascii').then(m => {
   anyAscii = m.default;
 });
 
@@ -792,6 +792,7 @@ export function execute(...operations) {
     // Note: we no longer need `steps` anymore since `commonExecute`
     // takes each operation as an argument.
     return commonExecute(
+      loadAnyAscii,
       createConnection,
       ...flatten(operations),
       cleanupState
