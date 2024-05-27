@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"patient\", {\"name\": \"Bukayo\"})"
+            "description": "get(\"Organization\", {\"name\": \"somename\"})"
           },
           {
             "title": "function",
