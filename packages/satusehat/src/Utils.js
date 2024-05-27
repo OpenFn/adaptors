@@ -3,7 +3,12 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
-import pkg from '../package.json';
+import pkg from '../package.json' assert { type: 'json' };
+
+
+const generateUserAgent = ()=>{
+ return  `nodejs/${process.version} @openfn/language-satusehat/${pkg.version}`
+}
 
 export const authorize = state => {
   const auth = state.configuration;
@@ -17,7 +22,7 @@ export const authorize = state => {
   if (clientId && clientSecret) {
     Object.assign(headers, {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': `nodejs/${process.version} @openfn/language-satusehat/${pkg.version}`,
+      'User-Agent': generateUserAgent(),
     });
 
     const body = new URLSearchParams();
@@ -71,7 +76,7 @@ export async function request(configuration, path, opts) {
 
   const headers = {
     Authorization: `Bearer ${access_token}`,
-    'User-Agent': `nodejs/${process.version} @openfn/language-satusehat`,
+    'User-Agent': generateUserAgent(),
     'content-type': 'application/json',
   };
 
