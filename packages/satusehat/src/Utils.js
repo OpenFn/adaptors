@@ -42,6 +42,10 @@ export const authorize = (state, headers = {}) => {
         };
       }
     );
+  } else {
+    throw new Error(
+      'Invalid authorization credentials. Include clientId and clientSecret in state.configuration'
+    );
   }
 };
 
