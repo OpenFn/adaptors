@@ -3,16 +3,18 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
+import pkg from '../package.json' assert { type: 'json' }
 
-export const authorize = (state, headers = {}) => {
+export const authorize = (state) => {
   const auth = state.configuration;
   const clientId = auth.clientId;
   const clientSecret = auth.clientSecret;
+  const headers = {};
 
   if (clientId && clientSecret) {
     Object.assign(headers, {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': `nodejs/${process.version} @openfn/language-satusehat`,
+      'User-Agent': `nodejs/${process.version} @openfn/language-satusehat/${pkg.version}`,
     });
 
     const body = new URLSearchParams();
