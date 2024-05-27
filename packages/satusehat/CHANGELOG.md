@@ -1,4 +1,4 @@
-# @openfn/language-template
+# @openfn/language-satusehat
 
 ## 1.0.0
 
