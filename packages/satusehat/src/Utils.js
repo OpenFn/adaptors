@@ -6,8 +6,8 @@ import {
 
 export const authorize = (state, headers = {}) => {
   const auth = state.configuration;
-  const clientId = auth.client_id;
-  const clientSecret = auth.client_secret;
+  const clientId = auth.clientId;
+  const clientSecret = auth.clientSecret;
 
   if (clientId && clientSecret) {
     Object.assign(headers, {
@@ -75,7 +75,7 @@ export async function request(configuration, path, opts) {
     query: params,
     parseAs,
     maxRedirections: 1,
-    baseUrl,
+    baseUrl:`${baseUrl}/fhir-r4/v1/`,
   };
 
   return commonRequest(method, path, options).then(logResponse);

@@ -52,7 +52,7 @@ export function get(path, params = {}, callback = s => s) {
     try {
       const response = await request(
         state.configuration,
-        `/fhir-r4/v1/${resolvedPath}`,
+        `/${resolvedPath}`,
         {
           method: 'GET',
           params: resolvedParams,
@@ -94,7 +94,7 @@ export function post(path, data, params = {}, callback = s => s) {
     try {
       const response = await request(
         state.configuration,
-        `/fhir-r4/v1/${resolvedPath}`,
+        `/${resolvedPath}`,
         {
           method: 'POST',
           data: resolvedData,

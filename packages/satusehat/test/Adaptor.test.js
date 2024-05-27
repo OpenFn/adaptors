@@ -25,9 +25,8 @@ describe('execute', () => {
     const state = {
       configuration: {
         baseUrl,
-
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
       },
     };
     const operations = [
@@ -51,9 +50,8 @@ describe('execute', () => {
     const state = {
       configuration: {
         baseUrl,
-
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
       },
     };
 
@@ -62,8 +60,8 @@ describe('execute', () => {
     expect(finalState).to.eql({
       configuration: {
         baseUrl: 'https://fake.satusehat.server.com',
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
         token: 'fake-token',
       },
       references: [],
@@ -144,9 +142,8 @@ describe('getOrganizations', () => {
     const state = {
       configuration: {
         baseUrl,
-
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
       },
     };
 
@@ -194,8 +191,8 @@ describe('getOrganizations', () => {
     const state = {
       configuration: {
         baseUrl,
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
       },
     };
 
@@ -318,8 +315,8 @@ describe('Create organization', () => {
     const state = {
       configuration: {
         baseUrl,
-        client_id: 'someclientid',
-        client_secret: 'someclientsecret',
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
       },
     };
 

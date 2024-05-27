@@ -11,7 +11,7 @@
         "https://www.satusehat.com"
       ]
     },
-    "client_id": {
+    "clientId": {
       "title": "Client Id",
       "type": "string",
       "minLength": 1,
@@ -20,7 +20,7 @@
         "the-long-uuid-provided-by-satusehat-for-your-organization"
       ]
     },
-    "client_secret": {
+    "clientSecret": {
       "title": "Client Secret",
       "type": "string",
       "description": "Client Secret",
@@ -34,7 +34,7 @@
   "additionalProperties": true,
   "required": [
     "baseUrl",
-    "client_id",
-    "client_secret"
+    "clientId",
+    "clientSecret"
   ]
 }
