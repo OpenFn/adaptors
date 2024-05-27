@@ -1,6 +1,6 @@
 # language-{{TEMPLATE}} <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the {{TEMPLATE}} adaptor.
+An OpenFn **_adaptor_** for building integration jobs for use with the {{TEMPLATE}} API.
 
 ## Documentation
 
