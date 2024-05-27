@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-satusehat",
   "version": "1.0.0",
-  "description": "The standard template for building OpenFn adaptors",
+  "description": "OpenFn satusehat adaptor",
   "type": "module",
   "exports": {
     ".": {
