@@ -4,19 +4,19 @@ An OpenFn **_adaptor_** for building integration jobs for use with the satusehat
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/template-docs)
+View the [docs site](https://docs.openfn.org/adaptors/packages/satusehat-docs)
 for full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/template-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/satusehat-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `post` function
 
 ```js
-create('patient', { name: 'Bukayo' });
+post('Organization', {  "resourceType": "Organization" });
 ```
 
 ## Development
