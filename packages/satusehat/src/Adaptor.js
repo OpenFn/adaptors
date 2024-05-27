@@ -56,7 +56,6 @@ export function get(path, params = {}, callback = s => s) {
         {
           method: 'GET',
           params: resolvedParams,
-          contentType: 'application/json',
         }
       );
 
@@ -99,7 +98,6 @@ export function post(path, data, params = {}, callback = s => s) {
           method: 'POST',
           data: resolvedData,
           params: resolvedParams,
-          contentType: 'application/json',
         }
       );
 

@@ -3,9 +3,9 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
-import pkg from '../package.json' assert { type: 'json' }
+import pkg from '../package.json' assert { type: 'json' };
 
-export const authorize = (state) => {
+export const authorize = state => {
   const auth = state.configuration;
   const clientId = auth.clientId;
   const clientSecret = auth.clientSecret;
@@ -64,16 +64,13 @@ export const prepareNextState = (state, response, callback = s => s) => {
 export async function request(configuration, path, opts) {
   const { baseUrl, token } = configuration;
 
-  const { method, data, params = {}, contentType, parseAs = 'json' } = opts;
+  const { method, data, params = {}, parseAs = 'json' } = opts;
 
   const headers = {
     Authorization: `Bearer ${token}`,
     'User-Agent': `nodejs/${process.version} @openfn/language-satusehat`,
+    'content-type': 'application/json',
   };
-  // console.log({headers});
-  if (contentType) {
-    headers['content-type'] = contentType;
-  }
 
   const options = {
     body: data,
@@ -81,7 +78,7 @@ export async function request(configuration, path, opts) {
     query: params,
     parseAs,
     maxRedirections: 1,
-    baseUrl:`${baseUrl}/fhir-r4/v1/`,
+    baseUrl: `${baseUrl}/fhir-r4/v1/`,
   };
 
   return commonRequest(method, path, options).then(logResponse);
