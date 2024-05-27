@@ -7,6 +7,9 @@ import pkg from '../package.json' assert { type: 'json' };
 
 export const authorize = state => {
   const auth = state.configuration;
+  if (auth.access_token) {
+    return state;
+  }
   const clientId = auth.clientId;
   const clientSecret = auth.clientSecret;
   const headers = {};
