@@ -84,7 +84,8 @@ describe('getOrganizations', () => {
       })
       .reply(200, {
         access_token: 'fake-token',
-      });
+      })
+      .persist();
   });
 
   it('should fetch organizations', async () => {
@@ -217,7 +218,8 @@ describe('Create organization', () => {
       })
       .reply(200, {
         access_token: 'fake-token',
-      });
+      })
+      .persist()
   });
 
   it('should create an organization', async () => {
@@ -226,6 +228,7 @@ describe('Create organization', () => {
         path: `/fhir-r4/v1/Organization`,
         method: 'POST',
       })
+      
       .reply(200, () => {
         // simulate a return from satusehat
         return {
