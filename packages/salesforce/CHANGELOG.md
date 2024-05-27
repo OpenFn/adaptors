@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 4.6.8
+
+### Patch Changes
+
+- Properly ensure any-ascii is loaded before executing, resolving a critical
+  race that we are losing in production
+
 ## 4.6.7
 
 ### Patch Changes
