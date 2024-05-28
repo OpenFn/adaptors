@@ -7,15 +7,8 @@ import {
   upsert,
   upsertIf,
   toUTF8,
-  steps,
-  each,
-  field,
-  fields,
-  sourceValue,
   execute,
 } from '../src/Adaptor';
-
-import testData from './testData' assert { type: 'json' };
 
 const { expect } = chai;
 
@@ -173,18 +166,32 @@ describe('Adaptor', () => {
   });
 
   describe('toUTF8', () => {
-    it('Transliterate unicode to ASCII representation', () => {
-      expect(toUTF8('άνθρωποι')).to.eql('anthropoi');
+    it('Transliterate unicode to ASCII representation', async () => {
+      const state = {
+        connection: {},
+      };
+
+      // Run toUTF8 inside an execute block to ensure that any-ascii gets loaded correctly
+      const convert = str => execute(state => toUTF8(str))(state);
+
+      let result = await convert('άνθρωποι');
+      expect(result).to.eql('anthropoi');
+
       // Misc
-      expect(toUTF8('☆ ♯ ♰ ⚄ ⛌')).to.equal('* # + 5 X');
+      result = await convert('☆ ♯ ♰ ⚄ ⛌');
+      expect(result).to.equal('* # + 5 X');
+
       // Emojis
-      expect(toUTF8('👑 🌴')).to.eql(':crown: :palm_tree:');
+      result = await convert('👑 🌴');
+      expect(result).to.eql(':crown: :palm_tree:');
+
       // Letterlike
-      expect(toUTF8('№ ℳ ⅋ ⅍')).to.eql('No M & A/S');
+      result = await convert('№ ℳ ⅋ ⅍');
+      expect(result).to.eql('No M & A/S');
+
       // Ordinal coordinator
-      expect(toUTF8('Nhamaonha 6ª Classe 2023-10-09')).to.eql(
-        'Nhamaonha 6a Classe 2023-10-09'
-      );
+      result = await convert('Nhamaonha 6ª Classe 2023-10-09');
+      expect(result).to.eql('Nhamaonha 6a Classe 2023-10-09');
     });
   });
 });

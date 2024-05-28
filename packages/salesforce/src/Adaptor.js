@@ -28,9 +28,11 @@ let anyAscii = undefined;
 
 // use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
 // This promise MUST be resolved by execute before a connection is created
-const loadAnyAscii = import('any-ascii').then(m => {
-  anyAscii = m.default;
-});
+const loadAnyAscii = state =>
+  import('any-ascii').then(m => {
+    anyAscii = m.default;
+    return state;
+  });
 
 /**
  * Adds a lookup relation or 'dome insert' to a record.
@@ -764,6 +766,10 @@ function createAccessTokenConnection(state) {
  * @returns {State}
  */
 function createConnection(state) {
+  if (state.connection) {
+    return state;
+  }
+
   const { access_token } = state.configuration;
 
   return access_token
