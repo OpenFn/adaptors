@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.6.9
+
+### Patch Changes
+
+- Fix any-ascii load and add more tests
+
 ## 4.6.8
 
 ### Patch Changes
