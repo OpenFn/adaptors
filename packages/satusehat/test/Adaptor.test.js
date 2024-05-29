@@ -11,7 +11,7 @@ const baseUrl = 'https://fake.satusehat.server.com';
 const testServer = enableMockClient(baseUrl);
 
 describe('execute', () => {
-  beforeEach(() => {
+  before(() => {
     testServer
       .intercept({
         path: '/oauth2/v1/accesstoken?grant_type=client_credentials',
@@ -19,7 +19,8 @@ describe('execute', () => {
       })
       .reply(200, {
         access_token: 'fake-token',
-      });
+      })
+      .persist();
   });
   it('executes each operation in sequence', async () => {
     const state = {
@@ -71,7 +72,7 @@ describe('execute', () => {
 });
 
 describe('getOrganizations', () => {
-  beforeEach(() => {
+  before(() => {
     testServer
       .intercept({
         path: '/oauth2/v1/accesstoken',
@@ -96,7 +97,6 @@ describe('getOrganizations', () => {
         },
       })
       .reply(200, () => {
-        // simulate a return from satusehat
         return {
           entry: [
             {
@@ -162,7 +162,6 @@ describe('getOrganizations', () => {
         method: 'GET',
       })
       .reply(200, () => {
-        // simulate a return from satusehat
         return {
           active: true,
           id: '12345-6789',
@@ -204,7 +203,7 @@ describe('getOrganizations', () => {
 });
 
 describe('Create organization', () => {
-  beforeEach(() => {
+  before(() => {
     testServer
       .intercept({
         path: '/oauth2/v1/accesstoken',
@@ -227,7 +226,6 @@ describe('Create organization', () => {
       })
 
       .reply(200, () => {
-        // simulate a return from satusehat
         return {
           active: true,
           address: [
@@ -407,7 +405,7 @@ describe('Create organization', () => {
 });
 
 describe('updateOrganization', () => {
-  beforeEach(() => {
+  before(() => {
     testServer
       .intercept({
         path: '/oauth2/v1/accesstoken',
@@ -464,7 +462,7 @@ describe('updateOrganization', () => {
 });
 
 describe('partiallyUpdateOrganization', () => {
-  beforeEach(() => {
+  before(() => {
     testServer
       .intercept({
         path: '/oauth2/v1/accesstoken',
