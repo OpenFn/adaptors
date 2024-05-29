@@ -70,12 +70,18 @@ export const prepareNextState = (state, response, callback = s => s) => {
 export async function request(configuration, path, opts) {
   const { baseUrl, access_token } = configuration;
 
-  const { method, data, params = {}, parseAs = 'json' } = opts;
+  const {
+    method,
+    data,
+    params = {},
+    parseAs = 'json',
+    contentType = 'application/json',
+  } = opts;
 
   const headers = {
     Authorization: `Bearer ${access_token}`,
     'User-Agent': generateUserAgent(),
-    'content-type': 'application/json',
+    'content-type': contentType,
   };
 
   const options = {

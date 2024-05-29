@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute, get, post } from '../src/Adaptor.js';
+import { execute, get, post, put, patch } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -216,7 +216,7 @@ describe('Create organization', () => {
       .reply(200, {
         access_token: 'fake-token',
       })
-      .persist()
+      .persist();
   });
 
   it('should create an organization', async () => {
@@ -225,7 +225,7 @@ describe('Create organization', () => {
         path: `/fhir-r4/v1/Organization`,
         method: 'POST',
       })
-      
+
       .reply(200, () => {
         // simulate a return from satusehat
         return {
@@ -403,5 +403,121 @@ describe('Create organization', () => {
     expect(data).to.haveOwnProperty('name');
     expect(data.name).to.equal('Some Name');
     expect(data.active).to.equal(true);
+  });
+});
+
+describe('updateOrganization', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/oauth2/v1/accesstoken',
+        method: 'POST',
+        query: {
+          grant_type: 'client_credentials',
+        },
+      })
+      .reply(200, {
+        access_token: 'fake-token',
+      })
+      .persist();
+  });
+
+  it('should update an organization', async () => {
+    testServer
+      .intercept({
+        path: `/fhir-r4/v1/Organization/12345-6789`,
+        method: 'PUT',
+      })
+      .reply(200, () => {
+        // simulate a return from satusehat
+        return {
+          active: false,
+          id: '12345-6789',
+          identifier: [],
+          meta: {
+            lastUpdated: '2024-05-29T07:37:07.508864+00:00',
+            versionId: 'someid',
+          },
+          resourceType: 'Organization',
+        };
+      });
+
+    const state = {
+      configuration: {
+        baseUrl,
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
+      },
+    };
+
+    const { data } = await execute(
+      put('Organization/12345-6789', {
+        resourceType: 'Organization',
+        id: '12345-6789',
+        active: false,
+      })
+    )(state);
+
+    expect(data.active).to.equal(false);
+    expect(data.id).to.equal('12345-6789');
+  });
+});
+
+describe('partiallyUpdateOrganization', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/oauth2/v1/accesstoken',
+        method: 'POST',
+        query: {
+          grant_type: 'client_credentials',
+        },
+      })
+      .reply(200, {
+        access_token: 'fake-token',
+      })
+      .persist();
+  });
+
+  it('should partially update an organization', async () => {
+    testServer
+      .intercept({
+        path: `/fhir-r4/v1/Organization/12345-6789`,
+        method: 'PATCH',
+      })
+      .reply(200, () => {
+        // simulate a return from satusehat
+        return {
+          active: false,
+          id: '12345-6789',
+          identifier: [],
+          meta: {
+            lastUpdated: '2024-05-29T07:37:07.508864+00:00',
+            versionId: 'someid',
+          },
+          resourceType: 'Organization',
+        };
+      });
+
+    const state = {
+      configuration: {
+        baseUrl,
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
+      },
+    };
+
+    const { data } = await execute(
+      patch('Organization/12345-6789', [
+        {
+          op: 'replace',
+          path: '/active',
+          value: false,
+        },
+      ])
+    )(state);
+
+    expect(data.active).to.equal(false);
+    expect(data.id).to.equal('12345-6789');
   });
 });
