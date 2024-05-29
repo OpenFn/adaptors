@@ -9,19 +9,22 @@ import { execute, get, post, put, patch } from '../src/Adaptor.js';
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const baseUrl = 'https://fake.satusehat.server.com';
 const testServer = enableMockClient(baseUrl);
+before(() => {
+  testServer
+    .intercept({
+      path: '/oauth2/v1/accesstoken',
+      method: 'POST',
+      query: {
+        grant_type: 'client_credentials',
+      },
+    })
+    .reply(200, {
+      access_token: 'fake-token',
+    })
+    .persist();
+});
 
 describe('execute', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/oauth2/v1/accesstoken?grant_type=client_credentials',
-        method: 'POST',
-      })
-      .reply(200, {
-        access_token: 'fake-token',
-      })
-      .persist();
-  });
   it('executes each operation in sequence', async () => {
     const state = {
       configuration: {
@@ -72,21 +75,6 @@ describe('execute', () => {
 });
 
 describe('getOrganizations', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/oauth2/v1/accesstoken',
-        method: 'POST',
-        query: {
-          grant_type: 'client_credentials',
-        },
-      })
-      .reply(200, {
-        access_token: 'fake-token',
-      })
-      .persist();
-  });
-
   it('should fetch organizations', async () => {
     testServer
       .intercept({
@@ -203,21 +191,6 @@ describe('getOrganizations', () => {
 });
 
 describe('Create organization', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/oauth2/v1/accesstoken',
-        method: 'POST',
-        query: {
-          grant_type: 'client_credentials',
-        },
-      })
-      .reply(200, {
-        access_token: 'fake-token',
-      })
-      .persist();
-  });
-
   it('should create an organization', async () => {
     testServer
       .intercept({
@@ -405,21 +378,6 @@ describe('Create organization', () => {
 });
 
 describe('updateOrganization', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/oauth2/v1/accesstoken',
-        method: 'POST',
-        query: {
-          grant_type: 'client_credentials',
-        },
-      })
-      .reply(200, {
-        access_token: 'fake-token',
-      })
-      .persist();
-  });
-
   it('should update an organization', async () => {
     testServer
       .intercept({
@@ -427,7 +385,6 @@ describe('updateOrganization', () => {
         method: 'PUT',
       })
       .reply(200, () => {
-        // simulate a return from satusehat
         return {
           active: false,
           id: '12345-6789',
@@ -462,21 +419,6 @@ describe('updateOrganization', () => {
 });
 
 describe('partiallyUpdateOrganization', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/oauth2/v1/accesstoken',
-        method: 'POST',
-        query: {
-          grant_type: 'client_credentials',
-        },
-      })
-      .reply(200, {
-        access_token: 'fake-token',
-      })
-      .persist();
-  });
-
   it('should partially update an organization', async () => {
     testServer
       .intercept({
@@ -484,7 +426,6 @@ describe('partiallyUpdateOrganization', () => {
         method: 'PATCH',
       })
       .reply(200, () => {
-        // simulate a return from satusehat
         return {
           active: false,
           id: '12345-6789',
