@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "Satusehat base URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "https://www.satusehat.com"
+      ]
+    },
+    "clientId": {
+      "title": "Client Id",
+      "type": "string",
+      "minLength": 1,
+      "description": "Your Satusehat client id",
+      "examples": [
+        "the-long-uuid-provided-by-satusehat-for-your-organization"
+      ]
+    },
+    "clientSecret": {
+      "title": "Client Secret",
+      "type": "string",
+      "description": "Client Secret",
+      "minLength": 1,
+      "examples": [
+        "the-long-secret-key-provided-by-satusehat"
+      ]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Satusehat access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "the-long-access-token-from-your-auth"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "baseUrl",
+    "clientId",
+    "clientSecret"
+  ]
+}

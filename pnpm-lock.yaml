@@ -1634,6 +1634,34 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
 
+  packages/satusehat:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      mocha:
+        specifier: 9.2.2
+        version: 9.2.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.4
+
   packages/sftp:
     dependencies:
       '@openfn/language-common':

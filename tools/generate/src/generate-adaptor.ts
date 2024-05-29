@@ -49,9 +49,14 @@ const copyAndRename = async (
       await fs.mkdir(targetPath, { recursive: true });
       await copyAndRename(sourcePath, targetPath, adaptorName);
     } else if (item.isFile()) {
-      let content = await fs.readFile(sourcePath, 'utf8');
-      content = content.replace(/{{TEMPLATE}}/g, adaptorName);
-
+      let content;
+      const ext = path.extname(item.name).toLowerCase();
+      if (/(png|jpe?g|gif|svg|webp)$/.test(ext)) {
+        content = await fs.readFile(sourcePath);
+      } else {
+        content = await fs.readFile(sourcePath, 'utf8');
+        content = content.replace(/{{TEMPLATE}}/g, adaptorName);
+      }
       await fs.writeFile(targetPath, content);
     }
   }

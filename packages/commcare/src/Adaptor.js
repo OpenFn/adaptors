@@ -106,7 +106,7 @@ export function post(path, data, params = {}, callback = s => s) {
       data,
       params
     );
-
+  
     try {
       const response = await request(
         state.configuration,
