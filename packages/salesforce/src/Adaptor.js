@@ -58,7 +58,7 @@ export function relationship(relationshipName, externalId, dataSource) {
 }
 
 /**
- * Outputs basic information about available sObjects.
+ * Prints a total number of all available sObjects and pushes the result to state.references
  * @public
  * @example
  * describeAll()
@@ -82,7 +82,7 @@ export function describeAll() {
 }
 
 /**
- * Returns basic information about an sObject.
+ * Prints an sObject metadata and pushes the result to state.references
  * @public
  * @example
  * describe('obj_name')
