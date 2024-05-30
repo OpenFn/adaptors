@@ -375,7 +375,14 @@ export function bulkQuery(qs, options, callback) {
  *   "vera__Beneficiary__c",
  *   "upsert",
  *   { extIdField: "vera__External_ID__c", failOnError: true },
- *   (state) => state.data
+ *   [
+ *     {
+ *       vera__Reporting_Period__c: 2023,
+ *       vera__Geographic_Area__c: "Uganda",
+ *       "vera__Indicator__r.vera__ExtId__c": 1001,
+ *       vera__Result_UID__c: "1001_2023_Uganda",
+ *     },
+ *   ]
  * );
  * @function
  * @param {string} sObject - API name of the sObject.
