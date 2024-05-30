@@ -1,13 +1,13 @@
 /**
- * @typedef {Object} State
+ * @typedef {object} State
  * @property {object} data JSON Data.
  * @property {Array<Reference>} references History of all previous operations.
  * @ignore
  */
 
 /**
- * @typedef {Function} Operation
- * @param {State} state
+ * @typedef {function} Operation
+ * @param {state} state
  * @ignore
  */
 
@@ -63,7 +63,7 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @example
  * describeAll()
  * @function
- * @returns {Operation}
+ * @returns {operation}
  */
 export function describeAll() {
   return state => {
@@ -87,8 +87,8 @@ export function describeAll() {
  * @example
  * describe('obj_name')
  * @function
- * @param {String} sObject - API name of the sObject.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @returns {operation}
  */
 export function describe(sObject) {
   return state => {
@@ -117,10 +117,10 @@ export function describe(sObject) {
  * @example
  * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
  * @function
- * @param {String} sObject - The sObject to retrieve
- * @param {String} id - The id of the record
- * @param {Function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
+ * @param {string} sObject - The sObject to retrieve
+ * @param {string} id - The id of the record
+ * @param {function} callback - A callback to execute once the record is retrieved
+ * @returns {operation}
  */
 export function retrieve(sObject, id, callback) {
   return state => {
@@ -158,11 +158,11 @@ export function retrieve(sObject, id, callback) {
  * @example <caption>Query more records if next records are available</caption>
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
- * @param {String} qs - A query string. Must be less than `4000` characters in WHERE clause
- * @param {Object} options - Options passed to the bulk api.
- * @param {Boolean} [options.autoFetch=false] - Fetch next records if available.
- * @param {Function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
+ * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
+ * @param {object} options - Options passed to the bulk api.
+ * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
+ * @param {function} callback - A callback to execute once the record is retrieved
+ * @returns {operation}
  */
 export function query(qs, options, callback = s => s) {
   return async state => {
@@ -305,12 +305,12 @@ const defaultOptions = {
  *   { pollTimeout: 10000, pollInterval: 6000 }
  * );
  * @function
- * @param {String} qs - A query string.
- * @param {Object} options - Options passed to the bulk api.
- * @param {Integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
- * @param {Integer} [options.pollInterval=3000] - Polling interval in milliseconds.
- * @param {Function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
+ * @param {string} qs - A query string.
+ * @param {object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
+ * @param {function} callback - A callback to execute once the record is retrieved
+ * @returns {operation}
  */
 export function bulkQuery(qs, options, callback) {
   return async state => {
@@ -378,16 +378,16 @@ export function bulkQuery(qs, options, callback) {
  *   (state) => state.data
  * );
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {String} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
- * @param {Object} options - Options passed to the bulk api.
- * @param {Integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
- * @param {Integer} [options.pollInterval=6000] - Polling interval in milliseconds.
- * @param {String} [options.extIdField] - External id field.
- * @param {Boolean} [options.failOnError] - Fail the operation on error.
- * @param {Boolean} [options.allowNoOp] - For skipping operation.
- * @param {Array} records - an array of records, or a function which returns an array.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
+ * @param {object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
+ * @param {string} [options.extIdField] - External id field.
+ * @param {boolean} [options.failOnError] - Fail the operation on error.
+ * @param {boolean} [options.allowNoOp] - For skipping operation.
+ * @param {array} records - an array of records, or a function which returns an array.
+ * @returns {operation}
  */
 export function bulk(sObject, operation, options, records) {
   return state => {
@@ -487,10 +487,10 @@ export function bulk(sObject, operation, options, records) {
  *  '0090n00000JQEWHYAA5
  * ], { failOnError: true })
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Array of IDs of records to delete.
- * @param {Object} options - Options for the destroy delete operation.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Array of IDs of records to delete.
+ * @param {object} options - Options for the destroy delete operation.
+ * @returns {operation}
  */
 export function destroy(sObject, attrs, options) {
   return state => {
@@ -532,9 +532,9 @@ export function destroy(sObject, attrs, options) {
  *   attr2: "bar"
  * })
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new record.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new record.
+ * @returns {operation}
  */
 export function create(sObject, attrs) {
   return state => {
@@ -561,9 +561,9 @@ export function create(sObject, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new record.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new record.
+ * @returns {operation}
  */
 export function insert(sObject, attrs) {
   return create(sObject, attrs);
@@ -578,10 +578,10 @@ export function insert(sObject, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {Boolean} logical - a logical statement that will be evaluated.
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
- * @returns {Operation}
+ * @param {boolean} logical - a logical statement that will be evaluated.
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new object.
+ * @returns {operation}
  */
 export function createIf(logical, sObject, attrs) {
   return state => {
@@ -619,13 +619,13 @@ export function createIf(logical, sObject, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {String} sObject - API name of the sObject.
+ * @param {string} sObject - API name of the sObject.
  * @magic sObject - $.children[?(!@.meta.system)].name
- * @param {String} externalId - The external ID of the sObject.
+ * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {object} attrs - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
- * @returns {Operation}
+ * @returns {operation}
  */
 export function upsert(sObject, externalId, attrs) {
   return state => {
@@ -659,11 +659,11 @@ export function upsert(sObject, externalId, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {Boolean} logical - a logical statement that will be evaluated.
- * @param {String} sObject - API name of the sObject.
- * @param {String} externalId - ID.
- * @param {Object} attrs - Field attributes for the new object.
- * @returns {Operation}
+ * @param {boolean} logical - a logical statement that will be evaluated.
+ * @param {string} sObject - API name of the sObject.
+ * @param {string} externalId - ID.
+ * @param {object} attrs - Field attributes for the new object.
+ * @returns {operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
@@ -706,9 +706,9 @@ export function upsertIf(logical, sObject, externalId, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
- * @returns {Operation}
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new object.
+ * @returns {operation}
  */
 export function update(sObject, attrs) {
   return state => {
@@ -733,7 +733,7 @@ export function update(sObject, attrs) {
  * reference(0)
  * @function
  * @param {number} position - Position for references array.
- * @returns {State}
+ * @returns {state}
  */
 export function reference(position) {
   return state => state.references[position].id;
@@ -794,8 +794,8 @@ function createAccessTokenConnection(state) {
  * Creates a connection to Salesforce using Basic Auth or OAuth.
  * @function createConnection
  * @private
- * @param {State} state - Runtime state.
- * @returns {State}
+ * @param {state} state - Runtime state.
+ * @returns {state}
  */
 function createConnection(state) {
   if (state.connection) {
@@ -812,8 +812,8 @@ function createConnection(state) {
 /**
  * Executes an operation.
  * @function
- * @param {Operation} operations - Operations
- * @returns {State}
+ * @param {operation} operations - Operations
+ * @returns {state}
  */
 export function execute(...operations) {
   const initialState = {
@@ -842,8 +842,8 @@ export function execute(...operations) {
  * @example
  * cleanupState(state)
  * @function
- * @param {State} state
- * @returns {State}
+ * @param {state} state
+ * @returns {state}
  */
 function cleanupState(state) {
   delete state.connection;
@@ -858,7 +858,7 @@ function cleanupState(state) {
  *   update(params)
  * )
  * @function
- * @returns {Array}
+ * @returns {array}
  */
 export function steps(...operations) {
   return flatten(operations);
@@ -874,7 +874,7 @@ export function steps(...operations) {
  *   return state;
  * });
  * @param {string} input - A string with unicode characters
- * @returns {String} - ASCII representation of input string
+ * @returns {string} - ASCII representation of input string
  */
 export function toUTF8(input) {
   return anyAscii(input);
@@ -888,14 +888,14 @@ export function toUTF8(input) {
  *   method: 'POST',
  *   json: { inputs: [{}] },
  * });
- * @param {String} url - Relative or absolute URL to request from
- * @param {Object} options - Request options
- * @param {String} [options.method=GET] - HTTP method to use. Defaults to GET
- * @param {Object} [options.headers] - Object of request headers
- * @param {Object} [options.json] - A JSON Object request body
- * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
- * @param {Function} callback - A callback to execute once the request is complete
- * @returns {Operation}
+ * @param {string} url - Relative or absolute URL to request from
+ * @param {object} options - Request options
+ * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
+ * @param {object} [options.headers] - Object of request headers
+ * @param {object} [options.json] - A JSON Object request body
+ * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @param {function} callback - A callback to execute once the request is complete
+ * @returns {operation}
  */
 
 export function request(path, options, callback = s => s) {
