@@ -82,7 +82,7 @@ export function describeAll() {
 }
 
 /**
- * Outputs basic information about an sObject to `STDOUT`.
+ * Returns basic information about an sObject.
  * @public
  * @example
  * describe('obj_name')
@@ -160,7 +160,7 @@ export function retrieve(sObject, id, callback) {
  * @function
  * @param {String} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {Object} options - Options passed to the bulk api.
- * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
+ * @param {Boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
@@ -307,8 +307,8 @@ const defaultOptions = {
  * @function
  * @param {String} qs - A query string.
  * @param {Object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
+ * @param {Integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
+ * @param {Integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @param {Function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
@@ -364,16 +364,29 @@ export function bulkQuery(qs, options, callback) {
  * Create and execute a bulk job.
  * @public
  * @example
- * bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {
- *   return state.data.someArray.map(x => {
- *     return { 'Age__c': x.age, 'Name': x.name }
- *   })
- * });
+ * bulk(
+ *   "Patient__c",
+ *   "insert",
+ *   { failOnError: true, pollInterval: 3000, pollTimeout: 240000 },
+ *   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+ * );
+ * @example <caption>Bulk upsert</caption>
+ * bulk(
+ *   "vera__Beneficiary__c",
+ *   "upsert",
+ *   { extIdField: "vera__External_ID__c", failOnError: true },
+ *   (state) => state.data
+ * );
  * @function
  * @param {String} sObject - API name of the sObject.
- * @param {String} operation - The bulk operation to be performed
+ * @param {String} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
  * @param {Object} options - Options passed to the bulk api.
- * @param {Function} records - an array of records, or a function which returns an array.
+ * @param {Integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
+ * @param {Integer} [options.pollInterval=6000] - Polling interval in milliseconds.
+ * @param {String} [options.extIdField] - External id field.
+ * @param {Boolean} [options.failOnError] - Fail the operation on error.
+ * @param {Boolean} [options.allowNoOp] - For skipping operation.
+ * @param {Array} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
@@ -511,7 +524,7 @@ export function destroy(sObject, attrs, options) {
 }
 
 /**
- * Create a new object.
+ * Create a new sObject record(s).
  * @public
  * @example
  * create('obj_name', {
@@ -520,7 +533,7 @@ export function destroy(sObject, attrs, options) {
  * })
  * @function
  * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {Object} attrs - Field attributes for the new record.
  * @returns {Operation}
  */
 export function create(sObject, attrs) {
@@ -540,7 +553,24 @@ export function create(sObject, attrs) {
 }
 
 /**
- * Create a new object if conditions are met.
+ * Synonym for "create(sObject, attrs)".
+ * @public
+ * @example
+ * insert('obj_name', {
+ *   attr1: "foo",
+ *   attr2: "bar"
+ * })
+ * @function
+ * @param {String} sObject - API name of the sObject.
+ * @param {Object} attrs - Field attributes for the new record.
+ * @returns {Operation}
+ */
+export function insert(sObject, attrs) {
+  return create(sObject, attrs);
+}
+
+/**
+ * Create a new sObject if conditions are met.
  * @public
  * @example
  * createIf(true, 'obj_name', {
@@ -548,7 +578,7 @@ export function create(sObject, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {boolean} logical - a logical statement that will be evaluated.
+ * @param {Boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {Object} attrs - Field attributes for the new object.
  * @returns {Operation}
@@ -580,7 +610,8 @@ export function createIf(logical, sObject, attrs) {
 }
 
 /**
- * Upsert an object.
+ * Upsert an sObject.
+ * This function creates or updates an sObject record based on the external ID provided.
  * @public
  * @example
  * upsert('obj_name', 'ext_id', {
@@ -590,7 +621,7 @@ export function createIf(logical, sObject, attrs) {
  * @function
  * @param {String} sObject - API name of the sObject.
  * @magic sObject - $.children[?(!@.meta.system)].name
- * @param {String} externalId - ID.
+ * @param {String} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {Object} attrs - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
@@ -628,7 +659,7 @@ export function upsert(sObject, externalId, attrs) {
  *   attr2: "bar"
  * })
  * @function
- * @param {boolean} logical - a logical statement that will be evaluated.
+ * @param {Boolean} logical - a logical statement that will be evaluated.
  * @param {String} sObject - API name of the sObject.
  * @param {String} externalId - ID.
  * @param {Object} attrs - Field attributes for the new object.
@@ -667,7 +698,7 @@ export function upsertIf(logical, sObject, externalId, attrs) {
 }
 
 /**
- * Update an object.
+ * Update an sObject.
  * @public
  * @example
  * update('obj_name', {
