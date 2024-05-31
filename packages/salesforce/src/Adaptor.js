@@ -585,7 +585,7 @@ export function insert(sObject, attrs) {
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
+ * @param {(object|object[])} attrs -  An object or array of objects
  * @returns {operation}
  */
 export function createIf(logical, sObject, attrs) {
@@ -630,7 +630,7 @@ export function createIf(logical, sObject, attrs) {
  * @magic sObject - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
+ * @param {(object|object[])} attrs -  An object or array of objects
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {operation}
  */
@@ -669,7 +669,7 @@ export function upsert(sObject, externalId, attrs) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {string} externalId - ID.
- * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
+ * @param {(object|object[])} attrs -  An object or array of objects
  * @returns {operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
@@ -719,7 +719,7 @@ export function upsertIf(logical, sObject, externalId, attrs) {
  * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
+ * @param {(object|object[])} attrs -  An object or array of objects
  * @returns {operation}
  */
 export function update(sObject, attrs) {
