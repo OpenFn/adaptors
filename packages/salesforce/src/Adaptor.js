@@ -533,11 +533,10 @@ export function destroy(sObject, attrs, options) {
 /**
  * Create a new sObject record(s).
  * @public
- * @example
- * create('obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record creation</caption>
+ * create("Account", { Name: "My Account #1" });
+ * @example <caption> Multiple records creation</caption>
+ * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Field attributes for the new record.
@@ -562,11 +561,10 @@ export function create(sObject, attrs) {
 /**
  * Synonym for "create(sObject, attrs)".
  * @public
- * @example
- * insert('obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record creation</caption>
+ * insert("Account", { Name: "My Account #1" });
+ * @example <caption> Multiple records creation</caption>
+ * insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Field attributes for the new record.
@@ -587,7 +585,7 @@ export function insert(sObject, attrs) {
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Field attributes for the new object.
+ * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
  * @returns {operation}
  */
 export function createIf(logical, sObject, attrs) {
@@ -617,20 +615,22 @@ export function createIf(logical, sObject, attrs) {
 }
 
 /**
- * Upsert an sObject.
- * This function creates or updates an sObject record based on the external ID provided.
+ * Upsert an sObject record or records.
+ * This function creates or updates an sObject record(s). External ID field name must be specified in second argument.
  * @public
- * @example
- * upsert('obj_name', 'ext_id', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record upsert </caption>
+ * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
+ * @example <caption> Multiple record upsert </caption>
+ * upsert("UpsertTable__c", "ExtId__c", [
+ *   { Name: "Record #1", ExtId__c : 'ID-0000001' },
+ *   { Name: "Record #2", ExtId__c : 'ID-0000002' },
+ * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
  * @magic sObject - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {object} attrs - Field attributes for the new object.
+ * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {operation}
  */
@@ -669,7 +669,7 @@ export function upsert(sObject, externalId, attrs) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {string} externalId - ID.
- * @param {object} attrs - Field attributes for the new object.
+ * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
  * @returns {operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
@@ -705,16 +705,21 @@ export function upsertIf(logical, sObject, externalId, attrs) {
 }
 
 /**
- * Update an sObject.
+ * Update an sObject record or records.
  * @public
- * @example
- * update('obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record update</caption>
+ * update("Account", {
+ *   Id: "0010500000fxbcuAAA",
+ *   Name: "Updated Account #1",
+ * });
+ * @example <caption> Multiple records update</caption>
+ * update("Account", [
+ *   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+ *   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+ * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Field attributes for the new object.
+ * @param {(object|object[])} attrs -  The data to process, either a single object or an array of objects.
  * @returns {operation}
  */
 export function update(sObject, attrs) {
