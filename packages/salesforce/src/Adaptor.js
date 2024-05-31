@@ -615,8 +615,8 @@ export function createIf(logical, sObject, attrs) {
 }
 
 /**
- * Upsert an sObject record or records.
- * This function creates or updates an sObject record(s). External ID field name must be specified in second argument.
+ * Create a new sObject record, or updates it if it already exists
+ * External ID field name must be specified in second argument.
  * @public
  * @example <caption> Single record upsert </caption>
  * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
@@ -658,7 +658,7 @@ export function upsert(sObject, externalId, attrs) {
 }
 
 /**
- * Upsert if conditions are met.
+ * Conditionally create a new sObject record, or updates it if it already exists
  * @public
  * @example
  * upsertIf(true, 'obj_name', 'ext_id', {
