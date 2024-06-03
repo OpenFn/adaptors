@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 4.6.10
+
+### Patch Changes
+
+- 90f44c62: Include the Salesforce query response in the result, even if no
+  records are found.
+
 ## 4.6.9
 
 ### Patch Changes
