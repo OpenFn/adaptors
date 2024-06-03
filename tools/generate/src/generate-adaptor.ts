@@ -8,7 +8,7 @@ const generateAdaptor = async (adaptorName: string) => {
 
   try {
     await fs.stat(adaptorPath);
-    console.error(`The adaptor path "${adaptorPath}" already exists.`);
+    console.error(`The adaptor path "${adaptorPath}" already exists`);
     process.exit(1);
   } catch (error: any) {
     if (error.code !== 'ENOENT') {
@@ -23,9 +23,12 @@ const generateAdaptor = async (adaptorName: string) => {
   await copyAndRename(templatePath, adaptorPath, adaptorName);
   console.log(`Adaptor "${adaptorName}" created successfully.`);
   console.log(
-    `Reminder: Change the assets 🖼️  for your new adaptor "${adaptorName}".`
+    `Update Adaptor.js and Utils.js to enable access to the backing datasource`
   );
-  console.log(`Reminder: Run "pnpm install" to install your packages.`);
+  console.log(
+    `Reminder: Change the assets 🖼️  for your new adaptor "${adaptorName}"`
+  );
+  console.log(`Reminder: Run "pnpm install" to install your packages`);
 };
 
 const fileMap = { package_json: 'package.json' };

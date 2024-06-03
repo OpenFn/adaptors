@@ -8,6 +8,21 @@ import {
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
+export const prepareNextState = (state, response, callback = s => s) => {
+  const { body, ...responseWithoutBody } = response;
+
+  if (!state.references) {
+    state.references = [];
+  }
+
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+
+  return callback(nextState);
+};
+
 // This helper function will call out to the backend service
 // And add authorisation headers
 export const request = (state, method, path, data) => {
