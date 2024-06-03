@@ -22,12 +22,17 @@ const generateAdaptor = async (adaptorName: string) => {
   console.log(`Creating new adaptor: ${adaptorName}`);
   await copyAndRename(templatePath, adaptorPath, adaptorName);
   console.log(`Adaptor "${adaptorName}" created successfully.`);
+  console.log();
+  console.log('Next steps:');
   console.log(
-    `Update Adaptor.js and Utils.js to enable access to the backing datasource`
+    `  Update Adaptor.js and Utils.js to enable access to the backing datasource`
   );
+  console.log(`  Change the assets 🖼️  for your new adaptor "${adaptorName}"`);
+  console.log(`  Review unit tests`);
   console.log(
-    `Reminder: Change the assets 🖼️  for your new adaptor "${adaptorName}"`
+    `  Consider updating the changelog to reflect the state of the first release`
   );
+  console.log();
   console.log(`Reminder: Run "pnpm install" to install your packages`);
 };
 

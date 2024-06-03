@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import util from './Utils';
+import * as util from './Utils';
 
 /**
  * Make a GET request
@@ -44,26 +44,20 @@ export function post(path, params, callback) {
  */
 export function request(method, path, body, params = {}, callback = s => s) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-    try {
-      const response = await util.request(
-        state.configuration,
-        `/${resolvedPath}`,
-        {
-          method,
-          params: resolvedParams,
-          data: resolvedData,
-        }
-      );
+    const [resolvedMethod, resolvedPath, resolvedData, resolvedParams] =
+      expandReferences(state, method, path, body, params);
 
-      return util.prepareNextState(state, response, callback);
-    } catch (e) {
-      throw e.body ?? e;
-    }
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        params: resolvedParams,
+        data: resolvedData,
+      }
+    );
+
+    return util.prepareNextState(state, response, callback);
   };
 }
 

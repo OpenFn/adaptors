@@ -37,8 +37,8 @@ describe('request', () => {
     };
 
     const finalState = await request('POST', 'patients', {
-      name: dataValue('fullName')(state),
-      gender: dataValue('gender')(state),
+      name: state.data.fullName,
+      gender: state.data.gender,
     })(state);
 
     expect(finalState.data).to.eql({
