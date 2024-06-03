@@ -218,6 +218,7 @@ export function query(qs, options, callback = s => s) {
         result.map(ref => ref.records).flat().length
       );
     } else {
+      result.push(qResult);
       console.log('No records found.');
     }
 
