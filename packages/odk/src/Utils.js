@@ -1,8 +1,3 @@
-/**
- * If you have any helper functions which are NOT operations,
- * you should add them here
- */
-
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
@@ -57,7 +52,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
 
 function removeLeadingSlash(url) {
   if (url.startsWith('/')) {
-      return url.substring(1);
+    return url.substring(1);
   }
   return url;
 }
@@ -71,10 +66,6 @@ export const request = (
 ) => {
   const { baseUrl, access_token } = configuration;
 
-  const errors = {
-    404: 'Page not found',
-  };
-
   const options = {
     body: data,
 
@@ -85,8 +76,6 @@ export const request = (
     },
 
     parseAs: 'json',
-
-    errors,
   };
 
   const url = `${baseUrl}/${removeLeadingSlash(path)}`;

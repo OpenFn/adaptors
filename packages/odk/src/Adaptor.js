@@ -48,15 +48,13 @@ export function get(path, params, headers, callback) {
  * @example
  * getForms(22);
  * @function
- * @param {number} id - Id of the project you want to get its forms
- * @param {Object} params - Optional request params
- * @param {Object} headers - Optional request headers
+ * @param {number} projectId - Id of the project you want to get its forms
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getForms(id, params, headers, callback) {
-  const path = `/v1/projects/${id}/forms`;
-  return request('GET', path, null, params, callback, headers);
+export function getForms(projectId, callback) {
+  const path = `/v1/projects/${projectId}/forms`;
+  return request('GET', path, null, callback);
 }
 
 /**
@@ -66,8 +64,6 @@ export function getForms(id, params, headers, callback) {
  * @function
  * @param {number} projectId - Id of the project you want to get its forms submissions
  * @param {string} xmlFormId - Id of the form you want to get its submissions
- * @param {Object} params - Optional request params
- * @param {Object} headers - Optional request headers
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
@@ -79,7 +75,7 @@ export function getSubmissions(
   callback
 ) {
   const path = `/v1/projects/${projectId}/forms/${xmlFormId}/submissions`;
-  return request('GET', path, null, params, callback, headers);
+  return request('GET', path, null, callback);
 }
 
 /**
@@ -100,6 +96,7 @@ export function post(path, data, params, callback) {
 /**
  * Make a general HTTP request
  * @example
+ * @public
  * request("POST", 'v1/projects', { name: 'Project Name' });
  * @function
  * @param {string} method - HTTP method to use
