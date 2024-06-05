@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "ODK base URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "https://odk.com"
+      ]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": [
+        "test@openfn.org"
+      ]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": [
+        "@some(!)Str0ngp4ss0w0rd"
+      ]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your ODK access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "the-long-access-token-from-your-auth"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "password",
+    "username",
+    "baseUrl"
+  ]
+}

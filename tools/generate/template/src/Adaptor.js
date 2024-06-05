@@ -12,7 +12,7 @@ import * as util from './Utils';
  * @returns {Operation}
  */
 export function get(path, params, callback) {
-  return request('POST', path, null, params, callback);
+  return request('GET', path, null, params, callback);
 }
 
 /**
