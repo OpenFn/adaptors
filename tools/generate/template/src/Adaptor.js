@@ -34,8 +34,8 @@ export function post(path, params, callback) {
  * Make a general HTTP request
  * @example
  * request("POST", "patient", { "name":"Bukayo" });
- * @public
  * @function
+ * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
  * @param {object} data - Object which will be attached to the POST body

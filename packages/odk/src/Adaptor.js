@@ -70,8 +70,6 @@ export function getForms(projectId, callback) {
 export function getSubmissions(
   projectId,
   xmlFormId,
-  params,
-  headers,
   callback
 ) {
   const path = `/v1/projects/${projectId}/forms/${xmlFormId}/submissions`;
@@ -97,8 +95,8 @@ export function post(path, data, params, callback) {
  * Make a general HTTP request
  * @example
  * request("POST", 'v1/projects', { name: 'Project Name' });
- * @public
  * @function
+ * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
  * @param {object} data - Object which will be attached to the POST body

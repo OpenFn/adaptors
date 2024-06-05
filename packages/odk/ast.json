@@ -1,5 +1,92 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "body",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a general HTTP request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the POST body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional request params",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    }
+  ],
   "exports": [],
   "common": [
     {
