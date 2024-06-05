@@ -33,8 +33,8 @@ export function post(path, params, callback) {
 /**
  * Make a general HTTP request
  * @example
- * @public
  * request("POST", "patient", { "name":"Bukayo" });
+ * @public
  * @function
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource

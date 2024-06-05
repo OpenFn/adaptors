@@ -96,8 +96,8 @@ export function post(path, data, params, callback) {
 /**
  * Make a general HTTP request
  * @example
- * @public
  * request("POST", 'v1/projects', { name: 'Project Name' });
+ * @public
  * @function
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
