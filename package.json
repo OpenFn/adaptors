@@ -8,6 +8,8 @@
   "scripts": {
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
+    "docs:publish": "pnpm exec scripts/publish-docs.sh",
+    "docs:build": "pnpm exec scripts/build-docs.sh",
     "build:tools": "pnpm --filter \"./tools/**\" build",
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
