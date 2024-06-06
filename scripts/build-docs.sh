@@ -1,5 +1,7 @@
 #!/bin/sh -l
 
+echo "Building docs.json"
+
 # clean tmp directory
 mkdir -p tmp
 rm -rf tmp/*
@@ -15,8 +17,9 @@ find tmp/*/* -type d -empty -delete
 
 # flatten json files
 # jq -s 'flatten' packages/*/docs/*.json > docs/docs.json
-rm tmp/*.json
-# add first opening bracked
+# rm tmp/*.json
+
+# add first opening bracket
 echo [ >>tmp/tmp.json
 # use all json files in current folder
 for i in packages/*/docs/*.json; do
@@ -34,13 +37,4 @@ rm tmp/tmp.json
 # add closing bracket
 echo ] >>tmp/docs.json
 
-# commit new docs
-git fetch origin docs
-git switch docs
-
-rsync -pr tmp/* docs/
-
-git add docs --force
-git status
-git add -A && git commit -m"Update auto-generated documentation."
-git push origin docs
+echo "Done!"

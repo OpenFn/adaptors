@@ -41,8 +41,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build docs
         run: pnpm build:adaptors docs
-      - name: Commit docs to docs branch
-        run: pnpm exec .github/workflows/docs.sh
+      - name: Generate docs.json
+        run: pnpm docs:build
+      - name: Commit docs.json to docs branch
+        run: pnpm docs:publish
 
       # Trigger a rebuild on the docs site to pull adaptor docs
       - name: Trigger deploy on openFn/docs
