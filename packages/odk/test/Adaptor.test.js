@@ -74,7 +74,7 @@ describe('Create Project', () => {
         path: '/v1/projects',
         method: 'POST',
       })
-      .reply(403);
+      .reply(403, 'Forbidden');
 
     const state = {
       configuration: {
@@ -90,7 +90,7 @@ describe('Create Project', () => {
       return error;
     });
 
-    expect(error.statusMessage).to.eql('Forbidden');
+    expect(error).to.eql('Forbidden');
   });
 });
 
