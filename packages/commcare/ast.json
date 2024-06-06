@@ -17,8 +17,13 @@
           },
           {
             "title": "example",
-            "description": "get(\n   \"case\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)\n * @example <caption>Get a specific case </caption>\nget(\n   \"case/12345\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)",
+            "description": "get(\n   \"case\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)",
             "caption": "Get a list of cases"
+          },
+          {
+            "title": "example",
+            "description": "get(\n   \"case/12345\"\n   {\n     limit: 1,\n     offset:0,\n   }\n)",
+            "caption": "Get a specific case"
           },
           {
             "title": "function",
@@ -39,7 +44,7 @@
             "description": "Optional request params such as limit and offset.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestQueries"
             },
             "name": "params"
           },
@@ -101,10 +106,10 @@
           },
           {
             "title": "param",
-            "description": "Request params including case type and external id.",
+            "description": "Request params including case type.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },
