@@ -1,6 +1,280 @@
 {
   "operations": [
     {
+      "name": "get",
+      "params": [
+        "path",
+        "params",
+        "headers",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a GET request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get(\"v1/projects\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional request params",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "Optional request headers",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "headers"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getForms",
+      "params": [
+        "projectId",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a GET request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getForms(22);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Id of the project you want to get its forms",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "projectId"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getSubmissions",
+      "params": [
+        "projectId",
+        "xmlFormId",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a GET request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getSubmissions(22, 'test');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Id of the project you want to get its forms submissions",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "projectId"
+          },
+          {
+            "title": "param",
+            "description": "Id of the form you want to get its submissions",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "xmlFormId"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a POST request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "post('v1/projects', { name: 'Project Name' });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the POST body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional request params",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "request",
       "params": [
         "method",
@@ -17,14 +291,14 @@
             "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });"
           },
           {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
