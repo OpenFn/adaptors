@@ -3,17 +3,33 @@
  * you should add them here
  */
 
+import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
+export const prepareNextState = (state, response, callback = s => s) => {
+  const { body, ...responseWithoutBody } = response;
+
+  if (!state.references) {
+    state.references = [];
+  }
+
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+
+  return callback(nextState);
+};
+
 // This helper function will call out to the backend service
 // And add authorisation headers
-export const request = (state, method, path, data) => {
+export const request = (configuration = {}, method, path, data) => {
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { baseUrl, username, password } = state.configuration;
+  const { baseUrl, username, password } = configuration;
   const headers = makeBasicAuthHeader(username, password);
 
   // TODO You can define custom error messages here

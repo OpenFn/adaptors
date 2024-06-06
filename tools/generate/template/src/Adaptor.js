@@ -1,96 +1,78 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request } from './Utils';
+import * as util from './Utils';
 
-// TODO You can override the execute function to run code at the start
-//      and end of job execution. This is useful for initialising and destroying
-//      client objects. In this example we need it to create the references array.
 /**
- * Execute a sequence of operations.
- * Wraps `language-common/execute` to make working with this API easier.
+ * Make a GET request
  * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
- * @private
- * @param {Operations} operations - Operations to be performed.
- * @returns {Operation}
- */
-export function execute(...operations) {
-  const initialState = {
-    references: [],
-    data: null,
-  };
-
-  // TODO: Add session-based authentication here if your API needs it.
-  return state => {
-    return commonExecute(...operations)({
-      ...initialState,
-      ...state,
-    });
-  };
-}
-
-// TODO this is example Operations which might create a resource on
-//      on a fictional service. It demonstrates best practice for how
-//      Operations should be written
-/**
- * Create some resource in some system
- * @public
- * @example
- * create("patient", {"name": "Bukayo"})
+ * get("patient");
  * @function
- * @param {string} resource - The type of entity that will be created
- * @param {object} data - The data to create the new resource from
- * @param {function} callback - An optional callback function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {Object} params - Optional request params
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function create(resource, data, callback = s => s) {
+export function get(path, params, callback) {
+  return request('GET', path, null, params, callback);
+}
+
+/**
+ * Make a POST request
+ * @example
+ * post("patient", { "name":"Bukayo" });
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {object} data - Object which will be attached to the POST body
+ * @param {Object} params - Optional request params
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function post(path, params, callback) {
+  return request('POST', path, null, params, callback);
+}
+
+/**
+ * Make a general HTTP request
+ * @example
+ * request("POST", "patient", { "name":"Bukayo" });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} data - Object which will be attached to the POST body
+ * @param {Object} params - Optional request params
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function request(method, path, body, params = {}, callback = s => s) {
   return async state => {
-    // Parameters like resource and data might be passed as functions, which
-    // allow us to lazily evaluate state references
-    // The expand function will either return the provided values back to us,
-    // or evaluate them first
-    const [resolvedResource, resolvedData] = expandReferences(
-      state,
-      resource,
-      data
+    const [resolvedMethod, resolvedPath, resolvedData, resolvedParams] =
+      expandReferences(state, method, path, body, params);
+
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        params: resolvedParams,
+        data: resolvedData,
+      }
     );
 
-    // Make the request to the service
-    // See src/Utils.js for the request implementation
-    const response = await request(
-      state,
-      'POST',
-      resolvedResource,
-      resolvedData
-    );
-
-    // Write the result to state.data, update the references array,  and save response metadata
-    const nextState = {
-      ...composeNextState(state, response.body),
-      response,
-    };
-
-    // Invoke the callback (if passed) before returning
-    return callback(nextState);
+    return util.prepareNextState(state, response, callback);
   };
 }
 
-// TODO: Decide which functions to publish from @openfn/language-common
 export {
   dataPath,
   dataValue,
   dateFns,
+  cursor,
   each,
   field,
   fields,
   fn,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
