@@ -33,6 +33,7 @@ export function execute(...operations) {
  * @example
  * get("v1/projects");
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {Object} params - Optional request params
  * @param {Object} headers - Optional request headers
@@ -48,6 +49,7 @@ export function get(path, params, headers, callback) {
  * @example
  * getForms(22);
  * @function
+ * @public
  * @param {number} projectId - Id of the project you want to get its forms
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -62,16 +64,13 @@ export function getForms(projectId, callback) {
  * @example
  * getSubmissions(22, 'test');
  * @function
+ * @public
  * @param {number} projectId - Id of the project you want to get its forms submissions
  * @param {string} xmlFormId - Id of the form you want to get its submissions
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getSubmissions(
-  projectId,
-  xmlFormId,
-  callback
-) {
+export function getSubmissions(projectId, xmlFormId, callback) {
   const path = `/v1/projects/${projectId}/forms/${xmlFormId}/submissions`;
   return request('GET', path, null, callback);
 }
@@ -81,6 +80,7 @@ export function getSubmissions(
  * @example
  * post('v1/projects', { name: 'Project Name' });
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object which will be attached to the POST body
  * @param {Object} params - Optional request params
@@ -122,8 +122,7 @@ export function request(method, path, body, params = {}, callback = s => s) {
 
       return util.prepareNextState(state, response, callback);
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw error.statusCode === 404 ? 'Page Not Found' : error.body ?? error;
     }
   };
 }

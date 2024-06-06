@@ -6,6 +6,7 @@ import * as util from './Utils';
  * @example
  * get("patient");
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {Object} params - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
@@ -20,6 +21,7 @@ export function get(path, params, callback) {
  * @example
  * post("patient", { "name":"Bukayo" });
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object which will be attached to the POST body
  * @param {Object} params - Optional request params
