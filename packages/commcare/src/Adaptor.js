@@ -7,6 +7,31 @@ import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
 
 /**
+ * Queries provided to the GET request
+ * @typedef {Object} RequestQueries
+ * @property {number} limit - The maximum number of records to return. Default: 20. Maximum: 5000.
+ * @property {number} offset - The number of records to offset in the results. Default: 0
+ * @property {string} xmlns - Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)
+ * @property {string} indexed_on_start - Optional date (and time). Will return only forms that have had data modified since the passed in date.
+ * @property {string} indexed_on_end - Optional date (and time). Will return only forms that have had data modified before the passed in date.
+ * @property {string} received_on_start - Optional date (and time). Will return only forms that were received after the passed in date.
+ * @property {string} received_on_end - Optional date (and time). Will return only forms that were received before the passed in date.
+ * @property {string} app_id - The returned records will be limited to the application defined
+ * @property {string} case_id - A case UUID.  Will only return forms which updated that case.
+ * @property {string} owner_id - Optional user of group UUID used when getting cases
+ * @property {string} user_id - Optional UUID for all cases last modified by that user
+ * @property {string} type - Optional case type to get all matching cases
+ */
+
+/**
+ * Queries provided to the submitXls request
+ * @typedef {Object} RequestOptions
+ * @property {string} case_type - Optional case type
+ * @property {string} search_field - Optional search field
+ * @property {string} create_new_cases - Optional for allowing to create new cases. Default `:on`
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for commcare.
  * @example
@@ -30,28 +55,16 @@ export function execute(...operations) {
 }
 
 /**
- * Make a get request to any commcare endpoint
- * - The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.
+ * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+ * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
- * get(
- *    "case"
- *    {
- *      limit: 1,
- *      offset:0,
- *    }
- * )
- *  * @example <caption>Get a specific case </caption>
- * get(
- *    "case/12345"
- *    {
- *      limit: 1,
- *      offset:0,
- *    }
- * )
+ * get("case", { limit: 20 })
+ * @example <caption>Get a specific case </caption>
+ * get("case/12345")
  * @function
  * @param {string} path - Path to resource
- * @param {Object} params - Optional request params such as limit and offset.
+ * @param {RequestQueries} params - Optional request params such as limit and offset.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
@@ -77,7 +90,10 @@ export function get(path, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      throw e.body ?? e;
+      if (e.statusCode === 404) {
+        e.body = { error: `Resource ${path} not found` };
+      }
+      throw e.body.error ?? e;
     }
   };
 }
@@ -85,12 +101,9 @@ export function get(path, params = {}, callback = s => s) {
 /**
  * Make a post request to commcare
  * @example
- * post(
- *   "user",
- *  {"username":"test",
- *  "password":"somepassword"}
- * );
+ * post( "user", { "username":"test", "password":"somepassword" })
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object or JSON which defines data that will be used to create a given instance of resource
  * @param {Object} params - Optional request params.
@@ -106,7 +119,7 @@ export function post(path, data, params = {}, callback = s => s) {
       data,
       params
     );
-  
+
     try {
       const response = await request(
         state.configuration,
@@ -142,7 +155,7 @@ export function post(path, data, params = {}, callback = s => s) {
  * )
  * @function
  * @param {Object} formData - Object including form data.
- * @param {Object} params - Request params including case type and external id.
+ * @param {RequestOptions} params - Request params including case type.
  * @returns {Operation}
  */
 export function submitXls(formData, params) {
@@ -234,7 +247,7 @@ export function submit(formData) {
  * fetchReportData(reportId, params, postUrl)
  * @function
  * @param {String} reportId - API name of the report.
- * @param {Object} params - Query params, incl: limit, offset, and custom report filters.
+ * @param {RequestQueries} params - Query params, incl: limit, offset, and any custom report filters.
  * @param {String} postUrl - Url to which the response object will be posted.
  * @returns {Operation}
  */
@@ -249,17 +262,16 @@ export function fetchReportData(reportId, params, postUrl) {
       contentType: 'application/json',
     });
 
-    const result = await request(state.configuration, postUrl, {
+    await request(state.configuration, postUrl, {
       method: 'POST',
       params,
       data: reportData,
       contentType: 'application/json',
     });
 
-    delete result.response;
     console.log('fetchReportData succeeded.');
-    console.log('Posted to: '.concat(postUrl));
-    return prepareNextState(state, {});
+    console.log('Posted to: ', postUrl);
+    return state;
   };
 }
 
