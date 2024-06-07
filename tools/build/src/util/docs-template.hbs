@@ -1,7 +1,7 @@
 {{#if (showMainIndex)~}}
 
 {{#globals kind="function" ~}}
-{{#if @first~}}{{>heading-indent}}Functions
+{{#if @first~}}## Functions
 
 <dl>
 {{/if~}}
@@ -37,7 +37,7 @@ The following functions are exported from the common adaptor:
 
 {{#orphans ~}}
 
-{{>heading-indent}}{{anchorName}}
+### {{anchorName}}
 
 {{>sig-name}}
 
