@@ -1,0 +1,3 @@
+{
+  "plugins": ["../../tools/build/jsdoc/lookup-tags.cjs"]
+}
