@@ -150,9 +150,6 @@ const build = async (lang: string) => {
   await writeFile(destination, docs);
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
-  // tmp debug
-  await writeFile(`${root}/docs/raw.json`, JSON.stringify(templateData));
-
   console.log(`... done! `, destination);
   console.log();
 

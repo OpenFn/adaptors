@@ -1,10 +1,7 @@
 {{#if state}}
-
-## state
-
 This operation writes the following keys to state:
 
-{{tableHead state "name|Name" "description|Description" ~}}
+{{tableHead state "name|State Key" "description|Description" ~}}
 
 {{#tableRow state "name" "description" ~}}
 | {{#if @col1}}{{>param-table-name}} | {{/if~}}
