@@ -100,11 +100,8 @@ export function get(path, params = {}, callback = s => s) {
         }
       );
 
-      console.log({ response });
-
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.log({ e: e });
       throw e.statusCode === 404 ? 'Page not found' : e.body.error ?? e;
     }
   };
