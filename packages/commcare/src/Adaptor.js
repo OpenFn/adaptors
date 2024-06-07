@@ -90,7 +90,10 @@ export function get(path, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      throw e.statusCode === 404 ? 'Page not found' : e.body.error ?? e;
+      if (e.statusCode === 404) {
+        e.body = { error: `Resource ${path} not found` };
+      }
+      throw e.body.error ?? e;
     }
   };
 }
@@ -268,7 +271,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
     console.log('fetchReportData succeeded.');
     console.log('Posted to: ', postUrl);
-    return prepareNextState(state, { body: '' });
+    return state;
   };
 }
 
