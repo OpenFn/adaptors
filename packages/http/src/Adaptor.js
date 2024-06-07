@@ -73,7 +73,6 @@ export function request(method, path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
- * @magic path - it magic you know
  * @state data - the response body will be written to state.data
  * @state response - the resonse from the HTTP server, including headers, statusCode, body, etc
  * @state references - the last response, without the body, will be pushed to references
