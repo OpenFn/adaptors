@@ -48,6 +48,19 @@ const build = async (lang: string) => {
     'no-cache': true,
   });
 
+  // Identify Operations
+  // TODO we can later add a supporting @operation tag, but this heuristic will go a long way
+  templateData.forEach(doclet => {
+    if (
+      doclet.returns
+        ?.at(0)
+        ?.type?.names.at(0)
+        .match(/operation/i)
+    ) {
+      doclet.kind = 'operation';
+    }
+  });
+
   // sort template data
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
   templateData.sort(function (a, b) {
@@ -148,6 +161,10 @@ const build = async (lang: string) => {
   const destination = `${destinationDir}/index.md`;
   await mkdir(destinationDir, { recursive: true });
   await writeFile(destination, docs);
+  await writeFile(
+    `${destinationDir}/raw.json`,
+    JSON.stringify(templateData, null, 2)
+  );
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
 
   await writeFile(

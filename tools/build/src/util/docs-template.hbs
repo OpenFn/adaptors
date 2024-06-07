@@ -1,7 +1,9 @@
 {{#if (showMainIndex)~}}
 
-{{#globals kind="function" ~}}
-{{#if @first~}}## Functions
+{{#globals kind="operation" ~}}
+{{#if @first}}
+
+#### Operations
 
 <dl>
 {{/if~}}
@@ -12,7 +14,7 @@
 {{#if @prefix}}{{@prefix}} {{/if~}}
 {{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
 {{~#if @methodSign}}{{#if (isEvent)}} {{@methodSign}}{{else}}{{@methodSign}}{{/if}}{{/if~}}
-{{{@codeClose}~}}
+{{@codeClose~}}
 </a>
 {{~/sig}}{{/if~}}
 </dt>
@@ -20,7 +22,29 @@
 {{#if @last~}}</dl>
 {{/if~}}
 {{/globals~}}
-{{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
+
+{{#globals kind="function"}}
+{{#if @first}}
+
+#### Functions
+
+<dl>
+{{/if~}}
+<dt>
+    {{#if name}}{{#sig no-gfm=true ~}}
+<a href="#{{toLowerCase (anchorName)}}">
+{{~{@codeOpen}~}}
+{{#if @prefix}}{{@prefix}} {{/if~}}
+{{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
+{{~#if @methodSign}}{{#if (isEvent)}} {{@methodSign}}{{else}}{{@methodSign}}{{/if}}{{/if~}}
+{{@codeClose~}}
+</a>
+{{~/sig}}{{/if~}}
+</dt>
+{{#if @last~}}</dl>
+{{/if~}}
+{{/globals~}}
+
 {{/if~}}
 
 {{#commonFns}}
@@ -35,14 +59,37 @@ The following functions are exported from the common adaptor:
 {{/if}}
 {{/commonFns}}
 
-{{#orphans ~}}
+{{>separator~}}
+
+{{#globals kind="operation" ~}}
+{{#if @first~}}## Operations
+
+Operations are used at the top level of your job code. You can nest Operations, but you cannot use an Operation within a callback.
+{{/if~}}
+
+### {{anchorName}}
+
+{{! operations should list parameters but not returns }}
+{{>sig-name}}
+
+{{>body}}
+{{>separator~}}
+
+{{/globals~}}
+
+{{#globals kind="function" ~}}
+{{#if @first~}}
+
+## Functions
+
+Functions are regular Javascript functions. They are not state aware, they do not neccessarily take state and they usually don't return state. Functions can only be used inside callback functions.
+{{/if~}}
 
 ### {{anchorName}}
 
 {{>sig-name}}
 
 {{>body}}
-{{>member-index~}}
 {{>separator~}}
-{{>members~}}
-{{/orphans~}}
+
+{{/globals~}}
