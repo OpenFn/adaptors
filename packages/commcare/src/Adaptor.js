@@ -11,7 +11,7 @@ import { request, prepareNextState } from './Utils';
  * @typedef {Object} RequestQueries
  * @property {number} limit - The maximum number of records to return. Default: 20. Maximum: 5000.
  * @property {number} offset - The number of records to offset in the results. Default: 0
- * @property {string} xmlns - Optional form XML namespace. See https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS
+ * @property {string} xmlns - Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)
  * @property {string} indexed_on_start - Optional date (and time). Will return only forms that have had data modified since the passed in date.
  * @property {string} indexed_on_end - Optional date (and time). Will return only forms that have had data modified before the passed in date.
  * @property {string} received_on_start - Optional date (and time). Will return only forms that were received after the passed in date.
@@ -28,7 +28,7 @@ import { request, prepareNextState } from './Utils';
  * @typedef {Object} RequestOptions
  * @property {string} case_type - Optional case type
  * @property {string} search_field - Optional search field
- * @property {string} create_new_cases - Optional for allowing to create new cases. Default :on
+ * @property {string} create_new_cases - Optional for allowing to create new cases. Default `:on`
  */
 
 /**
@@ -55,25 +55,13 @@ export function execute(...operations) {
 }
 
 /**
- * Make a get request to any commcare endpoint
- * - The response returned is {meta:{}, objects:[]}. These are destructured where objects will be written into state.data and meta into state.response along with the status code and returned headers.
+ * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+ * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
- * get(
- *    "case"
- *    {
- *      limit: 1,
- *      offset:0,
- *    }
- * )
+ * get("case", { limit: 20 })
  * @example <caption>Get a specific case </caption>
- * get(
- *    "case/12345"
- *    {
- *      limit: 1,
- *      offset:0,
- *    }
- * )
+ * get("case/12345")
  * @function
  * @param {string} path - Path to resource
  * @param {RequestQueries} params - Optional request params such as limit and offset.
@@ -110,11 +98,7 @@ export function get(path, params = {}, callback = s => s) {
 /**
  * Make a post request to commcare
  * @example
- * post(
- *   "user",
- *  {"username":"test",
- *  "password":"somepassword"}
- * );
+ * post( "user", { "username":"test", "password":"somepassword" })
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -283,7 +267,7 @@ export function fetchReportData(reportId, params, postUrl) {
     });
 
     console.log('fetchReportData succeeded.');
-    console.log('Posted to: '.concat(postUrl));
+    console.log('Posted to: ', postUrl);
     return prepareNextState(state, { body: '' });
   };
 }
