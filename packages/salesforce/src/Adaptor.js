@@ -7,7 +7,7 @@
 
 /**
  * @typedef {function} Operation
- * @param {state} state
+ * @param {State} state
  * @ignore
  */
 
@@ -58,12 +58,12 @@ export function relationship(relationshipName, externalId, dataSource) {
 }
 
 /**
- * Prints a total number of all available sObjects and pushes the result to state.references
+ * Prints the total number of all available sObjects and pushes the result to `state.references`.
  * @public
  * @example
  * describeAll()
  * @function
- * @returns {operation}
+ * @returns {Operation}
  */
 export function describeAll() {
   return state => {
@@ -88,7 +88,7 @@ export function describeAll() {
  * describe('obj_name')
  * @function
  * @param {string} sObject - API name of the sObject.
- * @returns {operation}
+ * @returns {Operation}
  */
 export function describe(sObject) {
   return state => {
@@ -120,7 +120,7 @@ export function describe(sObject) {
  * @param {string} sObject - The sObject to retrieve
  * @param {string} id - The id of the record
  * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {operation}
+ * @returns {Operation}
  */
 export function retrieve(sObject, id, callback) {
   return state => {
@@ -162,7 +162,7 @@ export function retrieve(sObject, id, callback) {
  * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {operation}
+ * @returns {Operation}
  */
 export function query(qs, options, callback = s => s) {
   return async state => {
@@ -310,7 +310,7 @@ const defaultOptions = {
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {operation}
+ * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
   return async state => {
@@ -363,7 +363,7 @@ export function bulkQuery(qs, options, callback) {
 /**
  * Create and execute a bulk job.
  * @public
- * @example
+ * @example <caption>Bulk insert</caption>
  * bulk(
  *   "Patient__c",
  *   "insert",
@@ -374,7 +374,7 @@ export function bulkQuery(qs, options, callback) {
  * bulk(
  *   "vera__Beneficiary__c",
  *   "upsert",
- *   { extIdField: "vera__External_ID__c", failOnError: true },
+ *   { extIdField: "vera__Result_UID__c", failOnError: true },
  *   [
  *     {
  *       vera__Reporting_Period__c: 2023,
@@ -394,7 +394,7 @@ export function bulkQuery(qs, options, callback) {
  * @param {boolean} [options.failOnError] - Fail the operation on error.
  * @param {boolean} [options.allowNoOp] - For skipping operation.
  * @param {array} records - an array of records, or a function which returns an array.
- * @returns {operation}
+ * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
   return state => {
@@ -497,7 +497,7 @@ export function bulk(sObject, operation, options, records) {
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
- * @returns {operation}
+ * @returns {Operation}
  */
 export function destroy(sObject, attrs, options) {
   return state => {
@@ -540,7 +540,7 @@ export function destroy(sObject, attrs, options) {
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Field attributes for the new record.
- * @returns {operation}
+ * @returns {Operation}
  */
 export function create(sObject, attrs) {
   return state => {
@@ -568,7 +568,7 @@ export function create(sObject, attrs) {
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Field attributes for the new record.
- * @returns {operation}
+ * @returns {Operation}
  */
 export function insert(sObject, attrs) {
   return create(sObject, attrs);
@@ -586,7 +586,7 @@ export function insert(sObject, attrs) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {(object|object[])} attrs -  An object or array of objects
- * @returns {operation}
+ * @returns {Operation}
  */
 export function createIf(logical, sObject, attrs) {
   return state => {
@@ -632,7 +632,7 @@ export function createIf(logical, sObject, attrs) {
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {(object|object[])} attrs -  An object or array of objects
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
- * @returns {operation}
+ * @returns {Operation}
  */
 export function upsert(sObject, externalId, attrs) {
   return state => {
@@ -670,7 +670,7 @@ export function upsert(sObject, externalId, attrs) {
  * @param {string} sObject - API name of the sObject.
  * @param {string} externalId - ID.
  * @param {(object|object[])} attrs -  An object or array of objects
- * @returns {operation}
+ * @returns {Operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
@@ -720,7 +720,7 @@ export function upsertIf(logical, sObject, externalId, attrs) {
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {(object|object[])} attrs -  An object or array of objects
- * @returns {operation}
+ * @returns {Operation}
  */
 export function update(sObject, attrs) {
   return state => {
@@ -745,7 +745,7 @@ export function update(sObject, attrs) {
  * reference(0)
  * @function
  * @param {number} position - Position for references array.
- * @returns {state}
+ * @returns {State}
  */
 export function reference(position) {
   return state => state.references[position].id;
@@ -806,8 +806,8 @@ function createAccessTokenConnection(state) {
  * Creates a connection to Salesforce using Basic Auth or OAuth.
  * @function createConnection
  * @private
- * @param {state} state - Runtime state.
- * @returns {state}
+ * @param {State} state - Runtime state.
+ * @returns {State}
  */
 function createConnection(state) {
   if (state.connection) {
@@ -824,8 +824,8 @@ function createConnection(state) {
 /**
  * Executes an operation.
  * @function
- * @param {operation} operations - Operations
- * @returns {state}
+ * @param {Operation} operations - Operations
+ * @returns {State}
  */
 export function execute(...operations) {
   const initialState = {
@@ -854,8 +854,8 @@ export function execute(...operations) {
  * @example
  * cleanupState(state)
  * @function
- * @param {state} state
- * @returns {state}
+ * @param {State} state
+ * @returns {State}
  */
 function cleanupState(state) {
   delete state.connection;
@@ -907,7 +907,7 @@ export function toUTF8(input) {
  * @param {object} [options.json] - A JSON Object request body
  * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
  * @param {function} callback - A callback to execute once the request is complete
- * @returns {operation}
+ * @returns {Operation}
  */
 
 export function request(path, options, callback = s => s) {
