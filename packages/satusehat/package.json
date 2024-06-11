@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-satusehat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn satusehat adaptor",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common":  "workspace:*"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

@@ -1,5 +1,12 @@
 # @openfn/language-openimis
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
 ## 1.0.2
 
 ### Patch Changes
