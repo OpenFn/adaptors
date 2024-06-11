@@ -1,5 +1,12 @@
 v0.4.0
 
+## 1.13.5
+
+### Patch Changes
+
+- http helpers: Fix an issue where query parameters in the URL did not get sent
+  to the server
+
 ## 1.13.4
 
 ### Patch Changes

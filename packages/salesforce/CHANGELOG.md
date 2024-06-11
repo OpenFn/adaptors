@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 4.6.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
 ## 4.6.10
 
 ### Patch Changes
