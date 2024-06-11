@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 6.2.3
+
+### Patch Changes
+
+- Fix an issue where query parameters in the URL did not get sent to the server
+
 ## 6.2.2
 
 ### Patch Changes

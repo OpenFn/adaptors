@@ -615,7 +615,7 @@ importers:
   packages/http:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.12.0
+        specifier: workspace:*
         version: link:../common
       cheerio:
         specifier: 1.0.0-rc.12
