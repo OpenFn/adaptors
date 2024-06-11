@@ -62,6 +62,18 @@ describe('parseUrl', () => {
     expect(url).to.eql('https://www.example.org/api/a/b/c');
   });
 
+  it('should extract query parameters', () => {
+    const { query } = parseUrl('a/b/c?x=1&y=2', 'https://www.example.org/api');
+
+    expect(query).to.eql({ x: '1', y: '2' });
+  });
+
+  it('should extract empty query parameters', () => {
+    const { query } = parseUrl('a', 'https://www.example.org/api');
+
+    expect(query).to.eql({});
+  });
+
   it('should throw if base has no protocol', () => {
     try {
       parseUrl('/a/b/c', 'www.example.org');
@@ -121,6 +133,45 @@ describe('request function', () => {
       .reply(200, {});
 
     const response = await request('GET', 'https://www.example.com/api');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api');
+  });
+
+  it('should include query parameters in the url', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request(
+      'GET',
+      'https://www.example.com/api?name=homelander'
+    );
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api?name=homelander');
+  });
+
+  it('should include query parameters in the options', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: { name: 'homelander' },
+    });
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.eql('https://www.example.com/api');

@@ -1,6 +1,7 @@
 import { Client, MockAgent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
+import querystring from 'node:querystring';
 
 const clients = new Map();
 
@@ -100,6 +101,7 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
     url: url.toString(),
     baseUrl: url.origin,
     path: url.pathname,
+    query: querystring.parse(url.searchParams.toString()),
   };
 };
 
@@ -122,10 +124,15 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
  */
 export async function request(method, fullUrlOrPath, options = {}) {
   const startTime = Date.now();
-  const { url, baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
+  const {
+    url,
+    baseUrl,
+    path,
+    query: urlQuery,
+  } = parseUrl(fullUrlOrPath, options.baseUrl);
   const {
     headers = {},
-    query = {},
+    query: optionQuery = {},
     body,
     errors = {},
     timeout = 300e3, // Default to 300 seconds,
@@ -138,7 +145,10 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const response = await client.request({
     path,
-    query,
+    query: {
+      ...optionQuery,
+      ...urlQuery,
+    },
     method,
     headers,
     body: encodeRequestBody(body),
