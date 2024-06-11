@@ -1,5 +1,16 @@
 # @openfn/language-commcare
 
+## 2.1.0
+
+### Minor Changes
+
+- 0719de00: Implement better error handling and make post a public function
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
 ## 2.0.0
 
 Rebase the commcare adaptor on the new HTTP helpers.

@@ -1,5 +1,12 @@
 # @openfn/language-primero
 
+## 2.11.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
 ## 2.11.13
 
 ### Patch Changes
