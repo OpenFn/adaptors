@@ -293,6 +293,12 @@ templates in jsoc2md.
 - Run `pnpm build docs` from root (or just one adaptor folder) and inspect the
   generated `docs/index/md` file.
 
+Once built, the docs need to be compiled into a JSON file to be published to the
+docs site. This is run automatically through github actions.
+
+For local dev against the docsite, you can run `pnpm docs:build` to rebuild your
+local `docs.json` file.
+
 ## Metadata
 
 Check the Wiki for the metadata creation guide:
