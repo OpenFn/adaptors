@@ -7,8 +7,6 @@ import jsonSqlPkg from 'json-sql';
 
 const jsonSql = jsonSqlPkg();
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for cartodb.
@@ -37,7 +35,7 @@ export function execute(...operations) {
  * @example
  * execute(
  *   sql(sqlQuery)
- * )(state)
+ * )
  * @function
  * @param {object} sqlQuery - Payload data for the message
  * @returns {Operation}
@@ -66,7 +64,7 @@ export function sql(sqlQuery) {
  * @example
  * execute(
  *   addRow(table, rowData)
- * )(state)
+ * )
  * @function
  * @param {String} table - Table name
  * @param {object} rowData - data to add in the row
