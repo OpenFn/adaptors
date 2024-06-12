@@ -1,5 +1,11 @@
 v0.4.0
 
+## 1.14.0
+
+### Minor Changes
+
+- 106ecf6d: Add `fnIf` operation
+
 ## 1.13.5
 
 ### Patch Changes

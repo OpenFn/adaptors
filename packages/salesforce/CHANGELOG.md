@@ -1,5 +1,16 @@
 # @openfn/language-salesforce
 
+## 4.7.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 4.6.11
 
 ### Patch Changes

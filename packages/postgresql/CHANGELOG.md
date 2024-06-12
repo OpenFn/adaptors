@@ -1,5 +1,16 @@
 # @openfn/language-postgresql
 
+## 4.2.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 4.1.15
 
 ### Patch Changes

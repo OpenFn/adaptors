@@ -1,5 +1,16 @@
 v0.1.6
 
+## 0.5.0
+
+### Minor Changes
+
+- 3d9d564c: Add `fn` and `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 0.4.1
 
 ### Patch Changes
