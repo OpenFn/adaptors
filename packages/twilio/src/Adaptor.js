@@ -74,6 +74,7 @@ export {
   sourceValue,
   alterState,
   fn,
+  fnIf,
   http,
   each,
   merge,

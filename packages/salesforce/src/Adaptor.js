@@ -912,6 +912,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   http,
   humanProper,
   index,

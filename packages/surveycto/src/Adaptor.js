@@ -174,6 +174,7 @@ export function cursor(value, options) {
 
 export {
   fn,
+  fnIf,
   chunk,
   merge,
   field,

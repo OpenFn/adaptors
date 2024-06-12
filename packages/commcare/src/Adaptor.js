@@ -277,6 +277,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
 export {
   fn,
+  fnIf,
   alterState,
   arrayToString,
   combine,

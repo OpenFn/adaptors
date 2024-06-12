@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -54,9 +53,8 @@ export function execute(...operations) {
  */
 export function postData(params, callback) {
   return state => {
-    const { url, body, headers, agentOptions } = expandReferences(params)(
-      state
-    );
+    const { url, body, headers, agentOptions } =
+      expandReferences(params)(state);
 
     return http
       .post({
@@ -82,6 +80,8 @@ export function postData(params, callback) {
 
 // What functions do you want from the common adaptor?
 export {
+  fn,
+  fnIf,
   alterState,
   dataPath,
   dataValue,

@@ -101,6 +101,7 @@ export function addRow(table, rowData) {
 
 export {
   fn,
+  fnIf,
   field,
   fields,
   sourceValue,

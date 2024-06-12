@@ -267,6 +267,7 @@ export * from 'lodash/fp';
 export {
   alterState,
   fn,
+  fnIf,
   dataPath,
   dataValue,
   each,

@@ -130,6 +130,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   parseCsv,
   lastReferenceValue,
   merge,

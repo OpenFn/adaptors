@@ -217,4 +217,6 @@ export {
   toArray,
   arrayToString,
   alterState,
+  fn,
+  fnIf,
 } from '@openfn/language-common';
