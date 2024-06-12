@@ -1,6 +1,6 @@
 #!/bin/sh -l
+echo "Committing new docs"
 
-# commit new docs
 git fetch origin docs
 git switch docs
 
@@ -10,5 +10,7 @@ git add docs --force
 git status
 git add -A && git commit -m "Update auto-generated documentation."
 
-# push
+echo "Pushing to docs branch"
 git push origin docs
+
+echo "Done!"
