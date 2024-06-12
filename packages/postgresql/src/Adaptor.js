@@ -157,25 +157,25 @@ function queryHandler(state, query, options, callback) {
  * @example
  * sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
  * @function
- * @param {string} sqlString - A sequence of characters that forms a valid SQL command.
+ * @param {string} sqlQuery - The SQL query as a string.
  * @param {object} [options] - Optional options argument
  * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
  * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function sql(sqlString, options, callback) {
+export function sql(sqlQuery, options, callback) {
   return state => {
     const { client } = state;
 
-    const [resolvedSqlString, resolvedOptions] = expandReferences(
+    const [resolvedSqlQuery, resolvedOptions] = expandReferences(
       state,
-      sqlString,
+      sqlQuery,
       options
     );
     try {
       console.log('Preparing to execute sql statement');
-      return queryHandler(state, resolvedSqlString, resolvedOptions, callback);
+      return queryHandler(state, resolvedSqlQuery, resolvedOptions, callback);
     } catch (e) {
       client.end();
       throw e;
