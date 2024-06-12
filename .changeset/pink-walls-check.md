@@ -2,14 +2,12 @@
 '@openfn/language-asana': minor
 '@openfn/language-azure-storage': minor
 '@openfn/language-beyonic': minor
-'@openfn/language-bigquery': minor
 '@openfn/language-cartodb': minor
 '@openfn/language-commcare': minor
 '@openfn/language-dhis2': minor
 '@openfn/language-dynamics': minor
 '@openfn/language-facebook': minor
 '@openfn/language-fhir': minor
-'@openfn/language-godata': minor
 '@openfn/language-googlehealthcare': minor
 '@openfn/language-googlesheets': minor
 '@openfn/language-hive': minor
@@ -21,7 +19,6 @@
 '@openfn/language-mailgun': minor
 '@openfn/language-maximo': minor
 '@openfn/language-medicmobile': minor
-'@openfn/language-mogli': minor
 '@openfn/language-mongodb': minor
 '@openfn/language-msgraph': minor
 '@openfn/language-mssql': minor
@@ -36,7 +33,6 @@
 '@openfn/language-openspp': minor
 '@openfn/language-postgresql': minor
 '@openfn/language-primero': minor
-'@openfn/language-progres': minor
 '@openfn/language-rapidpro': minor
 '@openfn/language-resourcemap': minor
 '@openfn/language-salesforce': minor
