@@ -121,6 +121,7 @@ export function get(path, query, callback = false) {
 
 export {
   fn,
+  fnIf,
   alterState,
   dataPath,
   dataValue,

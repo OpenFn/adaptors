@@ -433,6 +433,7 @@ export { axios, md5 };
 // What functions do you want from the common adaptor?
 export {
   fn,
+  fnIf,
   alterState,
   dataPath,
   dataValue,

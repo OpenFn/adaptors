@@ -316,6 +316,7 @@ export {
   fields,
   sourceValue,
   fn,
+  fnIf,
   alterState,
   each,
   merge,

@@ -486,6 +486,7 @@ export function upsert(
 export {
   alterState,
   fn,
+  fnIf,
   field,
   fields,
   sourceValue,

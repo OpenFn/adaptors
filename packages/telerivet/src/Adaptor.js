@@ -61,6 +61,7 @@ export function send(sendData) {
 
 export {
   fn,
+  fnIf,
   alterState,
   field,
   fields,

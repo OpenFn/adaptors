@@ -102,6 +102,7 @@ export function submitSite(collection_id, submissionData) {
 
 export {
   fn,
+  fnIf,
   alterState,
   field,
   fields,

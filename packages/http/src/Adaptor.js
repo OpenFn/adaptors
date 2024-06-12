@@ -190,6 +190,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   chunk,
   humanProper,
   lastReferenceValue,

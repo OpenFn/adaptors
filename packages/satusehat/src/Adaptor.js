@@ -183,6 +183,7 @@ export function patch(path, data, params = {}, callback = s => s) {
 
 export {
   fn,
+  fnIf,
   alterState,
   arrayToString,
   combine,

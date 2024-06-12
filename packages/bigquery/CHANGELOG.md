@@ -1,5 +1,16 @@
 # @openfn/language-bigquery
 
+## 2.1.0
+
+### Minor Changes
+
+- 3d9d564c: Add `fn` and `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 2.0.10
 
 ### Patch Changes

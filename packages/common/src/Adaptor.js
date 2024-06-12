@@ -68,6 +68,24 @@ export function fn(func) {
 }
 
 /**
+ * A custom operation that will only execute the function if the condition returns true
+ * @public
+ * @example
+ * fnIf((state) => state?.data?.name, get("https://example.com"));
+ * @function
+ * @param {Boolean} condition - The condition that returns true
+ * @param {Operation} operation - The operation needed to be executed.
+ * @returns {Operation}
+ */
+export function fnIf(condition, operation) {
+  return state => {
+    const [resolvedCondition] = newExpandReferences(state, condition);
+
+    return resolvedCondition ? operation(state) : state;
+  };
+}
+
+/**
  * Picks out a single value from a JSON object.
  * If a JSONPath returns more than one value for the reference, the first
  * item will be returned.
@@ -785,7 +803,7 @@ let cursorKey = 'cursor';
 /**
  * Sets a cursor property on state.
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
- * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
+ * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones
  * are not yet supported.
  * You can provide a formatter to customise the final cursor value, which is useful for normalising
  * different inputs. The custom formatter runs after natural language date conversion.
@@ -804,9 +822,13 @@ let cursorKey = 'cursor';
  * @returns {Operation}
  */
 export function cursor(value, options = {}) {
-  return (state) => {
+  return state => {
     const { format, ...optionsWithoutFormat } = options;
-    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, optionsWithoutFormat);
+    const [resolvedValue, resolvedOptions] = newExpandReferences(
+      state,
+      value,
+      optionsWithoutFormat
+    );
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
@@ -824,16 +846,16 @@ export function cursor(value, options = {}) {
 
     const cursor = resolvedValue ?? defaultValue;
     if (typeof cursor === 'string') {
-      const date = parseDate(cursor, cursorStart)
-      if (date instanceof Date && date.toString !== "Invalid Date") {
+      const date = parseDate(cursor, cursorStart);
+      if (date instanceof Date && date.toString !== 'Invalid Date') {
         state[cursorKey] = format?.(date) ?? date.toISOString();
 
         const formatted = format
           ? state[cursorKey]
-          // If no custom formatter is provided,
-          // Log the converted date in a very international, human-friendly format
-          // See https://date-fns.org/v3.6.0/docs/format
-          : dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
+          : // If no custom formatter is provided,
+            // Log the converted date in a very international, human-friendly format
+            // See https://date-fns.org/v3.6.0/docs/format
+            dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
 
         console.log(`Setting cursor "${cursor}" to: ${formatted}`);
         return state;
@@ -843,5 +865,5 @@ export function cursor(value, options = {}) {
     console.log('Setting cursor to:', state[cursorKey]);
 
     return state;
-  }
+  };
 }

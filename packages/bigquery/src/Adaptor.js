@@ -120,6 +120,8 @@ export function load(
 }
 
 export {
+  fn,
+  fnIf,
   alterState,
   dataPath,
   combine,
