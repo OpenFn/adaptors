@@ -68,23 +68,20 @@ export function fn(func) {
 }
 
 /**
- * A custom step (or operation) that will only execute if the condition returns a truthy value
+ * A custom operation that will only execute the function if the condition returns true
  * @public
  * @example
  * fnIf((state) => state?.data?.name, get("https://example.com"));
  * @function
- * @param {Boolean} truthyCondition is the condition that returns true
+ * @param {Boolean} condition - The condition that returns true
  * @param {Operation} operation - The operation needed to be executed.
  * @returns {Operation}
  */
-export function fnIf(truthyCondition, operation) {
+export function fnIf(condition, operation) {
   return state => {
-    const [resolvedTrutyCondition] = newExpandReferences(
-      state,
-      truthyCondition
-    );
+    const [resolvedCondition] = newExpandReferences(state, condition);
 
-    return resolvedTrutyCondition ? operation(state) : state;
+    return resolvedCondition ? operation(state) : state;
   };
 }
 

@@ -89,11 +89,11 @@
     {
       "name": "fnIf",
       "params": [
-        "truthyCondition",
+        "condition",
         "operation"
       ],
       "docs": {
-        "description": "A custom step (or operation) that will only execute if the condition returns a truthy value",
+        "description": "A custom operation that will only execute the function if the condition returns true",
         "tags": [
           {
             "title": "public",
@@ -111,12 +111,12 @@
           },
           {
             "title": "param",
-            "description": "is the condition that returns true",
+            "description": "The condition that returns true",
             "type": {
               "type": "NameExpression",
               "name": "Boolean"
             },
-            "name": "truthyCondition"
+            "name": "condition"
           },
           {
             "title": "param",
