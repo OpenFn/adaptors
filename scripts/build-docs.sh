@@ -17,7 +17,6 @@ find tmp/*/* -type d -empty -delete
 
 # flatten json files
 # jq -s 'flatten' packages/*/docs/*.json > docs/docs.json
-# rm tmp/*.json
 
 # add first opening bracket
 echo [ >>tmp/tmp.json
