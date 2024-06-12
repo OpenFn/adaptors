@@ -53,7 +53,7 @@ Add rows to a table
 ```js
 execute(
   addRow(table, rowData)
-)(state)
+)
 ```
 
 * * *
@@ -73,7 +73,7 @@ Execute an SQL statement
 ```js
 execute(
   sql(sqlQuery)
-)(state)
+)
 ```
 
 * * *
