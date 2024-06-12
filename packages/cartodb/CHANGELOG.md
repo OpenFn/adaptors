@@ -1,5 +1,11 @@
 # @openfn/language-cartodb
 
+## 0.2.2
+
+### Patch Changes
+
+- Fix example code
+
 ## 0.2.1
 
 ### Patch Changes
