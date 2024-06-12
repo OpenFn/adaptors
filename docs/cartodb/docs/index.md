@@ -28,6 +28,9 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fn">fn()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
 </dt>
 <dt>

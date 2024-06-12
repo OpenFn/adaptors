@@ -36,6 +36,8 @@
 <dt>
     <a href="#fn">fn(func)</a></dt>
 <dt>
+    <a href="#fnif">fnIf(condition, operation)</a></dt>
+<dt>
     <a href="#get">get(requestParams)</a></dt>
 <dt>
     <a href="#head">head(requestParams)</a></dt>
@@ -206,7 +208,7 @@ cursor(value, options) ⇒ <code>Operation</code>
 
 Sets a cursor property on state.
 Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
-which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
+which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones
 are not yet supported.
 You can provide a formatter to customise the final cursor value, which is useful for normalising
 different inputs. The custom formatter runs after natural language date conversion.
@@ -434,6 +436,25 @@ fn(state => {
   // do some things to state
   return state;
 });
+```
+
+* * *
+
+## fnIf
+
+fnIf(condition, operation) ⇒ <code>Operation</code>
+
+A custom operation that will only execute the function if the condition returns true
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| condition | <code>Boolean</code> | The condition that returns true |
+| operation | <code>Operation</code> | The operation needed to be executed. |
+
+**Example**  
+```js
+fnIf((state) => state?.data?.name, get("https://example.com"));
 ```
 
 * * *

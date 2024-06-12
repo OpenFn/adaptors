@@ -1,5 +1,16 @@
 # @openfn/language-mailgun
 
+## 0.5.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 0.4.5
 
 ### Patch Changes

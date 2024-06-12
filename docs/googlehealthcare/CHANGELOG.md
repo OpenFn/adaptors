@@ -1,5 +1,16 @@
 # @openfn/language-googlehealthcare
 
+## 1.1.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 1.0.1
 
 ### Patch Changes
