@@ -1,6 +1,8 @@
+import get from 'lodash/get.js';
 import curry from 'lodash/fp/curry.js';
+import groupBy from 'lodash/groupBy.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
-import { groupBy, get } from 'lodash';
+
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
