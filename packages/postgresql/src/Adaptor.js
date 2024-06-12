@@ -249,7 +249,6 @@ export function findValue(filter) {
         });
       });
     } catch (e) {
-      console.log(e, 'asd');
       throw e;
     }
   };
@@ -295,8 +294,7 @@ export function insert(table, record, options, callback) {
 
       const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
 
-      const queryToLog =
-        resolvedOptions && resolvedOptions.logValues ? query : safeQuery;
+      const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
       console.log('Preparing to insert via:', queryToLog);
       return queryHandler(state, query, resolvedOptions, callback);
     } catch (e) {
@@ -352,8 +350,7 @@ export function insertMany(table, records, options, callback) {
 
         const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
 
-        const queryToLog =
-          resolvedOptions && resolvedOptions.logValues ? query : safeQuery;
+        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
         console.log('Preparing to insertMany via:', queryToLog);
         resolve(queryHandler(state, query, resolvedOptions, callback));
       });
@@ -390,14 +387,14 @@ export function upsert(table, uuid, record, options, callback) {
   return state => {
     const { client } = state;
 
-    const [resovledTable, resovledUuid, resolvedRecord, resolvedOptions] =
+    const [resolvedTable, resolvedUuid, resolvedRecord, resolvedOptions] =
       expandReferences(state, table, uuid, record, options);
     try {
       const columns = Object.keys(resolvedRecord).sort();
       const columnsList = columns.join(', ');
       const values = columns.map(key => resolvedRecord[key]);
       const conflict =
-        resovledUuid.split(' ').length > 1 ? resovledUuid : `(${resovledUuid})`;
+        resolvedUuid.split(' ').length > 1 ? resolvedUuid : `(${resolvedUuid})`;
 
       const updateValues = columns
         .map(key => {
@@ -406,7 +403,7 @@ export function upsert(table, uuid, record, options, callback) {
         .join(', ');
 
       const insertValues = format(
-        `INSERT INTO ${resovledTable} (${columnsList}) VALUES (%L)`,
+        `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L)`,
         values
       );
 
@@ -417,12 +414,11 @@ export function upsert(table, uuid, record, options, callback) {
         handleOptions(resolvedOptions)
       );
 
-      const safeQuery = `INSERT INTO ${resovledTable} (${columnsList}) VALUES [--REDACTED--]
+      const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-      const queryToLog =
-        resolvedOptions && resolvedOptions.logValues ? query : safeQuery;
+      const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
       console.log('Preparing to upsert via:', queryToLog);
       return queryHandler(state, query, resolvedOptions, callback);
     } catch (e) {
@@ -505,8 +501,7 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-        const queryToLog =
-          resolvedOptions && resolvedOptions.logValues ? query : safeQuery;
+        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
         console.log('Preparing to upsert via:', queryToLog);
         resolve(queryHandler(state, query, resolvedOptions, callback));
       });
@@ -585,8 +580,7 @@ export function upsertMany(table, uuid, data, options, callback) {
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-        const queryToLog =
-          resolvedOptions && resolvedOptions.logValues ? query : safeQuery;
+        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
         console.log('Preparing to upsert via:', queryToLog);
         resolve(queryHandler(state, query, resolvedOptions, callback));
       });
