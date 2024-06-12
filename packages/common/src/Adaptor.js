@@ -1,6 +1,6 @@
 import curry from 'lodash/fp/curry.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
-
+import { groupBy, get } from 'lodash';
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
@@ -406,6 +406,34 @@ export function merge(dataSource, fields) {
 }
 
 /**
+ * Groups an array of objects by a specified key path.
+ *
+ * @param {Object[]} arrayOfObjects - The array of objects to be grouped.
+ * @param {string} keyPath - The key path to group by.
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ * @example
+ * const users = [
+ *   { name: 'Alice', age: 25, city: 'New York' },
+ *   { name: 'Bob', age: 30, city: 'San Francisco' },
+ *   { name: 'Charlie', age: 25, city: 'New York' },
+ *   { name: 'David', age: 30, city: 'San Francisco' }
+ * ];
+ * group(users, 'city');
+ */
+export function group(arrayOfObjects, keyPath, callback = s => s) {
+  return state => {
+    const [resolvedArray, resolvedKeyPath] = newExpandReferences(
+      state,
+      arrayOfObjects,
+      keyPath
+    );
+    const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
+    return callback(composeNextState(state, results));
+  };
+}
+
+/**
  * Returns the index of the current array being iterated.
  * To be used with `each` as a data source.
  * @public
@@ -463,6 +491,9 @@ export function toArray(arg) {
  * @returns {State}
  */
 export function composeNextState(state, response) {
+  if (!state.references) {
+    state.references = [];
+  }
   return {
     ...state,
     data: response,
@@ -785,7 +816,7 @@ let cursorKey = 'cursor';
 /**
  * Sets a cursor property on state.
  * Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
- * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones 
+ * which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones
  * are not yet supported.
  * You can provide a formatter to customise the final cursor value, which is useful for normalising
  * different inputs. The custom formatter runs after natural language date conversion.
@@ -804,9 +835,13 @@ let cursorKey = 'cursor';
  * @returns {Operation}
  */
 export function cursor(value, options = {}) {
-  return (state) => {
+  return state => {
     const { format, ...optionsWithoutFormat } = options;
-    const [resolvedValue, resolvedOptions] = newExpandReferences(state, value, optionsWithoutFormat);
+    const [resolvedValue, resolvedOptions] = newExpandReferences(
+      state,
+      value,
+      optionsWithoutFormat
+    );
 
     const {
       defaultValue, // if there is no cursor on state, this will be used
@@ -824,16 +859,16 @@ export function cursor(value, options = {}) {
 
     const cursor = resolvedValue ?? defaultValue;
     if (typeof cursor === 'string') {
-      const date = parseDate(cursor, cursorStart)
-      if (date instanceof Date && date.toString !== "Invalid Date") {
+      const date = parseDate(cursor, cursorStart);
+      if (date instanceof Date && date.toString !== 'Invalid Date') {
         state[cursorKey] = format?.(date) ?? date.toISOString();
 
         const formatted = format
           ? state[cursorKey]
-          // If no custom formatter is provided,
-          // Log the converted date in a very international, human-friendly format
-          // See https://date-fns.org/v3.6.0/docs/format
-          : dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
+          : // If no custom formatter is provided,
+            // Log the converted date in a very international, human-friendly format
+            // See https://date-fns.org/v3.6.0/docs/format
+            dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
 
         console.log(`Setting cursor "${cursor}" to: ${formatted}`);
         return state;
@@ -843,5 +878,5 @@ export function cursor(value, options = {}) {
     console.log('Setting cursor to:', state[cursorKey]);
 
     return state;
-  }
+  };
 }
