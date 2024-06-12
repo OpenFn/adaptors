@@ -1,5 +1,5 @@
 ---
-'@openfn/language-postgresql': minor
+'@openfn/language-postgresql': major
 ---
 
 - Update all operations to use util `expandReferences`
