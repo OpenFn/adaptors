@@ -1,5 +1,9 @@
 # @openfn/language-cartodb
 
+## 0.4.0
+
+Republish to npmjs.com. No changes.
+
 ## 0.3.0
 
 ### Minor Changes
