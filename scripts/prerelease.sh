@@ -6,7 +6,8 @@ if test -f .changeset/pre.json; then
   # I suppose this works
   # will this reset numbers or anything?
   # the other option is to use jq to read the json
-  pnpm changeset pre enter next
+  # so this is not safe to do when already in pre mode
+  #pnpm changeset pre enter next
 
   # bump versions
   pnpm changeset version
