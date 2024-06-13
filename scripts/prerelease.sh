@@ -13,7 +13,7 @@ if test -f .changeset/pre.json; then
   pnpm changeset version
 
   # publish
-  pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks
+  pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
 else
   echo "No prelease detected. Skipping release"
 
