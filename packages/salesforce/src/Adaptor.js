@@ -367,14 +367,14 @@ export function bulkQuery(qs, options, callback) {
  * bulk(
  *   "Patient__c",
  *   "insert",
- *   { failOnError: true, pollInterval: 3000, pollTimeout: 240000 },
+ *   { failOnError: true },
  *   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
  * );
  * @example <caption>Bulk upsert</caption>
  * bulk(
  *   "vera__Beneficiary__c",
  *   "upsert",
- *   { extIdField: "vera__Result_UID__c", failOnError: true },
+ *   { extIdField: "vera__Result_UID__c" },
  *   [
  *     {
  *       vera__Reporting_Period__c: 2023,
@@ -391,18 +391,28 @@ export function bulkQuery(qs, options, callback) {
  * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
  * @param {string} [options.extIdField] - External id field.
- * @param {boolean} [options.failOnError] - Fail the operation on error.
- * @param {boolean} [options.allowNoOp] - For skipping operation.
+ * @param {boolean} [options.failOnError=false] - Fail the operation on error.
+ * @param {boolean} [options.allowNoOp=false] - For skipping operation.
  * @param {array} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
   return state => {
     const { connection } = state;
-    const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
 
-    const [resolvedSObject, resolvedOperation, resolvedRecords] =
-      newExpandReferences(state, sObject, operation, records);
+    const [
+      resolvedSObject,
+      resolvedOperation,
+      resolvedOptions,
+      resolvedRecords,
+    ] = newExpandReferences(state, sObject, operation, options, records);
+
+    const {
+      failOnError = false,
+      allowNoOp = false,
+      pollTimeout,
+      pollInterval,
+    } = resolvedOptions;
 
     if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
@@ -559,7 +569,7 @@ export function create(sObject, attrs) {
 }
 
 /**
- * Synonym for "create(sObject, attrs)".
+ * Alias for "create(sObject, attrs)".
  * @public
  * @example <caption> Single record creation</caption>
  * insert("Account", { Name: "My Account #1" });
@@ -585,7 +595,7 @@ export function insert(sObject, attrs) {
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs -  An object or array of objects
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function createIf(logical, sObject, attrs) {
@@ -630,7 +640,7 @@ export function createIf(logical, sObject, attrs) {
  * @magic sObject - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {(object|object[])} attrs -  An object or array of objects
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {Operation}
  */
@@ -669,7 +679,7 @@ export function upsert(sObject, externalId, attrs) {
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {string} externalId - ID.
- * @param {(object|object[])} attrs -  An object or array of objects
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
@@ -719,7 +729,7 @@ export function upsertIf(logical, sObject, externalId, attrs) {
  * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs -  An object or array of objects
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function update(sObject, attrs) {
