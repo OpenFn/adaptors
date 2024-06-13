@@ -71,8 +71,8 @@ export function create(path, params, callback) {
       ...resolvedParams,
     };
 
-    return request(url, options, 'POST').then(response =>
-      handleResponse(response, state, callback)
+    return request(url, options, 'POST').then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
@@ -122,8 +122,8 @@ export function createTransactionBundle(params, callback) {
       auth,
     };
 
-    return request(url, options, 'POST').then(response =>
-      handleResponse(response, state, callback)
+    return request(url, options, 'POST').then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
@@ -148,8 +148,8 @@ export function get(path, query, callback = s => s) {
     const { baseUrl, apiPath } = state.configuration;
     const url = `${baseUrl}/${apiPath}/${resolvedPath}`;
 
-    return request(url, { ...resolvedQuery }).then(response =>
-      handleResponse(response, state, callback)
+    return request(url, { ...resolvedQuery }).then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
@@ -178,8 +178,8 @@ export function getClaim(claimId, query, callback = s => s) {
       ? `${baseUrl}/${apiPath}/Claim/${resourcedclaimId}`
       : `${baseUrl}/${apiPath}/Claim`;
 
-    return request(url, { ...resolvedQuery }).then(response =>
-      handleResponse(response, state, callback)
+    return request(url, { ...resolvedQuery }).then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
