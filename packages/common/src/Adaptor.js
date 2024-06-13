@@ -422,6 +422,7 @@ export function merge(dataSource, fields) {
  *   { name: 'David', age: 30, city: 'San Francisco' }
  * ];
  * group(users, 'city');
+ * // state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
  */
 export function group(arrayOfObjects, keyPath, callback = s => s) {
   return state => {
