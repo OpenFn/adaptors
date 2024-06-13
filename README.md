@@ -254,6 +254,48 @@ generated.
 When ready, merge the branch to main and a Github Action will trigger the
 release.
 
+## Pre-releases
+
+You can configure a pre-release to automatically make adaptor builds available
+on npm with the @next tag.
+
+When a pre-release is started, every push to branch will cause any adaptor with
+changesets to be published. Subsequent builds will trigger another publish with
+the pre-release version incremented (eg, the first pre-release will be,
+`1.0.0-0`, the second `1.0.0-1`).
+
+Lightning and the CLI will be able to access the @next version of the adaptor,
+eg:
+
+```
+openfn job.js -a http@next
+```
+
+A pre-release must be manually created and terminated.
+
+To start a pre-release, run:
+
+```
+pnpm prerelease:start
+```
+
+Ensure there are changesets for any adaptors you want to be published.
+
+Commit changes and push to branch. If CI passes, adaptors will be pre-released.
+
+When the adaptor is ready for a production release, the pre-release must be
+exited:
+
+```
+pnpm prerelease:end
+```
+
+At this point you can run `pnpm version` to generate versions for the final
+release.
+
+Note that while in pre-relesae mode, running `pnpm changeset version` will not
+consume the changesets.
+
 ## Build tooling
 
 The `build` command accepts a list of build steps as arguments: `ast`, `src`,

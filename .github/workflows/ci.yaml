@@ -30,3 +30,9 @@ jobs:
         run: pnpm run build
       - name: Unit Tests
         run: pnpm run test
+      - name: Setup NPM config
+        run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish @next prereleasae
+        run: pnpm prerelease:publish
