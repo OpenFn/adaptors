@@ -61,5 +61,7 @@
     "@openfn/parse-jsdoc": "1.0.0",
     "@openfn/slack-notify": "1.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "witty-planets-check"
+  ]
 }
