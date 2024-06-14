@@ -28,20 +28,52 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
-      # - name: Unit Tests
-      #   run: pnpm run test
-      # Everything here needs pushing out into a new job or workflow
-      - name: Setup NPM config
-        run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: git username
-        run: git config user.name $GH_USER
-        env:
-          GH_USER: ${{ secrets.GH_USER }}
-      - name: git email
-        run: git config user.email $GH_EMAIL
-        env:
-          GH_EMAIL: ${{ secrets.GH_EMAIL }}
-      - name: Publish @next prereleasae
-        run: pnpm next:publish
+      - name: Unit Tests
+        run: pnpm run test
+
+  next:
+    name: 'Prerelease @next'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.17.1]
+
+    steps:
+      # force git to checkout the branch, not a detached head
+      - uses: actions/checkout@v3
+        ref: $GITHUB_BASE_REF
+      - name: echo base ref
+        run: echo $GITHUB_BASE_REF
+      - name: Test git status
+        run: git status
+      # - uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 8.6.9
+      # - name: Setup node ${{ matrix.node-version }}
+      #   # https://github.com/actions/setup-node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: 'pnpm'
+      # - name: Setup pnpm
+      #   run: pnpm install --frozen-lockfile
+      # - name: Build
+      #   run: pnpm run build
+      # # - name: Unit Tests
+      # #   run: pnpm run test
+      # # Everything here needs pushing out into a new job or workflow
+      # - name: Setup NPM config
+      #   run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: git username
+      #   run: git config user.name $GH_USER
+      #   env:
+      #     GH_USER: ${{ secrets.GH_USER }}
+      # - name: git email
+      #   run: git config user.email $GH_EMAIL
+      #   env:
+      #     GH_EMAIL: ${{ secrets.GH_EMAIL }}
+      # - name: Publish @next prereleasae
+      #   run: pnpm next:publish
