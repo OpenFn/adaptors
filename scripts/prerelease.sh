@@ -13,7 +13,7 @@ if test -f .changeset/pre.json; then
   git push origin `$GITHUB_HEAD_REF`
 
   # publish
-  pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
+  # pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
 else
   echo "No prelease detected. Skipping release"
 
