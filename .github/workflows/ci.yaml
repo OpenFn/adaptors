@@ -59,7 +59,9 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
       - name: Build
-        run: pnpm run build
+        # run: pnpm run build
+        run: pnpm -C packages/common run build
+        run: pnpm -C packages/test-tmp run build
       # Everything here needs pushing out into a new job or workflow
       - name: Setup NPM config
         run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"

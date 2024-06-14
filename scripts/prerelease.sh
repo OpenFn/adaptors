@@ -7,24 +7,21 @@ if test -f .changeset/pre.json; then
   # bump versions
   pnpm changeset version
 
-  echo "Checkout git branch"
-  echo git status
-  
-  # This is wierd, why do I have to fetch here?
-  # Has something cached?
-  # git fetch origin $GITHUB_HEAD_REF
-  # git switch -c $GITHUB_HEAD_REF
-
   cat packages/test-tmp/package.json
   
   git add .
+
+  echo "Changes":
+  git status
   
   echo "Commiting changes"
   git commit -m "Bump pre-release versions"
-  # git push origin $GITHUB_HEAD_REF
+  git push origin $GITHUB_HEAD_REF
 
-  # publish
-  # pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
+  echo "Publishing...."
+  pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
+
+  echo "Done!"
 else
   echo "No prelease detected. Skipping release"
 fi
