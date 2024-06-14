@@ -57,10 +57,8 @@ jobs:
           cache: 'pnpm'
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
-      # - name: Build
-      #   run: pnpm run build
-      # - name: Unit Tests
-      #   run: pnpm run test
+      - name: Build
+        run: pnpm run build
       # Everything here needs pushing out into a new job or workflow
       - name: Setup NPM config
         run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
