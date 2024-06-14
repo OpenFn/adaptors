@@ -960,9 +960,9 @@ describe('cursor', () => {
 });
 
 describe('group', () => {
-  it('should group an array of objects by a specified key path. ', async function () {
+  it('should group an array of objects by a specified key path', function () {
     const state = {};
-    let resultingState = await group(testData.store.book, 'category')(state);
+    const resultingState = group(testData.store.book, 'category')(state);
 
     // Assert that state.data has certain keys
     assert.deepStrictEqual(Object.keys(resultingState.data).sort(), [

@@ -409,11 +409,7 @@ export function merge(dataSource, fields) {
 
 /**
  * Groups an array of objects by a specified key path.
- *
- * @param {Object[]} arrayOfObjects - The array of objects to be grouped.
- * @param {string} keyPath - The key path to group by.
- * @param {function} callback - (Optional) Callback function
- * @returns {Operation}
+ * @public
  * @example
  * const users = [
  *   { name: 'Alice', age: 25, city: 'New York' },
@@ -423,6 +419,11 @@ export function merge(dataSource, fields) {
  * ];
  * group(users, 'city');
  * // state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
+ * @function
+ * @param {Object[]} arrayOfObjects - The array of objects to be grouped.
+ * @param {string} keyPath - The key path to group by.
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
  */
 export function group(arrayOfObjects, keyPath, callback = s => s) {
   return state => {
@@ -432,7 +433,7 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
       keyPath
     );
     const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback(composeNextState(state, results));
+    return callback({ ...state, data: results, results });
   };
 }
 
