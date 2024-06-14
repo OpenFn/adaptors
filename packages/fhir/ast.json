@@ -9,7 +9,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource in a destination system using a POST request",
+        "description": "Sends a HTTP POST request  to the destination system",
         "tags": [
           {
             "title": "public",
@@ -18,7 +18,7 @@
           },
           {
             "title": "example",
-            "description": "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n},\n{parseAs:'json',\nheaders:{content-type:'application/json'}\n}\n})"
+            "description": "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n})"
           },
           {
             "title": "function",
@@ -77,11 +77,11 @@
       "name": "create",
       "params": [
         "path",
-        "params",
+        "data",
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource in a destination system using a POST request",
+        "description": "Creates a resource in a destination system",
         "tags": [
           {
             "title": "public",
@@ -113,7 +113,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",
