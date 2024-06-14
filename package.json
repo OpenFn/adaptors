@@ -19,9 +19,9 @@
     "metadata": "pnpm -C tools/metadata cli",
     "slack:notify": "cd tools/slack && pnpm notify",
     "generate": "pnpm -C tools/generate cli generate",
-    "prerelease:start": "pnpm changeset pre enter next",
-    "prerelease:publish": "pnpm exec scripts/prerelease.sh",
-    "prerelease:end": "pnpm changeset pre exit next && rm .changeset/pre.json"
+    "next:start": "pnpm changeset pre enter next",
+    "next:publish": "pnpm exec scripts/pre.sh",
+    "next:end": "pnpm changeset pre exit next && rm .changeset/pre.json"
   },
   "author": "Open Function Group",
   "license": "ISC",
