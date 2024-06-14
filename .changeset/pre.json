@@ -62,6 +62,7 @@
     "@openfn/slack-notify": "1.0.0"
   },
   "changesets": [
+    "fast-parents-invent",
     "witty-planets-check"
   ]
 }
