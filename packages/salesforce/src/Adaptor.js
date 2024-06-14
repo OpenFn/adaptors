@@ -392,7 +392,6 @@ export function bulkQuery(qs, options, callback) {
  * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
  * @param {string} [options.extIdField] - External id field.
  * @param {boolean} [options.failOnError=false] - Fail the operation on error.
- * @param {boolean} [options.allowNoOp=false] - For skipping operation.
  * @param {array} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
