@@ -6,7 +6,7 @@ export function handleResponse(response, data, state, callback = s => s) {
     ...composeNextState(state, data),
     response,
   };
-  callback(nextState);
+  return callback(nextState);
 }
 
 export function handleResponseError(response, data, method) {
@@ -33,13 +33,14 @@ export function handleResponseError(response, data, method) {
  * object if not provided.
  * @param {string} [method=GET] - The HTTP method to be used for the request. It defaults to 'GET' if not
  * specified.
- * @returns The `request` function is reurns a `{ data, response }` object, where the parsed JSON body
+ * @returns The `request` function returns a {{ data, response }} object, where the parsed JSON body
  * is written to `data`, and the raw http response to `response`.
  */
+
 export const request = async (urlString, params = {}, method = 'GET') => {
   let url = urlString;
   const defaultHeaders = { 'Content-Type': 'application/fhir+json' };
-  const { headers } = params;
+  const { headers, parseAs } = params;
   const setHeaders = { ...defaultHeaders, ...headers };
 
   delete params.headers;
@@ -56,15 +57,30 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   if ('GET' === method) {
     url = `${urlString}?${new URLSearchParams(params).toString()}`;
   } else {
-    options.body = JSON.stringify(params);
+    options.body = JSON.stringify(params.body);
   }
 
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
 
-  const data = contentType?.match(/application\/(fhir\+json|json)/)
-    ? await response.json()
-    : await response.text();
+  let data;
+  switch (parseAs) {
+    case 'json':
+      data = await response.json();
+      break;
+    case 'text':
+      data = await response.text();
+      break;
+    case 'stream':
+      data = response.body;
+      break;
+    default:
+      if (contentType?.match(/application\/(fhir\+json|json)/)) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+  }
 
   if (throwOnError) {
     handleResponseError(response, data, method);

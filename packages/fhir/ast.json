@@ -35,10 +35,10 @@
           },
           {
             "title": "param",
-            "description": "data to create the new resource",
+            "description": "contains body object to create the new resource, headers, and throwOnError",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "RequestOptions"
             },
             "name": "params"
           },

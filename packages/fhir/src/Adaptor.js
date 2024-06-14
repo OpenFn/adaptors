@@ -4,6 +4,15 @@ import { expandReferences } from '@openfn/language-common/util';
 import { handleResponse, request } from './Utils';
 
 /**
+ * Options provided to the Create request
+ * @typedef {Object} RequestOptions
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string .
+ * @property {boolean} throwOnError - Optional boolean value to throw if the error is status code 400. Default `true`
+ * @property {object} headers - An optional object of headers to append to the request. Default is `content-type:application/fhir+json`
+ * @property {string} parseAs - An optional field of the data response format. Default `json` if header is `content-type:application/fhir+json` else `text`
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
@@ -33,21 +42,37 @@ export function execute(...operations) {
  * Creates a resource in a destination system using a POST request
  * @public
  * @example
- * create("Bundle", {
- *   entry: [
- *     {
- *       fullUrl: "", // Eg: Patient URL
- *       resource: {}, // Resource data
- *       search: {
- *         mode: "match",
- *       },
- *     },
- *   ],
- *   type: "collection",
- * });
+ * post("Bundle",{
+ * body:{
+ * "resourceType": "Bundle"
+ * },
+ * parseAs:'json',
+ * headers:{content-type:'application/json'}
+ * })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - data to create the new resource
+ * @param {RequestOptions} params - contains body object to create the new resource, headers, and throwOnError
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function post(path, params, callback) {
+  return create(path, params, callback);
+}
+
+/**
+ * Creates a resource in a destination system using a POST request
+ * @public
+ * @example
+ * create("Bundle",{
+ * body:{
+ * "resourceType": "Bundle"
+ * },
+ * parseAs:'json',
+ * headers:{content-type:'application/json'}
+ * })
+ * @function
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} params - contains body object to create the new resource, headers, and throwOnError
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -63,11 +88,18 @@ export function create(path, params, callback) {
 
     const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
 
-    const options = {
-      headers: {
+    let headers = {};
+    if (params.headers) {
+      Object.assign(headers, params.headers);
+    } else {
+      headers = {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
-      },
+      };
+    }
+
+    const options = {
+      headers,
       ...resolvedParams,
     };
 
