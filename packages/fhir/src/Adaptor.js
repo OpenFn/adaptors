@@ -4,6 +4,14 @@ import { expandReferences } from '@openfn/language-common/util';
 import { handleResponse, request } from './Utils';
 
 /**
+ * Options provided to a HTTP request
+ * @typedef {Object} RequestParams
+ * @property {boolean} [throwOnError=true] - Optional boolean value to throw if the error is status code 400.
+ * @property {object} headers - An optional object of headers to append to the request.
+ * @property {string} parseAs - An optional field of the data response format.
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
@@ -30,7 +38,53 @@ export function execute(...operations) {
 }
 
 /**
- * Creates a resource in a destination system using a POST request
+ * Sends a HTTP POST request  to the destination system
+ * @public
+ * @example
+ * post("Bundle",{
+ * "resourceType": "Bundle"
+ * })
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} data - Object or JSON which defines data that will be used to create a given resource
+ * @param {RequestParams} params - Contains optional headers, parseAs, and throwOnError
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export function post(path, data, params, callback) {
+  return state => {
+    const [resolvedpath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
+    );
+    const { baseUrl, apiPath } = state.configuration;
+
+    const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
+
+    const headers = {
+      accept: 'application/fhir+json',
+      'Content-Type': 'application/fhir+json',
+    };
+
+    if (params?.headers) {
+      Object.assign(headers, params.headers);
+    }
+
+    const options = {
+      headers,
+      ...resolvedParams,
+      ...resolvedData,
+    };
+    return request(url, options, 'POST').then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
+    );
+  };
+}
+
+/**
+ * Creates a resource in a destination system
  * @public
  * @example
  * create("Bundle", {
@@ -47,17 +101,13 @@ export function execute(...operations) {
  * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - data to create the new resource
+ * @param {object} data - data to create the new resource
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function create(path, params, callback) {
+export function create(path, data, callback = s => s) {
   return state => {
-    const [resolvedpath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
+    const [resolvedpath, resolvedData] = expandReferences(state, path, data);
 
     const { baseUrl, apiPath } = state.configuration;
 
@@ -68,11 +118,11 @@ export function create(path, params, callback) {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
       },
-      ...resolvedParams,
+      ...resolvedData,
     };
 
-    return request(url, options, 'POST').then(response =>
-      handleResponse(response, state, callback)
+    return request(url, options, 'POST').then(({ data }) =>
+      callback({ ...state, data })
     );
   };
 }
@@ -122,8 +172,8 @@ export function createTransactionBundle(params, callback) {
       auth,
     };
 
-    return request(url, options, 'POST').then(response =>
-      handleResponse(response, state, callback)
+    return request(url, options, 'POST').then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
@@ -148,8 +198,8 @@ export function get(path, query, callback = s => s) {
     const { baseUrl, apiPath } = state.configuration;
     const url = `${baseUrl}/${apiPath}/${resolvedPath}`;
 
-    return request(url, { ...resolvedQuery }).then(response =>
-      handleResponse(response, state, callback)
+    return request(url, { ...resolvedQuery }).then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
@@ -178,8 +228,8 @@ export function getClaim(claimId, query, callback = s => s) {
       ? `${baseUrl}/${apiPath}/Claim/${resourcedclaimId}`
       : `${baseUrl}/${apiPath}/Claim`;
 
-    return request(url, { ...resolvedQuery }).then(response =>
-      handleResponse(response, state, callback)
+    return request(url, { ...resolvedQuery }).then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
     );
   };
 }
