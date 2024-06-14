@@ -7,8 +7,6 @@ if test -f .changeset/pre.json; then
   # bump versions
   pnpm changeset version
 
-  cat packages/test-tmp/package.json
-  
   git add .
 
   echo "Changes":
