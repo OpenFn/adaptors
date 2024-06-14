@@ -259,10 +259,18 @@ release.
 You can configure a pre-release to automatically make adaptor builds available
 on npm with the @next tag.
 
-When a pre-release is started, every push to branch will cause any adaptor with
-changesets to be published. Subsequent builds will trigger another publish with
-the pre-release version incremented (eg, the first pre-release will be,
-`1.0.0-0`, the second `1.0.0-1`).
+When a pre-release is started, every push to the branch will:
+
+- trigger a build
+- bump the version number for anything with a changeset
+- commit the new versions and push them back to the branch
+- publish the latested version to npm with the @next tag
+
+Pre-release versions are of the form `.next-0`, `.next-1` etc.
+
+branch will cause any adaptor with changesets to be published. Subsequent builds
+will trigger another publish with the pre-release version incremented (eg, the
+first pre-release will be, `1.0.0-0`, the second `1.0.0-1`).
 
 Lightning and the CLI will be able to access the @next version of the adaptor,
 eg:
@@ -276,7 +284,7 @@ A pre-release must be manually created and terminated.
 To start a pre-release, run:
 
 ```
-pnpm prerelease:start
+pnpm next:start
 ```
 
 Ensure there are changesets for any adaptors you want to be published.
@@ -287,7 +295,7 @@ When the adaptor is ready for a production release, the pre-release must be
 exited:
 
 ```
-pnpm prerelease:end
+pnpm next:end
 ```
 
 At this point you can run `pnpm version` to generate versions for the final
