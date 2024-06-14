@@ -9,7 +9,8 @@ if test -f .changeset/pre.json; then
   ## check changes into git
   git add .
   git commit -m "Bump pre-release versions"
-  git push origin `$GITHUB_BASE_REF`
+  git switch -c `$GITHUB_HEAD_REF`
+  git push origin `$GITHUB_HEAD_REF`
 
   # publish
   pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
