@@ -1,14 +1,87 @@
 {
   "operations": [
     {
-      "name": "create",
+      "name": "post",
       "params": [
         "path",
+        "data",
         "params",
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource in a destination system using a POST request",
+        "description": "Sends a HTTP POST request  to the destination system",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object or JSON which defines data that will be used to create a given resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Contains optional headers, parseAs, and throwOnError",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestParams"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "create",
+      "params": [
+        "path",
+        "data",
+        "callback"
+      ],
+      "docs": {
+        "description": "Creates a resource in a destination system",
         "tags": [
           {
             "title": "public",
@@ -40,7 +113,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",

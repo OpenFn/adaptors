@@ -1,13 +1,12 @@
 import { fetch } from 'undici';
 import { composeNextState } from '@openfn/language-common';
 
-export function handleResponse(response, state, callback) {
+export function handleResponse(response, data, state, callback = s => s) {
   const nextState = {
-    ...composeNextState(state, response),
+    ...composeNextState(state, data),
     response,
   };
-  if (callback) return callback(nextState);
-  return nextState;
+  return callback(nextState);
 }
 
 export function handleResponseError(response, data, method) {
@@ -27,23 +26,30 @@ export function handleResponseError(response, data, method) {
 /**
  * This is an asynchronous function that sends a request to a specified URL with optional parameters
  * and headers, and returns the response data in JSON format.
+ * If there is an error in the response, the function will throw an error unless `params.throwOnError` is false.
  * @param {string} url - The URL of the API endpoint that the request is being made to.
  * @param {object} [params] - An object containing any additional parameters to be sent with the request, such
  * as query parameters or request body data. It is an optional parameter and defaults to an empty
  * object if not provided.
  * @param {string} [method=GET] - The HTTP method to be used for the request. It defaults to 'GET' if not
  * specified.
- * @returns The `request` function is returning the parsed JSON data from the response of the HTTP
- * request made to the specified `url` with the given `params` and `method`. If there is an error in
- * the response, the function will throw an error.
+ * @returns The `request` function returns a {{ data, response }} object, where the parsed JSON body
+ * is written to `data`, and the raw http response to `response`.
  */
+
 export const request = async (urlString, params = {}, method = 'GET') => {
   let url = urlString;
   const defaultHeaders = { 'Content-Type': 'application/fhir+json' };
-  const { headers } = params;
-  const setHeaders = { ...headers, ...defaultHeaders };
+  const { headers, parseAs } = params;
+  const setHeaders = { ...defaultHeaders, ...headers };
+  const setParseAs = parseAs
 
   delete params.headers;
+  delete params.parseAs;
+
+  const throwOnError = 'throwOnError' in params ? params.throwOnError : true;
+
+  delete params.throwOnError;
 
   let options = {
     method,
@@ -59,11 +65,28 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
 
-  const data = contentType?.includes('application/fhir+json')
-    ? await response.json()
-    : await response.text();
+  let data;
+  switch (setParseAs) {
+    case 'json':
+      data = await response.json();
+      break;
+    case 'text':
+      data = await response.text();
+      break;
+    case 'stream':
+      data = response.body;
+      break;
+    default:
+      if (contentType?.match(/application\/(fhir\+json|json)/)) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+  }
 
-  handleResponseError(response, data, method);
+  if (throwOnError) {
+    handleResponseError(response, data, method);
+  }
 
-  return data;
+  return { data, response };
 };
