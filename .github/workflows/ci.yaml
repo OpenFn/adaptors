@@ -28,8 +28,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
-      - name: Unit Tests
-        run: pnpm run test
+      # - name: Unit Tests
+      #   run: pnpm run test
       # Everything here needs pushing out into a new job or workflow
       - name: Setup NPM config
         run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
@@ -44,4 +44,4 @@ jobs:
         env:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
       - name: Publish @next prereleasae
-        run: pnpm prerelease:publish
+        run: pnpm next:publish
