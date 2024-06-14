@@ -42,8 +42,10 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   const defaultHeaders = { 'Content-Type': 'application/fhir+json' };
   const { headers, parseAs } = params;
   const setHeaders = { ...defaultHeaders, ...headers };
+  const setParseAs = parseAs
 
   delete params.headers;
+  delete params.parseAs;
 
   const throwOnError = 'throwOnError' in params ? params.throwOnError : true;
 
@@ -57,14 +59,14 @@ export const request = async (urlString, params = {}, method = 'GET') => {
   if ('GET' === method) {
     url = `${urlString}?${new URLSearchParams(params).toString()}`;
   } else {
-    options.body = JSON.stringify(params.body);
+    options.body = JSON.stringify(params);
   }
 
   const response = await fetch(url, options);
   const contentType = response.headers.get('Content-Type');
 
   let data;
-  switch (parseAs) {
+  switch (setParseAs) {
     case 'json':
       data = await response.json();
       break;

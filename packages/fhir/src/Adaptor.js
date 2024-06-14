@@ -4,10 +4,9 @@ import { expandReferences } from '@openfn/language-common/util';
 import { handleResponse, request } from './Utils';
 
 /**
- * Options provided to the Create request
- * @typedef {Object} RequestOptions
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string .
- * @property {boolean} throwOnError - Optional boolean value to throw if the error is status code 400. Default `true`
+ * Options provided to a HTTP request
+ * @typedef {Object} RequestParams
+ * @property {boolean} [throwOnError=true] - Optional boolean value to throw if the error is status code 400. Default `true`
  * @property {object} headers - An optional object of headers to append to the request. Default is `content-type:application/fhir+json`
  * @property {string} parseAs - An optional field of the data response format. Default `json` if header is `content-type:application/fhir+json` else `text`
  */
@@ -43,40 +42,75 @@ export function execute(...operations) {
  * @public
  * @example
  * post("Bundle",{
- * body:{
  * "resourceType": "Bundle"
  * },
- * parseAs:'json',
+ * {parseAs:'json',
  * headers:{content-type:'application/json'}
+ * }
  * })
  * @function
  * @param {string} path - Path to resource
- * @param {RequestOptions} params - contains body object to create the new resource, headers, and throwOnError
+ * @param {object} data - Object or JSON which defines data that will be used to create a given resource
+ * @param {RequestParams} params - Contains optional headers, parseAs, and throwOnError
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function post(path, params, callback) {
-  return create(path, params, callback);
+export function post(path, data, params, callback) {
+  return state => {
+    const [resolvedpath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
+    );
+    const { baseUrl, apiPath } = state.configuration;
+
+    const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
+
+    let headers = {};
+    if (params?.headers) {
+      Object.assign(headers, params?.headers);
+    } else {
+      headers = {
+        accept: 'application/fhir+json',
+        'Content-Type': 'application/fhir+json',
+      };
+    }
+
+    const options = {
+      headers,
+      ...resolvedParams,
+      ...resolvedData,
+    };
+    return request(url, options, 'POST').then(({ response, data }) =>
+      handleResponse(response, data, state, callback)
+    );
+  };
 }
 
 /**
  * Creates a resource in a destination system using a POST request
  * @public
  * @example
- * create("Bundle",{
- * body:{
- * "resourceType": "Bundle"
- * },
- * parseAs:'json',
- * headers:{content-type:'application/json'}
- * })
+ * create("Bundle", {
+ *   entry: [
+ *     {
+ *       fullUrl: "", // Eg: Patient URL
+ *       resource: {}, // Resource data
+ *       search: {
+ *         mode: "match",
+ *       },
+ *     },
+ *   ],
+ *   type: "collection",
+ * });
  * @function
  * @param {string} path - Path to resource
- * @param {RequestOptions} params - contains body object to create the new resource, headers, and throwOnError
+ * @param {object} params - data to create the new resource
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function create(path, params, callback) {
+export function create(path, params, callback = s => s) {
   return state => {
     const [resolvedpath, resolvedParams] = expandReferences(
       state,
@@ -88,23 +122,16 @@ export function create(path, params, callback) {
 
     const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
 
-    let headers = {};
-    if (params.headers) {
-      Object.assign(headers, params.headers);
-    } else {
-      headers = {
+    const options = {
+      headers: {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
-      };
-    }
-
-    const options = {
-      headers,
+      },
       ...resolvedParams,
     };
 
-    return request(url, options, 'POST').then(({ response, data }) =>
-      handleResponse(response, data, state, callback)
+    return request(url, options, 'POST').then(({ data }) =>
+      callback({ ...state, data })
     );
   };
 }

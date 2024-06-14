@@ -1,6 +1,79 @@
 {
   "operations": [
     {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Creates a resource in a destination system using a POST request",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n},\n{parseAs:'json',\nheaders:{content-type:'application/json'}\n}\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object or JSON which defines data that will be used to create a given resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Contains optional headers, parseAs, and throwOnError",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestParams"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "create",
       "params": [
         "path",
@@ -35,10 +108,10 @@
           },
           {
             "title": "param",
-            "description": "contains body object to create the new resource, headers, and throwOnError",
+            "description": "data to create the new resource",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "object"
             },
             "name": "params"
           },
