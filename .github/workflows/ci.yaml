@@ -45,7 +45,7 @@ jobs:
         # with:
         #   ref: $GITHUB_BASE_REF
       - name: echo base ref
-        run: echo $GITHUB_BASE_REF
+        run: echo $GITHUB_HEAD_REF
       - name: Test git status
         run: git status
       # - uses: pnpm/action-setup@v2
