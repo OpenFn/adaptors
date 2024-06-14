@@ -2,13 +2,15 @@
 
 <dl>
 <dt>
-    <a href="#create">create(path, params, callback)</a></dt>
+    <a href="#create">create(path, data, callback)</a></dt>
 <dt>
     <a href="#createtransactionbundle">createTransactionBundle(params, callback)</a></dt>
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
     <a href="#getclaim">getClaim(claimId, query, callback)</a></dt>
+<dt>
+    <a href="#post">post(path, data, params, callback)</a></dt>
 </dl>
 
 The following functions are exported from the common adaptor:
@@ -52,15 +54,15 @@ The following functions are exported from the common adaptor:
 
 ## create
 
-create(path, params, callback) ⇒ <code>Operation</code>
+create(path, data, callback) ⇒ <code>Operation</code>
 
-Creates a resource in a destination system using a POST request
+Creates a resource in a destination system
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | data to create the new resource |
+| data | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
 **Example**  
@@ -161,22 +163,62 @@ getClaim({ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
 
 * * *
 
+## post
+
+post(path, data, params, callback) ⇒ <code>Operation</code>
+
+Sends a HTTP POST request  to the destination system
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| data | <code>object</code> | Object or JSON which defines data that will be used to create a given resource |
+| params | [<code>RequestParams</code>](#requestparams) | Contains optional headers, parseAs, and throwOnError |
+| callback | <code>function</code> | (Optional) callback function |
+
+**Example**  
+```js
+post("Bundle",{
+"resourceType": "Bundle"
+})
+```
+
+* * *
+
 ## request
 
-request ⇒
+request ⇒ <code>Object</code>
 
 This is an asynchronous function that sends a request to a specified URL with optional parameters
 and headers, and returns the response data in JSON format.
+If there is an error in the response, the function will throw an error unless `params.throwOnError` is false.
 
-**Returns**: The `request` function is returning the parsed JSON data from the response of the HTTP
-request made to the specified `url` with the given `params` and `method`. If there is an error in
-the response, the function will throw an error.  
+**Returns**: <code>Object</code> - The `request` function returns a  object, where the parsed JSON body
+is written to `data`, and the raw http response to `response`.  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | url | <code>string</code> |  | The URL of the API endpoint that the request is being made to. |
 | [params] | <code>object</code> |  | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |
 | [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to be used for the request. It defaults to 'GET' if not specified. |
+
+
+* * *
+
+## RequestParams
+
+RequestParams : <code>Object</code>
+
+Options provided to a HTTP request
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [throwOnError] | <code>boolean</code> | <code>true</code> | Optional boolean value to throw if the error is status code 400. |
+| headers | <code>object</code> |  | An optional object of headers to append to the request. |
+| parseAs | <code>string</code> |  | An optional field of the data response format. |
 
 
 * * *
