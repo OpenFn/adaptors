@@ -487,19 +487,6 @@
           },
           {
             "title": "param",
-            "description": "For skipping operation.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.allowNoOp",
-            "default": "false"
-          },
-          {
-            "title": "param",
             "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
