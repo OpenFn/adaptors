@@ -695,12 +695,8 @@
         "attrs"
       ],
       "docs": {
-        "description": "Create a new sObject if conditions are met.",
+        "description": "Create a new sObject if conditions are met.\n\n> The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.",
         "tags": [
-          {
-            "title": "deprecated",
-            "description": "use `fnIf(condition, create())` instead"
-          },
           {
             "title": "public",
             "description": null,
@@ -880,7 +876,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Conditionally create a new sObject record, or updates it if it already exists",
+        "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n> The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.",
         "tags": [
           {
             "title": "public",
@@ -890,10 +886,6 @@
           {
             "title": "example",
             "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
-          },
-          {
-            "title": "deprecated",
-            "description": null
           },
           {
             "title": "function",

@@ -585,7 +585,8 @@ export function insert(sObject, attrs) {
 
 /**
  * Create a new sObject if conditions are met.
- * @deprecated
+ *
+ * > The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.
  * @public
  * @example
  * createIf(true, 'obj_name', {
@@ -673,7 +674,8 @@ export function upsert(sObject, externalId, attrs) {
 
 /**
  * Conditionally create a new sObject record, or updates it if it already exists
- * @deprecated
+ *
+ * > The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.
  * @public
  * @example
  * upsertIf(true, 'obj_name', 'ext_id', {
