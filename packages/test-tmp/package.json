@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-test-tmp",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0-next.6",
   "description": "OpenFn test-tmp adaptor",
   "type": "module",
   "exports": {
