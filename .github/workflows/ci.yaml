@@ -77,3 +77,5 @@ jobs:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
       - name: Publish @next prereleasae
         run: pnpm next:publish
+
+      # Maybe publish to slack? This might be too annoying?
