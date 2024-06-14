@@ -602,6 +602,10 @@ export function createIf(logical, sObject, attrs) {
   return state => {
     const resolvedLogical = expandReferences(logical)(state);
 
+    console.warn(
+      `The 'createIf()' function has been deprecated. Use 'fnIf(condition,create())' instead.`
+    );
+
     if (resolvedLogical) {
       const { connection } = state;
       const finalAttrs = expandReferences(attrs)(state);
@@ -685,6 +689,10 @@ export function upsert(sObject, externalId, attrs) {
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
     const resolvedLogical = expandReferences(logical)(state);
+
+    console.warn(
+      `The 'upsertIf()' function has been deprecated. Use 'fnIf(condition,upsert())' instead.`
+    );
 
     if (resolvedLogical) {
       const { connection } = state;
