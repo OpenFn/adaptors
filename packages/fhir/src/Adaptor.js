@@ -6,9 +6,9 @@ import { handleResponse, request } from './Utils';
 /**
  * Options provided to a HTTP request
  * @typedef {Object} RequestParams
- * @property {boolean} [throwOnError=true] - Optional boolean value to throw if the error is status code 400. Default `true`
- * @property {object} headers - An optional object of headers to append to the request. Default is `content-type:application/fhir+json`
- * @property {string} parseAs - An optional field of the data response format. Default `json` if header is `content-type:application/fhir+json` else `text`
+ * @property {boolean} [throwOnError=true] - Optional boolean value to throw if the error is status code 400.
+ * @property {object} headers - An optional object of headers to append to the request.
+ * @property {string} parseAs - An optional field of the data response format.
  */
 
 /**
@@ -38,15 +38,11 @@ export function execute(...operations) {
 }
 
 /**
- * Creates a resource in a destination system using a POST request
+ * Sends a HTTP POST request  to the destination system
  * @public
  * @example
  * post("Bundle",{
  * "resourceType": "Bundle"
- * },
- * {parseAs:'json',
- * headers:{content-type:'application/json'}
- * }
  * })
  * @function
  * @param {string} path - Path to resource
@@ -67,14 +63,13 @@ export function post(path, data, params, callback) {
 
     const url = `${baseUrl}/${apiPath}/${resolvedpath}`;
 
-    let headers = {};
+    const headers = {
+      accept: 'application/fhir+json',
+      'Content-Type': 'application/fhir+json',
+    };
+
     if (params?.headers) {
-      Object.assign(headers, params?.headers);
-    } else {
-      headers = {
-        accept: 'application/fhir+json',
-        'Content-Type': 'application/fhir+json',
-      };
+      Object.assign(headers, params.headers);
     }
 
     const options = {
@@ -89,7 +84,7 @@ export function post(path, data, params, callback) {
 }
 
 /**
- * Creates a resource in a destination system using a POST request
+ * Creates a resource in a destination system
  * @public
  * @example
  * create("Bundle", {
@@ -106,17 +101,13 @@ export function post(path, data, params, callback) {
  * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - data to create the new resource
+ * @param {object} data - data to create the new resource
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function create(path, params, callback = s => s) {
+export function create(path, data, callback = s => s) {
   return state => {
-    const [resolvedpath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
+    const [resolvedpath, resolvedData] = expandReferences(state, path, data);
 
     const { baseUrl, apiPath } = state.configuration;
 
@@ -127,7 +118,7 @@ export function create(path, params, callback = s => s) {
         accept: 'application/fhir+json',
         'Content-Type': 'application/fhir+json',
       },
-      ...resolvedParams,
+      ...resolvedData,
     };
 
     return request(url, options, 'POST').then(({ data }) =>
