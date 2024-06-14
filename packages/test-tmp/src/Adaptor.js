@@ -2,7 +2,7 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
- * Make a GET request
+ * Make a GET request.
  * @example
  * get("patient");
  * @function
