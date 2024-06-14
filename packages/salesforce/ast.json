@@ -698,6 +698,10 @@
         "description": "Create a new sObject if conditions are met.",
         "tags": [
           {
+            "title": "deprecated",
+            "description": "use `fnIf(condition, create())` instead"
+          },
+          {
             "title": "public",
             "description": null,
             "type": null
@@ -886,6 +890,10 @@
           {
             "title": "example",
             "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+          },
+          {
+            "title": "deprecated",
+            "description": null
           },
           {
             "title": "function",

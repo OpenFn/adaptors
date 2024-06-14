@@ -585,6 +585,7 @@ export function insert(sObject, attrs) {
 
 /**
  * Create a new sObject if conditions are met.
+ * @deprecated
  * @public
  * @example
  * createIf(true, 'obj_name', {
@@ -672,6 +673,7 @@ export function upsert(sObject, externalId, attrs) {
 
 /**
  * Conditionally create a new sObject record, or updates it if it already exists
+ * @deprecated
  * @public
  * @example
  * upsertIf(true, 'obj_name', 'ext_id', {
