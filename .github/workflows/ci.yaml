@@ -43,7 +43,8 @@ jobs:
       # force git to checkout the branch, not a detached head
       - uses: actions/checkout@v3
         with:
-          ref: $GITHUB_HEAD_REF
+          # force to checkout as as branhc, so we can commit later
+          ref: next-tag
       - name: echo base ref
         run: echo $GITHUB_HEAD_REF
       - uses: pnpm/action-setup@v2
