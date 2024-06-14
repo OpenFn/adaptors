@@ -2,6 +2,15 @@
 '@openfn/language-salesforce': minor
 ---
 
-- Add `insert()` function which is an alias for `create()`.
-- Improve jsdocs for query, bulk, describe, create, upsert
-- Deprecated `upsertIf()` and `createIf()`
+### Added
+
+- `insert()` function as an alias for `create()`.
+
+### Improved
+
+- JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.
+
+### Deprecated
+
+- `upsertIf()` and `createIf()` functions are now deprecated. Use
+  `fnIf(condition, upsert())` instead.
