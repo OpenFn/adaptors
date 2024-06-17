@@ -1,6 +1,15 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
+import pkg from '../package.json' assert { type: 'json' };
+
+export function version() {
+  return state => ({
+    ...state,
+    version: pkg.version,
+  });
+}
+
 /**
  * Make a GET request.
  * @example
