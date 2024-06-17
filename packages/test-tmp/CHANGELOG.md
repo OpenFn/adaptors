@@ -1,5 +1,11 @@
 # @openfn/language-test-tmp
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- 488af85: Add version() operation
+
 ## 1.0.0-next.6
 
 ### Patch Changes
