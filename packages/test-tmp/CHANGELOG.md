@@ -1,5 +1,11 @@
 # @openfn/language-test-tmp
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- aceeb55: Do something neat
+
 ## 1.0.0-next.4
 
 ### Patch Changes
