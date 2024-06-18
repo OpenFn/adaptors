@@ -67,7 +67,7 @@
       "name": "describeAll",
       "params": [],
       "docs": {
-        "description": "Outputs basic information about available sObjects.",
+        "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
         "tags": [
           {
             "title": "public",
@@ -101,7 +101,7 @@
         "sObject"
       ],
       "docs": {
-        "description": "Outputs basic information about an sObject to `STDOUT`.",
+        "description": "Prints an sObject metadata and pushes the result to state.references",
         "tags": [
           {
             "title": "public",
@@ -122,7 +122,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -167,7 +167,7 @@
             "description": "The sObject to retrieve",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -176,7 +176,7 @@
             "description": "The id of the record",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "id"
           },
@@ -185,7 +185,7 @@
             "description": "A callback to execute once the record is retrieved",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "function"
             },
             "name": "callback"
           },
@@ -235,7 +235,7 @@
             "description": "A query string. Must be less than `4000` characters in WHERE clause",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "qs"
           },
@@ -244,7 +244,7 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
           },
@@ -266,7 +266,7 @@
             "description": "A callback to execute once the record is retrieved",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "function"
             },
             "name": "callback"
           },
@@ -316,7 +316,7 @@
             "description": "A query string.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "qs"
           },
@@ -325,7 +325,7 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
           },
@@ -360,7 +360,7 @@
             "description": "A callback to execute once the record is retrieved",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "function"
             },
             "name": "callback"
           },
@@ -394,7 +394,13 @@
           },
           {
             "title": "example",
-            "description": "bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {\n  return state.data.someArray.map(x => {\n    return { 'Age__c': x.age, 'Name': x.name }\n  })\n});"
+            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
+            "caption": "Bulk insert"
+          },
+          {
+            "title": "example",
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);",
+            "caption": "Bulk upsert"
           },
           {
             "title": "function",
@@ -406,16 +412,16 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
           {
             "title": "param",
-            "description": "The bulk operation to be performed",
+            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "operation"
           },
@@ -424,16 +430,67 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Polling timeout in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollTimeout",
+            "default": "240000"
+          },
+          {
+            "title": "param",
+            "description": "Polling interval in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollInterval",
+            "default": "6000"
+          },
+          {
+            "title": "param",
+            "description": "External id field.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.extIdField"
+          },
+          {
+            "title": "param",
+            "description": "Fail the operation on error.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.failOnError",
+            "default": "false"
           },
           {
             "title": "param",
             "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "array"
             },
             "name": "records"
           },
@@ -447,7 +504,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "destroy",
@@ -478,7 +535,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -487,7 +544,7 @@
             "description": "Array of IDs of records to delete.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "attrs"
           },
@@ -496,7 +553,7 @@
             "description": "Options for the destroy delete operation.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
           },
@@ -519,7 +576,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Create a new object.",
+        "description": "Create a new sObject record(s).",
         "tags": [
           {
             "title": "public",
@@ -528,7 +585,13 @@
           },
           {
             "title": "example",
-            "description": "create('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "create(\"Account\", { Name: \"My Account #1\" });",
+            "caption": "Single record creation"
+          },
+          {
+            "title": "example",
+            "description": "create(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+            "caption": "Multiple records creation"
           },
           {
             "title": "function",
@@ -540,16 +603,75 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the new record.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
+            },
+            "name": "attrs"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "insert",
+      "params": [
+        "sObject",
+        "attrs"
+      ],
+      "docs": {
+        "description": "Alias for \"create(sObject, attrs)\".",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "insert(\"Account\", { Name: \"My Account #1\" });",
+            "caption": "Single record creation"
+          },
+          {
+            "title": "example",
+            "description": "insert(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+            "caption": "Multiple records creation"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "API name of the sObject.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sObject"
+          },
+          {
+            "title": "param",
+            "description": "Field attributes for the new record.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
             },
             "name": "attrs"
           },
@@ -573,7 +695,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Create a new object if conditions are met.",
+        "description": "Create a new sObject if conditions are met.\n\n**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**",
         "tags": [
           {
             "title": "public",
@@ -603,7 +725,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -611,8 +733,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -636,7 +776,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Upsert an object.",
+        "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
         "tags": [
           {
             "title": "public",
@@ -645,7 +785,13 @@
           },
           {
             "title": "example",
-            "description": "upsert('obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "upsert(\"UpsertTable__c\", \"ExtId__c\", { Name: \"Record #1\", ExtId__c : 'ID-0000001' });",
+            "caption": "Single record upsert"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\"UpsertTable__c\", \"ExtId__c\", [\n  { Name: \"Record #1\", ExtId__c : 'ID-0000001' },\n  { Name: \"Record #2\", ExtId__c : 'ID-0000002' },\n]);",
+            "caption": "Multiple record upsert"
           },
           {
             "title": "function",
@@ -657,7 +803,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -667,10 +813,10 @@
           },
           {
             "title": "param",
-            "description": "ID.",
+            "description": "The external ID of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "externalId"
           },
@@ -682,8 +828,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -712,7 +876,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Upsert if conditions are met.",
+        "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**",
         "tags": [
           {
             "title": "public",
@@ -742,7 +906,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -751,7 +915,7 @@
             "description": "ID.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "externalId"
           },
@@ -759,8 +923,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -783,7 +965,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Update an object.",
+        "description": "Update an sObject record or records.",
         "tags": [
           {
             "title": "public",
@@ -792,7 +974,13 @@
           },
           {
             "title": "example",
-            "description": "update('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "update(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  Name: \"Updated Account #1\",\n});",
+            "caption": "Single record update"
+          },
+          {
+            "title": "example",
+            "description": "update(\"Account\", [\n  { Id: \"0010500000fxbcuAAA\", Name: \"Updated Account #1\" },\n  { Id: \"0010500000fxbcvAAA\", Name: \"Updated Account #2\" },\n]);",
+            "caption": "Multiple records update"
           },
           {
             "title": "function",
@@ -804,7 +992,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -812,8 +1000,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -903,7 +1109,7 @@
             "description": "ASCII representation of input string",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             }
           }
         ]

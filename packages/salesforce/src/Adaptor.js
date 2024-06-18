@@ -1,12 +1,12 @@
 /**
- * @typedef {Object} State
+ * @typedef {object} State
  * @property {object} data JSON Data.
  * @property {Array<Reference>} references History of all previous operations.
  * @ignore
  */
 
 /**
- * @typedef {Function} Operation
+ * @typedef {function} Operation
  * @param {State} state
  * @ignore
  */
@@ -58,7 +58,7 @@ export function relationship(relationshipName, externalId, dataSource) {
 }
 
 /**
- * Outputs basic information about available sObjects.
+ * Prints the total number of all available sObjects and pushes the result to `state.references`.
  * @public
  * @example
  * describeAll()
@@ -82,12 +82,12 @@ export function describeAll() {
 }
 
 /**
- * Outputs basic information about an sObject to `STDOUT`.
+ * Prints an sObject metadata and pushes the result to state.references
  * @public
  * @example
  * describe('obj_name')
  * @function
- * @param {String} sObject - API name of the sObject.
+ * @param {string} sObject - API name of the sObject.
  * @returns {Operation}
  */
 export function describe(sObject) {
@@ -117,9 +117,9 @@ export function describe(sObject) {
  * @example
  * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
  * @function
- * @param {String} sObject - The sObject to retrieve
- * @param {String} id - The id of the record
- * @param {Function} callback - A callback to execute once the record is retrieved
+ * @param {string} sObject - The sObject to retrieve
+ * @param {string} id - The id of the record
+ * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
 export function retrieve(sObject, id, callback) {
@@ -158,10 +158,10 @@ export function retrieve(sObject, id, callback) {
  * @example <caption>Query more records if next records are available</caption>
  * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
- * @param {String} qs - A query string. Must be less than `4000` characters in WHERE clause
- * @param {Object} options - Options passed to the bulk api.
+ * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
+ * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
- * @param {Function} callback - A callback to execute once the record is retrieved
+ * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
 export function query(qs, options, callback = s => s) {
@@ -305,11 +305,11 @@ const defaultOptions = {
  *   { pollTimeout: 10000, pollInterval: 6000 }
  * );
  * @function
- * @param {String} qs - A query string.
- * @param {Object} options - Options passed to the bulk api.
+ * @param {string} qs - A query string.
+ * @param {object} options - Options passed to the bulk api.
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
- * @param {Function} callback - A callback to execute once the record is retrieved
+ * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
@@ -363,26 +363,55 @@ export function bulkQuery(qs, options, callback) {
 /**
  * Create and execute a bulk job.
  * @public
- * @example
- * bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {
- *   return state.data.someArray.map(x => {
- *     return { 'Age__c': x.age, 'Name': x.name }
- *   })
- * });
+ * @example <caption>Bulk insert</caption>
+ * bulk(
+ *   "Patient__c",
+ *   "insert",
+ *   { failOnError: true },
+ *   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+ * );
+ * @example <caption>Bulk upsert</caption>
+ * bulk(
+ *   "vera__Beneficiary__c",
+ *   "upsert",
+ *   { extIdField: "vera__Result_UID__c" },
+ *   [
+ *     {
+ *       vera__Reporting_Period__c: 2023,
+ *       vera__Geographic_Area__c: "Uganda",
+ *       "vera__Indicator__r.vera__ExtId__c": 1001,
+ *       vera__Result_UID__c: "1001_2023_Uganda",
+ *     },
+ *   ]
+ * );
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {String} operation - The bulk operation to be performed
- * @param {Object} options - Options passed to the bulk api.
- * @param {Function} records - an array of records, or a function which returns an array.
+ * @param {string} sObject - API name of the sObject.
+ * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
+ * @param {object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
+ * @param {string} [options.extIdField] - External id field.
+ * @param {boolean} [options.failOnError=false] - Fail the operation on error.
+ * @param {array} records - an array of records, or a function which returns an array.
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
   return state => {
     const { connection } = state;
-    const { failOnError, allowNoOp, pollTimeout, pollInterval } = options;
 
-    const [resolvedSObject, resolvedOperation, resolvedRecords] =
-      newExpandReferences(state, sObject, operation, records);
+    const [
+      resolvedSObject,
+      resolvedOperation,
+      resolvedOptions,
+      resolvedRecords,
+    ] = newExpandReferences(state, sObject, operation, options, records);
+
+    const {
+      failOnError = false,
+      allowNoOp = false,
+      pollTimeout,
+      pollInterval,
+    } = resolvedOptions;
 
     if (allowNoOp && resolvedRecords.length === 0) {
       console.info(
@@ -474,9 +503,9 @@ export function bulk(sObject, operation, options, records) {
  *  '0090n00000JQEWHYAA5
  * ], { failOnError: true })
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Array of IDs of records to delete.
- * @param {Object} options - Options for the destroy delete operation.
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Array of IDs of records to delete.
+ * @param {object} options - Options for the destroy delete operation.
  * @returns {Operation}
  */
 export function destroy(sObject, attrs, options) {
@@ -511,16 +540,15 @@ export function destroy(sObject, attrs, options) {
 }
 
 /**
- * Create a new object.
+ * Create a new sObject record(s).
  * @public
- * @example
- * create('obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record creation</caption>
+ * create("Account", { Name: "My Account #1" });
+ * @example <caption> Multiple records creation</caption>
+ * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new record.
  * @returns {Operation}
  */
 export function create(sObject, attrs) {
@@ -540,7 +568,25 @@ export function create(sObject, attrs) {
 }
 
 /**
- * Create a new object if conditions are met.
+ * Alias for "create(sObject, attrs)".
+ * @public
+ * @example <caption> Single record creation</caption>
+ * insert("Account", { Name: "My Account #1" });
+ * @example <caption> Multiple records creation</caption>
+ * insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+ * @function
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new record.
+ * @returns {Operation}
+ */
+export function insert(sObject, attrs) {
+  return create(sObject, attrs);
+}
+
+/**
+ * Create a new sObject if conditions are met.
+ *
+ * **The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**
  * @public
  * @example
  * createIf(true, 'obj_name', {
@@ -549,13 +595,17 @@ export function create(sObject, attrs) {
  * })
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {string} sObject - API name of the sObject.
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function createIf(logical, sObject, attrs) {
   return state => {
     const resolvedLogical = expandReferences(logical)(state);
+
+    console.warn(
+      `The 'createIf()' function has been deprecated. Use 'fnIf(condition,create())' instead.`
+    );
 
     if (resolvedLogical) {
       const { connection } = state;
@@ -580,19 +630,22 @@ export function createIf(logical, sObject, attrs) {
 }
 
 /**
- * Upsert an object.
+ * Create a new sObject record, or updates it if it already exists
+ * External ID field name must be specified in second argument.
  * @public
- * @example
- * upsert('obj_name', 'ext_id', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record upsert </caption>
+ * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
+ * @example <caption> Multiple record upsert </caption>
+ * upsert("UpsertTable__c", "ExtId__c", [
+ *   { Name: "Record #1", ExtId__c : 'ID-0000001' },
+ *   { Name: "Record #2", ExtId__c : 'ID-0000002' },
+ * ]);
  * @function
- * @param {String} sObject - API name of the sObject.
+ * @param {string} sObject - API name of the sObject.
  * @magic sObject - $.children[?(!@.meta.system)].name
- * @param {String} externalId - ID.
+ * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {Operation}
  */
@@ -620,7 +673,9 @@ export function upsert(sObject, externalId, attrs) {
 }
 
 /**
- * Upsert if conditions are met.
+ * Conditionally create a new sObject record, or updates it if it already exists
+ *
+ * **The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**
  * @public
  * @example
  * upsertIf(true, 'obj_name', 'ext_id', {
@@ -629,14 +684,18 @@ export function upsert(sObject, externalId, attrs) {
  * })
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
- * @param {String} sObject - API name of the sObject.
- * @param {String} externalId - ID.
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {string} sObject - API name of the sObject.
+ * @param {string} externalId - ID.
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
   return state => {
     const resolvedLogical = expandReferences(logical)(state);
+
+    console.warn(
+      `The 'upsertIf()' function has been deprecated. Use 'fnIf(condition,upsert())' instead.`
+    );
 
     if (resolvedLogical) {
       const { connection } = state;
@@ -667,16 +726,21 @@ export function upsertIf(logical, sObject, externalId, attrs) {
 }
 
 /**
- * Update an object.
+ * Update an sObject record or records.
  * @public
- * @example
- * update('obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption> Single record update</caption>
+ * update("Account", {
+ *   Id: "0010500000fxbcuAAA",
+ *   Name: "Updated Account #1",
+ * });
+ * @example <caption> Multiple records update</caption>
+ * update("Account", [
+ *   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+ *   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+ * ]);
  * @function
- * @param {String} sObject - API name of the sObject.
- * @param {Object} attrs - Field attributes for the new object.
+ * @param {string} sObject - API name of the sObject.
+ * @param {(object|object[])} attrs - Field attributes for the new object.
  * @returns {Operation}
  */
 export function update(sObject, attrs) {
@@ -827,7 +891,7 @@ function cleanupState(state) {
  *   update(params)
  * )
  * @function
- * @returns {Array}
+ * @returns {array}
  */
 export function steps(...operations) {
   return flatten(operations);
@@ -843,7 +907,7 @@ export function steps(...operations) {
  *   return state;
  * });
  * @param {string} input - A string with unicode characters
- * @returns {String} - ASCII representation of input string
+ * @returns {string} - ASCII representation of input string
  */
 export function toUTF8(input) {
   return anyAscii(input);
@@ -857,13 +921,13 @@ export function toUTF8(input) {
  *   method: 'POST',
  *   json: { inputs: [{}] },
  * });
- * @param {String} url - Relative or absolute URL to request from
- * @param {Object} options - Request options
- * @param {String} [options.method=GET] - HTTP method to use. Defaults to GET
- * @param {Object} [options.headers] - Object of request headers
- * @param {Object} [options.json] - A JSON Object request body
- * @param {String} [options.body] - HTTP body (in POST/PUT/PATCH methods)
- * @param {Function} callback - A callback to execute once the request is complete
+ * @param {string} url - Relative or absolute URL to request from
+ * @param {object} options - Request options
+ * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
+ * @param {object} [options.headers] - Object of request headers
+ * @param {object} [options.json] - A JSON Object request body
+ * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @param {function} callback - A callback to execute once the request is complete
  * @returns {Operation}
  */
 
