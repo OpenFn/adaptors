@@ -433,7 +433,7 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
       keyPath
     );
     const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback({ ...state, data: results, results });
+    return callback({ ...state, data: results });
   };
 }
 
