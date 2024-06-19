@@ -1,4 +1,5 @@
 import get from 'lodash/get.js';
+import omit from 'lodash/omit.js';
 import curry from 'lodash/fp/curry.js';
 import groupBy from 'lodash/groupBy.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
@@ -433,7 +434,7 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
       keyPath
     );
     const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback({ ...state, data: results });
+    return callback({ ...state, data: omit(results, [undefined]) });
   };
 }
 
