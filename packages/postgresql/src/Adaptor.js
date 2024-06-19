@@ -766,6 +766,7 @@ export {
   fn,
   fnIf,
   http,
+  group,
   lastReferenceValue,
   merge,
   sourceValue,
