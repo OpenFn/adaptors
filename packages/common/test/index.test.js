@@ -1010,29 +1010,22 @@ describe('group', () => {
       ],
     };
 
-    let result;
-    group(state => {
-      result = state.data;
-      return result;
-    }, 'y.z')(input);
+    const result = group(state => state.data, 'y.z')(input);
 
-    expect(result).eql(input.data);
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
   });
 
   it('should expand key path', function () {
     const input = {
+      path: 'y.z',
       data: [
         { x: 'a', y: { z: 'a' } },
         { x: 'b', y: { z: undefined } },
       ],
     };
 
-    let result;
-    group(input.data, state => {
-      result = 'y.z';
-      return result;
-    })(input);
+    const result = group(input.data, state => state.path)(input);
 
-    expect(result).eql('y.z');
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
   });
 });
