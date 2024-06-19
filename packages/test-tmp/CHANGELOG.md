@@ -1,5 +1,11 @@
 # @openfn/language-test-tmp
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- 740494b: just a bump
+
 ## 1.0.0-next.8
 
 ### Major Changes
