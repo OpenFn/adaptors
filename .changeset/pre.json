@@ -49,7 +49,7 @@
     "@openfn/language-smpp": "1.4.0",
     "@openfn/language-surveycto": "2.2.0",
     "@openfn/language-telerivet": "0.3.0",
-    "@openfn/language-test-tmp": "1.0.0",
+    "@openfn/language-testing": "1.0.0",
     "@openfn/language-twilio": "0.5.0",
     "@openfn/language-vtiger": "1.3.0",
     "@openfn/language-zoho": "0.4.0",
