@@ -1,5 +1,11 @@
 # @openfn/language-test-tmp
 
+## 1.0.0-next.8
+
+### Major Changes
+
+- 1011ade: test: bump major version
+
 ## 1.0.0-next.7
 
 ### Patch Changes
