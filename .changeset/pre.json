@@ -62,11 +62,6 @@
     "@openfn/slack-notify": "1.0.0"
   },
   "changesets": [
-    "fast-parents-invent",
-    "fresh-ravens-suffer",
-    "fuzzy-doors-swim",
-    "good-files-hug",
-    "shiny-impalas-march",
-    "witty-planets-check"
+    "funny-gifts-marry"
   ]
 }
