@@ -725,6 +725,7 @@ export {
   fields,
   fn,
   http,
+  group,
   lastReferenceValue,
   merge,
   sourceValue,

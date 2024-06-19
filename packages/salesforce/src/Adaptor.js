@@ -916,6 +916,7 @@ export {
   humanProper,
   index,
   join,
+  group,
   jsonValue,
   lastReferenceValue,
   map,

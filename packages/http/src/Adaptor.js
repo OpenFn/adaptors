@@ -191,6 +191,7 @@ export {
   fields,
   fn,
   chunk,
+  group,
   humanProper,
   lastReferenceValue,
   merge,
