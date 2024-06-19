@@ -256,21 +256,15 @@ release.
 
 ## Pre-releases
 
-You can configure a pre-release to automatically make adaptor builds available
-on npm with the @next tag.
+You can configure a pre-release to deploy adaptor builds to npm with the @next
+tag.
 
-When a pre-release is started, every push to the branch will:
+New builds are triggered by pushing a new changeset, which will bump versions
+and publish to npm without adding the `@latest` tag.
 
-- trigger a build
-- bump the version number for anything with a changeset
-- commit the new versions and push them back to the branch
-- publish the latested version to npm with the @next tag
-
-Pre-release versions are of the form `.next-0`, `.next-1` etc.
-
-branch will cause any adaptor with changesets to be published. Subsequent builds
-will trigger another publish with the pre-release version incremented (eg, the
-first pre-release will be, `1.0.0-0`, the second `1.0.0-1`).
+Pre-release versions are of the form `.next-0`, `.next-1` etc. When a new
+pre-release build is published, the old version is immediately deprecated. When
+the adaptor is published, the last @next release is also deprecated.
 
 Lightning and the CLI will be able to access the @next version of the adaptor,
 eg:
@@ -301,7 +295,7 @@ pnpm next:end
 At this point you can run `pnpm version` to generate versions for the final
 release.
 
-Note that while in pre-relesae mode, running `pnpm changeset version` will not
+Note that while in pre-release mode, running `pnpm changeset version` will not
 consume the changesets.
 
 ## Build tooling
