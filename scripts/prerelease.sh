@@ -1,6 +1,8 @@
-# if there's a pre file
-# TODO maybe grep pre.json for `"mode": "pre"`
-if test -f .changeset/pre.json; then
+#!/bin/sh -l
+
+mode=$(cat .changeset/pre.json | jq ".mode")
+
+if [ "$mode" = "\"pre\"" ]; then
   # TODO if any of these steps fail, we have to exit 1
   echo "Publishing pre-release build"
 
