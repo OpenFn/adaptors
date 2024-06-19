@@ -59,6 +59,9 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#group">group()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#http">http()</a>
 </dt>
 <dt>
@@ -239,7 +242,7 @@ Execute an SQL statement
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sqlQuery | <code>function</code> | a function which takes state and returns a string of SQL. |
+| sqlQuery | <code>string</code> | The SQL query as a string. |
 | [options] | <code>object</code> | Optional options argument |
 | [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |

@@ -20,6 +20,8 @@
 <dt>
     <a href="#execute">execute(operations)</a></dt>
 <dt>
+    <a href="#insert">insert(sObject, attrs)</a></dt>
+<dt>
     <a href="#query">query(qs, options, callback)</a></dt>
 <dt>
     <a href="#reference">reference(position)</a></dt>
@@ -86,6 +88,9 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#group">group()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#http">http()</a>
 </dt>
 <dt>
@@ -132,20 +137,41 @@ bulk(sObject, operation, options, records) ⇒ <code>Operation</code>
 Create and execute a bulk job.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
-| operation | <code>String</code> | The bulk operation to be performed |
-| options | <code>Object</code> | Options passed to the bulk api. |
-| records | <code>function</code> | an array of records, or a function which returns an array. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sObject | <code>string</code> |  | API name of the sObject. |
+| operation | <code>string</code> |  | The bulk operation to be performed.Eg "insert" | "update" | "upsert" |
+| options | <code>object</code> |  | Options passed to the bulk api. |
+| [options.pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |
+| [options.pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |
+| [options.extIdField] | <code>string</code> |  | External id field. |
+| [options.failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |
+| records | <code>array</code> |  | an array of records, or a function which returns an array. |
 
-**Example**  
+**Example** *(Bulk insert)*  
 ```js
-bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {
-  return state.data.someArray.map(x => {
-    return { 'Age__c': x.age, 'Name': x.name }
-  })
-});
+bulk(
+  "Patient__c",
+  "insert",
+  { failOnError: true },
+  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+);
+```
+**Example** *(Bulk upsert)*  
+```js
+bulk(
+  "vera__Beneficiary__c",
+  "upsert",
+  { extIdField: "vera__Result_UID__c" },
+  [
+    {
+      vera__Reporting_Period__c: 2023,
+      vera__Geographic_Area__c: "Uganda",
+      "vera__Indicator__r.vera__ExtId__c": 1001,
+      vera__Result_UID__c: "1001_2023_Uganda",
+    },
+  ]
+);
 ```
 
 * * *
@@ -162,8 +188,8 @@ This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| qs | <code>String</code> |  | A query string. |
-| options | <code>Object</code> |  | Options passed to the bulk api. |
+| qs | <code>string</code> |  | A query string. |
+| options | <code>object</code> |  | Options passed to the bulk api. |
 | [options.pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |
 | [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
 | callback | <code>function</code> |  | A callback to execute once the record is retrieved |
@@ -205,20 +231,21 @@ cleanupState(state)
 
 create(sObject, attrs) ⇒ <code>Operation</code>
 
-Create a new object.
+Create a new sObject record(s).
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
-| attrs | <code>Object</code> | Field attributes for the new object. |
+| sObject | <code>string</code> | API name of the sObject. |
+| attrs | <code>object</code> | Field attributes for the new record. |
 
-**Example**  
+**Example** *( Single record creation)*  
 ```js
-create('obj_name', {
-  attr1: "foo",
-  attr2: "bar"
-})
+create("Account", { Name: "My Account #1" });
+```
+**Example** *( Multiple records creation)*  
+```js
+create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
 ```
 
 * * *
@@ -227,14 +254,16 @@ create('obj_name', {
 
 createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
 
-Create a new object if conditions are met.
+Create a new sObject if conditions are met.
+
+**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | logical | <code>boolean</code> | a logical statement that will be evaluated. |
-| sObject | <code>String</code> | API name of the sObject. |
-| attrs | <code>Object</code> | Field attributes for the new object. |
+| sObject | <code>string</code> | API name of the sObject. |
+| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
 **Example**  
 ```js
@@ -250,12 +279,12 @@ createIf(true, 'obj_name', {
 
 describe(sObject) ⇒ <code>Operation</code>
 
-Outputs basic information about an sObject to `STDOUT`.
+Prints an sObject metadata and pushes the result to state.references
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
+| sObject | <code>string</code> | API name of the sObject. |
 
 **Example**  
 ```js
@@ -268,7 +297,7 @@ describe('obj_name')
 
 describeAll() ⇒ <code>Operation</code>
 
-Outputs basic information about available sObjects.
+Prints the total number of all available sObjects and pushes the result to `state.references`.
 
 **Example**  
 ```js
@@ -286,9 +315,9 @@ Delete records of an object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
-| attrs | <code>Object</code> | Array of IDs of records to delete. |
-| options | <code>Object</code> | Options for the destroy delete operation. |
+| sObject | <code>string</code> | API name of the sObject. |
+| attrs | <code>object</code> | Array of IDs of records to delete. |
+| options | <code>object</code> | Options for the destroy delete operation. |
 
 **Example**  
 ```js
@@ -314,6 +343,29 @@ Executes an operation.
 
 * * *
 
+## insert
+
+insert(sObject, attrs) ⇒ <code>Operation</code>
+
+Alias for "create(sObject, attrs)".
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | API name of the sObject. |
+| attrs | <code>object</code> | Field attributes for the new record. |
+
+**Example** *( Single record creation)*  
+```js
+insert("Account", { Name: "My Account #1" });
+```
+**Example** *( Multiple records creation)*  
+```js
+insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+```
+
+* * *
+
 ## query
 
 query(qs, options, callback) ⇒ <code>Operation</code>
@@ -327,8 +379,8 @@ The Salesforce query API is subject to rate limits, [See for more details](https
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| qs | <code>String</code> |  | A query string. Must be less than `4000` characters in WHERE clause |
-| options | <code>Object</code> |  | Options passed to the bulk api. |
+| qs | <code>string</code> |  | A query string. Must be less than `4000` characters in WHERE clause |
+| options | <code>object</code> |  | Options passed to the bulk api. |
 | [options.autoFetch] | <code>boolean</code> | <code>false</code> | Fetch next records if available. |
 | callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
@@ -393,12 +445,12 @@ Send a HTTP request using connected session information.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| url | <code>String</code> |  | Relative or absolute URL to request from |
-| options | <code>Object</code> |  | Request options |
-| [options.method] | <code>String</code> | <code>GET</code> | HTTP method to use. Defaults to GET |
-| [options.headers] | <code>Object</code> |  | Object of request headers |
-| [options.json] | <code>Object</code> |  | A JSON Object request body |
-| [options.body] | <code>String</code> |  | HTTP body (in POST/PUT/PATCH methods) |
+| url | <code>string</code> |  | Relative or absolute URL to request from |
+| options | <code>object</code> |  | Request options |
+| [options.method] | <code>string</code> | <code>&quot;GET&quot;</code> | HTTP method to use. Defaults to GET |
+| [options.headers] | <code>object</code> |  | Object of request headers |
+| [options.json] | <code>object</code> |  | A JSON Object request body |
+| [options.body] | <code>string</code> |  | HTTP body (in POST/PUT/PATCH methods) |
 | callback | <code>function</code> |  | A callback to execute once the request is complete |
 
 **Example**  
@@ -420,8 +472,8 @@ Retrieves a Salesforce sObject(s).
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | The sObject to retrieve |
-| id | <code>String</code> | The id of the record |
+| sObject | <code>string</code> | The sObject to retrieve |
+| id | <code>string</code> | The id of the record |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
 
 **Example**  
@@ -433,7 +485,7 @@ retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 
 ## steps
 
-steps() ⇒ <code>Array</code>
+steps() ⇒ <code>array</code>
 
 Flattens an array of operations.
 
@@ -449,11 +501,11 @@ steps(
 
 ## toUTF8
 
-toUTF8(input) ⇒ <code>String</code>
+toUTF8(input) ⇒ <code>string</code>
 
 Transliterates unicode characters to their best ASCII representation
 
-**Returns**: <code>String</code> - - ASCII representation of input string  
+**Returns**: <code>string</code> - - ASCII representation of input string  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -474,20 +526,27 @@ fn((state) => {
 
 update(sObject, attrs) ⇒ <code>Operation</code>
 
-Update an object.
+Update an sObject record or records.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
-| attrs | <code>Object</code> | Field attributes for the new object. |
+| sObject | <code>string</code> | API name of the sObject. |
+| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example**  
+**Example** *( Single record update)*  
 ```js
-update('obj_name', {
-  attr1: "foo",
-  attr2: "bar"
-})
+update("Account", {
+  Id: "0010500000fxbcuAAA",
+  Name: "Updated Account #1",
+});
+```
+**Example** *( Multiple records update)*  
+```js
+update("Account", [
+  { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+  { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+]);
 ```
 
 * * *
@@ -496,21 +555,26 @@ update('obj_name', {
 
 upsert(sObject, externalId, attrs) ⇒ <code>Operation</code>
 
-Upsert an object.
+Create a new sObject record, or updates it if it already exists
+External ID field name must be specified in second argument.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>String</code> | API name of the sObject. |
-| externalId | <code>String</code> | ID. |
-| attrs | <code>Object</code> | Field attributes for the new object. |
+| sObject | <code>string</code> | API name of the sObject. |
+| externalId | <code>string</code> | The external ID of the sObject. |
+| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example**  
+**Example** *( Single record upsert )*  
 ```js
-upsert('obj_name', 'ext_id', {
-  attr1: "foo",
-  attr2: "bar"
-})
+upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
+```
+**Example** *( Multiple record upsert )*  
+```js
+upsert("UpsertTable__c", "ExtId__c", [
+  { Name: "Record #1", ExtId__c : 'ID-0000001' },
+  { Name: "Record #2", ExtId__c : 'ID-0000002' },
+]);
 ```
 
 * * *
@@ -519,15 +583,17 @@ upsert('obj_name', 'ext_id', {
 
 upsertIf(logical, sObject, externalId, attrs) ⇒ <code>Operation</code>
 
-Upsert if conditions are met.
+Conditionally create a new sObject record, or updates it if it already exists
+
+**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | logical | <code>boolean</code> | a logical statement that will be evaluated. |
-| sObject | <code>String</code> | API name of the sObject. |
-| externalId | <code>String</code> | ID. |
-| attrs | <code>Object</code> | Field attributes for the new object. |
+| sObject | <code>string</code> | API name of the sObject. |
+| externalId | <code>string</code> | ID. |
+| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
 **Example**  
 ```js

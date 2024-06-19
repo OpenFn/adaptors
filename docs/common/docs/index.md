@@ -40,6 +40,8 @@
 <dt>
     <a href="#get">get(requestParams)</a></dt>
 <dt>
+    <a href="#group">group(arrayOfObjects, keyPath, callback)</a></dt>
+<dt>
     <a href="#head">head(requestParams)</a></dt>
 <dt>
     <a href="#humanproper">humanProper(str)</a></dt>
@@ -477,6 +479,33 @@ Make a GET request
      url: state => `https://www.example.com/api/items/${state.id},
      headers: {"content-type": "application/json"}
 });
+```
+
+* * *
+
+## group
+
+group(arrayOfObjects, keyPath, callback) ⇒ <code>Operation</code>
+
+Groups an array of objects by a specified key path.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arrayOfObjects | <code>Array.&lt;Object&gt;</code> | The array of objects to be grouped. |
+| keyPath | <code>string</code> | The key path to group by. |
+| callback | <code>function</code> | (Optional) Callback function |
+
+**Example**  
+```js
+const users = [
+  { name: 'Alice', age: 25, city: 'New York' },
+  { name: 'Bob', age: 30, city: 'San Francisco' },
+  { name: 'Charlie', age: 25, city: 'New York' },
+  { name: 'David', age: 30, city: 'San Francisco' }
+];
+group(users, 'city');
+// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
 ```
 
 * * *
