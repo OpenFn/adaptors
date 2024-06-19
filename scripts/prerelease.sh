@@ -18,6 +18,11 @@ if [ "$mode" = "\"pre\"" ]; then
   git commit -m "Bump pre-release versions"
   git push origin $GITHUB_HEAD_REF
 
+  # publish with a dry run to get the summary
+  pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next --dry-run
+
+  node scripts/deprecate.mjs
+
   echo "Publishing...."
   pnpm publish -r --report-summary --publish-branch main --access=public --no-git-checks --tag next
 
