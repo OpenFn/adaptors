@@ -21,6 +21,7 @@
     "generate": "pnpm -C tools/generate cli generate",
     "next:start": "pnpm changeset pre enter next",
     "next:publish": "pnpm exec scripts/prerelease.sh",
+    "next:deprecate": "node scripts/deprecate.mjs",
     "next:end": "pnpm changeset pre exit next && rm .changeset/pre.json"
   },
   "author": "Open Function Group",
