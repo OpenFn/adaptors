@@ -962,12 +962,77 @@ describe('cursor', () => {
 describe('group', () => {
   it('should group an array of objects by a specified key path', function () {
     const state = {};
-    const resultingState = group(testData.store.book, 'category')(state);
+    const data = [{ x: 'a' }, { x: 'b' }, { x: 'b' }];
 
-    // Assert that state.data has certain keys
-    assert.deepStrictEqual(Object.keys(resultingState.data).sort(), [
-      'fiction',
-      'reference',
-    ]);
+    const result = group(data, 'x')(state);
+
+    expect(result.data).eql({ a: [{ x: 'a' }], b: [{ x: 'b' }, { x: 'b' }] });
+  });
+
+  it('should group an array of objects by a specified path', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({
+      a: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: 'a' } },
+      ],
+    });
+  });
+  it("should return an empty object if the key isn't present on any items", function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { w: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.q')(state);
+    expect(result.data).eql({});
+  });
+
+  it('should remove undefined keys', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: undefined } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+  it('should expand arrayOfObjects', function () {
+    const input = {
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    let result;
+    group(state => {
+      result = state.data;
+      return result;
+    }, 'y.z')(input);
+
+    expect(result).eql(input.data);
+  });
+
+  it('should expand key path', function () {
+    const input = {
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    let result;
+    group(input.data, state => {
+      result = 'y.z';
+      return result;
+    })(input);
+
+    expect(result).eql('y.z');
   });
 });
