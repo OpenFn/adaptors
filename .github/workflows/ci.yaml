@@ -69,12 +69,12 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: git config
-        run: git config user.name $GH_USER
+        run: git config user.name $GIT_USER
         env:
-          GH_USER: ${{ secrets.GH_USER }}
-      - run: git config user.email $GH_EMAIL
+          GIT_USER: ${{ secrets.GIT_USER }}
+      - run: git config user.email $GIT_EMAIL
         env:
-          GH_EMAIL: ${{ secrets.GH_EMAIL }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
       - name: Publish @next prereleasae
         run: pnpm next:publish
