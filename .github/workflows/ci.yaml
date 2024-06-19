@@ -72,7 +72,7 @@ jobs:
         run: git config user.name $GH_USER
         env:
           GH_USER: ${{ secrets.GH_USER }}
-        run: git config user.email $GH_EMAIL
+      - run: git config user.email $GH_EMAIL
         env:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
 
