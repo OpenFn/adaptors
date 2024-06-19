@@ -1,5 +1,28 @@
 # @openfn/language-salesforce
 
+## 4.8.0
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+- b5e0c266: ### Added
+
+  - `insert()` function as an alias for `create()`.
+
+  ### Improved
+
+  - JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.
+
+  ### Deprecated
+
+  - `upsertIf()` and `createIf()` functions are now deprecated. Use
+    `fnIf(condition, upsert())` instead.
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
 ## 4.7.0
 
 ### Minor Changes
