@@ -27,11 +27,10 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
 
-      # TODO don't actually build for now
-      # - name: Build
-      #   run: pnpm run build
-      # - name: Unit Tests
-      #   run: pnpm run test
+      - name: Build
+        run: pnpm run build
+      - name: Unit Tests
+        run: pnpm run test
 
   next:
     name: 'Prerelease @next'
@@ -47,7 +46,7 @@ jobs:
       # force git to checkout the branch, not a detached head
       - uses: actions/checkout@v3
         with:
-          # force to checkout as as branhc, so we can commit later
+          # force to checkout as as branch, so we can commit later
           ref: next-tags
       - name: echo base ref
         run: echo $GITHUB_HEAD_REF
@@ -63,22 +62,20 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
       - name: Build
-        # run: pnpm run build
-        run: pnpm -C packages/common run build
-      - run: pnpm -C packages/test-tmp run build
-      # Everything here needs pushing out into a new job or workflow
+        run: pnpm run build
+
       - name: Setup NPM config
         run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: git username
+      - name: git config
         run: git config user.name $GH_USER
         env:
           GH_USER: ${{ secrets.GH_USER }}
-      - name: git email
         run: git config user.email $GH_EMAIL
         env:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
+
       - name: Publish @next prereleasae
         run: pnpm next:publish
 
