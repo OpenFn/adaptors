@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-rapidpro",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A RapidPro adaptor for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.14.0",
+    "@openfn/language-common": "1.15.0",
     "axios": "^0.21.2"
   },
   "devDependencies": {
