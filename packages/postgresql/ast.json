@@ -3,7 +3,7 @@
     {
       "name": "sql",
       "params": [
-        "sqlString",
+        "sqlQuery",
         "options",
         "callback"
       ],
@@ -26,12 +26,12 @@
           },
           {
             "title": "param",
-            "description": "A sequence of characters that forms a valid SQL command.",
+            "description": "The SQL query as a string.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sqlString"
+            "name": "sqlQuery"
           },
           {
             "title": "param",
