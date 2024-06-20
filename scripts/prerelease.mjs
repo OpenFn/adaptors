@@ -49,7 +49,7 @@ async function prerelease() {
 
   for (const pkg of report.publishedPackages) {
     console.log(pkg);
-    updatePackage(pkg.name, hash);
+    updatePackage(pkg.name, `next-${hash}`);
   }
 
   // deprecate the current @next tagged stuff
