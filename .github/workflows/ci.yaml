@@ -75,6 +75,6 @@ jobs:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
       - name: Pre-release
-        run: pnpm run prerelease
+        run: pnpm prerelease
 
       # Maybe publish to slack? This might be too annoying?
