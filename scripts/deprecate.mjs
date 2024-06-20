@@ -1,13 +1,11 @@
 import util from 'node:util';
 import c_p from 'node:child_process';
 
-import summary from '../pnpm-publish-summary.json' assert { type: 'json' };
-
 const exec = util.promisify(c_p.exec);
 
 const DEPRECATION_MESSAGE = `This pre-release adaptor build has been outdated and should no longer be used`;
 
-async function deprecate() {
+export default async function deprecate(summary) {
   for (const { name } of summary.publishedPackages) {
     try {
       const { stdout: version } = await exec(`npm info ${name}@next version`);
@@ -26,5 +24,3 @@ async function deprecate() {
     }
   }
 }
-
-deprecate();

@@ -2,7 +2,7 @@ import util from 'node:util';
 import c_p from 'node:child_process';
 import path from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
-import summary from '../pnpm-publish-summary.json' assert { type: 'json' };
+import deprecate from './deprecate.mjs';
 
 const exec = util.promisify(c_p.exec);
 
@@ -51,6 +51,11 @@ async function prerelease() {
     console.log(pkg);
     updatePackage(pkg.name, hash);
   }
+
+  // deprecate the current @next tagged stuff
+  // (We have to do this before publish or we'll
+  // deprecate the wrong thing)
+  await deprecate(report);
 
   await exec('pnpm install');
   await exec('pnpm build');
