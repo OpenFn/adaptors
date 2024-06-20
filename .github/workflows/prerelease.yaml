@@ -1,0 +1,15 @@
+name: Pre-release
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types:
+      - completed
+
+jobs:
+  next:
+    name: 'Publish @next'
+    runs-on: ubuntu-latest
+
+    steps:
+      - run echo "test"
