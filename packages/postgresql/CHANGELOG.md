@@ -1,5 +1,21 @@
 # @openfn/language-postgresql
 
+## 5.0.0
+
+### Major Changes
+
+- 6a4081b8: - Update all operations to use util `expandReferences`
+  - Add `findValue` result to state
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
 ## 4.2.0
 
 ### Minor Changes

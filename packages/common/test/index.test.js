@@ -21,6 +21,7 @@ import {
   lastReferenceValue,
   map,
   merge,
+  group,
   parseCsv,
   referencePath,
   scrubEmojis,
@@ -866,95 +867,165 @@ describe('validate', () => {
 
 describe('cursor', () => {
   it('should set a cursor on state', () => {
-    const state = {}
-    const result = cursor(1234)(state)
+    const state = {};
+    const result = cursor(1234)(state);
     expect(result.cursor).to.eql(1234);
   });
 
   it('should set a cursorStart on state', () => {
-    const state = {}
+    const state = {};
     const date = new Date();
-    const result = cursor('start')(state)
-    const resultDate = new Date(result.cursor)
-    expect(resultDate.toDateString()).to.eql(date.toDateString())
+    const result = cursor('start')(state);
+    const resultDate = new Date(result.cursor);
+    expect(resultDate.toDateString()).to.eql(date.toDateString());
   });
 
   it('should set a cursor on state with a natural language timestamp', () => {
-    const state = {}
+    const state = {};
 
-    const date = startOfToday().toISOString()
-    const result = cursor('today')(state)
+    const date = startOfToday().toISOString();
+    const result = cursor('today')(state);
     expect(result.cursor).to.eql(date);
   });
 
   it('should not blow up if an arbitrary string is passed', () => {
-    const state = {}
+    const state = {};
 
-    const str = 'rock the cashbah'
-    const result = cursor(str)(state)
+    const str = 'rock the cashbah';
+    const result = cursor(str)(state);
     expect(result.cursor).to.eql(str);
   });
 
   it('should clear the cursor', () => {
     const state = {
-      cursor: new Date()
-    }
-    const result = cursor()(state)
-    expect(result.cursor).to.eql(undefined)
+      cursor: new Date(),
+    };
+    const result = cursor()(state);
+    expect(result.cursor).to.eql(undefined);
   });
 
   it('should use a default value', () => {
-    const state = {}
-    const result = cursor(state.cursor, { defaultValue: 33 })(state)
-    expect(result.cursor).to.eql(33)
+    const state = {};
+    const result = cursor(state.cursor, { defaultValue: 33 })(state);
+    expect(result.cursor).to.eql(33);
   });
 
   it('should use a custom key', () => {
-    const state = {}
-    const result = cursor(44, { key: 'page' })(state)
-    expect(result.page).to.eql(44)
+    const state = {};
+    const result = cursor(44, { key: 'page' })(state);
+    expect(result.page).to.eql(44);
   });
 
   it('should re-use a custom key', () => {
-    const state = {}
-    const result1 = cursor(44, { key: 'page' })(state)
-    expect(result1.page).to.eql(44)
+    const state = {};
+    const result1 = cursor(44, { key: 'page' })(state);
+    expect(result1.page).to.eql(44);
 
-    const result2 = cursor(55)(state)
-    expect(result2.page).to.eql(55)
+    const result2 = cursor(55)(state);
+    expect(result2.page).to.eql(55);
   });
 
   // testing the log output is hard here, I've only verified it manally
   it('should use an object', () => {
-    const state = {}
-    const c = { page: 22, next: 23 }
-    const result = cursor(c, { key: 'cursor' })(state)
-    expect(result.cursor).to.eql(c)
+    const state = {};
+    const c = { page: 22, next: 23 };
+    const result = cursor(c, { key: 'cursor' })(state);
+    expect(result.cursor).to.eql(c);
   });
 
   it('should apply a custom formatter', () => {
     const state = {};
     const result = cursor('abc', {
-      format: (c) => c.toUpperCase()
+      format: c => c.toUpperCase(),
     })(state);
-    expect(result.cursor).to.eql('ABC')
-  })
+    expect(result.cursor).to.eql('ABC');
+  });
 
   it('should format "today"', () => {
     const state = {};
     const date = new Date().toDateString();
     const result = cursor('today', {
-      format: (c) => c.toDateString()
+      format: c => c.toDateString(),
     })(state);
-    expect(result.cursor).to.eql(date)
-  })
+    expect(result.cursor).to.eql(date);
+  });
 
   it('should format a number to an arbitrary object', () => {
     const state = {};
     const result = cursor(3, {
-      format: (c) => ({ page: c })
+      format: c => ({ page: c }),
     })(state);
-    expect(result.cursor).to.eql({ page: 3 })
-  })
+    expect(result.cursor).to.eql({ page: 3 });
+  });
+});
 
+describe('group', () => {
+  it('should group an array of objects by a specified key path', function () {
+    const state = {};
+    const data = [{ x: 'a' }, { x: 'b' }, { x: 'b' }];
+
+    const result = group(data, 'x')(state);
+
+    expect(result.data).eql({ a: [{ x: 'a' }], b: [{ x: 'b' }, { x: 'b' }] });
+  });
+
+  it('should group an array of objects by a specified path', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({
+      a: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: 'a' } },
+      ],
+    });
+  });
+  it("should return an empty object if the key isn't present on any items", function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { w: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.q')(state);
+    expect(result.data).eql({});
+  });
+
+  it('should remove undefined keys', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: undefined } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+  it('should expand arrayOfObjects', function () {
+    const input = {
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    const result = group(state => state.data, 'y.z')(input);
+
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+
+  it('should expand key path', function () {
+    const input = {
+      path: 'y.z',
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    const result = group(input.data, state => state.path)(input);
+
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
 });

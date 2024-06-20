@@ -1,5 +1,12 @@
 v0.4.0
 
+## 1.15.0
+
+### Minor Changes
+
+- 5fb82f07: - Add `group()` operation
+  - Initialize `state.references` in `composeNextState()`
+
 ## 1.14.0
 
 ### Minor Changes

@@ -192,6 +192,7 @@ export {
   fn,
   fnIf,
   chunk,
+  group,
   humanProper,
   lastReferenceValue,
   merge,

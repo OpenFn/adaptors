@@ -1,4 +1,7 @@
+import get from 'lodash/get.js';
+import omit from 'lodash/omit.js';
 import curry from 'lodash/fp/curry.js';
+import groupBy from 'lodash/groupBy.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
 
 import { JSONPath } from 'jsonpath-plus';
@@ -424,6 +427,36 @@ export function merge(dataSource, fields) {
 }
 
 /**
+ * Groups an array of objects by a specified key path.
+ * @public
+ * @example
+ * const users = [
+ *   { name: 'Alice', age: 25, city: 'New York' },
+ *   { name: 'Bob', age: 30, city: 'San Francisco' },
+ *   { name: 'Charlie', age: 25, city: 'New York' },
+ *   { name: 'David', age: 30, city: 'San Francisco' }
+ * ];
+ * group(users, 'city');
+ * // state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
+ * @function
+ * @param {Object[]} arrayOfObjects - The array of objects to be grouped.
+ * @param {string} keyPath - The key path to group by.
+ * @param {function} callback - (Optional) Callback function
+ * @returns {Operation}
+ */
+export function group(arrayOfObjects, keyPath, callback = s => s) {
+  return state => {
+    const [resolvedArray, resolvedKeyPath] = newExpandReferences(
+      state,
+      arrayOfObjects,
+      keyPath
+    );
+    const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
+    return callback({ ...state, data: omit(results, [undefined]) });
+  };
+}
+
+/**
  * Returns the index of the current array being iterated.
  * To be used with `each` as a data source.
  * @public
@@ -481,6 +514,9 @@ export function toArray(arg) {
  * @returns {State}
  */
 export function composeNextState(state, response) {
+  if (!state.references) {
+    state.references = [];
+  }
   return {
     ...state,
     data: response,
