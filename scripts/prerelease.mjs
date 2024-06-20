@@ -12,7 +12,7 @@ async function updatePackage(packageName, suffix) {
   const pkgPath = path.resolve(`packages/${name}/package.json`);
   let pkg = await readFile(pkgPath, 'utf8');
   const pkgJson = JSON.parse(pkg);
-  pkgJson.version = `${pkgJson.version}-next+${suffix}`;
+  pkgJson.version = `${pkgJson.version}-${suffix}`;
 
   console.log(`Updated version of ${name} to ${pkgJson.version}`);
 

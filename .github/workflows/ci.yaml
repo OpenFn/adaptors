@@ -54,6 +54,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+      - name: echo sha
+        run: echo $GITHUB_SHA
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
 
@@ -68,9 +70,6 @@ jobs:
       - run: git config user.email $GIT_EMAIL
         env:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-
-      - name: Test
-        run: pnpm run pwd
 
       - name: Pre-release
         run: pnpm prerelease
