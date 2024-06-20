@@ -61,8 +61,6 @@ jobs:
           cache: 'pnpm'
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
-      - name: Build
-        run: pnpm run build
 
       - name: Setup NPM config
         run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
@@ -76,7 +74,7 @@ jobs:
         env:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
-      - name: Publish @next prereleasae
-        run: pnpm next:publish
+      - name: Pre-release
+        run node scripts/prerelease.mjs
 
       # Maybe publish to slack? This might be too annoying?
