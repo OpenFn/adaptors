@@ -19,7 +19,7 @@
     "metadata": "pnpm -C tools/metadata cli",
     "slack:notify": "cd tools/slack && pnpm notify",
     "generate": "pnpm -C tools/generate cli generate",
-    "prerelease": "node scripts/prerelease.mjs",
+    "prerelease": "node scripts/prerelease.mjs --no-warnings",
     "pwd": "pwd"
   },
   "author": "Open Function Group",
