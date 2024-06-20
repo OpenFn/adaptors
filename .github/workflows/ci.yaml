@@ -27,51 +27,7 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
 
-      # - name: Build
-      #   run: pnpm run build
-      # - name: Unit Tests
-      #   run: pnpm run test
-
-  next:
-    name: 'Prerelease @next'
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    strategy:
-      matrix:
-        node-version: [18.17.1]
-
-    steps:
-      # force git to checkout the branch, not a detached head
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.6.9
-      - name: Setup node ${{ matrix.node-version }}
-        # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: echo sha
-        run: echo $GITHUB_SHA
-      - name: Setup pnpm
-        run: pnpm install --frozen-lockfile
-
-      - name: Setup NPM config
-        run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: git config
-        run: git config user.name $GIT_USER
-        env:
-          GIT_USER: ${{ secrets.GIT_USER }}
-      - run: git config user.email $GIT_EMAIL
-        env:
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-
-      - name: Pre-release
-        run: pnpm prerelease
-
-      # Maybe publish to slack? This might be too annoying?
+      - name: Build
+        run: pnpm run build
+      - name: Unit Tests
+        run: pnpm run test
