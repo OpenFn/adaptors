@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Monoerepo for openfn language adaptors",
   "type": "module",
-  "private": "true",
+  "private": true,
   "packageManager": "pnpm@8.15.1",
   "scripts": {
     "migrate": "cd tools/migrate && pnpm migrate",
@@ -18,12 +18,14 @@
     "lint": "pnpm --filter \"./packages/**\" lint",
     "metadata": "pnpm -C tools/metadata cli",
     "slack:notify": "cd tools/slack && pnpm notify",
-    "generate": "pnpm -C tools/generate cli generate"
+    "generate": "pnpm -C tools/generate cli generate",
+    "prerelease": "node scripts/prerelease.mjs --no-warnings",
+    "pwd": "pwd"
   },
   "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
-    "@changesets/cli": "2.25.0",
+    "@changesets/cli": "2.27.5",
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",

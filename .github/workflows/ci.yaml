@@ -26,7 +26,50 @@ jobs:
           cache: 'pnpm'
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
+
       - name: Build
         run: pnpm run build
       - name: Unit Tests
         run: pnpm run test
+
+  next:
+    name: 'Publish @next'
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    strategy:
+      matrix:
+        node-version: [18.17.1]
+
+    #if: github.event.pull_request.draft == false
+    if: false
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.9
+      - name: Setup node ${{ matrix.node-version }}
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Setup pnpm
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup NPM config
+        run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: git config
+        run: git config user.name $GIT_USER
+        env:
+          GIT_USER: ${{ secrets.GIT_USER }}
+      - run: git config user.email $GIT_EMAIL
+        env:
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+
+      - name: Do pre-release
+        run: pnpm prerelease

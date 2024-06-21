@@ -254,6 +254,33 @@ generated.
 When ready, merge the branch to main and a Github Action will trigger the
 release.
 
+## Pre-releases
+
+**NOTE: pre-release automation is currently DISABLED until support is activated
+in Lightning**
+
+Pre-release builds for adaptors are availabe with the `@next` tag. These can be
+used in the CLI and Lightning and are generally available on `npm` (but because
+they're not flagged as `latest`, they won't be downloaded by default).
+
+Old pre-release versions will be deprecated when a new tag is published.
+
+Pre-releases are available for any non-draft PR with at least one changeset.
+
+The pre-release build will be updated when:
+
+- A PR is opened in a non-draft state
+- A new commit is pushed
+- A changeset is added
+
+Pre-releases will be given the correct next version number (the number that
+`pnpm changeset version` will generated), plus the suffix `-next-<sha>`, where
+sha is teh short github SHA for the commit.
+
+Note that the Worker and CLI will both always download the latest versions of
+the adaptor with the `@next` tag - it's a rolling tag and should always be up to
+date.
+
 ## Build tooling
 
 The `build` command accepts a list of build steps as arguments: `ast`, `src`,
