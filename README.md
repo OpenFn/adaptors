@@ -256,47 +256,30 @@ release.
 
 ## Pre-releases
 
-You can configure a pre-release to deploy adaptor builds to npm with the @next
-tag.
+**NOTE: pre-release automation is currently DISABLED until support is activated
+in Lightning**
 
-New builds are triggered by pushing a new changeset, which will bump versions
-and publish to npm without adding the `@latest` tag.
+Pre-release builds for adaptors are availabe with the `@next` tag. These can be
+used in the CLI and Lightning and are generally available on `npm` (but because
+they're not flagged as `latest`, they won't be downloaded by default).
 
-Pre-release versions are of the form `.next-0`, `.next-1` etc. When a new
-pre-release build is published, the old version is immediately deprecated. When
-the adaptor is published, the last @next release is also deprecated.
+Old pre-release versions will be deprecated when a new tag is published.
 
-Lightning and the CLI will be able to access the @next version of the adaptor,
-eg:
+Pre-releases are available for any non-draft PR with at least one changeset.
 
-```
-openfn job.js -a http@next
-```
+The pre-release build will be updated when:
 
-A pre-release must be manually created and terminated.
+- A PR is opened in a non-draft state
+- A new commit is pushed
+- A changeset is added
 
-To start a pre-release, run:
+Pre-releases will be given the correct next version number (the number that
+`pnpm changeset version` will generated), plus the suffix `-next-<sha>`, where
+sha is teh short github SHA for the commit.
 
-```
-pnpm next:start
-```
-
-Ensure there are changesets for any adaptors you want to be published.
-
-Commit changes and push to branch. If CI passes, adaptors will be pre-released.
-
-When the adaptor is ready for a production release, the pre-release must be
-exited:
-
-```
-pnpm next:end
-```
-
-At this point you can run `pnpm version` to generate versions for the final
-release.
-
-Note that while in pre-release mode, running `pnpm changeset version` will not
-consume the changesets.
+Note that the Worker and CLI will both always download the latest versions of
+the adaptor with the `@next` tag - it's a rolling tag and should always be up to
+date.
 
 ## Build tooling
 
