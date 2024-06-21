@@ -15,7 +15,14 @@ import { request as sendRequest, xmlParser } from './Utils';
  */
 
 /**
- * Execute a sequence of operations.
+ * State object
+ * @typedef {Object} HttpState
+ * @property data - the parsed response body.
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ **/
+
+/**
+ * Execute a sequence of operations
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
@@ -54,7 +61,6 @@ export function execute(...operations) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
-
  * @returns {Operation}
  */
 export function request(method, path, params, callback) {
@@ -73,7 +79,7 @@ export function request(method, path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
- * @state data - the parsed response body
+ * @state data - the parsed response body!
  * @state response - the response from the HTTP server, including headers, statusCode, body, etc
  * @state references
  * @returns {Operation}
@@ -94,6 +100,7 @@ export function get(path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {operation}
  */
 

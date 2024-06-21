@@ -1,13 +1,28 @@
+
+{{!-- TODO this approach will sort of work and let me seamlessly
+mix pre-defined Typedefs with ad-hoc inline defs.
+But overrides are a problem
+I'll actually need a getProps helper which takes all the properties referenced in the state here,
+flattens them, and returns a simple array of name/description pairs
+ --}}
 {{#if state}}
 This operation writes the following keys to state:
 
 {{tableHead state "name|State Key" "description|Description" ~}}
-
-{{#tableRow state "name" "description" ~}}
+{{#each state}}
+  {{#if this.type}}
+    {{#findById this.type}}
+        {{#tableRow this.properties "name" "description" ~}}
+      | {{#if @col1}}{{>param-table-name}} | {{/if~}}
+        {{#if @col2}}{{{stripNewlines (inlineLinks description)}}} |{{/if}}
+      {{/tableRow}}
+    {{/findById}}
+    
+  {{/if}}
+{{/each}}
+{{!-- {{#tableRow state "name" "description" ~}}
 | {{#if @col1}}{{>param-table-name}} | {{/if~}}
   {{#if @col2}}{{{stripNewlines (inlineLinks description)}}} |{{/if}}
-{{/tableRow}}
+{{/tableRow}} --}}
 
 {{/if}}
-
-
