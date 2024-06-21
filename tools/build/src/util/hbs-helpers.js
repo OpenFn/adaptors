@@ -14,22 +14,31 @@ exports.commonFns = function (options) {
   return handlebars.helpers.each(common, options);
 };
 
-// exports.findById = function (options, id) {
-//   options.hash.scope = 'global';
-//   return handlebars.helpers._identifiers(options).find(o => {
-//     return o.id === id;
-//   }, options);
-// };
+/**
+ * This guy takes a State array
+ * where each item is either a typedef
+ * or a single state property
+ * It must be flattened into a simple array
+ */
+exports.flattenState = function (state, options) {
+  // a list of all state keys
+  const keys = {};
 
-exports.findById = function (id, options) {
-  const result = options.data.root.find(o => {
-    return o.id === id;
+  state.forEach(s => {
+    if (s.type && !s.name) {
+      // If this is a type reference, lookup the type and add all its keys to the list
+      const def = options.data.root.find(o => {
+        return o.id === s.type;
+      });
+      def.properties.forEach(p => {
+        keys[p.name] = p;
+      });
+    } else {
+      // Otherwise, if this is a simple state key definition, just add it
+      keys[s.name] = s;
+    }
   });
-  return options.fn(result);
 
-  // const x = options.data.root.find(o => {
-  //   return o.id === id;
-  // });
-  // return JSON.stringify(x);
-  // return JSON.stringify(id);
+  // return the final keys as an array
+  return options.fn(Object.values(keys));
 };

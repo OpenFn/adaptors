@@ -101,6 +101,8 @@ export function get(path, params, callback) {
  * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
+ * @state extra - here's an extra state key!
+ * @state data - override the state.data definition
  * @returns {operation}
  */
 

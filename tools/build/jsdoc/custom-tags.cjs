@@ -9,7 +9,7 @@ exports.defineTags = dictionary => {
         doclet.state = [];
       }
       doclet.state.push({
-        name: tag.value.name ?? 'default',
+        name: tag.value.name,
         description:
           tag.value.description ?? defaults[tag.value.name] ?? 'No description',
         type: tag.value.type?.names[0],
