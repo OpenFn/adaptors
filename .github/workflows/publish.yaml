@@ -32,4 +32,4 @@ jobs:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
       # deprecate any outstanding @next builds, if any
-      # - run: pnpm next:deprecate
+      - run: pnpm next:deprecate
