@@ -10,6 +10,7 @@
     "setup": "pnpm --filter \"./tools/**\" install",
     "docs:publish": "pnpm exec scripts/publish-docs.sh",
     "docs:build": "pnpm exec scripts/build-docs.sh",
+    "docs:watch": "chokidar packages/*/docs/*.md -c 'pnpm docs:build' --throttle 2000",
     "build:tools": "pnpm --filter \"./tools/**\" build",
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
@@ -30,6 +31,7 @@
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
+    "chokidar-cli": "^3.0.0",
     "eslint": "8.26.0"
   }
 }
