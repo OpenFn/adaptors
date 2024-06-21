@@ -41,7 +41,7 @@ async function prerelease() {
 
   // For each package in the report,
   // update the version to include the commit hash
-  const hash = process.env.GITHUB_SHA?.substring(0, 8) ?? 'local'; // TOOD get from gh env
+  const hash = process.env.GITHUB_SHA?.substring(0, 8) ?? 'local';
 
   const { default: report } = await import('../pnpm-publish-summary.json', {
     assert: { type: 'json' },
