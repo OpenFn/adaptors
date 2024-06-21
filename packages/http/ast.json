@@ -125,6 +125,18 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "data - the response body will be written to state.data"
+          },
+          {
+            "title": "state",
+            "description": "response - the resonse from the HTTP server, including headers, statusCode, body, etc"
+          },
+          {
+            "title": "state",
+            "description": "references - the last response, without the body, will be pushed to references"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {

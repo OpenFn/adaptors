@@ -73,9 +73,9 @@ export function request(method, path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
- * @state data - the response body will be written to state.data
- * @state response - the resonse from the HTTP server, including headers, statusCode, body, etc
- * @state references - the last response, without the body, will be pushed to references
+ * @state data - the parsed response body
+ * @state response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @state references
  * @returns {Operation}
  */
 export function get(path, params, callback) {
