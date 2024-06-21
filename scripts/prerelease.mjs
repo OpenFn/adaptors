@@ -61,8 +61,6 @@ async function prerelease() {
 
   console.log('Publishing to npm');
 
-  // TODO I may need a commit here to allow the publish
-
   await exec(`pnpm publish \
     -r \
     --report-summary \
