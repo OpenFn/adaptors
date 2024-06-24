@@ -62,6 +62,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -126,15 +130,7 @@
           },
           {
             "title": "state",
-            "description": "data - the response body will be written to state.data"
-          },
-          {
-            "title": "state",
-            "description": "response - the resonse from the HTTP server, including headers, statusCode, body, etc"
-          },
-          {
-            "title": "state",
-            "description": "references - the last response, without the body, will be pushed to references"
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -200,6 +196,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -261,6 +261,10 @@
               "name": "function"
             },
             "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -326,6 +330,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -387,6 +395,10 @@
               "name": "function"
             },
             "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -455,6 +467,14 @@
               "name": "function"
             },
             "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "data - the parsed XML as a JSON object"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
           },
           {
             "title": "returns",
