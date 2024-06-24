@@ -318,21 +318,26 @@ const defaultOptions = {
   body: undefined,
 };
 
-// Assert response
-const assertOK = (response, fullUrl) => {
+const assertOK = async (response, fullUrl) => {
   if (response.status >= 400) {
-    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.status}`;
+    // Mailchimp return great error objects - we should just throw it
+    if (response.body.length) {
+      const message = `Request to ${fullUrl} failed with status: ${response.status}`;
 
-    const error = new Error(defaultErrorMesssage);
+      try {
+        const err = await response.body.json();
+        console.error(message);
+        throw err;
+      } catch (e) {
+        console.error('Error parsing error body');
+      }
+    }
 
+    // If for any reason we fail to parse the response body though,
+    // throw something a bit more generic
+    const error = new Error(message);
+    error.status = response.statusCode;
     error.url = fullUrl;
-    error.type = response.type;
-    error.title = response.title;
-    error.status = response.status;
-    error.detail = response.detail;
-    error.instance = response.instance;
-    error.errors = response.errors;
-
     throw error;
   }
 };
@@ -382,8 +387,9 @@ export function request(method, path, options, callback) {
 
     console.log('Mailchimp says', response.statusCode);
 
-    const responseBody = await response.body.json();
-    assertOK(responseBody, `https://${server}.api.mailchimp.com${urlPath}`);
+    assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
+
+    const responseBody = response.body.length ? await response.body.json() : {};
 
     const nextState = {
       ...state,

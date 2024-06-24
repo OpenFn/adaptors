@@ -151,7 +151,7 @@ describe('request', () => {
 
     expect(finalState).to.eql({ ...state, data: {}, response: {} });
   });
-  it('should expand argument refernces', async () => {
+  it('should expand argument references', async () => {
     const operationFixture = [
       {
         method: 'POST',
