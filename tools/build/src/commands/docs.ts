@@ -44,6 +44,8 @@ const build = async (lang: string) => {
   /* get template data */
   const templateData = jsdoc2md.getTemplateDataSync({
     files: glob,
+    configure: [path.resolve('../../tools/build/jsdoc/config.json')],
+    'no-cache': true,
   });
 
   // sort template data
@@ -88,6 +90,7 @@ const build = async (lang: string) => {
       path.resolve('../../tools/build/src/partials/description.hbs'),
       path.resolve('../../tools/build/src/partials/link.hbs'),
       path.resolve('../../tools/build/src/partials/members.hbs'),
+      path.resolve('../../tools/build/src/partials/state.hbs'),
     ],
     separators: true,
     'name-format': false,
@@ -146,6 +149,11 @@ const build = async (lang: string) => {
   await mkdir(destinationDir, { recursive: true });
   await writeFile(destination, docs);
   await writeFile(`${destinationDir}/${lang}.json`, JSON.stringify(docsJson));
+
+  await writeFile(
+    `${destinationDir}/raw.json`,
+    JSON.stringify(templateData, null, 2)
+  );
 
   console.log(`... done! `, destination);
   console.log();
