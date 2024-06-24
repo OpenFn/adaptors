@@ -149,7 +149,15 @@ describe('request', () => {
 
     const finalState = await execute(request('GET', '/'))(state);
 
-    expect(finalState).to.eql({ ...state, data: {}, response: {} });
+    expect(finalState).to.eql({
+      ...state,
+      data: {},
+      response: {
+        statusCode: 200,
+        headers: {},
+        body: {},
+      },
+    });
   });
   it('should expand argument references', async () => {
     const operationFixture = [

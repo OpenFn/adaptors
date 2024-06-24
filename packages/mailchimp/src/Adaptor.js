@@ -385,16 +385,24 @@ export function request(method, path, options, callback) {
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    console.log('Mailchimp says', response.statusCode);
+    console.log(response.statusCode, urlPath);
 
     assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
 
-    const responseBody = response.body.length ? await response.body.json() : {};
+    let data = {};
+    // Mailchimp returns 204 if there's no response data
+    if (response.statusCode !== 204) {
+      data = await response.body.json();
+    }
 
     const nextState = {
       ...state,
-      data: responseBody,
-      response: responseBody,
+      data,
+      response: {
+        headers: response.headers,
+        body: data,
+        statusCode: response.statusCode,
+      },
     };
     if (callback) return callback(nextState);
 
