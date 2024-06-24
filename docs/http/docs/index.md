@@ -99,6 +99,13 @@ Make a DELETE request
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 del(`/myendpoint/${state => state.data.id}`, {
@@ -121,6 +128,13 @@ Make a GET request
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 get('/myEndpoint', {
@@ -144,6 +158,12 @@ Parse XML with the Cheerio parser
 | script | <code>function</code> | script for extracting data |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed XML as a JSON object |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 parseXML(
@@ -179,6 +199,13 @@ Make a PATCH request
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 patch('/myEndpoint', {
@@ -202,6 +229,13 @@ Make a POST request
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 post('/myEndpoint', {
@@ -225,6 +259,13 @@ Make a PUT request
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 put('/myEndpoint', {
@@ -249,6 +290,13 @@ Make a HTTP request
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 **Example**  
 ```js
 request(
