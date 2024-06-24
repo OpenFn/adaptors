@@ -200,6 +200,7 @@ describe('request', () => {
       }))
     )(state);
   });
+
   it('should throw 401', async () => {
     const state = {
       references: [],
@@ -233,6 +234,56 @@ describe('request', () => {
       );
     });
   });
+
+  it('should handle 204', async () => {
+    const state = {
+      references: [],
+      configuration: {},
+    };
+
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+      })
+      .reply(204);
+
+    const result = await execute(request('GET', '/'))(state);
+
+    expect(result.data).to.eql({});
+    expect(result.response).to.eql({
+      statusCode: 204,
+      headers: {},
+      body: {},
+    });
+  });
+
+  it('should throw 400', async () => {
+    const state = {
+      references: [],
+      configuration: {},
+    };
+
+    const err = {
+      title: 'Member Exists',
+      status: 400,
+      detail:
+        'blah@gmail.com is already a list member. Use PUT to insert or update list members.',
+      instance: 'f12345624-4c60-1821-c58e-a1082e8fda58',
+    };
+
+    client
+      .intercept({
+        path: '/3.0/lists/blah',
+        method: 'POST',
+      })
+      .reply(404, err);
+
+    await execute(request('POST', '/lists/blah'))(state).catch(error => {
+      expect(error).to.eql(err);
+    });
+  });
+
   it('should include method, path and headers', async () => {
     const state = {
       references: [],
