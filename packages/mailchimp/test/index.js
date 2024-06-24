@@ -229,9 +229,11 @@ describe('request', () => {
       });
 
     await execute(request('GET', '/'))(state).catch(error => {
-      expect(error.message).to.eql(
-        'Request to https://us11.api.mailchimp.com/3.0/ failed with status: 401'
+      expect(error.type).to.eql(
+        'https://mailchimp.com/developer/marketing/docs/errors/'
       );
+      expect(error.status).to.eql(401);
+      expect(error.detail).to.eql('API key has been disabled');
     });
   });
 
@@ -279,9 +281,15 @@ describe('request', () => {
       })
       .reply(404, err);
 
-    await execute(request('POST', '/lists/blah'))(state).catch(error => {
-      expect(error).to.eql(err);
+    let error;
+    await execute(request('POST', '/lists/blah'))(state).catch(e => {
+      error = e;
     });
+
+    expect(error.title).to.eql(err.title);
+    expect(error.status).to.eql(err.status);
+    expect(error.detail).to.eql(err.detail);
+    expect(error.instance).to.eql(err.instance);
   });
 
   it('should include method, path and headers', async () => {
