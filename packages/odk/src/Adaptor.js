@@ -109,21 +109,17 @@ export function request(method, path, body, params = {}, callback = s => s) {
     const [resolvedMethod, resolvedPath, resolvedData, resolvedParams] =
       expandReferences(state, method, path, body, params);
 
-    try {
-      const response = await util.request(
-        state.configuration,
-        resolvedMethod,
-        resolvedPath,
-        {
-          params: resolvedParams,
-          data: resolvedData,
-        }
-      );
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        params: resolvedParams,
+        data: resolvedData,
+      }
+    );
 
-      return util.prepareNextState(state, response, callback);
-    } catch (error) {
-      throw error.statusCode === 404 ? 'Page Not Found' : error.body ?? error;
-    }
+    return util.prepareNextState(state, response, callback);
   };
 }
 
