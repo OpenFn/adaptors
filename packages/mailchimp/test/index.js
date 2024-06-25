@@ -149,9 +149,17 @@ describe('request', () => {
 
     const finalState = await execute(request('GET', '/'))(state);
 
-    expect(finalState).to.eql({ ...state, data: {}, response: {} });
+    expect(finalState).to.eql({
+      ...state,
+      data: {},
+      response: {
+        statusCode: 200,
+        headers: {},
+        body: {},
+      },
+    });
   });
-  it('should expand argument refernces', async () => {
+  it('should expand argument references', async () => {
     const operationFixture = [
       {
         method: 'POST',
@@ -192,6 +200,7 @@ describe('request', () => {
       }))
     )(state);
   });
+
   it('should throw 401', async () => {
     const state = {
       references: [],
@@ -220,11 +229,69 @@ describe('request', () => {
       });
 
     await execute(request('GET', '/'))(state).catch(error => {
-      expect(error.message).to.eql(
-        'Request to https://us11.api.mailchimp.com/3.0/ failed with status: 401'
+      expect(error.type).to.eql(
+        'https://mailchimp.com/developer/marketing/docs/errors/'
       );
+      expect(error.status).to.eql(401);
+      expect(error.detail).to.eql('API key has been disabled');
     });
   });
+
+  it('should handle 204 (no body)', async () => {
+    const state = {
+      references: [],
+      configuration: {},
+    };
+
+    client
+      .intercept({
+        path: '/3.0/',
+        method: 'GET',
+      })
+      .reply(204);
+
+    const result = await execute(request('GET', '/'))(state);
+
+    expect(result.data).to.eql({});
+    expect(result.response).to.eql({
+      statusCode: 204,
+      headers: {},
+      body: {},
+    });
+  });
+
+  it('should throw 400', async () => {
+    const state = {
+      references: [],
+      configuration: {},
+    };
+
+    const err = {
+      title: 'Member Exists',
+      status: 400,
+      detail:
+        'blah@gmail.com is already a list member. Use PUT to insert or update list members.',
+      instance: 'f12345624-4c60-1821-c58e-a1082e8fda58',
+    };
+
+    client
+      .intercept({
+        path: '/3.0/lists/blah',
+        method: 'POST',
+      })
+      .reply(404, err);
+
+    let error;
+    await execute(request('POST', '/lists/blah'))(state).catch(e => {
+      error = e;
+    });
+
+    expect(error.title).to.eql(err.title);
+    expect(error.status).to.eql(err.status);
+    expect(error.detail).to.eql(err.detail);
+    expect(error.instance).to.eql(err.instance);
+  });
+
   it('should include method, path and headers', async () => {
     const state = {
       references: [],

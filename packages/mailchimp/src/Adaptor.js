@@ -318,21 +318,27 @@ const defaultOptions = {
   body: undefined,
 };
 
-// Assert response
-const assertOK = (response, fullUrl) => {
-  if (response.status >= 400) {
-    const defaultErrorMesssage = `Request to ${fullUrl} failed with status: ${response.status}`;
+const assertOK = async (response, fullUrl) => {
+  if (response.statusCode >= 400) {
+    // Mailchimp returns great error objects - so try to just throw it back out
+    const message = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
+    console.error(message);
+    let mailchimpError;
+    try {
+      mailchimpError = await response.body.json();
+    } catch (e) {
+      console.warning('Error parsing mailchimp error body');
+      console.warning(e);
+    }
 
-    const error = new Error(defaultErrorMesssage);
-
+    if (mailchimpError) {
+      throw mailchimpError;
+    }
+    // If for any reason we fail to parse the response body,
+    // throw something a bit more generic
+    const error = new Error(message);
+    error.status = response.statusCode;
     error.url = fullUrl;
-    error.type = response.type;
-    error.title = response.title;
-    error.status = response.status;
-    error.detail = response.detail;
-    error.instance = response.instance;
-    error.errors = response.errors;
-
     throw error;
   }
 };
@@ -380,15 +386,24 @@ export function request(method, path, options, callback) {
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    console.log('Mailchimp says', response.statusCode);
+    console.log(response.statusCode, urlPath);
 
-    const responseBody = await response.body.json();
-    assertOK(responseBody, `https://${server}.api.mailchimp.com${urlPath}`);
+    await assertOK(response, `https://${server}.api.mailchimp.com${urlPath}`);
+
+    let data = {};
+    // Mailchimp returns 204 if there's no response data
+    if (response.statusCode !== 204) {
+      data = await response.body.json();
+    }
 
     const nextState = {
       ...state,
-      data: responseBody,
-      response: responseBody,
+      data,
+      response: {
+        headers: response.headers,
+        body: data,
+        statusCode: response.statusCode,
+      },
     };
     if (callback) return callback(nextState);
 
