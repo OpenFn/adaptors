@@ -5,13 +5,11 @@ import {
 } from '@openfn/language-common/util';
 
 export const authorize = state => {
-  const auth = state.configuration;
-  if (auth.access_token) {
+  const { baseUrl, access_token, email, password } = state.configuration;
+
+  if (access_token) {
     return state;
   }
-
-  const email = auth.username;
-  const password = auth.password;
 
   if (email && password) {
     const options = {
@@ -20,21 +18,32 @@ export const authorize = state => {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      baseUrl: auth.baseUrl,
+      baseUrl,
       parseAs: 'json',
       maxRedirections: 1,
     };
-    return commonRequest('POST', '/v1/sessions', options).then(response => {
-      return {
-        ...state,
-        configuration: {
-          ...state.configuration,
-          access_token: response.body.token,
-        },
-      };
-    });
+    return commonRequest('POST', '/v1/sessions', options)
+      .then(response => {
+        return {
+          ...state,
+          configuration: {
+            ...state.configuration,
+            access_token: response.body.token,
+          },
+        };
+      })
+      .catch(err => {
+        console.log('Error authenticating with ODK.');
+        throw err;
+      });
   }
+
+  // warn if no auth found
+  console.warn(`WARNING: no authentication properties found on congfiguration schema!
+    
+Make sure to either set an access_token or email & password`);
 };
+
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -43,19 +52,12 @@ export const prepareNextState = (state, response, callback = s => s) => {
   }
 
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
   return callback(nextState);
 };
-
-function removeLeadingSlash(url) {
-  if (url.startsWith('/')) {
-    return url.substring(1);
-  }
-  return url;
-}
 
 export const request = (
   configuration = {},
@@ -74,11 +76,9 @@ export const request = (
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
     },
-
+    baseUrl,
     parseAs: 'json',
   };
 
-  const url = `${baseUrl}/${removeLeadingSlash(path)}`;
-
-  return commonRequest(method, url, options).then(logResponse);
+  return commonRequest(method, path, options).then(logResponse);
 };
