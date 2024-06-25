@@ -10,7 +10,7 @@
 <dt>
     <a href="#post">post(path, data, params, [callback])</a></dt>
 <dt>
-    <a href="#request">request(method, path, data, params, [callback])</a></dt>
+    <a href="#request">request(method, path, body, params, [callback])</a></dt>
 </dl>
 
 The following functions are exported from the common adaptor:
@@ -135,7 +135,7 @@ post('v1/projects', { name: 'Project Name' });
 
 ## request
 
-request(method, path, data, params, [callback]) ⇒ <code>Operation</code>
+request(method, path, body, params, [callback]) ⇒ <code>Operation</code>
 
 Make a general HTTP request
 
@@ -144,7 +144,7 @@ Make a general HTTP request
 | --- | --- | --- |
 | method | <code>string</code> | HTTP method to use |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object which will be attached to the POST body |
+| body | <code>object</code> | Object which will be attached to the POST body |
 | params | <code>Object</code> | Optional request params |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
