@@ -256,9 +256,6 @@ release.
 
 ## Pre-releases
 
-**NOTE: pre-release automation is currently DISABLED until support is activated
-in Lightning**
-
 Pre-release builds for adaptors are availabe with the `@next` tag. These can be
 used in the CLI and Lightning and are generally available on `npm` (but because
 they're not flagged as `latest`, they won't be downloaded by default).
