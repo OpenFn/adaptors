@@ -50,7 +50,7 @@ describe('Create Project', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -79,7 +79,7 @@ describe('Create Project', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -116,7 +116,7 @@ describe('getProjects', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -165,7 +165,7 @@ describe('getForms', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -196,7 +196,7 @@ describe('getSubmissions', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };

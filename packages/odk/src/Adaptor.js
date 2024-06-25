@@ -4,7 +4,7 @@ import * as util from './Utils';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for commcare.
+ * Wraps `language-common/execute`, and prepends initial state for odk.
  * @example
  * execute(
  *   create('foo'),
