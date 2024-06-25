@@ -99,7 +99,7 @@ export function post(path, data, params, callback) {
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
+ * @param {object} body - Object which will be attached to the POST body
  * @param {Object} params - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
