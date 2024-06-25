@@ -90,7 +90,8 @@ describe('Create Project', () => {
       return error;
     });
 
-    expect(error).to.eql('Forbidden');
+    expect(error.statusMessage).to.eql('Forbidden');
+    expect(error.statusCode).to.eql(403);
   });
 });
 
