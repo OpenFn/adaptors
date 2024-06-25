@@ -8,7 +8,7 @@
       "format": "uri",
       "minLength": 1,
       "examples": [
-        "https://odk.com"
+        "https://sandbox.getodk.cloud/"
       ]
     },
     "username": {
