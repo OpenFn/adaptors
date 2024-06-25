@@ -320,7 +320,7 @@ const defaultOptions = {
 
 const assertOK = async (response, fullUrl) => {
   if (response.statusCode >= 400) {
-    // Mailchimp return great error objects - we should just throw it
+    // Mailchimp returns great error objects - so try to just throw it back out
     const message = `Request to ${fullUrl} failed with status: ${response.statusCode}`;
     console.error(message);
     let mailchimpError;
@@ -334,7 +334,7 @@ const assertOK = async (response, fullUrl) => {
     if (mailchimpError) {
       throw mailchimpError;
     }
-    // If for any reason we fail to parse the response body though,
+    // If for any reason we fail to parse the response body,
     // throw something a bit more generic
     const error = new Error(message);
     error.status = response.statusCode;

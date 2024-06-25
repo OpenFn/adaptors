@@ -237,7 +237,7 @@ describe('request', () => {
     });
   });
 
-  it('should handle 204', async () => {
+  it('should handle 204 (no body)', async () => {
     const state = {
       references: [],
       configuration: {},
