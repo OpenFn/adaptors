@@ -50,7 +50,7 @@ describe('Create Project', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -79,7 +79,7 @@ describe('Create Project', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -90,7 +90,8 @@ describe('Create Project', () => {
       return error;
     });
 
-    expect(error).to.eql('Forbidden');
+    expect(error.statusMessage).to.eql('Forbidden');
+    expect(error.statusCode).to.eql(403);
   });
 });
 
@@ -116,7 +117,7 @@ describe('getProjects', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -165,7 +166,7 @@ describe('getForms', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };
@@ -196,7 +197,7 @@ describe('getSubmissions', () => {
     const state = {
       configuration: {
         baseUrl,
-        username: 'someusername',
+        email: 'someusername',
         password: 'somepassword',
       },
     };

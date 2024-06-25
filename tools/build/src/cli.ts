@@ -19,7 +19,8 @@ export const cmd = yargs(hideBin(process.argv))
   })
   .option('watch', {
     boolean: true,
-    description: 'watch for changes and rebuild (only really works for src)',
+    description:
+      'watch for changes and rebuild (only really works for src and docs)',
   })
   .parse();
 

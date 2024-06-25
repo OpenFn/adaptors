@@ -4,7 +4,7 @@ import * as util from './Utils';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for commcare.
+ * Wraps `language-common/execute`, and prepends initial state for odk.
  * @example
  * execute(
  *   create('foo'),
@@ -99,7 +99,7 @@ export function post(path, data, params, callback) {
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
+ * @param {object} body - Object which will be attached to the POST body
  * @param {Object} params - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -109,21 +109,17 @@ export function request(method, path, body, params = {}, callback = s => s) {
     const [resolvedMethod, resolvedPath, resolvedData, resolvedParams] =
       expandReferences(state, method, path, body, params);
 
-    try {
-      const response = await util.request(
-        state.configuration,
-        resolvedMethod,
-        resolvedPath,
-        {
-          params: resolvedParams,
-          data: resolvedData,
-        }
-      );
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        params: resolvedParams,
+        data: resolvedData,
+      }
+    );
 
-      return util.prepareNextState(state, response, callback);
-    } catch (error) {
-      throw error.statusCode === 404 ? 'Page Not Found' : error.body ?? error;
-    }
+    return util.prepareNextState(state, response, callback);
   };
 }
 

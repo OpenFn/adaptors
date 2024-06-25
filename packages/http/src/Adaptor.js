@@ -15,7 +15,16 @@ import { request as sendRequest, xmlParser } from './Utils';
  */
 
 /**
- * Execute a sequence of operations.
+ * State object
+ * @typedef {Object} HttpState
+ * @private
+ * @property data - the parsed response body
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
+
+/**
+ * Execute a sequence of operations
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
@@ -54,6 +63,7 @@ export function execute(...operations) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function request(method, path, params, callback) {
@@ -72,6 +82,7 @@ export function request(method, path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, params, callback) {
@@ -90,6 +101,7 @@ export function get(path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {operation}
  */
 
@@ -109,6 +121,7 @@ export function post(path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function put(path, params, callback) {
@@ -127,6 +140,7 @@ export function put(path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
@@ -144,6 +158,7 @@ export function patch(path, params, callback) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function del(path, params, callback) {
@@ -172,6 +187,8 @@ export function del(path, params, callback) {
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
  * @param {function} callback - (Optional) Callback function
+ * @state data - the parsed XML as a JSON object
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function parseXML(body, script, callback) {

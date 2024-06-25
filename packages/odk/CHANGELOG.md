@@ -1,5 +1,13 @@
 # @openfn/language-odk
 
+## 2.0.0
+
+### Major Changes
+
+- 9234f83: - configuration-schema: rename `username` to `email`
+  - Improve logging when authentication fails
+  - Improve error reporting when requests fail
+
 ## 1.1.1
 
 ### Patch Changes
