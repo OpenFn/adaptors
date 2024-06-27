@@ -33,7 +33,8 @@ export const authorize = state => {
         };
       })
       .catch(err => {
-        console.log('Error authenticating with ODK.');
+        console.error('Error authenticating with ODK');
+        console.log(err.body);
         throw err;
       });
   }
