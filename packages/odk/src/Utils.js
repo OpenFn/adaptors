@@ -48,10 +48,6 @@ Make sure to either set an access_token or email & password`);
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
 
-  if (!state.references) {
-    state.references = [];
-  }
-
   const nextState = {
     ...composeNextState(state, body),
     response: responseWithoutBody,

@@ -99,7 +99,7 @@ describe('getSubmissions', () => {
       getSubmissions(1, 'test_form')
     )(state);
 
-    expect(finalState.data).to.eql(fixtures.submissions);
+    expect(finalState.data).to.eql(fixtures.submissions.value);
   });
 
   // TODO this isn't handled well yet
@@ -109,7 +109,9 @@ describe('getSubmissions', () => {
         path: '/v1/projects/1/forms/test_form.svc/Submissions',
         method: 'GET',
       })
-      .reply(404, fixtures.submissions);
+      .reply(404, {
+        /* what is this object ?*/
+      });
 
     const state = {
       configuration,

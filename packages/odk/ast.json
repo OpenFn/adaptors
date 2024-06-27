@@ -1,18 +1,18 @@
 {
   "operations": [
     {
-      "name": "getSubmissions",
+      "name": "get",
       "params": [
-        "projectId",
-        "xmlFormId",
+        "path",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Fetch all submissions to a given form.",
+        "description": "Make a GET request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions(22, 'my-form-id');"
+            "description": "get(\"v1/projects\");"
           },
           {
             "title": "function",
@@ -26,21 +26,21 @@
           },
           {
             "title": "param",
-            "description": "Id of the project you want to get its forms submissions",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "projectId"
-          },
-          {
-            "title": "param",
-            "description": "Id of the form you want to get its submissions",
+            "description": "Path to resource",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "xmlFormId"
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Options to configure the HTTP request",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
           },
           {
             "title": "param",
@@ -61,6 +61,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },
@@ -137,6 +141,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },
@@ -223,6 +231,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },

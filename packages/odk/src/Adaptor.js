@@ -1,22 +1,18 @@
 import { expandReferences } from '@openfn/language-common/util';
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import * as util from './Utils';
 
 /**
- * Fetch all submissions to a given form.
- * @example
- * getSubmissions(22, 'my-form-id');
- * @function
- * @public
- * @param {number} projectId - Id of the project you want to get its forms submissions
- * @param {string} xmlFormId - Id of the form you want to get its submissions
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function getSubmissions(projectId, xmlFormId, callback) {
-  const path = `/v1/projects/${projectId}/forms/${xmlFormId}.svc/Submissions`;
-  return request('GET', path, null, callback);
-}
+ * State object
+ * @typedef {Object} ODKHttpState
+ * @private
+ * @property data - the parsed response body
+ * @property response - the response from the ODK HTTP server (with the body removed)
+ * @property references - an array of all the previous data values
+ **/
 
 /**
  * Options provided to the HTTP request
@@ -28,6 +24,48 @@ export function getSubmissions(projectId, xmlFormId, callback) {
  */
 
 /**
+ * Fetch all submissions to a given form.
+ * @example
+ * getSubmissions(22, 'my-form-id');
+ * @function
+ * @public
+ * @param {number} projectId - Id of the project you want to get its forms submissions
+ * @param {string} xmlFormId - Id of the form you want to get its submissions
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ * @state {ODKHttpState}
+ * @state data - array of form submission objects
+ */
+export function getSubmissions(projectId, xmlFormId, callback = s => s) {
+  return async state => {
+    const [resolvedProjectId, resolvedXmlFormId] = expandReferences(
+      state,
+      projectId,
+      xmlFormId
+    );
+
+    const path = `/v1/projects/${resolvedProjectId}/forms/${resolvedXmlFormId}.svc/Submissions`;
+    const { body, ...responseWithoutBody } = await util.request(
+      state.configuration,
+      'GET',
+      path
+    );
+
+    responseWithoutBody['@odata.context'] = body['@odata.context'];
+
+    return callback(
+      composeNextState(
+        {
+          ...state,
+          response: responseWithoutBody,
+        },
+        body.value
+      )
+    );
+  };
+}
+
+/**
  * Make a GET request against the base URL.
  * @example
  * get("v1/projects");
@@ -37,6 +75,7 @@ export function getSubmissions(projectId, xmlFormId, callback) {
  * @param {RequestOptions} options - Options to configure the HTTP request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {ODKHttpState}
  */
 export function get(path, options, callback) {
   return request('GET', path, null, options, callback);
@@ -53,6 +92,7 @@ export function get(path, options, callback) {
  * @param {RequestOptions} options -  Options to configure the HTTP request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {ODKHttpState}
  */
 export function post(path, body, options, callback) {
   return request('POST', path, body, options, callback);
@@ -70,6 +110,7 @@ export function post(path, body, options, callback) {
  * @param {RequestOptions} options - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {ODKHttpState}
  */
 export function request(method, path, body, options = {}, callback = s => s) {
   return async state => {
@@ -93,24 +134,16 @@ export function request(method, path, body, options = {}, callback = s => s) {
  * Wraps `language-common/execute`, and prepends initial state for odk.
  * @example
  * execute(
- *   create('foo'),
- *   delete('bar')
+ *   get("v1/projects")
  * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
+ * @state {ODKHttpState}
  */
 export function execute(...operations) {
-  const initialState = {
-    references: [],
-    data: null,
-  };
-
   return state => {
-    return commonExecute(
-      util.authorize,
-      ...operations
-    )({ ...initialState, ...state });
+    return commonExecute(util.authorize, ...operations)(state);
   };
 }
 
