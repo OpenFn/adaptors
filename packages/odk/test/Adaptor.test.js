@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute, get, post, getSubmissions } from '../src/Adaptor.js';
+import { execute, request, get, post, getSubmissions } from '../src/Adaptor.js';
 
 import * as fixtures from './fixtures';
 
@@ -102,6 +102,26 @@ describe('getSubmissions', () => {
     expect(finalState.data).to.eql(fixtures.submissions.value);
   });
 
+  it('should expand references', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/1/forms/test_form.svc/Submissions',
+        method: 'GET',
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getSubmissions(() => 1, () => 'test_form')
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.submissions.value);
+  });
+
   // TODO this isn't handled well yet
   it.skip('it handles project not found', async () => {
     testServer
@@ -127,6 +147,48 @@ describe('getSubmissions', () => {
 });
 
 describe('HTTP wrappers', () => {
+  it('request() should expand references', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'PATCH',
+        body: JSON.stringify({
+          name: 'Project Name',
+        }),
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer abc',
+          y: '1',
+        },
+      })
+      .reply(200, {});
+
+    const state = {
+      configuration: {
+        baseUrl,
+        access_token: 'abc',
+      },
+
+      method: 'PATCH',
+      path: '/v1/projects',
+      body: {
+        name: 'Project Name',
+      },
+      options: {
+        headers: { y: '1' },
+      },
+    };
+
+    const finalState = await request(
+      s => s.method,
+      s => s.path,
+      s => s.body,
+      s => s.options
+    )(state);
+
+    expect(finalState.response.statusCode).to.eql(200);
+  });
+
   it('should get /projects', async () => {
     testServer
       .intercept({
