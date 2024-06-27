@@ -194,7 +194,39 @@ describe('HTTP wrappers', () => {
     expect(finalState.response.statusCode).to.equal(200);
   });
 
-  it.skip('should handle a 404', () => {});
+  it('should handle a 404', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/22',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {
+          message: 'Could not find the resource you were looking for.',
+          code: 404,
+        },
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const state = {
+      configuration,
+    };
+
+    const error = await get('/v1/projects/22')(state).catch(error => {
+      return error;
+    });
+
+    expect(error.statusMessage).to.eql('Not Found');
+    expect(error.statusCode).to.eql(404);
+    expect(error.body.message).to.eql(
+      'Could not find the resource you were looking for.'
+    );
+  });
 
   it('should post() to /projects', async () => {
     testServer
