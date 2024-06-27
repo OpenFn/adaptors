@@ -63,22 +63,23 @@ export const request = (
   configuration = {},
   method,
   path,
-  data,
-  headers = {}
+  body,
+  options = {}
 ) => {
   const { baseUrl, access_token } = configuration;
-
-  const options = {
-    body: data,
+  const { headers = {}, otherOptions = {} } = options;
+  const opts = {
+    body,
 
     headers: {
-      ...headers,
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
+      ...headers,
     },
     baseUrl,
     parseAs: 'json',
+    ...otherOptions,
   };
 
-  return commonRequest(method, path, options).then(logResponse);
+  return commonRequest(method, path, opts).then(logResponse);
 };

@@ -1,138 +1,6 @@
 {
   "operations": [
     {
-      "name": "get",
-      "params": [
-        "path",
-        "params",
-        "headers",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a GET request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "get(\"v1/projects\");"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Optional request params",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "Optional request headers",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "headers"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getForms",
-      "params": [
-        "projectId",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a GET request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getForms(22);"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Id of the project you want to get its forms",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "projectId"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "getSubmissions",
       "params": [
         "projectId",
@@ -140,11 +8,11 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request",
+        "description": "Fetch all submissions to a given form.",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions(22, 'test');"
+            "description": "getSubmissions(22, 'my-form-id');"
           },
           {
             "title": "function",
@@ -202,12 +70,12 @@
       "name": "post",
       "params": [
         "path",
-        "data",
-        "params",
+        "body",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request against the base URL.",
         "tags": [
           {
             "title": "example",
@@ -239,16 +107,16 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
+            "name": "body"
           },
           {
             "title": "param",
-            "description": "Optional request params",
+            "description": " Options to configure the HTTP request",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -280,11 +148,11 @@
         "method",
         "path",
         "body",
-        "params",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a HTTP request against the base URL.",
         "tags": [
           {
             "title": "example",
@@ -320,7 +188,7 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
+            "description": "Object which will be attached to the body",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -332,9 +200,9 @@
             "description": "Optional request params",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
