@@ -68,7 +68,7 @@ export const request = (
   options = {}
 ) => {
   const { baseUrl, access_token } = configuration;
-  const { headers = {}, otherOptions = {} } = options;
+  const { headers = {}, ...otherOptions } = options;
   const opts = {
     body,
 
