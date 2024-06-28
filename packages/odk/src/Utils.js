@@ -45,15 +45,13 @@ export const authorize = state => {
 Make sure to either set an access_token or email & password`);
 };
 
-export const prepareNextState = (state, response, callback = s => s) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
-  const nextState = {
+  return {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
 };
 
 export const request = (

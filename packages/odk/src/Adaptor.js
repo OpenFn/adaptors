@@ -31,12 +31,11 @@ import * as util from './Utils';
  * @public
  * @param {number} projectId - Id of the project the form belongs to
  * @param {string} xmlFormId - Id of the form to fetch submissions for
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
  * @state data - array of form submission objects
  */
-export function getSubmissions(projectId, xmlFormId, callback = s => s) {
+export function getSubmissions(projectId, xmlFormId) {
   return async state => {
     const [resolvedProjectId, resolvedXmlFormId] = expandReferences(
       state,
@@ -53,14 +52,12 @@ export function getSubmissions(projectId, xmlFormId, callback = s => s) {
 
     responseWithoutBody['@odata.context'] = body['@odata.context'];
 
-    return callback(
-      composeNextState(
-        {
-          ...state,
-          response: responseWithoutBody,
-        },
-        body.value
-      )
+    return composeNextState(
+      {
+        ...state,
+        response: responseWithoutBody,
+      },
+      body.value
     );
   };
 }
@@ -72,12 +69,11 @@ export function getSubmissions(projectId, xmlFormId, callback = s => s) {
  * @function
  * @public
  * @param {number} projectId - Id of the project
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
  * @state data - array of form data objects
  */
-export function getForms(projectId, callback = s => s) {
+export function getForms(projectId) {
   return async state => {
     const [resolvedProjectId] = expandReferences(state, projectId);
 
@@ -85,7 +81,7 @@ export function getForms(projectId, callback = s => s) {
 
     const response = await util.request(state.configuration, 'GET', path);
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -101,12 +97,11 @@ export function getForms(projectId, callback = s => s) {
  * @public
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Options to configure the HTTP request
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
  */
-export function get(path, options, callback) {
-  return request('GET', path, null, options, callback);
+export function get(path, options) {
+  return request('GET', path, null, options);
 }
 
 /**
@@ -118,12 +113,11 @@ export function get(path, options, callback) {
  * @param {string} path - Path to resource
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options -  Options to configure the HTTP request
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
  */
-export function post(path, body, options, callback) {
-  return request('POST', path, body, options, callback);
+export function post(path, body, options) {
+  return request('POST', path, body, options);
 }
 
 /**
@@ -136,11 +130,10 @@ export function post(path, body, options, callback) {
  * @param {string} path - Path to resource
  * @param {object} body - Object which will be attached to the body
  * @param {RequestOptions} options - Optional request params
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
  */
-export function request(method, path, body, options = {}, callback = s => s) {
+export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
       expandReferences(state, method, path, body, options);
@@ -153,7 +146,7 @@ export function request(method, path, body, options = {}, callback = s => s) {
       resolvedOptions
     );
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
