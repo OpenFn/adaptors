@@ -66,6 +66,30 @@ export function getSubmissions(projectId, xmlFormId, callback = s => s) {
 }
 
 /**
+ * Fetch all forms for a project
+ * @example
+ * getForms(22);
+ * @function
+ * @public
+ * @param {number} projectId - Id of the project
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ * @state {ODKHttpState}
+ * @state data - array of form data objects
+ */
+export function getForms(projectId, callback = s => s) {
+  return async state => {
+    const [resolvedProjectId] = expandReferences(state, projectId);
+
+    const path = `/v1/projects/${resolvedProjectId}/forms`;
+
+    const response = await util.request(state.configuration, 'GET', path);
+
+    return util.prepareNextState(state, response, callback);
+  };
+}
+
+/**
  * Make a GET request against the base URL.
  * @example
  * get("v1/projects");

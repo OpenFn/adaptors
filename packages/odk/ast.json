@@ -1,6 +1,70 @@
 {
   "operations": [
     {
+      "name": "getForms",
+      "params": [
+        "projectId",
+        "callback"
+      ],
+      "docs": {
+        "description": "Fetch all forms for a project",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getForms(22);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Id of the project",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "projectId"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
+          },
+          {
+            "title": "state",
+            "description": "data - array of form data objects"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "get",
       "params": [
         "path",
