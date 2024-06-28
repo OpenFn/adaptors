@@ -25,12 +25,12 @@ import * as util from './Utils';
 
 /**
  * Fetch all submissions to a given form.
- * @example
- * getSubmissions(22, 'my-form-id');
+ * @example Get all submissions to a form called 'patient-follow-up'
+ * getSubmissions(22, 'patient-follow-up');
  * @function
  * @public
- * @param {number} projectId - Id of the project you want to get its forms submissions
- * @param {string} xmlFormId - Id of the form you want to get its submissions
+ * @param {number} projectId - Id of the project the form belongs to
+ * @param {string} xmlFormId - Id of the form to fetch submissions for
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {ODKHttpState}
@@ -66,8 +66,8 @@ export function getSubmissions(projectId, xmlFormId, callback = s => s) {
 }
 
 /**
- * Fetch all forms for a project
- * @example
+ * Fetch all forms for a project.
+ * @example Fetch all forms for project with id 22
  * getForms(22);
  * @function
  * @public
@@ -91,8 +91,12 @@ export function getForms(projectId, callback = s => s) {
 
 /**
  * Make a GET request against the base URL.
- * @example
+ * @example Get a list of available projects
  * get("v1/projects");
+ * @example Get projects with query parameters
+ * get("v1/projects", {
+ *  query: { datasets: true }
+ * });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -107,7 +111,7 @@ export function get(path, options, callback) {
 
 /**
  * Make a POST request against the base URL.
- * @example
+ * @example Create a new project
  * post('v1/projects', { name: 'Project Name' });
  * @function
  * @public
@@ -123,8 +127,8 @@ export function post(path, body, options, callback) {
 }
 
 /**
- * Make a HTTP request against the base URL.
- * @example
+ * Make a general HTTP request against the base URL.
+ * @example Make a POST request to create a new project
  * request("POST", 'v1/projects', { name: 'Project Name' });
  * @function
  * @public
