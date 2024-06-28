@@ -109,11 +109,37 @@ describe('getSubmissions', () => {
     expect(finalState.data).to.eql(fixtures.submissions.value);
   });
 
+  it('should append query parameters', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/22/forms/test_form.svc/Submissions',
+        method: 'GET',
+        query: {
+          $top: '10',
+        },
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getSubmissions(22, 'test_form', { $top: 10 })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.submissions.value);
+  });
+
   it('should expand references', async () => {
     testServer
       .intercept({
         path: '/v1/projects/3/forms/test_form.svc/Submissions',
         method: 'GET',
+        query: {
+          $top: '20',
+        },
       })
       .reply(200, fixtures.submissions);
 
@@ -121,17 +147,22 @@ describe('getSubmissions', () => {
       configuration,
       projectId: 3,
       formId: 'test_form',
+      query: { $top: 20 },
     };
 
     // prettier-ignore
     const finalState = await execute(
-      getSubmissions((state) => state.projectId, (state) => state.formId)
+      getSubmissions(
+        (state) => state.projectId,
+        (state) => state.formId,
+        (state) => state.query
+      )
     )(state);
 
     expect(finalState.data).to.eql(fixtures.submissions.value);
   });
 
-  it('it handles project not found', async () => {
+  it('should handle project not found', async () => {
     testServer
       .intercept({
         path: '/v1/projects/4/forms/test_form.svc/Submissions',
