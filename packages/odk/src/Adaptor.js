@@ -25,9 +25,9 @@ import * as util from './Utils';
 
 /**
  * Fetch all submissions to a given form.
- * @example Get all submissions to a form called 'patient-follow-up'
+ * @example <caption>Get all submissions to a form called 'patient-follow-up'</caption>
  * getSubmissions(22, 'patient-follow-up');
- * @example Filter submissions by date
+ * @example <caption>Filter submissions by date</caption>
  * getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
  * @function
  * @public
@@ -66,7 +66,7 @@ export function getSubmissions(projectId, xmlFormId, query = {}) {
 
 /**
  * Fetch all forms for a project.
- * @example Fetch all forms for project with id 22
+ * @example <caption>Fetch all forms for project with id 22</caption>
  * getForms(22);
  * @function
  * @public
@@ -89,9 +89,9 @@ export function getForms(projectId) {
 
 /**
  * Make a GET request against the base URL.
- * @example Get a list of available projects
+ * @example <caption>Get a list of available projects</caption>
  * get("v1/projects");
- * @example Get projects with query parameters
+ * @example <caption>Get projects with query parameters</caption>
  * get("v1/projects", {
  *  query: { datasets: true }
  * });
@@ -108,7 +108,7 @@ export function get(path, options) {
 
 /**
  * Make a POST request against the base URL.
- * @example Create a new project
+ * @example <caption>Create a new project</caption>
  * post('v1/projects', { name: 'Project Name' });
  * @function
  * @public
@@ -124,7 +124,7 @@ export function post(path, body, options) {
 
 /**
  * Make a general HTTP request against the base URL.
- * @example Make a POST request to create a new project
+ * @example <caption>Make a POST request to create a new project</caption>
  * request("POST", 'v1/projects', { name: 'Project Name' });
  * @function
  * @public
@@ -156,7 +156,7 @@ export function request(method, path, body, options = {}) {
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for odk.
  * @example
- * execute(
+<caption> * execute(</caption>
  *   get("v1/projects")
  * )(state)
  * @private

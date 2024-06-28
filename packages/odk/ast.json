@@ -3,15 +3,15 @@
     {
       "name": "getForms",
       "params": [
-        "projectId",
-        "callback"
+        "projectId"
       ],
       "docs": {
-        "description": "Fetch all forms for a project",
+        "description": "Fetch all forms for a project.",
         "tags": [
           {
             "title": "example",
-            "description": "getForms(22);"
+            "description": "getForms(22);",
+            "caption": "Fetch all forms for project with id 22"
           },
           {
             "title": "function",
@@ -31,18 +31,6 @@
               "name": "number"
             },
             "name": "projectId"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -68,15 +56,20 @@
       "name": "get",
       "params": [
         "path",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a GET request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"v1/projects\");"
+            "description": "get(\"v1/projects\");",
+            "caption": "Get a list of available projects"
+          },
+          {
+            "title": "example",
+            "description": "get(\"v1/projects\", {\n query: { datasets: true }\n});",
+            "caption": "Get projects with query parameters"
           },
           {
             "title": "function",
@@ -107,18 +100,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -139,15 +120,15 @@
       "params": [
         "path",
         "body",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a POST request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "post('v1/projects', { name: 'Project Name' });"
+            "description": "post('v1/projects', { name: 'Project Name' });",
+            "caption": "Create a new project"
           },
           {
             "title": "function",
@@ -187,18 +168,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -220,15 +189,15 @@
         "method",
         "path",
         "body",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
-        "description": "Make a HTTP request against the base URL.",
+        "description": "Make a general HTTP request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });"
+            "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });",
+            "caption": "Make a POST request to create a new project"
           },
           {
             "title": "function",
@@ -275,18 +244,6 @@
               "name": "RequestOptions"
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
