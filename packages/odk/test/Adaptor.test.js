@@ -317,8 +317,7 @@ describe('HTTP wrappers', () => {
     expect(finalState.response.statusCode).to.eql(200);
   });
 
-  // TODO wow this is totally wrong!
-  it.skip('should get /projects', async () => {
+  it('should get /projects', async () => {
     testServer
       .intercept({
         path: '/v1/projects',
@@ -336,10 +335,11 @@ describe('HTTP wrappers', () => {
     ))(state);
 
     expect(finalState.data).to.eql(fixtures.projects);
+    expect(finalState.data[0].id).to.eql(66);
     expect(finalState.response.statusCode).to.equal(200);
   });
 
-  it.skip('should get() at /projects with a query', async () => {
+  it('should get() at /projects with a query', async () => {
     testServer
       .intercept({
         path: '/v1/projects',
