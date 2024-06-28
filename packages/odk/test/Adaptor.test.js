@@ -122,27 +122,39 @@ describe('getSubmissions', () => {
     expect(finalState.data).to.eql(fixtures.submissions.value);
   });
 
-  // TODO this isn't handled well yet
-  it.skip('it handles project not found', async () => {
+  it('it handles project not found', async () => {
     testServer
       .intercept({
         path: '/v1/projects/1/forms/test_form.svc/Submissions',
         method: 'GET',
       })
-      .reply(404, {
-        /* what is this object ?*/
-      });
+      .reply(
+        404,
+        {
+          message: 'Could not find the resource you were looking for.',
+          code: 404,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
     const state = {
       configuration,
     };
 
     // prettier-ignore
-    const finalState = await execute(
+    const error = await execute(
       getSubmissions(1, 'test_form')
-    )(state);
+    )(state).catch(e => e);
 
-    expect(finalState.data).to.eql(fixtures.submissions);
+    expect(error.statusCode).to.eql(404);
+    expect(error.statusMessage).to.eql('Not Found');
+    expect(error.body.message).to.eql(
+      'Could not find the resource you were looking for.'
+    );
   });
 });
 
