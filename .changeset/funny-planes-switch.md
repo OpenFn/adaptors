@@ -1,5 +1,5 @@
 ---
-'@openfn/language-satusehat': minor
+'@openfn/language-satusehat': patch
 ---
 
-Add temporary error logs
+Added extra logging around errors
