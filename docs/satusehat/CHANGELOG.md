@@ -1,5 +1,11 @@
 # @openfn/language-satusehat
 
+## 1.1.2
+
+### Patch Changes
+
+- 218a582: Added extra logging around errors
+
 ## 1.1.1
 
 ### Patch Changes
