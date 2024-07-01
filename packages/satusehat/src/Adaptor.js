@@ -57,7 +57,7 @@ export function get(path, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(e);
+     console.error(e.body)
       throw e;
     }
   };
@@ -96,7 +96,7 @@ export function post(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(e);
+     console.error(e.body)
       throw e;
     }
   };
@@ -135,7 +135,7 @@ export function put(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(e);
+     console.error(e.body)
       throw e;
     }
   };
@@ -179,7 +179,7 @@ export function patch(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(e);
+     console.error(e.body)
       throw e;
     }
   };
