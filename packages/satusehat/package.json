@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-satusehat",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "OpenFn satusehat adaptor",
   "type": "module",
   "exports": {
