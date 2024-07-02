@@ -27,7 +27,7 @@ import * as util from './Utils';
  * Fetch all submissions to a given form.
  * @example <caption>Get all submissions to a form called 'patient-follow-up'</caption>
  * getSubmissions(22, 'patient-follow-up');
- * @example <caption>Filter submissions since a given</caption>
+ * @example <caption>Filter submissions since a given date</caption>
  * getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
  * @function
  * @public
