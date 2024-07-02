@@ -133,7 +133,7 @@ This operation writes the following keys to state:
 ```js
 getSubmissions(22, 'patient-follow-up');
 ```
-**Example** *(Filter submissions since a given)*  
+**Example** *(Filter submissions since a given date)*  
 ```js
 getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
 ```
