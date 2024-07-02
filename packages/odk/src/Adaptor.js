@@ -27,13 +27,13 @@ import * as util from './Utils';
  * Fetch all submissions to a given form.
  * @example <caption>Get all submissions to a form called 'patient-follow-up'</caption>
  * getSubmissions(22, 'patient-follow-up');
- * @example <caption>Filter submissions by date</caption>
+ * @example <caption>Filter submissions since a given</caption>
  * getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
  * @function
  * @public
  * @param {number} projectId - Id of the project the form belongs to
  * @param {string} xmlFormId - Id of the form to fetch submissions for
- * @param {string} query - Query parameters to append filter the fetch: See {@link https://docs.getodk.org/central-api-odata-endpoints/#data-document}
+ * @param {string} query - Query parameters to append to the request, see {@link https://docs.getodk.org/central-api-odata-endpoints/#data-document}
  * @returns {Operation}
  * @state {ODKHttpState}
  * @state data - array of form submission objects
