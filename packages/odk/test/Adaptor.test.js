@@ -2,73 +2,478 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
 import {
+  execute,
   request,
   get,
   post,
-  getForms,
   getSubmissions,
+  getForms,
 } from '../src/Adaptor.js';
-import { describe } from 'node:test';
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
+import * as fixtures from './fixtures';
+
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const baseUrl = 'https://odk.server.com';
 const testServer = enableMockClient(baseUrl);
 
+const configuration = {
+  baseUrl,
+  email: 'a@b.com',
+  password: 'pass',
+};
+
+const mockResponse = (status, body) => ({
+  statusCode: status,
+  responseOptions: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  },
+  data: body,
+});
+
+// Set up a fake auth endpoint
 before(() => {
   testServer
     .intercept({
       path: '/v1/sessions',
       method: 'POST',
     })
-    .reply(200, {
-      token: 'fake-token',
+    .reply(req => {
+      // Ensure credentials are correct and throw the appropriate response
+      const creds = JSON.parse(req.body);
+      if (
+        creds.email !== configuration.email ||
+        creds.password !== configuration.password
+      ) {
+        return mockResponse(401, {
+          message: 'Could not authenticate with the provided credentials.',
+          code: 401,
+        });
+      }
+      return mockResponse(200, {
+        token: 'fake-token',
+      });
     })
     .persist();
 });
 
-describe('Create Project', () => {
-  it('it should create a project', async () => {
+describe('getSubmissions', () => {
+  it('should fail if credentials are wrong', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/1/forms/test_form.svc/Submissions',
+        method: 'GET',
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration: {
+        ...configuration,
+        password: 'wrooooong',
+      },
+    };
+
+    let error;
+    try {
+      await execute(getSubmissions(1, 'test_form'))(state);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.statusCode).to.eql(401);
+    expect(error.statusMessage).to.eql('Unauthorized');
+    expect(error.body.message).to.eql(
+      'Could not authenticate with the provided credentials.'
+    );
+  });
+
+  it('should get form submissions', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/2/forms/test_form.svc/Submissions',
+        method: 'GET',
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getSubmissions(2, 'test_form')
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.submissions.value);
+  });
+
+  it('should append query parameters', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/22/forms/test_form.svc/Submissions',
+        method: 'GET',
+        query: {
+          $top: '10',
+        },
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getSubmissions(22, 'test_form', { $top: 10 })
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.submissions.value);
+  });
+
+  it('should expand references', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/3/forms/test_form.svc/Submissions',
+        method: 'GET',
+        query: {
+          $top: '20',
+        },
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration,
+      projectId: 3,
+      formId: 'test_form',
+      query: { $top: 20 },
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getSubmissions(
+        (state) => state.projectId,
+        (state) => state.formId,
+        (state) => state.query
+      )
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.submissions.value);
+  });
+
+  it('should handle project not found', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/4/forms/test_form.svc/Submissions',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {
+          message: 'Could not find the resource you were looking for.',
+          code: 404,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const error = await execute(
+      getSubmissions(4, 'test_form')
+    )(state).catch(e => e);
+
+    expect(error.statusCode).to.eql(404);
+    expect(error.statusMessage).to.eql('Not Found');
+    expect(error.body.message).to.eql(
+      'Could not find the resource you were looking for.'
+    );
+  });
+});
+
+describe('getForms', () => {
+  it('should fail if credentials are wrong', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/1/forms',
+        method: 'GET',
+      })
+      .reply(200, fixtures.submissions);
+
+    const state = {
+      configuration: {
+        ...configuration,
+        password: 'wrooooong',
+      },
+    };
+
+    let error;
+    try {
+      await execute(getForms(1))(state);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.statusCode).to.eql(401);
+    expect(error.statusMessage).to.eql('Unauthorized');
+    expect(error.body.message).to.eql(
+      'Could not authenticate with the provided credentials.'
+    );
+  });
+
+  it('should get a list of forms', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/2/forms',
+        method: 'GET',
+      })
+      .reply(200, fixtures.forms);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getForms(2)
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.forms);
+  });
+
+  it('should expand references', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/3/forms',
+        method: 'GET',
+      })
+      .reply(200, fixtures.forms);
+
+    const state = {
+      configuration,
+      projectId: 3,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      getForms((state) => state.projectId)
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.forms);
+  });
+
+  it('it handles project not found', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/4/forms',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {
+          message: 'Could not find the resource you were looking for.',
+          code: 404,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const error = await execute(
+      getForms(4)
+    )(state).catch(e => e);
+
+    expect(error.statusCode).to.eql(404);
+    expect(error.statusMessage).to.eql('Not Found');
+    expect(error.body.message).to.eql(
+      'Could not find the resource you were looking for.'
+    );
+  });
+});
+
+describe('HTTP wrappers', () => {
+  it('request() should expand references', async () => {
     testServer
       .intercept({
         path: '/v1/projects',
-        data: {
+        method: 'PATCH',
+        body: JSON.stringify({
           name: 'Project Name',
+        }),
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer abc',
+          y: '1',
         },
-        method: 'POST',
       })
-      .reply(200, {
-        id: 1,
-        name: 'Default Project',
-        description: 'Description of this Project to show on Central.',
-        keyId: 3,
-        archived: false,
-      });
+      .reply(200, {});
 
     const state = {
       configuration: {
         baseUrl,
-        email: 'someusername',
-        password: 'somepassword',
+        access_token: 'abc',
+      },
+
+      method: 'PATCH',
+      path: '/v1/projects',
+      body: {
+        name: 'Project Name',
+      },
+      options: {
+        headers: { y: '1' },
       },
     };
 
-    const finalState = await post('/v1/projects', {
-      name: 'Project Name',
-    })(state);
+    const finalState = await request(
+      s => s.method,
+      s => s.path,
+      s => s.body,
+      s => s.options
+    )(state);
 
-    expect(finalState.data).to.eql({
-      id: 1,
-      name: 'Default Project',
-      description: 'Description of this Project to show on Central.',
-      keyId: 3,
-      archived: false,
-    });
+    expect(finalState.response.statusCode).to.eql(200);
   });
 
-  it('throws an error if creating project returns 403', async () => {
+  it('should get /projects', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'GET',
+      })
+      .reply(200, fixtures.projects);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      get('/v1/projects'
+    ))(state);
+
+    expect(finalState.data).to.eql(fixtures.projects);
+    expect(finalState.data[0].id).to.eql(66);
+    expect(finalState.response.statusCode).to.equal(200);
+  });
+
+  it('should get() at /projects with a query', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'GET',
+        query: {
+          $top: 5,
+        },
+      })
+      .reply(200, fixtures.projects);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      get('/v1/projects', { query: { $top: 5 }})
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.projects);
+    expect(finalState.response.statusCode).to.equal(200);
+  });
+
+  it.skip('should get() at /projects with a custom header', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'GET',
+        headers: {
+          foo: 'bar',
+        },
+      })
+      .reply(200, fixtures.projects);
+
+    const state = {
+      configuration,
+    };
+
+    // prettier-ignore
+    const finalState = await execute(
+      get('/v1/projects', { headers: { 'foo': 'bar' }})
+    )(state);
+
+    expect(finalState.data).to.eql(fixtures.projects);
+    expect(finalState.response.statusCode).to.equal(200);
+  });
+
+  it.skip('should handle a 404', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects/22',
+        method: 'GET',
+      })
+      .reply(
+        404,
+        {
+          message: 'Could not find the resource you were looking for.',
+          code: 404,
+        },
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const state = {
+      configuration,
+    };
+
+    const error = await get('/v1/projects/22')(state).catch(error => {
+      return error;
+    });
+
+    expect(error.statusMessage).to.eql('Not Found');
+    expect(error.statusCode).to.eql(404);
+    expect(error.body.message).to.eql(
+      'Could not find the resource you were looking for.'
+    );
+  });
+
+  it('should post() to /projects', async () => {
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'POST',
+      })
+      .reply(200, {});
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await execute(
+      post('/v1/projects', {
+        name: 'Project Name',
+      })
+    )(state);
+
+    expect(finalState.response.statusCode).to.eql(200);
+  });
+
+  it('throws an error when post() returns 403', async () => {
     testServer
       .intercept({
         path: '/v1/projects',
@@ -77,11 +482,7 @@ describe('Create Project', () => {
       .reply(403, 'Forbidden');
 
     const state = {
-      configuration: {
-        baseUrl,
-        email: 'someusername',
-        password: 'somepassword',
-      },
+      configuration,
     };
 
     const error = await post('/v1/projects', {
@@ -92,125 +493,5 @@ describe('Create Project', () => {
 
     expect(error.statusMessage).to.eql('Forbidden');
     expect(error.statusCode).to.eql(403);
-  });
-});
-
-describe('getProjects', () => {
-  it('it should get projects', async () => {
-    testServer
-      .intercept({
-        path: '/v1/projects',
-        method: 'GET',
-      })
-      .reply(200, {
-        id: 1,
-        name: 'SomeName',
-        description: null,
-        archived: null,
-        keyId: null,
-        createdAt: '2024-04-25T18:33:28.727Z',
-        updatedAt: '2024-04-25T18:40:56.617Z',
-        deletedAt: null,
-        verbs: [],
-      });
-
-    const state = {
-      configuration: {
-        baseUrl,
-        email: 'someusername',
-        password: 'somepassword',
-      },
-    };
-
-    const finalState = await get('/v1/projects')(state);
-
-    expect(finalState.data).to.eql({
-      id: 1,
-      name: 'SomeName',
-      description: null,
-      archived: null,
-      keyId: null,
-      createdAt: '2024-04-25T18:33:28.727Z',
-      updatedAt: '2024-04-25T18:40:56.617Z',
-      deletedAt: null,
-      verbs: [],
-    });
-  });
-});
-
-describe('getForms', () => {
-  it('it should get project forms', async () => {
-    testServer
-      .intercept({
-        path: '/v1/projects/1/forms',
-        method: 'GET',
-      })
-      .reply(200, {
-        projectId: 1,
-        xmlFormId: 'test_form',
-        state: 'open',
-        enketoId: 'ABCD1234',
-        enketoOnceId: '12345abcd',
-        createdAt: '2024-04-25T18:42:50.367Z',
-        updatedAt: '2024-04-25T18:42:53.338Z',
-        keyId: null,
-        version: '2023120100',
-        hash: '12345abcd',
-        sha: '12345abcd',
-        sha256: '12345abcd',
-        draftToken: null,
-        publishedAt: '2024-04-25T18:42:53.336Z',
-        name: 'Test Form',
-      });
-
-    const state = {
-      configuration: {
-        baseUrl,
-        email: 'someusername',
-        password: 'somepassword',
-      },
-    };
-
-    const finalState = await getForms(1)(state);
-
-    expect(finalState.data.projectId).to.eql(1);
-    expect(finalState.data.xmlFormId).to.eql('test_form');
-  });
-});
-
-describe('getSubmissions', () => {
-  it('it should get project forms submissions', async () => {
-    testServer
-      .intercept({
-        path: '/v1/projects/1/forms/test_form/submissions',
-        method: 'GET',
-      })
-      .reply(200, {
-        instanceId: 'uuid:abcd1234',
-        submitterId: 4,
-        deviceId: null,
-        createdAt: '2024-04-25T18:45:02.627Z',
-        updatedAt: null,
-        reviewState: null,
-      });
-
-    const state = {
-      configuration: {
-        baseUrl,
-        email: 'someusername',
-        password: 'somepassword',
-      },
-    };
-
-    const finalState = await getSubmissions(1, 'test_form')(state);
-
-    expect(finalState.data).to.eql({
-      instanceId: 'uuid:abcd1234',
-      submitterId: 4,
-      deviceId: null,
-      createdAt: '2024-04-25T18:45:02.627Z',
-      updatedAt: null,
-      reviewState: null,
-    });
   });
 });

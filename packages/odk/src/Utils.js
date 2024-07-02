@@ -33,7 +33,8 @@ export const authorize = state => {
         };
       })
       .catch(err => {
-        console.log('Error authenticating with ODK.');
+        console.error('Error authenticating with ODK');
+        console.log(err.body);
         throw err;
       });
   }
@@ -44,41 +45,36 @@ export const authorize = state => {
 Make sure to either set an access_token or email & password`);
 };
 
-export const prepareNextState = (state, response, callback = s => s) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
-  if (!state.references) {
-    state.references = [];
-  }
-
-  const nextState = {
+  return {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
 };
 
 export const request = (
   configuration = {},
   method,
   path,
-  data,
-  headers = {}
+  body,
+  options = {}
 ) => {
   const { baseUrl, access_token } = configuration;
-
-  const options = {
-    body: data,
+  const { headers = {}, ...otherOptions } = options;
+  const opts = {
+    body,
 
     headers: {
-      ...headers,
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
+      ...headers,
     },
     baseUrl,
     parseAs: 'json',
+    ...otherOptions,
   };
 
-  return commonRequest(method, path, options).then(logResponse);
+  return commonRequest(method, path, opts).then(logResponse);
 };

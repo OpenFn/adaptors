@@ -1,19 +1,75 @@
 {
   "operations": [
     {
-      "name": "get",
+      "name": "getForms",
       "params": [
-        "path",
-        "params",
-        "headers",
-        "callback"
+        "projectId"
       ],
       "docs": {
-        "description": "Make a GET request",
+        "description": "Fetch all forms for a project.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"v1/projects\");"
+            "description": "getForms(22);",
+            "caption": "Fetch all forms for project with id 22"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Id of the project",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "projectId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
+          },
+          {
+            "title": "state",
+            "description": "data - array of form data objects"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a GET request against the base URL.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get(\"v1/projects\");",
+            "caption": "Get a list of available projects"
+          },
+          {
+            "title": "example",
+            "description": "get(\"v1/projects\", {\n query: { datasets: true }\n});",
+            "caption": "Get projects with query parameters"
           },
           {
             "title": "function",
@@ -36,33 +92,12 @@
           },
           {
             "title": "param",
-            "description": "Optional request params",
+            "description": "Options to configure the HTTP request",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "Optional request headers",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "headers"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -71,128 +106,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getForms",
-      "params": [
-        "projectId",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a GET request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getForms(22);"
           },
           {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Id of the project you want to get its forms",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "projectId"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getSubmissions",
-      "params": [
-        "projectId",
-        "xmlFormId",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a GET request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getSubmissions(22, 'test');"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Id of the project you want to get its forms submissions",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "projectId"
-          },
-          {
-            "title": "param",
-            "description": "Id of the form you want to get its submissions",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "xmlFormId"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },
@@ -202,16 +119,16 @@
       "name": "post",
       "params": [
         "path",
-        "data",
-        "params",
-        "callback"
+        "body",
+        "options"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "post('v1/projects', { name: 'Project Name' });"
+            "description": "post('v1/projects', { name: 'Project Name' });",
+            "caption": "Create a new project"
           },
           {
             "title": "function",
@@ -239,28 +156,16 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
+            "name": "body"
           },
           {
             "title": "param",
-            "description": "Optional request params",
+            "description": " Options to configure the HTTP request",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -269,6 +174,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },
@@ -280,15 +189,15 @@
         "method",
         "path",
         "body",
-        "params",
-        "callback"
+        "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a general HTTP request against the base URL.",
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });"
+            "description": "request(\"POST\", 'v1/projects', { name: 'Project Name' });",
+            "caption": "Make a POST request to create a new project"
           },
           {
             "title": "function",
@@ -320,7 +229,7 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
+            "description": "Object which will be attached to the body",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -332,21 +241,9 @@
             "description": "Optional request params",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -355,6 +252,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{ODKHttpState}"
           }
         ]
       },

@@ -25,8 +25,9 @@ export const prepareNextState = (state, response, callback = s => s) => {
 };
 
 // This helper function will call out to the backend service
-// And add authorisation headers
-export const request = (configuration = {}, method, path, data) => {
+// and add authorisation headers
+// Refer to the common request function for options and details
+export const request = (configuration = {}, method, path, options) => {
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
   const { baseUrl, username, password } = configuration;
@@ -39,25 +40,27 @@ export const request = (configuration = {}, method, path, data) => {
     404: 'Page not found',
   };
 
-  const options = {
-    // Append data to the request body
-    body: data,
-
-    // You can dd extra headers here if yout want to
-    headers: {
-      ...headers,
-      'content-type': 'application/json',
-    },
-
+  const opts = {
     // Force the response to be parsed as JSON
     parseAs: 'json',
 
     // Include the error map
     errors,
+
+    // Set the baseUrl from the config object
+    baseUrl,
+
+    ...options,
+
+    // You can add extra headers here if you want to
+    headers: {
+      'content-type': 'application/json',
+      ...headers,
+    },
   };
 
-  // Build the url base on the baseUrl in config and the path provided
-  const url = `${baseUrl}/api/${path}`;
+  // TODO you may want to add a prefix to the path
+
   // Make the actual request
-  return commonRequest(method, url, options);
+  return commonRequest(method, path, options);
 };
