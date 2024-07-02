@@ -2,15 +2,15 @@
 
 <dl>
 <dt>
-    <a href="#get">get(path, params, headers, [callback])</a></dt>
+    <a href="#get">get(path, options)</a></dt>
 <dt>
-    <a href="#getforms">getForms(projectId, [callback])</a></dt>
+    <a href="#getforms">getForms(projectId)</a></dt>
 <dt>
-    <a href="#getsubmissions">getSubmissions(projectId, xmlFormId, [callback])</a></dt>
+    <a href="#getsubmissions">getSubmissions(projectId, xmlFormId, query)</a></dt>
 <dt>
-    <a href="#post">post(path, data, params, [callback])</a></dt>
+    <a href="#post">post(path, body, options)</a></dt>
 <dt>
-    <a href="#request">request(method, path, body, params, [callback])</a></dt>
+    <a href="#request">request(method, path, body, options)</a></dt>
 </dl>
 
 The following functions are exported from the common adaptor:
@@ -54,38 +54,55 @@ The following functions are exported from the common adaptor:
 
 ## get
 
-get(path, params, headers, [callback]) ⇒ <code>Operation</code>
+get(path, options) ⇒ <code>Operation</code>
 
-Make a GET request
+Make a GET request against the base URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>Object</code> | Optional request params |
-| headers | <code>Object</code> | Optional request headers |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+**Example** *(Get a list of available projects)*  
 ```js
 get("v1/projects");
+```
+**Example** *(Get projects with query parameters)*  
+```js
+get("v1/projects", {
+ query: { datasets: true }
+});
 ```
 
 * * *
 
 ## getForms
 
-getForms(projectId, [callback]) ⇒ <code>Operation</code>
+getForms(projectId) ⇒ <code>Operation</code>
 
-Make a GET request
+Fetch all forms for a project.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| projectId | <code>number</code> | Id of the project you want to get its forms |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| projectId | <code>number</code> | Id of the project |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | array of form data objects |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+**Example** *(Fetch all forms for project with id 22)*  
 ```js
 getForms(22);
 ```
@@ -94,39 +111,56 @@ getForms(22);
 
 ## getSubmissions
 
-getSubmissions(projectId, xmlFormId, [callback]) ⇒ <code>Operation</code>
+getSubmissions(projectId, xmlFormId, query) ⇒ <code>Operation</code>
 
-Make a GET request
+Fetch all submissions to a given form.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| projectId | <code>number</code> | Id of the project you want to get its forms submissions |
-| xmlFormId | <code>string</code> | Id of the form you want to get its submissions |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| projectId | <code>number</code> | Id of the project the form belongs to |
+| xmlFormId | <code>string</code> | Id of the form to fetch submissions for |
+| query | <code>string</code> | Query parameters to append to the request, see [https://docs.getodk.org/central-api-odata-endpoints/#data-document](https://docs.getodk.org/central-api-odata-endpoints/#data-document) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | array of form submission objects |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+**Example** *(Get all submissions to a form called &#x27;patient-follow-up&#x27;)*  
 ```js
-getSubmissions(22, 'test');
+getSubmissions(22, 'patient-follow-up');
+```
+**Example** *(Filter submissions since a given)*  
+```js
+getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
 ```
 
 * * *
 
 ## post
 
-post(path, data, params, [callback]) ⇒ <code>Operation</code>
+post(path, body, options) ⇒ <code>Operation</code>
 
-Make a POST request
+Make a POST request against the base URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object which will be attached to the POST body |
-| params | <code>Object</code> | Optional request params |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| body | <code>object</code> | Object which will be attached to the POST body |
+| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+**Example** *(Create a new project)*  
 ```js
 post('v1/projects', { name: 'Project Name' });
 ```
@@ -135,23 +169,47 @@ post('v1/projects', { name: 'Project Name' });
 
 ## request
 
-request(method, path, body, params, [callback]) ⇒ <code>Operation</code>
+request(method, path, body, options) ⇒ <code>Operation</code>
 
-Make a general HTTP request
+Make a general HTTP request against the base URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | method | <code>string</code> | HTTP method to use |
 | path | <code>string</code> | Path to resource |
-| body | <code>object</code> | Object which will be attached to the POST body |
-| params | <code>Object</code> | Optional request params |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| body | <code>object</code> | Object which will be attached to the body |
+| options | [<code>RequestOptions</code>](#requestoptions) | Optional request params |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+**Example** *(Make a POST request to create a new project)*  
 ```js
 request("POST", 'v1/projects', { name: 'Project Name' });
 ```
+
+* * *
+
+## RequestOptions
+
+RequestOptions : <code>Object</code>
+
+Options provided to the HTTP request
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. |
+| headers | <code>object</code> | An object of headers to append to the request. |
+| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
+| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+
 
 * * *
 

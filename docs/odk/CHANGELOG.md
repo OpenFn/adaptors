@@ -1,5 +1,16 @@
 # @openfn/language-odk
 
+## 3.0.0
+
+### Major Changes
+
+- 0b81f06: - `getSubmissions()` now returns submission data (not metadata)
+  - `getSubmissions()` arguments can be references (functions)
+  - `getSubmissions()` supports query parameters
+  - HTTP helper APIs have been slightly streamlined and fixed
+  - Documentation overhaul
+  - All callback functions have been removed (use an fn() block instead)
+
 ## 2.0.0
 
 ### Major Changes

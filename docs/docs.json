@@ -13345,7 +13345,7 @@
     "kind": "external"
   }
 ],
-{"name":"odk","adaptor":"@openfn/language-odk","version":"2.0.0","docs":"\"## Functions\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, params, headers, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(projectId, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(projectId, xmlFormId, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, params, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, params, [callback])</a></dt>\\n</dl>\\n\\nThe following functions are exported from the common adaptor:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## get\\n\\nget(path, params, headers, [callback]) ⇒ <code>Operation</code>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | <code>Object</code> | Optional request params |\\n| headers | <code>Object</code> | Optional request headers |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**  \\n```js\\nget(\\\"v1/projects\\\");\\n```\\n\\n* * *\\n\\n## getForms\\n\\ngetForms(projectId, [callback]) ⇒ <code>Operation</code>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectId | <code>number</code> | Id of the project you want to get its forms |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**  \\n```js\\ngetForms(22);\\n```\\n\\n* * *\\n\\n## getSubmissions\\n\\ngetSubmissions(projectId, xmlFormId, [callback]) ⇒ <code>Operation</code>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectId | <code>number</code> | Id of the project you want to get its forms submissions |\\n| xmlFormId | <code>string</code> | Id of the form you want to get its submissions |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**  \\n```js\\ngetSubmissions(22, 'test');\\n```\\n\\n* * *\\n\\n## post\\n\\npost(path, data, params, [callback]) ⇒ <code>Operation</code>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the POST body |\\n| params | <code>Object</code> | Optional request params |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**  \\n```js\\npost('v1/projects', { name: 'Project Name' });\\n```\\n\\n* * *\\n\\n## request\\n\\nrequest(method, path, body, params, [callback]) ⇒ <code>Operation</code>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| params | <code>Object</code> | Optional request params |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**  \\n```js\\nrequest(\\\"POST\\\", 'v1/projects', { name: 'Project Name' });\\n```\\n\\n* * *\\n\\n\"","readme":"\"# language-odk <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the odk API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/odk-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/odk-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `post` function\\n\\n```js\\npost('v1/projects', { name: 'Project Name' });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-odk\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- 9234f83: - configuration-schema: rename `username` to `email`\\n  - Improve logging when authentication fails\\n  - Improve error reporting when requests fail\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.0.0\\n\\nInitial release for odk adaptor with `get`, `post`, `getForms` and\\n`getSubmissions`\\n\"","functions":["get","getForms","getSubmissions","post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"ODK base URL","format":"uri","minLength":1,"examples":["https://sandbox.getodk.cloud/"]},"email":{"title":"Email","type":"string","description":"Email","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"access_token":{"title":"Access Token","type":"string","description":"Your ODK access token","writeOnly":true,"minLength":1,"examples":["the-long-access-token-from-your-auth"]}},"type":"object","additionalProperties":true,"required":["password","email","baseUrl"]}},
+{"name":"odk","adaptor":"@openfn/language-odk","version":"3.0.0","docs":"\"## Functions\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(projectId)</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(projectId, xmlFormId, query)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\nThe following functions are exported from the common adaptor:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## get\\n\\nget(path, options) ⇒ <code>Operation</code>\\n\\nMake a GET request against the base URL.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the ODK HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Get a list of available projects)*  \\n```js\\nget(\\\"v1/projects\\\");\\n```\\n**Example** *(Get projects with query parameters)*  \\n```js\\nget(\\\"v1/projects\\\", {\\n query: { datasets: true }\\n});\\n```\\n\\n* * *\\n\\n## getForms\\n\\ngetForms(projectId) ⇒ <code>Operation</code>\\n\\nFetch all forms for a project.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectId | <code>number</code> | Id of the project |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | array of form data objects |\\n| response | the response from the ODK HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Fetch all forms for project with id 22)*  \\n```js\\ngetForms(22);\\n```\\n\\n* * *\\n\\n## getSubmissions\\n\\ngetSubmissions(projectId, xmlFormId, query) ⇒ <code>Operation</code>\\n\\nFetch all submissions to a given form.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectId | <code>number</code> | Id of the project the form belongs to |\\n| xmlFormId | <code>string</code> | Id of the form to fetch submissions for |\\n| query | <code>string</code> | Query parameters to append to the request, see [https://docs.getodk.org/central-api-odata-endpoints/#data-document](https://docs.getodk.org/central-api-odata-endpoints/#data-document) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | array of form submission objects |\\n| response | the response from the ODK HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Get all submissions to a form called &#x27;patient-follow-up&#x27;)*  \\n```js\\ngetSubmissions(22, 'patient-follow-up');\\n```\\n**Example** *(Filter submissions since a given)*  \\n```js\\ngetSubmissions(22, 'patient-follow-up', { $filter: \\\"$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z\\\" });\\n```\\n\\n* * *\\n\\n## post\\n\\npost(path, body, options) ⇒ <code>Operation</code>\\n\\nMake a POST request against the base URL.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the ODK HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Create a new project)*  \\n```js\\npost('v1/projects', { name: 'Project Name' });\\n```\\n\\n* * *\\n\\n## request\\n\\nrequest(method, path, body, options) ⇒ <code>Operation</code>\\n\\nMake a general HTTP request against the base URL.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the ODK HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Make a POST request to create a new project)*  \\n```js\\nrequest(\\\"POST\\\", 'v1/projects', { name: 'Project Name' });\\n```\\n\\n* * *\\n\\n## RequestOptions\\n\\nRequestOptions : <code>Object</code>\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-odk <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the odk API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/odk-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/odk-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `post` function\\n\\n```js\\npost('v1/projects', { name: 'Project Name' });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-odk\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 0b81f06: - `getSubmissions()` now returns submission data (not metadata)\\n  - `getSubmissions()` arguments can be references (functions)\\n  - `getSubmissions()` supports query parameters\\n  - HTTP helper APIs have been slightly streamlined and fixed\\n  - Documentation overhaul\\n  - All callback functions have been removed (use an fn() block instead)\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- 9234f83: - configuration-schema: rename `username` to `email`\\n  - Improve logging when authentication fails\\n  - Improve error reporting when requests fail\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.0.0\\n\\nInitial release for odk adaptor with `get`, `post`, `getForms` and\\n`getSubmissions`\\n\"","functions":["get","getForms","post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"ODK base URL","format":"uri","minLength":1,"examples":["https://sandbox.getodk.cloud/"]},"email":{"title":"Email","type":"string","description":"Email","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"access_token":{"title":"Access Token","type":"string","description":"Your ODK access token","writeOnly":true,"minLength":1,"examples":["the-long-access-token-from-your-auth"]}},"type":"object","additionalProperties":true,"required":["password","email","baseUrl"]}},
 [
   {
     "id": "execute",
@@ -13366,7 +13366,7 @@
       }
     ],
     "examples": [
-      "execute(\n  create('foo'),\n  delete('bar')\n)(state)"
+      "<caption> * execute(</caption>\n  get(\"v1/projects\")\n)(state)"
     ],
     "returns": [
       {
@@ -13379,11 +13379,18 @@
     ],
     "access": "private",
     "meta": {
-      "lineno": 17,
+      "lineno": 167,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 0
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      }
+    ],
+    "order": 7
   },
   {
     "id": "get",
@@ -13391,7 +13398,7 @@
     "name": "get",
     "kind": "function",
     "scope": "global",
-    "description": "Make a GET request",
+    "description": "Make a GET request against the base URL.",
     "params": [
       {
         "type": {
@@ -13405,34 +13412,16 @@
       {
         "type": {
           "names": [
-            "Object"
+            "RequestOptions"
           ]
         },
-        "description": "Optional request params",
-        "name": "params"
-      },
-      {
-        "type": {
-          "names": [
-            "Object"
-          ]
-        },
-        "description": "Optional request headers",
-        "name": "headers"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "optional": true,
-        "description": "Optional callback to handle the response",
-        "name": "callback"
+        "description": "Options to configure the HTTP request",
+        "name": "options"
       }
     ],
     "examples": [
-      "get(\"v1/projects\");"
+      "<caption>Get a list of available projects</caption>\nget(\"v1/projects\");",
+      "<caption>Get projects with query parameters</caption>\nget(\"v1/projects\", {\n query: { datasets: true }\n});"
     ],
     "returns": [
       {
@@ -13445,11 +13434,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 43,
+      "lineno": 105,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 1,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      }
+    ],
+    "order": 4,
     "level": 0
   },
   {
@@ -13458,7 +13454,7 @@
     "name": "getForms",
     "kind": "function",
     "scope": "global",
-    "description": "Make a GET request",
+    "description": "Fetch all forms for a project.",
     "params": [
       {
         "type": {
@@ -13466,22 +13462,12 @@
             "number"
           ]
         },
-        "description": "Id of the project you want to get its forms",
+        "description": "Id of the project",
         "name": "projectId"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "optional": true,
-        "description": "Optional callback to handle the response",
-        "name": "callback"
       }
     ],
     "examples": [
-      "getForms(22);"
+      "<caption>Fetch all forms for project with id 22</caption>\ngetForms(22);"
     ],
     "returns": [
       {
@@ -13494,11 +13480,23 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 57,
+      "lineno": 78,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 2,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      },
+      {
+        "name": "data",
+        "description": "array of form data objects",
+        "type": null
+      }
+    ],
+    "order": 3,
     "level": 0
   },
   {
@@ -13507,7 +13505,7 @@
     "name": "getSubmissions",
     "kind": "function",
     "scope": "global",
-    "description": "Make a GET request",
+    "description": "Fetch all submissions to a given form.",
     "params": [
       {
         "type": {
@@ -13515,7 +13513,7 @@
             "number"
           ]
         },
-        "description": "Id of the project you want to get its forms submissions",
+        "description": "Id of the project the form belongs to",
         "name": "projectId"
       },
       {
@@ -13524,22 +13522,22 @@
             "string"
           ]
         },
-        "description": "Id of the form you want to get its submissions",
+        "description": "Id of the form to fetch submissions for",
         "name": "xmlFormId"
       },
       {
         "type": {
           "names": [
-            "function"
+            "string"
           ]
         },
-        "optional": true,
-        "description": "Optional callback to handle the response",
-        "name": "callback"
+        "description": "Query parameters to append to the request, see {@link https://docs.getodk.org/central-api-odata-endpoints/#data-document}",
+        "name": "query"
       }
     ],
     "examples": [
-      "getSubmissions(22, 'test');"
+      "<caption>Get all submissions to a form called 'patient-follow-up'</caption>\ngetSubmissions(22, 'patient-follow-up');",
+      "<caption>Filter submissions since a given</caption>\ngetSubmissions(22, 'patient-follow-up', { $filter: \"$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z\" });"
     ],
     "returns": [
       {
@@ -13552,12 +13550,58 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 73,
+      "lineno": 41,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 3,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      },
+      {
+        "name": "data",
+        "description": "array of form submission objects",
+        "type": null
+      }
+    ],
+    "order": 2,
     "level": 0
+  },
+  {
+    "id": "ODKHttpState",
+    "longname": "ODKHttpState",
+    "name": "ODKHttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the ODK HTTP server (with the body removed)",
+        "name": "response"
+      },
+      {
+        "description": "an array of all the previous data values",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 8,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
+    },
+    "order": 0
   },
   {
     "id": "post",
@@ -13565,7 +13609,7 @@
     "name": "post",
     "kind": "function",
     "scope": "global",
-    "description": "Make a POST request",
+    "description": "Make a POST request against the base URL.",
     "params": [
       {
         "type": {
@@ -13583,30 +13627,20 @@
           ]
         },
         "description": "Object which will be attached to the POST body",
-        "name": "data"
+        "name": "body"
       },
       {
         "type": {
           "names": [
-            "Object"
+            "RequestOptions"
           ]
         },
-        "description": "Optional request params",
-        "name": "params"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "optional": true,
-        "description": "Optional callback to handle the response",
-        "name": "callback"
+        "description": "Options to configure the HTTP request",
+        "name": "options"
       }
     ],
     "examples": [
-      "post('v1/projects', { name: 'Project Name' });"
+      "<caption>Create a new project</caption>\npost('v1/projects', { name: 'Project Name' });"
     ],
     "returns": [
       {
@@ -13619,11 +13653,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 90,
+      "lineno": 121,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 4,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      }
+    ],
+    "order": 5,
     "level": 0
   },
   {
@@ -13632,7 +13673,7 @@
     "name": "request",
     "kind": "function",
     "scope": "global",
-    "description": "Make a general HTTP request",
+    "description": "Make a general HTTP request against the base URL.",
     "params": [
       {
         "type": {
@@ -13658,31 +13699,21 @@
             "object"
           ]
         },
-        "description": "Object which will be attached to the POST body",
+        "description": "Object which will be attached to the body",
         "name": "body"
       },
       {
         "type": {
           "names": [
-            "Object"
+            "RequestOptions"
           ]
         },
         "description": "Optional request params",
-        "name": "params"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "optional": true,
-        "description": "Optional callback to handle the response",
-        "name": "callback"
+        "name": "options"
       }
     ],
     "examples": [
-      "request(\"POST\", 'v1/projects', { name: 'Project Name' });"
+      "<caption>Make a POST request to create a new project</caption>\nrequest(\"POST\", 'v1/projects', { name: 'Project Name' });"
     ],
     "returns": [
       {
@@ -13695,11 +13726,76 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 107,
+      "lineno": 138,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
     },
-    "order": 5,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ODKHttpState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      }
+    ],
+    "meta": {
+      "lineno": 17,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odk/src"
+    },
+    "order": 1,
     "level": 0
   },
   {
