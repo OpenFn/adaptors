@@ -222,6 +222,7 @@ export function getCases(query, options, callback) {
           );
 
           if (expandedOptions?.withReferrals) {
+            console.log(`Fetching ${cases.length} cases referral`);
             for await (const c of cases) {
               const requestParams = {
                 method: 'GET',
