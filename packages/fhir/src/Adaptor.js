@@ -249,3 +249,136 @@ export {
   merge,
   sourceValue,
 } from '@openfn/language-common';
+
+/**
+ * Options provided to a HTTP request
+ * @typedef {Object} RequestOptions
+ * @property {boolean=true} throwOnError - Set to false to prevent the function throwing for statusCodes greater than 400
+ * @property {object} headers - Object of headers to append to the request
+ * @property {object} body - JSON payload to attach to the request
+ * @property {object} query - Query parameters for the request. Will be encoded into the URL
+ */
+// Note: parseAs is deliberately excluded here - assume everything is json
+
+/**
+ * Send a generic HTTP request to the server
+ * @param {string} method - The HTTP method to be used for the request. It defaults to 'GET' if not
+ * @param {string} path - The resource path that the request is being made to
+ * @param {RequestOptions} [options] - An object containing any additional parameters to be sent with the request, such
+ * as query parameters or request body data.
+ * @param {string} path - The resource path that the request is being made to.
+ * @returns {Operation}
+ */
+export const request =
+  async (method, path, options = {}, callback) =>
+  state => ({
+    ...state,
+    data,
+    response,
+  });
+
+/**
+ * Send a HTTP POST request
+ * @public
+ * @function
+ * @example
+ * post("Bundle",{
+ *   "resourceType": "Bundle"
+ * })
+ * @param {string} path - Path to resource
+ * @param {object} data - JSON data to append to the POST body
+ * @param {RequestOptions} options - Additional options for the request
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export const post = (path, data, options, callback) => state => ({
+  ...state,
+  data,
+  response,
+});
+
+/**
+ * Send a HTTP GET request
+ * @public
+ * @function
+ * @example <caption>Get Patient from FHIR</caption>
+ * get('Patient');
+ * @example <caption>Get Claim from FHIR with optional query</caption>
+ * get("Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
+ * @param {string} path - Path to resource
+ * @param {object} params - Parameters to encode into the URL query
+ * @param {RequestOptions} options - Options to control the request
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export const get = (path, params, options, callback) => state => ({
+  ...state,
+  data,
+  response,
+});
+
+
+/**
+ * Creates a resource in a destination system using a POST request
+ * @public
+ * @function
+ * @example
+ * create("Patient",{ ... })
+ * @param {string} resource - The resource type to create
+ * @param {object} resource - The resource to create
+ * @param {object} params - FHIR parameters to control and configure resource creation
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+// NOTE: the signature takes type and data, and we should post { resourceType, resource } to the server
+export const create = (resource, resource, params, callback) = (state) => ({
+  ...state,
+  data,
+  response,
+});
+
+/**
+ * Creates a transactionBundle for HAPI FHIR
+ * @public
+ * @example
+ * createTransactionBundle([
+ *     {
+ *       fullUrl: "https://hapi.fhir.org/baseR4/Patient/592442",
+ *       resource: {
+ *         resourceType: "Patient",
+ *         id: "592442",
+ *         name: [{ given: "Caleb", family: "Cushing" }],
+ *       },
+ *       request: {
+ *         method: "POST",
+ *         url: "Patient",
+ *       },
+ *     },
+ *   ]);
+ * @function
+ * @param {array} entries - array of transactiions
+ * @param {object} params - data to create the new transaction
+ * @param {function} callback - (Optional) callback function
+ * @returns {Operation}
+ */
+export const createTransactionBundle = (entries, params, callback) = (state) => ({
+  ...state,
+  data
+})
+
+
+/**
+ * Get Claim in a FHIR system
+ * @public
+ * @function
+ * @example
+ * getClaim({ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
+ * @param {string} claimId - claim id
+ * @param {object} params - query parameters
+ * @param {function} callback - callback function
+ * @returns {Operation}
+ */
+export const getClaim = (claimId, params, callback = s => s)  => (state) => ({
+  ...state,
+  data
+})
