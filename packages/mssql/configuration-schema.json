@@ -40,6 +40,8 @@
       ]
     },
     "port": {
+      "title": "Port",
+      "description": "Database instance port",
       "type": "integer",
       "default": 1433,
       "examples": [

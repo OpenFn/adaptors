@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 4.3.2
+
+### Patch Changes
+
+- bb5436c: Add title and description for `port` configuration
+
 ## 4.3.1
 
 ### Patch Changes
