@@ -16,8 +16,6 @@ jobs:
         with:
           node-version: '18.17.1'
       - uses: pnpm/action-setup@v4
-        with:
-          version: 8.6.8
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm test
