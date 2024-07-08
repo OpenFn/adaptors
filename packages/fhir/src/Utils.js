@@ -37,12 +37,12 @@ export function handleResponseError(response, data, method) {
  * is written to `data`, and the raw http response to `response`.
  */
 
-export const request = async (urlString, params = {}, method = 'GET') => {
+export const sendRequest = async (urlString, params = {}, method = 'GET') => {
   let url = urlString;
   const defaultHeaders = { 'Content-Type': 'application/fhir+json' };
   const { headers, parseAs } = params;
   const setHeaders = { ...defaultHeaders, ...headers };
-  const setParseAs = parseAs
+  const setParseAs = parseAs;
 
   delete params.headers;
   delete params.parseAs;
