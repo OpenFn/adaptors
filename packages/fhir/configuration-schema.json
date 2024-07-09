@@ -29,20 +29,31 @@
                 "R4"
             ]
         },
-        "authType": {
-            "title": "Auth Type",
+        "username": {
+            "title": "Username",
             "type": "string",
-            "description": "The type of authentication used to authenticate into the destination system",
+            "description": "Username",
             "examples": [
-                "Basic"
+                "openfn_test"
             ]
         },
-        "token": {
-            "title": "Token",
+        "password": {
+            "title": "Password",
             "type": "string",
-            "description": "The token  used to authenticate into the destination system",
+            "description": "Password",
+            "writeOnly": true,
             "examples": [
-                "@super!scretetoken"
+                "@some(!)Str0ngp4ss0w0rd"
+            ]
+        },
+        "access_token": {
+            "title": "Access Token",
+            "type": "string",
+            "description": "Your FHIR access token",
+            "writeOnly": true,
+            "minLength": 1,
+            "examples": [
+                "the-long-access-token-from-your-auth"
             ]
         }
     },
