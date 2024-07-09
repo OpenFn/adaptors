@@ -74,29 +74,6 @@ describe('create', () => {
 
     expect(finalState.data).to.eql(fixtures.patientBundleCreateResponse);
   });
-
-  it.skip('throws an error for a 404', async () => {
-    testServer
-      .intercept({
-        path: 'baseR4/noAccess',
-        method: 'POST',
-      })
-      .reply(404, fixtures.noAccessResponse);
-
-    const state = {
-      configuration,
-    };
-
-    let e;
-    const finalState = await execute(create('noAccess', { name: 'taylor' }))(
-      state
-    ).catch(err => {
-      e = err;
-    });
-
-    expect(e.message).to.contain('Message: Not Found');
-    expect(finalState).to.eql(undefined);
-  });
 });
 
 describe('createTransactionBundle', () => {
@@ -122,6 +99,29 @@ describe('createTransactionBundle', () => {
 });
 
 describe('get', () => {
+  it('should throw for invalid patient id', async () => {
+    testServer
+      .intercept({
+        path: '/baseR4/Patient/invalid-patient-id',
+        method: 'GET',
+      })
+      .reply(400, fixtures.invalidPatient);
+    const state = { configuration };
+
+    let e;
+    try {
+      await execute(get('Patient/invalid-patient-id'))(state);
+    } catch (err) {
+      e = err;
+    }
+
+    expect(e.message).to.contain(
+      'GET to https://hapi.fhir.org/baseR4/Patient/invalid-patient-id returned 400: Bad Request'
+    );
+    expect(e.statusCode).to.eql(400);
+    expect(e.statusMessage).to.eql('Bad Request');
+  });
+
   it('should get patient resource bundle', async () => {
     testServer
       .intercept({
@@ -171,20 +171,6 @@ describe('get', () => {
 
     expect(finalState.data).to.eql(fixtures.patient);
   });
-
-  it.skip('should throw for invalid patient id', async () => {
-    testServer
-      .intercept({
-        path: '/baseR4/Patient/invalid-patient-id',
-        method: 'GET',
-      })
-      .reply(404, fixtures.invalidPatient);
-    const state = { configuration };
-
-    const finalState = await execute(get('Patient/invalid-patient-id'))(state);
-
-    expect(finalState.data).to.eql(fixtures.invalidPatient);
-  });
 });
 
 describe('getClaim', () => {
@@ -218,5 +204,33 @@ describe('getClaim', () => {
     const finalState = await execute(getClaim('49023'))(state);
 
     expect(finalState.data).to.eql(fixtures.claim);
+  });
+});
+
+describe('post', () => {
+  it('throws an error for a 404', async () => {
+    testServer
+      .intercept({
+        path: 'baseR4/noAccess',
+        method: 'POST',
+      })
+      .reply(404, fixtures.noAccessResponse);
+
+    const state = {
+      configuration,
+    };
+
+    let e;
+    try {
+      await execute(post('noAccess', { name: 'taylor' }))(state);
+    } catch (err) {
+      e = err;
+    }
+
+    expect(e.message).to.contain(
+      'POST to https://hapi.fhir.org/baseR4/noAccess returned 404: Not Found'
+    );
+    expect(e.statusCode).to.eql(404);
+    expect(e.statusMessage).to.eql('Not Found');
   });
 });
