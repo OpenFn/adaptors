@@ -176,9 +176,19 @@ function cleanupState(state) {
  *   remote: true,
  *   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
+ * @example <caption>Get case from Primero with referrals</caption>
+ * getCases(
+ *   {
+ *     remote: true,
+ *   },
+ *   {
+ *     withReferrals: true,
+ *   }
+ * );
  * @function
- * @param {object} query - an object with a query param at minimum, option to getReferrals
- * @param {object} options - (Optional) an object with a getReferrals key to fetch referrals
+ * @param {object} query - an object with a query param at minimum, option to getCases
+ * @param {object} [options] - (Optional) an object with a withReferrals key to fetch referrals
+ * @param {boolean} [options.withReferrals] - A boolean value for fetching case referrals
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -222,7 +232,7 @@ export function getCases(query, options, callback) {
           );
 
           if (expandedOptions?.withReferrals) {
-            console.log(`Fetching ${cases.length} cases referral`);
+            console.log(`Fetching ${cases.length} cases referrals`);
             for await (const c of cases) {
               const requestParams = {
                 method: 'GET',
