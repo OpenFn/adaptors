@@ -36,9 +36,9 @@ export function execute(...operations) {
   };
 }
 /**
- * Make a GET request
+ * Make a GET request in OpenLMIS
  * @example
- * get("processingPeriods");
+ * get("supplyLines");
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -52,7 +52,7 @@ export function get(path, options, callback) {
 }
 
 /**
- * Make a POST request
+ * Make a POST request in OpenLMIS
  * @example
  * post("patient", { "name":"Bukayo" });
  * @function
@@ -69,7 +69,7 @@ export function post(path, options, callback) {
 }
 
 /**
- * Make a general HTTP request
+ * Make a general HTTP request in OpenLMIS
  * @example
  * request("POST", "patient", { "name":"Bukayo" });
  * @function

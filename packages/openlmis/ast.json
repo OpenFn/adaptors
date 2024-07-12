@@ -8,11 +8,11 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request",
+        "description": "Make a GET request in OpenLMIS",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patient\");"
+            "description": "get(\"supplyLines\");"
           },
           {
             "title": "function",
@@ -78,7 +78,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request in OpenLMIS",
         "tags": [
           {
             "title": "example",
@@ -159,7 +159,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a general HTTP request in OpenLMIS",
         "tags": [
           {
             "title": "example",
@@ -272,6 +272,59 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
           },
           {
             "title": "returns",
