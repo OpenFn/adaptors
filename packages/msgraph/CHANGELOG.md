@@ -1,5 +1,12 @@
 # @openfn/language-msgraph
 
+## 0.7.0
+
+### Minor Changes
+
+- 1d2a641: Normalize configuration keys for oauth. `access_token` and
+  `accessToken` are now both supported (`access_token` is preferred)
+
 ## 0.6.1
 
 ### Patch Changes
