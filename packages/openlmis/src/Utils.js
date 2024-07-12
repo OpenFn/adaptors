@@ -1,8 +1,3 @@
-/**
- * If you have any helper functions which are NOT operations,
- * you should add them here
- */
-
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
@@ -28,10 +23,18 @@ export const prepareNextState = (state, response, callback = s => s) => {
 // and add authorisation headers
 // Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+  const {
+    baseUrl,
+    username,
+    password,
+    clientId = 'user-client',
+    clientSecrete = 'changeme',
+    apiPath = 'api',
+  } = configuration;
+
+  const url = `${baseUrl}/${apiPath}`;
+  const headers = makeBasicAuthHeader(clientId, clientSecrete);
+  const { query = {} } = options;
 
   // TODO You can define custom error messages here
   //      The request function will throw if it receives
@@ -48,10 +51,14 @@ export const request = (configuration = {}, method, path, options) => {
     errors,
 
     // Set the baseUrl from the config object
-    baseUrl,
+    baseUrl: url,
 
-    ...options,
-
+    query: {
+      grant_type: 'password',
+      username,
+      password,
+      ...query,
+    },
     // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
@@ -62,5 +69,5 @@ export const request = (configuration = {}, method, path, options) => {
   // TODO you may want to add a prefix to the path
 
   // Make the actual request
-  return commonRequest(method, path, options);
+  return commonRequest(method, path, opts);
 };
