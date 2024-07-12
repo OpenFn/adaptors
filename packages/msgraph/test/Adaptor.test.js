@@ -15,7 +15,7 @@ setGlobalDispatcher(MockAgent);
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
-    const state = {};
+    const state = { configuration: { accessToken: fixtures.accessToken } };
     const operations = [
       state => {
         return { counter: 1 };
@@ -37,7 +37,7 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    const state = {};
+    const state = { configuration: { accessToken: fixtures.accessToken } };
 
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
@@ -46,6 +46,9 @@ describe('execute', () => {
 
   it('should stop operation on error', async () => {
     const state = {
+      configuration: {
+        accessToken: fixtures.accessToken,
+      },
       drives: {
         default: {
           id: 'b!YXzpkoLwR06bxC8tNdg71m_',
