@@ -1,5 +1,8 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  expandReferences,
+  normalizeOauthConfig,
+} from '@openfn/language-common/util';
 
 import {
   request,
@@ -43,6 +46,7 @@ export function execute(...operations) {
     return commonExecute(...operations)({
       ...initialState,
       ...state,
+      configuration: normalizeOauthConfig(state.configuration),
     })
       .then(cleanup)
       .catch(error => {
