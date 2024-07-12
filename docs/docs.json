@@ -11126,7 +11126,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 66,
+      "lineno": 70,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11165,7 +11165,7 @@
     ],
     "access": "private",
     "meta": {
-      "lineno": 24,
+      "lineno": 27,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11221,7 +11221,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 101,
+      "lineno": 105,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11281,7 +11281,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 131,
+      "lineno": 135,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11341,7 +11341,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 224,
+      "lineno": 228,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11401,7 +11401,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 170,
+      "lineno": 174,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
@@ -11604,7 +11604,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 315,
+      "lineno": 319,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/msgraph/src"
     },
