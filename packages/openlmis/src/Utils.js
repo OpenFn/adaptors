@@ -4,6 +4,62 @@ import {
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
+export const authorize = state => {
+  const {
+    baseUrl,
+    access_token,
+    username,
+    password,
+    clientId = 'user-client',
+    clientSecrete = 'changeme',
+  } = state.configuration;
+
+  const headers = makeBasicAuthHeader(clientId, clientSecrete);
+
+  if (access_token) return state;
+
+  if (username && password) {
+    if (clientId === 'user-client')
+      console.warn('Using default client id:', clientId);
+    if (clientSecrete === 'changeme')
+      console.warn('Using default client secrete:', clientSecrete);
+
+    const options = {
+      query: { grant_type: 'password', username, password },
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      baseUrl,
+      parseAs: 'json',
+      maxRedirections: 1,
+    };
+    return commonRequest('POST', '/api/oauth/token', options)
+      .then(response => {
+        return {
+          ...state,
+          configuration: {
+            ...state.configuration,
+            access_token: response.body.access_token,
+          },
+        };
+      })
+      .catch(err => {
+        console.error('Error authenticating with OpenLMIS');
+        console.log(err.body);
+        throw err;
+      });
+  }
+
+  // warn if no auth found
+  console.warn(
+    `WARNING: no authentication properties found on congfiguration schema!`
+  );
+  console.warn(
+    'Make sure to either set an access_token or username & password'
+  );
+};
+
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -19,55 +75,22 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
-// This helper function will call out to the backend service
-// and add authorisation headers
-// Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  const {
-    baseUrl,
-    username,
-    password,
-    clientId = 'user-client',
-    clientSecrete = 'changeme',
-    apiPath = 'api',
-  } = configuration;
+  const { baseUrl, access_token } = configuration;
 
-  const url = `${baseUrl}/${apiPath}`;
-  const headers = makeBasicAuthHeader(clientId, clientSecrete);
-  const { query = {} } = options;
-
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
-  const errors = {
-    404: 'Page not found',
-  };
+  const url = `${baseUrl}/api`;
+  const { headers = {}, ...otherOptions } = options;
 
   const opts = {
-    // Force the response to be parsed as JSON
     parseAs: 'json',
-
-    // Include the error map
-    errors,
-
-    // Set the baseUrl from the config object
     baseUrl: url,
-
-    query: {
-      grant_type: 'password',
-      username,
-      password,
-      ...query,
-    },
-    // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
+      Authorization: `Bearer ${access_token}`,
       ...headers,
     },
+    ...otherOptions,
   };
 
-  // TODO you may want to add a prefix to the path
-
-  // Make the actual request
   return commonRequest(method, path, opts);
 };

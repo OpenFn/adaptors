@@ -14,23 +14,58 @@
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": [
+        "https://example.com"
+      ]
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "examples": ["test@openfn.org"]
+      "examples": [
+        "test@openfn.org"
+      ]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "examples": [
+        "@some(!)Str0ngp4ss0w0rd"
+      ]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your OpenLMIS API access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "4739f6c9-3b81-4176-98a1-bf001c8416ea"
+      ]
+    },
+    "clientId": {
+      "title": "Client ID",
+      "type": "string",
+      "description": "Your user based client id",
+      "writeOnly": true,
+      "minLength": 1,
+      "default": "user-client"
+    },
+    "clientSecrete": {
+      "title": "Client Secrete Token",
+      "type": "string",
+      "description": "Your user based client secrete",
+      "writeOnly": true,
+      "minLength": 1,
+      "default": "changeme"
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": [
+    "password",
+    "username"
+  ]
 }
