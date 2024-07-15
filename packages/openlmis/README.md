@@ -1,6 +1,7 @@
 # language-openlmis <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the openlmis API.
+An OpenFn **_adaptor_** for building integration jobs for use with the
+[openLMIS](https://github.com/OpenLMISf) API.
 
 ## Documentation
 
@@ -12,12 +13,6 @@ for full technical documentation.
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/openlmis-configuration-schema/)
 for required and optional `configuration` properties.
-
-### A example expression using the `create` function
-
-```js
-post('patient', { name: 'Bukayo' });
-```
 
 ## Development
 
