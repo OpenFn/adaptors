@@ -1,6 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
+  logResponse,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
@@ -77,13 +78,11 @@ export const prepareNextState = (state, response, callback = s => s) => {
 
 export const request = (configuration = {}, method, path, options) => {
   const { baseUrl, access_token } = configuration;
-
-  const url = `${baseUrl}/api`;
   const { headers = {}, ...otherOptions } = options;
 
   const opts = {
     parseAs: 'json',
-    baseUrl: url,
+    baseUrl: `${baseUrl}/api`,
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
@@ -92,5 +91,8 @@ export const request = (configuration = {}, method, path, options) => {
     ...otherOptions,
   };
 
-  return commonRequest(method, path, opts);
+  return commonRequest(method, path, opts).catch(e => {
+    logResponse(e);
+    throw e;
+  });
 };

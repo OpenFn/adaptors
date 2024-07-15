@@ -4,28 +4,63 @@ import { enableMockClient } from '@openfn/language-common/util';
 import { execute, request, post, get } from '../src/Adaptor.js';
 import * as fixtures from './fixtures';
 
+const username = 'test';
+const password = 'pass';
 const baseUrl = 'https://test.openlmis.org';
 const testServer = enableMockClient(baseUrl);
 
-const configuration = {
-  baseUrl,
-  username: 'test',
-  password: 'pass',
-};
+const configuration = { baseUrl, username, password };
 
-describe.skip('HTTP wrappers', () => {
+const mockResponse = (status, body) => ({
+  statusCode: status,
+  responseOptions: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  },
+  data: body,
+});
+
+// Set up a fake auth endpoint
+before(() => {
+  testServer
+    .intercept({
+      path: '/api/oauth/token',
+      query: { grant_type: 'password', username, password },
+      method: 'POST',
+    })
+    .reply(req => {
+      // Ensure credentials are correct and throw the appropriate response
+      const creds = req.query;
+
+      const ensureCreds =
+        creds.username !== configuration.username ||
+        creds.password !== configuration.password;
+
+      return ensureCreds
+        ? mockResponse(401, {
+            message: 'Could not authenticate with the provided credentials.',
+            code: 401,
+          })
+        : mockResponse(200, {
+            access_token: 'fake-token',
+          });
+    })
+    .persist();
+});
+
+describe('HTTP wrappers', () => {
   it('request() should expand references', async () => {
     testServer
       .intercept({
         path: '/api/programs',
-        method: 'PATCH',
+        method: 'POST',
         body: JSON.stringify({
           name: 'Program Name',
         }),
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer abc',
-          y: '1',
         },
       })
       .reply(200, {});
@@ -36,13 +71,10 @@ describe.skip('HTTP wrappers', () => {
         access_token: 'abc',
       },
 
-      method: 'PATCH',
-      path: '/api/programs',
+      method: 'POST',
+      path: '/programs',
       body: {
         name: 'Program Name',
-      },
-      options: {
-        headers: { y: '1' },
       },
     };
 
@@ -69,12 +101,12 @@ describe.skip('HTTP wrappers', () => {
     };
 
     // prettier-ignore
-    const finalState = await execute(
-      get('/api/programs'
-    ))(state);
+    const finalState = await execute(get('programs'))(state);
 
     expect(finalState.data).to.eql(fixtures.programs);
-    expect(finalState.data[0].id).to.eql(66);
+    expect(finalState.data[0].id).to.eql(
+      'dce17f2e-af3e-40ad-8e00-3496adef44c3'
+    );
     expect(finalState.response.statusCode).to.equal(200);
   });
 
@@ -84,7 +116,7 @@ describe.skip('HTTP wrappers', () => {
         path: '/api/programs',
         method: 'GET',
         query: {
-          $top: 5,
+          page: 5,
         },
       })
       .reply(200, fixtures.programs);
@@ -95,14 +127,14 @@ describe.skip('HTTP wrappers', () => {
 
     // prettier-ignore
     const finalState = await execute(
-      get('/api/programs', { query: { $top: 5 }})
+      get('programs', { query: { page: 5 }})
     )(state);
 
     expect(finalState.data).to.eql(fixtures.programs);
     expect(finalState.response.statusCode).to.equal(200);
   });
 
-  it.skip('should get() at /programs with a custom header', async () => {
+  it('should get() at /programs with a custom header', async () => {
     testServer
       .intercept({
         path: '/api/programs',
@@ -119,14 +151,14 @@ describe.skip('HTTP wrappers', () => {
 
     // prettier-ignore
     const finalState = await execute(
-      get('/api/programs', { headers: { 'foo': 'bar' }})
+      get('programs', { headers: { 'foo': 'bar' }})
     )(state);
 
     expect(finalState.data).to.eql(fixtures.programs);
     expect(finalState.response.statusCode).to.equal(200);
   });
 
-  it.skip('should handle a 404', async () => {
+  it('should handle a 404', async () => {
     testServer
       .intercept({
         path: '/api/programs/22',
@@ -149,7 +181,7 @@ describe.skip('HTTP wrappers', () => {
       configuration,
     };
 
-    const error = await get('/api/programs/22')(state).catch(error => {
+    const error = await get('programs/22')(state).catch(error => {
       return error;
     });
 
@@ -173,33 +205,37 @@ describe.skip('HTTP wrappers', () => {
     };
 
     const finalState = await execute(
-      post('/api/programs', {
+      post('/programs', {
         name: 'Program Name',
+        code: 'fine',
       })
     )(state);
 
     expect(finalState.response.statusCode).to.eql(200);
   });
 
-  it('throws an error when post() returns 403', async () => {
+  it('throws an error when post() returns 400', async () => {
     testServer
       .intercept({
         path: '/api/programs',
         method: 'POST',
       })
-      .reply(403, 'Forbidden');
+      .reply(400, 'Bad Request');
 
     const state = {
       configuration,
     };
 
-    const error = await post('/api/programs', {
+    const error = await post('programs', {
       name: 'Program Name',
     })(state).catch(error => {
       return error;
     });
 
-    expect(error.statusMessage).to.eql('Forbidden');
-    expect(error.statusCode).to.eql(403);
+    expect(error.statusMessage).to.eql('Bad Request');
+    expect(error.message).to.eql(
+      'POST to https://test.openlmis.org/api/programs returned 400: Bad Request'
+    );
+    expect(error.statusCode).to.eql(400);
   });
 });

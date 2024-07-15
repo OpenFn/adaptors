@@ -14,7 +14,7 @@ import * as util from './Utils';
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @property {object} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  */
@@ -54,46 +54,44 @@ export function get(path, options, callback) {
 /**
  * Make a POST request in OpenLMIS
  * @example <caption>Creates new program</caption>
- * post("programs", { "name":"Bukayo" });
+ * post("programs", { name: "Bukayo", code: "abc" });
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * @param {object} body - Object which will be attached to the POST body
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {OpenLMISState}
  */
-export function post(path, options, callback) {
-  return request('POST', path, null, options, callback);
+export function post(path, body, callback) {
+  return request('POST', path, body, null, callback);
 }
 
 /**
  * Make a PUT request in OpenLMIS
  * @example <caption>Update existing program</caption>
- * put("programs/123", { "name":"Bukayo" });
+ * put("programs/123", { name: "DigTalent", code: "123" });
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the PUT body
- * @param {RequestOptions} options - Optional request options
+ * @param {object} body - Object which will be attached to the PUT body
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {OpenLMISState}
  */
-export function put(path, options, callback) {
-  return request('PUT', path, null, options, callback);
+export function put(path, body, callback) {
+  return request('PUT', path, body, null, callback);
 }
 
 /**
  * Make a general HTTP request in OpenLMIS
  * @example
- * request("POST", "patient", { "name":"Bukayo" });
+ * request("POST", "programs", { name: "WSH", code: "123" });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
+ * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -101,7 +99,7 @@ export function put(path, options, callback) {
  */
 export function request(method, path, body, options = {}, callback = s => s) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedData, resolvedoptions] =
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
       expandReferences(state, method, path, body, options);
 
     const response = await util.request(
@@ -109,7 +107,7 @@ export function request(method, path, body, options = {}, callback = s => s) {
       resolvedMethod,
       resolvedPath,
       {
-        data: resolvedData,
+        body: resolvedBody,
         ...resolvedoptions,
       }
     );

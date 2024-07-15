@@ -12,7 +12,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "get(\"supplyLines\");"
+            "description": "get(\"supplyLines\");",
+            "caption": "Get all supplyLines"
           },
           {
             "title": "function",
@@ -74,7 +75,7 @@
       "name": "post",
       "params": [
         "path",
-        "options",
+        "body",
         "callback"
       ],
       "docs": {
@@ -82,7 +83,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "post(\"patient\", { \"name\":\"Bukayo\" });"
+            "description": "post(\"programs\", { name: \"Bukayo\", code: \"abc\" });",
+            "caption": "Creates new program"
           },
           {
             "title": "function",
@@ -110,16 +112,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
+            "name": "body"
           },
           {
             "title": "param",
@@ -147,7 +140,78 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
+    },
+    {
+      "name": "put",
+      "params": [
+        "path",
+        "body",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a PUT request in OpenLMIS",
+        "tags": [
+          {
+            "title": "example",
+            "description": "put(\"programs/123\", { name: \"DigTalent\", code: \"123\" });",
+            "caption": "Update existing program"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the PUT body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenLMISState}"
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "request",
@@ -163,7 +227,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\":\"Bukayo\" });"
+            "description": "request(\"POST\", \"programs\", { name: \"WSH\", code: \"123\" });"
           },
           {
             "title": "function",
@@ -200,7 +264,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
+            "name": "body"
           },
           {
             "title": "param",
@@ -237,7 +301,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
