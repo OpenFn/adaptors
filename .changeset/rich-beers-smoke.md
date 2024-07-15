@@ -2,4 +2,4 @@
 '@openfn/language-openlmis': minor
 ---
 
-Add generic helpers
+Add generic helpers. `request()`, `post()`, `get()` and `put()`
