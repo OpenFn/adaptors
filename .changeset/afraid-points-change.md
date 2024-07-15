@@ -2,4 +2,4 @@
 '@openfn/language-primero': patch
 ---
 
-Improve `getCases` function
+Improve `getCases()` withReferrals docs
