@@ -186,7 +186,10 @@ function cleanupState(state) {
  *   }
  * );
  * @function
- * @param {object} query - an object with a query param at minimum, option to getCases
+ * @param {object} [query] - (Optional) an object with a query param at minimum, option to getCases
+ * @param {boolean} [query.remote] - A remote option to getCases
+ * @param {string} [query.query] - A query option to getCases
+ * @param {string} [query.case_id] - A case_id option to getCases
  * @param {object} [options] - (Optional) an object with a withReferrals key to fetch referrals
  * @param {boolean} [options.withReferrals] - A boolean value for fetching case referrals
  * @param {function} callback - (Optional) Callback function
