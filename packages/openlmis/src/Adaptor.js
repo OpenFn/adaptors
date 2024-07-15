@@ -37,7 +37,7 @@ export function execute(...operations) {
 }
 /**
  * Make a GET request in OpenLMIS
- * @example
+ * @example <caption>Get all supplyLines</caption>
  * get("supplyLines");
  * @function
  * @public
@@ -53,8 +53,8 @@ export function get(path, options, callback) {
 
 /**
  * Make a POST request in OpenLMIS
- * @example
- * post("patient", { "name":"Bukayo" });
+ * @example <caption>Creates new program</caption>
+ * post("programs", { "name":"Bukayo" });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -66,6 +66,23 @@ export function get(path, options, callback) {
  */
 export function post(path, options, callback) {
   return request('POST', path, null, options, callback);
+}
+
+/**
+ * Make a PUT request in OpenLMIS
+ * @example <caption>Update existing program</caption>
+ * put("programs/123", { "name":"Bukayo" });
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {object} data - Object which will be attached to the PUT body
+ * @param {RequestOptions} options - Optional request options
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ * @state {OpenLMISState}
+ */
+export function put(path, options, callback) {
+  return request('PUT', path, null, options, callback);
 }
 
 /**
@@ -111,7 +128,7 @@ export {
   fields,
   fn,
   fnIf,
-  lastReferenceValue,
   merge,
   sourceValue,
+  lastReferenceValue,
 } from '@openfn/language-common';
