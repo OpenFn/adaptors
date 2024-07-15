@@ -176,7 +176,7 @@ function cleanupState(state) {
  *   remote: true,
  *   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
- * @example <caption>Get case from Primero with referrals</caption>
+ * @example <caption>Get cases and their referrals</caption>
  * getCases(
  *   {
  *     remote: true,
@@ -232,8 +232,11 @@ export function getCases(query, options, callback) {
           );
 
           if (expandedOptions?.withReferrals) {
-            console.log(`Fetching ${cases.length} cases referrals`);
+            console.log(
+              `This might take a while, we are fetching ${cases.length} cases referrals`
+            );
             for await (const c of cases) {
+              console.log(`Fetching ${c.id.slice(0, -10) + '...'}, referrals`);
               const requestParams = {
                 method: 'GET',
                 url: `${url}/api/v2/cases/${c.id}/referrals`,

@@ -26,13 +26,18 @@
             "caption": "Get case from Primero for a specific case id"
           },
           {
+            "title": "example",
+            "description": "getCases(\n  {\n    remote: true,\n  },\n  {\n    withReferrals: true,\n  }\n);",
+            "caption": "Get cases and their referrals"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
           },
           {
             "title": "param",
-            "description": "an object with a query param at minimum, option to getReferrals",
+            "description": "an object with a query param at minimum, option to getCases",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -41,12 +46,27 @@
           },
           {
             "title": "param",
-            "description": "(Optional) an object with a getReferrals key to fetch referrals",
+            "description": "(Optional) an object with a withReferrals key to fetch referrals",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A boolean value for fetching case referrals",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.withReferrals"
           },
           {
             "title": "param",
@@ -67,7 +87,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createCase",
