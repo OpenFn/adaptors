@@ -57,7 +57,7 @@ export function execute(...operations) {
 }
 
 /**
- * Send a generic HTTP request to the server
+ * Send a generic HTTP request to the baseURL defined in config
  * @param {string} method - The HTTP method to be used for the request. It defaults to 'GET' if not
  * @param {string} path - The resource path that the request is being made to
  * @param {RequestOptions} [options] - An object containing any additional parameters to be sent with the request, such
@@ -86,7 +86,7 @@ export const request =
   };
 
 /**
- * Send a HTTP POST request
+ * Send a HTTP POST request to the baseURL defined in config
  * @public
  * @function
  * @example <caption>Create bundle</caption>
@@ -105,7 +105,7 @@ export function post(path, data, options = {}, callback = s => s) {
 }
 
 /**
- * Send a HTTP GET request
+ * Send a HTTP GET request to the baseURL defined in config
  * @public
  * @function
  * @example <caption>Get Patient from FHIR</caption>
@@ -124,7 +124,7 @@ export function get(path, params = {}, options = {}, callback = s => s) {
 }
 
 /**
- * Creates a resource in a destination system using a POST request
+ * Creates a resource by sending a POST request to the baseURL defined in config
  * @public
  * @function
  * @example

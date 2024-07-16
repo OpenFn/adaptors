@@ -9,7 +9,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Send a HTTP POST request",
+        "description": "Send a HTTP POST request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
@@ -87,7 +87,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Send a HTTP GET request",
+        "description": "Send a HTTP GET request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
@@ -170,7 +170,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource in a destination system using a POST request",
+        "description": "Creates a resource by sending a POST request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
