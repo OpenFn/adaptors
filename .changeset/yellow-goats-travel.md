@@ -90,6 +90,10 @@
       data,
     });
   ```
+- Updated `configuration-schema.json`
+  - Removed `authType`
+  - Rename `token` to `access_token`
+  - Add `username` and `password`
 
 ### Removed
 
