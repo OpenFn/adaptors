@@ -90,12 +90,17 @@ export function get(
     try {
       do {
         // fetch a page
+
         const response = await request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
           {
             method: 'GET',
-            params: resolvedParams,
+            params: {
+              ...resolvedParams,
+              offset: offset,
+              limit: limit,
+            },
             contentType: 'application/json',
           }
         );

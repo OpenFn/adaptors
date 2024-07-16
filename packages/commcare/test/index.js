@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { execute, submitXls, get, post } from '../src';
-import sinon from 'sinon';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -102,12 +101,8 @@ describe('getCases', () => {
   it('should fetch cases', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
-        query: {
-          limit: 1,
-          offset: 0,
-        },
       })
       .reply(200, () => {
         return {
@@ -170,115 +165,41 @@ describe('getCases', () => {
     expect(data[0]).to.haveOwnProperty('case_id');
     expect(response.meta.limit).to.equal(1);
   });
-
-  it('should fetch cases with pagination', async () => {
+  it('should fetch a single case', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case\/12345/,
         method: 'GET',
-        query: {
-          limit: 1,
-          offset: 0,
-        },
       })
       .reply(200, () => {
         return {
-          meta: {
-            limit: 1,
-            next: null,
-            offset: 0,
-            previous: null,
-            total_count: 3,
+          case_id: '12345',
+          closed: false,
+          closed_by: null,
+          date_closed: null,
+          date_modified: 'xxxxx',
+          domain: `${domain}`,
+          id: '12345',
+          indexed_on: 'xxxxx',
+          indices: {},
+          opened_by: 'xxxxx',
+          properties: {
+            Children_alive: 'no',
+            Last_menstrual_period: 'xxxx',
+            Total_children: '',
+            case_name: 'Jane',
+            case_type: 'pregnancy',
+            date_opened: 'xxxxx',
+            external_id: null,
+            feeling_sick: 'No',
+            owner_id: 'xxxxxx',
+            village_name: 'Somewhere',
           },
-          objects: [
-            {
-              case_id: '12345',
-              closed: false,
-              closed_by: null,
-              date_closed: null,
-              date_modified: 'xxxxx',
-              domain: `${domain}`,
-              id: '12345',
-              indexed_on: 'xxxxx',
-              indices: {},
-              opened_by: 'xxxxx',
-              properties: {
-                Children_alive: 'no',
-                Last_menstrual_period: 'xxxx',
-                Total_children: '',
-                case_name: 'Jane',
-                case_type: 'pregnancy',
-                date_opened: 'xxxxx',
-                external_id: null,
-                feeling_sick: 'No',
-                owner_id: 'xxxxxx',
-                village_name: 'Somewhere',
-              },
-              resource_uri: '',
-              server_date_modified: 'xxxxx',
-              server_date_opened: 'xxxxx',
-              user_id: 'xxxxx',
-              xform_ids: ['xxxx'],
-            },
-            {
-              case_id: '12345',
-              closed: false,
-              closed_by: null,
-              date_closed: null,
-              date_modified: 'xxxxx',
-              domain: `${domain}`,
-              id: '12345',
-              indexed_on: 'xxxxx',
-              indices: {},
-              opened_by: 'xxxxx',
-              properties: {
-                Children_alive: 'no',
-                Last_menstrual_period: 'xxxx',
-                Total_children: '',
-                case_name: 'Jane',
-                case_type: 'pregnancy',
-                date_opened: 'xxxxx',
-                external_id: null,
-                feeling_sick: 'No',
-                owner_id: 'xxxxxx',
-                village_name: 'Somewhere',
-              },
-              resource_uri: '',
-              server_date_modified: 'xxxxx',
-              server_date_opened: 'xxxxx',
-              user_id: 'xxxxx',
-              xform_ids: ['xxxx'],
-            },
-            {
-              case_id: '12345',
-              closed: false,
-              closed_by: null,
-              date_closed: null,
-              date_modified: 'xxxxx',
-              domain: `${domain}`,
-              id: '12345',
-              indexed_on: 'xxxxx',
-              indices: {},
-              opened_by: 'xxxxx',
-              properties: {
-                Children_alive: 'no',
-                Last_menstrual_period: 'xxxx',
-                Total_children: '',
-                case_name: 'Jane',
-                case_type: 'pregnancy',
-                date_opened: 'xxxxx',
-                external_id: null,
-                feeling_sick: 'No',
-                owner_id: 'xxxxxx',
-                village_name: 'Somewhere',
-              },
-              resource_uri: '',
-              server_date_modified: 'xxxxx',
-              server_date_opened: 'xxxxx',
-              user_id: 'xxxxx',
-              xform_ids: ['xxxx'],
-            },
-          ],
+          resource_uri: '',
+          server_date_modified: 'xxxxx',
+          server_date_opened: 'xxxxx',
+          user_id: 'xxxxx',
+          xform_ids: ['xxxx'],
         };
       });
 
@@ -292,71 +213,7 @@ describe('getCases', () => {
       },
     };
 
-    const { data, response } = await execute(
-      get('case', { limit: 1, offset: 0 })
-    )(state);
-
-    expect(data.length).to.equal(3);
-    expect(data[0]).to.haveOwnProperty('case_id');
-    expect(response.meta.limit).to.equal(1);
-  });
-
-  it('should fetch a single case', async () => {
-    testServer
-      .intercept({
-        path: `/a/${domain}/api/v0.5/case/12345`,
-        method: 'GET',
-        query: {
-          limit: 1000,
-          offset: 0,
-        },
-      })
-      .reply(200, () => {
-        return [
-          {
-            case_id: '12345',
-            closed: false,
-            closed_by: null,
-            date_closed: null,
-            date_modified: 'xxxxx',
-            domain: `${domain}`,
-            id: '12345',
-            indexed_on: 'xxxxx',
-            indices: {},
-            opened_by: 'xxxxx',
-            properties: {
-              Children_alive: 'no',
-              Last_menstrual_period: 'xxxx',
-              Total_children: '',
-              case_name: 'Jane',
-              case_type: 'pregnancy',
-              date_opened: 'xxxxx',
-              external_id: null,
-              feeling_sick: 'No',
-              owner_id: 'xxxxxx',
-              village_name: 'Somewhere',
-            },
-            resource_uri: '',
-            server_date_modified: 'xxxxx',
-            server_date_opened: 'xxxxx',
-            user_id: 'xxxxx',
-            xform_ids: ['xxxx'],
-          },
-        ];
-      });
-
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
-
     const { data } = await execute(get('case/12345'))(state);
-
     expect(data[0].case_id).to.equal('12345');
     expect(data[0].properties.case_type).to.equal('pregnancy');
   });
@@ -364,7 +221,7 @@ describe('getCases', () => {
   it('should fetch cases and call the callback', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
         query: {
           limit: 1000,
@@ -461,6 +318,54 @@ describe('getCases', () => {
         xform_ids: ['xxxx'],
       },
     ]);
+  });
+
+  it('should fetch cases with pagination', async () => {
+    const objects = [
+      { case_id: '123' },
+      { case_id: '456' },
+      { case_id: '789' },
+    ];
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        const offset = req.query.offset;
+        const next =
+          req.query.offset < objects.length - 1
+            ? `offset=${offset + 1}&limit=1`
+            : null;
+        return {
+          meta: {
+            limit: 1,
+            next: next,
+            offset: offset,
+            previous: null,
+            total_count: 3,
+          },
+          objects: [objects[offset]],
+        };
+      })
+      .times(4);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await execute(
+      get('case', { limit: 1, offset: 0 })
+    )(state);
+    expect(data.length).to.equal(3);
+    expect(response.meta.limit).to.equal(1);
+    expect(response.meta.offset).to.equal(2);
   });
 });
 
