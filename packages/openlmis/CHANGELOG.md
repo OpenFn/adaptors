@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Add generic helpers. `request()`, `post()`, `get()` and `put()`
