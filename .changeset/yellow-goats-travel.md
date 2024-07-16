@@ -4,28 +4,7 @@
 
 ### Added
 
-- Introduced a new `RequestOptions` for the HTTP request:
-
-  - `headers`: An object of headers to append to the request.
-  - `body`: JSON payload to attach to the request.
-  - `query`: Query parameters for the request, encoded into the URL.
-  - `errors`: Map of errorCodes -> error messages, ie,
-    `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this
-    code.
-  - `timeout`: Request timeout in ms. Default: 300 seconds.
-
-- Introduced a new `GetOptions` for the GET HTTP request:
-
-  - `headers`: An object of headers to append to the request.
-  - `errors`: Map of errorCodes -> error messages, ie,
-    `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this
-    code.
-  - `timeout`: Request timeout in ms. Default: 300 seconds.
-
-- Introduced a new `FHIRHttpState` for the State object:
-  - `data`: The parsed response body
-  - `response`: The response from the FHIR HTTP server (with the body removed)
-  - `references`: An array of all the previous data values
+- Improved type definitions for `request()` and `get()`
 
 ### Changed
 
@@ -97,4 +76,4 @@
 
 ### Removed
 
-- Removed `parseAs` from the options, assuming everything is JSON by default.
+- Removed `parseAs` from the options.
