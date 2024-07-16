@@ -77,23 +77,48 @@ export function get(path, params = {}, callback = s => s) {
       params
     );
 
-    try {
-      const response = await request(
-        state.configuration,
-        `/a/${domain}/api/v0.5/${resolvedPath}`,
-        {
-          method: 'GET',
-          params: resolvedParams,
-          contentType: 'application/json',
-        }
-      );
+    let allItems = [];
+    let next;
+    let nextState = state;
+    let offset = 0;
+    const limit = 1000;
 
-      return prepareNextState(state, response, callback);
+    try {
+      do {
+        const requestParams = {
+          offset: offset,
+          limit: limit,
+          ...resolvedParams,
+        };
+        // fetch a page
+        const response = await request(
+          state.configuration,
+          `/a/${domain}/api/v0.5/${resolvedPath}`,
+          {
+            method: 'GET',
+            params: requestParams,
+            contentType: 'application/json',
+          }
+        );
+        nextState = prepareNextState(state, response, callback);
+
+        if (Array.isArray(nextState.data)) {
+          allItems.push(...nextState.data);
+        } else {
+          allItems.push(nextState.data);
+        }
+        next = response?.body?.meta?.next;
+        offset = limit + offset;
+      } while (next);
+      return {
+        ...nextState,
+        data: allItems,
+      };
     } catch (e) {
       if (e.statusCode === 404) {
         e.body = { error: `Resource ${path} not found` };
       }
-      throw e.body.error ?? e;
+      throw e;
     }
   };
 }
