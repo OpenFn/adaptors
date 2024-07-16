@@ -110,7 +110,7 @@ export function post(path, data, options = {}, callback = s => s) {
  * @function
  * @example <caption>Get a Patient resource by id</caption>
  * get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');
- * @example <caption>Get Claim from FHIR with optional query</caption>
+ * @example <caption>Get a resource with query parameters</caption>
  * get("Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
  * @param {string} path - Path to resource
  * @param {object} params - (Optional) Parameters to encode into the URL query
@@ -124,7 +124,7 @@ export function get(path, params = {}, options = {}, callback = s => s) {
 }
 
 /**
- * Creates a resource by sending a POST request to the baseURL defined in config
+ * Creates a resource by sending a request to the baseURL defined in config
  * @public
  * @function
  * @example

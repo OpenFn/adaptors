@@ -107,7 +107,7 @@
           {
             "title": "example",
             "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
-            "caption": "Get Claim from FHIR with optional query"
+            "caption": "Get a resource with query parameters"
           },
           {
             "title": "param",
@@ -170,7 +170,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource by sending a POST request to the baseURL defined in config",
+        "description": "Creates a resource by sending a request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
