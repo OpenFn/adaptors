@@ -84,9 +84,9 @@ export const request = (configuration = {}, method, path, options) => {
     parseAs: 'json',
     baseUrl: `${baseUrl}/api`,
     headers: {
+      ...headers,
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
-      ...headers,
     },
     ...otherOptions,
   };
