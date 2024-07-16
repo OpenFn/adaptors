@@ -115,7 +115,7 @@ describe('get', () => {
       e = err;
     }
 
-    expect(e.message).to.contain(
+    expect(e.message).to.include(
       'GET to https://hapi.fhir.org/baseR4/Patient/invalid-patient-id returned 400: Bad Request'
     );
     expect(e.statusCode).to.eql(400);
@@ -227,7 +227,7 @@ describe('post', () => {
       e = err;
     }
 
-    expect(e.message).to.contain(
+    expect(e.message).to.include(
       'POST to https://hapi.fhir.org/baseR4/noAccess returned 404: Not Found'
     );
     expect(e.statusCode).to.eql(404);
