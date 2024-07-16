@@ -101,8 +101,8 @@
           },
           {
             "title": "example",
-            "description": "get('Patient');",
-            "caption": "Get Patient from FHIR"
+            "description": "get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');",
+            "caption": "Get a Patient resource by id"
           },
           {
             "title": "example",

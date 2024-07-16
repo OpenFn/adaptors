@@ -161,15 +161,18 @@ describe('get', () => {
   it('should get patient resource by id', async () => {
     testServer
       .intercept({
-        path: '/baseR4/Patient/592442',
+        path: '/baseR4/Patient/abc',
         method: 'GET',
       })
-      .reply(200, fixtures.patient);
+      .reply(200, fixtures.patient)
+      .persist();
     const state = { configuration };
 
-    const finalState = await execute(get('Patient/592442'))(state);
+    const path1State = await execute(get('/Patient/abc'))(state);
+    const path2State = await execute(get('Patient/abc'))(state);
 
-    expect(finalState.data).to.eql(fixtures.patient);
+    expect(path1State.data).to.eql(fixtures.patient);
+    expect(path2State.data).to.eql(fixtures.patient);
   });
 });
 

@@ -108,8 +108,8 @@ export function post(path, data, options = {}, callback = s => s) {
  * Send a HTTP GET request to the baseURL defined in config
  * @public
  * @function
- * @example <caption>Get Patient from FHIR</caption>
- * get('Patient');
+ * @example <caption>Get a Patient resource by id</caption>
+ * get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');
  * @example <caption>Get Claim from FHIR with optional query</caption>
  * get("Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
  * @param {string} path - Path to resource
