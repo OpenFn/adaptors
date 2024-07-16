@@ -68,7 +68,11 @@ export function execute(...operations) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function get(path, params = {}, callback = s => s) {
+export function get(
+  path,
+  params = { offset: 0, limit: 1000 },
+  callback = s => s
+) {
   return async state => {
     const { domain } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -80,23 +84,18 @@ export function get(path, params = {}, callback = s => s) {
     let allItems = [];
     let next;
     let nextState = state;
-    let offset = 0;
-    const limit = 1000;
+    let offset = resolvedParams.offset;
+    const limit = resolvedParams.limit;
 
     try {
       do {
-        const requestParams = {
-          offset: offset,
-          limit: limit,
-          ...resolvedParams,
-        };
         // fetch a page
         const response = await request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
           {
             method: 'GET',
-            params: requestParams,
+            params: resolvedParams,
             contentType: 'application/json',
           }
         );
