@@ -82,7 +82,7 @@ export const request =
       resolvedPath,
       resolvedOptions
     );
-    return callback(util.prepareNextState(state, response));
+    return util.prepareNextState(state, response, callback);
   };
 
 /**

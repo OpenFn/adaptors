@@ -17,13 +17,13 @@ export function addAuth(configuration = {}, headers) {
   }
 }
 
-export const prepareNextState = (state, response) => {
+export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
 
-  return {
+  return callback({
     ...composeNextState(state, body),
     response: responseWithoutBody,
-  };
+  });
 };
 
 export const request = (configuration = {}, method, path, options = {}) => {
