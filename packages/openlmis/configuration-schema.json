@@ -11,11 +11,11 @@
           "type": "null"
         }
       ],
-      "description": "The base URL (http://www.example.com)",
+      "description": "The base URL (https://test.openlmis.org)",
       "format": "uri",
       "minLength": 1,
       "examples": [
-        "https://example.com"
+        "https://test.openlmis.org"
       ]
     },
     "username": {
@@ -23,7 +23,7 @@
       "type": "string",
       "description": "Username",
       "examples": [
-        "test@openfn.org"
+        "administrator"
       ]
     },
     "password": {
@@ -53,8 +53,8 @@
       "minLength": 1,
       "default": "user-client"
     },
-    "clientSecrete": {
-      "title": "Client Secrete Token",
+    "clientSecret": {
+      "title": "Client Secret Token",
       "type": "string",
       "description": "Your user based client secrete",
       "writeOnly": true,
@@ -66,6 +66,7 @@
   "additionalProperties": true,
   "required": [
     "password",
-    "username"
+    "username",
+    "baseUrl"
   ]
 }
