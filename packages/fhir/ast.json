@@ -2,7 +2,12 @@
   "operations": [
     {
       "name": "post",
-      "params": {},
+      "params": [
+        "path",
+        "data",
+        "options",
+        "callback"
+      ],
       "docs": {
         "description": "Send a HTTP POST request",
         "tags": [
@@ -18,7 +23,8 @@
           },
           {
             "title": "example",
-            "description": "post(\"Bundle\",{\n  \"resourceType\": \"Bundle\"\n})"
+            "description": "post(\"Bundle\",{\n  \"resourceType\": \"Bundle\"\n})",
+            "caption": "Create bundle"
           },
           {
             "title": "param",
@@ -40,7 +46,7 @@
           },
           {
             "title": "param",
-            "description": "Additional options for the request",
+            "description": "(Optional) Additional options for the request",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -63,14 +69,23 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "get",
-      "params": {},
+      "params": [
+        "path",
+        "params",
+        "options",
+        "callback"
+      ],
       "docs": {
         "description": "Send a HTTP GET request",
         "tags": [
@@ -105,7 +120,7 @@
           },
           {
             "title": "param",
-            "description": "Parameters to encode into the URL query",
+            "description": "(Optional) Parameters to encode into the URL query",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -114,10 +129,10 @@
           },
           {
             "title": "param",
-            "description": "Options to control the request",
+            "description": "(Optional) Options to control the request",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "GetOptions"
             },
             "name": "options"
           },
@@ -137,14 +152,23 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "create",
-      "params": {},
+      "params": [
+        "resourceType",
+        "resource",
+        "params",
+        "callback"
+      ],
       "docs": {
         "description": "Creates a resource in a destination system using a POST request",
         "tags": [
@@ -205,14 +229,22 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "createTransactionBundle",
-      "params": {},
+      "params": [
+        "entries",
+        "params",
+        "callback"
+      ],
       "docs": {
         "description": "Creates a transactionBundle for HAPI FHIR",
         "tags": [
@@ -264,14 +296,22 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "getClaim",
-      "params": {},
+      "params": [
+        "claimId",
+        "params",
+        "callback"
+      ],
       "docs": {
         "description": "Get Claim in a FHIR system",
         "tags": [
@@ -323,10 +363,14 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

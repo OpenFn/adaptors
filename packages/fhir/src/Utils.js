@@ -34,6 +34,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
   addAuth(configuration, headers);
 
   const opts = {
+    ...otherOptions,
     headers: {
       accept: 'application/fhir+json',
       'content-type': 'application/fhir+json',
@@ -41,7 +42,6 @@ export const request = (configuration = {}, method, path, options = {}) => {
     },
     baseUrl: url,
     parseAs: 'json',
-    ...otherOptions,
   };
 
   return commonRequest(method, path, opts)

@@ -18,6 +18,16 @@ import * as util from './Utils';
  * @property {object} headers - Object of headers to append to the request
  * @property {object} body - JSON payload to attach to the request
  * @property {object} query - Query parameters for the request. Will be encoded into the URL
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ */
+
+/**
+ * Options provided to a GET HTTP request
+ * @typedef {Object} GetOptions
+ * @property {object} headers - Object of headers to append to the request
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
  */
 
 /**
@@ -79,38 +89,20 @@ export const request =
  * Send a HTTP POST request
  * @public
  * @function
- * @example
+ * @example <caption>Create bundle</caption>
  * post("Bundle",{
  *   "resourceType": "Bundle"
  * })
  * @param {string} path - Path to resource
  * @param {object} data - JSON data to append to the POST body
- * @param {RequestOptions} options - Additional options for the request
+ * @param {RequestOptions} options - (Optional) Additional options for the request
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export const post =
-  (path, data, options, callback = s => s) =>
-  async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      path,
-      data,
-      options
-    );
-
-    const response = await util.request(
-      state.configuration,
-      'POST',
-      resolvedPath,
-      {
-        ...resolvedOptions,
-        body: resolvedData,
-      }
-    );
-    return callback(util.prepareNextState(state, response));
-  };
+export function post(path, data, options = {}, callback = s => s) {
+  return request('POST', path, { ...options, body: data }, callback);
+}
 
 /**
  * Send a HTTP GET request
@@ -121,34 +113,15 @@ export const post =
  * @example <caption>Get Claim from FHIR with optional query</caption>
  * get("Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
  * @param {string} path - Path to resource
- * @param {object} params - Parameters to encode into the URL query
- * @param {RequestOptions} options - Options to control the request
+ * @param {object} params - (Optional) Parameters to encode into the URL query
+ * @param {GetOptions} options - (Optional) Options to control the request
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export const get =
-  (path, params = {}, options = {}, callback = s => s) =>
-  async state => {
-    const [resolvedPath, resolvedParams, resolvedOptions] = expandReferences(
-      state,
-      path,
-      params,
-      options
-    );
-
-    const response = await util.request(
-      state.configuration,
-      'GET',
-      resolvedPath,
-      {
-        ...resolvedOptions,
-        query: resolvedParams,
-      }
-    );
-
-    return callback(util.prepareNextState(state, response));
-  };
+export function get(path, params = {}, options = {}, callback = s => s) {
+  return request('GET', path, { ...options, query: params }, callback);
+}
 
 /**
  * Creates a resource in a destination system using a POST request
@@ -163,23 +136,14 @@ export const get =
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export const create =
-  (resourceType, resource, params, callback = s => s) =>
-  async state => {
-    const [resolvedResourceType, resolvedResource, resolvedParams] =
-      expandReferences(state, resourceType, resource, params);
-
-    const response = await util.request(
-      state.configuration,
-      'POST',
-      resolvedResourceType,
-      {
-        ...resolvedParams,
-        body: { ...resolvedResource, resourceType: resolvedResourceType },
-      }
-    );
-    return callback(util.prepareNextState(state, response));
-  };
+export function create(resourceType, resource, params, callback = s => s) {
+  return request(
+    'POST',
+    resourceType,
+    { ...params, body: { ...resource, resourceType } },
+    callback
+  );
+}
 
 /**
  * Creates a transactionBundle for HAPI FHIR
@@ -206,25 +170,21 @@ export const create =
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export const createTransactionBundle =
-  (entries, params, callback = s => s) =>
-  async state => {
-    const [resolvedEntries, resolvedParams] = expandReferences(
-      state,
-      entries,
-      params
-    );
-
-    const response = await util.request(state.configuration, 'POST', '/', {
-      ...resolvedParams,
+export function createTransactionBundle(entries, params, callback = s => s) {
+  return request(
+    'POST',
+    '/',
+    {
+      ...params,
       body: {
         resourceType: 'Bundle',
         type: 'transaction',
-        entry: resolvedEntries,
+        entry: entries,
       },
-    });
-    return callback(util.prepareNextState(state, response));
-  };
+    },
+    callback
+  );
+}
 
 /**
  * Get Claim in a FHIR system
@@ -238,24 +198,14 @@ export const createTransactionBundle =
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export const getClaim =
-  (claimId, params, callback = s => s) =>
-  async state => {
-    const [resolvedClaimId, resolvedParams] = expandReferences(
-      state,
-      claimId,
-      params
-    );
-    const response = await util.request(
-      state.configuration,
-      'GET',
-      resolvedClaimId ? `Claim/${resolvedClaimId}` : 'Claim',
-      {
-        query: resolvedParams,
-      }
-    );
-    return callback(util.prepareNextState(state, response));
-  };
+export function getClaim(claimId, params, callback = s => s) {
+  return request(
+    'GET',
+    claimId ? `Claim/${claimId}` : 'Claim',
+    { query: params },
+    callback
+  );
+}
 
 export {
   alterState,
