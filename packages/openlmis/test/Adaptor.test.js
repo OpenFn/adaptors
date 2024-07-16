@@ -104,9 +104,6 @@ describe('HTTP wrappers', () => {
     const finalState = await execute(get('programs'))(state);
 
     expect(finalState.data).to.eql(fixtures.programs);
-    expect(finalState.data[0].id).to.eql(
-      'dce17f2e-af3e-40ad-8e00-3496adef44c3'
-    );
     expect(finalState.response.statusCode).to.equal(200);
   });
 
