@@ -12,18 +12,18 @@ export const authorize = state => {
     username,
     password,
     clientId = 'user-client',
-    clientSecrete = 'changeme',
+    clientSecret = 'changeme',
   } = state.configuration;
 
-  const headers = makeBasicAuthHeader(clientId, clientSecrete);
+  const headers = makeBasicAuthHeader(clientId, clientSecret);
 
   if (access_token) return state;
 
   if (username && password) {
     if (clientId === 'user-client')
       console.warn('Using default client id:', clientId);
-    if (clientSecrete === 'changeme')
-      console.warn('Using default client secrete:', clientSecrete);
+    if (clientSecret === 'changeme')
+      console.warn('Using default client secrete:', clientSecret);
 
     const options = {
       query: { grant_type: 'password', username, password },

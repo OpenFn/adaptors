@@ -31,14 +31,12 @@ import * as util from './Utils';
  * @state {OpenLMISState}
  */
 export function execute(...operations) {
-  return state => {
-    return commonExecute(util.authorize, ...operations)(state);
-  };
+  return commonExecute(util.authorize, ...operations);
 }
 /**
  * Make a GET request in OpenLMIS
  * @example <caption>Get all supplyLines</caption>
- * get("supplyLines");
+ * get("/supplyLines");
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -54,7 +52,7 @@ export function get(path, options, callback) {
 /**
  * Make a POST request in OpenLMIS
  * @example <caption>Creates new program</caption>
- * post("programs", { name: "Bukayo", code: "abc" });
+ * post("/programs", { name: "Bukayo", code: "abc" });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -70,7 +68,7 @@ export function post(path, body, callback) {
 /**
  * Make a PUT request in OpenLMIS
  * @example <caption>Update existing program</caption>
- * put("programs/123", { name: "DigTalent", code: "123" });
+ * put("/programs/123", { name: "DigTalent", code: "123" });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -86,7 +84,7 @@ export function put(path, body, callback) {
 /**
  * Make a general HTTP request in OpenLMIS
  * @example
- * request("POST", "programs", { name: "WSH", code: "123" });
+ * request("POST", "/programs", { name: "WSH", code: "123" });
  * @function
  * @public
  * @param {string} method - HTTP method to use
