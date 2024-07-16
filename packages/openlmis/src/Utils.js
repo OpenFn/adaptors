@@ -23,7 +23,7 @@ export const authorize = state => {
     if (clientId === 'user-client')
       console.warn('Using default client id:', clientId);
     if (clientSecret === 'changeme')
-      console.warn('Using default client secrete:', clientSecret);
+      console.warn('Using default client secret:', clientSecret);
 
     const options = {
       query: { grant_type: 'password', username, password },
