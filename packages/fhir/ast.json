@@ -170,7 +170,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource by sending a request to the baseURL defined in config",
+        "description": "Creates a resource by sending a request to the baseURL defined in config\nThe resource object doesn't need resourceType.",
         "tags": [
           {
             "title": "public",
@@ -184,8 +184,8 @@
           },
           {
             "title": "example",
-            "description": "create(\"Patient\", state => state.patient)",
-            "caption": "Create a patient"
+            "description": "create('Patient', {\n  name: [\n    {\n      use: 'official',\n      family: 'La Paradisio',\n      given: ['Josephine', 'Nessa'],\n    },\n  ],\n});",
+            "caption": "Create a new patient"
           },
           {
             "title": "param",
@@ -265,7 +265,7 @@
           },
           {
             "title": "param",
-            "description": "array of transactiions",
+            "description": "array of transactions",
             "type": {
               "type": "NameExpression",
               "name": "array"

@@ -214,7 +214,7 @@ export function create(resourceType, resource, params, callback = s => s) {
  *   },
  * ]);
  * @function
- * @param {array} entries - array of transactiions
+ * @param {array} entries - array of transactions
  * @param {object} params - data to create the new transaction
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
