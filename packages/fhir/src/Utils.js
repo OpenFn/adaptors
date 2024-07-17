@@ -32,7 +32,7 @@ export const prepareNextState = (state, response, callback) => {
 export const request = (configuration, method, path, options = {}) => {
   const { baseUrl, apiPath } = configuration;
   const { headers = {}, ...otherOptions } = options;
-  const safePath = nodepath.join(apiPath ?? '', path);
+  const fullPath = nodepath.join(apiPath ?? '', path);
 
   urlMatchesBase(path, baseUrl);
   addAuth(configuration, headers);
@@ -48,7 +48,7 @@ export const request = (configuration, method, path, options = {}) => {
     parseAs: 'json',
   };
 
-  return commonRequest(method, safePath, opts).then(logResponse);
+  return commonRequest(method, fullPath, opts).then(logResponse);
 };
 
 function urlMatchesBase(path, baseUrl) {
