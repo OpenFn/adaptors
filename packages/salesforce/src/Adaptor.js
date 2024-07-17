@@ -70,14 +70,13 @@ export function execute(...operations) {
  * bulk(
  *   "Patient__c",
  *   "insert",
- *   { failOnError: true },
- *   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+ *   (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),
+ *   { failOnError: true }
  * );
  * @example <caption>Bulk upsert</caption>
  * bulk(
  *   "vera__Beneficiary__c",
  *   "upsert",
- *   { extIdField: "vera__Result_UID__c" },
  *   [
  *     {
  *       vera__Reporting_Period__c: 2023,
@@ -85,35 +84,36 @@ export function execute(...operations) {
  *       "vera__Indicator__r.vera__ExtId__c": 1001,
  *       vera__Result_UID__c: "1001_2023_Uganda",
  *     },
- *   ]
+ *   ],
+ *   { extIdField: "vera__Result_UID__c" }
  * );
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
+ * @param {array} records - an array of records, or a function which returns an array.
  * @param {object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
  * @param {string} [options.extIdField] - External id field.
  * @param {boolean} [options.failOnError=false] - Fail the operation on error.
- * @param {array} records - an array of records, or a function which returns an array.
+ * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
+ * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
  * @returns {Operation}
  */
-export function bulk(sObject, operation, options, records) {
+export function bulk(sObject, operation, records, options) {
   return state => {
     const { connection } = state;
 
     const [
       resolvedSObject,
       resolvedOperation,
-      resolvedOptions,
       resolvedRecords,
+      resolvedOptions,
     ] = newExpandReferences(state, sObject, operation, options, records);
 
     const {
       failOnError = false,
       allowNoOp = false,
-      pollTimeout,
-      pollInterval,
+      pollTimeout = 240000,
+      pollInterval = 6000,
     } = resolvedOptions;
 
     if (allowNoOp && resolvedRecords.length === 0) {
@@ -192,14 +192,15 @@ export function bulk(sObject, operation, options, records) {
     ).then(arrayOfResults => {
       console.log('Merging results arrays.');
       const merged = [].concat.apply([], arrayOfResults);
+      return util.prepareNextState(state, merged);
       return { ...state, references: [merged, ...state.references] };
     });
   };
 }
-const defaultOptions = {
-  pollTimeout: 90000, // in ms
-  pollInterval: 3000, // in ms
-};
+// const defaultOptions = {
+//   pollTimeout: 90000, // in ms
+//   pollInterval: 3000, // in ms
+// };
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -220,25 +221,20 @@ const defaultOptions = {
  * @param {object} options - Options passed to the bulk api.
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
- * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function bulkQuery(qs, options, callback) {
+export function bulkQuery(qs, options) {
   return async state => {
     const { connection } = state;
-    const [resolvedQs, resolvedOptions] = newExpandReferences(
-      state,
-      qs,
-      options
-    );
+    const [
+      resolvedQs,
+      resolvedOptions = { pollTimeout: 90000, pollInterval: 3000 },
+    ] = newExpandReferences(state, qs, options);
 
     if (parseFloat(connection.version) < 47.0)
       throw new Error('bulkQuery requires API version 47.0 and later');
 
-    const { pollTimeout, pollInterval } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
+    const { pollTimeout, pollInterval } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
 
@@ -261,13 +257,7 @@ export function bulkQuery(qs, options, callback) {
       pollTimeout
     );
 
-    const nextState = {
-      ...composeNextState(state, result),
-      result,
-    };
-    if (callback) return callback(nextState);
-
-    return nextState;
+    return util.prepareNextState(state, result);
   };
 }
 
@@ -280,22 +270,25 @@ export function bulkQuery(qs, options, callback) {
  * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Field attributes for the new record.
+ * @param {object} records - Field attributes for the new record.
  * @returns {Operation}
  */
-export function create(sObject, attrs) {
+export function create(sObject, records) {
   return state => {
     let { connection } = state;
-    const finalAttrs = expandReferences(attrs)(state);
-    console.info(`Creating ${sObject}`, finalAttrs);
+    const [resolvedSObject, resolvedRecords] = newExpandReferences(
+      state,
+      sObject,
+      records
+    );
+    console.info(`Creating ${resolvedSObject}`, resolvedRecords);
 
-    return connection.create(sObject, finalAttrs).then(function (recordResult) {
-      console.log('Result : ' + JSON.stringify(recordResult));
-      return {
-        ...state,
-        references: [recordResult, ...state.references],
-      };
-    });
+    return connection
+      .create(resolvedSObject, resolvedRecords)
+      .then(recordResult => {
+        console.log('Result : ' + JSON.stringify(recordResult));
+        return util.prepareNextState(state, recordResult);
+      });
   };
 }
 
@@ -312,19 +305,16 @@ export function describe(sObject) {
   return state => {
     const { connection } = state;
 
-    const objectName = expandReferences(sObject)(state);
+    const [resolvedSObject] = newExpandReferences(state, sObject);
 
     return connection
-      .sobject(objectName)
+      .sobject(resolvedSObject)
       .describe()
       .then(result => {
         console.log('Label : ' + result.label);
         console.log('Num of Fields : ' + result.fields.length);
 
-        return {
-          ...state,
-          references: [result, ...state.references],
-        };
+        return util.prepareNextState(state, result);
       });
   };
 }
@@ -389,11 +379,7 @@ export function describeAll() {
     return connection.describeGlobal().then(result => {
       const { sobjects } = result;
       console.log(`Retrieved ${sobjects.length} sObjects`);
-
-      return {
-        ...state,
-        references: [sobjects, ...state.references],
-      };
+      return util.prepareNextState(state, { records: sobjects, ...result });
     });
   };
 }
@@ -406,11 +392,11 @@ export function describeAll() {
  * insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Field attributes for the new record.
+ * @param {object} records - Field attributes for the new record.
  * @returns {Operation}
  */
-export function insert(sObject, attrs) {
-  return create(sObject, attrs);
+export function insert(sObject, records) {
+  return create(sObject, records);
 }
 
 export function post(url, data, options) {
@@ -432,10 +418,9 @@ export function post(url, data, options) {
  * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
- * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs, options, callback = s => s) {
+export function query(qs, options) {
   return async state => {
     let done = false;
     let qResult = null;
@@ -497,11 +482,7 @@ export function query(qs, options, callback = s => s) {
       'Results retrieved and pushed to position [0] of the references array.'
     );
 
-    const nextState = {
-      ...state,
-      references: [result, ...state.references],
-    };
-    return callback(nextState);
+    return util.prepareNextState(state, ...result);
   };
 }
 
