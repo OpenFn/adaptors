@@ -14,7 +14,7 @@ import * as util from './Utils';
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
- * @property {object} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @property {object} body - body data to append to the request.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  */
@@ -39,7 +39,7 @@ export function execute(...operations) {
  * get("/supplyLines");
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (relative to the base URL defined in configuration)
  * @param {RequestOptions} options - Optional request options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -55,7 +55,7 @@ export function get(path, options, callback) {
  * post("/programs", { name: "Bukayo", code: "abc" });
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (relative to the base URL defined in configuration)
  * @param {object} body - Object which will be attached to the POST body
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -71,7 +71,7 @@ export function post(path, body, callback) {
  * put("/programs/123", { name: "DigTalent", code: "123" });
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (relative to the base URL defined in configuration)
  * @param {object} body - Object which will be attached to the PUT body
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -88,7 +88,7 @@ export function put(path, body, callback) {
  * @function
  * @public
  * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (relative to the base URL defined in configuration)
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @param {function} [callback] - Optional callback to handle the response
