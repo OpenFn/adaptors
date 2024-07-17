@@ -99,7 +99,7 @@ describe('createTransactionBundle', () => {
 });
 
 describe('get', () => {
-  it('should throw for invalid patient id', async () => {
+  it('throws an error when get() returns 400', async () => {
     testServer
       .intercept({
         path: '/baseR4/Patient/invalid-patient-id',
