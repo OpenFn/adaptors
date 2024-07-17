@@ -20,8 +20,8 @@ import {
 } from '@openfn/language-common';
 
 import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+import * as util from './Utils';
 
-import jsforce from 'jsforce';
 import flatten from 'lodash/flatten';
 
 let anyAscii = undefined;
@@ -35,328 +35,31 @@ const loadAnyAscii = state =>
   });
 
 /**
- * Adds a lookup relation or 'dome insert' to a record.
- * @public
- * @example
- * Data Sourced Value:
- *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
- * Fixed Value:
- *  relationship("relationship_name__r", "externalID on related object", "hello world")
+ * Executes an operation.
  * @function
- * @param {string} relationshipName - `__r` relationship field on the record.
- * @param {string} externalId - Salesforce ExternalID field.
- * @param {string} dataSource - resolvable source.
- * @returns {object}
+ * @param {Operation} operations - Operations
+ * @returns {State}
  */
-export function relationship(relationshipName, externalId, dataSource) {
-  return field(relationshipName, state => {
-    if (typeof dataSource == 'function') {
-      return { [externalId]: dataSource(state) };
-    }
-    return { [externalId]: dataSource };
-  });
-}
+export function execute(...operations) {
+  const initialState = {
+    logger: {
+      info: console.info.bind(console),
+      debug: console.log.bind(console),
+    },
+    references: [],
+    data: null,
+    configuration: {},
+  };
 
-/**
- * Prints the total number of all available sObjects and pushes the result to `state.references`.
- * @public
- * @example
- * describeAll()
- * @function
- * @returns {Operation}
- */
-export function describeAll() {
   return state => {
-    const { connection } = state;
-
-    return connection.describeGlobal().then(result => {
-      const { sobjects } = result;
-      console.log(`Retrieved ${sobjects.length} sObjects`);
-
-      return {
-        ...state,
-        references: [sobjects, ...state.references],
-      };
-    });
-  };
-}
-
-/**
- * Prints an sObject metadata and pushes the result to state.references
- * @public
- * @example
- * describe('obj_name')
- * @function
- * @param {string} sObject - API name of the sObject.
- * @returns {Operation}
- */
-export function describe(sObject) {
-  return state => {
-    const { connection } = state;
-
-    const objectName = expandReferences(sObject)(state);
-
-    return connection
-      .sobject(objectName)
-      .describe()
-      .then(result => {
-        console.log('Label : ' + result.label);
-        console.log('Num of Fields : ' + result.fields.length);
-
-        return {
-          ...state,
-          references: [result, ...state.references],
-        };
-      });
-  };
-}
-
-/**
- * Retrieves a Salesforce sObject(s).
- * @public
- * @example
- * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
- * @function
- * @param {string} sObject - The sObject to retrieve
- * @param {string} id - The id of the record
- * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
- */
-export function retrieve(sObject, id, callback) {
-  return state => {
-    const { connection } = state;
-
-    const finalId = expandReferences(id)(state);
-
-    return connection
-      .sobject(sObject)
-      .retrieve(finalId)
-      .then(result => {
-        return {
-          ...state,
-          references: [result, ...state.references],
-        };
-      })
-      .then(state => {
-        if (callback) {
-          return callback(state);
-        }
-        return state;
-      });
-  };
-}
-
-/**
- * Execute an SOQL query.
- * Note that in an event of a query error,
- * error logs will be printed but the operation will not throw the error.
- *
- * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
- * @public
- * @example
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example <caption>Query more records if next records are available</caption>
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
- * @function
- * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
- * @param {object} options - Options passed to the bulk api.
- * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
- * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
- */
-export function query(qs, options, callback = s => s) {
-  return async state => {
-    let done = false;
-    let qResult = null;
-    let result = [];
-
-    const { connection } = state;
-    const [resolvedQs, resolvedOptions] = newExpandReferences(
-      state,
-      qs,
-      options
-    );
-    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
-
-    console.log(`Executing query: ${resolvedQs}`);
-    try {
-      qResult = await connection.query(resolvedQs);
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
-    }
-
-    if (qResult.totalSize > 0) {
-      console.log('Total records', qResult.totalSize);
-
-      while (!done) {
-        result.push(qResult);
-
-        if (qResult.done) {
-          done = true;
-        } else if (autoFetch) {
-          console.log(
-            'Fetched records so far',
-            result.map(ref => ref.records).flat().length
-          );
-          console.log('Fetching next records...');
-          try {
-            qResult = await connection.request({ url: qResult.nextRecordsUrl });
-          } catch (err) {
-            const { message, errorCode } = err;
-            console.log(`Error ${errorCode}: ${message}`);
-            throw err;
-          }
-        } else {
-          done = true;
-        }
-      }
-
-      console.log(
-        'Done ✔ retrieved records',
-        result.map(ref => ref.records).flat().length
-      );
-    } else {
-      result.push(qResult);
-      console.log('No records found.');
-    }
-
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
-
-    const nextState = {
-      ...state,
-      references: [result, ...state.references],
-    };
-    return callback(nextState);
-  };
-}
-
-async function pollJobResult(conn, job, pollInterval, pollTimeout) {
-  let attempt = 0;
-
-  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
-
-  while (attempt < maxPollingAttempts) {
-    // Make an HTTP GET request to check the job status
-    const jobInfo = await conn
-      .request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .catch(error => {
-        console.log('Failed to fetch job information', error);
-      });
-
-    if (jobInfo && jobInfo.state === 'JobComplete') {
-      const response = await conn.request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      console.log('Job result retrieved', response.length);
-      return response;
-    } else {
-      // Handle maxPollingAttempts
-      if (attempt + 1 === maxPollingAttempts) {
-        console.error(
-          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
-        );
-        throw new Error(`Polling time out. Job Id = ${job.id}`);
-      }
-      console.log(
-        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
-          jobInfo.state
-        }:`
-      );
-    }
-
-    // Wait for the polling interval before the next attempt
-    await new Promise(resolve => setTimeout(resolve, pollInterval));
-    attempt++;
-  }
-}
-
-const defaultOptions = {
-  pollTimeout: 90000, // in ms
-  pollInterval: 3000, // in ms
-};
-/**
- * Execute an SOQL Bulk Query.
- * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
- * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
- * @public
- * @example
- * <caption>The results will be available on `state.data`</caption>
- * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example
- * bulkQuery(
- *   (state) =>
- *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
- *   { pollTimeout: 10000, pollInterval: 6000 }
- * );
- * @function
- * @param {string} qs - A query string.
- * @param {object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
- * @param {function} callback - A callback to execute once the record is retrieved
- * @returns {Operation}
- */
-export function bulkQuery(qs, options, callback) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedQs, resolvedOptions] = newExpandReferences(
-      state,
-      qs,
-      options
-    );
-
-    if (parseFloat(connection.version) < 47.0)
-      throw new Error('bulkQuery requires API version 47.0 and later');
-
-    const { pollTimeout, pollInterval } = {
-      ...defaultOptions,
-      ...resolvedOptions,
-    };
-
-    console.log(`Executing query: ${resolvedQs}`);
-
-    const queryJob = await connection.request({
-      method: 'POST',
-      url: `/services/data/v${connection.version}/jobs/query`,
-      body: JSON.stringify({
-        operation: 'query',
-        query: resolvedQs,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const result = await pollJobResult(
-      connection,
-      queryJob,
-      pollInterval,
-      pollTimeout
-    );
-
-    const nextState = {
-      ...composeNextState(state, result),
-      result,
-    };
-    if (callback) return callback(nextState);
-
-    return nextState;
+    // Note: we no longer need `steps` anymore since `commonExecute`
+    // takes each operation as an argument.
+    return commonExecute(
+      loadAnyAscii,
+      util.createConnection,
+      ...flatten(operations),
+      util.removeConnection
+    )({ ...initialState, ...state });
   };
 }
 
@@ -493,6 +196,138 @@ export function bulk(sObject, operation, options, records) {
     });
   };
 }
+const defaultOptions = {
+  pollTimeout: 90000, // in ms
+  pollInterval: 3000, // in ms
+};
+/**
+ * Execute an SOQL Bulk Query.
+ * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
+ * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
+ * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
+ * @public
+ * @example
+ * <caption>The results will be available on `state.data`</caption>
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example
+ * bulkQuery(
+ *   (state) =>
+ *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
+ *   { pollTimeout: 10000, pollInterval: 6000 }
+ * );
+ * @function
+ * @param {string} qs - A query string.
+ * @param {object} options - Options passed to the bulk api.
+ * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
+ * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
+ * @param {function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
+export function bulkQuery(qs, options, callback) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+
+    if (parseFloat(connection.version) < 47.0)
+      throw new Error('bulkQuery requires API version 47.0 and later');
+
+    const { pollTimeout, pollInterval } = {
+      ...defaultOptions,
+      ...resolvedOptions,
+    };
+
+    console.log(`Executing query: ${resolvedQs}`);
+
+    const queryJob = await connection.request({
+      method: 'POST',
+      url: `/services/data/v${connection.version}/jobs/query`,
+      body: JSON.stringify({
+        operation: 'query',
+        query: resolvedQs,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await util.pollJobResult(
+      connection,
+      queryJob,
+      pollInterval,
+      pollTimeout
+    );
+
+    const nextState = {
+      ...composeNextState(state, result),
+      result,
+    };
+    if (callback) return callback(nextState);
+
+    return nextState;
+  };
+}
+
+/**
+ * Create a new sObject record(s).
+ * @public
+ * @example <caption> Single record creation</caption>
+ * create("Account", { Name: "My Account #1" });
+ * @example <caption> Multiple records creation</caption>
+ * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+ * @function
+ * @param {string} sObject - API name of the sObject.
+ * @param {object} attrs - Field attributes for the new record.
+ * @returns {Operation}
+ */
+export function create(sObject, attrs) {
+  return state => {
+    let { connection } = state;
+    const finalAttrs = expandReferences(attrs)(state);
+    console.info(`Creating ${sObject}`, finalAttrs);
+
+    return connection.create(sObject, finalAttrs).then(function (recordResult) {
+      console.log('Result : ' + JSON.stringify(recordResult));
+      return {
+        ...state,
+        references: [recordResult, ...state.references],
+      };
+    });
+  };
+}
+
+/**
+ * Prints an sObject metadata and pushes the result to state.references
+ * @public
+ * @example
+ * describe('obj_name')
+ * @function
+ * @param {string} sObject - API name of the sObject.
+ * @returns {Operation}
+ */
+export function describe(sObject) {
+  return state => {
+    const { connection } = state;
+
+    const objectName = expandReferences(sObject)(state);
+
+    return connection
+      .sobject(objectName)
+      .describe()
+      .then(result => {
+        console.log('Label : ' + result.label);
+        console.log('Num of Fields : ' + result.fields.length);
+
+        return {
+          ...state,
+          references: [result, ...state.references],
+        };
+      });
+  };
+}
 
 /**
  * Delete records of an object.
@@ -540,33 +375,28 @@ export function destroy(sObject, attrs, options) {
 }
 
 /**
- * Create a new sObject record(s).
+ * Prints the total number of all available sObjects and pushes the result to `state.references`.
  * @public
- * @example <caption> Single record creation</caption>
- * create("Account", { Name: "My Account #1" });
- * @example <caption> Multiple records creation</caption>
- * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+ * @example
+ * describeAll()
  * @function
- * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Field attributes for the new record.
  * @returns {Operation}
  */
-export function create(sObject, attrs) {
+export function describeAll() {
   return state => {
-    let { connection } = state;
-    const finalAttrs = expandReferences(attrs)(state);
-    console.info(`Creating ${sObject}`, finalAttrs);
+    const { connection } = state;
 
-    return connection.create(sObject, finalAttrs).then(function (recordResult) {
-      console.log('Result : ' + JSON.stringify(recordResult));
+    return connection.describeGlobal().then(result => {
+      const { sobjects } = result;
+      console.log(`Retrieved ${sobjects.length} sObjects`);
+
       return {
         ...state,
-        references: [recordResult, ...state.references],
+        references: [sobjects, ...state.references],
       };
     });
   };
 }
-
 /**
  * Alias for "create(sObject, attrs)".
  * @public
@@ -583,49 +413,95 @@ export function insert(sObject, attrs) {
   return create(sObject, attrs);
 }
 
+export function post(url, data, options) {
+  return state;
+}
+
 /**
- * Create a new sObject if conditions are met.
+ * Execute an SOQL query.
+ * Note that in an event of a query error,
+ * error logs will be printed but the operation will not throw the error.
  *
- * **The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**
+ * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
  * @public
  * @example
- * createIf(true, 'obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+ * @example <caption>Query more records if next records are available</caption>
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
  * @function
- * @param {boolean} logical - a logical statement that will be evaluated.
- * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
+ * @param {object} options - Options passed to the bulk api.
+ * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
+ * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function createIf(logical, sObject, attrs) {
-  return state => {
-    const resolvedLogical = expandReferences(logical)(state);
+export function query(qs, options, callback = s => s) {
+  return async state => {
+    let done = false;
+    let qResult = null;
+    let result = [];
 
-    console.warn(
-      `The 'createIf()' function has been deprecated. Use 'fnIf(condition,create())' instead.`
+    const { connection } = state;
+    const [resolvedQs, resolvedOptions] = newExpandReferences(
+      state,
+      qs,
+      options
+    );
+    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+
+    console.log(`Executing query: ${resolvedQs}`);
+    try {
+      qResult = await connection.query(resolvedQs);
+    } catch (err) {
+      const { message, errorCode } = err;
+      console.log(`Error ${errorCode}: ${message}`);
+      throw err;
+    }
+
+    if (qResult.totalSize > 0) {
+      console.log('Total records', qResult.totalSize);
+
+      while (!done) {
+        result.push(qResult);
+
+        if (qResult.done) {
+          done = true;
+        } else if (autoFetch) {
+          console.log(
+            'Fetched records so far',
+            result.map(ref => ref.records).flat().length
+          );
+          console.log('Fetching next records...');
+          try {
+            qResult = await connection.request({ url: qResult.nextRecordsUrl });
+          } catch (err) {
+            const { message, errorCode } = err;
+            console.log(`Error ${errorCode}: ${message}`);
+            throw err;
+          }
+        } else {
+          done = true;
+        }
+      }
+
+      console.log(
+        'Done ✔ retrieved records',
+        result.map(ref => ref.records).flat().length
+      );
+    } else {
+      result.push(qResult);
+      console.log('No records found.');
+    }
+
+    console.log(
+      'Results retrieved and pushed to position [0] of the references array.'
     );
 
-    if (resolvedLogical) {
-      const { connection } = state;
-      const finalAttrs = expandReferences(attrs)(state);
-      console.info(`Creating ${sObject}`, finalAttrs);
-      return connection
-        .create(sObject, finalAttrs)
-        .then(function (recordResult) {
-          console.log('Result : ' + JSON.stringify(recordResult));
-          return {
-            ...state,
-            references: [recordResult, ...state.references],
-          };
-        });
-    } else {
-      console.info(`Not creating ${sObject} because logical is false.`);
-      return {
-        ...state,
-      };
-    }
+    const nextState = {
+      ...state,
+      references: [result, ...state.references],
+    };
+    return callback(nextState);
   };
 }
 
@@ -673,59 +549,6 @@ export function upsert(sObject, externalId, attrs) {
 }
 
 /**
- * Conditionally create a new sObject record, or updates it if it already exists
- *
- * **The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**
- * @public
- * @example
- * upsertIf(true, 'obj_name', 'ext_id', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
- * @function
- * @param {boolean} logical - a logical statement that will be evaluated.
- * @param {string} sObject - API name of the sObject.
- * @param {string} externalId - ID.
- * @param {(object|object[])} attrs - Field attributes for the new object.
- * @returns {Operation}
- */
-export function upsertIf(logical, sObject, externalId, attrs) {
-  return state => {
-    const resolvedLogical = expandReferences(logical)(state);
-
-    console.warn(
-      `The 'upsertIf()' function has been deprecated. Use 'fnIf(condition,upsert())' instead.`
-    );
-
-    if (resolvedLogical) {
-      const { connection } = state;
-      const finalAttrs = expandReferences(attrs)(state);
-      console.info(
-        `Upserting ${sObject} with externalId`,
-        externalId,
-        ':',
-        finalAttrs
-      );
-
-      return connection
-        .upsert(sObject, finalAttrs, externalId)
-        .then(function (recordResult) {
-          console.log('Result : ' + JSON.stringify(recordResult));
-          return {
-            ...state,
-            references: [recordResult, ...state.references],
-          };
-        });
-    } else {
-      console.info(`Not upserting ${sObject} because logical is false.`);
-      return {
-        ...state,
-      };
-    }
-  };
-}
-
-/**
  * Update an sObject record or records.
  * @public
  * @example <caption> Single record update</caption>
@@ -757,144 +580,6 @@ export function update(sObject, attrs) {
       };
     });
   };
-}
-
-/**
- * Get a reference ID by an index.
- * @public
- * @example
- * reference(0)
- * @function
- * @param {number} position - Position for references array.
- * @returns {State}
- */
-export function reference(position) {
-  return state => state.references[position].id;
-}
-
-function getConnection(state, options) {
-  const { apiVersion } = state.configuration;
-
-  const apiVersionRegex = /^\d{2}\.\d$/;
-
-  if (apiVersion && apiVersionRegex.test(apiVersion)) {
-    options.version = apiVersion;
-  } else {
-    options.version = '47.0';
-  }
-  console.log('Using Salesforce API version:', options.version);
-
-  return new jsforce.Connection(options);
-}
-
-async function createBasicAuthConnection(state) {
-  const { loginUrl, username, password, securityToken } = state.configuration;
-
-  const connection = getConnection(state, { loginUrl });
-
-  await connection
-    .login(username, securityToken ? password + securityToken : password)
-    .catch(e => {
-      console.error(`Failed to connect to salesforce as ${username}`);
-      throw e;
-    });
-
-  console.info(`Connected to salesforce as ${username}.`);
-
-  return {
-    ...state,
-    connection,
-  };
-}
-
-function createAccessTokenConnection(state) {
-  const { instance_url, access_token } = state.configuration;
-
-  const connection = getConnection(state, {
-    instanceUrl: instance_url,
-    accessToken: access_token,
-  });
-
-  console.log(`Connected with ${connection._sessionType} session type`);
-
-  return {
-    ...state,
-    connection,
-  };
-}
-
-/**
- * Creates a connection to Salesforce using Basic Auth or OAuth.
- * @function createConnection
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function createConnection(state) {
-  if (state.connection) {
-    return state;
-  }
-
-  const { access_token } = state.configuration;
-
-  return access_token
-    ? createAccessTokenConnection(state)
-    : createBasicAuthConnection(state);
-}
-
-/**
- * Executes an operation.
- * @function
- * @param {Operation} operations - Operations
- * @returns {State}
- */
-export function execute(...operations) {
-  const initialState = {
-    logger: {
-      info: console.info.bind(console),
-      debug: console.log.bind(console),
-    },
-    references: [],
-    data: null,
-    configuration: {},
-  };
-
-  return state => {
-    // Note: we no longer need `steps` anymore since `commonExecute`
-    // takes each operation as an argument.
-    return commonExecute(
-      loadAnyAscii,
-      createConnection,
-      ...flatten(operations),
-      cleanupState
-    )({ ...initialState, ...state });
-  };
-}
-/**
- * Removes unserializable keys from the state.
- * @example
- * cleanupState(state)
- * @function
- * @param {State} state
- * @returns {State}
- */
-function cleanupState(state) {
-  delete state.connection;
-  return state;
-}
-
-/**
- * Flattens an array of operations.
- * @example
- * steps(
- *   createIf(params),
- *   update(params)
- * )
- * @function
- * @returns {array}
- */
-export function steps(...operations) {
-  return flatten(operations);
 }
 
 /**
@@ -957,15 +642,68 @@ export function request(path, options, callback = s => s) {
     return callback(nextState);
   };
 }
-// Note that we expose the entire axios package to the user here.
-import axios from 'axios';
 
-export { axios };
+/**
+ * Retrieves a Salesforce sObject(s).
+ * @public
+ * @example
+ * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
+ * @function
+ * @param {string} sObject - The sObject to retrieve
+ * @param {string} id - The id of the record
+ * @param {function} callback - A callback to execute once the record is retrieved
+ * @returns {Operation}
+ */
+export function retrieve(sObject, id, callback) {
+  return state => {
+    const { connection } = state;
+
+    const finalId = expandReferences(id)(state);
+
+    return connection
+      .sobject(sObject)
+      .retrieve(finalId)
+      .then(result => {
+        return {
+          ...state,
+          references: [result, ...state.references],
+        };
+      })
+      .then(state => {
+        if (callback) {
+          return callback(state);
+        }
+        return state;
+      });
+  };
+}
+
+/**
+ * Adds a lookup relation or 'dome insert' to a record.
+ * @public
+ * @example
+ * Data Sourced Value:
+ *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
+ * Fixed Value:
+ *  relationship("relationship_name__r", "externalID on related object", "hello world")
+ * @function
+ * @param {string} relationshipName - `__r` relationship field on the record.
+ * @param {string} externalId - Salesforce ExternalID field.
+ * @param {string} dataSource - resolvable source.
+ * @returns {object}
+ */
+export function relationship(relationshipName, externalId, dataSource) {
+  return field(relationshipName, state => {
+    if (typeof dataSource == 'function') {
+      return { [externalId]: dataSource(state) };
+    }
+    return { [externalId]: dataSource };
+  });
+}
 
 export {
   alterState,
   arrayToString,
-  beta,
   chunk,
   combine,
   dataPath,
