@@ -78,10 +78,7 @@ export const request = (configuration = {}, method, path, options) => {
     ...otherOptions,
   };
 
-  return commonRequest(method, path, opts).catch(e => {
-    logResponse(e);
-    throw e;
-  });
+  return commonRequest(method, path, opts);
 };
 
 function urlMatchesBase(path, baseUrl) {
