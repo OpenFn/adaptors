@@ -237,3 +237,21 @@ describe('post', () => {
     expect(e.statusMessage).to.eql('Not Found');
   });
 });
+
+describe('Url Matches BaseUrl', () => {
+  it('throw an error when url origin does not match baseUrl', async () => {
+    const state = {
+      configuration,
+    };
+
+    const error = await post('https://example.com/claim', {
+      name: 'Program Name',
+    })(state).catch(error => {
+      return error;
+    });
+
+    expect(error.message).to.eql(
+      'The URL https://example.com/claim does not match the base URL https://hapi.fhir.org'
+    );
+  });
+});

@@ -101,7 +101,22 @@ export const request =
  * @state {FHIRHttpState}
  */
 export function post(path, data, options = {}, callback = s => s) {
-  return request('POST', path, { ...options, body: data }, callback);
+  return async state => {
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      resolvedPath,
+      { ...resolvedOptions, body: resolvedData }
+    );
+    return util.prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -120,29 +135,64 @@ export function post(path, data, options = {}, callback = s => s) {
  * @state {FHIRHttpState}
  */
 export function get(path, params = {}, options = {}, callback = s => s) {
-  return request('GET', path, { ...options, query: params }, callback);
+  return async state => {
+    const [resolvedPath, resolvedParams, resolvedOptions] = expandReferences(
+      state,
+      path,
+      params,
+      options
+    );
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      resolvedPath,
+      { ...resolvedOptions, query: resolvedParams }
+    );
+    return util.prepareNextState(state, response, callback);
+  };
 }
 
 /**
  * Creates a resource by sending a request to the baseURL defined in config
+ * The resource object doesn't need resourceType.
  * @public
  * @function
- * @example
- * create("Patient",{ ... })
+ * @example <caption>Create a new patient</caption>
+ * create('Patient', {
+ *   name: [
+ *     {
+ *       use: 'official',
+ *       family: 'La Paradisio',
+ *       given: ['Josephine', 'Nessa'],
+ *     },
+ *   ],
+ * });
  * @param {string} resourceType - The resource type to create
  * @param {object} resource - The resource to create
- * @param {object} params - FHIR parameters to control and configure resource creation
+ * @param {object} params - (Optional) FHIR parameters to control and configure resource creation
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
 export function create(resourceType, resource, params, callback = s => s) {
-  return request(
-    'POST',
-    resourceType,
-    { ...params, body: { ...resource, resourceType } },
-    callback
-  );
+  return async state => {
+    const [resolvedResourceType, resolvedResource, resolvedParams] =
+      expandReferences(state, resourceType, resource, params);
+
+    const opts = {
+      ...resolvedParams,
+      body: { ...resolvedResource, resourceType: resolvedResourceType },
+    };
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      resolvedResourceType,
+      opts
+    );
+    return util.prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -171,19 +221,24 @@ export function create(resourceType, resource, params, callback = s => s) {
  * @state {FHIRHttpState}
  */
 export function createTransactionBundle(entries, params, callback = s => s) {
-  return request(
-    'POST',
-    '/',
-    {
-      ...params,
+  return async state => {
+    const [resolvedEntries, resolvedParams] = expandReferences(
+      state,
+      entries,
+      params
+    );
+
+    const opts = {
+      ...resolvedParams,
       body: {
         resourceType: 'Bundle',
         type: 'transaction',
-        entry: entries,
+        entry: resolvedEntries,
       },
-    },
-    callback
-  );
+    };
+    const response = await util.request(state.configuration, 'POST', '/', opts);
+    return util.prepareNextState(state, response, callback);
+  };
 }
 
 /**
@@ -199,12 +254,21 @@ export function createTransactionBundle(entries, params, callback = s => s) {
  * @state {FHIRHttpState}
  */
 export function getClaim(claimId, params, callback = s => s) {
-  return request(
-    'GET',
-    claimId ? `Claim/${claimId}` : 'Claim',
-    { query: params },
-    callback
-  );
+  return async state => {
+    const [resolvedClaimId, resolvedParams] = expandReferences(
+      state,
+      claimId,
+      params
+    );
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      resolvedClaimId ? `Claim/${resolvedClaimId}` : 'Claim',
+      { query: resolvedParams }
+    );
+    return util.prepareNextState(state, response, callback);
+  };
 }
 
 export {

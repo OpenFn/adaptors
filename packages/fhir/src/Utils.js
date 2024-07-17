@@ -1,9 +1,12 @@
-import { composeNextState } from '@openfn/language-common';
+import nodepath from 'node:path';
+
 import {
   request as commonRequest,
   logResponse,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
+
+import { composeNextState } from '@openfn/language-common';
 
 export function addAuth(configuration = {}, headers) {
   if (headers.Authorization) return;
@@ -29,8 +32,9 @@ export const prepareNextState = (state, response, callback) => {
 export const request = (configuration = {}, method, path, options = {}) => {
   const { baseUrl, apiPath } = configuration;
   const { headers = {}, ...otherOptions } = options;
-  const url = apiPath ? `${baseUrl}/${apiPath}` : baseUrl;
+  const safePath = nodepath.join(apiPath ?? '', path);
 
+  urlMatchesBase(path, baseUrl);
   addAuth(configuration, headers);
 
   const opts = {
@@ -40,14 +44,19 @@ export const request = (configuration = {}, method, path, options = {}) => {
       'content-type': 'application/fhir+json',
       ...headers,
     },
-    baseUrl: url,
+    baseUrl,
     parseAs: 'json',
   };
 
-  return commonRequest(method, path, opts)
-    .then(logResponse)
-    .catch(e => {
-      logResponse(e);
-      throw e;
-    });
+  return commonRequest(method, safePath, opts).then(logResponse);
 };
+
+function urlMatchesBase(path, baseUrl) {
+  const base = new URL(baseUrl);
+  const url = new URL(path, baseUrl);
+
+  if (url.origin !== base.origin) {
+    throw new Error(`The URL ${path} does not match the base URL ${baseUrl}`);
+  }
+  return true;
+}

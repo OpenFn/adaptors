@@ -184,7 +184,8 @@
           },
           {
             "title": "example",
-            "description": "create(\"Patient\",{ ... })"
+            "description": "create(\"Patient\", state => state.patient)",
+            "caption": "Create a patient"
           },
           {
             "title": "param",
@@ -206,7 +207,7 @@
           },
           {
             "title": "param",
-            "description": "FHIR parameters to control and configure resource creation",
+            "description": "(Optional) FHIR parameters to control and configure resource creation",
             "type": {
               "type": "NameExpression",
               "name": "object"
