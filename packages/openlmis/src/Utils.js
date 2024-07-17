@@ -6,25 +6,14 @@ import {
 } from '@openfn/language-common/util';
 
 export const authorize = state => {
-  const {
-    baseUrl,
-    access_token,
-    username,
-    password,
-    clientId = 'user-client',
-    clientSecret = 'changeme',
-  } = state.configuration;
+  const { baseUrl, access_token, username, password, clientId, clientSecret } =
+    state.configuration;
 
   const headers = makeBasicAuthHeader(clientId, clientSecret);
 
   if (access_token) return state;
 
   if (username && password) {
-    if (clientId === 'user-client')
-      console.warn('Using default client id:', clientId);
-    if (clientSecret === 'changeme')
-      console.warn('Using default client secret:', clientSecret);
-
     const options = {
       query: { grant_type: 'password', username, password },
       headers: {
@@ -80,6 +69,8 @@ export const request = (configuration = {}, method, path, options) => {
   const { baseUrl, access_token } = configuration;
   const { headers = {}, ...otherOptions } = options;
 
+  urlMatchesBase(path, baseUrl);
+
   const opts = {
     parseAs: 'json',
     baseUrl: `${baseUrl}/api`,
@@ -96,3 +87,14 @@ export const request = (configuration = {}, method, path, options) => {
     throw e;
   });
 };
+
+function urlMatchesBase(path, baseUrl) {
+  const base = new URL(baseUrl);
+  const url = new URL(path, baseUrl);
+
+  if (url.origin !== base.origin) {
+    throw new Error(`The URL ${path} does not match the base URL ${baseUrl}`);
+  }
+
+  return true;
+}
