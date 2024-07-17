@@ -21,7 +21,7 @@ import * as util from './Utils';
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for odk.
+ * Wraps `language-common/execute`, and prepends initial state for openlmis.
  * @example <caption> * execute(</caption>
  *   get("processingPeriods")
  * )(state)
