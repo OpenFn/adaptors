@@ -67,6 +67,8 @@
   "required": [
     "password",
     "username",
-    "baseUrl"
+    "baseUrl",
+    "clientId",
+    "clientSecret"
   ]
 }
