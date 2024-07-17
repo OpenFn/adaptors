@@ -27,7 +27,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (relative to the base URL defined in configuration)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -98,7 +98,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (relative to the base URL defined in configuration)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -169,7 +169,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (relative to the base URL defined in configuration)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -250,7 +250,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (relative to the base URL defined in configuration)",
             "type": {
               "type": "NameExpression",
               "name": "string"
