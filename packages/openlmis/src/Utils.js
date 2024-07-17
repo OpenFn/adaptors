@@ -43,19 +43,15 @@ export const authorize = state => {
 
   // warn if no auth found
   console.warn(
-    `WARNING: no authentication properties found on congfiguration schema!`
+    `WARNING: no authentication properties found on configuration schema!`
   );
   console.warn(
-    'Make sure to either set an access_token or username & password'
+    'Make sure to either set an access_token or username, password, clientId, and clientSecret'
   );
 };
 
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
-
-  if (!state.references) {
-    state.references = [];
-  }
 
   const nextState = {
     ...composeNextState(state, response.body),
