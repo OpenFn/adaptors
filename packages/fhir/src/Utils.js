@@ -29,7 +29,7 @@ export const prepareNextState = (state, response, callback) => {
   });
 };
 
-export const request = (configuration = {}, method, path, options = {}) => {
+export const request = (configuration, method, path, options = {}) => {
   const { baseUrl, apiPath } = configuration;
   const { headers = {}, ...otherOptions } = options;
   const safePath = nodepath.join(apiPath ?? '', path);
