@@ -154,8 +154,8 @@ export function get(path, params = {}, options = {}, callback = s => s) {
 }
 
 /**
- * Creates a resource by sending a request to the baseURL defined in config
- * The resource object doesn't need resourceType.
+ * Creates a new resource with a server assigned resourceType.
+ * The resource object doesn't need resourceType or id
  * @public
  * @function
  * @example <caption>Create a new patient</caption>
@@ -196,7 +196,7 @@ export function create(resourceType, resource, params, callback = s => s) {
 }
 
 /**
- * Creates a transactionBundle for HAPI FHIR
+ * Create a transactionBundle to process multiple requests at once
  * @public
  * @example
  * createTransactionBundle([

@@ -170,7 +170,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource by sending a request to the baseURL defined in config\nThe resource object doesn't need resourceType.",
+        "description": "Creates a new resource with a server assigned resourceType.\nThe resource object doesn't need resourceType or id",
         "tags": [
           {
             "title": "public",
@@ -247,7 +247,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Creates a transactionBundle for HAPI FHIR",
+        "description": "Create a transactionBundle to process multiple requests at once",
         "tags": [
           {
             "title": "public",

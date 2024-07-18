@@ -236,9 +236,7 @@ describe('post', () => {
     expect(e.statusCode).to.eql(404);
     expect(e.statusMessage).to.eql('Not Found');
   });
-});
 
-describe('Url Matches BaseUrl', () => {
   it('throw an error when url origin does not match baseUrl', async () => {
     const state = {
       configuration,
