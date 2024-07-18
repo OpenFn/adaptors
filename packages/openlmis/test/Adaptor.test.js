@@ -6,10 +6,12 @@ import * as fixtures from './fixtures';
 
 const username = 'test';
 const password = 'pass';
+const clientId = 'user-client';
+const clientSecret = 'changeme';
 const baseUrl = 'https://test.openlmis.org';
 const testServer = enableMockClient(baseUrl);
 
-const configuration = { baseUrl, username, password };
+const configuration = { baseUrl, username, password, clientId, clientSecret };
 
 const mockResponse = (status, body) => ({
   statusCode: status,
@@ -43,7 +45,12 @@ before(() => {
             code: 401,
           })
         : mockResponse(200, {
-            access_token: 'fake-token',
+            access_token: 'a3117bbd-5cd5-483c-8d24-d7ffb72e4eaa',
+            token_type: 'bearer',
+            expires_in: 1800,
+            scope: 'read write',
+            referenceDataUserId: 'a337ec45-31a0-4f2b-9b2e-a105c4b669bb',
+            username: 'administrator',
           });
     })
     .persist();
@@ -235,9 +242,7 @@ describe('HTTP wrappers', () => {
     );
     expect(error.statusCode).to.eql(400);
   });
-});
 
-describe('Url Matches BaseUrl', () => {
   it('throw an error when url origin does not match baseUrl', async () => {
     const state = {
       configuration,
@@ -250,7 +255,7 @@ describe('Url Matches BaseUrl', () => {
     });
 
     expect(error.message).to.eql(
-      'The URL https://example.com/programs does not match the base URL https://test.openlmis.org'
+      'Requests must be sent to the base URL: https://test.openlmis.org'
     );
   });
 });
