@@ -14,26 +14,20 @@
       "description": "The base URL (https://test.openlmis.org)",
       "format": "uri",
       "minLength": 1,
-      "examples": [
-        "https://test.openlmis.org"
-      ]
+      "examples": ["https://test.openlmis.org"]
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "examples": [
-        "administrator"
-      ]
+      "examples": ["administrator"]
     },
     "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
       "writeOnly": true,
-      "examples": [
-        "@some(!)Str0ngp4ss0w0rd"
-      ]
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
     },
     "access_token": {
       "title": "Access Token",
@@ -41,9 +35,7 @@
       "description": "Your OpenLMIS API access token",
       "writeOnly": true,
       "minLength": 1,
-      "examples": [
-        "4739f6c9-3b81-4176-98a1-bf001c8416ea"
-      ]
+      "examples": ["4739f6c9-3b81-4176-98a1-bf001c8416ea"]
     },
     "clientId": {
       "title": "Client ID",
@@ -56,7 +48,7 @@
     "clientSecret": {
       "title": "Client Secret Token",
       "type": "string",
-      "description": "Your user based client secrete",
+      "description": "Your user based client secret",
       "writeOnly": true,
       "minLength": 1,
       "default": "changeme"
@@ -64,11 +56,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": [
-    "password",
-    "username",
-    "baseUrl",
-    "clientId",
-    "clientSecret"
-  ]
+  "required": ["password", "username", "baseUrl", "clientId", "clientSecret"]
 }
