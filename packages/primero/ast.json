@@ -37,16 +37,19 @@
           },
           {
             "title": "param",
-            "description": "an object with a query param at minimum, option to getCases",
+            "description": "(Optional) An object with a query param at minimum, option to getCases",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "query"
           },
           {
             "title": "param",
-            "description": "(Optional) an object with a withReferrals key to fetch referrals",
+            "description": "Additional options",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -58,7 +61,7 @@
           },
           {
             "title": "param",
-            "description": "A boolean value for fetching case referrals",
+            "description": "Set to true to fetch referrals. This will generate an extra request for each case and may take some time to process.",
             "type": {
               "type": "OptionalType",
               "expression": {

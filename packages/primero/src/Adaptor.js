@@ -186,12 +186,9 @@ function cleanupState(state) {
  *   }
  * );
  * @function
- * @param {object} [query] - (Optional) an object with a query param at minimum, option to getCases
- * @param {boolean} [query.remote] - A remote option to getCases
- * @param {string} [query.query] - A query option to getCases
- * @param {string} [query.case_id] - A case_id option to getCases
- * @param {object} [options] - (Optional) an object with a withReferrals key to fetch referrals
- * @param {boolean} [options.withReferrals] - A boolean value for fetching case referrals
+ * @param {object} [query] - (Optional) An object with a query param at minimum, option to getCases
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.withReferrals] - Set to true to fetch referrals. This will generate an extra request for each case and may take some time to process.
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -235,11 +232,9 @@ export function getCases(query, options, callback) {
           );
 
           if (expandedOptions?.withReferrals) {
-            console.log(
-              `This might take a while, we are fetching ${cases.length} cases referrals`
-            );
+            console.log(`Fetching ${cases.length} cases referrals...`);
             for await (const c of cases) {
-              console.log(`Fetching ${c.id.slice(0, -10) + '...'}, referrals`);
+              console.log(`Fetching referral...`);
               const requestParams = {
                 method: 'GET',
                 url: `${url}/api/v2/cases/${c.id}/referrals`,
