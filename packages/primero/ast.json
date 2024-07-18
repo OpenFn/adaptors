@@ -27,7 +27,7 @@
           },
           {
             "title": "example",
-            "description": "getCases({\n  remote: true,\n  sex: \"male\",\n  age: \"10..15\".\n  protection_concerns :\"unaccompanied,separated\",\n});",
+            "description": "getCases({\n  remote: true,\n  sex: \"male\",\n  age: \"10..15\",\n  protection_concerns :\"unaccompanied,separated\",\n});",
             "caption": "Fetch all cases which match query criteria"
           },
           {
