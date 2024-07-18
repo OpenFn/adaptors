@@ -160,25 +160,32 @@ function cleanupState(state) {
 }
 
 /**
- * Get cases from Primero
- *
  * Use this function to get cases from Primero based on a set of query parameters.
  * Note that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.
- * You can specify a `case_id` value to fetch a unique case and a query string to filter result.
+ * Set `case_id` on the query object to fetch a specific case.
  * @public
- * @example <caption> Get cases from Primero with query parameters</caption>
+ * @function
+ * @example <caption>Fetch all cases</caption>
+ * getCases();
+ * @example <caption>Fetch all cases which match query criteria</caption>
  * getCases({
  *   remote: true,
- *   query: "sex=male",
+ *   sex: "male",
+ *   age: "10..15",
+ *   protection_concerns :"unaccompanied,separated",
  * });
- * @example <caption>Get case from Primero for a specific case id</caption>
+ * @example <caption>Fetch a specific case by id</caption>
  * getCases({
- *   remote: true,
  *   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
  * });
- * @function
- * @param {object} query - an object with a query param at minimum, option to getReferrals
- * @param {object} options - (Optional) an object with a getReferrals key to fetch referrals
+ * @example <caption>Get all remote cases and their referrals</caption>
+ * getCases(
+ *  { remote: true },
+ *  { withReferrals: true }
+ * );
+ * @param {object} query - Query parameters to send to primero, which will be built into URL parameters. See {@link https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md Primero Docs} for a list of valid parameters.
+ * @param {object} options - (Optional) Additional options
+ * @param {boolean} options.withReferrals - Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process.
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
@@ -222,7 +229,9 @@ export function getCases(query, options, callback) {
           );
 
           if (expandedOptions?.withReferrals) {
+            console.log(`Fetching referrals for ${cases.length} cases...`);
             for await (const c of cases) {
+              console.log(`Fetching referral...`);
               const requestParams = {
                 method: 'GET',
                 url: `${url}/api/v2/cases/${c.id}/referrals`,

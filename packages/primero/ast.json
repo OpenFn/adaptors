@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get cases from Primero\n\nUse this function to get cases from Primero based on a set of query parameters.\nNote that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.\nYou can specify a `case_id` value to fetch a unique case and a query string to filter result.",
+        "description": "Use this function to get cases from Primero based on a set of query parameters.\nNote that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.\nSet `case_id` on the query object to fetch a specific case.",
         "tags": [
           {
             "title": "public",
@@ -16,23 +16,33 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "getCases({\n  remote: true,\n  query: \"sex=male\",\n});",
-            "caption": "Get cases from Primero with query parameters"
-          },
-          {
-            "title": "example",
-            "description": "getCases({\n  remote: true,\n  case_id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
-            "caption": "Get case from Primero for a specific case id"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
           },
           {
+            "title": "example",
+            "description": "getCases();",
+            "caption": "Fetch all cases"
+          },
+          {
+            "title": "example",
+            "description": "getCases({\n  remote: true,\n  sex: \"male\",\n  age: \"10..15\".\n  protection_concerns :\"unaccompanied,separated\",\n});",
+            "caption": "Fetch all cases which match query criteria"
+          },
+          {
+            "title": "example",
+            "description": "getCases({\n  case_id: \"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\",\n});",
+            "caption": "Fetch a specific case by id"
+          },
+          {
+            "title": "example",
+            "description": "getCases(\n { remote: true },\n { withReferrals: true }\n);",
+            "caption": "Get all remote cases and their referrals"
+          },
+          {
             "title": "param",
-            "description": "an object with a query param at minimum, option to getReferrals",
+            "description": "Query parameters to send to primero, which will be built into URL parameters. See {@link https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md Primero Docs} for a list of valid parameters.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -41,12 +51,21 @@
           },
           {
             "title": "param",
-            "description": "(Optional) an object with a getReferrals key to fetch referrals",
+            "description": "(Optional) Additional options",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "options.withReferrals"
           },
           {
             "title": "param",
@@ -67,7 +86,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createCase",
