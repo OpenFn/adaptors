@@ -9,11 +9,21 @@ export const authorize = state => {
   const { baseUrl, access_token, username, password, clientId, clientSecret } =
     state.configuration;
 
+  if (access_token) {
+    console.log('Logging in with access token');
+    return state;
+  }
+  if (!clientId) {
+    console.warn('WARNING: Client ID is required');
+  }
+  if (!clientSecret) {
+    console.warn('WARNING: Client Secret is required');
+  }
+
   const headers = makeBasicAuthHeader(clientId, clientSecret);
 
-  if (access_token) return state;
-
   if (username && password) {
+    console.log('Logging in with user-based client credentials');
     const options = {
       query: { grant_type: 'password', username, password },
       headers: {
@@ -81,7 +91,7 @@ function urlMatchesBase(path, baseUrl) {
   const url = new URL(path, baseUrl);
 
   if (url.origin !== base.origin) {
-    throw new Error(`The URL ${path} does not match the base URL ${baseUrl}`);
+    throw new Error(`Requests must be sent to the base URL: ${baseUrl}`);
   }
 
   return true;
