@@ -68,11 +68,7 @@ export function execute(...operations) {
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function get(
-  path,
-  params = { offset: 0, limit: 1000 },
-  callback = s => s
-) {
+export function get(path, params = {}, callback = s => s) {
   return async state => {
     const { domain } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -81,42 +77,50 @@ export function get(
       params
     );
 
+    let { offset = 0, limit = 1000 } = resolvedPath;
+
     let allItems = [];
+    let items;
     let next;
     let nextState = state;
-    let offset = resolvedParams.offset;
-    const limit = resolvedParams.limit;
 
     try {
       do {
-        // fetch a page
+        let requestParams = {
+          ...resolvedParams,
+        };
+
+        if (next) {
+          requestParams = {
+            ...requestParams,
+            offset,
+            limit,
+          };
+        }
 
         const response = await request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
           {
             method: 'GET',
-            params: {
-              ...resolvedParams,
-              offset: offset,
-              limit: limit,
-            },
+            params: requestParams,
             contentType: 'application/json',
           }
         );
         nextState = prepareNextState(state, response, callback);
 
-        if (Array.isArray(nextState.data)) {
+        if (next) {
           allItems.push(...nextState.data);
         } else {
-          allItems.push(nextState.data);
+          items = nextState.data;
         }
         next = response?.body?.meta?.next;
+        limit = response?.body?.meta?.limit;
         offset = limit + offset;
       } while (next);
       return {
         ...nextState,
-        data: allItems,
+        data: items || allItems,
       };
     } catch (e) {
       if (e.statusCode === 404) {
