@@ -1,6 +1,5 @@
 import jsforce from 'jsforce';
 import { composeNextState } from '@openfn/language-common';
-import { result } from 'lodash';
 
 function getConnection(state, options) {
   const { apiVersion } = state.configuration;
