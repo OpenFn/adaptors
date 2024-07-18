@@ -176,32 +176,43 @@ generateAuthString(state)
 
 getCases(query, options, callback) ⇒ <code>Operation</code>
 
-Get cases from Primero
-
 Use this function to get cases from Primero based on a set of query parameters.
 Note that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.
-You can specify a `case_id` value to fetch a unique case and a query string to filter result.
+Set `case_id` on the query object to fetch a specific case.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| query | <code>object</code> | an object with a query param at minimum, option to getReferrals |
-| options | <code>object</code> | (Optional) an object with a getReferrals key to fetch referrals |
+| query | <code>object</code> | Query parameters to send to primero, which will be built into URL parameters. See [Primero Docs](https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md) for a list of valid parameters. |
+| options | <code>object</code> | (Optional) Additional options |
+| options.withReferrals | <code>boolean</code> | Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *( Get cases from Primero with query parameters)*  
+**Example** *(Fetch all cases)*  
+```js
+getCases();
+```
+**Example** *(Fetch all cases which match query criteria)*  
 ```js
 getCases({
   remote: true,
-  query: "sex=male",
+  sex: "male",
+  age: "10..15",
+  protection_concerns :"unaccompanied,separated",
 });
 ```
-**Example** *(Get case from Primero for a specific case id)*  
+**Example** *(Fetch a specific case by id)*  
 ```js
 getCases({
-  remote: true,
   case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
 });
+```
+**Example** *(Get all remote cases and their referrals)*  
+```js
+getCases(
+ { remote: true },
+ { withReferrals: true }
+);
 ```
 
 * * *

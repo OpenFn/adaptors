@@ -1,5 +1,12 @@
 # @openfn/language-primero
 
+## 2.12.2
+
+### Patch Changes
+
+- 3ad9122: - Improve `getCases()` withReferrals docs
+  - Add logs when fetching case referrals
+
 ## 2.12.1
 
 ### Patch Changes
