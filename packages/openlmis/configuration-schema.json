@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://test.openlmis.org)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://test.openlmis.org"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": ["administrator"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your OpenLMIS API access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["4739f6c9-3b81-4176-98a1-bf001c8416ea"]
+    },
+    "clientId": {
+      "title": "Client ID",
+      "type": "string",
+      "description": "Your user based client id",
+      "writeOnly": true,
+      "minLength": 1,
+      "default": "user-client"
+    },
+    "clientSecret": {
+      "title": "Client Secret Token",
+      "type": "string",
+      "description": "Your user based client secret",
+      "writeOnly": true,
+      "minLength": 1,
+      "default": "changeme"
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["password", "username", "baseUrl", "clientId", "clientSecret"]
+}

@@ -1,0 +1,68 @@
+[
+    {
+        "id": "dce17f2e-af3e-40ad-8e00-3496adef44c3",
+        "code": "PRG001",
+        "name": "Family Planning",
+        "description": null,
+        "active": true,
+        "periodsSkippable": true,
+        "skipAuthorization": false,
+        "showNonFullSupplyTab": true,
+        "enableDatePhysicalStockCountCompleted": false
+    },
+    {
+        "id": "10845cb9-d365-4aaa-badd-b4fa39c6a26a",
+        "code": "PRG002",
+        "name": "Essential Meds",
+        "description": null,
+        "active": true,
+        "periodsSkippable": false,
+        "skipAuthorization": false,
+        "showNonFullSupplyTab": null,
+        "enableDatePhysicalStockCountCompleted": false
+    },
+    {
+        "id": "66032ea8-b69b-4102-a1eb-844e57143187",
+        "code": "PRG003",
+        "name": "New Program",
+        "description": null,
+        "active": true,
+        "periodsSkippable": false,
+        "skipAuthorization": false,
+        "showNonFullSupplyTab": false,
+        "enableDatePhysicalStockCountCompleted": false
+    },
+    {
+        "id": "418bdc1d-c303-4bd0-b2d3-d8901150a983",
+        "code": "PRG004",
+        "name": "EPI",
+        "description": null,
+        "active": true,
+        "periodsSkippable": false,
+        "skipAuthorization": true,
+        "showNonFullSupplyTab": false,
+        "enableDatePhysicalStockCountCompleted": false
+    },
+    {
+        "id": "ef9a2b39-e7ce-4ebe-930c-f5c6d15b578a",
+        "code": "PRG005",
+        "name": "ARV",
+        "description": null,
+        "active": true,
+        "periodsSkippable": true,
+        "skipAuthorization": false,
+        "showNonFullSupplyTab": true,
+        "enableDatePhysicalStockCountCompleted": false
+    },
+    {
+        "id": "8a0cf9c6-0591-4ce1-bbbb-ae55553db0dc",
+        "code": "PRG006",
+        "name": "Lab Program",
+        "description": null,
+        "active": true,
+        "periodsSkippable": true,
+        "skipAuthorization": false,
+        "showNonFullSupplyTab": true,
+        "enableDatePhysicalStockCountCompleted": false
+    }
+]
