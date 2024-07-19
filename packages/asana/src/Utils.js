@@ -36,9 +36,10 @@ export function request(state, path, params, callback = s => s) {
     })
     .then(callback)
     .catch(err => {
-      console.log('Asana says:');
-      logResponse(err);
-
+      if (err.code !== 'BASE_URL_MISMATCH') {
+        console.log('Asana says:');
+        logResponse(err);
+      }
       throw err;
     });
 }
