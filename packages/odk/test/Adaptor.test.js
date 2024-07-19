@@ -509,7 +509,7 @@ describe('HTTP wrappers', () => {
     expect(error.code).to.eql('BASE_URL_MISMATCH');
   });
 
-  it('does not throw throws when matching absolute URL is passed', async () => {
+  it('does not throw when matching absolute URL is passed', async () => {
     const state = {
       configuration,
     };
