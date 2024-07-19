@@ -277,7 +277,7 @@ export function createTaskStory(taskGid, params, callback) {
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function request(path, params, callback) {
+export function request(path, params = {}, callback) {
   return state => {
     const [resolvedPath, { body = {}, query = {}, method = 'GET' }] =
       expandReferences(state, path, params);
