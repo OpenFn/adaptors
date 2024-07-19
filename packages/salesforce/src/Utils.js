@@ -136,12 +136,9 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
   }
 }
 
-export const prepareNextState = (state, fullResult) => {
-  const { records, ...result } = fullResult;
-
-  // console.log(fullResult);
+export const prepareNextState = (state, result, data) => {
   return {
-    ...composeNextState(state, records || result),
+    ...composeNextState(state, data ?? result),
     result,
   };
 };
