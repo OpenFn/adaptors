@@ -5,11 +5,11 @@
       "params": [
         "path",
         "data",
-        "params",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Sends a HTTP POST request  to the destination system",
+        "description": "Send a HTTP POST request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
@@ -17,13 +17,14 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"Bundle\",{\n  \"resourceType\": \"Bundle\"\n})",
+            "caption": "Create bundle"
           },
           {
             "title": "param",
@@ -36,7 +37,7 @@
           },
           {
             "title": "param",
-            "description": "Object or JSON which defines data that will be used to create a given resource",
+            "description": "JSON data to append to the POST body",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -45,12 +46,12 @@
           },
           {
             "title": "param",
-            "description": "Contains optional headers, parseAs, and throwOnError",
+            "description": "(Optional) Additional options for the request",
             "type": {
               "type": "NameExpression",
-              "name": "RequestParams"
+              "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -68,122 +69,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "create",
-      "params": [
-        "path",
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "Creates a resource in a destination system",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
           },
           {
-            "title": "example",
-            "description": "create(\"Bundle\", {\n  entry: [\n    {\n      fullUrl: \"\", // Eg: Patient URL\n      resource: {}, // Resource data\n      search: {\n        mode: \"match\",\n      },\n    },\n  ],\n  type: \"collection\",\n});"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "data to create the new resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "createTransactionBundle",
-      "params": [
-        "params",
-        "callback"
-      ],
-      "docs": {
-        "description": "Creates a transactionBundle for HAPI FHIR",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "createTransactionBundle({\n  resourceType: \"Bundle\",\n  type: \"transaction\",\n  entry: [\n    {\n      fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n      resource: {\n        resourceType: \"Patient\",\n        id: \"592442\",\n        name: [{ given: \"Caleb\", family: \"Cushing\" }],\n      },\n      request: {\n        method: \"POST\",\n        url: \"Patient\",\n      },\n    },\n  ],\n});"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "data to create the new transaction",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
@@ -193,11 +82,12 @@
       "name": "get",
       "params": [
         "path",
-        "query",
+        "params",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Get a resource in a FHIR system",
+        "description": "Send a HTTP GET request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
@@ -205,19 +95,19 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
-            "caption": "Get Claim from FHIR with optional query"
-          },
-          {
-            "title": "example",
-            "description": "get('Patient');",
-            "caption": "Get Patient from FHIR"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');",
+            "caption": "Get a Patient resource by id"
+          },
+          {
+            "title": "example",
+            "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
+            "caption": "Get a resource with query parameters"
           },
           {
             "title": "param",
@@ -230,12 +120,21 @@
           },
           {
             "title": "param",
-            "description": "data to get the new resource",
+            "description": "(Optional) Parameters to encode into the URL query",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "query"
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Options to control the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "GetOptions"
+            },
+            "name": "options"
           },
           {
             "title": "param",
@@ -253,6 +152,145 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "create",
+      "params": [
+        "resourceType",
+        "resource",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Creates a new resource with a server assigned resourceType.\nThe resource object doesn't need resourceType or id",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "create('Patient', {\n  name: [\n    {\n      use: 'official',\n      family: 'La Paradisio',\n      given: ['Josephine', 'Nessa'],\n    },\n  ],\n});",
+            "caption": "Create a new patient"
+          },
+          {
+            "title": "param",
+            "description": "The resource type to create",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "The resource to create",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) FHIR parameters to control and configure resource creation",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createTransactionBundle",
+      "params": [
+        "entries",
+        "callback"
+      ],
+      "docs": {
+        "description": "Create a transactionBundle to process multiple requests at once",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createTransactionBundle([\n  {\n    fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n    resource: {\n      resourceType: \"Patient\",\n      id: \"592442\",\n      name: [{ given: \"Caleb\", family: \"Cushing\" }],\n    },\n    request: {\n      method: \"POST\",\n      url: \"Patient\",\n    },\n  },\n]);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "array of transactions",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "entries"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
@@ -262,7 +300,7 @@
       "name": "getClaim",
       "params": [
         "claimId",
-        "query",
+        "params",
         "callback"
       ],
       "docs": {
@@ -274,17 +312,17 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "getClaim({ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
           },
           {
+            "title": "example",
+            "description": "getClaim('',{ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
+          },
+          {
             "title": "param",
-            "description": "(optional) claim id",
+            "description": "claim id",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -293,16 +331,16 @@
           },
           {
             "title": "param",
-            "description": "(optinal) query parameters",
+            "description": "query parameters",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "query"
+            "name": "params"
           },
           {
             "title": "param",
-            "description": "(Optional) callback function",
+            "description": "callback function",
             "type": {
               "type": "NameExpression",
               "name": "function"
@@ -316,6 +354,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
