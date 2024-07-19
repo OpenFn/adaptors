@@ -4,10 +4,8 @@ import {
   request as commonRequest,
   logResponse,
   makeBasicAuthHeader,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
-
-import { composeNextState } from '@openfn/language-common';
-import { assertRelativeUrl } from '../../common/src/util/http';
 
 export function addAuth(configuration = {}, headers) {
   if (headers.Authorization) return;
