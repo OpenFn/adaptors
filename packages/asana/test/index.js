@@ -41,7 +41,7 @@ describe('request', () => {
     // happily the request won't actually be made, so we don't need to mock anything here
     let err;
     try {
-      await execute(request('https:///www.blah.com/a/b/c'))({});
+      await execute(request('https://www.blah.com/a/b/c'))({});
     } catch (e) {
       err = e;
     }
