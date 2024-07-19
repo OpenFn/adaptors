@@ -88,6 +88,7 @@ const build = async (lang: string) => {
       // TODO we should be able to automate this
       path.resolve('../../tools/build/src/partials/body.hbs'),
       path.resolve('../../tools/build/src/partials/description.hbs'),
+      path.resolve('../../tools/build/src/partials/examples.hbs'),
       path.resolve('../../tools/build/src/partials/link.hbs'),
       path.resolve('../../tools/build/src/partials/members.hbs'),
       path.resolve('../../tools/build/src/partials/state.hbs'),
