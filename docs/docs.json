@@ -5358,7 +5358,7 @@
     "kind": "external"
   }
 ],
-{"name":"fhir","adaptor":"@openfn/language-fhir","version":"4.0.0","docs":"\"## Functions\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(path, data, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createtransactionbundle\\\">createTransactionBundle(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getclaim\\\">getClaim(claimId, query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, params, callback)</a></dt>\\n</dl>\\n\\nThe following functions are exported from the common adaptor:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## create\\n\\ncreate(path, data, callback) ⇒ <code>Operation</code>\\n\\nCreates a resource in a destination system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | data to create the new resource |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**  \\n```js\\ncreate(\\\"Bundle\\\", {\\n  entry: [\\n    {\\n      fullUrl: \\\"\\\", // Eg: Patient URL\\n      resource: {}, // Resource data\\n      search: {\\n        mode: \\\"match\\\",\\n      },\\n    },\\n  ],\\n  type: \\\"collection\\\",\\n});\\n```\\n\\n* * *\\n\\n## createTransactionBundle\\n\\ncreateTransactionBundle(params, callback) ⇒ <code>Operation</code>\\n\\nCreates a transactionBundle for HAPI FHIR\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | data to create the new transaction |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**  \\n```js\\ncreateTransactionBundle({\\n  resourceType: \\\"Bundle\\\",\\n  type: \\\"transaction\\\",\\n  entry: [\\n    {\\n      fullUrl: \\\"https://hapi.fhir.org/baseR4/Patient/592442\\\",\\n      resource: {\\n        resourceType: \\\"Patient\\\",\\n        id: \\\"592442\\\",\\n        name: [{ given: \\\"Caleb\\\", family: \\\"Cushing\\\" }],\\n      },\\n      request: {\\n        method: \\\"POST\\\",\\n        url: \\\"Patient\\\",\\n      },\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n## get\\n\\nget(path, query, callback) ⇒ <code>Operation</code>\\n\\nGet a resource in a FHIR system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| query | <code>object</code> | data to get the new resource |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example** *(Get Claim from FHIR with optional query)*  \\n```js\\nget(\\\"Claim\\\", { _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 })\\n```\\n**Example** *(Get Patient from FHIR)*  \\n```js\\nget('Patient');\\n```\\n\\n* * *\\n\\n## getClaim\\n\\ngetClaim(claimId, query, callback) ⇒ <code>Operation</code>\\n\\nGet Claim in a FHIR system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| claimId | <code>string</code> | (optional) claim id |\\n| query | <code>object</code> | (optinal) query parameters |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**  \\n```js\\ngetClaim({ _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 });\\n```\\n\\n* * *\\n\\n## post\\n\\npost(path, data, params, callback) ⇒ <code>Operation</code>\\n\\nSends a HTTP POST request  to the destination system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object or JSON which defines data that will be used to create a given resource |\\n| params | [<code>RequestParams</code>](#requestparams) | Contains optional headers, parseAs, and throwOnError |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**  \\n```js\\npost(\\\"Bundle\\\",{\\n\\\"resourceType\\\": \\\"Bundle\\\"\\n})\\n```\\n\\n* * *\\n\\n## request\\n\\nrequest ⇒ <code>Object</code>\\n\\nThis is an asynchronous function that sends a request to a specified URL with optional parameters\\nand headers, and returns the response data in JSON format.\\nIf there is an error in the response, the function will throw an error unless `params.throwOnError` is false.\\n\\n**Returns**: <code>Object</code> - The `request` function returns a  object, where the parsed JSON body\\nis written to `data`, and the raw http response to `response`.  \\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| url | <code>string</code> |  | The URL of the API endpoint that the request is being made to. |\\n| [params] | <code>object</code> |  | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |\\n| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to be used for the request. It defaults to 'GET' if not specified. |\\n\\n\\n* * *\\n\\n## RequestParams\\n\\nRequestParams : <code>Object</code>\\n\\nOptions provided to a HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [throwOnError] | <code>boolean</code> | <code>true</code> | Optional boolean value to throw if the error is status code 400. |\\n| headers | <code>object</code> |  | An optional object of headers to append to the request. |\\n| parseAs | <code>string</code> |  | An optional field of the data response format. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-fhir\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the HAPI FHIR\\nAPI.\\n\\n## FHIR Documentation\\n\\nThe Restfull API can be seen here: https://www.hl7.org/fhir/http.html\\n\\n## Documentation\\n\\n\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-configuration-schema/)\\ndefinition.\\n\\n#### Creates a resource in a destination system using a POST request\\n\\n```js\\ncreate('/endpoint', { foo: 'bar' });\\n```\\n\\n#### Creates a transactionBundle for HAPI FHIR\\n\\n```js\\ncreateTransactionBundle({\\n  entry: [transactionBundle],\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-fhir\\n\\n## 4.0.0\\n\\n### Major Changes\\n\\n- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where\\n  data is the response body and response is the raw response\\n  - All HTTP methods now support a `throwOnError` param, which defaults to true.\\n    If false, the adaptor will not throw if the HTTP status is <=400\\n  - request: return { data, response } directly\\n  - request: fix an issue where default headers would override user headers\\n  - request: if the body contains application/json content, parse it as JSON\\n\\n## 3.2.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 3.1.2\\n\\n### Patch Changes\\n\\n- 2b283549: - Update `create()` example\\n  - Update required properties in configuration schema\\n\\n## 3.1.1\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 3.1.0\\n\\n### Minor Changes\\n\\n- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- d4b4094: - Update configuration schema,\\n  - Add `get()` function\\n  - Fix `create()` axios config\\n  - Remove unused code\\n  - Improve error handling\\n  - Improve response handling\\n\\n## 1.1.5\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.4\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.3\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.2\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- fee607e: Migrate FHIR, update package export\\n\\n### Patch Changes\\n\\n- cb5d0ed: Updated to @openfn/simple-ast v0.4.1\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\"","functions":["create","createTransactionBundle","get","getClaim","post"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"baseUrl":{"title":"Base Url","type":"string","description":"The baseUrl","examples":["https://hapi.fhir.org"]},"apiPath":{"title":"API Path","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"R4","description":"FHIR api path","minLength":1,"examples":["baseR4","R3","R4"]},"authType":{"title":"Auth Type","type":"string","description":"The type of authentication used to authenticate into the destination system","examples":["Basic"]},"token":{"title":"Token","type":"string","description":"The token  used to authenticate into the destination system","examples":["@super!scretetoken"]}},"required":["baseUrl","apiPath"]}},
+{"name":"fhir","adaptor":"@openfn/language-fhir","version":"5.0.0","docs":"\"## Functions\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(resourceType, resource, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createtransactionbundle\\\">createTransactionBundle(entries, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, params, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getclaim\\\">getClaim(claimId, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, options, callback)</a></dt>\\n</dl>\\n\\nThe following functions are exported from the common adaptor:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## create\\n\\ncreate(resourceType, resource, params, callback) ⇒ <code>Operation</code>\\n\\nCreates a new resource with a server assigned resourceType.\\nThe resource object doesn't need resourceType or id\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resourceType | <code>string</code> | The resource type to create |\\n| resource | <code>object</code> | The resource to create |\\n| params | <code>object</code> | (Optional) FHIR parameters to control and configure resource creation |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Create a new patient)*  \\n```js\\ncreate('Patient', {\\n  name: [\\n    {\\n      use: 'official',\\n      family: 'La Paradisio',\\n      given: ['Josephine', 'Nessa'],\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n## createTransactionBundle\\n\\ncreateTransactionBundle(entries, callback) ⇒ <code>Operation</code>\\n\\nCreate a transaction bundle to process multiple requests at once\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| entries | <code>array</code> | array of transactions |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example**  \\n```js\\ncreateTransactionBundle([\\n  {\\n    fullUrl: \\\"https://hapi.fhir.org/baseR4/Patient/592442\\\",\\n    resource: {\\n      resourceType: \\\"Patient\\\",\\n      id: \\\"592442\\\",\\n      name: [{ given: \\\"Caleb\\\", family: \\\"Cushing\\\" }],\\n    },\\n    request: {\\n      method: \\\"POST\\\",\\n      url: \\\"Patient\\\",\\n    },\\n  },\\n]);\\n```\\n\\n* * *\\n\\n## get\\n\\nget(path, params, options, callback) ⇒ <code>Operation</code>\\n\\nSend a HTTP GET request to the baseURL defined in config\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | <code>object</code> | (Optional) Parameters to encode into the URL query |\\n| options | [<code>GetOptions</code>](#getoptions) | (Optional) Options to control the request |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Get a Patient resource by id)*  \\n```js\\nget('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');\\n```\\n**Example** *(Get a resource with query parameters)*  \\n```js\\nget(\\\"Claim\\\", { _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 })\\n```\\n\\n* * *\\n\\n## getClaim\\n\\ngetClaim(claimId, params, callback) ⇒ <code>Operation</code>\\n\\nGet Claim in a FHIR system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| claimId | <code>string</code> | claim id |\\n| params | <code>object</code> | query parameters |\\n| callback | <code>function</code> | callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example**  \\n```js\\ngetClaim('',{ _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 });\\n```\\n\\n* * *\\n\\n## GetOptions\\n\\nGetOptions : <code>Object</code>\\n\\nOptions provided to a GET HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| headers | <code>object</code> | Object of headers to append to the request |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n## post\\n\\npost(path, data, options, callback) ⇒ <code>Operation</code>\\n\\nSend a HTTP POST request to the baseURL defined in config\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | JSON data to append to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | (Optional) Additional options for the request |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n**Example** *(Create bundle)*  \\n```js\\npost(\\\"Bundle\\\",{\\n  \\\"resourceType\\\": \\\"Bundle\\\"\\n})\\n```\\n\\n* * *\\n\\n## request\\n\\nrequest ⇒ <code>Operation</code>\\n\\nSend a generic HTTP request to the baseURL defined in config\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | The HTTP method to be used for the request. It defaults to 'GET' if not |\\n| path | <code>string</code> | The resource path that the request is being made to |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n* * *\\n\\n## RequestOptions\\n\\nRequestOptions : <code>Object</code>\\n\\nOptions provided to a HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| headers | <code>object</code> | Object of headers to append to the request |\\n| body | <code>object</code> | JSON payload to attach to the request |\\n| query | <code>object</code> | Query parameters for the request. Will be encoded into the URL |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-fhir\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the HAPI FHIR\\nAPI.\\n\\n## FHIR Documentation\\n\\nThe Restfull API can be seen here: https://www.hl7.org/fhir/http.html\\n\\n## Documentation\\n\\n\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-configuration-schema/)\\ndefinition.\\n\\n#### Creates a resource in a destination system using a POST request\\n\\n```js\\ncreate('/endpoint', { foo: 'bar' });\\n```\\n\\n#### Creates a transactionBundle for HAPI FHIR\\n\\n```js\\ncreateTransactionBundle({\\n  entry: [transactionBundle],\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-fhir\\n\\n## 5.0.0\\n\\n#### Added\\n\\n- Improved type definitions for `request()` and `get()`\\n\\n#### Changed\\n\\n- Updated `request` function to the new signature:\\n\\n  ```js\\n  export const request =\\n    async (method, path, options = {}, callback) =>\\n    state => ({\\n      ...state,\\n      data,\\n      response,\\n    });\\n  ```\\n\\n- Updated `post` function to the new signature:\\n\\n  ```js\\n  export const post = (path, data, options, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `get` function to the new signature:\\n\\n  ```js\\n  export const get = (path, params, options, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `create` function to the new signature:\\n\\n  ```js\\n  export const create = (resource, resource, params, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `createTransactionBundle` function:\\n\\n  ```js\\n  export const createTransactionBundle = (entries, callback) => state => ({\\n    ...state,\\n    data,\\n  });\\n  ```\\n\\n- Updated `getClaim` function to the new signature:\\n  ```js\\n  export const getClaim =\\n    (claimId, params, callback = s => s) =>\\n    state => ({\\n      ...state,\\n      data,\\n    });\\n  ```\\n- Updated `configuration-schema.json`\\n  - Removed `authType`\\n  - Rename `token` to `access_token`\\n  - Add `username` and `password`\\n\\n#### Removed\\n\\n- Removed `parseAs` from the options.\\n\\n## 4.0.0\\n\\n### Major Changes\\n\\n- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where\\n  data is the response body and response is the raw response\\n  - All HTTP methods now support a `throwOnError` param, which defaults to true.\\n    If false, the adaptor will not throw if the HTTP status is <=400\\n  - request: return { data, response } directly\\n  - request: fix an issue where default headers would override user headers\\n  - request: if the body contains application/json content, parse it as JSON\\n\\n## 3.2.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 3.1.2\\n\\n### Patch Changes\\n\\n- 2b283549: - Update `create()` example\\n  - Update required properties in configuration schema\\n\\n## 3.1.1\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 3.1.0\\n\\n### Minor Changes\\n\\n- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- d4b4094: - Update configuration schema,\\n  - Add `get()` function\\n  - Fix `create()` axios config\\n  - Remove unused code\\n  - Improve error handling\\n  - Improve response handling\\n\\n## 1.1.5\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.4\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.3\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.2\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- fee607e: Migrate FHIR, update package export\\n\\n### Patch Changes\\n\\n- cb5d0ed: Updated to @openfn/simple-ast v0.4.1\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\"","functions":["create","createTransactionBundle","get","getClaim","post"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"baseUrl":{"title":"Base Url","type":"string","description":"The baseUrl","examples":["https://hapi.fhir.org"]},"apiPath":{"title":"API Path","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"R4","description":"FHIR api path","minLength":1,"examples":["baseR4","R3","R4"]},"username":{"title":"Username","type":"string","description":"Username","examples":["openfn_test"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"access_token":{"title":"Access Token","type":"string","description":"Your FHIR access token","writeOnly":true,"minLength":1,"examples":["the-long-access-token-from-your-auth"]}},"required":["baseUrl","apiPath"]}},
 [
   {
     "id": "create",
@@ -5366,7 +5366,7 @@
     "name": "create",
     "kind": "function",
     "scope": "global",
-    "description": "Creates a resource in a destination system",
+    "description": "Creates a new resource with a server assigned resourceType.\nThe resource object doesn't need resourceType or id",
     "params": [
       {
         "type": {
@@ -5374,8 +5374,8 @@
             "string"
           ]
         },
-        "description": "Path to resource",
-        "name": "path"
+        "description": "The resource type to create",
+        "name": "resourceType"
       },
       {
         "type": {
@@ -5383,55 +5383,16 @@
             "object"
           ]
         },
-        "description": "data to create the new resource",
-        "name": "data"
+        "description": "The resource to create",
+        "name": "resource"
       },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "(Optional) callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "create(\"Bundle\", {\n  entry: [\n    {\n      fullUrl: \"\", // Eg: Patient URL\n      resource: {}, // Resource data\n      search: {\n        mode: \"match\",\n      },\n    },\n  ],\n  type: \"collection\",\n});"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 108,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
-    },
-    "order": 3,
-    "level": 0
-  },
-  {
-    "id": "createTransactionBundle",
-    "longname": "createTransactionBundle",
-    "name": "createTransactionBundle",
-    "kind": "function",
-    "scope": "global",
-    "description": "Creates a transactionBundle for HAPI FHIR",
-    "params": [
       {
         "type": {
           "names": [
             "object"
           ]
         },
-        "description": "data to create the new transaction",
+        "description": "(Optional) FHIR parameters to control and configure resource creation",
         "name": "params"
       },
       {
@@ -5445,7 +5406,7 @@
       }
     ],
     "examples": [
-      "createTransactionBundle({\n  resourceType: \"Bundle\",\n  type: \"transaction\",\n  entry: [\n    {\n      fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n      resource: {\n        resourceType: \"Patient\",\n        id: \"592442\",\n        name: [{ given: \"Caleb\", family: \"Cushing\" }],\n      },\n      request: {\n        method: \"POST\",\n        url: \"Patient\",\n      },\n    },\n  ],\n});"
+      "<caption>Create a new patient</caption>\ncreate('Patient', {\n  name: [\n    {\n      use: 'official',\n      family: 'La Paradisio',\n      given: ['Josephine', 'Nessa'],\n    },\n  ],\n});"
     ],
     "returns": [
       {
@@ -5458,11 +5419,73 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 157,
+      "lineno": 178,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 4,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "createTransactionBundle",
+    "longname": "createTransactionBundle",
+    "name": "createTransactionBundle",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create a transaction bundle to process multiple requests at once",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "array"
+          ]
+        },
+        "description": "array of transactions",
+        "name": "entries"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "createTransactionBundle([\n  {\n    fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n    resource: {\n      resourceType: \"Patient\",\n      id: \"592442\",\n      name: [{ given: \"Caleb\", family: \"Cushing\" }],\n    },\n    request: {\n      method: \"POST\",\n      url: \"Patient\",\n    },\n  },\n]);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 222,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 8,
     "level": 0
   },
   {
@@ -5497,11 +5520,45 @@
     ],
     "access": "private",
     "meta": {
-      "lineno": 26,
+      "lineno": 45,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 1
+    "order": 3
+  },
+  {
+    "id": "FHIRHttpState",
+    "longname": "FHIRHttpState",
+    "name": "FHIRHttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the FHIR HTTP server (with the body removed)",
+        "name": "response"
+      },
+      {
+        "description": "an array of all the previous data values",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 6,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
+    },
+    "order": 0
   },
   {
     "id": "get",
@@ -5509,7 +5566,7 @@
     "name": "get",
     "kind": "function",
     "scope": "global",
-    "description": "Get a resource in a FHIR system",
+    "description": "Send a HTTP GET request to the baseURL defined in config",
     "params": [
       {
         "type": {
@@ -5526,8 +5583,17 @@
             "object"
           ]
         },
-        "description": "data to get the new resource",
-        "name": "query"
+        "description": "(Optional) Parameters to encode into the URL query",
+        "name": "params"
+      },
+      {
+        "type": {
+          "names": [
+            "GetOptions"
+          ]
+        },
+        "description": "(Optional) Options to control the request",
+        "name": "options"
       },
       {
         "type": {
@@ -5540,8 +5606,8 @@
       }
     ],
     "examples": [
-      "<caption>Get Claim from FHIR with optional query</caption>\nget(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
-      "<caption>Get Patient from FHIR</caption>\nget('Patient');"
+      "<caption>Get a Patient resource by id</caption>\nget('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');",
+      "<caption>Get a resource with query parameters</caption>\nget(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })"
     ],
     "returns": [
       {
@@ -5554,11 +5620,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 194,
+      "lineno": 137,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 5,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 6,
     "level": 0
   },
   {
@@ -5575,7 +5648,7 @@
             "string"
           ]
         },
-        "description": "(optional) claim id",
+        "description": "claim id",
         "name": "claimId"
       },
       {
@@ -5584,8 +5657,8 @@
             "object"
           ]
         },
-        "description": "(optinal) query parameters",
-        "name": "query"
+        "description": "query parameters",
+        "name": "params"
       },
       {
         "type": {
@@ -5593,12 +5666,12 @@
             "function"
           ]
         },
-        "description": "(Optional) callback function",
+        "description": "callback function",
         "name": "callback"
       }
     ],
     "examples": [
-      "getClaim({ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
+      "getClaim('',{ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
     ],
     "returns": [
       {
@@ -5611,11 +5684,67 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 218,
+      "lineno": 250,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 6,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "GetOptions",
+    "longname": "GetOptions",
+    "name": "GetOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to a GET HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object of headers to append to the request",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      }
+    ],
+    "meta": {
+      "lineno": 25,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
+    },
+    "order": 2,
     "level": 0
   },
   {
@@ -5624,7 +5753,7 @@
     "name": "post",
     "kind": "function",
     "scope": "global",
-    "description": "Sends a HTTP POST request  to the destination system",
+    "description": "Send a HTTP POST request to the baseURL defined in config",
     "params": [
       {
         "type": {
@@ -5641,17 +5770,17 @@
             "object"
           ]
         },
-        "description": "Object or JSON which defines data that will be used to create a given resource",
+        "description": "JSON data to append to the POST body",
         "name": "data"
       },
       {
         "type": {
           "names": [
-            "RequestParams"
+            "RequestOptions"
           ]
         },
-        "description": "Contains optional headers, parseAs, and throwOnError",
-        "name": "params"
+        "description": "(Optional) Additional options for the request",
+        "name": "options"
       },
       {
         "type": {
@@ -5664,7 +5793,7 @@
       }
     ],
     "examples": [
-      "post(\"Bundle\",{\n\"resourceType\": \"Bundle\"\n})"
+      "<caption>Create bundle</caption>\npost(\"Bundle\",{\n  \"resourceType\": \"Bundle\"\n})"
     ],
     "returns": [
       {
@@ -5677,11 +5806,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 54,
+      "lineno": 103,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 2,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 5,
     "level": 0
   },
   {
@@ -5690,7 +5826,7 @@
     "name": "request",
     "kind": "constant",
     "scope": "global",
-    "description": "This is an asynchronous function that sends a request to a specified URL with optional parameters\nand headers, and returns the response data in JSON format.\nIf there is an error in the response, the function will throw an error unless `params.throwOnError` is false.",
+    "description": "Send a generic HTTP request to the baseURL defined in config",
     "params": [
       {
         "type": {
@@ -5698,18 +5834,8 @@
             "string"
           ]
         },
-        "description": "The URL of the API endpoint that the request is being made to.",
-        "name": "url"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "optional": true,
-        "description": "An object containing any additional parameters to be sent with the request, such\nas query parameters or request body data. It is an optional parameter and defaults to an empty\nobject if not provided.",
-        "name": "params"
+        "description": "The HTTP method to be used for the request. It defaults to 'GET' if not",
+        "name": "method"
       },
       {
         "type": {
@@ -5717,34 +5843,57 @@
             "string"
           ]
         },
+        "description": "The resource path that the request is being made to",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
         "optional": true,
-        "defaultvalue": "GET",
-        "description": "The HTTP method to be used for the request. It defaults to 'GET' if not\nspecified.",
-        "name": "method"
+        "description": "An object containing any additional parameters to be sent with the request, such\nas query parameters or request body data.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) callback function",
+        "name": "callback"
       }
     ],
     "returns": [
       {
         "type": {
           "names": [
-            "Object"
+            "Operation"
           ]
-        },
-        "description": "The `request` function returns a  object, where the parsed JSON body\nis written to `data`, and the raw http response to `response`."
+        }
       }
     ],
     "meta": {
-      "lineno": 40,
-      "filename": "Utils.js",
+      "lineno": 69,
+      "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 7,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FHIRHttpState"
+      }
+    ],
+    "order": 4,
     "level": 0
   },
   {
-    "id": "RequestParams",
-    "longname": "RequestParams",
-    "name": "RequestParams",
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
     "kind": "typedef",
     "scope": "global",
     "description": "Options provided to a HTTP request",
@@ -5757,13 +5906,11 @@
       {
         "type": {
           "names": [
-            "boolean"
+            "object"
           ]
         },
-        "optional": true,
-        "defaultvalue": true,
-        "description": "Optional boolean value to throw if the error is status code 400.",
-        "name": "throwOnError"
+        "description": "Object of headers to append to the request",
+        "name": "headers"
       },
       {
         "type": {
@@ -5771,25 +5918,43 @@
             "object"
           ]
         },
-        "description": "An optional object of headers to append to the request.",
-        "name": "headers"
+        "description": "JSON payload to attach to the request",
+        "name": "body"
       },
       {
         "type": {
           "names": [
-            "string"
+            "object"
           ]
         },
-        "description": "An optional field of the data response format.",
-        "name": "parseAs"
+        "description": "Query parameters for the request. Will be encoded into the URL",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
       }
     ],
     "meta": {
-      "lineno": 6,
+      "lineno": 15,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/fhir/src"
     },
-    "order": 0,
+    "order": 1,
     "level": 0
   },
   {
