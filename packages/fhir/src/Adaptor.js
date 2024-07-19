@@ -215,21 +215,15 @@ export function create(resourceType, resource, params, callback = s => s) {
  * ]);
  * @function
  * @param {array} entries - array of transactions
- * @param {object} params - data to create the new transaction
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
-export function createTransactionBundle(entries, params, callback = s => s) {
+export function createTransactionBundle(entries, callback = s => s) {
   return async state => {
-    const [resolvedEntries, resolvedParams] = expandReferences(
-      state,
-      entries,
-      params
-    );
+    const [resolvedEntries] = expandReferences(state, entries);
 
     const opts = {
-      ...resolvedParams,
       body: {
         resourceType: 'Bundle',
         type: 'transaction',

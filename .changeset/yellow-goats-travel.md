@@ -50,14 +50,13 @@
   });
   ```
 
-- Updated `createTransactionBundle` function to the new signature:
+- Updated `createTransactionBundle` function:
 
   ```js
-  export const createTransactionBundle =
-    (entries, params, callback) => state => ({
-      ...state,
-      data,
-    });
+  export const createTransactionBundle = (entries, callback) => state => ({
+    ...state,
+    data,
+  });
   ```
 
 - Updated `getClaim` function to the new signature:

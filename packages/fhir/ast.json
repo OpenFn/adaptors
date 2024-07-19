@@ -243,7 +243,6 @@
       "name": "createTransactionBundle",
       "params": [
         "entries",
-        "params",
         "callback"
       ],
       "docs": {
@@ -271,15 +270,6 @@
               "name": "array"
             },
             "name": "entries"
-          },
-          {
-            "title": "param",
-            "description": "data to create the new transaction",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
           },
           {
             "title": "param",
