@@ -94,7 +94,7 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
       if (fullUrl.origin !== base.origin) {
         const e = new Error(ERROR_URL_MISMATCH);
         e.code = 'BASE_URL_MISMATCH';
-        e.description = `A request was attempted to an absolute URL, but a different base URL was specified. This is potential security violation.`;
+        e.description = `A request was attempted to an absolute URL, but a different base URL was specified. This is a potential security violation.`;
         e.target = pathOrUrl;
         e.baseUrl = baseUrl;
         e.fix = 'Try using a generic HTTP function to access the target URL';
