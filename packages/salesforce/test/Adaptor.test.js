@@ -26,7 +26,7 @@ describe('Adaptor', () => {
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields]);
           expect(spy.called).to.eql(true);
-          expect(state.references[0]).to.eql({ Id: 10 });
+          expect(state.data).to.eql({ Id: 10 });
         })
         .then(done)
         .catch(done);
@@ -56,7 +56,7 @@ describe('Adaptor', () => {
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields, externalId]);
           expect(spy.called).to.eql(true);
-          expect(state.references[0]).to.eql({ Id: 10 });
+          expect(state.data).to.eql({ Id: 10 });
         })
         .then(done)
         .catch(done);
