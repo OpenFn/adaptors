@@ -5,7 +5,7 @@ import ClientFixtures, { fixtures } from './ClientFixtures';
 import Adaptor from '../src';
 import { convertDate, dateRegex } from '../src/Utils';
 
-const { execute } = Adaptor;
+const { execute, request } = Adaptor;
 
 describe('execute', () => {
   it.skip('executes each operation in sequence', done => {
@@ -41,6 +41,19 @@ describe('execute', () => {
         data: null,
       });
     });
+  });
+});
+
+describe('request', () => {
+  it('throws if an absolute URL is passed', async () => {
+    // happily the request won't actually be made, so we don't need to mock anything here
+    let err;
+    try {
+      await execute(request('https://www.blah.com/a/b/c'))({});
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.equal('INVALID_ABSOLUTE_URL');
   });
 });
 

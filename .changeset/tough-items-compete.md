@@ -1,6 +1,7 @@
 ---
 '@openfn/language-odk': patch
 '@openfn/language-satusehat': patch
+'@openfn/language-surveycto': patch
 ---
 
-Enforce that absolute urls should not be passed
+Enforce that absolute urls must not be passed to HTTP functions
