@@ -13,13 +13,11 @@
 
 import {
   execute as commonExecute,
-  expandReferences,
-  composeNextState,
   field,
   chunk,
 } from '@openfn/language-common';
 
-import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 import flatten from 'lodash/flatten';
@@ -98,7 +96,7 @@ export function execute(...operations) {
  * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
  * @returns {Operation}
  */
-export function bulk(sObject, operation, records, options) {
+export function bulk(sObject, operation, records, options = {}) {
   return state => {
     const { connection } = state;
 
@@ -107,7 +105,7 @@ export function bulk(sObject, operation, records, options) {
       resolvedOperation,
       resolvedRecords,
       resolvedOptions,
-    ] = newExpandReferences(state, sObject, operation, options, records);
+    ] = expandReferences(state, sObject, operation, records, options);
 
     const {
       failOnError = false,
@@ -132,9 +130,6 @@ export function bulk(sObject, operation, records, options) {
       chunkedBatches.map(
         chunkedBatch =>
           new Promise((resolve, reject) => {
-            const timeout = pollTimeout || 240000;
-            const interval = pollInterval || 6000;
-
             console.info(
               `Creating bulk ${resolvedOperation} job for ${resolvedSObject} with ${chunkedBatch.length} records`
             );
@@ -164,7 +159,7 @@ export function bulk(sObject, operation, records, options) {
                 console.info(batchInfo);
                 const batchId = batchInfo.id;
                 var batch = job.batch(batchId);
-                batch.poll(interval, timeout);
+                batch.poll(pollInterval, pollTimeout);
               })
               .then(async res => {
                 await job.close();
@@ -191,16 +186,11 @@ export function bulk(sObject, operation, records, options) {
       )
     ).then(arrayOfResults => {
       console.log('Merging results arrays.');
-      const merged = [].concat.apply([], arrayOfResults);
+      const merged = arrayOfResults.flat();
       return util.prepareNextState(state, merged);
-      return { ...state, references: [merged, ...state.references] };
     });
   };
 }
-// const defaultOptions = {
-//   pollTimeout: 90000, // in ms
-//   pollInterval: 3000, // in ms
-// };
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -223,18 +213,15 @@ export function bulk(sObject, operation, records, options) {
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @returns {Operation}
  */
-export function bulkQuery(qs, options) {
+export function bulkQuery(qs, options = {}) {
   return async state => {
     const { connection } = state;
-    const [
-      resolvedQs,
-      resolvedOptions = { pollTimeout: 90000, pollInterval: 3000 },
-    ] = newExpandReferences(state, qs, options);
+    const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
 
     if (parseFloat(connection.version) < 47.0)
       throw new Error('bulkQuery requires API version 47.0 and later');
 
-    const { pollTimeout, pollInterval } = resolvedOptions;
+    const { pollTimeout = 90000, pollInterval = 3000 } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
 
@@ -276,7 +263,7 @@ export function bulkQuery(qs, options) {
 export function create(sObject, records) {
   return state => {
     let { connection } = state;
-    const [resolvedSObject, resolvedRecords] = newExpandReferences(
+    const [resolvedSObject, resolvedRecords] = expandReferences(
       state,
       sObject,
       records
@@ -305,7 +292,7 @@ export function describe(sObject) {
   return state => {
     const { connection } = state;
 
-    const [resolvedSObject] = newExpandReferences(state, sObject);
+    const [resolvedSObject] = expandReferences(state, sObject);
 
     return connection
       .sobject(resolvedSObject)
@@ -329,20 +316,25 @@ export function describe(sObject) {
  * ], { failOnError: true })
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {object} attrs - Array of IDs of records to delete.
+ * @param {object} ids - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
  * @returns {Operation}
  */
-export function destroy(sObject, attrs, options) {
+export function destroy(sObject, ids, options = {}) {
   return state => {
     const { connection } = state;
-    const finalAttrs = expandReferences(attrs)(state);
-    const { failOnError } = options;
+    const [resolvedSObject, resolvedIds, resolvedOptions] = expandReferences(
+      state,
+      sObject,
+      ids,
+      options
+    );
+    const { failOnError = false } = resolvedOptions;
     console.info(`Deleting ${sObject} records`);
 
     return connection
-      .sobject(sObject)
-      .del(finalAttrs)
+      .sobject(resolvedSObject)
+      .del(resolvedIds)
       .then(function (result) {
         const successes = result.filter(r => r.success);
         console.log(
@@ -351,15 +343,13 @@ export function destroy(sObject, attrs, options) {
         );
 
         const failures = result.filter(r => !r.success);
-        console.log('Failed to delete: ', JSON.stringify(failures, null, 2));
+        if (failures.length > 0)
+          console.log('Failed to delete: ', JSON.stringify(failures, null, 2));
 
         if (failOnError && result.some(r => !r.success))
           throw 'Some deletes failed; exiting with failure code.';
 
-        return {
-          ...state,
-          references: [result, ...state.references],
-        };
+        return util.prepareNextState(state, result);
       });
   };
 }
@@ -379,10 +369,41 @@ export function describeAll() {
     return connection.describeGlobal().then(result => {
       const { sobjects } = result;
       console.log(`Retrieved ${sobjects.length} sObjects`);
-      return util.prepareNextState(state, { records: sobjects, ...result });
+      return util.prepareNextState(state, result, sobjects);
     });
   };
 }
+/**
+ * Send a GET HTTP request using connected session information.
+ * @example
+ * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+ * @param {string} url - Relative to request from
+ * @param {object} options - Request query parameters
+ * @returns {Operation}
+ */
+export function get(path, options = {}) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const { headers, ...query } = resolvedOptions;
+    console.log(`GET: ${resolvedPath}`);
+    const requestOptions = {
+      url: resolvedPath,
+      method: 'GET',
+      query,
+      headers: { 'content-type': 'application/json', ...headers },
+    };
+
+    const result = await connection.request(requestOptions);
+
+    return util.prepareNextState(state, result);
+  };
+}
+
 /**
  * Alias for "create(sObject, attrs)".
  * @public
@@ -399,8 +420,43 @@ export function insert(sObject, records) {
   return create(sObject, records);
 }
 
-export function post(url, data, options) {
-  return state;
+/**
+ * Send a POST HTTP request using connected session information.
+ *
+ * @example
+ * post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });
+ * @param {string} url - Relative to request from
+ * @param {object} data - A JSON Object request body
+ * @param {object} options - Request options
+ * @param {object} [options.headers] - Object of request headers
+ * @param {object} [options.query] - A JSON Object request body
+ * @returns {Operation}
+ */
+export function post(path, data, options = {}) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
+    const { query, headers } = resolvedOptions;
+
+    console.log(`POST: ${resolvedPath}`);
+
+    const requestOptions = {
+      url: resolvedPath,
+      method: 'POST',
+      query,
+      headers: { 'content-type': 'application/json', ...headers },
+      body: JSON.stringify(resolvedData),
+    };
+
+    const result = await connection.request(requestOptions);
+
+    return util.prepareNextState(state, result);
+  };
 }
 
 /**
@@ -420,19 +476,15 @@ export function post(url, data, options) {
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @returns {Operation}
  */
-export function query(qs, options) {
+export function query(qs, options = {}) {
   return async state => {
     let done = false;
     let qResult = null;
     let result = [];
 
     const { connection } = state;
-    const [resolvedQs, resolvedOptions] = newExpandReferences(
-      state,
-      qs,
-      options
-    );
-    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+    const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
+    const { autoFetch = false } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
     try {
@@ -478,11 +530,7 @@ export function query(qs, options) {
       console.log('No records found.');
     }
 
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
-
-    return util.prepareNextState(state, ...result);
+    return util.prepareNextState(state, result, result?.records);
   };
 }
 
@@ -502,29 +550,28 @@ export function query(qs, options) {
  * @magic sObject - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @param {(object|object[])} records - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {Operation}
  */
-export function upsert(sObject, externalId, attrs) {
+export function upsert(sObject, externalId, records) {
   return state => {
     const { connection } = state;
-    const finalAttrs = expandReferences(attrs)(state);
+    const [resolvedSObject, resolvedExternalId, resolvedRecords] =
+      expandReferences(state, sObject, externalId, records);
     console.info(
-      `Upserting ${sObject} with externalId`,
-      externalId,
+      `Upserting ${resolvedSObject} with externalId`,
+      resolvedExternalId,
       ':',
-      finalAttrs
+      resolvedRecords
     );
 
     return connection
-      .upsert(sObject, finalAttrs, externalId)
-      .then(function (recordResult) {
-        console.log('Result : ' + JSON.stringify(recordResult));
-        return {
-          ...state,
-          references: [recordResult, ...state.references],
-        };
+      .upsert(resolvedSObject, resolvedRecords, resolvedExternalId)
+      .then(function (result) {
+        console.log('Result : ' + JSON.stringify(result));
+
+        return util.prepareNextState(state, result);
       });
   };
 }
@@ -544,22 +591,25 @@ export function upsert(sObject, externalId, attrs) {
  * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
- * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @param {(object|object[])} records - Field attributes for the new object.
  * @returns {Operation}
  */
-export function update(sObject, attrs) {
+export function update(sObject, records) {
   return state => {
     let { connection } = state;
-    const finalAttrs = expandReferences(attrs)(state);
-    console.info(`Updating ${sObject}`, finalAttrs);
+    const [resolvedSObject, resolvedRecords] = expandReferences(
+      state,
+      sObject,
+      records
+    );
+    console.info(`Updating ${resolvedSObject}`, resolvedRecords);
 
-    return connection.update(sObject, finalAttrs).then(function (recordResult) {
-      console.log('Result : ' + JSON.stringify(recordResult));
-      return {
-        ...state,
-        references: [recordResult, ...state.references],
-      };
-    });
+    return connection
+      .update(resolvedSObject, resolvedRecords)
+      .then(function (result) {
+        console.log('Result : ' + JSON.stringify(result));
+        return util.prepareNextState(state, result);
+      });
   };
 }
 
@@ -587,20 +637,18 @@ export function toUTF8(input) {
  *   method: 'POST',
  *   json: { inputs: [{}] },
  * });
- * @param {string} url - Relative or absolute URL to request from
+ * @param {string} url - Relative to request from
  * @param {object} options - Request options
  * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
  * @param {object} [options.headers] - Object of request headers
  * @param {object} [options.json] - A JSON Object request body
  * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
- * @param {function} callback - A callback to execute once the request is complete
  * @returns {Operation}
  */
-
-export function request(path, options, callback = s => s) {
+export function request(path, options = {}) {
   return async state => {
     const { connection } = state;
-    const [resolvedPath, resolvedOptions] = newExpandReferences(
+    const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
       options
@@ -618,9 +666,7 @@ export function request(path, options, callback = s => s) {
 
     const result = await connection.request(requestOptions);
 
-    const nextState = composeNextState(state, result);
-
-    return callback(nextState);
+    return util.prepareNextState(state, result);
   };
 }
 
@@ -632,54 +678,24 @@ export function request(path, options, callback = s => s) {
  * @function
  * @param {string} sObject - The sObject to retrieve
  * @param {string} id - The id of the record
- * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function retrieve(sObject, id, callback) {
+export function retrieve(sObject, id) {
   return state => {
     const { connection } = state;
 
-    const finalId = expandReferences(id)(state);
+    const [resolvedSObject, resolvedId] = expandReferences(state, sObject, id);
 
+    console.log(
+      `Retrieving data for sObject '${resolvedSObject}' with Id '${resolvedId}'`
+    );
     return connection
-      .sobject(sObject)
-      .retrieve(finalId)
+      .sobject(resolvedSObject)
+      .retrieve(resolvedId)
       .then(result => {
-        return {
-          ...state,
-          references: [result, ...state.references],
-        };
-      })
-      .then(state => {
-        if (callback) {
-          return callback(state);
-        }
-        return state;
+        return util.prepareNextState(state, result);
       });
   };
-}
-
-/**
- * Adds a lookup relation or 'dome insert' to a record.
- * @public
- * @example
- * Data Sourced Value:
- *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
- * Fixed Value:
- *  relationship("relationship_name__r", "externalID on related object", "hello world")
- * @function
- * @param {string} relationshipName - `__r` relationship field on the record.
- * @param {string} externalId - Salesforce ExternalID field.
- * @param {string} dataSource - resolvable source.
- * @returns {object}
- */
-export function relationship(relationshipName, externalId, dataSource) {
-  return field(relationshipName, state => {
-    if (typeof dataSource == 'function') {
-      return { [externalId]: dataSource(state) };
-    }
-    return { [externalId]: dataSource };
-  });
 }
 
 export {
