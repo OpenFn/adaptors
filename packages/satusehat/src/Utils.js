@@ -1,7 +1,9 @@
 import { composeNextState } from '@openfn/language-common';
+import nodepath from 'node:path';
 import {
   request as commonRequest,
   logResponse,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
 
 const generateUserAgent = () => {
@@ -84,14 +86,18 @@ export async function request(configuration, path, opts) {
     'content-type': contentType,
   };
 
+  assertRelativeUrl(path);
+
+  const safePath = nodepath.join('fhir-r4/v1', path);
+
   const options = {
     body: data,
     headers,
     query: params,
     parseAs,
     maxRedirections: 1,
-    baseUrl: `${baseUrl}/fhir-r4/v1/`,
+    baseUrl,
   };
 
-  return commonRequest(method, path, options).then(logResponse);
+  return commonRequest(method, safePath, options).then(logResponse);
 }
