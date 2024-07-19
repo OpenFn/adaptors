@@ -246,7 +246,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Create a transactionBundle to process multiple requests at once",
+        "description": "Create a transaction bundle to process multiple requests at once",
         "tags": [
           {
             "title": "public",
