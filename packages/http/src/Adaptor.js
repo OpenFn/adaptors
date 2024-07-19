@@ -46,7 +46,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a HTTP request
+ * Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  * request(
@@ -58,8 +58,8 @@ export function execute(...operations) {
  *    }
  * )
  * @function
- * @param {string} method - The HTTP method to use
- * @param {string} path - Path to resource
+ * @param {string} method - The HTTP method to use.
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
@@ -70,7 +70,7 @@ export function request(method, path, params, callback) {
 }
 
 /**
- * Make a GET request
+ * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  * get('/myEndpoint', {
@@ -78,7 +78,7 @@ export function request(method, path, params, callback) {
  *   headers: {'content-type': 'application/json'},
  * })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
@@ -89,7 +89,7 @@ export function get(path, params, callback) {
 }
 
 /**
- * Make a POST request
+ * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  post('/myEndpoint', {
@@ -97,7 +97,7 @@ export function get(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
@@ -109,7 +109,7 @@ export function post(path, params, callback) {
 }
 
 /**
- * Make a PUT request
+ * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  put('/myEndpoint', {
@@ -117,7 +117,7 @@ export function post(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
@@ -128,7 +128,7 @@ export function put(path, params, callback) {
 }
 
 /**
- * Make a PATCH request
+ * Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  patch('/myEndpoint', {
@@ -136,7 +136,7 @@ export function put(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
@@ -147,14 +147,14 @@ export function patch(path, params, callback) {
 }
 
 /**
- * Make a DELETE request
+ * Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  del(`/myendpoint/${state => state.data.id}`, {
  *    headers: {'content-type': 'application/json'}
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
