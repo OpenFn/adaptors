@@ -8,12 +8,15 @@ import {
   post,
   del,
   parseUrl,
+  ERROR_URL_MISMATCH,
 } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
 
+// TODO double check these tests and make sure they cover enoguh cases now
+// Also send some invalid requests - break it!
 describe('parseUrl', () => {
-  it('should work with a url as a path', () => {
+  it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
 
     expect(baseUrl).to.equal('https://www.example.org');
@@ -79,6 +82,22 @@ describe('parseUrl', () => {
       parseUrl('/a/b/c', 'www.example.org');
     } catch (e) {
       expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if path and no base', () => {
+    try {
+      parseUrl('/a/b/c');
+    } catch (e) {
+      expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if url and base mismatch', () => {
+    try {
+      parseUrl('http://www.x.com/a', 'http://www.y.com/a');
+    } catch (e) {
+      expect(e.message).to.eql(ERROR_URL_MISMATCH);
     }
   });
 });
