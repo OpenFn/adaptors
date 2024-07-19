@@ -196,7 +196,7 @@ export function create(resourceType, resource, params, callback = s => s) {
 }
 
 /**
- * Create a transactionBundle to process multiple requests at once
+ * Create a transaction bundle to process multiple requests at once
  * @public
  * @example
  * createTransactionBundle([
