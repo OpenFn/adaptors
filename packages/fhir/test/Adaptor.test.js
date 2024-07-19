@@ -248,8 +248,6 @@ describe('post', () => {
       return error;
     });
 
-    expect(error.message).to.eql(
-      'The URL https://example.com/claim does not match the base URL https://hapi.fhir.org'
-    );
+    expect(error.code).to.eql('INVALID_ABSOLUTE_URL');
   });
 });
