@@ -13,8 +13,6 @@ import {
 
 const client = enableMockClient('https://www.example.com');
 
-// TODO double check these tests and make sure they cover enoguh cases now
-// Also send some invalid requests - break it!
 describe('parseUrl', () => {
   it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
