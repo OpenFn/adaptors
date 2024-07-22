@@ -1,5 +1,6 @@
 import nodepath from 'node:path';
 
+import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
