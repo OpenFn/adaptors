@@ -6,6 +6,39 @@
  */
 
 import { request } from './util/http';
+import set from 'lodash/set';
+
+const helpers = {
+  json: function () {
+    set(this, 'headers.Content-Type', 'application/json');
+    return this;
+  },
+  basic: function (username, password) {
+    const buff = Buffer.from(`${username}:${password}`);
+    const credentials = buff.toString('base64');
+
+    set(this, 'headers.Authorization', `Basic ${credentials}`);
+    return this;
+  },
+};
+
+/**
+ * Builder function for request options
+ * Enables stuff like this:
+ * ```
+ * get($.data.url, options({ query: $.query }).json().basic(user, pass))
+ * ```
+ */
+export function options(opts = {}) {
+  for (let h in helpers) {
+    Object.defineProperty(opts, h, {
+      enumerable: false,
+      value: helpers[h],
+    });
+  }
+
+  return opts;
+}
 
 /**
  * Options provided to the HTTP request
@@ -44,9 +77,10 @@ import { request } from './util/http';
  * @state {HttpState}
  * @returns {Operation}
  */
-export function request(method, url, options, callback) {
-  return sendRequest(method, url, options, callback);
-}
+const req = function (method, url, options, callback) {
+  return request(method, url, options, callback);
+};
+export { req as request };
 
 /**
  * Make a GET request.
@@ -61,7 +95,7 @@ export function request(method, url, options, callback) {
  * @returns {Operation}
  */
 export function get(url, options, callback) {
-  return sendRequest('GET', url, options, callback);
+  return request('GET', url, options, callback);
 }
 
 /**
@@ -81,5 +115,5 @@ export function get(url, options, callback) {
  */
 
 export function post(path, data, options, callback) {
-  return sendRequest('POST', path, { body: data, ...options }, callback);
+  return request('POST', path, { body: data, ...options }, callback);
 }
