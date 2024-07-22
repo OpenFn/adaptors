@@ -11,11 +11,7 @@
  * @ignore
  */
 
-import {
-  execute as commonExecute,
-  field,
-  chunk,
-} from '@openfn/language-common';
+import { execute as commonExecute, chunk } from '@openfn/language-common';
 
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
