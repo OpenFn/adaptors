@@ -1,7 +1,7 @@
 {{#if (showMainIndex)~}}
 
 {{#globals kind="function" ~}}
-{{#if @first~}}{{>heading-indent}}Functions
+{{#if @first~}}
 
 <dl>
 {{/if~}}
@@ -20,7 +20,6 @@
 {{#if @last~}}</dl>
 {{/if~}}
 {{/globals~}}
-{{!-- {{>global-index-kinds kind="typedef" title="Typedefs" ~}} --}}
 {{/if~}}
 
 {{#commonFns}}
@@ -35,14 +34,27 @@ The following functions are exported from the common adaptor:
 {{/if}}
 {{/commonFns}}
 
-{{#orphans ~}}
+{{#globals kind="function" ~}}
+{{#if @first~}}## Functions
+{{/if~}}
 
-{{>heading-indent}}{{anchorName}}
+### {{anchorName}}
 
 {{>sig-name}}
-
 {{>body}}
 {{>member-index~}}
 {{>separator~}}
 {{>members~}}
-{{/orphans~}}
+{{/globals~}}
+
+{{#globals kind="typedef" ~}}
+{{#if @first~}}{{>heading-indent}} Interfaces
+
+{{/if~}}
+
+### {{anchorName}}
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+{{/globals~}}
