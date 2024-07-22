@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#getdeploymentinfo">getDeploymentInfo(params, callback)</a></dt>
@@ -54,9 +52,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## getDeploymentInfo
+## Functions
+### getDeploymentInfo
 
-getDeploymentInfo(params, callback) ⇒ <code>Operation</code>
+<p><code>getDeploymentInfo(params, callback) ⇒ Operation</code></p>
 
 Get deployment information for a specific form
 
@@ -66,7 +65,7 @@ Get deployment information for a specific form
 | params | <code>object</code> | Form Id and data to make the fetch or filter |
 | callback | <code>function</code> | (Optional) Callback function to execute after fetching form deployment information |
 
-**Example**  
+**Example**
 ```js
 getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
   console.log(state.data);
@@ -76,9 +75,9 @@ getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
 
 * * *
 
-## getForms
+### getForms
 
-getForms(params, callback) ⇒ <code>Operation</code>
+<p><code>getForms(params, callback) ⇒ Operation</code></p>
 
 Make a request to get the list of forms
 
@@ -88,7 +87,7 @@ Make a request to get the list of forms
 | params | <code>object</code> | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function to execute after fetching form list |
 
-**Example**  
+**Example**
 ```js
 getForms({}, state => {
    console.log(state.data);
@@ -98,9 +97,9 @@ getForms({}, state => {
 
 * * *
 
-## getSubmissions
+### getSubmissions
 
-getSubmissions(params, callback) ⇒ <code>Operation</code>
+<p><code>getSubmissions(params, callback) ⇒ Operation</code></p>
 
 Get submissions for a specific form
 
@@ -110,7 +109,7 @@ Get submissions for a specific form
 | params | <code>object</code> | Form Id and data to make the fetch or filter |
 | callback | <code>function</code> | (Optional) Callback function to execute after fetching form submissions |
 
-**Example**  
+**Example**
 ```js
 getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
   console.log(state.data);

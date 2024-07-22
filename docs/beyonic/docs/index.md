@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#createcollectionrequest">createCollectionRequest(data)</a></dt>
@@ -39,9 +37,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## createCollectionRequest
+## Functions
+### createCollectionRequest
 
-createCollectionRequest(data) ⇒ <code>Operation</code>
+<p><code>createCollectionRequest(data) ⇒ Operation</code></p>
 
 Create a collection request
 
@@ -50,7 +49,7 @@ Create a collection request
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the collection request |
 
-**Example**  
+**Example**
 ```js
 execute(
   createCollectionRequest(data)
@@ -59,9 +58,9 @@ execute(
 
 * * *
 
-## createContact
+### createContact
 
-createContact(data) ⇒ <code>Operation</code>
+<p><code>createContact(data) ⇒ Operation</code></p>
 
 Create a contact
 
@@ -70,7 +69,7 @@ Create a contact
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the contact |
 
-**Example**  
+**Example**
 ```js
 execute(
   createContact(data)
@@ -79,9 +78,9 @@ execute(
 
 * * *
 
-## createPayment
+### createPayment
 
-createPayment(data) ⇒ <code>Operation</code>
+<p><code>createPayment(data) ⇒ Operation</code></p>
 
 Create a payment
 
@@ -90,7 +89,7 @@ Create a payment
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the payment |
 
-**Example**  
+**Example**
 ```js
 execute(
   createPayment(data)

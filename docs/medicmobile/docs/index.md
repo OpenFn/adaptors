@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#changesapi">changesApi(params, callback)</a></dt>
@@ -45,9 +43,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## changesApi
+## Functions
+### changesApi
 
-changesApi(params, callback) ⇒ <code>Operation</code>
+<p><code>changesApi(params, callback) ⇒ Operation</code></p>
 
 Access the CouchDB Changes API
 
@@ -57,16 +56,16 @@ Access the CouchDB Changes API
 | params | <code>object</code> | Query parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 changesApi(params, callback)
 ```
 
 * * *
 
-## fetchSubmissions
+### fetchSubmissions
 
-fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
+<p><code>fetchSubmissions(formId, params, postUrl) ⇒ Operation</code></p>
 
 Access form submissions and post them as JSON.
 
@@ -77,7 +76,7 @@ Access form submissions and post them as JSON.
 | params | <code>object</code> | Starting sequence id |
 | postUrl | <code>string</code> | Inbox to post form data |
 
-**Example**  
+**Example**
 ```js
 fetchSubmissions(
   "pregnancy", // formId
@@ -88,9 +87,9 @@ fetchSubmissions(
 
 * * *
 
-## pickFormData
+### pickFormData
 
-pickFormData(formId) ⇒ <code>Operation</code>
+<p><code>pickFormData(formId) ⇒ Operation</code></p>
 
 Select submissions for a specific form
 
@@ -99,7 +98,7 @@ Select submissions for a specific form
 | --- | --- | --- |
 | formId | <code>string</code> | The form ID. |
 
-**Example**  
+**Example**
 ```js
 pickFormData(formId)
 ```

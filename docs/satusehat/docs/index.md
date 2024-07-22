@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#get">get(path, params, callback)</a></dt>
@@ -56,9 +54,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## get
+## Functions
+### get
 
-get(path, params, callback) ⇒ <code>Operation</code>
+<p><code>get(path, params, callback) ⇒ Operation</code></p>
 
 Make a get request to any satusehat endpoint
 
@@ -69,16 +68,16 @@ Make a get request to any satusehat endpoint
 | params | <code>object</code> | Optional request params such as name. |
 | callback | <code>function</code> | An optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 get("Organization", {"name": "somename"})
 ```
 
 * * *
 
-## patch
+### patch
 
-patch(path, data, params, [callback]) ⇒ <code>Operation</code>
+<p><code>patch(path, data, params, [callback]) ⇒ Operation</code></p>
 
 Make a patch request to satusehat
 
@@ -90,7 +89,7 @@ Make a patch request to satusehat
 | params | <code>Object</code> | Optional request params. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 patch(
   "Organization/123",
@@ -105,9 +104,9 @@ patch(
 
 * * *
 
-## post
+### post
 
-post(path, data, params, [callback]) ⇒ <code>Operation</code>
+<p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
 
 Make a post request to satusehat
 
@@ -119,7 +118,7 @@ Make a post request to satusehat
 | params | <code>Object</code> | Optional request params. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 post(
   "Organization",
@@ -130,9 +129,9 @@ post(
 
 * * *
 
-## put
+### put
 
-put(path, data, params, [callback]) ⇒ <code>Operation</code>
+<p><code>put(path, data, params, [callback]) ⇒ Operation</code></p>
 
 Make a put request to satusehat
 
@@ -144,7 +143,7 @@ Make a put request to satusehat
 | params | <code>Object</code> | Optional request params. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 put(
   "Organization/123",

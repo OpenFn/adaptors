@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#addrowstorefs">addRowsToRefs(state, rows)</a></dt>
@@ -79,9 +77,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## addRowsToRefs
+## Functions
+### addRowsToRefs
 
-addRowsToRefs(state, rows) ⇒ <code>State</code>
+<p><code>addRowsToRefs(state, rows) ⇒ State</code></p>
 
 Sets the returned rows from a query as the first item in the state.references
 array, leaving state.data unchanged between operations.
@@ -95,9 +94,9 @@ array, leaving state.data unchanged between operations.
 
 * * *
 
-## cleanupState
+### cleanupState
 
-cleanupState(state) ⇒ <code>State</code>
+<p><code>cleanupState(state) ⇒ State</code></p>
 
 Removes unserializable keys from the state.
 
@@ -106,16 +105,16 @@ Removes unserializable keys from the state.
 | --- | --- |
 | state | <code>State</code> | 
 
-**Example**  
+**Example**
 ```js
 cleanupState(state)
 ```
 
 * * *
 
-## createConnection
+### createConnection
 
-createConnection(state) ⇒ <code>State</code>
+<p><code>createConnection(state) ⇒ State</code></p>
 
 Creates a connection.
 
@@ -124,16 +123,16 @@ Creates a connection.
 | --- | --- | --- |
 | state | <code>State</code> | Runtime state. |
 
-**Example**  
+**Example**
 ```js
 createConnection(state)
 ```
 
 * * *
 
-## describeTable
+### describeTable
 
-describeTable(tableName, options) ⇒ <code>Operation</code>
+<p><code>describeTable(tableName, options) ⇒ Operation</code></p>
 
 List the columns of a table in a database.
 
@@ -143,16 +142,16 @@ List the columns of a table in a database.
 | tableName | <code>string</code> | The name of the table to describe |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 describeTable('clinic_visits')
 ```
 
 * * *
 
-## findValue
+### findValue
 
-findValue(filter) ⇒ <code>Operation</code>
+<p><code>findValue(filter) ⇒ Operation</code></p>
 
 Fetch a uuid key given a condition
 
@@ -161,7 +160,7 @@ Fetch a uuid key given a condition
 | --- | --- | --- |
 | filter | <code>object</code> | A filter object with the lookup table, a uuid and the condition |
 
-**Example**  
+**Example**
 ```js
 findValue({
    uuid: 'id',
@@ -173,9 +172,9 @@ findValue({
 
 * * *
 
-## flattenRows
+### flattenRows
 
-flattenRows(state, rows) ⇒ <code>State</code>
+<p><code>flattenRows(state, rows) ⇒ State</code></p>
 
 Returns a flatten object of the rows (array of arrays) with rowCount.
 
@@ -188,9 +187,9 @@ Returns a flatten object of the rows (array of arrays) with rowCount.
 
 * * *
 
-## insert
+### insert
 
-insert(table, record, options) ⇒ <code>Operation</code>
+<p><code>insert(table, record, options) ⇒ Operation</code></p>
 
 Insert a record
 
@@ -201,16 +200,16 @@ Insert a record
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
 ```
 
 * * *
 
-## insertMany
+### insertMany
 
-insertMany(table, records, options) ⇒ <code>Operation</code>
+<p><code>insertMany(table, records, options) ⇒ Operation</code></p>
 
 Insert many records, using the keys of the first as the column template
 
@@ -221,16 +220,16 @@ Insert many records, using the keys of the first as the column template
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
 ```
 
 * * *
 
-## insertTable
+### insertTable
 
-insertTable(tableName, columns, options) ⇒ <code>Operation</code>
+<p><code>insertTable(tableName, columns, options) ⇒ Operation</code></p>
 
 Create a table in database when given an array of columns and a table_name.
 
@@ -241,7 +240,7 @@ Create a table in database when given an array of columns and a table_name.
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 insertTable('table_name', state => state.data.map(
   column => ({
@@ -255,9 +254,9 @@ insertTable('table_name', state => state.data.map(
 
 * * *
 
-## modifyTable
+### modifyTable
 
-modifyTable(tableName, columns, options) ⇒ <code>Operation</code>
+<p><code>modifyTable(tableName, columns, options) ⇒ Operation</code></p>
 
 Alter an existing table in the database.
 
@@ -268,7 +267,7 @@ Alter an existing table in the database.
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 modifyTable('table_name', state => state.data.map(
   newColumn => ({
@@ -282,9 +281,9 @@ modifyTable('table_name', state => state.data.map(
 
 * * *
 
-## sql
+### sql
 
-sql(params) ⇒ <code>Operation</code>
+<p><code>sql(params) ⇒ Operation</code></p>
 
 Execute an SQL statement
 
@@ -293,16 +292,16 @@ Execute an SQL statement
 | --- | --- | --- |
 | params | <code>object</code> | Payload data for the message |
 
-**Example**  
+**Example**
 ```js
 sql({ query, options })
 ```
 
 * * *
 
-## upsert
+### upsert
 
-upsert(table, uuid, record, options) ⇒ <code>Operation</code>
+<p><code>upsert(table, uuid, record, options) ⇒ Operation</code></p>
 
 Insert or update a record using SQL MERGE
 
@@ -314,7 +313,7 @@ Insert or update a record using SQL MERGE
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 upsert(table, uuid, record, { setNull: "'undefined'", logValues: false})
 upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false})
@@ -322,9 +321,9 @@ upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false
 
 * * *
 
-## upsertIf
+### upsertIf
 
-upsertIf(logical, table, uuid, record, options) ⇒ <code>Operation</code>
+<p><code>upsertIf(logical, table, uuid, record, options) ⇒ Operation</code></p>
 
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
@@ -337,7 +336,7 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | record | <code>object</code> | Payload data for the record as a JS object or function |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 upsertIf(
   dataValue('name'),
@@ -350,9 +349,9 @@ upsertIf(
 
 * * *
 
-## upsertMany
+### upsertMany
 
-upsertMany(table, uuid, records, options) ⇒ <code>Operation</code>
+<p><code>upsertMany(table, uuid, records, options) ⇒ Operation</code></p>
 
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
@@ -364,7 +363,7 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+**Example**
 ```js
 upsertMany(
  'users', 'email', records, { logValues: false }

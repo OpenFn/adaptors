@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#create">create(resourceType, data, [callback])</a></dt>
@@ -66,9 +64,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## create
+## Functions
+### create
 
-create(resourceType, data, [callback]) ⇒ <code>Operation</code>
+<p><code>create(resourceType, data, [callback]) ⇒ Operation</code></p>
 
 Create a record
 
@@ -79,7 +78,7 @@ Create a record
 | data | <code>OpenMRSData</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(Create a person)*  
+**Example:** Create a person
 ```js
 create("person", {
   names: [
@@ -103,9 +102,9 @@ create("person", {
 
 * * *
 
-## createEncounter
+### createEncounter
 
-createEncounter(data, [callback]) ⇒ <code>Operation</code>
+<p><code>createEncounter(data, [callback]) ⇒ Operation</code></p>
 
 Creates an encounter
 
@@ -115,7 +114,7 @@ Creates an encounter
 | data | <code>object</code> | Data parameters of the encounter |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(Create an encounter)*  
+**Example:** Create an encounter
 ```js
 createEncounter({
   encounterDatetime: '2023-05-25T06:08:25.000+0000',
@@ -134,9 +133,9 @@ createEncounter({
 
 * * *
 
-## createPatient
+### createPatient
 
-createPatient(data, [callback]) ⇒ <code>Operation</code>
+<p><code>createPatient(data, [callback]) ⇒ Operation</code></p>
 
 Creates a new patient
 
@@ -146,7 +145,7 @@ Creates a new patient
 | data | <code>object</code> | Object parameters of the patient |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 createPatient({
   identifiers: [
@@ -173,9 +172,9 @@ createPatient({
 
 * * *
 
-## get
+### get
 
-get(path, query, [callback]) ⇒ <code>Operation</code>
+<p><code>get(path, query, [callback]) ⇒ Operation</code></p>
 
 Make a get request to any OpenMRS endpoint
 
@@ -186,7 +185,7 @@ Make a get request to any OpenMRS endpoint
 | query | <code>object</code> | parameters for the request |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 get("patient", {
   q: "Patient",
@@ -196,9 +195,9 @@ get("patient", {
 
 * * *
 
-## getEncounter
+### getEncounter
 
-getEncounter(uuid, [callback]) ⇒ <code>Operation</code>
+<p><code>getEncounter(uuid, [callback]) ⇒ Operation</code></p>
 
 Gets encounter matching a uuid
 
@@ -208,16 +207,16 @@ Gets encounter matching a uuid
 | uuid | <code>object</code> | A uuid for the encounter |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 getEncounter("123")
 ```
 
 * * *
 
-## getEncounters
+### getEncounters
 
-getEncounters(query, [callback]) ⇒ <code>Operation</code>
+<p><code>getEncounters(query, [callback]) ⇒ Operation</code></p>
 
 Gets encounters matching params
 
@@ -227,16 +226,16 @@ Gets encounters matching params
 | query | <code>object</code> | Object for the patient |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 getEncounters({ patient: "123", fromdate: "2023-05-18" })
 ```
 
 * * *
 
-## getPatient
+### getPatient
 
-getPatient(uuid, [callback]) ⇒ <code>Operation</code>
+<p><code>getPatient(uuid, [callback]) ⇒ Operation</code></p>
 
 Gets patient matching a uuid
 
@@ -246,20 +245,20 @@ Gets patient matching a uuid
 | uuid | <code>string</code> | A uuid for the patient |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 getPatient("123")
 ```
-**Example** *(Get a patient by uuid)*  
+**Example:** Get a patient by uuid
 ```js
 getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
 ```
 
 * * *
 
-## post
+### post
 
-post(path, data, [callback]) ⇒ <code>Operation</code>
+<p><code>post(path, data, [callback]) ⇒ Operation</code></p>
 
 Make a post request to any OpenMRS endpoint
 
@@ -270,7 +269,7 @@ Make a post request to any OpenMRS endpoint
 | data | <code>object</code> | Object which defines data that will be used to create a given instance of resource |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 post(
   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
@@ -280,9 +279,9 @@ post(
 
 * * *
 
-## searchPatient
+### searchPatient
 
-searchPatient(query, [callback]) ⇒ <code>Operation</code>
+<p><code>searchPatient(query, [callback]) ⇒ Operation</code></p>
 
 Fetch all non-retired patients that match any specified parameters
 
@@ -292,16 +291,16 @@ Fetch all non-retired patients that match any specified parameters
 | query | <code>object</code> | Object with query for the patient. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 searchPatient({ q: "Sarah"})
 ```
 
 * * *
 
-## searchPerson
+### searchPerson
 
-searchPerson(query, [callback]) ⇒ <code>Operation</code>
+<p><code>searchPerson(query, [callback]) ⇒ Operation</code></p>
 
 Fetch all non-retired persons that match any specified parameters
 
@@ -311,16 +310,16 @@ Fetch all non-retired persons that match any specified parameters
 | query | <code>object</code> | object with query for the person |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 searchPerson({ q: "Sarah" })
 ```
 
 * * *
 
-## update
+### update
 
-update(resourceType, path, data, [callback]) ⇒ <code>Operation</code>
+<p><code>update(resourceType, path, data, [callback]) ⇒ Operation</code></p>
 
 Update data. A generic helper function to update a resource object of any type.
 Updating an object requires to send `all required fields` or the `full body`
@@ -333,16 +332,16 @@ Updating an object requires to send `all required fields` or the `full body`
 | data | <code>Object</code> | Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(a person)*  
+**Example:** a person
 ```js
 update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
 ```
 
 * * *
 
-## upsert
+### upsert
 
-upsert(resourceType, query, data, [callback]) ⇒ <code>Operation</code>
+<p><code>upsert(resourceType, query, data, [callback]) ⇒ Operation</code></p>
 
 Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
 
@@ -358,11 +357,11 @@ Upsert a record. A generic helper function used to atomically either insert a ro
 | data | <code>Object</code> | The data to use for update or create depending on the result of the query. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(For an existing patient using upsert)*  
+**Example:** For an existing patient using upsert
 ```js
 upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
 ```
-**Example** *(For non existing patient creating a patient record using upsert )*  
+**Example:** For non existing patient creating a patient record using upsert 
 ```js
 upsert(
   "patient",

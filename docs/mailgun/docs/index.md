@@ -38,9 +38,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## send
+## Functions
+### send
 
-send(params)
+<p><code>send(params)</code></p>
 
 Create an event
 
@@ -49,7 +50,7 @@ Create an event
 | --- | --- | --- |
 | params | <code>object</code> | Params for sending an email |
 
-**Example**  
+**Example**
 ```js
 send({
   from: 'from_email',

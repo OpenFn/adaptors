@@ -35,9 +35,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## postMessage
+## Functions
+### postMessage
 
-postMessage(params) ⇒ <code>Operation</code>
+<p><code>postMessage(params) ⇒ Operation</code></p>
 
 Post a message
 
@@ -46,7 +47,7 @@ Post a message
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
-**Example**  
+**Example**
 ```js
 postMessage({
  "recipient": {

@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#fetch">fetch(params)</a></dt>
@@ -45,9 +43,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## fetch
+## Functions
+### fetch
 
-fetch(params) ⇒ <code>Operation</code>
+<p><code>fetch(params) ⇒ Operation</code></p>
 
 Make a GET request and POST it somewhere else
 
@@ -56,7 +55,7 @@ Make a GET request and POST it somewhere else
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
-**Example**  
+**Example**
 ```js
 fetch({
  endpoint: 'maxrest/rest/os/mxinventory',
@@ -70,9 +69,9 @@ fetch({
 
 * * *
 
-## update
+### update
 
-update(params) ⇒ <code>Operation</code>
+<p><code>update(params) ⇒ Operation</code></p>
 
 Make an update in Maximo 7.6 and beyond
 
@@ -81,7 +80,7 @@ Make an update in Maximo 7.6 and beyond
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**  
+**Example**
 ```js
 execute(
   update(params)
@@ -90,9 +89,9 @@ execute(
 
 * * *
 
-## update75
+### update75
 
-update75(params) ⇒ <code>Operation</code>
+<p><code>update75(params) ⇒ Operation</code></p>
 
 Make an upadte in Maximo 7.5
 
@@ -101,7 +100,7 @@ Make an upadte in Maximo 7.5
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**  
+**Example**
 ```js
 execute(
   update75(params)

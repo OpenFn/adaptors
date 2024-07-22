@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#addrow">addRow(table, rowData)</a></dt>
@@ -40,9 +38,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## addRow
+## Functions
+### addRow
 
-addRow(table, rowData) ⇒ <code>Operation</code>
+<p><code>addRow(table, rowData) ⇒ Operation</code></p>
 
 Add rows to a table
 
@@ -52,7 +51,7 @@ Add rows to a table
 | table | <code>String</code> | Table name |
 | rowData | <code>object</code> | data to add in the row |
 
-**Example**  
+**Example**
 ```js
 execute(
   addRow(table, rowData)
@@ -61,9 +60,9 @@ execute(
 
 * * *
 
-## sql
+### sql
 
-sql(sqlQuery) ⇒ <code>Operation</code>
+<p><code>sql(sqlQuery) ⇒ Operation</code></p>
 
 Execute an SQL statement
 
@@ -72,7 +71,7 @@ Execute an SQL statement
 | --- | --- | --- |
 | sqlQuery | <code>object</code> | Payload data for the message |
 
-**Example**  
+**Example**
 ```js
 execute(
   sql(sqlQuery)

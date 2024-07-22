@@ -38,9 +38,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## postData
+## Functions
+### postData
 
-postData(params, callback) ⇒ <code>Operation</code>
+<p><code>postData(params, callback) ⇒ Operation</code></p>
 
 Make a POST request with a certificate
 
@@ -50,7 +51,7 @@ Make a POST request with a certificate
 | params | <code>object</code> | Url, Headers and Body parameters |
 | callback | <code>function</code> | (Optional) A callback function |
 
-**Example**  
+**Example**
 ```js
 postData({
  url: urlDTP,

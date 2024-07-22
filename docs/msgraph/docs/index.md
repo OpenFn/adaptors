@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#create">create(resource, data, callback)</a></dt>
@@ -59,9 +57,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## create
+## Functions
+### create
 
-create(resource, data, callback) ⇒ <code>Operation</code>
+<p><code>create(resource, data, callback) ⇒ Operation</code></p>
 
 Create some resource in msgraph
 
@@ -72,16 +71,16 @@ Create some resource in msgraph
 | data | <code>object</code> | The data to create the new resource |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 create("applications", {"displayName": "My App"})
 ```
 
 * * *
 
-## get
+### get
 
-get(path, query, callback) ⇒ <code>Operation</code>
+<p><code>get(path, query, callback) ⇒ Operation</code></p>
 
 Make a GET request to msgraph resource
 
@@ -92,16 +91,16 @@ Make a GET request to msgraph resource
 | query | <code>object</code> | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 get('sites/root/lists')
 ```
 
 * * *
 
-## getDrive
+### getDrive
 
-getDrive(specifier, name, [callback]) ⇒ <code>Operation</code>
+<p><code>getDrive(specifier, name, [callback]) ⇒ Operation</code></p>
 
 Get a Drive or SharePoint document library. The drive metadata will be written
 to state.drives, where it can be used by other adaptor functions.
@@ -115,20 +114,20 @@ some parent resource, like a group
 | name | <code>string</code> |  | The local name of the drive used to write to state.drives, ie, state.drives[name] |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a drive by ID)*  
+**Example:** Get a drive by ID
 ```js
 getDrive({ id: "YXzpkoLwR06bxC8tNdg71m" })
 ```
-**Example** *(Get the default drive for a site)*  
+**Example:** Get the default drive for a site
 ```js
 getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
 ```
 
 * * *
 
-## getFile
+### getFile
 
-getFile(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+<p><code>getFile(pathOrId, options, [callback]) ⇒ Operation</code></p>
 
 Get file metadata or file content.
 
@@ -139,20 +138,20 @@ Get file metadata or file content.
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a file by ID)*  
+**Example:** Get a file by ID
 ```js
 getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
 ```
-**Example** *(Get a file for a named drive by id)*  
+**Example:** Get a file for a named drive by id
 ```js
 getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
 ```
 
 * * *
 
-## getFolder
+### getFolder
 
-getFolder(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+<p><code>getFolder(pathOrId, options, [callback]) ⇒ Operation</code></p>
 
 Get the contents or metadata of a folder.
 
@@ -163,39 +162,20 @@ Get the contents or metadata of a folder.
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a folder by ID)*  
+**Example:** Get a folder by ID
 ```js
 getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
 ```
-**Example** *(Get a folder for a named drive by id)*  
+**Example:** Get a folder for a named drive by id
 ```js
 getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
 ```
 
 * * *
 
-## request
+### sheetToBuffer
 
-request ⇒
-
-This is an asynchronous function that sends a request to a specified URL with optional parameters
-and headers, and returns the response data in JSON format.
-
-**Returns**: The `request` function is returning the parsed JSON data from the response of the HTTP
-request made to the specified `url` with the given `params` and `method`. If there is an error in
-the response, the function will throw an error.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| url | <code>string</code> | The URL of the API endpoint that the request is being made to. |
-| [options] | <code>object</code> | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |
-
-
-* * *
-
-## sheetToBuffer
-
-sheetToBuffer(rows, options) ⇒
+<p><code>sheetToBuffer(rows, options) ⇒</code></p>
 
 The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
 and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
@@ -210,7 +190,7 @@ buffer.
 | [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
 | [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
 
-**Example** *(Create a buffer containing excel file with &#x60;xlsx&#x60; output format  )*  
+**Example:** Create a buffer containing excel file with &#x60;xlsx&#x60; output format  
 ```js
 sheetToBuffer('$.data[*]', {
  wsName: 'Invalid Grant Codes',
@@ -220,9 +200,9 @@ sheetToBuffer('$.data[*]', {
 
 * * *
 
-## uploadFile
+### uploadFile
 
-uploadFile(resource, data, callback) ⇒ <code>Operation</code>
+<p><code>uploadFile(resource, data, callback) ⇒ Operation</code></p>
 
 Upload a file to a drive
 
@@ -238,7 +218,7 @@ Upload a file to a drive
 | data | <code>Object</code> | A buffer containing the file. |
 | callback | <code>function</code> | Optional callback function |
 
-**Example** *(Upload Excel file to a drive using &#x60;driveId&#x60; and &#x60;parantItemId&#x60;)*  
+**Example:** Upload Excel file to a drive using &#x60;driveId&#x60; and &#x60;parantItemId&#x60;
 ```js
 uploadFile(
   state => ({
@@ -249,7 +229,7 @@ uploadFile(
   state => state.buffer
 );
 ```
-**Example** *(Upload Excel file to a SharePoint drive using &#x60;siteId&#x60; and &#x60;parantItemId&#x60;)*  
+**Example:** Upload Excel file to a SharePoint drive using &#x60;siteId&#x60; and &#x60;parantItemId&#x60;
 ```js
 uploadFile(
   state => ({

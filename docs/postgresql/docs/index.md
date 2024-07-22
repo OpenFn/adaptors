@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#describetable">describeTable(tableName, [options], callback)</a></dt>
@@ -74,9 +72,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## describeTable
+## Functions
+### describeTable
 
-describeTable(tableName, [options], callback) ⇒ <code>Operation</code>
+<p><code>describeTable(tableName, [options], callback) ⇒ Operation</code></p>
 
 List the columns of a table in a database.
 
@@ -89,16 +88,16 @@ List the columns of a table in a database.
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 describeTable('clinic_visits')
 ```
 
 * * *
 
-## findValue
+### findValue
 
-findValue([filter]) ⇒ <code>value</code>
+<p><code>findValue([filter]) ⇒ value</code></p>
 
 Fetch a uuid key given a condition
 
@@ -111,7 +110,7 @@ Fetch a uuid key given a condition
 | [filter.where] | <code>object</code> | An object that contains key-value pairs to filter the search results. |
 | [filter.operator] | <code>object</code> | An object that contains key-value pairs to specify the type of comparison to perform on the where clause. |
 
-**Example**  
+**Example**
 ```js
 findValue({
    uuid: 'id',
@@ -123,9 +122,9 @@ findValue({
 
 * * *
 
-## insert
+### insert
 
-insert(table, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>insert(table, record, [options], callback) ⇒ Operation</code></p>
 
 Insert a record
 
@@ -141,16 +140,16 @@ Insert a record
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
 ```
 
 * * *
 
-## insertMany
+### insertMany
 
-insertMany(table, records, [options], callback) ⇒ <code>Operation</code>
+<p><code>insertMany(table, records, [options], callback) ⇒ Operation</code></p>
 
 Insert many records, using the keys of the first as the column template
 
@@ -166,16 +165,16 @@ Insert many records, using the keys of the first as the column template
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
 ```
 
 * * *
 
-## insertTable
+### insertTable
 
-insertTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+<p><code>insertTable(tableName, columns, [options], callback) ⇒ Operation</code></p>
 
 Create a table in database when given an array of columns and a table_name.
 
@@ -189,7 +188,7 @@ Create a table in database when given an array of columns and a table_name.
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 insertTable('table_name', state => state.data.map(
   column => ({
@@ -203,9 +202,9 @@ insertTable('table_name', state => state.data.map(
 
 * * *
 
-## modifyTable
+### modifyTable
 
-modifyTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+<p><code>modifyTable(tableName, columns, [options], callback) ⇒ Operation</code></p>
 
 Alter an existing table in the database.
 
@@ -219,7 +218,7 @@ Alter an existing table in the database.
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 modifyTable('table_name', state => state.data.map(
   newColumn => ({
@@ -233,9 +232,9 @@ modifyTable('table_name', state => state.data.map(
 
 * * *
 
-## sql
+### sql
 
-sql(sqlQuery, [options], callback) ⇒ <code>Operation</code>
+<p><code>sql(sqlQuery, [options], callback) ⇒ Operation</code></p>
 
 Execute an SQL statement
 
@@ -248,16 +247,16 @@ Execute an SQL statement
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
 ```
 
 * * *
 
-## upsert
+### upsert
 
-upsert(table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsert(table, uuid, record, [options], callback) ⇒ Operation</code></p>
 
 Insert or update a record using ON CONFLICT UPDATE
 
@@ -274,7 +273,7 @@ Insert or update a record using ON CONFLICT UPDATE
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 upsert(
   'users', // the DB table
@@ -286,9 +285,9 @@ upsert(
 
 * * *
 
-## upsertIf
+### upsertIf
 
-upsertIf(logical, table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsertIf(logical, table, uuid, record, [options], callback) ⇒ Operation</code></p>
 
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
@@ -306,7 +305,7 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 upsertIf(
   dataValue('name'),
@@ -319,9 +318,9 @@ upsertIf(
 
 * * *
 
-## upsertMany
+### upsertMany
 
-upsertMany(table, uuid, data, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsertMany(table, uuid, data, [options], callback) ⇒ Operation</code></p>
 
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
@@ -338,7 +337,7 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 upsertMany(
   'users', // the DB table

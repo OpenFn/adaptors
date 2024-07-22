@@ -35,9 +35,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## submitSite
+## Functions
+### submitSite
 
-submitSite(eventData) ⇒ <code>Operation</code>
+<p><code>submitSite(eventData) ⇒ Operation</code></p>
 
 Create an event
 
@@ -46,7 +47,7 @@ Create an event
 | --- | --- | --- |
 | eventData | <code>object</code> | Payload data for the event |
 
-**Example**  
+**Example**
 ```js
 execute(
   event(eventData)

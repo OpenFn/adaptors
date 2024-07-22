@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#fetchsurveydata">fetchSurveyData(params)</a></dt>
@@ -43,9 +41,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## fetchSurveyData
+## Functions
+### fetchSurveyData
 
-fetchSurveyData(params) ⇒ <code>Operation</code>
+<p><code>fetchSurveyData(params) ⇒ Operation</code></p>
 
 Make a POST request to fetch Magpi data and POST it somewhere else
 
@@ -54,7 +53,7 @@ Make a POST request to fetch Magpi data and POST it somewhere else
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
-**Example**  
+**Example**
 ```js
 fetchSurveyData({
  "surveyId": "37479",
@@ -65,9 +64,9 @@ fetchSurveyData({
 
 * * *
 
-## submitRecord
+### submitRecord
 
-submitRecord(jsonData) ⇒ <code>Operation</code>
+<p><code>submitRecord(jsonData) ⇒ Operation</code></p>
 
 Submit a record for a form/survey which already exists in a Magpi user account
 
@@ -76,7 +75,7 @@ Submit a record for a form/survey which already exists in a Magpi user account
 | --- | --- | --- |
 | jsonData | <code>object</code> | Payload data for the record |
 
-**Example**  
+**Example**
 ```js
 submitRecord(jsonData)
 ```

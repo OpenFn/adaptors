@@ -38,9 +38,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## query
+## Functions
+### query
 
-query(qs, options, callback) ⇒ <code>Operation</code>
+<p><code>query(qs, options, callback) ⇒ Operation</code></p>
 
 Execute an SQL statement
 
@@ -51,7 +52,7 @@ Execute an SQL statement
 | options | <code>object</code> | (Optional) options for executing sql statement |
 | callback | <code>function</code> | An optional callback function |
 
-**Example** *(Get patient count from hive database)*  
+**Example:** Get patient count from hive database
 ```js
 query("select count(*) from patient");
 ```

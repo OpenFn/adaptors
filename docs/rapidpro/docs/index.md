@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#addcontact">addContact(params, callback)</a></dt>
@@ -50,9 +48,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## addContact
+## Functions
+### addContact
 
-addContact(params, callback) ⇒ <code>Operation</code>
+<p><code>addContact(params, callback) ⇒ Operation</code></p>
 
 Adds a new contact to RapidPro
 
@@ -62,7 +61,7 @@ Adds a new contact to RapidPro
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 addContact({
   name: "Mamadou",
@@ -73,9 +72,9 @@ addContact({
 
 * * *
 
-## sendBroadcast
+### sendBroadcast
 
-sendBroadcast(params, callback) ⇒ <code>Operation</code>
+<p><code>sendBroadcast(params, callback) ⇒ Operation</code></p>
 
 Sends a message to a list of contacts and/or URNs
 
@@ -85,7 +84,7 @@ Sends a message to a list of contacts and/or URNs
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 sendBroadcast({
   text: "Hello world",
@@ -96,9 +95,9 @@ sendBroadcast({
 
 * * *
 
-## startFlow
+### startFlow
 
-startFlow(params, callback) ⇒ <code>Operation</code>
+<p><code>startFlow(params, callback) ⇒ Operation</code></p>
 
 Start a RapidPro flow for a number of contacts
 
@@ -108,7 +107,7 @@ Start a RapidPro flow for a number of contacts
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 startFlow({
   flow: "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
@@ -119,9 +118,9 @@ startFlow({
 
 * * *
 
-## upsertContact
+### upsertContact
 
-upsertContact(params, callback) ⇒ <code>Operation</code>
+<p><code>upsertContact(params, callback) ⇒ Operation</code></p>
 
 Upserts a contact to RapidPro by URN
 
@@ -131,7 +130,7 @@ Upserts a contact to RapidPro by URN
 | params | <code>object</code> | data to upsert a contact |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 upsertContact({
   name: "Mamadou",

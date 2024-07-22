@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#downloadblob">downloadBlob(blobName, [options])</a></dt>
@@ -48,9 +46,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## downloadBlob
+## Functions
+### downloadBlob
 
-downloadBlob(blobName, [options]) ⇒ <code>Operation</code>
+<p><code>downloadBlob(blobName, [options]) ⇒ Operation</code></p>
 
 Download a blob from Azure Blob Storage.
 
@@ -60,16 +59,16 @@ Download a blob from Azure Blob Storage.
 | blobName | <code>string</code> |  | Name of the blob to download. |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options for the download process. |
 
-**Example**  
+**Example**
 ```js
 downloadBlob('mycontainer', 'myblob.txt', { downloadAs: 'string' })
 ```
 
 * * *
 
-## getBlobProperties
+### getBlobProperties
 
-getBlobProperties(blobName, options) ⇒ <code>Operation</code>
+<p><code>getBlobProperties(blobName, options) ⇒ Operation</code></p>
 
 Get properties of a blob in Azure Blob Storage.
 
@@ -79,16 +78,16 @@ Get properties of a blob in Azure Blob Storage.
 | blobName | <code>string</code> | Name of the blob to get properties for. |
 | options | <code>string</code> | Additional options for the getBlobProperties process. |
 
-**Example**  
+**Example**
 ```js
 getBlobProperties('mycontainer', 'myblob.txt')
 ```
 
 * * *
 
-## uploadBlob
+### uploadBlob
 
-uploadBlob(blobName, content, uploadOptions, [options]) ⇒ <code>Operation</code>
+<p><code>uploadBlob(blobName, content, uploadOptions, [options]) ⇒ Operation</code></p>
 
 Upload content to Azure Blob Storage.
 
@@ -103,7 +102,7 @@ Upload content to Azure Blob Storage.
 | [options.overwrite] | <code>boolean</code> | <code>false</code> | Whether to overwrite an existing blob with the same name. |
 | [options.containerName] | <code>string</code> |  | Container name. Overrides state.configuration. |
 
-**Example**  
+**Example**
 ```js
 uploadBlob('mycontainer', 'myblob.txt', {foo:"bar"}, { blobHTTPHeaders: { blobContentType: 'application/json' } })
 ```

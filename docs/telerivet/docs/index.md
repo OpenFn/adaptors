@@ -32,9 +32,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## send
+## Functions
+### send
 
-send(sendData) ⇒ <code>Operation</code>
+<p><code>send(sendData) ⇒ Operation</code></p>
 
 Send a message
 
@@ -43,7 +44,7 @@ Send a message
 | --- | --- | --- |
 | sendData | <code>object</code> | Payload data for the message |
 
-**Example**  
+**Example**
 ```js
 execute(
   send(data)

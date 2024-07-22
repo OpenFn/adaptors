@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#addtogroup">addToGroup(group_id, individual_id, role)</a></dt>
@@ -82,9 +80,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## addToGroup
+## Functions
+### addToGroup
 
-addToGroup(group_id, individual_id, role) ⇒ <code>Operation</code>
+<p><code>addToGroup(group_id, individual_id, role) ⇒ Operation</code></p>
 
 add individual to group in OpenSPP
 
@@ -95,24 +94,24 @@ add individual to group in OpenSPP
 | individual_id | <code>string</code> | individual registrant id |
 | role | <code>string</code> | individual role in group |
 
-**Example** *(create a new head for group)*  
+**Example:** create a new head for group
 ```js
 addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
 ```
-**Example** *(create a new ordinary member for group)*  
+**Example:** create a new ordinary member for group
 ```js
 addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
 ```
-**Example** *(create a new member with new role for group)*  
+**Example:** create a new member with new role for group
 ```js
 addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
 ```
 
 * * *
 
-## createGroup
+### createGroup
 
-createGroup(data, callback) ⇒ <code>Operation</code>
+<p><code>createGroup(data, callback) ⇒ Operation</code></p>
 
 create new group for OpenSPP
 
@@ -122,16 +121,16 @@ create new group for OpenSPP
 | data | <code>object</code> | registrant create data |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 createGroup({ name: "Group 1" })
 ```
 
 * * *
 
-## createIndividual
+### createIndividual
 
-createIndividual(data, callback) ⇒ <code>Operation</code>
+<p><code>createIndividual(data, callback) ⇒ Operation</code></p>
 
 create new individual for OpenSPP
 
@@ -141,16 +140,16 @@ create new individual for OpenSPP
 | data | <code>object</code> | registrant create data |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 createIndividual({ name: "Individual 1" })
 ```
 
 * * *
 
-## enroll
+### enroll
 
-enroll(spp_id, program_id)
+<p><code>enroll(spp_id, program_id)</code></p>
 
 enroll registrant to program in OpenSPP
 
@@ -160,16 +159,16 @@ enroll registrant to program in OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to enroll |
 | program_id | <code>string</code> | program_id of program |
 
-**Example**  
+**Example**
 ```js
 enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 ```
 
 * * *
 
-## getArea
+### getArea
 
-getArea(spp_id, callback) ⇒ <code>Operation</code>
+<p><code>getArea(spp_id, callback) ⇒ Operation</code></p>
 
 get area by id in OpenSPP
 
@@ -179,16 +178,16 @@ get area by id in OpenSPP
 | spp_id | <code>string</code> | spp_id of area |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getArea("LOC_7M92NLDH")
 ```
 
 * * *
 
-## getEnrolledPrograms
+### getEnrolledPrograms
 
-getEnrolledPrograms(spp_id, callback) ⇒ <code>Operation</code>
+<p><code>getEnrolledPrograms(spp_id, callback) ⇒ Operation</code></p>
 
 get programs list for specific registrant from OpenSPP
 
@@ -198,16 +197,16 @@ get programs list for specific registrant from OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to search |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getEnrolledPrograms("IND_Q4VGGZPF")
 ```
 
 * * *
 
-## getGroup
+### getGroup
 
-getGroup(spp_id, callback) ⇒ <code>Operation</code>
+<p><code>getGroup(spp_id, callback) ⇒ Operation</code></p>
 
 get group information from OpenSPP
 
@@ -217,16 +216,16 @@ get group information from OpenSPP
 | spp_id | <code>string</code> | The spp_id of the group |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getGroup("GRP_Q4VGGZPF")
 ```
 
 * * *
 
-## getGroupMembers
+### getGroupMembers
 
-getGroupMembers(spp_id, [options], callback) ⇒ <code>Operation</code>
+<p><code>getGroupMembers(spp_id, [options], callback) ⇒ Operation</code></p>
 
 get group members information from OpenSPP
 
@@ -237,16 +236,16 @@ get group members information from OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getGroupMembers("GRP_Q4VGGZPF")
 ```
 
 * * *
 
-## getIndividual
+### getIndividual
 
-getIndividual(spp_id, callback) ⇒ <code>Operation</code>
+<p><code>getIndividual(spp_id, callback) ⇒ Operation</code></p>
 
 get individual information from OpenSPP
 
@@ -256,16 +255,16 @@ get individual information from OpenSPP
 | spp_id | <code>string</code> | The spp_id of the individual |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getIndividual("IND_Q4VGGZPF")
 ```
 
 * * *
 
-## getProgram
+### getProgram
 
-getProgram(program_id, callback) ⇒ <code>Operation</code>
+<p><code>getProgram(program_id, callback) ⇒ Operation</code></p>
 
 get program information from OpenSPP
 
@@ -275,16 +274,16 @@ get program information from OpenSPP
 | program_id | <code>string</code> | searching domain |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getProgram("PROG_2023_00000001")
 ```
 
 * * *
 
-## getPrograms
+### getPrograms
 
-getPrograms([options], callback) ⇒ <code>Operation</code>
+<p><code>getPrograms([options], callback) ⇒ Operation</code></p>
 
 get programs list from OpenSPP
 
@@ -294,16 +293,16 @@ get programs list from OpenSPP
 | [options] | <code>number</code> | <code>{}</code> | offset from start |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getPrograms(100)
 ```
 
 * * *
 
-## getServicePoint
+### getServicePoint
 
-getServicePoint(spp_id, callback) ⇒ <code>Operation</code>
+<p><code>getServicePoint(spp_id, callback) ⇒ Operation</code></p>
 
 get service points information from OpenSPP
 
@@ -313,16 +312,16 @@ get service points information from OpenSPP
 | spp_id | <code>string</code> | The spp_id of the agent |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 getServicePoint("SVP_8P4KP4RT")
 ```
 
 * * *
 
-## removeFromGroup
+### removeFromGroup
 
-removeFromGroup(group_id, individual_id) ⇒ <code>Operation</code>
+<p><code>removeFromGroup(group_id, individual_id) ⇒ Operation</code></p>
 
 remove individual from group in OpenSPP
 
@@ -332,16 +331,16 @@ remove individual from group in OpenSPP
 | group_id | <code>string</code> | group registrant id |
 | individual_id | <code>string</code> | individual registrant id |
 
-**Example**  
+**Example**
 ```js
 removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
 ```
 
 * * *
 
-## searchArea
+### searchArea
 
-searchArea(domain, [options], callback) ⇒ <code>Operation</code>
+<p><code>searchArea(domain, [options], callback) ⇒ Operation</code></p>
 
 searching for service point in OpenSPP
 
@@ -352,20 +351,20 @@ searching for service point in OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example** *(search without offset)*  
+**Example:** search without offset
 ```js
 searchArea([["code", "=", "10732"]])
 ```
-**Example** *(search with offset)*  
+**Example:** search with offset
 ```js
 searchArea([["kind", "=", 1]], { offset: 10 }})
 ```
 
 * * *
 
-## searchGroup
+### searchGroup
 
-searchGroup(domain, [options], callback) ⇒ <code>Operation</code>
+<p><code>searchGroup(domain, [options], callback) ⇒ Operation</code></p>
 
 get groups from OpenSPP
 
@@ -376,24 +375,24 @@ get groups from OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example** *(search group by domain)*  
+**Example:** search group by domain
 ```js
 searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
 ```
-**Example** *(search group by domain with offset)*  
+**Example:** search group by domain with offset
 ```js
 searchGroup([["spp_id", "ilike", "GRP"]], { offset: 100 }})
 ```
-**Example** *(search group by complex domain for more accuracy)*  
+**Example:** search group by complex domain for more accuracy
 ```js
 searchGroup([["address", "!=", false], ["phone", "!=", false]])
 ```
 
 * * *
 
-## searchIndividual
+### searchIndividual
 
-searchIndividual(domain, [options], callback) ⇒ <code>Operation</code>
+<p><code>searchIndividual(domain, [options], callback) ⇒ Operation</code></p>
 
 get individuals from OpenSPP
 
@@ -404,24 +403,24 @@ get individuals from OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example** *(search individual by domain)*  
+**Example:** search individual by domain
 ```js
 searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
 ```
-**Example** *(search individual by domain with offset)*  
+**Example:** search individual by domain with offset
 ```js
 searchIndividual([["spp_id", "ilike", "IND"]], { offset: 100 })
 ```
-**Example** *(search individual by complex domain for more accuracy)*  
+**Example:** search individual by complex domain for more accuracy
 ```js
 searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
 ```
 
 * * *
 
-## searchServicePoint
+### searchServicePoint
 
-searchServicePoint(domain, [options], callback) ⇒ <code>Operation</code>
+<p><code>searchServicePoint(domain, [options], callback) ⇒ Operation</code></p>
 
 searching for service point in OpenSPP
 
@@ -432,20 +431,20 @@ searching for service point in OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
-**Example** *(search without offset)*  
+**Example:** search without offset
 ```js
 searchServicePoint([["name", "ilike", "agent 1"]])
 ```
-**Example** *(search with offset)*  
+**Example:** search with offset
 ```js
 searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
 ```
 
 * * *
 
-## unenroll
+### unenroll
 
-unenroll(spp_id, program_id)
+<p><code>unenroll(spp_id, program_id)</code></p>
 
 unenroll registrant from program in OpenSPP
 
@@ -455,16 +454,16 @@ unenroll registrant from program in OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to unenroll |
 | program_id | <code>string</code> | program_id of program |
 
-**Example**  
+**Example**
 ```js
 unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
 ```
 
 * * *
 
-## updateGroup
+### updateGroup
 
-updateGroup(group_id, data) ⇒ <code>Operation</code>
+<p><code>updateGroup(group_id, data) ⇒ Operation</code></p>
 
 update group for OpenSPP
 
@@ -474,16 +473,16 @@ update group for OpenSPP
 | group_id | <code>string</code> | group registrant id |
 | data | <code>object</code> | registrant update data |
 
-**Example**  
+**Example**
 ```js
 updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
 ```
 
 * * *
 
-## updateIndividual
+### updateIndividual
 
-updateIndividual(individual_id, data) ⇒ <code>Operation</code>
+<p><code>updateIndividual(individual_id, data) ⇒ Operation</code></p>
 
 update individual for OpenSPP
 
@@ -493,7 +492,7 @@ update individual for OpenSPP
 | individual_id | <code>string</code> | individual registrant id |
 | data | <code>object</code> | registrant update data |
 
-**Example**  
+**Example**
 ```js
 updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
 ```

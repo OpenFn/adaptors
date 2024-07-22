@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#alterstate">alterState(func)</a></dt>
@@ -87,9 +85,10 @@
     <a href="#withagent">withAgent(params)</a></dt>
 </dl>
 
-## alterState
+## Functions
+### alterState
 
-alterState(func) ⇒ <code>Operation</code>
+<p><code>alterState(func) ⇒ Operation</code></p>
 
 alias for "fn()"
 
@@ -101,9 +100,9 @@ alias for "fn()"
 
 * * *
 
-## arrayToString
+### arrayToString
 
-arrayToString(arr, separator) ⇒ <code>string</code>
+<p><code>arrayToString(arr, separator) ⇒ string</code></p>
 
 Turns an array into a string, separated by X.
 
@@ -113,7 +112,7 @@ Turns an array into a string, separated by X.
 | arr | <code>array</code> | Array of toString'able primatives. |
 | separator | <code>string</code> | Separator string. |
 
-**Example**  
+**Example**
 ```js
 field("destination_string__c", function(state) {
   return arrayToString(dataValue("path_of_array")(state), ', ')
@@ -122,9 +121,9 @@ field("destination_string__c", function(state) {
 
 * * *
 
-## asData
+### asData
 
-asData(data, state) ⇒ <code>array</code>
+<p><code>asData(data, state) ⇒ array</code></p>
 
 Simple switcher allowing other expressions to use either a JSONPath or
 object literals as a data source.
@@ -138,16 +137,16 @@ object literals as a data source.
 | data | <code>String</code> \| <code>object</code> \| <code>function</code> |  |
 | state | <code>object</code> | The current state. |
 
-**Example**  
+**Example**
 ```js
 asData('$.key'| key | callback)
 ```
 
 * * *
 
-## chunk
+### chunk
 
-chunk(array, chunkSize) ⇒ <code>Object</code>
+<p><code>chunk(array, chunkSize) ⇒ Object</code></p>
 
 Chunks an array into an array of arrays, each with no more than a certain size.
 
@@ -157,16 +156,16 @@ Chunks an array into an array of arrays, each with no more than a certain size.
 | array | <code>Object</code> | Array to be chunked |
 | chunkSize | <code>Integer</code> | The maxiumum size of each chunks |
 
-**Example**  
+**Example**
 ```js
 chunk([1,2,3,4,5], 2)
 ```
 
 * * *
 
-## combine
+### combine
 
-combine(operations) ⇒ <code>Operation</code>
+<p><code>combine(operations) ⇒ Operation</code></p>
 
 Combines two operations into one
 
@@ -175,7 +174,7 @@ Combines two operations into one
 | --- | --- | --- |
 | operations | <code>Operations</code> | Operations to be performed. |
 
-**Example**  
+**Example**
 ```js
 combine(
   create('foo'),
@@ -185,9 +184,9 @@ combine(
 
 * * *
 
-## composeNextState
+### composeNextState
 
-composeNextState(state, response) ⇒ <code>State</code>
+<p><code>composeNextState(state, response) ⇒ State</code></p>
 
 Prepares next state
 
@@ -197,16 +196,16 @@ Prepares next state
 | state | <code>State</code> | state |
 | response | <code>Object</code> | Response to be added |
 
-**Example**  
+**Example**
 ```js
 composeNextState(state, response)
 ```
 
 * * *
 
-## cursor
+### cursor
 
-cursor(value, options) ⇒ <code>Operation</code>
+<p><code>cursor(value, options) ⇒ Operation</code></p>
 
 Sets a cursor property on state.
 Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
@@ -225,20 +224,20 @@ See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-g
 | options.defaultValue | <code>any</code> | the value to use if value is falsy |
 | options.format | <code>function</code> | custom formatter for the final cursor value |
 
-**Example** *(Use a cursor from state if present, or else use the default value)*  
+**Example:** Use a cursor from state if present, or else use the default value
 ```js
 cursor($.cursor, { defaultValue: 'today' })
 ```
-**Example** *(Use a pagination cursor)*  
+**Example:** Use a pagination cursor
 ```js
 cursor(22)
 ```
 
 * * *
 
-## dataPath
+### dataPath
 
-dataPath(path) ⇒ <code>string</code>
+<p><code>dataPath(path) ⇒ string</code></p>
 
 Ensures a path points at the data.
 
@@ -247,16 +246,16 @@ Ensures a path points at the data.
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `data`. |
 
-**Example**  
+**Example**
 ```js
 dataPath('key')
 ```
 
 * * *
 
-## dataValue
+### dataValue
 
-dataValue(path) ⇒ <code>Operation</code>
+<p><code>dataValue(path) ⇒ Operation</code></p>
 
 Picks out a single value from the source data object—usually `state.data`.
 If a JSONPath returns more than one value for the reference, the first
@@ -267,16 +266,16 @@ item will be returned.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `data`. |
 
-**Example**  
+**Example**
 ```js
 dataValue('key')
 ```
 
 * * *
 
-## del
+### del
 
-del(requestParams) ⇒ <code>Operation</code>
+<p><code>del(requestParams) ⇒ Operation</code></p>
 
 Make a DELETE request
 
@@ -286,7 +285,7 @@ Make a DELETE request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Deleting a record with data that comes from state)*  
+**Example:** Deleting a record with data that comes from state
 ```js
 delete({
    url: state => `https://www.example.com/api/items/${state.id}`,
@@ -295,9 +294,9 @@ delete({
 
 * * *
 
-## each
+### each
 
-each(dataSource, operation) ⇒ <code>Operation</code>
+<p><code>each(dataSource, operation) ⇒ Operation</code></p>
 
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
@@ -314,7 +313,7 @@ the state's references.
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
-**Example**  
+**Example**
 ```js
 each("$.[*]",
   create("SObject",
@@ -325,9 +324,9 @@ each("$.[*]",
 
 * * *
 
-## each
+### each
 
-each(dataSource, operation) ⇒ <code>Operation</code>
+<p><code>each(dataSource, operation) ⇒ Operation</code></p>
 
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
@@ -344,7 +343,7 @@ the state's references.
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
-**Example**  
+**Example**
 ```js
 each("$.[*]",
    create("SObject",
@@ -354,9 +353,9 @@ each("$.[*]",
 
 * * *
 
-## expandReferences
+### expandReferences
 
-expandReferences(value, [skipFilter]) ⇒ <code>Operation</code>
+<p><code>expandReferences(value, [skipFilter]) ⇒ Operation</code></p>
 
 Recursively resolves objects that have resolvable values (functions).
 
@@ -369,9 +368,9 @@ Recursively resolves objects that have resolvable values (functions).
 
 * * *
 
-## expandRequestReferences
+### expandRequestReferences
 
-expandRequestReferences(value) ⇒ <code>Operation</code>
+<p><code>expandRequestReferences(value) ⇒ Operation</code></p>
 
 Recursively resolves objects that have resolvable values (functions), but
 omits HTTP request specific modules like `FormData`.
@@ -384,9 +383,9 @@ omits HTTP request specific modules like `FormData`.
 
 * * *
 
-## field
+### field
 
-field(key, value) ⇒ <code>Field</code>
+<p><code>field(key, value) ⇒ Field</code></p>
 
 Returns a key, value pair in an array.
 
@@ -396,16 +395,16 @@ Returns a key, value pair in an array.
 | key | <code>string</code> | Name of the field |
 | value | <code>Value</code> | The value itself or a sourceable operation. |
 
-**Example**  
+**Example**
 ```js
 field('destination_field_name__c', 'value')
 ```
 
 * * *
 
-## fields
+### fields
 
-fields(fields) ⇒ <code>Object</code>
+<p><code>fields(fields) ⇒ Object</code></p>
 
 Zips key value pairs into an object.
 
@@ -414,16 +413,16 @@ Zips key value pairs into an object.
 | --- | --- | --- |
 | fields | <code>Fields</code> | a list of fields |
 
-**Example**  
+**Example**
 ```js
 fields(list_of_fields)
 ```
 
 * * *
 
-## fn
+### fn
 
-fn(func) ⇒ <code>Operation</code>
+<p><code>fn(func) ⇒ Operation</code></p>
 
 Creates a custom step (or operation) for more flexible job writing.
 
@@ -432,7 +431,7 @@ Creates a custom step (or operation) for more flexible job writing.
 | --- | --- | --- |
 | func | <code>function</code> | is the function |
 
-**Example**  
+**Example**
 ```js
 fn(state => {
   // do some things to state
@@ -442,9 +441,9 @@ fn(state => {
 
 * * *
 
-## fnIf
+### fnIf
 
-fnIf(condition, operation) ⇒ <code>Operation</code>
+<p><code>fnIf(condition, operation) ⇒ Operation</code></p>
 
 A custom operation that will only execute the function if the condition returns true
 
@@ -454,16 +453,16 @@ A custom operation that will only execute the function if the condition returns 
 | condition | <code>Boolean</code> | The condition that returns true |
 | operation | <code>Operation</code> | The operation needed to be executed. |
 
-**Example**  
+**Example**
 ```js
 fnIf((state) => state?.data?.name, get("https://example.com"));
 ```
 
 * * *
 
-## get
+### get
 
-get(requestParams) ⇒ <code>Operation</code>
+<p><code>get(requestParams) ⇒ Operation</code></p>
 
 Make a GET request
 
@@ -473,7 +472,7 @@ Make a GET request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Get an item with a specified id from state)*  
+**Example:** Get an item with a specified id from state
 ```js
  get({
      url: state => `https://www.example.com/api/items/${state.id},
@@ -483,9 +482,9 @@ Make a GET request
 
 * * *
 
-## group
+### group
 
-group(arrayOfObjects, keyPath, callback) ⇒ <code>Operation</code>
+<p><code>group(arrayOfObjects, keyPath, callback) ⇒ Operation</code></p>
 
 Groups an array of objects by a specified key path.
 
@@ -496,7 +495,7 @@ Groups an array of objects by a specified key path.
 | keyPath | <code>string</code> | The key path to group by. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 const users = [
   { name: 'Alice', age: 25, city: 'New York' },
@@ -510,9 +509,9 @@ group(users, 'city');
 
 * * *
 
-## head
+### head
 
-head(requestParams) ⇒ <code>Operation</code>
+<p><code>head(requestParams) ⇒ Operation</code></p>
 
 Make a HEAD request
 
@@ -522,7 +521,7 @@ Make a HEAD request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method)*  
+**Example:** Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method
 ```js
 head({
   url: 'https://www.example.com/api/items',
@@ -531,9 +530,9 @@ head({
 
 * * *
 
-## humanProper
+### humanProper
 
-humanProper(str) ⇒ <code>string</code>
+<p><code>humanProper(str) ⇒ string</code></p>
 
 Substitutes underscores for spaces and proper-cases a string
 
@@ -542,30 +541,30 @@ Substitutes underscores for spaces and proper-cases a string
 | --- | --- | --- |
 | str | <code>string</code> | String that needs converting |
 
-**Example**  
+**Example**
 ```js
 field("destination_string__c", humanProper(state.data.path_to_string))
 ```
 
 * * *
 
-## index
+### index
 
-index() ⇒ <code>DataSource</code>
+<p><code>index() ⇒ DataSource</code></p>
 
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
 
-**Example**  
+**Example**
 ```js
 index()
 ```
 
 * * *
 
-## join
+### join
 
-join(targetPath, sourcePath, targetKey) ⇒ <code>Operation</code>
+<p><code>join(targetPath, sourcePath, targetKey) ⇒ Operation</code></p>
 
 Adds data from a target object
 
@@ -576,16 +575,16 @@ Adds data from a target object
 | sourcePath | <code>String</code> | Source path |
 | targetKey | <code>String</code> | Target Key |
 
-**Example**  
+**Example**
 ```js
 join('$.key','$.data','newKey')
 ```
 
 * * *
 
-## jsonValue
+### jsonValue
 
-jsonValue(obj, path) ⇒ <code>Operation</code>
+<p><code>jsonValue(obj, path) ⇒ Operation</code></p>
 
 Picks out a single value from a JSON object.
 If a JSONPath returns more than one value for the reference, the first
@@ -597,16 +596,16 @@ item will be returned.
 | obj | <code>object</code> | A valid JSON object. |
 | path | <code>String</code> | JSONPath referencing a point in given JSON object. |
 
-**Example**  
+**Example**
 ```js
 jsonValue({ a:1 }, 'a')
 ```
 
 * * *
 
-## lastReferenceValue
+### lastReferenceValue
 
-lastReferenceValue(path) ⇒ <code>Operation</code>
+<p><code>lastReferenceValue(path) ⇒ Operation</code></p>
 
 Picks out the last reference value from source data.
 
@@ -615,16 +614,16 @@ Picks out the last reference value from source data.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `references`. |
 
-**Example**  
+**Example**
 ```js
 lastReferenceValue('key')
 ```
 
 * * *
 
-## map
+### map
 
-map(path, operation, state) ⇒ <code>State</code>
+<p><code>map(path, operation, state) ⇒ State</code></p>
 
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
@@ -639,7 +638,7 @@ of the JSONPath provided.
 | operation | <code>function</code> | The operation needed to be repeated. |
 | state | <code>State</code> | Runtime state. |
 
-**Example**  
+**Example**
 ```js
 map("$.[*]",
   create("SObject",
@@ -650,9 +649,9 @@ map("$.[*]",
 
 * * *
 
-## merge
+### merge
 
-merge(dataSource, fields) ⇒ <code>DataSource</code>
+<p><code>merge(dataSource, fields) ⇒ DataSource</code></p>
 
 Merges fields into each item in an array.
 
@@ -662,7 +661,7 @@ Merges fields into each item in an array.
 | dataSource | <code>DataSource</code> |  |
 | fields | <code>Object</code> | Group of fields to merge in. |
 
-**Example**  
+**Example**
 ```js
 merge(
   "$.books[*]",
@@ -674,9 +673,9 @@ merge(
 
 * * *
 
-## options
+### options
 
-options(requestParams) ⇒ <code>Operation</code>
+<p><code>options(requestParams) ⇒ Operation</code></p>
 
 Make a OPTIONS request
 
@@ -686,7 +685,7 @@ Make a OPTIONS request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Requests permitted communication options for a given URL or server, with data from state.)*  
+**Example:** Requests permitted communication options for a given URL or server, with data from state.
 ```js
 options({
   url: 'https://www.example.com/api/items',
@@ -695,9 +694,9 @@ options({
 
 * * *
 
-## parseCsv
+### parseCsv
 
-parseCsv(csvData, [parsingOptions], [callback]) ⇒ <code>Operation</code>
+<p><code>parseCsv(csvData, [parsingOptions], [callback]) ⇒ Operation</code></p>
 
 Takes a CSV file string or stream and parsing options as input, and returns a promise that
 resolves to the parsed CSV data as an array of objects.
@@ -724,9 +723,9 @@ Options for `parsingOptions` include:
 
 * * *
 
-## patch
+### patch
 
-patch(requestParams) ⇒ <code>Operation</code>
+<p><code>patch(requestParams) ⇒ Operation</code></p>
 
 Make a PATCH request
 
@@ -736,7 +735,7 @@ Make a PATCH request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Applies partial modifications to a resource, with data from state.)*  
+**Example:** Applies partial modifications to a resource, with data from state.
 ```js
 patch({
   url: state => `https://www.example.com/api/items/${state.id}`,
@@ -746,9 +745,9 @@ patch({
 
 * * *
 
-## post
+### post
 
-post(requestParams) ⇒ <code>Operation</code>
+<p><code>post(requestParams) ⇒ Operation</code></p>
 
 Make a POST request
 
@@ -758,14 +757,14 @@ Make a POST request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Sending a payload with data that comes from state)*  
+**Example:** Sending a payload with data that comes from state
 ```js
 post({
   url: "https://example.com",
   data: (state) => state.data
 });
 ```
-**Example** *( Capturing the response for later use in state )*  
+**Example:**  Capturing the response for later use in state 
 ```js
 alterState((state) => {
   return post({
@@ -779,9 +778,9 @@ alterState((state) => {
 
 * * *
 
-## put
+### put
 
-put(requestParams) ⇒ <code>Operation</code>
+<p><code>put(requestParams) ⇒ Operation</code></p>
 
 Make a PUT request
 
@@ -791,7 +790,7 @@ Make a PUT request
 | --- | --- | --- |
 | requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example** *(Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.)*  
+**Example:** Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.
 ```js
 put({
   url: state => `https://www.example.com/api/items/${state.id}`,
@@ -801,9 +800,9 @@ put({
 
 * * *
 
-## referencePath
+### referencePath
 
-referencePath(path) ⇒ <code>string</code>
+<p><code>referencePath(path) ⇒ string</code></p>
 
 Ensures a path points at references.
 
@@ -812,16 +811,16 @@ Ensures a path points at references.
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `references`. |
 
-**Example**  
+**Example**
 ```js
 referencePath('key')
 ```
 
 * * *
 
-## request
+### request
 
-request(method, fullUrlOrPath, [options]) ⇒
+<p><code>request(method, fullUrlOrPath, [options]) ⇒</code></p>
 
 `request` is a helper function that sends HTTP requests and returns the response
 body, headers, and status code.
@@ -845,9 +844,9 @@ Use the error map to provide custom error messages or get hold of the response i
 
 * * *
 
-## scrubEmojis
+### scrubEmojis
 
-scrubEmojis(text, replacementChars) ⇒ <code>string</code>
+<p><code>scrubEmojis(text, replacementChars) ⇒ string</code></p>
 
 Replaces emojis in a string.
 
@@ -857,16 +856,16 @@ Replaces emojis in a string.
 | text | <code>string</code> | String that needs to be cleaned |
 | replacementChars | <code>string</code> | Characters that replace the emojis |
 
-**Example**  
+**Example**
 ```js
 scrubEmojis('Dove🕊️⭐ 29')
 ```
 
 * * *
 
-## source
+### source
 
-source(path) ⇒ <code>Array.&lt;(String\|Object)&gt;</code>
+<p><code>source(path) ⇒ Array.&lt;(String|Object)&gt;</code></p>
 
 Picks out a value from source data.
 Will return whatever JSONPath returns, which will always be an array.
@@ -877,16 +876,16 @@ If you need a single value use `sourceValue` instead.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
 
-**Example**  
+**Example**
 ```js
 source('$.key')
 ```
 
 * * *
 
-## sourceValue
+### sourceValue
 
-sourceValue(path) ⇒ <code>Operation</code>
+<p><code>sourceValue(path) ⇒ Operation</code></p>
 
 Picks out a single value from source data.
 If a JSONPath returns more than one value for the reference, the first
@@ -897,16 +896,16 @@ item will be returned.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
 
-**Example**  
+**Example**
 ```js
 sourceValue('$.key')
 ```
 
 * * *
 
-## splitKeys
+### splitKeys
 
-splitKeys(obj, keys) ⇒ <code>Array.&lt;Object&gt;</code>
+<p><code>splitKeys(obj, keys) ⇒ Array.&lt;Object&gt;</code></p>
 
 Splits an object into two objects based on a list of keys.
 The first object contains the keys that are not in the list,
@@ -922,9 +921,9 @@ and the second contains the keys that are.
 
 * * *
 
-## toArray
+### toArray
 
-toArray(arg) ⇒ <code>array</code>
+<p><code>toArray(arg) ⇒ array</code></p>
 
 Ensures primitive data types are wrapped in an array.
 Does not affect array objects.
@@ -934,7 +933,7 @@ Does not affect array objects.
 | --- | --- | --- |
 | arg | <code>any</code> | Data required to be in an array |
 
-**Example**  
+**Example**
 ```js
 each(function(state) {
   return toArray( dataValue("path_of_array")(state) )
@@ -943,9 +942,9 @@ each(function(state) {
 
 * * *
 
-## validate
+### validate
 
-validate(schema, data) ⇒ <code>Operation</code>
+<p><code>validate(schema, data) ⇒ Operation</code></p>
 
 Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
 Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
@@ -958,24 +957,24 @@ By default, schema is loaded from `state.schema` and data from `state.data`.
 | schema | <code>string</code> \| <code>object</code> | The schema, path or URL to validate against |
 | data | <code>string</code> \| <code>object</code> | The data or path to validate |
 
-**Example** *(Validate &#x60;state.data&#x60; with &#x60;state.schema&#x60;)*  
+**Example:** Validate &#x60;state.data&#x60; with &#x60;state.schema&#x60;
 ```js
 validate()
 ```
-**Example** *(Validate form data at &#x60;state.form&#x60; with a schema from a URL)*  
+**Example:** Validate form data at &#x60;state.form&#x60; with a schema from a URL
 ```js
 validate("https://www.example.com/schema/record", "form")
 ```
-**Example** *(Validate the each item in &#x60;state.records&#x60; with a schema from a URL)*  
+**Example:** Validate the each item in &#x60;state.records&#x60; with a schema from a URL
 ```js
 each("records[*]", validate("https://www.example.com/schema/record"))
 ```
 
 * * *
 
-## withAgent
+### withAgent
 
-withAgent(params) ⇒ <code>Operation</code>
+<p><code>withAgent(params) ⇒ Operation</code></p>
 
 Creates an https agent for axios from the agentOptions key passed in params.
 

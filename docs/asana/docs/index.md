@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#createtask">createTask(params, callback)</a></dt>
@@ -62,9 +60,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## createTask
+## Functions
+### createTask
 
-createTask(params, callback) ⇒ <code>Operation</code>
+<p><code>createTask(params, callback) ⇒ Operation</code></p>
 
 Create a task.
 
@@ -74,7 +73,7 @@ Create a task.
 | params | <code>object</code> | Body parameters |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 createTask({
   name: "test",
@@ -86,9 +85,9 @@ createTask({
 
 * * *
 
-## createTaskStory
+### createTaskStory
 
-createTaskStory(taskGid, params, callback) ⇒ <code>Operation</code>
+<p><code>createTaskStory(taskGid, params, callback) ⇒ Operation</code></p>
 
 Create a story to a specific task.
 
@@ -99,13 +98,13 @@ Create a story to a specific task.
 | params | [<code>StoryOptions</code>](#storyoptions) | Story parameters |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example** *(Create a plain text comment)*  
+**Example:** Create a plain text comment
 ```js
 createTaskStory("1206933955023739", {
   text: "This is a comment",
 });
 ```
-**Example** *(Create a HTML formatted text comment)*  
+**Example:** Create a HTML formatted text comment
 ```js
 createTaskStory("1206933955023739", {
   html_text: "<body>This is a comment</body>",
@@ -114,9 +113,9 @@ createTaskStory("1206933955023739", {
 
 * * *
 
-## getTask
+### getTask
 
-getTask(taskGid, params, callback) ⇒ <code>Operation</code>
+<p><code>getTask(taskGid, params, callback) ⇒ Operation</code></p>
 
 Get a single task of a given project.
 
@@ -127,7 +126,7 @@ Get a single task of a given project.
 | params | <code>object</code> | Query params to include. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 getTask("1206933955023739", {
   opt_fields: "name,notes,assignee",
@@ -136,9 +135,9 @@ getTask("1206933955023739", {
 
 * * *
 
-## getTasks
+### getTasks
 
-getTasks(projectGid, params, callback) ⇒ <code>Operation</code>
+<p><code>getTasks(projectGid, params, callback) ⇒ Operation</code></p>
 
 Get the list of tasks for a given project.
 
@@ -149,7 +148,7 @@ Get the list of tasks for a given project.
 | params | <code>object</code> | Query params to include. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 getTasks("1206933955023739", {
   opt_fields: "name,notes,assignee",
@@ -158,9 +157,9 @@ getTasks("1206933955023739", {
 
 * * *
 
-## request
+### request
 
-request(path, params, callback) ⇒ <code>Operation</code>
+<p><code>request(path, params, callback) ⇒ Operation</code></p>
 
 Make a request in Asana API
 
@@ -171,7 +170,7 @@ Make a request in Asana API
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 request("/asanaEndpoint", {
   method: "POST",
@@ -181,9 +180,61 @@ request("/asanaEndpoint", {
 
 * * *
 
-## RequestOptions
+### updateTask
 
-RequestOptions : <code>Object</code>
+<p><code>updateTask(taskGid, params, callback) ⇒ Operation</code></p>
+
+Update a specific task.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| taskGid | <code>string</code> | Globally unique identifier for the task |
+| params | <code>object</code> | Body parameters |
+| callback | <code>function</code> | (Optional) callback function |
+
+**Example**
+```js
+updateTask("1206933955023739", {
+  name: "test",
+  approval_status: "pending",
+  assignee: "12345",
+});
+```
+
+* * *
+
+### upsertTask
+
+<p><code>upsertTask(projectGid, params, callback) ⇒ Operation</code></p>
+
+Update or create a task.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| projectGid | <code>string</code> | Globally unique identifier for the project |
+| params | <code>object</code> | an object with an externalId and some task data. |
+| callback | <code>function</code> | (Optional) callback function |
+
+**Example**
+```js
+upsertTask("1201382240880", {
+  externalId: "name",
+  data: {
+    name: "test",
+    approval_status: "pending",
+    projects: ["1201382240880"],
+    assignee: "12345",
+  },
+});
+```
+
+* * *
+
+##  Interfaces
+
+### RequestOptions
 
 Options provided to the Asana API request
 
@@ -198,9 +249,7 @@ Options provided to the Asana API request
 
 * * *
 
-## StoryOptions
-
-StoryOptions : <code>Object</code>
+### StoryOptions
 
 Options provided to the createTaskStory request
 
@@ -215,58 +264,6 @@ Options provided to the createTaskStory request
 | opt_fields | <code>array</code> | Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include. |
 | opt_pretty | <code>boolean</code> | Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging. |
 
-
-* * *
-
-## updateTask
-
-updateTask(taskGid, params, callback) ⇒ <code>Operation</code>
-
-Update a specific task.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| taskGid | <code>string</code> | Globally unique identifier for the task |
-| params | <code>object</code> | Body parameters |
-| callback | <code>function</code> | (Optional) callback function |
-
-**Example**  
-```js
-updateTask("1206933955023739", {
-  name: "test",
-  approval_status: "pending",
-  assignee: "12345",
-});
-```
-
-* * *
-
-## upsertTask
-
-upsertTask(projectGid, params, callback) ⇒ <code>Operation</code>
-
-Update or create a task.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| projectGid | <code>string</code> | Globally unique identifier for the project |
-| params | <code>object</code> | an object with an externalId and some task data. |
-| callback | <code>function</code> | (Optional) callback function |
-
-**Example**  
-```js
-upsertTask("1201382240880", {
-  externalId: "name",
-  data: {
-    name: "test",
-    approval_status: "pending",
-    projects: ["1201382240880"],
-    assignee: "12345",
-  },
-});
-```
 
 * * *
 

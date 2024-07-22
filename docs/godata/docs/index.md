@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#getcase">getCase(id, query, callback)</a></dt>
@@ -69,9 +67,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## getCase
+## Functions
+### getCase
 
-getCase(id, query, callback) ⇒ <code>Operation</code>
+<p><code>getCase(id, query, callback) ⇒ Operation</code></p>
 
 Get one or multiple cases within an outbreak from a query filter
 
@@ -82,7 +81,7 @@ Get one or multiple cases within an outbreak from a query filter
 | query | <code>object</code> | An object with a query filter parameter |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 getCase(
    '3b55-cdf4',
@@ -96,9 +95,9 @@ getCase(
 
 * * *
 
-## getContact
+### getContact
 
-getContact(id, query, callback) ⇒ <code>Operation</code>
+<p><code>getContact(id, query, callback) ⇒ Operation</code></p>
 
 Get one or multiple contacts within an outbreak from a query filter
 
@@ -109,7 +108,7 @@ Get one or multiple contacts within an outbreak from a query filter
 | query | <code>object</code> | An object with a query filter parameter |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 getContact("343d-dc3e", {"where":{"firstName": "Luca"}}, state => {
    console.log(state.data);
@@ -119,9 +118,9 @@ getContact("343d-dc3e", {"where":{"firstName": "Luca"}}, state => {
 
 * * *
 
-## getLocation
+### getLocation
 
-getLocation(query, callback) ⇒ <code>Operation</code>
+<p><code>getLocation(query, callback) ⇒ Operation</code></p>
 
 Get one or multiple locations from a query filter
 
@@ -131,7 +130,7 @@ Get one or multiple locations from a query filter
 | query | <code>object</code> | An object with a query filter parameter |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 getLocation({"where":{"name": "30 DE OCTUBRE"}}, state => {
    console.log(state.data);
@@ -141,9 +140,9 @@ getLocation({"where":{"name": "30 DE OCTUBRE"}}, state => {
 
 * * *
 
-## getOutbreak
+### getOutbreak
 
-getOutbreak(query, callback) ⇒ <code>Operation</code>
+<p><code>getOutbreak(query, callback) ⇒ Operation</code></p>
 
 Get one or multiple outbreaks from a query filter
 
@@ -153,7 +152,7 @@ Get one or multiple outbreaks from a query filter
 | query | <code>object</code> | An object with a query filter parameter |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 getOutbreak({"where":{"name": "Outbreak demo"}}, state => {
    console.log(state.data);
@@ -163,9 +162,9 @@ getOutbreak({"where":{"name": "Outbreak demo"}}, state => {
 
 * * *
 
-## getReferenceData
+### getReferenceData
 
-getReferenceData(query, callback) ⇒ <code>Operation</code>
+<p><code>getReferenceData(query, callback) ⇒ Operation</code></p>
 
 Get one or multiple reference data from a query filter
 
@@ -175,7 +174,7 @@ Get one or multiple reference data from a query filter
 | query | <code>object</code> | An object with a query filter parameter |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 getReferenceData({"where":{"categoryId": "LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME"}}, state => {
    console.log(state.data);
@@ -185,9 +184,9 @@ getReferenceData({"where":{"categoryId": "LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAM
 
 * * *
 
-## listCases
+### listCases
 
-listCases(id, callback) ⇒ <code>Operation</code>
+<p><code>listCases(id, callback) ⇒ Operation</code></p>
 
 Fetch the list of cases within a particular outbreak using its ID.
 
@@ -197,7 +196,7 @@ Fetch the list of cases within a particular outbreak using its ID.
 | id | <code>string</code> | Outbreak id |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 listCases("343d-dc3e", state => {
    console.log(state);
@@ -207,9 +206,9 @@ listCases("343d-dc3e", state => {
 
 * * *
 
-## listContacts
+### listContacts
 
-listContacts(id, callback) ⇒ <code>Operation</code>
+<p><code>listContacts(id, callback) ⇒ Operation</code></p>
 
 Fetch the list of contacts within a particular outbreak using its ID.
 
@@ -219,7 +218,7 @@ Fetch the list of contacts within a particular outbreak using its ID.
 | id | <code>string</code> | Outbreak id |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 listContacts("343d-dc3e", // Outbreak Id
    state => {
@@ -230,9 +229,9 @@ listContacts("343d-dc3e", // Outbreak Id
 
 * * *
 
-## listLocations
+### listLocations
 
-listLocations(callback) ⇒ <code>Operation</code>
+<p><code>listLocations(callback) ⇒ Operation</code></p>
 
 Fetch the list of locations
 
@@ -241,7 +240,7 @@ Fetch the list of locations
 | --- | --- | --- |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 listLocations(state => {
    console.log(state.data);
@@ -251,9 +250,9 @@ listLocations(state => {
 
 * * *
 
-## listOutbreaks
+### listOutbreaks
 
-listOutbreaks(callback) ⇒ <code>Operation</code>
+<p><code>listOutbreaks(callback) ⇒ Operation</code></p>
 
 Fetch the list of outbreaks
 
@@ -262,7 +261,7 @@ Fetch the list of outbreaks
 | --- | --- | --- |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 listOutbreaks(state => {
    console.log(state.data);
@@ -272,9 +271,9 @@ listOutbreaks(state => {
 
 * * *
 
-## listReferenceData
+### listReferenceData
 
-listReferenceData(callback) ⇒ <code>Operation</code>
+<p><code>listReferenceData(callback) ⇒ Operation</code></p>
 
 Fetch the list of reference data
 
@@ -283,7 +282,7 @@ Fetch the list of reference data
 | --- | --- | --- |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 listReferenceData(state => {
    console.log(state.data);
@@ -293,9 +292,9 @@ listReferenceData(state => {
 
 * * *
 
-## upsertCase
+### upsertCase
 
-upsertCase(id, externalId, goDataCase, callback) ⇒ <code>Operation</code>
+<p><code>upsertCase(id, externalId, goDataCase, callback) ⇒ Operation</code></p>
 
 Upsert case to godata using an external id to mach a specific record
 
@@ -307,7 +306,7 @@ Upsert case to godata using an external id to mach a specific record
 | goDataCase | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 upsertCase("4dce-3eedce3-rd33", 'visualId',
    data: state => {
@@ -324,9 +323,9 @@ upsertCase("4dce-3eedce3-rd33", 'visualId',
 
 * * *
 
-## upsertContact
+### upsertContact
 
-upsertContact(id, externalId, goDataContact, callback) ⇒ <code>Operation</code>
+<p><code>upsertContact(id, externalId, goDataContact, callback) ⇒ Operation</code></p>
 
 Upsert contact to godata using an external id to match a specific record.
 
@@ -338,7 +337,7 @@ Upsert contact to godata using an external id to match a specific record.
 | goDataContact | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 upsertContact("4dce-3eedce3-rd33", 'visualId',
    {
@@ -352,9 +351,9 @@ upsertContact("4dce-3eedce3-rd33", 'visualId',
 
 * * *
 
-## upsertLocation
+### upsertLocation
 
-upsertLocation(externalId, goDataLocation, callback) ⇒ <code>Operation</code>
+<p><code>upsertLocation(externalId, goDataLocation, callback) ⇒ Operation</code></p>
 
 Upsert location to godata
 
@@ -365,16 +364,16 @@ Upsert location to godata
 | goDataLocation | <code>object</code> | an object with some location data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 upsertLocation('name', {...})
 ```
 
 * * *
 
-## upsertOutbreak
+### upsertOutbreak
 
-upsertOutbreak(outbreak, callback) ⇒ <code>Operation</code>
+<p><code>upsertOutbreak(outbreak, callback) ⇒ Operation</code></p>
 
 Upsert outbreak to godata
 
@@ -384,16 +383,16 @@ Upsert outbreak to godata
 | outbreak | <code>object</code> | an object with an externalId and some outbreak data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 upsertOutbreak({externalId: "3dec33-ede3", data: {...}})
 ```
 
 * * *
 
-## upsertReferenceData
+### upsertReferenceData
 
-upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ <code>Operation</code>
+<p><code>upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ Operation</code></p>
 
 Upsert reference data to godata
 
@@ -404,7 +403,7 @@ Upsert reference data to godata
 | goDataReferenceData | <code>object</code> | an object with some reference data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 upsertReferenceData('id', {...})
 ```

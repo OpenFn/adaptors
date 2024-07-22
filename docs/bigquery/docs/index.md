@@ -44,9 +44,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## load
+## Functions
+### load
 
-load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ <code>Operation</code>
+<p><code>load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ Operation</code></p>
 
 Load files to BigQuery
 
@@ -60,7 +61,7 @@ Load files to BigQuery
 | loadOptions | <code>object</code> | options to pass to the bigquery.load() API |
 | callback | <code>function</code> | and optional callback |
 
-**Example**  
+**Example**
 ```js
 load(
   './tmp/files',

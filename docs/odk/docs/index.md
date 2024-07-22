@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#get">get(path, options)</a></dt>
@@ -52,9 +50,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## get
+## Functions
+### get
 
-get(path, options) ⇒ <code>Operation</code>
+<p><code>get(path, options) ⇒ Operation</code></p>
 
 Make a GET request against the base URL.
 
@@ -71,11 +70,11 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example** *(Get a list of available projects)*  
+**Example:** Get a list of available projects
 ```js
 get("v1/projects");
 ```
-**Example** *(Get projects with query parameters)*  
+**Example:** Get projects with query parameters
 ```js
 get("v1/projects", {
  query: { datasets: true }
@@ -84,9 +83,9 @@ get("v1/projects", {
 
 * * *
 
-## getForms
+### getForms
 
-getForms(projectId) ⇒ <code>Operation</code>
+<p><code>getForms(projectId) ⇒ Operation</code></p>
 
 Fetch all forms for a project.
 
@@ -102,16 +101,16 @@ This operation writes the following keys to state:
 | data | array of form data objects |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example** *(Fetch all forms for project with id 22)*  
+**Example:** Fetch all forms for project with id 22
 ```js
 getForms(22);
 ```
 
 * * *
 
-## getSubmissions
+### getSubmissions
 
-getSubmissions(projectId, xmlFormId, query) ⇒ <code>Operation</code>
+<p><code>getSubmissions(projectId, xmlFormId, query) ⇒ Operation</code></p>
 
 Fetch all submissions to a given form.
 
@@ -129,20 +128,20 @@ This operation writes the following keys to state:
 | data | array of form submission objects |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example** *(Get all submissions to a form called &#x27;patient-follow-up&#x27;)*  
+**Example:** Get all submissions to a form called &#x27;patient-follow-up&#x27;
 ```js
 getSubmissions(22, 'patient-follow-up');
 ```
-**Example** *(Filter submissions since a given date)*  
+**Example:** Filter submissions since a given date
 ```js
 getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/submissionDate gt 2020-01-31T23:59:59.999Z" });
 ```
 
 * * *
 
-## post
+### post
 
-post(path, body, options) ⇒ <code>Operation</code>
+<p><code>post(path, body, options) ⇒ Operation</code></p>
 
 Make a POST request against the base URL.
 
@@ -160,16 +159,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example** *(Create a new project)*  
+**Example:** Create a new project
 ```js
 post('v1/projects', { name: 'Project Name' });
 ```
 
 * * *
 
-## request
+### request
 
-request(method, path, body, options) ⇒ <code>Operation</code>
+<p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
 Make a general HTTP request against the base URL.
 
@@ -188,16 +187,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example** *(Make a POST request to create a new project)*  
+**Example:** Make a POST request to create a new project
 ```js
 request("POST", 'v1/projects', { name: 'Project Name' });
 ```
 
 * * *
 
-## RequestOptions
+##  Interfaces
 
-RequestOptions : <code>Object</code>
+### RequestOptions
 
 Options provided to the HTTP request
 

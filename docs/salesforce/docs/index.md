@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#bulk">bulk(sObject, operation, options, records)</a></dt>
@@ -130,9 +128,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#toarray">toArray()</a>
 </dt></dl>
 
-## bulk
+## Functions
+### bulk
 
-bulk(sObject, operation, options, records) ⇒ <code>Operation</code>
+<p><code>bulk(sObject, operation, options, records) ⇒ Operation</code></p>
 
 Create and execute a bulk job.
 
@@ -148,7 +147,7 @@ Create and execute a bulk job.
 | [options.failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |
 | records | <code>array</code> |  | an array of records, or a function which returns an array. |
 
-**Example** *(Bulk insert)*  
+**Example:** Bulk insert
 ```js
 bulk(
   "Patient__c",
@@ -157,7 +156,7 @@ bulk(
   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
 );
 ```
-**Example** *(Bulk upsert)*  
+**Example:** Bulk upsert
 ```js
 bulk(
   "vera__Beneficiary__c",
@@ -176,9 +175,9 @@ bulk(
 
 * * *
 
-## bulkQuery
+### bulkQuery
 
-bulkQuery(qs, options, callback) ⇒ <code>Operation</code>
+<p><code>bulkQuery(qs, options, callback) ⇒ Operation</code></p>
 
 Execute an SOQL Bulk Query.
 This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
@@ -194,11 +193,11 @@ This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 | [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
 | callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
-**Example** *(The results will be available on &#x60;state.data&#x60;)*  
+**Example:** The results will be available on &#x60;state.data&#x60;
 ```js
 bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```
-**Example**  
+**Example**
 ```js
 bulkQuery(
   (state) =>
@@ -209,9 +208,9 @@ bulkQuery(
 
 * * *
 
-## cleanupState
+### cleanupState
 
-cleanupState(state) ⇒ <code>State</code>
+<p><code>cleanupState(state) ⇒ State</code></p>
 
 Removes unserializable keys from the state.
 
@@ -220,16 +219,16 @@ Removes unserializable keys from the state.
 | --- | --- |
 | state | <code>State</code> | 
 
-**Example**  
+**Example**
 ```js
 cleanupState(state)
 ```
 
 * * *
 
-## create
+### create
 
-create(sObject, attrs) ⇒ <code>Operation</code>
+<p><code>create(sObject, attrs) ⇒ Operation</code></p>
 
 Create a new sObject record(s).
 
@@ -239,20 +238,20 @@ Create a new sObject record(s).
 | sObject | <code>string</code> | API name of the sObject. |
 | attrs | <code>object</code> | Field attributes for the new record. |
 
-**Example** *( Single record creation)*  
+**Example:**  Single record creation
 ```js
 create("Account", { Name: "My Account #1" });
 ```
-**Example** *( Multiple records creation)*  
+**Example:**  Multiple records creation
 ```js
 create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
 ```
 
 * * *
 
-## createIf
+### createIf
 
-createIf(logical, sObject, attrs) ⇒ <code>Operation</code>
+<p><code>createIf(logical, sObject, attrs) ⇒ Operation</code></p>
 
 Create a new sObject if conditions are met.
 
@@ -265,7 +264,7 @@ Create a new sObject if conditions are met.
 | sObject | <code>string</code> | API name of the sObject. |
 | attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example**  
+**Example**
 ```js
 createIf(true, 'obj_name', {
   attr1: "foo",
@@ -275,9 +274,9 @@ createIf(true, 'obj_name', {
 
 * * *
 
-## describe
+### describe
 
-describe(sObject) ⇒ <code>Operation</code>
+<p><code>describe(sObject) ⇒ Operation</code></p>
 
 Prints an sObject metadata and pushes the result to state.references
 
@@ -286,29 +285,29 @@ Prints an sObject metadata and pushes the result to state.references
 | --- | --- | --- |
 | sObject | <code>string</code> | API name of the sObject. |
 
-**Example**  
+**Example**
 ```js
 describe('obj_name')
 ```
 
 * * *
 
-## describeAll
+### describeAll
 
-describeAll() ⇒ <code>Operation</code>
+<p><code>describeAll() ⇒ Operation</code></p>
 
 Prints the total number of all available sObjects and pushes the result to `state.references`.
 
-**Example**  
+**Example**
 ```js
 describeAll()
 ```
 
 * * *
 
-## destroy
+### destroy
 
-destroy(sObject, attrs, options) ⇒ <code>Operation</code>
+<p><code>destroy(sObject, attrs, options) ⇒ Operation</code></p>
 
 Delete records of an object.
 
@@ -319,7 +318,7 @@ Delete records of an object.
 | attrs | <code>object</code> | Array of IDs of records to delete. |
 | options | <code>object</code> | Options for the destroy delete operation. |
 
-**Example**  
+**Example**
 ```js
 destroy('obj_name', [
  '0060n00000JQWHYAA5',
@@ -329,9 +328,9 @@ destroy('obj_name', [
 
 * * *
 
-## execute
+### execute
 
-execute(operations) ⇒ <code>State</code>
+<p><code>execute(operations) ⇒ State</code></p>
 
 Executes an operation.
 
@@ -343,9 +342,9 @@ Executes an operation.
 
 * * *
 
-## insert
+### insert
 
-insert(sObject, attrs) ⇒ <code>Operation</code>
+<p><code>insert(sObject, attrs) ⇒ Operation</code></p>
 
 Alias for "create(sObject, attrs)".
 
@@ -355,20 +354,20 @@ Alias for "create(sObject, attrs)".
 | sObject | <code>string</code> | API name of the sObject. |
 | attrs | <code>object</code> | Field attributes for the new record. |
 
-**Example** *( Single record creation)*  
+**Example:**  Single record creation
 ```js
 insert("Account", { Name: "My Account #1" });
 ```
-**Example** *( Multiple records creation)*  
+**Example:**  Multiple records creation
 ```js
 insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
 ```
 
 * * *
 
-## query
+### query
 
-query(qs, options, callback) ⇒ <code>Operation</code>
+<p><code>query(qs, options, callback) ⇒ Operation</code></p>
 
 Execute an SOQL query.
 Note that in an event of a query error,
@@ -384,20 +383,20 @@ The Salesforce query API is subject to rate limits, [See for more details](https
 | [options.autoFetch] | <code>boolean</code> | <code>false</code> | Fetch next records if available. |
 | callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
-**Example**  
+**Example**
 ```js
 query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```
-**Example** *(Query more records if next records are available)*  
+**Example:** Query more records if next records are available
 ```js
 query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
 ```
 
 * * *
 
-## reference
+### reference
 
-reference(position) ⇒ <code>State</code>
+<p><code>reference(position) ⇒ State</code></p>
 
 Get a reference ID by an index.
 
@@ -406,16 +405,16 @@ Get a reference ID by an index.
 | --- | --- | --- |
 | position | <code>number</code> | Position for references array. |
 
-**Example**  
+**Example**
 ```js
 reference(0)
 ```
 
 * * *
 
-## relationship
+### relationship
 
-relationship(relationshipName, externalId, dataSource) ⇒ <code>object</code>
+<p><code>relationship(relationshipName, externalId, dataSource) ⇒ object</code></p>
 
 Adds a lookup relation or 'dome insert' to a record.
 
@@ -426,7 +425,7 @@ Adds a lookup relation or 'dome insert' to a record.
 | externalId | <code>string</code> | Salesforce ExternalID field. |
 | dataSource | <code>string</code> | resolvable source. |
 
-**Example**  
+**Example**
 ```js
 Data Sourced Value:
  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
@@ -436,9 +435,9 @@ Fixed Value:
 
 * * *
 
-## request
+### request
 
-request(url, options, callback) ⇒ <code>Operation</code>
+<p><code>request(url, options, callback) ⇒ Operation</code></p>
 
 Send a HTTP request using connected session information.
 
@@ -453,7 +452,7 @@ Send a HTTP request using connected session information.
 | [options.body] | <code>string</code> |  | HTTP body (in POST/PUT/PATCH methods) |
 | callback | <code>function</code> |  | A callback to execute once the request is complete |
 
-**Example**  
+**Example**
 ```js
 request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
   method: 'POST',
@@ -463,9 +462,9 @@ request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
 
 * * *
 
-## retrieve
+### retrieve
 
-retrieve(sObject, id, callback) ⇒ <code>Operation</code>
+<p><code>retrieve(sObject, id, callback) ⇒ Operation</code></p>
 
 Retrieves a Salesforce sObject(s).
 
@@ -476,20 +475,20 @@ Retrieves a Salesforce sObject(s).
 | id | <code>string</code> | The id of the record |
 | callback | <code>function</code> | A callback to execute once the record is retrieved |
 
-**Example**  
+**Example**
 ```js
 retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ```
 
 * * *
 
-## steps
+### steps
 
-steps() ⇒ <code>array</code>
+<p><code>steps() ⇒ array</code></p>
 
 Flattens an array of operations.
 
-**Example**  
+**Example**
 ```js
 steps(
   createIf(params),
@@ -499,9 +498,9 @@ steps(
 
 * * *
 
-## toUTF8
+### toUTF8
 
-toUTF8(input) ⇒ <code>string</code>
+<p><code>toUTF8(input) ⇒ string</code></p>
 
 Transliterates unicode characters to their best ASCII representation
 
@@ -511,7 +510,7 @@ Transliterates unicode characters to their best ASCII representation
 | --- | --- | --- |
 | input | <code>string</code> | A string with unicode characters |
 
-**Example**  
+**Example**
 ```js
 fn((state) => {
   const s = toUTF8("άνθρωποι");
@@ -522,9 +521,9 @@ fn((state) => {
 
 * * *
 
-## update
+### update
 
-update(sObject, attrs) ⇒ <code>Operation</code>
+<p><code>update(sObject, attrs) ⇒ Operation</code></p>
 
 Update an sObject record or records.
 
@@ -534,14 +533,14 @@ Update an sObject record or records.
 | sObject | <code>string</code> | API name of the sObject. |
 | attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example** *( Single record update)*  
+**Example:**  Single record update
 ```js
 update("Account", {
   Id: "0010500000fxbcuAAA",
   Name: "Updated Account #1",
 });
 ```
-**Example** *( Multiple records update)*  
+**Example:**  Multiple records update
 ```js
 update("Account", [
   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
@@ -551,9 +550,9 @@ update("Account", [
 
 * * *
 
-## upsert
+### upsert
 
-upsert(sObject, externalId, attrs) ⇒ <code>Operation</code>
+<p><code>upsert(sObject, externalId, attrs) ⇒ Operation</code></p>
 
 Create a new sObject record, or updates it if it already exists
 External ID field name must be specified in second argument.
@@ -565,11 +564,11 @@ External ID field name must be specified in second argument.
 | externalId | <code>string</code> | The external ID of the sObject. |
 | attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example** *( Single record upsert )*  
+**Example:**  Single record upsert 
 ```js
 upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
 ```
-**Example** *( Multiple record upsert )*  
+**Example:**  Multiple record upsert 
 ```js
 upsert("UpsertTable__c", "ExtId__c", [
   { Name: "Record #1", ExtId__c : 'ID-0000001' },
@@ -579,9 +578,9 @@ upsert("UpsertTable__c", "ExtId__c", [
 
 * * *
 
-## upsertIf
+### upsertIf
 
-upsertIf(logical, sObject, externalId, attrs) ⇒ <code>Operation</code>
+<p><code>upsertIf(logical, sObject, externalId, attrs) ⇒ Operation</code></p>
 
 Conditionally create a new sObject record, or updates it if it already exists
 
@@ -595,7 +594,7 @@ Conditionally create a new sObject record, or updates it if it already exists
 | externalId | <code>string</code> | ID. |
 | attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
-**Example**  
+**Example**
 ```js
 upsertIf(true, 'obj_name', 'ext_id', {
   attr1: "foo",

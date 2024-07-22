@@ -35,9 +35,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## sendSMS
+## Functions
+### sendSMS
 
-sendSMS(from, toNumber, message) ⇒ <code>Operation</code>
+<p><code>sendSMS(from, toNumber, message) ⇒ Operation</code></p>
 
 Sends an SMS message to a specific phone number
 
@@ -48,7 +49,7 @@ Sends an SMS message to a specific phone number
 | toNumber | <code>String</code> | Destination phone number. |
 | message | <code>String</code> | Text message |
 
-**Example**  
+**Example**
 ```js
 sendSMS("OpenFn", "phoneNumber", "Hello World!")
 ```

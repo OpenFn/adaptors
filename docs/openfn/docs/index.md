@@ -44,9 +44,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## request
+## Functions
+### request
 
-request(options, callback) ⇒ <code>Operation</code>
+<p><code>request(options, callback) ⇒ Operation</code></p>
 
 Make a POST request
 
@@ -56,7 +57,7 @@ Make a POST request
 | options | <code>object</code> | Body, Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 request({method: 'get', path: '/jobs/});
 ```

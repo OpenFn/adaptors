@@ -35,9 +35,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## createFhirResource
+## Functions
+### createFhirResource
 
-createFhirResource([fhirStore], resource, callback) ⇒ <code>Operation</code>
+<p><code>createFhirResource([fhirStore], resource, callback) ⇒ Operation</code></p>
 
 Create some resource in Google Cloud Healthcare
 
@@ -48,7 +49,7 @@ Create some resource in Google Cloud Healthcare
 | resource | <code>object</code> | The FHIR resource data to be created |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+**Example**
 ```js
 createFhirResource(
   {
@@ -65,7 +66,7 @@ createFhirResource(
   }
 );
 ```
-**Example**  
+**Example**
 ```js
 createFhirResource(
   {

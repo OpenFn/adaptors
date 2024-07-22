@@ -29,9 +29,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## encounter
+## Functions
+### encounter
 
-encounter(encounterData) ⇒ <code>Operation</code>
+<p><code>encounter(encounterData) ⇒ Operation</code></p>
 
 Create an encounter
 
@@ -40,7 +41,7 @@ Create an encounter
 | --- | --- | --- |
 | encounterData | <code>object</code> | Payload data for the encounter |
 
-**Example**  
+**Example**
 ```js
 execute(
   encounter(data)

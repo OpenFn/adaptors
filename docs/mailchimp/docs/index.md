@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#addmember">addMember(params, [callback])</a></dt>
@@ -72,9 +70,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## addMember
+## Functions
+### addMember
 
-addMember(params, [callback]) ⇒ <code>Operation</code>
+<p><code>addMember(params, [callback]) ⇒ Operation</code></p>
 
 addMember to a list
 
@@ -87,9 +86,9 @@ addMember to a list
 
 * * *
 
-## archiveMember
+### archiveMember
 
-archiveMember(params, [callback]) ⇒ <code>Operation</code>
+<p><code>archiveMember(params, [callback]) ⇒ Operation</code></p>
 
 archiveMember in a list
 
@@ -102,9 +101,9 @@ archiveMember in a list
 
 * * *
 
-## deleteMember
+### deleteMember
 
-deleteMember(params, [callback]) ⇒ <code>Operation</code>
+<p><code>deleteMember(params, [callback]) ⇒ Operation</code></p>
 
 Permanently delete a member from a list
 
@@ -117,9 +116,9 @@ Permanently delete a member from a list
 
 * * *
 
-## get
+### get
 
-get(path, query, [callback]) ⇒ <code>Operation</code>
+<p><code>get(path, query, [callback]) ⇒ Operation</code></p>
 
 The get function is used to make a GET request to the Mailchimp API.
 
@@ -130,16 +129,16 @@ The get function is used to make a GET request to the Mailchimp API.
 | query | <code>object</code> | An object containing query parameters to be included in the request |
 | [callback] | <code>function</code> | (Optional) callback to handle the response |
 
-**Example** *(Get a list of account exports for a given account)*  
+**Example:** Get a list of account exports for a given account
 ```js
 get('/account-exports');
 ```
 
 * * *
 
-## listAudienceInfo
+### listAudienceInfo
 
-listAudienceInfo(query, [callback]) ⇒ <code>Operation</code>
+<p><code>listAudienceInfo(query, [callback]) ⇒ Operation</code></p>
 
 Get information about a specific list in your Mailchimp account.
 Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
@@ -153,9 +152,9 @@ Results include list members who have signed up but haven't confirmed their subs
 
 * * *
 
-## listAudiences
+### listAudiences
 
-listAudiences(query, [callback]) ⇒ <code>Operation</code>
+<p><code>listAudiences(query, [callback]) ⇒ Operation</code></p>
 
 Get information about all lists in the account.
 
@@ -168,9 +167,9 @@ Get information about all lists in the account.
 
 * * *
 
-## listBatches
+### listBatches
 
-listBatches(params, [callback]) ⇒ <code>Operation</code>
+<p><code>listBatches(params, [callback]) ⇒ Operation</code></p>
 
 listBatches
 
@@ -183,9 +182,9 @@ listBatches
 
 * * *
 
-## listMembers
+### listMembers
 
-listMembers(params, [callback]) ⇒ <code>Operation</code>
+<p><code>listMembers(params, [callback]) ⇒ Operation</code></p>
 
 listMembers
 
@@ -198,9 +197,9 @@ listMembers
 
 * * *
 
-## post
+### post
 
-post(path, body, query, [callback]) ⇒ <code>Operation</code>
+<p><code>post(path, body, query, [callback]) ⇒ Operation</code></p>
 
 The post function is used to make a POST request to the Mailchimp API.
 
@@ -212,16 +211,16 @@ The post function is used to make a POST request to the Mailchimp API.
 | query | <code>object</code> | An object containing query parameters to be included in the request |
 | [callback] | <code>function</code> | (Optional) callback to handle the response |
 
-**Example** *(Create a new account export in your Mailchimp account)*  
+**Example:** Create a new account export in your Mailchimp account
 ```js
 post('/accounts-export', {include_stages:[]});
 ```
 
 * * *
 
-## request
+### request
 
-request(method, path, options, [callback]) ⇒ <code>Operation</code>
+<p><code>request(method, path, options, [callback]) ⇒ Operation</code></p>
 
 Make an HTTP request to Mailchimp API
 
@@ -233,20 +232,20 @@ Make an HTTP request to Mailchimp API
 | options | <code>Object</code> | Additional options for the request (query, body only). |
 | [callback] | <code>function</code> | (Optional) callback function to handle the response. |
 
-**Example** *(Get list to all other resources available in the API)*  
+**Example:** Get list to all other resources available in the API
 ```js
 request('GET','/');
 ```
-**Example** *(Create a new account export in your Mailchimp account)*  
+**Example:** Create a new account export in your Mailchimp account
 ```js
 request('POST','/accounts-export', {include_stages:[]});
 ```
 
 * * *
 
-## startBatch
+### startBatch
 
-startBatch(params, [callback]) ⇒ <code>Operation</code>
+<p><code>startBatch(params, [callback]) ⇒ Operation</code></p>
 
 Start a batch with a list of operations.
 
@@ -256,16 +255,16 @@ Start a batch with a list of operations.
 | params | <code>object</code> | operations batch job |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 startBatch(params)
 ```
 
 * * *
 
-## tagMembers
+### tagMembers
 
-tagMembers(params, [callback]) ⇒ <code>Operation</code>
+<p><code>tagMembers(params, [callback]) ⇒ Operation</code></p>
 
 Tag members with a particular tag
 
@@ -275,7 +274,7 @@ Tag members with a particular tag
 | params | <code>object</code> | a tagId, members, and a list |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 tagMembers((state) => ({
   listId: "someId", // All Subscribers list
@@ -283,7 +282,7 @@ tagMembers((state) => ({
   members: state.response.body.rows.map((u) => u.email),
 }));
 ```
-**Example**  
+**Example**
 ```js
 tagMembers((state) => ({
   listId: "someId",
@@ -296,9 +295,9 @@ tagMembers((state) => ({
 
 * * *
 
-## updateMember
+### updateMember
 
-updateMember(params, [callback]) ⇒ <code>Operation</code>
+<p><code>updateMember(params, [callback]) ⇒ Operation</code></p>
 
 updateMember
 
@@ -311,9 +310,9 @@ updateMember
 
 * * *
 
-## updateMemberTags
+### updateMemberTags
 
-updateMemberTags(params, [callback]) ⇒ <code>Operation</code>
+<p><code>updateMemberTags(params, [callback]) ⇒ Operation</code></p>
 
 updateMemberTags
 
@@ -326,9 +325,9 @@ updateMemberTags
 
 * * *
 
-## upsertMembers
+### upsertMembers
 
-upsertMembers(params, [callback]) ⇒ <code>Operation</code>
+<p><code>upsertMembers(params, [callback]) ⇒ Operation</code></p>
 
 Add or update a list members
 
@@ -338,7 +337,7 @@ Add or update a list members
 | params | <code>object</code> | a listId, users, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 upsertMembers((state) => ({
   listId: "someId",

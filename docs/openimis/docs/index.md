@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#cleanupstate">cleanupState(state)</a></dt>
@@ -51,9 +49,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## cleanupState
+## Functions
+### cleanupState
 
-cleanupState(state) ⇒ <code>State</code>
+<p><code>cleanupState(state) ⇒ State</code></p>
 
 Discards the auth token from state.
 
@@ -63,16 +62,16 @@ Discards the auth token from state.
 | --- | --- | --- |
 | state | <code>State</code> | Runtime state. |
 
-**Example**  
+**Example**
 ```js
 cleanupState(state)
 ```
 
 * * *
 
-## getFHIR
+### getFHIR
 
-getFHIR(path, params, callback) ⇒ <code>Operation</code>
+<p><code>getFHIR(path, params, callback) ⇒ Operation</code></p>
 
 Get FHIR resources from OpenIMIS
 
@@ -83,16 +82,16 @@ Get FHIR resources from OpenIMIS
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 getFHIR("Patient")
 ```
 
 * * *
 
-## login
+### login
 
-login(state) ⇒ <code>State</code>
+<p><code>login(state) ⇒ State</code></p>
 
 Logs in to OpenIMIS.
 
@@ -102,7 +101,7 @@ Logs in to OpenIMIS.
 | --- | --- | --- |
 | state | <code>State</code> | Runtime state. |
 
-**Example**  
+**Example**
 ```js
 login(state)
 ```

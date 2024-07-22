@@ -38,9 +38,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## sendSMS
+## Functions
+### sendSMS
 
-sendSMS(params) ⇒ <code>Operation</code>
+<p><code>sendSMS(params) ⇒ Operation</code></p>
 
 Sends an SMS message to a specific phone number
 
@@ -49,7 +50,7 @@ Sends an SMS message to a specific phone number
 | --- | --- | --- |
 | params | <code>Object</code> | an object containing 'body', 'from', and 'to' keys. |
 
-**Example**  
+**Example**
 ```js
 sendSMS({
  body: dataValue('sampleText'),

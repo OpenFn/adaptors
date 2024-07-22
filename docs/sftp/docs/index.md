@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#getcsv">getCSV(filePath, [parsingOptions])</a></dt>
@@ -58,9 +56,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## getCSV
+## Functions
+### getCSV
 
-getCSV(filePath, [parsingOptions]) ⇒ <code>Operation</code>
+<p><code>getCSV(filePath, [parsingOptions]) ⇒ Operation</code></p>
 
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
@@ -70,7 +69,7 @@ Get a CSV and return a JSON array of strings for each item separated by the deli
 | filePath | <code>string</code> | Path to resource |
 | [parsingOptions] | <code>Object</code> | Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more [on csvtojson docs](https://github.com/Keyang/node-csvtojson#parameters) |
 
-**Example**  
+**Example**
 ```js
 getCSV(
   '/some/path/to_file.csv',
@@ -80,9 +79,9 @@ getCSV(
 
 * * *
 
-## getJSON
+### getJSON
 
-getJSON(filePath, encoding) ⇒ <code>Operation</code>
+<p><code>getJSON(filePath, encoding) ⇒ Operation</code></p>
 
 Fetch a json file from an FTP server
 
@@ -92,7 +91,7 @@ Fetch a json file from an FTP server
 | filePath | <code>string</code> | Path to resource |
 | encoding | <code>string</code> | Character encoding for the json |
 
-**Example**  
+**Example**
 ```js
 getJSON(
   '/path/To/File',
@@ -102,9 +101,9 @@ getJSON(
 
 * * *
 
-## list
+### list
 
-list(dirPath, filter, [callback]) ⇒ <code>Operation</code>
+<p><code>list(dirPath, filter, [callback]) ⇒ Operation</code></p>
 
 List files present in a directory
 
@@ -115,17 +114,17 @@ List files present in a directory
 | filter | <code>function</code> | a filter function used to select return entries |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(basic files listing)*  
+**Example:** basic files listing
 ```js
 list('/some/path/')
 ```
-**Example** *(list files with filters)*  
+**Example:** list files with filters
 ```js
 list('/some/path/', file=> {
  return /foo.\.txt/.test(file.name);
 })
 ```
-**Example** *(list files with filters and use callback)*  
+**Example:** list files with filters and use callback
 ```js
 list(
   "/some/path/",
@@ -141,9 +140,9 @@ list(
 
 * * *
 
-## normalizeCSVarray
+### normalizeCSVarray
 
-normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
+<p><code>normalizeCSVarray(options, callback) ⇒ Operation</code></p>
 
 Convert JSON array of strings into a normalized object
 
@@ -153,16 +152,16 @@ Convert JSON array of strings into a normalized object
 | options | <code>options</code> | Options passed to csvtojson parser |
 | callback | <code>callback</code> | Options passed to csvtojson parser |
 
-**Example**  
+**Example**
 ```js
 normalizeCSVarray({ delimiter: ';', noheader: true });
 ```
 
 * * *
 
-## putCSV
+### putCSV
 
-putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
+<p><code>putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ Operation</code></p>
 
 Convert JSON to CSV and upload to an FTP server
 
@@ -173,7 +172,7 @@ Convert JSON to CSV and upload to an FTP server
 | remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |
 | parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |
 
-**Example**  
+**Example**
 ```js
 putCSV(
   '/some/path/to_local_file.csv',

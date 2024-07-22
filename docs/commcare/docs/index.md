@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#fetchreportdata">fetchReportData(reportId, params, postUrl)</a></dt>
@@ -58,9 +56,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## fetchReportData
+## Functions
+### fetchReportData
 
-fetchReportData(reportId, params, postUrl) ⇒ <code>Operation</code>
+<p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>
 
 Make a GET request to CommCare's Reports API
 and POST the response to somewhere else.
@@ -72,16 +71,16 @@ and POST the response to somewhere else.
 | params | [<code>RequestQueries</code>](#requestqueries) | Query params, incl: limit, offset, and any custom report filters. |
 | postUrl | <code>String</code> | Url to which the response object will be posted. |
 
-**Example**  
+**Example**
 ```js
 fetchReportData(reportId, params, postUrl)
 ```
 
 * * *
 
-## get
+### get
 
-get(path, params, [callback]) ⇒ <code>Operation</code>
+<p><code>get(path, params, [callback]) ⇒ Operation</code></p>
 
 Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
 A `response` key will be added to state with the HTTP response and a `meta` key
@@ -93,20 +92,20 @@ A `response` key will be added to state with the HTTP response and a `meta` key
 | params | [<code>RequestQueries</code>](#requestqueries) | Optional request params such as limit and offset. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example** *(Get a list of cases)*  
+**Example:** Get a list of cases
 ```js
 get("case", { limit: 20 })
 ```
-**Example** *(Get a specific case )*  
+**Example:** Get a specific case 
 ```js
 get("case/12345")
 ```
 
 * * *
 
-## post
+### post
 
-post(path, data, params, [callback]) ⇒ <code>Operation</code>
+<p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
 
 Make a post request to commcare
 
@@ -118,16 +117,72 @@ Make a post request to commcare
 | params | <code>Object</code> | Optional request params. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+**Example**
 ```js
 post( "user", { "username":"test", "password":"somepassword" })
 ```
 
 * * *
 
-## RequestOptions
+### submit
 
-RequestOptions : <code>Object</code>
+<p><code>submit(formData) ⇒ Operation</code></p>
+
+Submit form data
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Object including form data. |
+
+**Example**
+```js
+submit(
+   fields(
+     field("@", function(state) {
+       return {
+         "xmlns": "http://openrosa.org/formdesigner/form-id-here"
+       };
+     }),
+     field("question1", dataValue("answer1")),
+     field("question2", "Some answer here.")
+   )
+ )
+```
+
+* * *
+
+### submitXls
+
+<p><code>submitXls(formData, params) ⇒ Operation</code></p>
+
+Convert form data to xls then submit.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>Object</code> | Object including form data. |
+| params | [<code>RequestOptions</code>](#requestoptions) | Request params including case type. |
+
+**Example**
+```js
+submitXls(
+   [
+     {name: 'Mamadou', phone: '000000'},
+   ],
+   {
+     case_type: 'student',
+     search_field: 'external_id',
+     create_new_cases: 'on',
+   }
+)
+```
+
+* * *
+
+##  Interfaces
+
+### RequestOptions
 
 Queries provided to the submitXls request
 
@@ -142,9 +197,7 @@ Queries provided to the submitXls request
 
 * * *
 
-## RequestQueries
-
-RequestQueries : <code>Object</code>
+### RequestQueries
 
 Queries provided to the GET request
 
@@ -165,62 +218,6 @@ Queries provided to the GET request
 | user_id | <code>string</code> | Optional UUID for all cases last modified by that user |
 | type | <code>string</code> | Optional case type to get all matching cases |
 
-
-* * *
-
-## submit
-
-submit(formData) ⇒ <code>Operation</code>
-
-Submit form data
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formData | <code>Object</code> | Object including form data. |
-
-**Example**  
-```js
-submit(
-   fields(
-     field("@", function(state) {
-       return {
-         "xmlns": "http://openrosa.org/formdesigner/form-id-here"
-       };
-     }),
-     field("question1", dataValue("answer1")),
-     field("question2", "Some answer here.")
-   )
- )
-```
-
-* * *
-
-## submitXls
-
-submitXls(formData, params) ⇒ <code>Operation</code>
-
-Convert form data to xls then submit.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| formData | <code>Object</code> | Object including form data. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Request params including case type. |
-
-**Example**  
-```js
-submitXls(
-   [
-     {name: 'Mamadou', phone: '000000'},
-   ],
-   {
-     case_type: 'student',
-     search_field: 'external_id',
-     create_new_cases: 'on',
-   }
-)
-```
 
 * * *
 

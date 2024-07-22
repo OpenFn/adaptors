@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#appendvalues">appendValues(params, callback)</a></dt>
@@ -54,9 +52,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## appendValues
+## Functions
+### appendValues
 
-appendValues(params, callback) ⇒ <code>Operation</code>
+<p><code>appendValues(params, callback) ⇒ Operation</code></p>
 
 Add an array of rows to the spreadsheet.
 https://developers.google.com/sheets/api/samples/writing#append_values
@@ -70,7 +69,7 @@ https://developers.google.com/sheets/api/samples/writing#append_values
 | [params.values] | <code>array</code> | A 2d array of values to update. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 appendValues({
   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
@@ -84,9 +83,9 @@ appendValues({
 
 * * *
 
-## batchUpdateValues
+### batchUpdateValues
 
-batchUpdateValues(params, callback) ⇒ <code>Operation</code>
+<p><code>batchUpdateValues(params, callback) ⇒ Operation</code></p>
 
 Batch update values in a Spreadsheet.
 
@@ -101,7 +100,7 @@ Batch update values in a Spreadsheet.
 | [params.values] | <code>array</code> | A 2d array of values to update. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 batchUpdateValues({
   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
@@ -115,9 +114,9 @@ batchUpdateValues({
 
 * * *
 
-## getValues
+### getValues
 
-getValues(spreadsheetId, range, callback) ⇒ <code>Operation</code>
+<p><code>getValues(spreadsheetId, range, callback) ⇒ Operation</code></p>
 
 Gets cell values from a Spreadsheet.
 
@@ -129,7 +128,7 @@ Gets cell values from a Spreadsheet.
 | range | <code>string</code> | The sheet range. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')
 ```

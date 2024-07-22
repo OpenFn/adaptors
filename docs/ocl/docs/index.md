@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
@@ -43,9 +41,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## get
+## Functions
+### get
 
-get(path, query, callback) ⇒ <code>Operation</code>
+<p><code>get(path, query, callback) ⇒ Operation</code></p>
 
 Get a resource in OCL
 
@@ -56,7 +55,7 @@ Get a resource in OCL
 | query | <code>object</code> | A query object that will limit what resources are retrieved when converted into request params. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 get(
   "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
@@ -77,9 +76,9 @@ get(
 
 * * *
 
-## getMappings
+### getMappings
 
-getMappings(ownerId, repositoryId, [options], callback) ⇒ <code>Operation</code>
+<p><code>getMappings(ownerId, repositoryId, [options], callback) ⇒ Operation</code></p>
 
 Get a source repository in OCL
 
@@ -91,7 +90,7 @@ Get a source repository in OCL
 | [options] | <code>Object</code> | Optional. `options`  which can be passed to  See more [on OCL swagger docs](https://api.openconceptlab.org/swagger/) |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+**Example**
 ```js
 getMappings(
   "MSFOCG",

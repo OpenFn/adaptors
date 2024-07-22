@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#insert">insert(table, fields)</a></dt>
@@ -58,9 +56,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## insert
+## Functions
+### insert
 
-insert(table, fields) ⇒ <code>Operation</code>
+<p><code>insert(table, fields) ⇒ Operation</code></p>
 
 Insert a record
 
@@ -70,7 +69,7 @@ Insert a record
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
-**Example**  
+**Example**
 ```js
 execute(
   insert('table', fields(
@@ -81,9 +80,9 @@ execute(
 
 * * *
 
-## query
+### query
 
-query(options) ⇒ <code>Operation</code>
+<p><code>query(options) ⇒ Operation</code></p>
 
 Execute a SQL statement
 
@@ -92,7 +91,7 @@ Execute a SQL statement
 | --- | --- | --- |
 | options | <code>object</code> | Payload data for the message |
 
-**Example**  
+**Example**
 ```js
 execute(
   query({ sql: 'select * from users;' })
@@ -101,9 +100,9 @@ execute(
 
 * * *
 
-## sqlString
+### sqlString
 
-sqlString(queryString) ⇒ <code>Operation</code>
+<p><code>sqlString(queryString) ⇒ Operation</code></p>
 
 Execute a SQL statement
 
@@ -112,7 +111,7 @@ Execute a SQL statement
 | --- | --- | --- |
 | queryString | <code>String</code> | A query string (or function which takes state and returns a string) |
 
-**Example**  
+**Example**
 ```js
 execute(
   sqlString(state => "select * from items;")
@@ -121,9 +120,9 @@ execute(
 
 * * *
 
-## upsert
+### upsert
 
-upsert(table, fields) ⇒ <code>Operation</code>
+<p><code>upsert(table, fields) ⇒ Operation</code></p>
 
 Insert or Update a record if matched
 
@@ -133,7 +132,7 @@ Insert or Update a record if matched
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
-**Example**  
+**Example**
 ```js
 execute(
   upsert('table', fields(
@@ -144,9 +143,9 @@ execute(
 
 * * *
 
-## upsertMany
+### upsertMany
 
-upsertMany(table, data) ⇒ <code>Operation</code>
+<p><code>upsertMany(table, data) ⇒ Operation</code></p>
 
 Insert or update multiple records using ON DUPLICATE KEY
 
@@ -156,7 +155,7 @@ Insert or update multiple records using ON DUPLICATE KEY
 | table | <code>string</code> | The target table |
 | data | <code>array</code> | An array of objects or a function that returns an array |
 
-**Example**  
+**Example**
 ```js
 upsertMany(
   'users', // the DB table

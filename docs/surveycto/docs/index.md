@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#cursor">cursor(value, options)</a></dt>
@@ -51,27 +49,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## convertDate
+## Functions
+### cursor
 
-convertDate
-
-This function will attempt to convert any date representation into
-a surveyCTO `MMM dd, yyy h:mm:ss a` string.
-Strings already in this format will be ignored, other strings will be parsed
-by the Date constructor.
-Number values should be epoch or unix timestamps and will be converted to strings
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| date | <code>\*</code> | a date in a string, number or Date format |
-
-
-* * *
-
-## cursor
-
-cursor(value, options) ⇒ <code>Operation</code>
+<p><code>cursor(value, options) ⇒ Operation</code></p>
 
 Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).
 This supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
@@ -87,7 +68,7 @@ See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-g
 | options.defaultValue | <code>any</code> | the value to use if value is falsy |
 | options.format | <code>function</code> | custom formatter for the final cursor value |
 
-**Example** *(Use a cursor from state if present, or else use the default value)*  
+**Example:** Use a cursor from state if present, or else use the default value
 ```js
 cursor('today')
 fetchSubmissions('test', { date: $.cursor });
@@ -95,26 +76,9 @@ fetchSubmissions('test', { date: $.cursor });
 
 * * *
 
-## FetchSubmissionOptions
+### fetchSubmissions
 
-FetchSubmissionOptions : <code>Object</code>
-
-Options provided to `fetchSubmissions()`
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [date] | <code>string</code> | <code>0</code> | Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved. |
-| [format] | <code>string</code> | <code>&quot;json&quot;</code> | Format the submission data type as  `csv` or `json`. |
-| [status] | <code>string</code> |  | Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`. |
-
-
-* * *
-
-## fetchSubmissions
-
-fetchSubmissions(formId, options, callback) ⇒ <code>Operation</code>
+<p><code>fetchSubmissions(formId, options, callback) ⇒ Operation</code></p>
 
 Fetch form submissions.
 
@@ -127,29 +91,29 @@ If a date filter is provided, it will be  converted internally to the surveyCTO 
 | options | [<code>FetchSubmissionOptions</code>](#fetchsubmissionoptions) | Form submission date, format, status parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Fetch all form submissions)*  
+**Example:** Fetch all form submissions
 ```js
 fetchSubmissions('test');
 ```
-**Example** *( With SurveyCTO date format (UTC))*  
+**Example:**  With SurveyCTO date format (UTC)
 ```js
 fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });
 ```
-**Example** *(Using a rolling cursor )*  
+**Example:** Using a rolling cursor 
 ```js
 cursor((state) => state.cursor, { defaultValue: 'today' });
 fetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });
 cursor('now');
 ```
-**Example** *( Formatting the results to CSV String)*  
+**Example:**  Formatting the results to CSV String
 ```js
 fetchSubmissions('test', { format: 'csv' });
 ```
-**Example** *( With reviewStatus filter)*  
+**Example:**  With reviewStatus filter
 ```js
 fetchSubmissions('test', { status: 'approved|rejected' });
 ```
-**Example** *( With a callback function)*  
+**Example:**  With a callback function
 ```js
 fetchSubmissions(
   'test',
@@ -165,9 +129,9 @@ fetchSubmissions(
 
 * * *
 
-## request
+### request
 
-request(path, params, callback) ⇒ <code>Operation</code>
+<p><code>request(path, params, callback) ⇒ Operation</code></p>
 
 Make a request in SurveyCTO API
 
@@ -178,7 +142,7 @@ Make a request in SurveyCTO API
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+**Example**
 ```js
 request("/anEndpoint", {
   method: "POST",
@@ -188,9 +152,24 @@ request("/anEndpoint", {
 
 * * *
 
-## RequestOptions
+##  Interfaces
 
-RequestOptions : <code>Object</code>
+### FetchSubmissionOptions
+
+Options provided to `fetchSubmissions()`
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [date] | <code>string</code> | <code>0</code> | Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved. |
+| [format] | <code>string</code> | <code>&quot;json&quot;</code> | Format the submission data type as  `csv` or `json`. |
+| [status] | <code>string</code> |  | Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`. |
+
+
+* * *
+
+### RequestOptions
 
 Options provided to request()
 

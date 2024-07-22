@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#get">get(path, options, [callback])</a></dt>
@@ -50,9 +48,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## get
+## Functions
+### get
 
-get(path, options, [callback]) ⇒ <code>Operation</code>
+<p><code>get(path, options, [callback]) ⇒ Operation</code></p>
 
 Make a GET request in OpenLMIS
 
@@ -70,16 +69,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example** *(Get all supplyLines)*  
+**Example:** Get all supplyLines
 ```js
 get("/supplyLines");
 ```
 
 * * *
 
-## post
+### post
 
-post(path, body, [callback]) ⇒ <code>Operation</code>
+<p><code>post(path, body, [callback]) ⇒ Operation</code></p>
 
 Make a POST request in OpenLMIS
 
@@ -97,16 +96,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example** *(Creates new program)*  
+**Example:** Creates new program
 ```js
 post("/programs", { name: "Bukayo", code: "abc" });
 ```
 
 * * *
 
-## put
+### put
 
-put(path, body, [callback]) ⇒ <code>Operation</code>
+<p><code>put(path, body, [callback]) ⇒ Operation</code></p>
 
 Make a PUT request in OpenLMIS
 
@@ -124,16 +123,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example** *(Update existing program)*  
+**Example:** Update existing program
 ```js
 put("/programs/123", { name: "DigTalent", code: "123" });
 ```
 
 * * *
 
-## request
+### request
 
-request(method, path, body, options, [callback]) ⇒ <code>Operation</code>
+<p><code>request(method, path, body, options, [callback]) ⇒ Operation</code></p>
 
 Make a general HTTP request in OpenLMIS
 
@@ -153,16 +152,16 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 request("POST", "/programs", { name: "WSH", code: "123" });
 ```
 
 * * *
 
-## RequestOptions
+##  Interfaces
 
-RequestOptions : <code>Object</code>
+### RequestOptions
 
 Options provided to the HTTP request
 

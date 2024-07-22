@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#connect">connect(state)</a></dt>
@@ -51,9 +49,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## connect
+## Functions
+### connect
 
-connect(state) ⇒ <code>State</code>
+<p><code>connect(state) ⇒ State</code></p>
 
 Connects to a mongoDb instance
 
@@ -62,16 +61,16 @@ Connects to a mongoDb instance
 | --- | --- | --- |
 | state | <code>State</code> | Runtime state. |
 
-**Example**  
+**Example**
 ```js
 connect(state)
 ```
 
 * * *
 
-## disconnect
+### disconnect
 
-disconnect(state) ⇒ <code>State</code>
+<p><code>disconnect(state) ⇒ State</code></p>
 
 Removes connection from the state.
 
@@ -80,16 +79,16 @@ Removes connection from the state.
 | --- | --- |
 | state | <code>State</code> | 
 
-**Example**  
+**Example**
 ```js
 disconnect(state)
 ```
 
 * * *
 
-## execute
+### execute
 
-execute(operations) ⇒ <code>Operation</code>
+<p><code>execute(operations) ⇒ Operation</code></p>
 
 Execute a sequence of operations.
 Wraps `@openfn/language-common/execute`, and prepends initial state for http.
@@ -99,7 +98,7 @@ Wraps `@openfn/language-common/execute`, and prepends initial state for http.
 | --- | --- | --- |
 | operations | <code>Operations</code> | Operations to be performed. |
 
-**Example**  
+**Example**
 ```js
 execute(
   insertDocuments(params),
@@ -109,9 +108,9 @@ execute(
 
 * * *
 
-## findDocuments
+### findDocuments
 
-findDocuments(params) ⇒ <code>State</code>
+<p><code>findDocuments(params) ⇒ State</code></p>
 
 Find documents in a mongoDb collection
 
@@ -120,7 +119,7 @@ Find documents in a mongoDb collection
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+**Example**
 ```js
 findDocuments({
    database: 'str',
@@ -131,9 +130,9 @@ findDocuments({
 
 * * *
 
-## insertDocuments
+### insertDocuments
 
-insertDocuments(params) ⇒ <code>State</code>
+<p><code>insertDocuments(params) ⇒ State</code></p>
 
 Inserts documents into a mongoDb collection
 
@@ -142,7 +141,7 @@ Inserts documents into a mongoDb collection
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+**Example**
 ```js
 insertDocuments({
    database: 'str',
@@ -153,9 +152,9 @@ insertDocuments({
 
 * * *
 
-## updateDocument
+### updateDocument
 
-updateDocument(params) ⇒ <code>State</code>
+<p><code>updateDocument(params) ⇒ State</code></p>
 
 Updates document (optionally upserting) into a mongoDb collection
 
@@ -164,7 +163,7 @@ Updates document (optionally upserting) into a mongoDb collection
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+**Example**
 ```js
 updateDocuments({
    database: 'str',

@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#del">del(path, params, callback)</a></dt>
@@ -86,9 +84,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#toarray">toArray()</a>
 </dt></dl>
 
-## del
+## Functions
+### del
 
-del(path, params, callback) ⇒ <code>Operation</code>
+<p><code>del(path, params, callback) ⇒ Operation</code></p>
 
 Make a DELETE request
 
@@ -106,7 +105,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 del(`/myendpoint/${state => state.data.id}`, {
    headers: {'content-type': 'application/json'}
@@ -115,9 +114,9 @@ del(`/myendpoint/${state => state.data.id}`, {
 
 * * *
 
-## get
+### get
 
-get(path, params, callback) ⇒ <code>Operation</code>
+<p><code>get(path, params, callback) ⇒ Operation</code></p>
 
 Make a GET request
 
@@ -135,7 +134,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 get('/myEndpoint', {
   query: {foo: 'bar', a: 1},
@@ -145,9 +144,9 @@ get('/myEndpoint', {
 
 * * *
 
-## parseXML
+### parseXML
 
-parseXML(body, script, callback) ⇒ <code>Operation</code>
+<p><code>parseXML(body, script, callback) ⇒ Operation</code></p>
 
 Parse XML with the Cheerio parser
 
@@ -164,7 +163,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed XML as a JSON object |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 parseXML(
   (state) => state.response,
@@ -173,7 +172,7 @@ parseXML(
   }
 );
 ```
-**Example** *(Using parseXML with a callback)*  
+**Example:** Using parseXML with a callback
 ```js
  parseXML(
   (state) => state.response,
@@ -186,9 +185,9 @@ parseXML(
 
 * * *
 
-## patch
+### patch
 
-patch(path, params, callback) ⇒ <code>Operation</code>
+<p><code>patch(path, params, callback) ⇒ Operation</code></p>
 
 Make a PATCH request
 
@@ -206,7 +205,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 patch('/myEndpoint', {
    body: {'foo': 'bar'},
@@ -216,9 +215,9 @@ patch('/myEndpoint', {
 
 * * *
 
-## post
+### post
 
-post(path, params, callback) ⇒ <code>operation</code>
+<p><code>post(path, params, callback) ⇒ operation</code></p>
 
 Make a POST request
 
@@ -236,7 +235,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 post('/myEndpoint', {
    body: {'foo': 'bar'},
@@ -246,9 +245,9 @@ post('/myEndpoint', {
 
 * * *
 
-## put
+### put
 
-put(path, params, callback) ⇒ <code>Operation</code>
+<p><code>put(path, params, callback) ⇒ Operation</code></p>
 
 Make a PUT request
 
@@ -266,7 +265,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 put('/myEndpoint', {
    body: {'foo': 'bar'},
@@ -276,9 +275,9 @@ put('/myEndpoint', {
 
 * * *
 
-## request
+### request
 
-request(method, path, params, callback) ⇒ <code>Operation</code>
+<p><code>request(method, path, params, callback) ⇒ Operation</code></p>
 
 Make a HTTP request
 
@@ -297,7 +296,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**  
+**Example**
 ```js
 request(
   'GET',
@@ -311,9 +310,9 @@ request(
 
 * * *
 
-## RequestOptions
+##  Interfaces
 
-RequestOptions : <code>Object</code>
+### RequestOptions
 
 Options provided to the HTTP request
 

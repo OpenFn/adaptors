@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#cleanupstate">cleanupState(state)</a></dt>
@@ -72,9 +70,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#toarray">toArray()</a>
 </dt></dl>
 
-## cleanupState
+## Functions
+### cleanupState
 
-cleanupState(state) ⇒ <code>State</code>
+<p><code>cleanupState(state) ⇒ State</code></p>
 
 Removes unserializable keys from the state.
 
@@ -86,9 +85,9 @@ Removes unserializable keys from the state.
 
 * * *
 
-## lookup
+### lookup
 
-lookup(relationshipName, externalID, path) ⇒ <code>object</code>
+<p><code>lookup(relationshipName, externalID, path) ⇒ object</code></p>
 
 Adds a lookup or 'dome insert' to a record.
 
@@ -99,16 +98,16 @@ Adds a lookup or 'dome insert' to a record.
 | externalID | <code>string</code> | Salesforce ExternalID field. |
 | path | <code>string</code> | JSONPath to data source. |
 
-**Example** *(Example)*  
+**Example:** Example
 ```js
 lookup("relationship_name__r", "externalID on related object", "$.path")
 ```
 
 * * *
 
-## relationship
+### relationship
 
-relationship(relationshipName, externalID, dataSource) ⇒ <code>object</code>
+<p><code>relationship(relationshipName, externalID, dataSource) ⇒ object</code></p>
 
 Adds a lookup or 'dome insert' to a record.
 
@@ -119,11 +118,11 @@ Adds a lookup or 'dome insert' to a record.
 | externalID | <code>string</code> | Salesforce ExternalID field. |
 | dataSource | <code>string</code> | resolvable source. |
 
-**Example** *(Data Sourced Value)*  
+**Example:** Data Sourced Value
 ```js
 relationship("relationship_name__r", "externalID on related object", dataSource("path"))
 ```
-**Example** *(Fixed Value)*  
+**Example:** Fixed Value
 ```js
 relationship("relationship_name__r", "externalID on related object", "hello world")
 ```

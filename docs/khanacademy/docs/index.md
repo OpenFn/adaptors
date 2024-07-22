@@ -32,9 +32,10 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## fetch
+## Functions
+### fetch
 
-fetch(params) ⇒ <code>Operation</code>
+<p><code>fetch(params) ⇒ Operation</code></p>
 
 Fetch data from the Khan Academy API
 
@@ -43,7 +44,7 @@ Fetch data from the Khan Academy API
 | --- | --- | --- |
 | params | <code>object</code> | data to make the query |
 
-**Example**  
+**Example**
 ```js
 execute(
   fetch(params)
