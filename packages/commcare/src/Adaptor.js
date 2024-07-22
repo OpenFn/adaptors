@@ -56,6 +56,7 @@ export function execute(...operations) {
 
 /**
  * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+ * Adding an offset param will trigger an automatic pagination and the returned data is combined and written into state.data
  * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
@@ -65,7 +66,7 @@ export function execute(...operations) {
  * @function
  * @param {string} path - Path to resource
  * @param {RequestQueries} params - Optional request params such as limit and offset.
- * @param {function} [callback] - Optional callback to handle the response
+ * @param {function} [callback] - Optional callback to handle the response. During pagination, the callback is called on each pagination request made
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
@@ -77,27 +78,18 @@ export function get(path, params = {}, callback = s => s) {
       params
     );
 
-    let { offset = 0, limit = 1000 } = resolvedPath;
+    let { offset = 0, limit = 1000 } = resolvedParams;
 
-    let allItems = [];
-    let items;
-    let next;
     let nextState = state;
+    let result;
+    let allowPagination = !isNaN(resolvedParams.offset);
 
     try {
+      let requestParams = {
+        ...resolvedParams,
+      };
+
       do {
-        let requestParams = {
-          ...resolvedParams,
-        };
-
-        if (next) {
-          requestParams = {
-            ...requestParams,
-            offset,
-            limit,
-          };
-        }
-
         const response = await request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
@@ -107,20 +99,35 @@ export function get(path, params = {}, callback = s => s) {
             contentType: 'application/json',
           }
         );
+
         nextState = prepareNextState(state, response, callback);
 
-        if (next) {
-          allItems.push(...nextState.data);
+        if (response?.body?.meta?.next) {
+          if (!result) {
+            result = [];
+          }
+          offset = response?.body?.meta?.offset + response?.body?.meta?.limit;
+          limit = response?.body?.meta?.limit;
+
+          requestParams = {
+            ...requestParams,
+            offset,
+            limit,
+          };
+          result.push(...nextState.data);
         } else {
-          items = nextState.data;
+          if (result) {
+            result.push(...nextState.data);
+          } else {
+            result = nextState.data;
+          }
+
+          break;
         }
-        next = response?.body?.meta?.next;
-        limit = response?.body?.meta?.limit;
-        offset = limit + offset;
-      } while (next);
+      } while (allowPagination);
       return {
         ...nextState,
-        data: items || allItems,
+        data: result,
       };
     } catch (e) {
       if (e.statusCode === 404) {

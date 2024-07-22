@@ -101,7 +101,7 @@ describe('getCases', () => {
   it('should fetch cases', async () => {
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -157,9 +157,7 @@ describe('getCases', () => {
       },
     };
 
-    const { data, response } = await execute(
-      get('case', { limit: 1, offset: 0 })
-    )(state);
+    const { data, response } = await execute(get('case'))(state);
 
     expect(data.length).to.equal(1);
     expect(data[0]).to.haveOwnProperty('case_id');
@@ -168,7 +166,7 @@ describe('getCases', () => {
   it('should fetch a single case', async () => {
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case\/12345/,
+        path: `/a/${domain}/api/v0.5/case/12345`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -214,17 +212,17 @@ describe('getCases', () => {
     };
 
     const { data } = await execute(get('case/12345'))(state);
-    expect(data[0].case_id).to.equal('12345');
-    expect(data[0].properties.case_type).to.equal('pregnancy');
+    expect(data.case_id).to.equal('12345');
+    expect(data.properties.case_type).to.equal('pregnancy');
   });
 
   it('should fetch cases and call the callback', async () => {
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
         query: {
-          limit: 1000,
+          limit: 400,
           offset: 0,
         },
       })
@@ -286,7 +284,16 @@ describe('getCases', () => {
       return state;
     };
 
-    await execute(get('case', {}, callback))(state);
+    await execute(
+      get(
+        'case',
+        {
+          limit: 400,
+          offset: 0,
+        },
+        callback
+      )
+    )(state);
     expect(callbackArg.data).to.deep.equal([
       {
         case_id: '12345',
@@ -328,8 +335,12 @@ describe('getCases', () => {
     ];
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
+        query: {
+          limit: 1,
+          offset: 0,
+        },
       })
       .reply(200, req => {
         const offset = req.query.offset;
@@ -347,8 +358,57 @@ describe('getCases', () => {
           },
           objects: [objects[offset]],
         };
+      });
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+        query: {
+          limit: '1',
+          offset: '1',
+        },
       })
-      .times(4);
+      .reply(200, req => {
+        const offset = parseInt(req.query.offset, 10);
+        const next =
+          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
+        return {
+          meta: {
+            limit: 1,
+            next: next,
+            offset: offset,
+            previous: null,
+            total_count: objects.length,
+          },
+          objects: [objects[offset]],
+        };
+      });
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+        query: {
+          limit: '1',
+          offset: '2',
+        },
+      })
+      .reply(200, req => {
+        const offset = parseInt(req.query.offset, 10);
+        const next =
+          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
+        return {
+          meta: {
+            limit: 1,
+            next: next,
+            offset: offset,
+            previous: null,
+            total_count: objects.length,
+          },
+          objects: [objects[offset]],
+        };
+      });
 
     const state = {
       configuration: {

@@ -29,7 +29,6 @@
     "JSONPath": "^0.10.0",
     "js2xmlparser": "^1.0.0",
     "lodash-fp": "^0.10.4",
-    "sinon": "^18.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "devDependencies": {
