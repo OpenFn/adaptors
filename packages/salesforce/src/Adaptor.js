@@ -133,7 +133,7 @@ export function bulk(sObject, operation, records, options = {}) {
             const job = connection.bulk.createJob(
               resolvedSObject,
               resolvedOperation,
-              options
+              resolvedOptions
             );
 
             job.on('error', err => reject(err));
@@ -166,8 +166,8 @@ export function bulk(sObject, operation, records, options = {}) {
                   });
 
                 errors.forEach(err => {
-                  err[`${options.extIdField}`] =
-                    chunkedBatch[err.position - 1][options.extIdField];
+                  err[`${resolvedOptions.extIdField}`] =
+                    chunkedBatch[err.position - 1][resolvedOptions.extIdField];
                 });
 
                 if (failOnError && errors.length > 0) {
