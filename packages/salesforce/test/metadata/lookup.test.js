@@ -15,7 +15,7 @@ describe('Salesforce lookup tests', async () => {
   // Unit tests of each query against the cached metadata
   describe('upsert', () => {
     it('sObject: should list non-system sObject names', () => {
-      const results = jp.query(data, queries.upsert.sObject);
+      const results = jp.query(data, queries.upsert.sObjectName);
       // Note that there are two sobjects in the model - this should correctly just return 1
       expect(results).to.have.lengthOf(1);
       expect(results).to.include('vera__Beneficiary__c');
