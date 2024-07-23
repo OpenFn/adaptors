@@ -301,7 +301,7 @@ export function describe(sObjectName) {
       : connection.describeGlobal().then(result => {
           const { sobjects } = result;
           console.log(`Retrieved ${sobjects.length} sObjects`);
-          return util.prepareNextState(state, result, sobjects);
+          return util.prepareNextState(state, result);
         });
   };
 }
