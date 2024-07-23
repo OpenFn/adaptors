@@ -85,7 +85,8 @@ export const assertRelativeUrl = path => {
   if (/https?:\/\//.test(path)) {
     const e = new Error('');
     e.code = 'UNEXPECTED_ABSOLUTE_URL';
-    e.description = 'An absolute URL was provided but only a path is supported';
+    e.description =
+      'An absolute URL was provided (https://...) but only a path (/a/b/c) is supported';
     e.url = path;
     e.fix =
       'Remove the protocol, domain and origin from the provided URL. Maybe you need to use the generic HTTP helper functions instead?';
@@ -106,7 +107,6 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
     // If the url is absolute, and there's a basePath, ensure they point to the same origin
     if (baseUrl) {
       const base = new URL(baseUrl);
-      // TODO should I `assertURLPath` here instead? Is that actually a cleaner error?
       if (fullUrl.origin !== base.origin) {
         const e = new Error(ERROR_URL_MISMATCH);
         e.code = 'BASE_URL_MISMATCH';
@@ -114,7 +114,6 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
         e.target = pathOrUrl;
         e.baseUrl = baseUrl;
         e.fix = 'Try using a generic HTTP function to access the target URL';
-        // TODO maybe link to docs?
         throw e;
       }
     }
