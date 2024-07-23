@@ -292,7 +292,7 @@
         "sObjectName"
       ],
       "docs": {
-        "description": "Prints an sObject metadata and pushes the result to state.references",
+        "description": "Fetches and prints metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
         "tags": [
           {
             "title": "public",
@@ -301,7 +301,13 @@
           },
           {
             "title": "example",
-            "description": "describe('obj_name')"
+            "description": "describe()",
+            "caption": "Fetch metadata for all available sObjects"
+          },
+          {
+            "title": "example",
+            "description": "describe('Account')",
+            "caption": "Fetch metadata for Account sObject"
           },
           {
             "title": "function",
@@ -310,10 +316,13 @@
           },
           {
             "title": "param",
-            "description": "API name of the sObject.",
+            "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
             "name": "sObjectName"
           },

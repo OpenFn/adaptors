@@ -271,12 +271,15 @@ export function create(sObjectName, records) {
 }
 
 /**
- * Prints an sObject metadata and pushes the result to state.references
+ * Fetches and prints metadata for an sObject and pushes the result to `state.data`.
+ * If `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.
  * @public
- * @example
- * describe('obj_name')
+ * @example <caption>Fetch metadata for all available sObjects</caption>
+ * describe()
+ * @example <caption>Fetch metadata for Account sObject</caption>
+ * describe('Account')
  * @function
- * @param {string} sObjectName - API name of the sObject.
+ * @param {string} [sObjectName] - The API name of the sObject. If omitted, fetches metadata for all sObjects.
  * @returns {Operation}
  */
 export function describe(sObjectName) {
