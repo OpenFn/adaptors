@@ -359,7 +359,7 @@ export function destroy(sObjectName, ids, options = {}) {
  * @example
  * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
  * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {object} options - Request query parameters
+ * @param {object} options - Request query parameters and headers
  * @returns {Operation}
  */
 export function get(path, options = {}) {
