@@ -11,7 +11,11 @@
  * @ignore
  */
 
-import { execute as commonExecute, chunk } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  chunk,
+  composeNextState,
+} from '@openfn/language-common';
 
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
@@ -178,7 +182,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
       )
     ).then(results => {
       console.log('Merging results arrays.');
-      return util.prepareNextState(state, results.flat());
+      return composeNextState(state, results.flat());
     });
   };
 }
@@ -235,7 +239,7 @@ export function bulkQuery(qs, options = {}) {
       pollTimeout
     );
 
-    return util.prepareNextState(state, result);
+    return composeNextState(state, result);
   };
 }
 
@@ -265,7 +269,7 @@ export function create(sObjectName, records) {
       .create(resolvedSObjectName, resolvedRecords)
       .then(recordResult => {
         console.log('Result : ' + JSON.stringify(recordResult));
-        return util.prepareNextState(state, recordResult);
+        return composeNextState(state, recordResult);
       });
   };
 }
@@ -296,12 +300,12 @@ export function describe(sObjectName) {
             console.log('Label : ' + result.label);
             console.log('Num of Fields : ' + result.fields.length);
 
-            return util.prepareNextState(state, result);
+            return composeNextState(state, result);
           })
       : connection.describeGlobal().then(result => {
           const { sobjects } = result;
           console.log(`Retrieved ${sobjects.length} sObjects`);
-          return util.prepareNextState(state, result);
+          return composeNextState(state, result);
         });
   };
 }
@@ -349,7 +353,7 @@ export function destroy(sObjectName, ids, options = {}) {
             throw 'Some deletes failed; exiting with failure code.';
         }
 
-        return util.prepareNextState(state, result);
+        return composeNextState(state, result);
       });
   };
 }
@@ -381,7 +385,7 @@ export function get(path, options = {}) {
 
     const result = await connection.request(requestOptions);
 
-    return util.prepareNextState(state, result);
+    return composeNextState(state, result);
   };
 }
 
@@ -436,7 +440,7 @@ export function post(path, data, options = {}) {
 
     const result = await connection.request(requestOptions);
 
-    return util.prepareNextState(state, result);
+    return composeNextState(state, result);
   };
 }
 
@@ -511,7 +515,7 @@ export function query(qs, options = {}) {
       console.log('No records found.');
     }
 
-    return util.prepareNextState(state, result, result?.records);
+    return composeNextState(state, result, result?.records);
   };
 }
 
@@ -552,7 +556,7 @@ export function upsert(sObjectName, externalId, records) {
       .then(function (result) {
         console.log('Result : ' + JSON.stringify(result));
 
-        return util.prepareNextState(state, result);
+        return composeNextState(state, result);
       });
   };
 }
@@ -589,7 +593,7 @@ export function update(sObjectName, records) {
       .update(resolvedSObjectName, resolvedRecords)
       .then(function (result) {
         console.log('Result : ' + JSON.stringify(result));
-        return util.prepareNextState(state, result);
+        return composeNextState(state, result);
       });
   };
 }
@@ -647,7 +651,7 @@ export function request(path, options = {}) {
 
     const result = await connection.request(requestOptions);
 
-    return util.prepareNextState(state, result);
+    return composeNextState(state, result);
   };
 }
 
@@ -678,7 +682,7 @@ export function retrieve(sObjectName, id) {
       .sobject(resolvedSObjectName)
       .retrieve(resolvedId)
       .then(result => {
-        return util.prepareNextState(state, result);
+        return composeNextState(state, result);
       });
   };
 }
