@@ -254,6 +254,6 @@ describe('HTTP wrappers', () => {
       return error;
     });
 
-    expect(error.code).to.eql('INVALID_ABSOLUTE_URL');
+    expect(error.code).to.eql('UNEXPECTED_ABSOLUTE_URL');
   });
 });

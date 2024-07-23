@@ -53,7 +53,7 @@ describe('request', () => {
     } catch (e) {
       err = e;
     }
-    expect(err.code).to.equal('INVALID_ABSOLUTE_URL');
+    expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
   });
 });
 

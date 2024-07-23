@@ -91,7 +91,7 @@ describe('get', () => {
     } catch (e) {
       err = e;
     }
-    expect(err.code).to.equal('INVALID_ABSOLUTE_URL');
+    expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
   });
 
   it('should fetch organizations', async () => {
