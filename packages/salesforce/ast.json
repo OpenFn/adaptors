@@ -3,7 +3,7 @@
     {
       "name": "bulk",
       "params": [
-        "sObject",
+        "sObjectName",
         "operation",
         "records",
         "options"
@@ -38,7 +38,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -78,6 +78,19 @@
               }
             },
             "name": "options.extIdField"
+          },
+          {
+            "title": "param",
+            "description": "Skipping bulk operation if no records.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.allowNoOp",
+            "default": "false"
           },
           {
             "title": "param",
@@ -217,7 +230,7 @@
     {
       "name": "create",
       "params": [
-        "sObject",
+        "sObjectName",
         "records"
       ],
       "docs": {
@@ -250,7 +263,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -276,7 +289,7 @@
     {
       "name": "describe",
       "params": [
-        "sObject"
+        "sObjectName"
       ],
       "docs": {
         "description": "Prints an sObject metadata and pushes the result to state.references",
@@ -302,7 +315,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "returns",
@@ -319,7 +332,7 @@
     {
       "name": "destroy",
       "params": [
-        "sObject",
+        "sObjectName",
         "ids",
         "options"
       ],
@@ -333,7 +346,7 @@
           },
           {
             "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
+            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5'\n], { failOnError: true })"
           },
           {
             "title": "function",
@@ -347,7 +360,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -380,45 +393,13 @@
       "valid": true
     },
     {
-      "name": "describeAll",
-      "params": [],
-      "docs": {
-        "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "describeAll()"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "insert",
       "params": [
-        "sObject",
+        "sObjectName",
         "records"
       ],
       "docs": {
-        "description": "Alias for \"create(sObject, attrs)\".",
+        "description": "Alias for \"create(sObjectName, attrs)\".",
         "tags": [
           {
             "title": "public",
@@ -447,7 +428,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -544,7 +525,7 @@
     {
       "name": "upsert",
       "params": [
-        "sObject",
+        "sObjectName",
         "externalId",
         "records"
       ],
@@ -578,7 +559,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "magic",
@@ -643,7 +624,7 @@
     {
       "name": "update",
       "params": [
-        "sObject",
+        "sObjectName",
         "records"
       ],
       "docs": {
@@ -676,7 +657,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -758,7 +739,7 @@
     {
       "name": "retrieve",
       "params": [
-        "sObject",
+        "sObjectName",
         "id"
       ],
       "docs": {
@@ -785,7 +766,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
