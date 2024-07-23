@@ -85,29 +85,29 @@ const build = async (lang: string) => {
         'WARNING: failed to load common docs. This may result in incorrect documentation'
       );
     }
-  }
 
-  // Extract exports from common and add them to the template data as externals
-  for (const f of fileSet.files) {
-    const src = await fs.readFile(f, 'utf8');
+    // Extract exports from common and add them to the template data as externals
+    for (const f of fileSet.files) {
+      const src = await fs.readFile(f, 'utf8');
 
-    const exports = extractExports(src).map(e => {
-      const isNamespace = common.find(data => data.scope === e);
-      return {
-        id: e,
-        common: true,
-        name: e,
-        scope: 'global',
-        kind: isNamespace ? 'external' : 'external-function',
-      };
-    });
-    templateData.push(...exports);
+      const exports = extractExports(src).map(e => {
+        const isNamespace = common.find(data => data.scope === e);
+        return {
+          id: e,
+          common: true,
+          name: e,
+          scope: 'global',
+          kind: isNamespace ? 'external' : 'external-function',
+        };
+      });
+      templateData.push(...exports);
+    }
   }
 
   // for each entry, set its scope to be the file name
   templateData.forEach(data => {
     if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
-      data.scope = data.meta.filename.split('.')[0].toLowerCase();
+      data.scope = data.meta.filename.split('.')[0];
     }
   });
 
