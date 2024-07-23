@@ -19,7 +19,7 @@ exports.commonFns = function (options) {
 };
 
 exports.externalName = function (def) {
-  if (def.kind === 'function') {
+  if (def.kind === 'external-function') {
     return `${def.name}()`;
   }
   return def.name;

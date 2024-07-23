@@ -94,7 +94,7 @@ const build = async (lang: string) => {
         common: true,
         name: e,
         scope: 'global',
-        kind: isNamespace ? 'external' : 'function',
+        kind: isNamespace ? 'external' : 'external-function',
       };
     });
     templateData.push(...exports);
