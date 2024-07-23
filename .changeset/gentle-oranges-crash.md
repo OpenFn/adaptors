@@ -9,7 +9,7 @@ old code.
 
 - Remove axios dependency
 - Remove old/unused functions. `relationship`, `upsertIf`, `createIf`,
-  `reference`, `steps`, `beta`
+  `reference`, `steps`, `beta`, `describeAll()`
 - Standardize state mutation in all operation
 - Change `bulk` signature to `bulk(operation, sObjectName, records, options)`
 - Remove callback support
@@ -22,3 +22,5 @@ old code.
 
 - Change `cleanupState` to `removeConnection` and tagged it as private function
 - Rename `attrs` to `records`
+
+### Migration Guide
