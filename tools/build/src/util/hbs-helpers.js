@@ -4,6 +4,10 @@ exports.toLowerCase = function (str) {
   return str ? str.toLowerCase() : str;
 };
 
+exports.namespacedHeader = function (namespace, name) {
+  return `### ${namespace}.${name} \{\#${namespace}_${name}\}`;
+};
+
 exports.commonFns = function (options) {
   options.hash.scope = 'global';
   const common = () =>
@@ -12,6 +16,28 @@ exports.commonFns = function (options) {
     }, options);
 
   return handlebars.helpers.each(common, options);
+};
+
+// get a list of all namespaces
+exports.namespaces = function (options) {
+  const fn = () => {
+    const ns = {};
+    handlebars.helpers._identifiers(options).forEach(o => {
+      if (!ns[o.scope]) ns[o.scope] = [];
+
+      ns[o.scope].push(o);
+    }, options);
+
+    delete ns.global;
+
+    const items = [];
+    for (const n in ns) {
+      items.push(...ns[n]);
+    }
+    return items;
+  };
+
+  return handlebars.helpers.each(fn, options);
 };
 
 /**
