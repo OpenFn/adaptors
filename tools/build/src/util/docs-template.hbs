@@ -42,11 +42,11 @@ This adaptor exports the following namespaced functions:
 {{#commonFns}}
 
 {{#if @first~}}
-The following functions are exported from the common adaptor:
+This adaptor exports the following from common:
 <dl>
 {{/if~}}
 <dt>
-    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{name}}()</a>
+    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{externalName this}}</a>
 </dt>{{#if @last}}</dl>
 {{/if}}
 {{/commonFns}}
@@ -67,8 +67,10 @@ The following functions are exported from the common adaptor:
 
 {{#namespaces}}
 
-{{#if @first~}}
-## Namespaces
+{{#if newscope}}
+## {{scope}}
+
+These functions belong to the {{scope}} namespace.
 {{/if}}
 {{namespacedHeader scope name}}
 

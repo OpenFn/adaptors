@@ -18,12 +18,22 @@ exports.commonFns = function (options) {
   return handlebars.helpers.each(common, options);
 };
 
+exports.externalName = function (def) {
+  if (def.kind === 'function') {
+    return `${def.name}()`;
+  }
+  return def.name;
+};
+
 // get a list of all namespaces
 exports.namespaces = function (options) {
   const fn = () => {
     const ns = {};
     handlebars.helpers._identifiers(options).forEach(o => {
-      if (!ns[o.scope]) ns[o.scope] = [];
+      if (!ns[o.scope]) {
+        ns[o.scope] = [];
+        o.newscope = true;
+      }
 
       ns[o.scope].push(o);
     }, options);

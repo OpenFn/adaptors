@@ -1,4 +1,4 @@
-import fs, { writeFile, mkdir } from 'node:fs/promises';
+import fs, { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import jsdoc2md from 'jsdoc-to-markdown';
@@ -38,7 +38,7 @@ const build = async (lang: string) => {
 
   const glob = `${root}/src/**/*.js`;
 
-  const template = await fs.readFile(
+  const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
   /* get template data */
@@ -66,16 +66,37 @@ const build = async (lang: string) => {
   const fileSet = new FileSet();
   await fileSet.add([glob]);
 
+  let common: any[] = [];
+  if (lang !== 'common') {
+    // try and load common's data
+    // (common SHOULD be built first, so this should work)
+    try {
+      const commonRaw = await readFile(
+        path.resolve('../../packages/common/docs/raw.json'),
+        'utf8'
+      );
+      common = JSON.parse(commonRaw || '');
+    } catch (e) {
+      console.warn(
+        'WARNING: failed to load common docs. This may result in incorrect documentation'
+      );
+    }
+  }
+
   // Extract exports from common and add them to the template data as externals
   for (const f of fileSet.files) {
     const src = await fs.readFile(f, 'utf8');
-    const exports = extractExports(src).map(e => ({
-      id: e,
-      common: true,
-      name: e,
-      scope: 'global',
-      kind: 'external',
-    }));
+
+    const exports = extractExports(src).map(e => {
+      const isNamespace = common.find(data => data.scope === e);
+      return {
+        id: e,
+        common: true,
+        name: e,
+        scope: 'global',
+        kind: isNamespace ? 'external' : 'function',
+      };
+    });
     templateData.push(...exports);
   }
 
