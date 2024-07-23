@@ -1,10 +1,11 @@
 /**
- * New helpers go here
+ * This file contains some operations which wrap the common.util request helper
  *
- * light, generic wrappers
+ * They enable every adaptor to export the http namespace and expose totally generic http operations
  *
  */
 
+import { expandReferences } from './util';
 import { request } from './util/http';
 import set from 'lodash/set';
 
@@ -20,13 +21,21 @@ const helpers = {
     set(this, 'headers.Authorization', `Basic ${credentials}`);
     return this;
   },
+  bearer: function (token) {
+    set(this, 'headers.Authorization', `Bearer ${token}`);
+    return this;
+  },
+  oauth: function (token) {
+    set(this, 'headers.Authorization', `Bearer ${token}`);
+    return this;
+  },
 };
 
 /**
  * Builder function for request options
  * Enables stuff like this:
  * ```
- * get($.data.url, options({ query: $.query }).json().basic(user, pass))
+ * get($.data.url, http.options({ query: $.query }).json().basic(user, pass))
  * ```
  */
 export function options(opts = {}) {
@@ -73,12 +82,19 @@ export function options(opts = {}) {
  * @param {string} method - The HTTP method to use.
  * @param {string} url - URL to resource.
  * @param {RequestOptions} options - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-const req = function (method, url, options, callback) {
-  return request(method, url, options, callback);
+const req = function (method, url, options) {
+  return state => {
+    const [resolvedMethod, resolvedUrl, resolvedOptions] = expandReferences(
+      state,
+      method,
+      url,
+      options
+    );
+    return request(resolvedMethod, resolvedUrl, resolvedOptions);
+  };
 };
 export { req as request };
 
@@ -90,12 +106,11 @@ export { req as request };
  * get('https://jsonplaceholder.typicode.com/todos')
  * @param {string} url - URL to access.
  * @param {RequestOptions} options - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function get(url, options, callback) {
-  return request('GET', url, options, callback);
+export function get(url, options) {
+  return req('GET', url, options);
 }
 
 /**
@@ -109,11 +124,10 @@ export function get(url, options, callback) {
  *  })
  * @param {string} url - URL to access.
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
 
-export function post(path, data, options, callback) {
-  return request('POST', path, { body: data, ...options }, callback);
+export function post(path, data, options) {
+  return req('POST', path, { body: data, ...options });
 }
