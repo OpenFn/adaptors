@@ -619,10 +619,10 @@ export function toUTF8(input) {
  *   json: { inputs: [{}] },
  * });
  * @param {string} url - Relative to request from
- * @param {object} options - Query parameters and headers
+ * @param {object} options - The options for the request.
  * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
  * @param {object} [options.headers] - Object of request headers
- * @param {object} [options.json] - A JSON Object request body
+ * @param {object} [options.json] - A JSON object to send as the request body.
  * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
  * @returns {Operation}
  */
