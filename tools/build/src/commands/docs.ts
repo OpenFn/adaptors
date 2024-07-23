@@ -79,6 +79,13 @@ const build = async (lang: string) => {
     templateData.push(...exports);
   }
 
+  // for each entry, set its scope to be the file naame
+  templateData.forEach(data => {
+    if (data.meta?.filename !== 'Adaptor.js') {
+      data.scope = data.meta.filename.split('.')[0];
+    }
+  });
+
   const helper = path.resolve('../../tools/build/src/util/hbs-helpers.js');
   const renderOpts = {
     template: `${template}`,
