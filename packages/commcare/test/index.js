@@ -7,6 +7,87 @@ const testServer = enableMockClient(hostUrl);
 const domain = 'my-domain';
 const app = 'my-app';
 
+const defaultObjects = [
+  { case_id: '1' },
+  { case_id: '2' },
+  { case_id: '3' },
+  { case_id: '4' },
+  { case_id: '5' },
+  { case_id: '6' },
+];
+const handlePayload = (offset = 0, limit, objects = defaultObjects) => {
+  const next =
+    offset + limit < objects.length ? `offset=${offset + limit}&limit=1` : null;
+
+  return {
+    meta: {
+      limit: limit,
+      next: next,
+      offset: offset,
+      total_count: objects.length,
+    },
+    objects: objects.slice(offset, limit + offset),
+  };
+};
+
+describe('handlePayload', () => {
+  it('should handle offset=0 limit=1', () => {
+    const result = handlePayload(0, 1);
+    expect(result).to.eql({
+      meta: {
+        limit: 1,
+        offset: 0,
+        total_count: 6,
+        next: 'offset=1&limit=1',
+      },
+      objects: [{ case_id: '1' }],
+    });
+  });
+
+  it('should handle offset=3 limit=3', () => {
+    const result = handlePayload(3, 3);
+    expect(result.meta).to.eql({
+      limit: 3,
+      offset: 3,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(3);
+  });
+  it('should handle offset=5 limit=1', () => {
+    const result = handlePayload(5, 1);
+    expect(result.meta).to.eql({
+      limit: 1,
+      offset: 5,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(1);
+  });
+
+  it('should handle offset=0 limit=6', () => {
+    const result = handlePayload(0, 6);
+    expect(result.meta).to.eql({
+      limit: 6,
+      offset: 0,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(6);
+  });
+  it('should handle offset=5 limit=12', () => {
+    const result = handlePayload(5, 12);
+    expect(result.meta).to.eql({
+      limit: 12,
+      offset: 5,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(1);
+  });
+});
+
+//  add a describe to test above function- atleast 6, small 5 limit 1 0 limit 6 limit 12 off 5
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     let state = {
@@ -341,19 +422,7 @@ describe('get', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        const offset = req.query.offset ?? 0;
-        const next =
-          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
-        return {
-          meta: {
-            limit: 1,
-            next: next,
-            offset: offset,
-            previous: null,
-            total_count: 3,
-          },
-          objects: [objects[offset]],
-        };
+        return handlePayload(req.query.offset, 1, objects);
       })
       .times(5);
 
@@ -385,21 +454,9 @@ describe('get', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        const offset = req.query.offset ?? 0;
-        const next =
-          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
-        return {
-          meta: {
-            limit: 1,
-            next: next,
-            offset: offset,
-            previous: null,
-            total_count: 3,
-          },
-          objects: [objects[offset]],
-        };
+        return handlePayload(req.query.offset, 1, objects);
       })
-      .times(5);
+      .times(3);
 
     const state = {
       configuration: {
@@ -428,10 +485,21 @@ describe('get', () => {
   it('should not add limit and offset to the parameters of the first request if the user does not pass them', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
       })
-      .reply(200, {});
+      .reply(200, () => {
+        return {
+          meta: {
+            limit: 1,
+            next: null,
+            offset: 1,
+            previous: null,
+            total_count: 1,
+          },
+          objects: [],
+        };
+      });
 
     const state = {
       configuration: {
@@ -470,8 +538,7 @@ describe('get', () => {
           },
           objects: [{ case_id: '789' }],
         };
-      })
-      .times(5);
+      });
 
     const state = {
       configuration: {
@@ -489,14 +556,6 @@ describe('get', () => {
   });
 
   it("should respect the user's limit while paginating", async () => {
-    const objects = [
-      { case_id: '1' },
-      { case_id: '2' },
-      { case_id: '3' },
-      { case_id: '4' },
-      { case_id: '5' },
-      { case_id: '6' },
-    ];
     testServer
       .intercept({
         path: /\/a\/my-domain\/api\/v0\.5\/case/,
@@ -506,23 +565,7 @@ describe('get', () => {
         },
       })
       .reply(200, req => {
-        const limit = req.query.limit ?? 1;
-        const offset = req.query.offset ?? 0;
-        const next =
-          offset + limit < objects.length - 1
-            ? `offset=${offset + limit}&limit=2`
-            : null;
-
-        return {
-          meta: {
-            limit: limit,
-            next: next,
-            offset: offset,
-            previous: null,
-            total_count: objects.length,
-          },
-          objects: objects.slice(offset, limit + offset),
-        };
+        return handlePayload(req.query.offset, req.query.limit);
       })
       .times(5);
 
@@ -596,19 +639,7 @@ describe('get', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        const offset = req.query.offset ?? 0;
-        const next =
-          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
-        return {
-          meta: {
-            limit: 1,
-            next: next,
-            offset: offset,
-            previous: null,
-            total_count: 3,
-          },
-          objects: [objects[offset]],
-        };
+        return handlePayload(req.query.offset, 1, objects);
       })
       .times(5);
 
