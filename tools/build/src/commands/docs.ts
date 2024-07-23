@@ -81,7 +81,7 @@ const build = async (lang: string) => {
 
   // for each entry, set its scope to be the file naame
   templateData.forEach(data => {
-    if (data.meta?.filename !== 'Adaptor.js') {
+    if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
       data.scope = data.meta.filename.split('.')[0];
     }
   });
