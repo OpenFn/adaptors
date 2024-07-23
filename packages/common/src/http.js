@@ -116,8 +116,8 @@ export function get(url, options) {
 /**
  * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
  * @function
+ * @example
  *  post('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
