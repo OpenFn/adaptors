@@ -164,7 +164,7 @@ export function retrieve(sObject, id, callback) {
  * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs, options, callback = s => s) {
+export function query(qs, options = {}, callback = s => s) {
   return async state => {
     let done = false;
     let qResult = null;
@@ -176,7 +176,7 @@ export function query(qs, options, callback = s => s) {
       qs,
       options
     );
-    const { autoFetch } = { ...{ autoFetch: false }, ...resolvedOptions };
+    const { autoFetch = false } = resolvedOptions;
 
     console.log(`Executing query: ${resolvedQs}`);
     try {
@@ -228,7 +228,7 @@ export function query(qs, options, callback = s => s) {
 
     const nextState = {
       ...state,
-      references: [result, ...state.references],
+      references: [...result, ...state.references],
     };
     return callback(nextState);
   };
