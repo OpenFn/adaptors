@@ -14,14 +14,6 @@ old code.
 
 ### Migration Guide
 
-- Use `describe()` instead of `describeAll()`.
-- Use `fnIf(true, upsert())` instead of `upsertIf()`
-- Use `fnIf(true, create())` instead of `createIf()`
-- Use `bulk(operation, sObjectName, records, options )` instead of
-  `bulk(operation, sObject, options, records)`
-
-### Migration Guide
-
 - Replace `describeAll()` with `describe()`.
 - Replace `upsertIf()` with `fnIf(true, upsert())`.
 - Replace `createIf()` with `fnIf(true, create())`.
