@@ -328,7 +328,7 @@ export function destroy(sObjectName, ids, options = {}) {
 
     const { failOnError = false } = resolvedOptions;
 
-    console.info(`Deleting ${sObject} records`);
+    console.info(`Deleting ${resolvedSObjectName} records`);
 
     return connection
       .sobject(resolvedSObjectName)
