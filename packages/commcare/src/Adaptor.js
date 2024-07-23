@@ -56,7 +56,8 @@ export function execute(...operations) {
 
 /**
  * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
- * Adding an offset param will trigger an automatic pagination and the returned data is combined and written into state.data
+ * Not adding an offset param when getting items will trigger an automatic pagination and the returned data is combined and written into state.data
+ * If an offset is provided, no auto-pagination occurs
  * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
@@ -82,13 +83,14 @@ export function get(path, params = {}, callback = s => s) {
 
     let nextState = state;
     let result;
-    let allowPagination = !isNaN(resolvedParams.offset);
+    let allowPagination = isNaN(resolvedParams.offset);
+
 
     try {
       let requestParams = {
         ...resolvedParams,
       };
-
+  
       do {
         const response = await request(
           state.configuration,
@@ -101,7 +103,6 @@ export function get(path, params = {}, callback = s => s) {
         );
 
         nextState = prepareNextState(state, response, callback);
-
         if (response?.body?.meta?.next) {
           if (!result) {
             result = [];

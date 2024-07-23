@@ -326,8 +326,10 @@ describe('getCases', () => {
       },
     ]);
   });
+});
 
-  it('should fetch cases with pagination', async () => {
+describe('get', () => {
+  it('should fetch the next page if the response has a meta.next property', async () => {
     const objects = [
       { case_id: '123' },
       { case_id: '456' },
@@ -335,19 +337,13 @@ describe('getCases', () => {
     ];
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
-        query: {
-          limit: 1,
-          offset: 0,
-        },
       })
       .reply(200, req => {
-        const offset = req.query.offset;
+        const offset = req.query.offset ?? 0;
         const next =
-          req.query.offset < objects.length - 1
-            ? `offset=${offset + 1}&limit=1`
-            : null;
+          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
         return {
           meta: {
             limit: 1,
@@ -358,19 +354,38 @@ describe('getCases', () => {
           },
           objects: [objects[offset]],
         };
-      });
+      })
+      .times(5);
 
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await execute(get('case'))(state);
+    expect(data.length).to.equal(3);
+    expect(response.meta.limit).to.equal(1);
+    expect(response.meta.offset).to.equal(2);
+  });
+
+  it('should call the callback once per page', async () => {
+    const objects = [
+      { case_id: '123' },
+      { case_id: '456' },
+      { case_id: '789' },
+    ];
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
-        query: {
-          limit: '1',
-          offset: '1',
-        },
       })
       .reply(200, req => {
-        const offset = parseInt(req.query.offset, 10);
+        const offset = req.query.offset ?? 0;
         const next =
           offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
         return {
@@ -379,34 +394,173 @@ describe('getCases', () => {
             next: next,
             offset: offset,
             previous: null,
-            total_count: objects.length,
+            total_count: 3,
           },
           objects: [objects[offset]],
         };
-      });
+      })
+      .times(5);
 
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    let callbackArgCount = 0;
+    const callback = state => {
+      callbackArgCount++;
+      return state;
+    };
+
+    const { data, response } = await execute(get('case', {}, callback))(state);
+
+    expect(data.length).to.equal(3);
+    expect(response.meta.limit).to.equal(1);
+    expect(response.meta.offset).to.equal(2);
+    expect(callbackArgCount).to.deep.equal(3);
+  });
+
+  it('should not add limit and offset to the parameters of the first request if the user does not pass them', async () => {
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
+      })
+      .reply(200, {});
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { response } = await execute(get('case'))(state);
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('should not auto-fetch if the user sets an offset', async () => {
+    let callCount = 0;
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
         query: {
-          limit: '1',
-          offset: '2',
+          offset: 1,
         },
       })
-      .reply(200, req => {
-        const offset = parseInt(req.query.offset, 10);
-        const next =
-          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
+      .reply(200, () => {
+        callCount++;
+
         return {
           meta: {
             limit: 1,
+            next: 'offset=2',
+            offset: 1,
+            previous: null,
+            total_count: 3,
+          },
+          objects: [{ case_id: '789' }],
+        };
+      })
+      .times(5);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(get('case', { offset: 1 }))(state);
+    expect(data.length).to.equal(1);
+    expect(callCount).to.equal(1);
+  });
+
+  it("should respect the user's limit while paginating", async () => {
+    const objects = [
+      { case_id: '1' },
+      { case_id: '2' },
+      { case_id: '3' },
+      { case_id: '4' },
+      { case_id: '5' },
+      { case_id: '6' },
+    ];
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+        query: {
+          limit: 2,
+        },
+      })
+      .reply(200, req => {
+        const limit = req.query.limit ?? 1;
+        const offset = req.query.offset ?? 0;
+        const next =
+          offset + limit < objects.length - 1
+            ? `offset=${offset + limit}&limit=2`
+            : null;
+
+        return {
+          meta: {
+            limit: limit,
             next: next,
             offset: offset,
             previous: null,
             total_count: objects.length,
           },
-          objects: [objects[offset]],
+          objects: objects.slice(offset, limit + offset),
+        };
+      })
+      .times(5);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const callback = state => {
+      expect(state.data.length).to.equal(2);
+      return state;
+    };
+
+    const { data } = await execute(get('case', { limit: 2 }, callback))(state);
+    expect(data.length).to.equal(6);
+  });
+
+  it('should call the callback once for a single request', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        return {
+          meta: {
+            limit: 1,
+            next: null,
+            offset: 0,
+            previous: null,
+            total_count: 1,
+          },
+          objects: { case_id: '123' },
         };
       });
 
@@ -420,15 +574,60 @@ describe('getCases', () => {
       },
     };
 
-    const { data, response } = await execute(
-      get('case', { limit: 1, offset: 0 })
-    )(state);
+    let callbackArgCount = 0;
+    const callback = state => {
+      callbackArgCount++;
+      return state;
+    };
+
+    await execute(get('case', {}, callback))(state);
+    expect(callbackArgCount).to.deep.equal(1);
+  });
+
+  it.skip('should stop paginating after the first error', async () => {
+    const objects = [
+      { case_id: '123' },
+      { case_id: '456' },
+      { case_id: '789' },
+    ];
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        const offset = req.query.offset ?? 0;
+        const next =
+          offset < objects.length - 1 ? `offset=${offset + 1}&limit=1` : null;
+        return {
+          meta: {
+            limit: 1,
+            next: next,
+            offset: offset,
+            previous: null,
+            total_count: 3,
+          },
+          objects: [objects[offset]],
+        };
+      })
+      .times(5);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await execute(get('case'))(state);
     expect(data.length).to.equal(3);
     expect(response.meta.limit).to.equal(1);
     expect(response.meta.offset).to.equal(2);
   });
 });
-
 describe('createUser', () => {
   it('should create a user', async () => {
     testServer
