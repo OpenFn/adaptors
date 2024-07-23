@@ -66,7 +66,7 @@ exports.flattenState = function (state, options) {
       const def = options.data.root.find(o => {
         return o.id === s.type;
       });
-      def.properties.forEach(p => {
+      def?.properties?.forEach(p => {
         keys[p.name] = p;
       });
     } else {

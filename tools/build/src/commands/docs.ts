@@ -41,12 +41,16 @@ const build = async (lang: string) => {
   const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
-  /* get template data */
-  const templateData = jsdoc2md.getTemplateDataSync({
+
+  let templateData = jsdoc2md.getTemplateDataSync({
     files: glob,
     configure: [path.resolve('../../tools/build/jsdoc/config.json')],
     'no-cache': true,
   });
+
+  // Ignore everything that isn't explicilty marked public
+  // This might be problematic?
+  templateData = templateData.filter(data => data.access === 'public');
 
   // sort template data
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
@@ -100,10 +104,10 @@ const build = async (lang: string) => {
     templateData.push(...exports);
   }
 
-  // for each entry, set its scope to be the file naame
+  // for each entry, set its scope to be the file name
   templateData.forEach(data => {
     if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
-      data.scope = data.meta.filename.split('.')[0];
+      data.scope = data.meta.filename.split('.')[0].toLowerCase();
     }
   });
 
