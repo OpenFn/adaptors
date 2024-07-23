@@ -136,9 +136,4 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
   }
 }
 
-export const prepareNextState = (state, result, data) => {
-  return {
-    ...composeNextState(state, data ?? result),
-    result,
-  };
-};
+export const prepareNextState = (state, data) => composeNextState(state, data);
