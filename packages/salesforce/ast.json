@@ -572,7 +572,7 @@
           },
           {
             "title": "magic",
-            "description": "sObject - $.children[?(!@.meta.system)].name"
+            "description": "sObjectName - $.children[?(!@.meta.system)].name"
           },
           {
             "title": "param",
@@ -616,7 +616,7 @@
           },
           {
             "title": "magic",
-            "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
+            "description": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
             "title": "returns",

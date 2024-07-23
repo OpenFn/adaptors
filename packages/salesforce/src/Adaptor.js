@@ -528,11 +528,11 @@ export function query(qs, options = {}) {
  * ]);
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @magic sObject - $.children[?(!@.meta.system)].name
+ * @magic sObjectName - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {(object|object[])} records - Field attributes for the new object.
- * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
+ * @magic records - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @returns {Operation}
  */
 export function upsert(sObjectName, externalId, records) {
