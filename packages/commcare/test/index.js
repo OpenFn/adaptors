@@ -15,7 +15,7 @@ const defaultObjects = [
   { case_id: '5' },
   { case_id: '6' },
 ];
-const handlePayload = (offset = 0, limit, objects = defaultObjects) => {
+const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
   const next =
     offset + limit < objects.length ? `offset=${offset + limit}&limit=1` : null;
 
@@ -30,9 +30,9 @@ const handlePayload = (offset = 0, limit, objects = defaultObjects) => {
   };
 };
 
-describe('handlePayload', () => {
+describe('paginatedResponse', () => {
   it('should handle offset=0 limit=1', () => {
-    const result = handlePayload(0, 1);
+    const result = paginatedResponse(0, 1);
     expect(result).to.eql({
       meta: {
         limit: 1,
@@ -45,7 +45,7 @@ describe('handlePayload', () => {
   });
 
   it('should handle offset=3 limit=3', () => {
-    const result = handlePayload(3, 3);
+    const result = paginatedResponse(3, 3);
     expect(result.meta).to.eql({
       limit: 3,
       offset: 3,
@@ -55,7 +55,7 @@ describe('handlePayload', () => {
     expect(result.objects.length).to.equal(3);
   });
   it('should handle offset=5 limit=1', () => {
-    const result = handlePayload(5, 1);
+    const result = paginatedResponse(5, 1);
     expect(result.meta).to.eql({
       limit: 1,
       offset: 5,
@@ -66,7 +66,7 @@ describe('handlePayload', () => {
   });
 
   it('should handle offset=0 limit=6', () => {
-    const result = handlePayload(0, 6);
+    const result = paginatedResponse(0, 6);
     expect(result.meta).to.eql({
       limit: 6,
       offset: 0,
@@ -76,7 +76,7 @@ describe('handlePayload', () => {
     expect(result.objects.length).to.equal(6);
   });
   it('should handle offset=5 limit=12', () => {
-    const result = handlePayload(5, 12);
+    const result = paginatedResponse(5, 12);
     expect(result.meta).to.eql({
       limit: 12,
       offset: 5,
@@ -87,7 +87,6 @@ describe('handlePayload', () => {
   });
 });
 
-//  add a describe to test above function- atleast 6, small 5 limit 1 0 limit 6 limit 12 off 5
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     let state = {
@@ -422,7 +421,7 @@ describe('get', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        return handlePayload(req.query.offset, 1, objects);
+        return paginatedResponse(req.query.offset, 1, objects);
       })
       .times(5);
 
@@ -454,7 +453,7 @@ describe('get', () => {
         method: 'GET',
       })
       .reply(200, req => {
-        return handlePayload(req.query.offset, 1, objects);
+        return paginatedResponse(req.query.offset, 1, objects);
       })
       .times(3);
 
@@ -565,7 +564,7 @@ describe('get', () => {
         },
       })
       .reply(200, req => {
-        return handlePayload(req.query.offset, req.query.limit);
+        return paginatedResponse(req.query.offset, req.query.limit);
       })
       .times(5);
 
@@ -625,38 +624,6 @@ describe('get', () => {
 
     await execute(get('case', {}, callback))(state);
     expect(callbackArgCount).to.deep.equal(1);
-  });
-
-  it.skip('should stop paginating after the first error', async () => {
-    const objects = [
-      { case_id: '123' },
-      { case_id: '456' },
-      { case_id: '789' },
-    ];
-    testServer
-      .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
-        method: 'GET',
-      })
-      .reply(200, req => {
-        return handlePayload(req.query.offset, 1, objects);
-      })
-      .times(5);
-
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
-
-    const { data, response } = await execute(get('case'))(state);
-    expect(data.length).to.equal(3);
-    expect(response.meta.limit).to.equal(1);
-    expect(response.meta.offset).to.equal(2);
   });
 });
 describe('createUser', () => {
