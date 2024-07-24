@@ -126,6 +126,7 @@ export function get(path, params = {}, callback = s => s) {
           break;
         }
       } while (allowPagination);
+      
       return {
         ...nextState,
         data: result,
