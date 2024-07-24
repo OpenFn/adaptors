@@ -79,19 +79,19 @@ export function get(path, params = {}, callback = s => s) {
       params
     );
 
-    let { offset = 0, limit = 1000 } = resolvedParams;
+    let offset, limit;
 
     let nextState = state;
     let result;
     let allowPagination = isNaN(resolvedParams.offset);
 
-
     try {
       let requestParams = {
         ...resolvedParams,
       };
-  
+
       do {
+        // Make the first request
         const response = await request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
@@ -104,11 +104,13 @@ export function get(path, params = {}, callback = s => s) {
 
         nextState = prepareNextState(state, response, callback);
         if (response?.body?.meta?.next) {
+          // Check if next is present and make another call
+
           if (!result) {
             result = [];
           }
-          offset = response?.body?.meta?.offset + response?.body?.meta?.limit;
-          limit = response?.body?.meta?.limit;
+          offset = response.body.meta.offset + response.body.meta.limit;
+          limit = response.body.meta.limit;
 
           requestParams = {
             ...requestParams,
@@ -122,11 +124,12 @@ export function get(path, params = {}, callback = s => s) {
           } else {
             result = nextState.data;
           }
-
+          //  Break when next is null
           break;
         }
       } while (allowPagination);
-      
+      // Make another call if offset is missing in the params
+
       return {
         ...nextState,
         data: result,
