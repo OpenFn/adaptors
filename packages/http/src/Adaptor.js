@@ -17,7 +17,6 @@ import { request as sendRequest, xmlParser } from './Utils';
 /**
  * State object
  * @typedef {Object} HttpState
- * @private
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
@@ -31,7 +30,6 @@ import { request as sendRequest, xmlParser } from './Utils';
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */

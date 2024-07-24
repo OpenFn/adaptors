@@ -48,9 +48,11 @@ const build = async (lang: string) => {
     'no-cache': true,
   });
 
-  // Ignore everything that isn't explicilty marked public
-  // This might be problematic?
-  templateData = templateData.filter(data => data.access === 'public');
+  // Filter items which are not marked as @public
+  // But also include typedefs regardless of visibility - because why you would you declare a private typedef?
+  templateData = templateData.filter(
+    data => data.kind === 'typedef' || data.access === 'public'
+  );
 
   // sort template data
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
