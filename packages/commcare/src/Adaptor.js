@@ -56,8 +56,8 @@ export function execute(...operations) {
 
 /**
  * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
- * Not adding an offset param when getting items will trigger an automatic pagination and the returned data is combined and written into state.data
- * If an offset is provided, no auto-pagination occurs
+ * Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
+ * is paginated.
  * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
@@ -67,7 +67,7 @@ export function execute(...operations) {
  * @function
  * @param {string} path - Path to resource
  * @param {RequestQueries} params - Optional request params such as limit and offset.
- * @param {function} [callback] - Optional callback to handle the response. During pagination, the callback is called on each pagination request made
+ * @param {function} [callback] - Callback invoked once per page of data retrieved.
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
@@ -83,6 +83,8 @@ export function get(path, params = {}, callback = s => s) {
 
     let nextState = state;
     let result;
+
+    // Automatically paginate if the user did not pass an offset
     let allowPagination = isNaN(resolvedParams.offset);
 
     try {
@@ -103,9 +105,9 @@ export function get(path, params = {}, callback = s => s) {
         );
 
         nextState = prepareNextState(state, response, callback);
+        // If the server tells us there's another page of data, setup
+        // the next request to get it
         if (response?.body?.meta?.next) {
-          // Check if next is present and make another call
-
           if (!result) {
             result = [];
           }
@@ -124,11 +126,10 @@ export function get(path, params = {}, callback = s => s) {
           } else {
             result = nextState.data;
           }
-          //  Break when next is null
+          // Exit the loop when no more data is available
           break;
         }
       } while (allowPagination);
-      // Make another call if offset is missing in the params
 
       return {
         ...nextState,

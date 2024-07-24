@@ -1,5 +1,5 @@
 ---
-'@openfn/language-commcare': major
+'@openfn/language-commcare': minor
 ---
 
-Implement pagination on commcare `get`
+`get()` will now automatically paginate responses (unless an offset is passed)
