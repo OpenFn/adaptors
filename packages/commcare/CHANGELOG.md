@@ -1,5 +1,12 @@
 # @openfn/language-commcare
 
+## 2.3.0
+
+### Minor Changes
+
+- ac4b4a0: `get()` will now automatically paginate responses (unless an offset
+  is passed)
+
 ## 2.2.1
 
 ### Patch Changes
