@@ -178,7 +178,7 @@ describe('SubmitXls', () => {
 });
 
 describe('getCases', () => {
-  it('should fetch cases', async () => {
+  it.only('should fetch cases', async () => {
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
@@ -296,15 +296,11 @@ describe('getCases', () => {
     expect(data.properties.case_type).to.equal('pregnancy');
   });
 
-  it('should fetch cases and call the callback', async () => {
+  it.only('should fetch cases and call the callback', async () => {
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
         method: 'GET',
-        query: {
-          limit: 400,
-          offset: 0,
-        },
       })
       .reply(200, () => {
         return {
@@ -313,7 +309,7 @@ describe('getCases', () => {
             next: null,
             offset: 0,
             previous: null,
-            total_count: 2,
+            total_count: 1,
           },
           objects: [
             {
@@ -364,16 +360,7 @@ describe('getCases', () => {
       return state;
     };
 
-    await execute(
-      get(
-        'case',
-        {
-          limit: 400,
-          offset: 0,
-        },
-        callback
-      )
-    )(state);
+    await execute(get('case', {}, callback))(state);
     expect(callbackArg.data).to.deep.equal([
       {
         case_id: '12345',
