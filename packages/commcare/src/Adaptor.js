@@ -9,6 +9,7 @@ import { request, prepareNextState } from './Utils';
 /**
  * Queries provided to the GET request
  * @typedef {Object} RequestQueries
+ * @public
  * @property {number} limit - The maximum number of records to return. Default: 20. Maximum: 5000.
  * @property {number} offset - The number of records to offset in the results. Default: 0
  * @property {string} xmlns - Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)
@@ -26,6 +27,7 @@ import { request, prepareNextState } from './Utils';
 /**
  * Queries provided to the submitXls request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {string} case_type - Optional case type
  * @property {string} search_field - Optional search field
  * @property {string} create_new_cases - Optional for allowing to create new cases. Default `:on`

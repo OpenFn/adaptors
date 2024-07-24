@@ -49,7 +49,6 @@ const build = async (lang: string) => {
   });
 
   // Filter items which are not marked as @public
-  // But also include typedefs regardless of visibility - because why you would you declare a private typedef?
   templateData = templateData.filter(
     data => data.kind === 'typedef' || data.access === 'public'
   );

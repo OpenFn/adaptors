@@ -304,6 +304,143 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "createTaskStory",
+      "params": [
+        "taskGid",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Options provided to the createTaskStory request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "StoryOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "The plain text of the comment to add. Cannot be used with html_text.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "text"
+          },
+          {
+            "title": "property",
+            "description": "Opt In. HTML formatted text for a comment. This will not include the name of the creator.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "html_text"
+          },
+          {
+            "title": "property",
+            "description": "Default to `false`. Whether the story should be pinned on the resource.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "is_pinned"
+          },
+          {
+            "title": "property",
+            "description": "The name of the sticker in this story. `null` if there is no sticker.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sticker_name"
+          },
+          {
+            "title": "property",
+            "description": "Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include.",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "opt_fields"
+          },
+          {
+            "title": "property",
+            "description": "Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "opt_pretty"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "request",
+      "params": [
+        "path",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Options provided to the Asana API request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "Body data to append to the request.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "property",
+            "description": "An object of query parameters to be encoded into the URL.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "property",
+            "description": "The HTTP method to use. Defaults to `GET`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

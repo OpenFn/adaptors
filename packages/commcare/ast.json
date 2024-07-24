@@ -1,6 +1,140 @@
 {
   "operations": [
     {
+      "name": "execute",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Queries provided to the GET request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestQueries"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "The maximum number of records to return. Default: 20. Maximum: 5000.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "limit"
+          },
+          {
+            "title": "property",
+            "description": "The number of records to offset in the results. Default: 0",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "offset"
+          },
+          {
+            "title": "property",
+            "description": "Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "xmlns"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that have had data modified since the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "indexed_on_start"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that have had data modified before the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "indexed_on_end"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that were received after the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "received_on_start"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that were received before the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "received_on_end"
+          },
+          {
+            "title": "property",
+            "description": "The returned records will be limited to the application defined",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "app_id"
+          },
+          {
+            "title": "property",
+            "description": "A case UUID.  Will only return forms which updated that case.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "case_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional user of group UUID used when getting cases",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "owner_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional UUID for all cases last modified by that user",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "user_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional case type to get all matching cases",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "type"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "get",
       "params": [
         "path",

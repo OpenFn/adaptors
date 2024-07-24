@@ -1,6 +1,113 @@
 {
   "operations": [
     {
+      "name": "execute",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Options provided to the HTTP request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "body"
+          },
+          {
+            "title": "property",
+            "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "errors"
+          },
+          {
+            "title": "property",
+            "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "form"
+          },
+          {
+            "title": "property",
+            "description": "An object of query parameters to be encoded into the URL.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "property",
+            "description": "An object of headers to append to the request.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "headers"
+          },
+          {
+            "title": "property",
+            "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "parseAs"
+          },
+          {
+            "title": "property",
+            "description": "Request timeout in ms. Default: 300 seconds.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "timeout"
+          },
+          {
+            "title": "property",
+            "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "tls"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "request",
       "params": [
         "method",
