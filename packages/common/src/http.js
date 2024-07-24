@@ -9,6 +9,13 @@ import { expandReferences } from './util';
 import { request } from './util/http';
 import set from 'lodash/set';
 
+/**
+ * Helper functions provided by `http.options`
+ * @typedef OptionsHelpers
+ * @property {function} json - Sets the `content-type' header to 'application/json'
+ * @property {object} jam - jar
+ */
+
 const helpers = {
   json: function () {
     set(this, 'headers.Content-Type', 'application/json');
@@ -32,11 +39,13 @@ const helpers = {
 };
 
 /**
- * Builder function for request options
- * Enables stuff like this:
- * ```
- * get($.data.url, http.options({ query: $.query }).json().basic(user, pass))
- * ```
+ * Builder function to create request options. The
+ * @param {CommonRequestOptions} options - options to pass to the request
+ * @returns {OptionsHelpers}
+ * @function
+ * @public
+ * @example Get with a query an oath token
+ * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token)
  */
 export function options(opts = {}) {
   for (let h in helpers) {
@@ -51,7 +60,7 @@ export function options(opts = {}) {
 
 /**
  * Options provided to the HTTP request
- * @typedef {Object} RequestOptions
+ * @typedef {Object} CommonRequestOptions
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors.
  * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
  * @property {object} query - An object of query parameters to be encoded into the URL.
@@ -63,7 +72,7 @@ export function options(opts = {}) {
 
 /**
  * State object
- * @typedef {Object} HttpState
+ * @typedef {Object} CommonHttpState
  * @private
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
@@ -75,14 +84,15 @@ export function options(opts = {}) {
  * @public
  * @function
  * @example
- * request(
+ * http.request(
  *   'GET',
  *   'https://jsonplaceholder.typicode.com/todos'
  * )
+ * @name request
  * @param {string} method - The HTTP method to use.
  * @param {string} url - URL to resource.
- * @param {RequestOptions} options - Query, Headers and Authentication parameters
- * @state {HttpState}
+ * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @state {CommonHttpState}
  * @returns {Operation}
  */
 const req = function (method, url, options) {
@@ -102,11 +112,13 @@ export { req as request };
  * Make a GET request.
  * @public
  * @function
- * @example
- * get('https://jsonplaceholder.typicode.com/todos')
+ * @example Request a resource
+ * http.get('https://jsonplaceholder.typicode.com/todos')
+ * @example Request a resource with basic auth
+ * http.get('https://jsonplaceholder.typicode.com/todos', http.options().basic('user', 'pass'))
  * @param {string} url - URL to access.
- * @param {RequestOptions} options - Query, Headers and Authentication parameters
- * @state {HttpState}
+ * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @state {CommonHttpState}
  * @returns {Operation}
  */
 export function get(url, options) {
@@ -114,17 +126,17 @@ export function get(url, options) {
 }
 
 /**
- * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
+ * Make a POST request.
  * @public
  * @function
  * @example
- *  post('/myEndpoint', {
+ *  http.post('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
  *  })
  * @param {string} url - URL to access.
- * @param {RequestOptions} params - Query, Headers and Authentication parameters
- * @state {HttpState}
+ * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @state {CommonHttpState}
  * @returns {Operation}
  */
 
