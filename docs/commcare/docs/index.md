@@ -83,6 +83,8 @@ fetchReportData(reportId, params, postUrl)
 <p><code>get(path, params, [callback]) ⇒ Operation</code></p>
 
 Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
+is paginated.
 A `response` key will be added to state with the HTTP response and a `meta` key
 
 
@@ -90,7 +92,7 @@ A `response` key will be added to state with the HTTP response and a `meta` key
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
 | params | [<code>RequestQueries</code>](#requestqueries) | Optional request params such as limit and offset. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| [callback] | <code>function</code> | Callback invoked once per page of data retrieved. |
 
 **Example:** Get a list of cases
 ```js
