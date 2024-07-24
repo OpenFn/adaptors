@@ -105,9 +105,13 @@ const build = async (lang: string) => {
     }
   }
 
-  // for each entry, set its scope to be the file name
   templateData.forEach(data => {
-    if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
+    // all typedefs are global
+    if (data.kind === 'typedef') {
+      data.scope = 'global';
+    }
+    // Set scope to be the file name
+    else if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
       data.scope = data.meta.filename.split('.')[0];
     }
   });
