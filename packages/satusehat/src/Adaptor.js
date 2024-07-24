@@ -72,6 +72,7 @@ export function get(path, params = {}, callback = s => s) {
  *  }
  * );
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object or JSON which defines data that will be used to create a given instance of resource
  * @param {Object} params - Optional request params.
@@ -111,6 +112,7 @@ export function post(path, data, params = {}, callback = s => s) {
  *  }
  * );
  * @function
+ * @public
  * @param {string} path - Path to resource and exact item to be updated
  * @param {object} data - Object or JSON which defines data that will be used to update a given instance of resource
  * @param {Object} params - Optional request params.
@@ -154,6 +156,7 @@ export function put(path, data, params = {}, callback = s => s) {
  *
  * );
  * @function
+ * @public
  * @param {string} path - Path to resource and exact item to be partially updated
  * @param {Array} data - An array of objects which defines data that will be used to partially update a given instance of resource
  * @param {Object} params - Optional request params.

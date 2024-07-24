@@ -42,6 +42,7 @@ export function execute(...operations) {
  *  postUrl: 'https://www.openfn.org/inbox/not-real',
  * });
  * @function
+ * @public
  * @param {object} params - data to make the fetch
  * @returns {Operation}
  */
@@ -188,6 +189,7 @@ export function create(params) {
  *   update(params)
  * )(state)
  * @function
+ * @public
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
@@ -253,6 +255,7 @@ export function update(params) {
  *   update75(params)
  * )(state)
  * @function
+ * @public
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
