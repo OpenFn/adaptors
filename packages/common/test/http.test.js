@@ -49,6 +49,18 @@ describe('options', () => {
     });
   });
 
+  it('should not override existing headers with json()', () => {
+    const opts = {};
+
+    const result = options(opts).json({ headers: { x: 1 } });
+    expect(result).to.eql({
+      headers: {
+        x: 1,
+        'Content-Type': 'application/json',
+      },
+    });
+  });
+
   it('should work with basic()', () => {
     const opts = { a: 1 };
 

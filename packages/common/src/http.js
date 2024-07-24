@@ -1,19 +1,15 @@
-/**
- * This file contains some operations which wrap the common.util request helper
- *
- * They enable every adaptor to export the http namespace and expose totally generic http operations
- *
- */
-
 import { expandReferences } from './util';
 import { request } from './util/http';
 import set from 'lodash/set';
 
 /**
- * Helper functions provided by `http.options`
+ * Helper functions provided by `http.options`.
  * @typedef OptionsHelpers
+ * @public
  * @property {function} json - Sets the `content-type' header to 'application/json'
- * @property {object} jam - jar
+ * @property {function} basic - Sets basic auth on the Authorization header. Pass username and password
+ * @property {function} bearer - Sets a Bearer token on the Authorization header. Pass the token.
+ * @property {function} oauth - Sets a Bearer token on the Authorization header. Pass the oauth token.
  */
 
 const helpers = {
@@ -39,12 +35,15 @@ const helpers = {
 };
 
 /**
- * Builder function to create request options. The
+ * Builder function to create request options. Returns an object with helpers to
+ * easily add commonly used options. The return object is chainable so you can set
+ * as many options as you want.
+ * Pass an object to set your own options.
  * @param {CommonRequestOptions} options - options to pass to the request
  * @returns {OptionsHelpers}
  * @function
  * @public
- * @example Get with a query an oath token
+ * @example <caption>Get with a query an oath token</caption>
  * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token)
  */
 export function options(opts = {}) {
@@ -91,7 +90,7 @@ export function options(opts = {}) {
  * @name request
  * @param {string} method - The HTTP method to use.
  * @param {string} url - URL to resource.
- * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @param {CommonRequestOptions} options - Request options
  * @state {CommonHttpState}
  * @returns {Operation}
  */
@@ -112,12 +111,20 @@ export { req as request };
  * Make a GET request.
  * @public
  * @function
- * @example Request a resource
+ * @example <caption>Request a resource</caption>
  * http.get('https://jsonplaceholder.typicode.com/todos')
- * @example Request a resource with basic auth
- * http.get('https://jsonplaceholder.typicode.com/todos', http.options().basic('user', 'pass'))
- * @param {string} url - URL to access.
- * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @example <caption>Request a resource with basic auth</caption>
+ * http.get(
+ *  'https://jsonplaceholder.typicode.com/todos',
+ *  http.options().basic('user', 'pass')
+ * )
+ * @example <caption>Request a resource with oauth</caption>
+ * http.get(
+ *  'https://jsonplaceholder.typicode.com/todos',
+ *  http.options().oauth($.configuration.access_token)
+ * )
+ * @param {string} url - URL to access
+ * @param {CommonRequestOptions} options - Request options
  * @state {CommonHttpState}
  * @returns {Operation}
  */
@@ -129,17 +136,17 @@ export function get(url, options) {
  * Make a POST request.
  * @public
  * @function
- * @example
- *  http.post('/myEndpoint', {
- *    body: {'foo': 'bar'},
- *    headers: {'content-type': 'application/json'},
+ * @example <caption>Post a JSON object (setting the content-type header)</caption>
+ *  http.post(
+ *    'https://jsonplaceholder.typicode.com/todos',
+ *    $.data,
+ *    options().json(),
  *  })
- * @param {string} url - URL to access.
- * @param {CommonRequestOptions} options - Query, Headers and Authentication parameters
+ * @param {string} url - URL to access
+ * @param {CommonRequestOptions} options - Request options
  * @state {CommonHttpState}
  * @returns {Operation}
  */
-
 export function post(path, data, options) {
   return req('POST', path, { body: data, ...options });
 }
