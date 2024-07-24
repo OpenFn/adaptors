@@ -178,7 +178,7 @@ describe('SubmitXls', () => {
 });
 
 describe('getCases', () => {
-  it.only('should fetch cases', async () => {
+  it('should fetch cases', async () => {
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
@@ -296,7 +296,7 @@ describe('getCases', () => {
     expect(data.properties.case_type).to.equal('pregnancy');
   });
 
-  it.only('should fetch cases and call the callback', async () => {
+  it('should fetch cases and call the callback', async () => {
     testServer
       .intercept({
         path: `/a/${domain}/api/v0.5/case`,
@@ -402,15 +402,19 @@ describe('get', () => {
       { case_id: '456' },
       { case_id: '789' },
     ];
+
+    let callCount = 0;
+
     testServer
       .intercept({
         path: /\/a\/my-domain\/api\/v0\.5\/case/,
         method: 'GET',
       })
       .reply(200, req => {
+        callCount++;
         return paginatedResponse(req.query.offset, 1, objects);
       })
-      .times(5);
+      .times(3);
 
     const state = {
       configuration: {
@@ -423,6 +427,7 @@ describe('get', () => {
     };
 
     const { data, response } = await execute(get('case'))(state);
+    expect(callCount).to.equal(3);
     expect(data.length).to.equal(3);
     expect(response.meta.limit).to.equal(1);
     expect(response.meta.offset).to.equal(2);
@@ -434,6 +439,7 @@ describe('get', () => {
       { case_id: '456' },
       { case_id: '789' },
     ];
+
     testServer
       .intercept({
         path: /\/a\/my-domain\/api\/v0\.5\/case/,
@@ -462,16 +468,18 @@ describe('get', () => {
 
     const { data, response } = await execute(get('case', {}, callback))(state);
 
+    expect(callbackArgCount).to.deep.equal(3);
+
     expect(data.length).to.equal(3);
     expect(response.meta.limit).to.equal(1);
     expect(response.meta.offset).to.equal(2);
-    expect(callbackArgCount).to.deep.equal(3);
   });
 
   it('should not add limit and offset to the parameters of the first request if the user does not pass them', async () => {
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        // This will fail if query params are added to the url
+        path: '/a/my-domain/api/v0.5/case',
         method: 'GET',
       })
       .reply(200, () => {
@@ -503,27 +511,19 @@ describe('get', () => {
 
   it('should not auto-fetch if the user sets an offset', async () => {
     let callCount = 0;
+
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: '/a/my-domain/api/v0.5/case',
         method: 'GET',
         query: {
           offset: 1,
         },
       })
-      .reply(200, () => {
+      .reply(200, req => {
         callCount++;
 
-        return {
-          meta: {
-            limit: 1,
-            next: 'offset=2',
-            offset: 1,
-            previous: null,
-            total_count: 3,
-          },
-          objects: [{ case_id: '789' }],
-        };
+        return paginatedResponse(req.query.offset, 1);
       });
 
     const state = {
@@ -613,6 +613,7 @@ describe('get', () => {
     expect(callbackArgCount).to.deep.equal(1);
   });
 });
+
 describe('createUser', () => {
   it('should create a user', async () => {
     testServer
