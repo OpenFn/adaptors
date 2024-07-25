@@ -50,9 +50,9 @@ describe('options', () => {
   });
 
   it('should not override existing headers with json()', () => {
-    const opts = {};
+    const opts = { headers: { x: 1 } };
 
-    const result = options(opts).json({ headers: { x: 1 } });
+    const result = options(opts).json();
     expect(result).to.eql({
       headers: {
         x: 1,
