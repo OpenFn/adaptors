@@ -6,7 +6,6 @@ import * as util from './Utils';
 /**
  * State object
  * @typedef {Object} FHIRHttpState
- * @private
  * @property data - the parsed response body
  * @property response - the response from the FHIR HTTP server (with the body removed)
  * @property references - an array of all the previous data values
@@ -15,6 +14,7 @@ import * as util from './Utils';
 /**
  * Options provided to a HTTP request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object} headers - Object of headers to append to the request
  * @property {object} body - JSON payload to attach to the request
  * @property {object} query - Query parameters for the request. Will be encoded into the URL
@@ -24,8 +24,8 @@ import * as util from './Utils';
 
 /**
  * Options provided to a GET HTTP request
- * @typedef {Object} GetOptions
- * @property {object} headers - Object of headers to append to the request
+ * @public
+ * @typedef {Object} GetOptions * @property {object} headers - Object of headers to append to the request
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
  */

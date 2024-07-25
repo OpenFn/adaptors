@@ -78,7 +78,7 @@ function withAgent(params) {
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @returns {Operation} - Function which takes state and returns a Promise
  * @example <caption>Get an item with a specified id from state</caption>
- *  get({
+ *  http.get({
  *      url: state => `https://www.example.com/api/items/${state.id},
  *      headers: {"content-type": "application/json"}
  * });
@@ -98,13 +98,13 @@ export function get(requestParams) {
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Sending a payload with data that comes from state</caption>
- * post({
+ * http.post({
  *   url: "https://example.com",
  *   data: (state) => state.data
  * });
  * @example <caption> Capturing the response for later use in state </caption>
- * alterState((state) => {
- *   return post({
+ * fn((state) => {
+ *   return http.post({
  *     url: "https://example.com",
  *     data: (state) => state.data
  *   })(state).then(({response}) => {
@@ -128,7 +128,7 @@ export function post(requestParams) {
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Deleting a record with data that comes from state</caption>
- * delete({
+ * http.delete({
  *    url: state => `https://www.example.com/api/items/${state.id}`,
  *  })(state);
  * @returns {Operation} - Function which takes state and returns a Promise
@@ -150,7 +150,7 @@ export { del as delete };
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Gets the headers that would be returned if the HEAD request's URL was instead requested with the HTTP GET method</caption>
- * head({
+ * http.head({
  *   url: 'https://www.example.com/api/items',
  * });
  * @returns {Operation} - Function which takes state and returns a Promise
@@ -170,7 +170,7 @@ export function head(requestParams) {
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.</caption>
- * put({
+ * http.put({
  *   url: state => `https://www.example.com/api/items/${state.id}`,
  *   data: state => state.data
  * });
@@ -191,7 +191,7 @@ export function put(requestParams) {
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Applies partial modifications to a resource, with data from state.</caption>
- * patch({
+ * http.patch({
  *   url: state => `https://www.example.com/api/items/${state.id}`,
  *   data: state => state.data
  * });
@@ -212,7 +212,7 @@ export function patch(requestParams) {
  * @function
  * @param {object} requestParams - Supports the exact parameters as Axios. See {@link https://github.com/axios/axios#axios-api here}
  * @example <caption>Requests permitted communication options for a given URL or server, with data from state.</caption>
- * options({
+ * http.options({
  *   url: 'https://www.example.com/api/items',
  * });
  * @returns {Operation} - Function which takes state and returns a Promise

@@ -4,6 +4,10 @@ exports.toLowerCase = function (str) {
   return str ? str.toLowerCase() : str;
 };
 
+exports.namespacedHeader = function (namespace, name) {
+  return `### ${namespace}.${name} \{\#${namespace}_${name}\}`;
+};
+
 exports.commonFns = function (options) {
   options.hash.scope = 'global';
   const common = () =>
@@ -12,6 +16,38 @@ exports.commonFns = function (options) {
     }, options);
 
   return handlebars.helpers.each(common, options);
+};
+
+exports.externalName = function (def) {
+  if (def.kind === 'external-function') {
+    return `${def.name}()`;
+  }
+  return def.name;
+};
+
+// get a list of all namespaces
+exports.namespaces = function (options) {
+  const fn = () => {
+    const ns = {};
+    handlebars.helpers._identifiers(options).forEach(o => {
+      if (!ns[o.scope]) {
+        ns[o.scope] = [];
+        o.newscope = true;
+      }
+
+      ns[o.scope].push(o);
+    }, options);
+
+    delete ns.global;
+
+    const items = [];
+    for (const n in ns) {
+      items.push(...ns[n]);
+    }
+    return items;
+  };
+
+  return handlebars.helpers.each(fn, options);
 };
 
 /**
@@ -30,7 +66,7 @@ exports.flattenState = function (state, options) {
       const def = options.data.root.find(o => {
         return o.id === s.type;
       });
-      def.properties.forEach(p => {
+      def?.properties?.forEach(p => {
         keys[p.name] = p;
       });
     } else {

@@ -1,6 +1,112 @@
 {
   "operations": [
     {
+      "name": "insert",
+      "params": [
+        "table",
+        "fields"
+      ],
+      "docs": {
+        "description": "Insert a record",
+        "tags": [
+          {
+            "title": "example",
+            "description": "execute(\n  insert('table', fields(\n     field('name', dataValue('name'))\n  ))\n)(state)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The target table",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "table"
+          },
+          {
+            "title": "param",
+            "description": "A fields object",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsert",
+      "params": [
+        "table",
+        "fields"
+      ],
+      "docs": {
+        "description": "Insert or Update a record if matched",
+        "tags": [
+          {
+            "title": "example",
+            "description": "execute(\n  upsert('table', fields(\n     field('name', dataValue('name'))\n  ))\n)(state)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The target table",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "table"
+          },
+          {
+            "title": "param",
+            "description": "A fields object",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "upsertMany",
       "params": [
         "table",
@@ -22,6 +128,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
@@ -52,6 +163,92 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "query",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Execute a SQL statement",
+        "tags": [
+          {
+            "title": "example",
+            "description": "execute(\n  query({ sql: 'select * from users;' })\n)(state)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Payload data for the message",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sqlString",
+      "params": [
+        "queryString"
+      ],
+      "docs": {
+        "description": "Execute a SQL statement",
+        "tags": [
+          {
+            "title": "example",
+            "description": "execute(\n  sqlString(state => \"select * from items;\")\n)(state)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "A query string (or function which takes state and returns a string)",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "queryString"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -70,13 +267,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -114,13 +311,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
           },
           {
             "title": "param",
@@ -166,13 +363,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -209,13 +406,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -252,13 +449,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -295,13 +492,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -339,13 +536,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -391,13 +588,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
           },
           {
             "title": "param",
@@ -435,13 +632,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -487,13 +684,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -540,6 +737,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -584,13 +786,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "param",

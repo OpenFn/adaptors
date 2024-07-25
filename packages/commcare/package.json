@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-commcare",
-  "version": "2.2.1",
+  "version": "2.3.1",
   "description": "Commcare Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -29,7 +29,6 @@
     "JSONPath": "^0.10.0",
     "js2xmlparser": "^1.0.0",
     "lodash-fp": "^0.10.4",
-    "sinon": "^18.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "devDependencies": {

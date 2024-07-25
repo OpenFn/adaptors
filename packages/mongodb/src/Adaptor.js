@@ -88,6 +88,7 @@ function disconnect(state) {
  *    documents: [1,2,3]
  *   });
  * @function
+ * @public
  * @param {object} params - Configuration for mongo
  * @returns {State}
  */
@@ -134,6 +135,7 @@ export function insertDocuments(params) {
  *    query: {a:3}
  *   });
  * @function
+ * @public
  * @param {object} params - Configuration for mongo
  * @returns {State}
  */
@@ -180,6 +182,7 @@ export function findDocuments(params) {
  *    options: { upsert: true }
  *   });
  * @function
+ * @public
  * @param {object} params - Configuration for mongo
  * @returns {State}
  */

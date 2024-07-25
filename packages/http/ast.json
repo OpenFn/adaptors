@@ -1,6 +1,113 @@
 {
   "operations": [
     {
+      "name": "execute",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Options provided to the HTTP request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "body"
+          },
+          {
+            "title": "property",
+            "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "errors"
+          },
+          {
+            "title": "property",
+            "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "form"
+          },
+          {
+            "title": "property",
+            "description": "An object of query parameters to be encoded into the URL.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "property",
+            "description": "An object of headers to append to the request.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "headers"
+          },
+          {
+            "title": "property",
+            "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "parseAs"
+          },
+          {
+            "title": "property",
+            "description": "Request timeout in ms. Default: 300 seconds.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "timeout"
+          },
+          {
+            "title": "property",
+            "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "tls"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "request",
       "params": [
         "method",
@@ -505,13 +612,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -549,13 +656,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
           },
           {
             "title": "param",
@@ -601,13 +708,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -644,13 +751,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -687,13 +794,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -730,13 +837,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -774,13 +881,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -826,13 +933,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
           },
           {
             "title": "param",
@@ -870,13 +977,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -922,13 +1029,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -973,6 +1080,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
@@ -1027,6 +1139,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
@@ -1091,13 +1208,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "param",
@@ -1143,13 +1260,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
           },
           {
             "title": "param",
@@ -1186,13 +1303,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", humanProper(state.data.path_to_string))"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", humanProper(state.data.path_to_string))"
           },
           {
             "title": "param",
@@ -1297,13 +1414,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "scrubEmojis('Dove🕊️⭐ 29')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "scrubEmojis('Dove🕊️⭐ 29')"
           },
           {
             "title": "param",
@@ -1350,13 +1467,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "chunk([1,2,3,4,5], 2)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
           },
           {
             "title": "param",
@@ -1477,6 +1594,11 @@
             "type": null
           },
           {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
             "title": "example",
             "description": "cursor($.cursor, { defaultValue: 'today' })",
             "caption": "Use a cursor from state if present, or else use the default value"
@@ -1485,11 +1607,6 @@
             "title": "example",
             "description": "cursor(22)",
             "caption": "Use a pagination cursor"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
           },
           {
             "title": "param",

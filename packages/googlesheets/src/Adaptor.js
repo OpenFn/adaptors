@@ -143,6 +143,7 @@ export function appendValues(params, callback = s => s) {
  *   ],
  * })
  * @function
+ * @public
  * @param {Object} params - Data object to add to the spreadsheet.
  * @param {string} [params.spreadsheetId] The spreadsheet ID.
  * @param {string} [params.range] The range of values to update.
