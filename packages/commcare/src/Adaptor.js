@@ -58,6 +58,8 @@ export function execute(...operations) {
 
 /**
  * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+ * Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
+ * is paginated.
  * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
  * @example <caption>Get a list of cases</caption>
@@ -67,7 +69,7 @@ export function execute(...operations) {
  * @function
  * @param {string} path - Path to resource
  * @param {RequestQueries} params - Optional request params such as limit and offset.
- * @param {function} [callback] - Optional callback to handle the response
+ * @param {function} [callback] - Callback invoked once per page of data retrieved.
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
@@ -79,23 +81,67 @@ export function get(path, params = {}, callback = s => s) {
       params
     );
 
-    try {
-      const response = await request(
-        state.configuration,
-        `/a/${domain}/api/v0.5/${resolvedPath}`,
-        {
-          method: 'GET',
-          params: resolvedParams,
-          contentType: 'application/json',
-        }
-      );
+    let offset, limit;
 
-      return prepareNextState(state, response, callback);
+    let nextState = state;
+    let result;
+
+    // Automatically paginate if the user did not pass an offset
+    let allowPagination = isNaN(resolvedParams.offset);
+
+    try {
+      let requestParams = {
+        ...resolvedParams,
+      };
+
+      do {
+        // Make the first request
+        const response = await request(
+          state.configuration,
+          `/a/${domain}/api/v0.5/${resolvedPath}`,
+          {
+            method: 'GET',
+            params: requestParams,
+            contentType: 'application/json',
+          }
+        );
+
+        nextState = prepareNextState(state, response, callback);
+        // If the server tells us there's another page of data, setup
+        // the next request to get it
+        if (response?.body?.meta?.next) {
+          if (!result) {
+            result = [];
+          }
+          offset = response.body.meta.offset + response.body.meta.limit;
+          limit = response.body.meta.limit;
+
+          requestParams = {
+            ...requestParams,
+            offset,
+            limit,
+          };
+          result.push(...nextState.data);
+        } else {
+          if (result) {
+            result.push(...nextState.data);
+          } else {
+            result = nextState.data;
+          }
+          // Exit the loop when no more data is available
+          break;
+        }
+      } while (allowPagination);
+
+      return {
+        ...nextState,
+        data: result,
+      };
     } catch (e) {
       if (e.statusCode === 404) {
         e.body = { error: `Resource ${path} not found` };
       }
-      throw e.body.error ?? e;
+      throw e;
     }
   };
 }
