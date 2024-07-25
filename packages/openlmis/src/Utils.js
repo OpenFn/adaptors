@@ -1,6 +1,7 @@
 import nodepath from 'node:path';
 import { composeNextState } from '@openfn/language-common';
 import {
+  assertRelativeUrl,
   request as commonRequest,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
@@ -70,7 +71,7 @@ export const request = (configuration = {}, method, path, options) => {
   const { baseUrl, access_token } = configuration;
   const { headers = {}, ...otherOptions } = options;
 
-  urlMatchesBase(path, baseUrl);
+  assertRelativeUrl(path);
 
   const opts = {
     parseAs: 'json',
@@ -85,14 +86,3 @@ export const request = (configuration = {}, method, path, options) => {
 
   return commonRequest(method, safepath, opts);
 };
-
-function urlMatchesBase(path, baseUrl) {
-  const base = new URL(baseUrl);
-  const url = new URL(path, baseUrl);
-
-  if (url.origin !== base.origin) {
-    throw new Error(`Requests must be sent to the base URL: ${baseUrl}`);
-  }
-
-  return true;
-}

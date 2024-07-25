@@ -116,7 +116,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a HTTP request",
+        "description": "Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -134,7 +134,7 @@
           },
           {
             "title": "param",
-            "description": "The HTTP method to use",
+            "description": "The HTTP method to use.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -143,7 +143,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -192,7 +192,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request",
+        "description": "Make a GET request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -210,7 +210,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -259,7 +259,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -277,7 +277,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -326,7 +326,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a PUT request",
+        "description": "Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -344,7 +344,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -393,7 +393,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a PATCH request",
+        "description": "Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -411,7 +411,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -460,7 +460,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a DELETE request",
+        "description": "Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.",
         "tags": [
           {
             "title": "public",
@@ -478,7 +478,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
               "name": "string"

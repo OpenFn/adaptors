@@ -8,12 +8,13 @@ import {
   post,
   del,
   parseUrl,
+  ERROR_URL_MISMATCH,
 } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
 
 describe('parseUrl', () => {
-  it('should work with a url as a path', () => {
+  it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
 
     expect(baseUrl).to.equal('https://www.example.org');
@@ -62,6 +63,17 @@ describe('parseUrl', () => {
     expect(url).to.eql('https://www.example.org/api/a/b/c');
   });
 
+  it('should work with matching absolute url and base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'https://www.example.org/api/a/b/c',
+      'https://www.example.org/api'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
   it('should extract query parameters', () => {
     const { query } = parseUrl('a/b/c?x=1&y=2', 'https://www.example.org/api');
 
@@ -79,6 +91,22 @@ describe('parseUrl', () => {
       parseUrl('/a/b/c', 'www.example.org');
     } catch (e) {
       expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if path and no base', () => {
+    try {
+      parseUrl('/a/b/c');
+    } catch (e) {
+      expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if url and base mismatch', () => {
+    try {
+      parseUrl('http://www.x.com/a', 'http://www.y.com/a');
+    } catch (e) {
+      expect(e.message).to.eql(ERROR_URL_MISMATCH);
     }
   });
 });

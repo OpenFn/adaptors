@@ -1,10 +1,12 @@
 import { composeNextState } from '@openfn/language-common';
 import {
+  assertRelativeUrl,
   request as commonRequest,
   logResponse,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 import { formatInTimeZone } from 'date-fns-tz';
+import nodepath from 'node:path';
 
 const addBasicAuth = (configuration = {}, headers) => {
   const { username, password } = configuration;
@@ -15,8 +17,14 @@ const addBasicAuth = (configuration = {}, headers) => {
 
 const buildUrl = (configuration = {}, path) => {
   const { servername, apiVersion = 'v1' } = configuration;
-  if (!servername) throw 'Please specify servername in your credentials';
-  return `https://${servername}.surveycto.com/api/${apiVersion}/${path}`;
+  if (!servername) {
+    throw 'Error: specify servername in your credentials';
+  }
+  return nodepath.join(
+    `https://${servername}.surveycto.com/api`,
+    apiVersion,
+    path
+  );
 };
 
 export const prepareNextState = (state, response, callback) => {
@@ -30,6 +38,8 @@ export const prepareNextState = (state, response, callback) => {
 };
 
 export const requestHelper = (state, path, params, callback = s => s) => {
+  assertRelativeUrl(path);
+
   let { body = {}, headers, method = 'GET', query } = params;
 
   addBasicAuth(state.configuration, headers);

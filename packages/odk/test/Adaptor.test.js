@@ -494,4 +494,40 @@ describe('HTTP wrappers', () => {
     expect(error.statusMessage).to.eql('Forbidden');
     expect(error.statusCode).to.eql(403);
   });
+
+  it('throws when an absolute URL is passed', async () => {
+    const state = {
+      configuration,
+    };
+
+    const error = await post('https://www.example.com', {
+      name: 'Project Name',
+    })(state).catch(error => {
+      return error;
+    });
+
+    expect(error.code).to.eql('BASE_URL_MISMATCH');
+  });
+
+  it('does not throw when matching absolute URL is passed', async () => {
+    const state = {
+      configuration,
+    };
+
+    testServer
+      .intercept({
+        path: '/v1/projects',
+        method: 'GET',
+      })
+      .reply(200, fixtures.projects);
+
+    // prettier-ignore
+    const finalState = await execute(
+      get(`${configuration.baseUrl}/v1/projects`
+    ))(state);
+
+    expect(finalState.data).to.eql(fixtures.projects);
+    expect(finalState.data[0].id).to.eql(66);
+    expect(finalState.response.statusCode).to.equal(200);
+  });
 });

@@ -264,23 +264,34 @@ export function createTaskStory(taskGid, params, callback) {
  */
 
 /**
- * Make a request in Asana API
+ * Make a HTTP request against the Asana API.
  * @public
- * @example
- * request("/asanaEndpoint", {
+ * @example Get a task by id
+ * request("/tasks/1234");
+ * @example Query for tasks in a given project
+ * request("/tasks", {
+ *   query: { project: "abc" },
+ * });
+ * @example Create a new task
+ * request("/tasks", {
  *   method: "POST",
- *   query: { foo: "bar", a: 1 },
+ *   body: { data: { name: "do the thing", completed: false } },
  * });
  * @function
- * @param {string} path - Path to resource
- * @param {RequestOptions} params - Query, body and method parameters
+ * @param {string} path - Path to resource (excluding api/version)
+ * @param {RequestOptions} params - (Optional) Query, body and method parameters
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function request(path, params, callback) {
+export function request(path, params = {}, callback) {
   return state => {
-    const [resolvedPath, { body = {}, query = {}, method = 'GET' }] =
-      expandReferences(state, path, params);
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    const { body = {}, query = {}, method = 'GET' } = resolvedParams;
 
     return requestHelper(
       state,

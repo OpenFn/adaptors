@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a get request to any satusehat endpoint",
+        "description": "Make a GET request to Satusehat",
         "tags": [
           {
             "title": "public",
