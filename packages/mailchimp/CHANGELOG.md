@@ -1,5 +1,14 @@
 # @openfn/language-mailchimp
 
+## 1.0.1
+
+### Patch Changes
+
+- 73d0a02: Make documentation public
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
 ## 1.0.0
 
 ### Major Changes

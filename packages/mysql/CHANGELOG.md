@@ -1,5 +1,14 @@
 # @openfn/language-mysql
 
+## 1.5.2
+
+### Patch Changes
+
+- 73d0a02: Make documentation public
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
 ## 1.5.1
 
 ### Patch Changes
