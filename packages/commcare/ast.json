@@ -1,6 +1,140 @@
 {
   "operations": [
     {
+      "name": "execute",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Queries provided to the GET request",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestQueries"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "The maximum number of records to return. Default: 20. Maximum: 5000.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "limit"
+          },
+          {
+            "title": "property",
+            "description": "The number of records to offset in the results. Default: 0",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "offset"
+          },
+          {
+            "title": "property",
+            "description": "Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "xmlns"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that have had data modified since the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "indexed_on_start"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that have had data modified before the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "indexed_on_end"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that were received after the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "received_on_start"
+          },
+          {
+            "title": "property",
+            "description": "Optional date (and time). Will return only forms that were received before the passed in date.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "received_on_end"
+          },
+          {
+            "title": "property",
+            "description": "The returned records will be limited to the application defined",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "app_id"
+          },
+          {
+            "title": "property",
+            "description": "A case UUID.  Will only return forms which updated that case.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "case_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional user of group UUID used when getting cases",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "owner_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional UUID for all cases last modified by that user",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "user_id"
+          },
+          {
+            "title": "property",
+            "description": "Optional case type to get all matching cases",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "type"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "get",
       "params": [
         "path",
@@ -324,13 +458,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -368,13 +502,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
           },
           {
             "title": "param",
@@ -420,13 +554,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -463,13 +597,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -506,13 +640,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -549,13 +683,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -593,13 +727,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -645,13 +779,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
           },
           {
             "title": "param",
@@ -689,13 +823,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -741,13 +875,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -794,6 +928,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -838,13 +977,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "param",

@@ -200,6 +200,7 @@ export function upsertTask(projectGid, params, callback) {
 /**
  * Options provided to the createTaskStory request
  * @typedef {Object} StoryOptions
+ * @public
  * @property {string} text - The plain text of the comment to add. Cannot be used with html_text.
  * @property {string} html_text - Opt In. HTML formatted text for a comment. This will not include the name of the creator.
  * @property {boolean} is_pinned - Default to `false`. Whether the story should be pinned on the resource.
@@ -256,6 +257,7 @@ export function createTaskStory(taskGid, params, callback) {
 /**
  * Options provided to the Asana API request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object} body - Body data to append to the request.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {string} method - The HTTP method to use. Defaults to `GET`

@@ -78,6 +78,7 @@ export function getForms(params, callback) {
  *   return state;
  * });
  * @function
+ * @public
  * @param {object} params - Form Id and data to make the fetch or filter
  * @param {function} callback - (Optional) Callback function to execute after fetching form submissions
  * @returns {Operation}
@@ -118,6 +119,7 @@ export function getSubmissions(params, callback) {
  *   return state;
  * });
  * @function
+ * @public
  * @param {object} params - Form Id and data to make the fetch or filter
  * @param {function} callback - (Optional) Callback function to execute after fetching form deployment information
  * @returns {Operation}

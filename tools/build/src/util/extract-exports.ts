@@ -1,4 +1,3 @@
-
 import * as acorn from 'acorn';
 
 export default (source: string) => {
@@ -18,8 +17,7 @@ export default (source: string) => {
       })
     )
     .flat()
-    .sort()
+    .sort();
 
-  return externalFunctions
-
-}
+  return externalFunctions;
+};

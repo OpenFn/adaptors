@@ -55,12 +55,12 @@ export function alterState(func) {
 /**
  * Creates a custom step (or operation) for more flexible job writing.
  * @public
+ * @function
  * @example
  * fn(state => {
  *   // do some things to state
  *   return state;
  * });
- * @function
  * @param {Function} func is the function
  * @returns {Operation}
  */
@@ -73,9 +73,9 @@ export function fn(func) {
 /**
  * A custom operation that will only execute the function if the condition returns true
  * @public
+ * @function
  * @example
  * fnIf((state) => state?.data?.name, get("https://example.com"));
- * @function
  * @param {Boolean} condition - The condition that returns true
  * @param {Operation} operation - The operation needed to be executed.
  * @returns {Operation}
@@ -93,9 +93,9 @@ export function fnIf(condition, operation) {
  * If a JSONPath returns more than one value for the reference, the first
  * item will be returned.
  * @public
+ * @function
  * @example
  * jsonValue({ a:1 }, 'a')
- * @function
  * @param {object} obj - A valid JSON object.
  * @param {String} path - JSONPath referencing a point in given JSON object.
  * @returns {Operation}
@@ -109,9 +109,9 @@ export function jsonValue(obj, path) {
  * If a JSONPath returns more than one value for the reference, the first
  * item will be returned.
  * @public
+ * @function
  * @example
  * sourceValue('$.key')
- * @function
  * @param {String} path - JSONPath referencing a point in `state`.
  * @returns {Operation}
  */
@@ -126,9 +126,9 @@ export function sourceValue(path) {
  * Will return whatever JSONPath returns, which will always be an array.
  * If you need a single value use `sourceValue` instead.
  * @public
+ * @function
  * @example
  * source('$.key')
- * @function
  * @param {String} path - JSONPath referencing a point in `state`.
  * @returns {Array.<String|Object>}
  */
@@ -141,9 +141,9 @@ export function source(path) {
 /**
  * Ensures a path points at the data.
  * @public
+ * @function
  * @example
  * dataPath('key')
- * @function
  * @param {string} path - JSONPath referencing a point in `data`.
  * @returns {string}
  */
@@ -159,9 +159,9 @@ export function dataPath(path) {
  * If a JSONPath returns more than one value for the reference, the first
  * item will be returned.
  * @public
+ * @function
  * @example
  * dataValue('key')
- * @function
  * @param {String} path - JSONPath referencing a point in `data`.
  * @returns {Operation}
  */
@@ -172,9 +172,9 @@ export function dataValue(path) {
 /**
  * Ensures a path points at references.
  * @public
+ * @function
  * @example
  * referencePath('key')
- * @function
  * @param {string} path - JSONPath referencing a point in `references`.
  * @returns {string}
  */
@@ -188,9 +188,9 @@ export function referencePath(path) {
 /**
  * Picks out the last reference value from source data.
  * @public
+ * @function
  * @example
  * lastReferenceValue('key')
- * @function
  * @param {String} path - JSONPath referencing a point in `references`.
  * @returns {Operation}
  */
@@ -207,13 +207,13 @@ export function lastReferenceValue(path) {
  * The operation will receive a slice of the data based of each item
  * of the JSONPath provided.
  * @public
+ * @function
  * @example
  * map("$.[*]",
  *   create("SObject",
  *     field("FirstName", sourceValue("$.firstName"))
  *   )
  * )
- * @function
  * @param {string} path - JSONPath referencing a point in `state.data`.
  * @param {function} operation - The operation needed to be repeated.
  * @param {State} state - Runtime state.
@@ -242,9 +242,9 @@ export const map = curry(function (path, operation, state) {
  * - Object Literal of the data itself.
  * - Function to be called with state.
  * @public
+ * @function
  * @example
  * asData('$.key'| key | callback)
- * @function
  * @param {String|object|function} data
  * @param {object} state - The current state.
  * @returns {array}
@@ -270,13 +270,13 @@ export function asData(data, state) {
  * It also ensures the results of an operation make their way back into
  * the state's references.
  * @public
+ * @function
  * @example
  * each("$.[*]",
  *   create("SObject",
  *     field("FirstName", sourceValue("$.firstName"))
  *   )
  * )
- * @function
  * @param {DataSource} dataSource - JSONPath referencing a point in `state`.
  * @param {Operation} operation - The operation needed to be repeated.
  * @returns {Operation}
@@ -302,12 +302,12 @@ export function each(dataSource, operation) {
 /**
  * Combines two operations into one
  * @public
+ * @function
  * @example
  * combine(
  *   create('foo'),
  *   delete('bar')
  * )
- * @function
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -328,9 +328,9 @@ export function combine(...operations) {
 /**
  * Adds data from a target object
  * @public
+ * @function
  * @example
  * join('$.key','$.data','newKey')
- * @function
  * @param {String} targetPath - Target path
  * @param {String} sourcePath - Source path
  * @param {String} targetKey - Target Key
@@ -376,9 +376,9 @@ export function expandReferences(value, skipFilter) {
 /**
  * Returns a key, value pair in an array.
  * @public
+ * @function
  * @example
  * field('destination_field_name__c', 'value')
- * @function
  * @param {string} key - Name of the field
  * @param {Value} value - The value itself or a sourceable operation.
  * @returns {Field}
@@ -390,9 +390,9 @@ export function field(key, value) {
 /**
  * Zips key value pairs into an object.
  * @public
+ * @function
  * @example
  *  fields(list_of_fields)
- * @function
  * @param {Fields} fields - a list of fields
  * @returns {Object}
  */
@@ -411,6 +411,7 @@ export function fields(...fields) {
  *   )
  * )
  * @function
+ * @public
  * @param {DataSource} dataSource
  * @param {Object} fields - Group of fields to merge in.
  * @returns {DataSource}
@@ -439,6 +440,7 @@ export function merge(dataSource, fields) {
  * group(users, 'city');
  * // state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
  * @function
+ * @public
  * @param {Object[]} arrayOfObjects - The array of objects to be grouped.
  * @param {string} keyPath - The key path to group by.
  * @param {function} callback - (Optional) Callback function
@@ -460,9 +462,9 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
  * Returns the index of the current array being iterated.
  * To be used with `each` as a data source.
  * @public
+ * @function
  * @example
  * index()
- * @function
  * @returns {DataSource}
  */
 export function index() {
@@ -474,11 +476,11 @@ export function index() {
 /**
  * Turns an array into a string, separated by X.
  * @public
+ * @function
  * @example
  * field("destination_string__c", function(state) {
  *   return arrayToString(dataValue("path_of_array")(state), ', ')
  * })
- * @function
  * @param {array} arr - Array of toString'able primatives.
  * @param {string} separator - Separator string.
  * @returns {string}
@@ -491,11 +493,11 @@ export function arrayToString(arr, separator) {
  * Ensures primitive data types are wrapped in an array.
  * Does not affect array objects.
  * @public
+ * @function
  * @example
  * each(function(state) {
  *   return toArray( dataValue("path_of_array")(state) )
  * }, ...)
- * @function
  * @param {any} arg - Data required to be in an array
  * @returns {array}
  */
@@ -506,9 +508,9 @@ export function toArray(arg) {
 /**
  * Prepares next state
  * @public
+ * @function
  * @example
  * composeNextState(state, response)
- * @function
  * @param {State} state - state
  * @param {Object} response - Response to be added
  * @returns {State}
@@ -527,9 +529,9 @@ export function composeNextState(state, response) {
 /**
  * Substitutes underscores for spaces and proper-cases a string
  * @public
+ * @function
  * @example
  * field("destination_string__c", humanProper(state.data.path_to_string))
- * @function
  * @param {string} str - String that needs converting
  * @returns {string}
  */
@@ -571,9 +573,9 @@ export function splitKeys(obj, keys) {
 /**
  * Replaces emojis in a string.
  * @public
+ * @function
  * @example
  * scrubEmojis('Dove🕊️⭐ 29')
- * @function
  * @param {string} text - String that needs to be cleaned
  * @param {string} replacementChars - Characters that replace the emojis
  * @returns {string}
@@ -601,9 +603,9 @@ export function scrubEmojis(text, replacementChars) {
 /**
  * Chunks an array into an array of arrays, each with no more than a certain size.
  * @public
+ * @function
  * @example
  * chunk([1,2,3,4,5], 2)
- * @function
  * @param {Object} array - Array to be chunked
  * @param {Integer} chunkSize - The maxiumum size of each chunks
  * @returns {Object}
@@ -711,22 +713,6 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
   };
 }
 
-// /**
-//  * Returns a unique array of objects by an attribute in those objects
-//  * @public
-//  * @example
-//  * uniqBy([{a:1}, {b:2}, {a:1, b:2}], 'a')
-//  * @function
-//  * @param {Object} array - Array of objects to be deduplicated
-//  * @param {Integer} uid - The attribute name on which to deduplicate
-//  * @returns {Object}
-//  */
-// export function uniqBy(array, uid) {
-//   return Array.from(new Set(array.map(a => a[uid]))).map(id => {
-//     return array.find(a => a[uid] === id);
-//   });
-// }
-
 const ajvVersions = {};
 
 // We need to import different versions of AJV depending on the schema
@@ -760,6 +746,8 @@ const getAjvVersion = async schema => {
  * Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
  * Data can be passed directly or loaded as a JSON path from state.
  * By default, schema is loaded from `state.schema` and data from `state.data`.
+ * @pubic
+ * @function
  * @param {string|object} schema - The schema, path or URL to validate against
  * @param {string|object} data - The data or path to validate
  * @example <caption>Validate `state.data` with `state.schema`</caption>
@@ -845,11 +833,11 @@ let cursorKey = 'cursor';
  * different inputs. The custom formatter runs after natural language date conversion.
  * See the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}
  * @public
+ * @function
  * @example <caption>Use a cursor from state if present, or else use the default value</caption>
  * cursor($.cursor, { defaultValue: 'today' })
  * @example <caption>Use a pagination cursor</caption>
  * cursor(22)
- * @function
  * @param {any} value - the cursor value. Usually an ISO date, natural language date, or page number
  * @param {object} options - options to control the cursor.
  * @param {string} options.key - set the cursor key. Will persist through the whole run.

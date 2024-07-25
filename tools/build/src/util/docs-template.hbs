@@ -22,14 +22,31 @@
 {{/globals~}}
 {{/if~}}
 
+{{#namespaces}}
+
+{{#if @first~}}
+This adaptor exports the following namespaced functions:
+
+<dl>
+{{/if}}
+<dt>
+    {{#sig no-gfm=true}}
+    <a href="#{{scope}}_{{name}}">{{scope}}.{{name}}{{@methodSign}}</a>
+    {{/sig}}
+</dt>
+{{#if @last~}}
+</dl>
+{{/if}}
+{{/namespaces}}
+
 {{#commonFns}}
 
 {{#if @first~}}
-The following functions are exported from the common adaptor:
+This adaptor exports the following from common:
 <dl>
 {{/if~}}
 <dt>
-    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{name}}()</a>
+    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{externalName this}}</a>
 </dt>{{#if @last}}</dl>
 {{/if}}
 {{/commonFns}}
@@ -47,7 +64,25 @@ The following functions are exported from the common adaptor:
 {{>members~}}
 {{/globals~}}
 
-{{#globals kind="typedef" ~}}
+
+{{#namespaces}}
+
+{{#if newscope}}
+## {{scope}}
+
+These functions belong to the {{scope}} namespace.
+{{/if}}
+{{namespacedHeader scope name}}
+
+{{>sig-name}}
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+
+{{/namespaces}}
+
+{{#globals kind="typedef" access="public" ~}}
 {{#if @first~}}{{>heading-indent}} Interfaces
 
 {{/if~}}

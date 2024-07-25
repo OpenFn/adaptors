@@ -37,6 +37,7 @@ export function execute(...operations) {
  *   sql(sqlQuery)
  * )
  * @function
+ * @public
  * @param {object} sqlQuery - Payload data for the message
  * @returns {Operation}
  */
@@ -66,6 +67,7 @@ export function sql(sqlQuery) {
  *   addRow(table, rowData)
  * )
  * @function
+ * @public
  * @param {String} table - Table name
  * @param {object} rowData - data to add in the row
  * @returns {Operation}

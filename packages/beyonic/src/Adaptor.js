@@ -34,6 +34,7 @@ export function execute(...operations) {
  * execute(
  *   createPayment(data)
  * )(state)
+ * @public
  * @function
  * @param {object} data - Payload data for the payment
  * @returns {Operation}
@@ -62,6 +63,7 @@ export function createPayment(data) {
  * execute(
  *   createContact(data)
  * )(state)
+ * @public
  * @function
  * @param {object} data - Payload data for the contact
  * @returns {Operation}
@@ -90,6 +92,7 @@ export function createContact(data) {
  * execute(
  *   createCollectionRequest(data)
  * )(state)
+ * @public
  * @function
  * @param {object} data - Payload data for the collection request
  * @returns {Operation}
