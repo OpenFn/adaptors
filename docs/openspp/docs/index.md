@@ -41,7 +41,8 @@
     <a href="#updateindividual">updateIndividual(individual_id, data)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
@@ -50,7 +51,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -68,7 +69,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -498,4 +499,5 @@ updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
 ```
 
 * * *
+
 

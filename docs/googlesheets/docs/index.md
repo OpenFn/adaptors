@@ -7,7 +7,8 @@
     <a href="#getvalues">getValues(spreadsheetId, range, callback)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -40,7 +41,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -134,4 +135,5 @@ getValues('1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos','Sheet1!A1:E1')
 ```
 
 * * *
+
 

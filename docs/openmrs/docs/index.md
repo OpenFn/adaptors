@@ -25,7 +25,8 @@
     <a href="#upsert">upsert(resourceType, query, data, [callback])</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -384,4 +385,5 @@ upsert(
 ```
 
 * * *
+
 

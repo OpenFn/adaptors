@@ -1,5 +1,6 @@
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -32,24 +33,4 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## Functions
-### send
-
-<p><code>send(sendData) ⇒ Operation</code></p>
-
-Send a message
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| sendData | <code>object</code> | Payload data for the message |
-
-**Example**
-```js
-execute(
-  send(data)
-)(state)
-```
-
-* * *
 

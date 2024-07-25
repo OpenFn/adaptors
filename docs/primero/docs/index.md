@@ -1,12 +1,8 @@
 <dl>
 <dt>
-    <a href="#cleanupstate">cleanupState(state)</a></dt>
-<dt>
     <a href="#createcase">createCase(params, callback)</a></dt>
 <dt>
     <a href="#createreferrals">createReferrals(params, callback)</a></dt>
-<dt>
-    <a href="#generateauthstring">generateAuthString(state)</a></dt>
 <dt>
     <a href="#getcases">getCases(query, options, callback)</a></dt>
 <dt>
@@ -18,10 +14,6 @@
 <dt>
     <a href="#getreferrals">getReferrals(params, callback)</a></dt>
 <dt>
-    <a href="#login">login(state)</a></dt>
-<dt>
-    <a href="#queryhandler">queryHandler(state, params, callback)</a></dt>
-<dt>
     <a href="#updatecase">updateCase(id, params, callback)</a></dt>
 <dt>
     <a href="#updatereferral">updateReferral(params, callback)</a></dt>
@@ -29,13 +21,14 @@
     <a href="#upsertcase">upsertCase(params, callback)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#beta">beta()</a>
+    <a href="/adaptors/packages/common-docs#beta">beta</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
@@ -47,7 +40,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -65,7 +58,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -78,24 +71,6 @@ The following functions are exported from the common adaptor:
 </dt></dl>
 
 ## Functions
-### cleanupState
-
-<p><code>cleanupState(state) ⇒ State</code></p>
-
-Removes unserializable keys from the state.
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**
-```js
-cleanupState(state)
-```
-
-* * *
-
 ### createCase
 
 <p><code>createCase(params, callback) ⇒ Operation</code></p>
@@ -149,24 +124,6 @@ createReferrals({
     notes: "This is a bulk referral",
   },
 });
-```
-
-* * *
-
-### generateAuthString
-
-<p><code>generateAuthString(state) ⇒ string</code></p>
-
-Generate an auth string to support multiple types of auth credentials.
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**
-```js
-generateAuthString(state)
 ```
 
 * * *
@@ -328,40 +285,6 @@ getReferrals({
 
 * * *
 
-### login
-
-<p><code>login(state) ⇒ State</code></p>
-
-Logs in to Primero.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**
-```js
-login(state)
-```
-
-* * *
-
-### queryHandler
-
-<p><code>queryHandler(state, params, callback) ⇒ State</code></p>
-
-Execute custom query
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-| params | <code>object</code> | 
-| callback | <code>function</code> | 
-
-
-* * *
-
 ### updateCase
 
 <p><code>updateCase(id, params, callback) ⇒ Operation</code></p>
@@ -450,4 +373,5 @@ upsertCase({
 ```
 
 * * *
+
 

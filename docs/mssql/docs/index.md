@@ -1,16 +1,8 @@
 <dl>
 <dt>
-    <a href="#addrowstorefs">addRowsToRefs(state, rows)</a></dt>
-<dt>
-    <a href="#cleanupstate">cleanupState(state)</a></dt>
-<dt>
-    <a href="#createconnection">createConnection(state)</a></dt>
-<dt>
     <a href="#describetable">describeTable(tableName, options)</a></dt>
 <dt>
     <a href="#findvalue">findValue(filter)</a></dt>
-<dt>
-    <a href="#flattenrows">flattenRows(state, rows)</a></dt>
 <dt>
     <a href="#insert">insert(table, record, options)</a></dt>
 <dt>
@@ -29,7 +21,8 @@
     <a href="#upsertmany">upsertMany(table, uuid, records, options)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -47,7 +40,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -65,7 +58,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -78,58 +71,6 @@ The following functions are exported from the common adaptor:
 </dt></dl>
 
 ## Functions
-### addRowsToRefs
-
-<p><code>addRowsToRefs(state, rows) ⇒ State</code></p>
-
-Sets the returned rows from a query as the first item in the state.references
-array, leaving state.data unchanged between operations.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> |  |
-| rows | <code>array</code> | the array of rows returned from the sql query |
-
-
-* * *
-
-### cleanupState
-
-<p><code>cleanupState(state) ⇒ State</code></p>
-
-Removes unserializable keys from the state.
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**
-```js
-cleanupState(state)
-```
-
-* * *
-
-### createConnection
-
-<p><code>createConnection(state) ⇒ State</code></p>
-
-Creates a connection.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**
-```js
-createConnection(state)
-```
-
-* * *
-
 ### describeTable
 
 <p><code>describeTable(tableName, options) ⇒ Operation</code></p>
@@ -169,21 +110,6 @@ findValue({
    operator: { first_name: 'like', last_name: '='}
  })
 ```
-
-* * *
-
-### flattenRows
-
-<p><code>flattenRows(state, rows) ⇒ State</code></p>
-
-Returns a flatten object of the rows (array of arrays) with rowCount.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> |  |
-| rows | <code>array</code> | the array of rows returned from the sql query |
-
 
 * * *
 
@@ -374,4 +300,5 @@ upsertMany(
 ```
 
 * * *
+
 

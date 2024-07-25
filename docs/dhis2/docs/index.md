@@ -2,8 +2,6 @@
 <dt>
     <a href="#attr">attr(attribute, value)</a></dt>
 <dt>
-    <a href="#configmigrationhelper">configMigrationHelper(state)</a></dt>
-<dt>
     <a href="#create">create(resourceType, data, [options], [callback])</a></dt>
 <dt>
     <a href="#destroy">destroy(resourceType, path, [data], [options], [callback])</a></dt>
@@ -18,16 +16,13 @@
 <dt>
     <a href="#patch">patch(resourceType, path, data, [options], [callback])</a></dt>
 <dt>
-    <a href="#request">request(configuration, axiosRequest)</a></dt>
-<dt>
-    <a href="#selectid">selectId(resourceType)</a></dt>
-<dt>
     <a href="#update">update(resourceType, path, data, [options], [callback])</a></dt>
 <dt>
     <a href="#upsert">upsert(resourceType, query, data, [options], [callback])</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -39,7 +34,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -60,7 +55,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#group">group()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -88,25 +83,6 @@ Converts an attribute ID and value into a DSHI2 attribute object
 **Example**
 ```js
 attr('w75KJ2mc4zz', 'Elias')
-```
-
-* * *
-
-### configMigrationHelper
-
-<p><code>configMigrationHelper(state) ⇒ object</code></p>
-
-Migrates `apiUrl` to `hostUrl` if `hostUrl` is `blank`.
-For `OpenFn.org` users with the `old-style configuration`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>object</code> | the runtime state |
-
-**Example**
-```js
-configMigrationHelper(state)
 ```
 
 * * *
@@ -382,39 +358,6 @@ patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
 
 * * *
 
-### request
-
-<p><code>request(configuration, axiosRequest) ⇒ Promise</code></p>
-
-The request client takes configuration from state and an axios request object
-then (1) logs the method and URL, (2) applies standard headers and auth
-before spreading the rest of the axios configuration, and (3) executes an
-axios request.
-
-**Returns**: <code>Promise</code> - a promise that will resolve to either a response object or an error object.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| configuration | <code>object</code> | configuration must have a username and password |
-| axiosRequest | <code>object</code> | the axiosRequest contains valid axios params: https://axios-http.com/docs/req_config |
-
-
-* * *
-
-### selectId
-
-<p><code>selectId(resourceType) ⇒ string</code></p>
-
-Determines the attribute name for a DHIS2 system ID given a resource type.
-
-
-| Param | Type |
-| --- | --- |
-| resourceType | <code>string</code> | 
-
-
-* * *
-
 ### update
 
 <p><code>update(resourceType, path, data, [options], [callback]) ⇒ Operation</code></p>
@@ -614,4 +557,5 @@ upsert('trackedEntityInstances', {
 ```
 
 * * *
+
 

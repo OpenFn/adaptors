@@ -1,13 +1,18 @@
+
+This adaptor exports the following namespaced functions:
+
 <dl>
 <dt>
-    <a href="#cleanupstate">cleanupState(state)</a></dt>
+    <a href="#sourceHelpers_lookup">sourceHelpers.lookup(relationshipName, externalID, path)</a>
+</dt>
+
 <dt>
-    <a href="#lookup">lookup(relationshipName, externalID, path)</a></dt>
-<dt>
-    <a href="#relationship">relationship(relationshipName, externalID, dataSource)</a></dt>
+    <a href="#sourceHelpers_relationship">sourceHelpers.relationship(relationshipName, externalID, dataSource)</a>
+</dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -16,7 +21,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#beta">beta()</a>
+    <a href="/adaptors/packages/common-docs#beta">beta</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
@@ -70,22 +75,11 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#toarray">toArray()</a>
 </dt></dl>
 
-## Functions
-### cleanupState
 
-<p><code>cleanupState(state) ⇒ State</code></p>
+## sourceHelpers
 
-Removes unserializable keys from the state.
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-
-* * *
-
-### lookup
+These functions belong to the sourceHelpers namespace.
+### sourceHelpers.lookup {#sourceHelpers_lookup}
 
 <p><code>lookup(relationshipName, externalID, path) ⇒ object</code></p>
 
@@ -105,7 +99,8 @@ lookup("relationship_name__r", "externalID on related object", "$.path")
 
 * * *
 
-### relationship
+
+### sourceHelpers.relationship {#sourceHelpers_relationship}
 
 <p><code>relationship(relationshipName, externalID, dataSource) ⇒ object</code></p>
 
@@ -128,4 +123,5 @@ relationship("relationship_name__r", "externalID on related object", "hello worl
 ```
 
 * * *
+
 

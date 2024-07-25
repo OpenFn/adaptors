@@ -1,5 +1,6 @@
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
@@ -29,24 +30,4 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## Functions
-### encounter
-
-<p><code>encounter(encounterData) ⇒ Operation</code></p>
-
-Create an encounter
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| encounterData | <code>object</code> | Payload data for the encounter |
-
-**Example**
-```js
-execute(
-  encounter(data)
-)(state)
-```
-
-* * *
 

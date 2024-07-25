@@ -15,7 +15,8 @@
     <a href="#request">request(method, path, params, callback)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -39,7 +40,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -309,6 +310,7 @@ request(
 ```
 
 * * *
+
 
 ##  Interfaces
 

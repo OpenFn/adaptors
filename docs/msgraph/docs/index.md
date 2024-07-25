@@ -10,12 +10,19 @@
 <dt>
     <a href="#getfolder">getFolder(pathOrId, options, [callback])</a></dt>
 <dt>
-    <a href="#sheettobuffer">sheetToBuffer(rows, options)</a></dt>
-<dt>
     <a href="#uploadfile">uploadFile(resource, data, callback)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#Utils_sheetToBuffer">Utils.sheetToBuffer(rows, options)</a>
+</dt>
+</dl>
+
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
@@ -27,7 +34,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -173,33 +180,6 @@ getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
 
 * * *
 
-### sheetToBuffer
-
-<p><code>sheetToBuffer(rows, options) ⇒</code></p>
-
-The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
-and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
-buffer.
-
-**Returns**: a buffer containing the Excel file in `state.buffer`.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| rows |  | The `rows` parameter is an array of objects representing the data to be written to the Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object represent the column headers. The values of the object represent the data in each cell of the row. |
-| options |  | The `options` parameter is an object that contains additional configuration options |
-| [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
-| [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
-
-**Example:** Create a buffer containing excel file with &#x60;xlsx&#x60; output format  
-```js
-sheetToBuffer('$.data[*]', {
- wsName: 'Invalid Grant Codes',
- bookType: 'xlsx',
-});
-```
-
-* * *
-
 ### uploadFile
 
 <p><code>uploadFile(resource, data, callback) ⇒ Operation</code></p>
@@ -242,4 +222,36 @@ uploadFile(
 ```
 
 * * *
+
+
+## Utils
+
+These functions belong to the Utils namespace.
+### Utils.sheetToBuffer {#Utils_sheetToBuffer}
+
+<p><code>sheetToBuffer(rows, options) ⇒</code></p>
+
+The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
+and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
+buffer.
+
+**Returns**: a buffer containing the Excel file in `state.buffer`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rows |  | The `rows` parameter is an array of objects representing the data to be written to the Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object represent the column headers. The values of the object represent the data in each cell of the row. |
+| options |  | The `options` parameter is an object that contains additional configuration options |
+| [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
+| [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
+
+**Example:** Create a buffer containing excel file with &#x60;xlsx&#x60; output format  
+```js
+sheetToBuffer('$.data[*]', {
+ wsName: 'Invalid Grant Codes',
+ bookType: 'xlsx',
+});
+```
+
+* * *
+
 

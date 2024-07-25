@@ -7,7 +7,8 @@
     <a href="#createpayment">createPayment(data)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
@@ -97,4 +98,5 @@ execute(
 ```
 
 * * *
+
 

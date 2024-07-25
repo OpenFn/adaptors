@@ -1,5 +1,10 @@
+<dl>
+<dt>
+    <a href="#sendsms">sendSMS(from, toNumber, message)</a></dt>
+</dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -55,4 +60,5 @@ sendSMS("OpenFn", "phoneNumber", "Hello World!")
 ```
 
 * * *
+
 

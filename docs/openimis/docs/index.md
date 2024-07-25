@@ -1,13 +1,10 @@
 <dl>
 <dt>
-    <a href="#cleanupstate">cleanupState(state)</a></dt>
-<dt>
     <a href="#getfhir">getFHIR(path, params, callback)</a></dt>
-<dt>
-    <a href="#login">login(state)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -19,7 +16,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -37,7 +34,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -50,25 +47,6 @@ The following functions are exported from the common adaptor:
 </dt></dl>
 
 ## Functions
-### cleanupState
-
-<p><code>cleanupState(state) ⇒ State</code></p>
-
-Discards the auth token from state.
-
-**Returns**: <code>State</code> - state - but with a "token" removed from the configuration key.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**
-```js
-cleanupState(state)
-```
-
-* * *
-
 ### getFHIR
 
 <p><code>getFHIR(path, params, callback) ⇒ Operation</code></p>
@@ -89,22 +67,4 @@ getFHIR("Patient")
 
 * * *
 
-### login
-
-<p><code>login(state) ⇒ State</code></p>
-
-Logs in to OpenIMIS.
-
-**Returns**: <code>State</code> - state - but with a "token" added to the configuration key.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**
-```js
-login(state)
-```
-
-* * *
 

@@ -11,7 +11,8 @@
     <a href="#post">post(path, data, options, callback)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -23,7 +24,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -216,6 +217,7 @@ post("Bundle",{
 
 * * *
 
+
 ##  Interfaces
 
 ### GetOptions
@@ -226,7 +228,6 @@ Options provided to a GET HTTP request
 
 | Name | Type | Description |
 | --- | --- | --- |
-| headers | <code>object</code> | Object of headers to append to the request |
 | errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
 | timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
 

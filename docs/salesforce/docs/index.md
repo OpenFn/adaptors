@@ -4,8 +4,6 @@
 <dt>
     <a href="#bulkquery">bulkQuery(qs, options, callback)</a></dt>
 <dt>
-    <a href="#cleanupstate">cleanupState(state)</a></dt>
-<dt>
     <a href="#create">create(sObject, attrs)</a></dt>
 <dt>
     <a href="#createif">createIf(logical, sObject, attrs)</a></dt>
@@ -16,8 +14,6 @@
 <dt>
     <a href="#destroy">destroy(sObject, attrs, options)</a></dt>
 <dt>
-    <a href="#execute">execute(operations)</a></dt>
-<dt>
     <a href="#insert">insert(sObject, attrs)</a></dt>
 <dt>
     <a href="#query">query(qs, options, callback)</a></dt>
@@ -26,11 +22,7 @@
 <dt>
     <a href="#relationship">relationship(relationshipName, externalId, dataSource)</a></dt>
 <dt>
-    <a href="#request">request(url, options, callback)</a></dt>
-<dt>
     <a href="#retrieve">retrieve(sObject, id, callback)</a></dt>
-<dt>
-    <a href="#steps">steps()</a></dt>
 <dt>
     <a href="#toutf8">toUTF8(input)</a></dt>
 <dt>
@@ -41,7 +33,8 @@
     <a href="#upsertif">upsertIf(logical, sObject, externalId, attrs)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -50,7 +43,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#beta">beta()</a>
+    <a href="/adaptors/packages/common-docs#beta">beta</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
@@ -65,7 +58,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -89,7 +82,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#group">group()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http()</a>
+    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#humanproper">humanProper()</a>
@@ -208,24 +201,6 @@ bulkQuery(
 
 * * *
 
-### cleanupState
-
-<p><code>cleanupState(state) ⇒ State</code></p>
-
-Removes unserializable keys from the state.
-
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**
-```js
-cleanupState(state)
-```
-
-* * *
-
 ### create
 
 <p><code>create(sObject, attrs) ⇒ Operation</code></p>
@@ -328,20 +303,6 @@ destroy('obj_name', [
 
 * * *
 
-### execute
-
-<p><code>execute(operations) ⇒ State</code></p>
-
-Executes an operation.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operation</code> | Operations |
-
-
-* * *
-
 ### insert
 
 <p><code>insert(sObject, attrs) ⇒ Operation</code></p>
@@ -435,33 +396,6 @@ Fixed Value:
 
 * * *
 
-### request
-
-<p><code>request(url, options, callback) ⇒ Operation</code></p>
-
-Send a HTTP request using connected session information.
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | Relative or absolute URL to request from |
-| options | <code>object</code> |  | Request options |
-| [options.method] | <code>string</code> | <code>&quot;GET&quot;</code> | HTTP method to use. Defaults to GET |
-| [options.headers] | <code>object</code> |  | Object of request headers |
-| [options.json] | <code>object</code> |  | A JSON Object request body |
-| [options.body] | <code>string</code> |  | HTTP body (in POST/PUT/PATCH methods) |
-| callback | <code>function</code> |  | A callback to execute once the request is complete |
-
-**Example**
-```js
-request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
-  method: 'POST',
-  json: { inputs: [{}] },
-});
-```
-
-* * *
-
 ### retrieve
 
 <p><code>retrieve(sObject, id, callback) ⇒ Operation</code></p>
@@ -478,22 +412,6 @@ Retrieves a Salesforce sObject(s).
 **Example**
 ```js
 retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
-```
-
-* * *
-
-### steps
-
-<p><code>steps() ⇒ array</code></p>
-
-Flattens an array of operations.
-
-**Example**
-```js
-steps(
-  createIf(params),
-  update(params)
-)
 ```
 
 * * *
@@ -603,4 +521,5 @@ upsertIf(true, 'obj_name', 'ext_id', {
 ```
 
 * * *
+
 

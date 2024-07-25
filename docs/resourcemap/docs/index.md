@@ -1,5 +1,6 @@
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -35,24 +36,4 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## Functions
-### submitSite
-
-<p><code>submitSite(eventData) ⇒ Operation</code></p>
-
-Create an event
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| eventData | <code>object</code> | Payload data for the event |
-
-**Example**
-```js
-execute(
-  event(eventData)
-)(state)
-```
-
-* * *
 

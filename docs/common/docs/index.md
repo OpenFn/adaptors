@@ -1,7 +1,5 @@
 <dl>
 <dt>
-    <a href="#alterstate">alterState(func)</a></dt>
-<dt>
     <a href="#arraytostring">arrayToString(arr, separator)</a></dt>
 <dt>
     <a href="#asdata">asData(data, state)</a></dt>
@@ -18,15 +16,9 @@
 <dt>
     <a href="#datavalue">dataValue(path)</a></dt>
 <dt>
-    <a href="#del">del(requestParams)</a></dt>
-<dt>
-    <a href="#each">each(dataSource, operation)</a></dt>
-<dt>
     <a href="#each">each(dataSource, operation)</a></dt>
 <dt>
     <a href="#expandreferences">expandReferences(value, [skipFilter])</a></dt>
-<dt>
-    <a href="#expandrequestreferences">expandRequestReferences(value)</a></dt>
 <dt>
     <a href="#field">field(key, value)</a></dt>
 <dt>
@@ -36,11 +28,7 @@
 <dt>
     <a href="#fnif">fnIf(condition, operation)</a></dt>
 <dt>
-    <a href="#get">get(requestParams)</a></dt>
-<dt>
     <a href="#group">group(arrayOfObjects, keyPath, callback)</a></dt>
-<dt>
-    <a href="#head">head(requestParams)</a></dt>
 <dt>
     <a href="#humanproper">humanProper(str)</a></dt>
 <dt>
@@ -56,19 +44,9 @@
 <dt>
     <a href="#merge">merge(dataSource, fields)</a></dt>
 <dt>
-    <a href="#options">options(requestParams)</a></dt>
-<dt>
     <a href="#parsecsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
 <dt>
-    <a href="#patch">patch(requestParams)</a></dt>
-<dt>
-    <a href="#post">post(requestParams)</a></dt>
-<dt>
-    <a href="#put">put(requestParams)</a></dt>
-<dt>
     <a href="#referencepath">referencePath(path)</a></dt>
-<dt>
-    <a href="#request">request(method, fullUrlOrPath, [options])</a></dt>
 <dt>
     <a href="#scrubemojis">scrubEmojis(text, replacementChars)</a></dt>
 <dt>
@@ -79,27 +57,58 @@
     <a href="#splitkeys">splitKeys(obj, keys)</a></dt>
 <dt>
     <a href="#toarray">toArray(arg)</a></dt>
-<dt>
-    <a href="#validate">validate(schema, data)</a></dt>
-<dt>
-    <a href="#withagent">withAgent(params)</a></dt>
 </dl>
 
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#http_del">http.del(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_expandRequestReferences">http.expandRequestReferences(value)</a>
+</dt>
+
+<dt>
+    <a href="#http_get">http.get(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_head">http.head(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_options">http.options(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_patch">http.patch(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#http_put">http.put(requestParams)</a>
+</dt>
+
+<dt>
+    <a href="#beta_each">beta.each(dataSource, operation)</a>
+</dt>
+
+<dt>
+    <a href="#dateFns_format">dateFns.format()</a>
+</dt>
+
+<dt>
+    <a href="#dateFns_parse">dateFns.parse()</a>
+</dt>
+</dl>
+
+
 ## Functions
-### alterState
-
-<p><code>alterState(func) ⇒ Operation</code></p>
-
-alias for "fn()"
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | is the function |
-
-
-* * *
-
 ### arrayToString
 
 <p><code>arrayToString(arr, separator) ⇒ string</code></p>
@@ -273,27 +282,6 @@ dataValue('key')
 
 * * *
 
-### del
-
-<p><code>del(requestParams) ⇒ Operation</code></p>
-
-Make a DELETE request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Deleting a record with data that comes from state
-```js
-delete({
-   url: state => `https://www.example.com/api/items/${state.id}`,
- })(state);
-```
-
-* * *
-
 ### each
 
 <p><code>each(dataSource, operation) ⇒ Operation</code></p>
@@ -324,35 +312,6 @@ each("$.[*]",
 
 * * *
 
-### each
-
-<p><code>each(dataSource, operation) ⇒ Operation</code></p>
-
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
-
-It also ensures the results of an operation make their way back into
-the state's references.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
-| operation | <code>Operation</code> | The operation needed to be repeated. |
-
-**Example**
-```js
-each("$.[*]",
-   create("SObject",
-   field("FirstName", sourceValue("$.firstName")))
- )
-```
-
-* * *
-
 ### expandReferences
 
 <p><code>expandReferences(value, [skipFilter]) ⇒ Operation</code></p>
@@ -364,21 +323,6 @@ Recursively resolves objects that have resolvable values (functions).
 | --- | --- | --- |
 | value | <code>object</code> | data |
 | [skipFilter] | <code>function</code> | a function which returns true if a value should be skipped |
-
-
-* * *
-
-### expandRequestReferences
-
-<p><code>expandRequestReferences(value) ⇒ Operation</code></p>
-
-Recursively resolves objects that have resolvable values (functions), but
-omits HTTP request specific modules like `FormData`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>object</code> | data |
 
 
 * * *
@@ -460,28 +404,6 @@ fnIf((state) => state?.data?.name, get("https://example.com"));
 
 * * *
 
-### get
-
-<p><code>get(requestParams) ⇒ Operation</code></p>
-
-Make a GET request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Get an item with a specified id from state
-```js
- get({
-     url: state => `https://www.example.com/api/items/${state.id},
-     headers: {"content-type": "application/json"}
-});
-```
-
-* * *
-
 ### group
 
 <p><code>group(arrayOfObjects, keyPath, callback) ⇒ Operation</code></p>
@@ -505,27 +427,6 @@ const users = [
 ];
 group(users, 'city');
 // state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
-```
-
-* * *
-
-### head
-
-<p><code>head(requestParams) ⇒ Operation</code></p>
-
-Make a HEAD request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method
-```js
-head({
-  url: 'https://www.example.com/api/items',
-});
 ```
 
 * * *
@@ -673,27 +574,6 @@ merge(
 
 * * *
 
-### options
-
-<p><code>options(requestParams) ⇒ Operation</code></p>
-
-Make a OPTIONS request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Requests permitted communication options for a given URL or server, with data from state.
-```js
-options({
-  url: 'https://www.example.com/api/items',
-});
-```
-
-* * *
-
 ### parseCsv
 
 <p><code>parseCsv(csvData, [parsingOptions], [callback]) ⇒ Operation</code></p>
@@ -723,83 +603,6 @@ Options for `parsingOptions` include:
 
 * * *
 
-### patch
-
-<p><code>patch(requestParams) ⇒ Operation</code></p>
-
-Make a PATCH request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Applies partial modifications to a resource, with data from state.
-```js
-patch({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
-
-* * *
-
-### post
-
-<p><code>post(requestParams) ⇒ Operation</code></p>
-
-Make a POST request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Sending a payload with data that comes from state
-```js
-post({
-  url: "https://example.com",
-  data: (state) => state.data
-});
-```
-**Example:**  Capturing the response for later use in state 
-```js
-alterState((state) => {
-  return post({
-    url: "https://example.com",
-    data: (state) => state.data
-  })(state).then(({response}) => {
-   state.responseData = response.data
-  })
-});
-```
-
-* * *
-
-### put
-
-<p><code>put(requestParams) ⇒ Operation</code></p>
-
-Make a PUT request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.
-```js
-put({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
-
-* * *
-
 ### referencePath
 
 <p><code>referencePath(path) ⇒ string</code></p>
@@ -815,32 +618,6 @@ Ensures a path points at references.
 ```js
 referencePath('key')
 ```
-
-* * *
-
-### request
-
-<p><code>request(method, fullUrlOrPath, [options]) ⇒</code></p>
-
-`request` is a helper function that sends HTTP requests and returns the response
-body, headers, and status code.
-Use the error map to provide custom error messages or get hold of the response in case of errors.
-
-**Returns**: an object with the following properties:
-- method: the request method
-- url: the request url
-- code: the status code of the response
-- headers: the headers of the response
-- body: the body of the response
-- message: the status text of the response
-- duration: the response time  
-
-| Param | Description |
-| --- | --- |
-| method | The HTTP method to use for the request (e.g., "GET", "POST", "PUT", "DELETE", etc.). |
-| fullUrlOrPath | The full or partial URL for the request. |
-| [options] | The `options` parameter is an object that contains additional configuration options for the request. |
-
 
 * * *
 
@@ -942,47 +719,248 @@ each(function(state) {
 
 * * *
 
-### validate
 
-<p><code>validate(schema, data) ⇒ Operation</code></p>
+## http
 
-Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
-Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
-Data can be passed directly or loaded as a JSON path from state.
-By default, schema is loaded from `state.schema` and data from `state.data`.
+These functions belong to the http namespace.
+### http.del {#http_del}
 
+<p><code>del(requestParams) ⇒ Operation</code></p>
+
+Make a DELETE request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| schema | <code>string</code> \| <code>object</code> | The schema, path or URL to validate against |
-| data | <code>string</code> \| <code>object</code> | The data or path to validate |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
 
-**Example:** Validate &#x60;state.data&#x60; with &#x60;state.schema&#x60;
+**Example:** Deleting a record with data that comes from state
 ```js
-validate()
-```
-**Example:** Validate form data at &#x60;state.form&#x60; with a schema from a URL
-```js
-validate("https://www.example.com/schema/record", "form")
-```
-**Example:** Validate the each item in &#x60;state.records&#x60; with a schema from a URL
-```js
-each("records[*]", validate("https://www.example.com/schema/record"))
+http.delete({
+   url: state => `https://www.example.com/api/items/${state.id}`,
+ })(state);
 ```
 
 * * *
 
-### withAgent
 
-<p><code>withAgent(params) ⇒ Operation</code></p>
+### http.expandRequestReferences {#http_expandRequestReferences}
 
-Creates an https agent for axios from the agentOptions key passed in params.
+<p><code>expandRequestReferences(value) ⇒ Operation</code></p>
+
+Recursively resolves objects that have resolvable values (functions), but
+omits HTTP request specific modules like `FormData`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | data |
+| value | <code>object</code> | data |
 
 
 * * *
+
+
+### http.get {#http_get}
+
+<p><code>get(requestParams) ⇒ Operation</code></p>
+
+Make a GET request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Get an item with a specified id from state
+```js
+ http.get({
+     url: state => `https://www.example.com/api/items/${state.id},
+     headers: {"content-type": "application/json"}
+});
+```
+
+* * *
+
+
+### http.head {#http_head}
+
+<p><code>head(requestParams) ⇒ Operation</code></p>
+
+Make a HEAD request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method
+```js
+http.head({
+  url: 'https://www.example.com/api/items',
+});
+```
+
+* * *
+
+
+### http.options {#http_options}
+
+<p><code>options(requestParams) ⇒ Operation</code></p>
+
+Make a OPTIONS request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Requests permitted communication options for a given URL or server, with data from state.
+```js
+http.options({
+  url: 'https://www.example.com/api/items',
+});
+```
+
+* * *
+
+
+### http.patch {#http_patch}
+
+<p><code>patch(requestParams) ⇒ Operation</code></p>
+
+Make a PATCH request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Applies partial modifications to a resource, with data from state.
+```js
+http.patch({
+  url: state => `https://www.example.com/api/items/${state.id}`,
+  data: state => state.data
+});
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(requestParams) ⇒ Operation</code></p>
+
+Make a POST request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Sending a payload with data that comes from state
+```js
+http.post({
+  url: "https://example.com",
+  data: (state) => state.data
+});
+```
+**Example:**  Capturing the response for later use in state 
+```js
+fn((state) => {
+  return http.post({
+    url: "https://example.com",
+    data: (state) => state.data
+  })(state).then(({response}) => {
+   state.responseData = response.data
+  })
+});
+```
+
+* * *
+
+
+### http.put {#http_put}
+
+<p><code>put(requestParams) ⇒ Operation</code></p>
+
+Make a PUT request
+
+**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+
+**Example:** Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.
+```js
+http.put({
+  url: state => `https://www.example.com/api/items/${state.id}`,
+  data: state => state.data
+});
+```
+
+* * *
+
+
+## beta
+
+These functions belong to the beta namespace.
+### beta.each {#beta_each}
+
+<p><code>each(dataSource, operation) ⇒ Operation</code></p>
+
+Scopes an array of data based on a JSONPath.
+Useful when the source data has `n` items you would like to map to
+an operation.
+The operation will receive a slice of the data based of each item
+of the JSONPath provided.
+
+It also ensures the results of an operation make their way back into
+the state's references.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
+| operation | <code>Operation</code> | The operation needed to be repeated. |
+
+**Example**
+```js
+each("$.[*]",
+   create("SObject",
+   field("FirstName", sourceValue("$.firstName")))
+ )
+```
+
+* * *
+
+
+## dateFns
+
+These functions belong to the dateFns namespace.
+### dateFns.format {#dateFns_format}
+
+<p><code>format()</code></p>
+
+The format function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
+
+
+* * *
+
+
+### dateFns.parse {#dateFns_parse}
+
+<p><code>parse()</code></p>
+
+The parse function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
+
+
+* * *
+
 

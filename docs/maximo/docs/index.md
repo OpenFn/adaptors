@@ -7,7 +7,8 @@
     <a href="#update75">update75(params)</a></dt>
 </dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -108,4 +109,5 @@ execute(
 ```
 
 * * *
+
 

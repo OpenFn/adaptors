@@ -1,5 +1,6 @@
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
@@ -32,24 +33,4 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
 
-## Functions
-### fetch
-
-<p><code>fetch(params) ⇒ Operation</code></p>
-
-Fetch data from the Khan Academy API
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | data to make the query |
-
-**Example**
-```js
-execute(
-  fetch(params)
-)(state)
-```
-
-* * *
 

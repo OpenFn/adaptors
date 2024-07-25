@@ -1,5 +1,10 @@
+<dl>
+<dt>
+    <a href="#query">query(qs, options, callback)</a></dt>
+</dl>
 
-The following functions are exported from the common adaptor:
+
+This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
@@ -8,7 +13,7 @@ The following functions are exported from the common adaptor:
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#datefns">dateFns()</a>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -58,4 +63,5 @@ query("select count(*) from patient");
 ```
 
 * * *
+
 
