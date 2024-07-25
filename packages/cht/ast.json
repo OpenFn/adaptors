@@ -4,15 +4,17 @@
       "name": "post",
       "params": [
         "path",
+        "body",
         "options",
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request against the base url",
         "tags": [
           {
             "title": "example",
-            "description": "post(\"patient\", { \"name\":\"Bukayo\" });"
+            "description": "post(\"/api/v1/people\", {  \n\"name\": \"Hannah\",\n\"phone\": \"+254712345678\",\n\"type\": \"contact\",\n\"contact_type\": \"patient\", });",
+            "caption": "Create a new person"
           },
           {
             "title": "function",
@@ -40,7 +42,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
+            "name": "body"
           },
           {
             "title": "param",
@@ -73,11 +75,82 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{SHTHttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
+    },
+    {
+      "name": "put",
+      "params": [
+        "path",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a PUT request against the base url",
+        "tags": [
+          {
+            "title": "example",
+            "description": "put(\"/api/v1/settings\",{overwrite:true});",
+            "caption": "Update settings"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional to configure the HTTP request",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{SHTHttpState}"
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "request",
@@ -186,13 +259,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -229,13 +302,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -272,13 +345,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -315,13 +388,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -358,13 +431,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -402,13 +475,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -455,13 +528,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -507,13 +580,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -560,6 +633,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -604,6 +682,11 @@
             "type": null
           },
           {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
             "title": "example",
             "description": "cursor($.cursor, { defaultValue: 'today' })",
             "caption": "Use a cursor from state if present, or else use the default value"
@@ -612,11 +695,6 @@
             "title": "example",
             "description": "cursor(22)",
             "caption": "Use a pagination cursor"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
           },
           {
             "title": "param",

@@ -1,75 +1,198 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, dataValue } from '../src/Adaptor.js';
+import { request, get, post, put } from '../src/Adaptor.js';
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const testServer = enableMockClient('https://example.cht.com');
 
 describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
+  it('should send a GET request', async () => {
+    const data = {
+      has_permissions: true,
+    };
+
     testServer
       .intercept({
-        path: '/api/patients',
-        method: 'POST',
+        path: '/api/v1/settings',
+        method: 'GET',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+      .reply(200, data);
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
+        baseUrl: 'https://example.cht.com',
         username: 'hello',
         password: 'there',
       },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
+      data,
     };
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
+    const finalState = await request('GET', '/api/v1/settings')(state);
 
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
+    expect(finalState.data).to.eql(data);
   });
 
-  it('throws an error if the service returns 403', async () => {
+  it('should throw for a 403 response', async () => {
     testServer
       .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
+        path: '/api/v1/contacts',
+        method: 'GET',
       })
       .reply(403);
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
+        baseUrl: 'https://example.cht.com',
         username: 'hello',
         password: 'there',
       },
     };
 
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
+    const error = await request(
+      'GET',
+      '/api/v1/contacts'
+    )(state).catch(error => {
       return error;
     });
-
     expect(error.statusMessage).to.eql('Forbidden');
+  });
+
+  it('should include basic auth', async () => {
+    testServer
+      .intercept({
+        path: '/api/v1/settings',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {});
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data: {},
+    };
+
+    const finalState = await request('GET', '/api/v1/settings')(state);
+
+    expect(finalState.configuration).to.eql(state.configuration);
+  });
+});
+
+describe('get()', () => {
+  it('should make a simple get request', async () => {
+    const data = {
+      has_permissions: true,
+    };
+
+    testServer
+      .intercept({
+        path: '/api/v1/settings',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, data);
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data,
+    };
+
+    const finalState = await get('/api/v1/settings')(state);
+
+    expect(finalState.data).to.eql(data);
+    expect(finalState.response.method).to.eql('GET');
+  });
+});
+describe('post()', () => {
+  it('should make a simple post request', async () => {
+    testServer
+      .intercept({
+        path: '/api/v1/people',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(201, {
+        name: 'Hannah',
+        phone: '+254712345678',
+        type: 'contact',
+        contact_type: 'patient',
+      });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data: {
+        name: 'Hannah',
+        phone: '+254712345678',
+        type: 'contact',
+        contact_type: 'patient',
+      },
+    };
+
+    const finalState = await post('/api/v1/people')(state);
+
+    expect(finalState.data).to.eql({
+      name: 'Hannah',
+      phone: '+254712345678',
+      type: 'contact',
+      contact_type: 'patient',
+    });
+  });
+});
+
+describe('put()', () => {
+  it('should make a simple put request', async () => {
+    testServer
+      .intercept({
+        path: '/api/v1/settings',
+        method: 'PUT',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {
+        success: true,
+        upgraded: false,
+      });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data: {
+        success: true,
+        upgraded: false,
+      },
+    };
+
+    const finalState = await put('/api/v1/settings', {
+      overwrite: true,
+    })(state);
+
+    expect(finalState.data).to.eql({
+      success: true,
+      upgraded: false,
+    });
   });
 });
