@@ -3,10 +3,10 @@ import * as util from './Utils';
 
 /**
  * State object
- * @typedef {Object} SHTHttpState
+ * @typedef {Object} CHTHttpState
  * @private
  * @property data - the parsed response body
- * @property response - the response from the SHT HTTP server, including headers, statusCode, body, etc
+ * @property response - the response from the CHT HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
  **/
 
@@ -35,10 +35,10 @@ import * as util from './Utils';
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional to configure the HTTP request
+ * @param {RequestOptions} options - Options to configure the HTTP request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @state {SHTHttpState}
+ * @state {CHTHttpState}
  */
 export function get(path, options, callback) {
   return request('GET', path, null, options, callback);
@@ -59,7 +59,7 @@ export function get(path, options, callback) {
  * @param {RequestOptions} options - Optional request options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @state {SHTHttpState}
+ * @state {CHTHttpState}
  */
 export function post(path, body, options, callback) {
   return request('POST', path, body, options, callback);
@@ -72,19 +72,23 @@ export function post(path, body, options, callback) {
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional to configure the HTTP request
+ * @param {RequestOptions} options - Options to configure the HTTP request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @state {SHTHttpState}
+ * @state {CHTHttpState}
  */
 export function put(path, options, callback) {
   return request('PUT', path, null, options, callback);
 }
 
 /**
- * Make a general HTTP request
+ * Make a general HTTP request to CHT
  * @example
- * request("POST", "patient", { "name":"Bukayo" });
+ * request("POST","/api/v1/people", {  
+  "name": "Hannah",
+  "phone": "+254712345678",
+  "type": "contact",
+  "contact_type": "patient", });
  * @function
  * @public
  * @param {string} method - HTTP method to use
@@ -93,7 +97,7 @@ export function put(path, options, callback) {
  * @param {RequestOptions} options - Optional request options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @state {HttpState}
+ * @state {CHTHttpState}
  */
 export function request(method, path, body, options = {}, callback = s => s) {
   return async state => {

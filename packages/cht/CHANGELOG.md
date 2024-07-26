@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Initial release for cht adaptor with `get`, `post`, and `put`

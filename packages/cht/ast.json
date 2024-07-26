@@ -75,7 +75,7 @@
           },
           {
             "title": "state",
-            "description": "{SHTHttpState}"
+            "description": "{CHTHttpState}"
           }
         ]
       },
@@ -117,7 +117,7 @@
           },
           {
             "title": "param",
-            "description": "Optional to configure the HTTP request",
+            "description": "Options to configure the HTTP request",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -146,7 +146,7 @@
           },
           {
             "title": "state",
-            "description": "{SHTHttpState}"
+            "description": "{CHTHttpState}"
           }
         ]
       },
@@ -162,11 +162,11 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a general HTTP request to CHT",
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\":\"Bukayo\" });"
+            "description": "request(\"POST\",\"/api/v1/people\", {  \n\"name\": \"Hannah\",\n\"phone\": \"+254712345678\",\n\"type\": \"contact\",\n\"contact_type\": \"patient\", });"
           },
           {
             "title": "function",
@@ -236,7 +236,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{CHTHttpState}"
           }
         ]
       },

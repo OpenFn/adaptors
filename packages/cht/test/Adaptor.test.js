@@ -19,7 +19,7 @@ describe('request', () => {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      .reply(200, data);
+      .reply(200, data, { headers: { 'content-type': 'application/json' } });
 
     const state = {
       configuration: {
@@ -59,31 +59,6 @@ describe('request', () => {
     });
     expect(error.statusMessage).to.eql('Forbidden');
   });
-
-  it('should include basic auth', async () => {
-    testServer
-      .intercept({
-        path: '/api/v1/settings',
-        method: 'GET',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, {});
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://example.cht.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {},
-    };
-
-    const finalState = await request('GET', '/api/v1/settings')(state);
-
-    expect(finalState.configuration).to.eql(state.configuration);
-  });
 });
 
 describe('get()', () => {
@@ -100,7 +75,7 @@ describe('get()', () => {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      .reply(200, data);
+      .reply(200, data, { headers: { 'content-type': 'application/json' } });
 
     const state = {
       configuration: {
@@ -116,6 +91,32 @@ describe('get()', () => {
     expect(finalState.data).to.eql(data);
     expect(finalState.response.method).to.eql('GET');
   });
+  it('should make a get with parameters', async () => {
+    const data = '<?xml version="1.0"?>';
+
+    testServer
+      .intercept({
+        path: '/api/v1/forms/undo_death_report.xml',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, data, { headers: { 'content-type': 'text/html' } });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data,
+    };
+
+    const finalState = await get('/api/v1/forms/undo_death_report.xml')(state);
+
+    expect(finalState.data).to.eql(data);
+  });
 });
 describe('post()', () => {
   it('should make a simple post request', async () => {
@@ -127,12 +128,14 @@ describe('post()', () => {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      .reply(201, {
-        name: 'Hannah',
-        phone: '+254712345678',
-        type: 'contact',
-        contact_type: 'patient',
-      });
+      .reply(
+        201,
+        {
+          id: '71df9d25ed6732ea3b4435862510d115',
+          rev: '1-a4060843d78f46a60a6f41051e40e3b5',
+        },
+        { headers: { 'content-type': 'application/json' } }
+      );
 
     const state = {
       configuration: {
@@ -141,20 +144,21 @@ describe('post()', () => {
         password: 'there',
       },
       data: {
-        name: 'Hannah',
-        phone: '+254712345678',
-        type: 'contact',
-        contact_type: 'patient',
+        id: '71df9d25ed6732ea3b4435862510d115',
+        rev: '1-a4060843d78f46a60a6f41051e40e3b5',
       },
     };
 
-    const finalState = await post('/api/v1/people')(state);
+    const finalState = await post('/api/v1/people', {
+      name: 'Samuel',
+      place: '1d83f2b4a27eceb40df9e9f9ad06d137',
+      type: 'contact',
+      contact_type: 'chp',
+    })(state);
 
     expect(finalState.data).to.eql({
-      name: 'Hannah',
-      phone: '+254712345678',
-      type: 'contact',
-      contact_type: 'patient',
+      id: '71df9d25ed6732ea3b4435862510d115',
+      rev: '1-a4060843d78f46a60a6f41051e40e3b5',
     });
   });
 });
@@ -169,10 +173,14 @@ describe('put()', () => {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      .reply(200, {
-        success: true,
-        upgraded: false,
-      });
+      .reply(
+        200,
+        {
+          success: true,
+          upgraded: false,
+        },
+        { headers: { 'content-type': 'application/json' } }
+      );
 
     const state = {
       configuration: {

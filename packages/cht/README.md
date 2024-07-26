@@ -13,10 +13,14 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/cht-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `post` function
 
 ```js
-post('patient', { name: 'Bukayo' });
+post("/api/v1/people", {  
+  "name": "Hannah",
+  "phone": "+254712345678",
+  "type": "contact",
+  "contact_type": "patient", });
 ```
 
 ## Development

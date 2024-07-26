@@ -1,8 +1,3 @@
-/**
- * If you have any helper functions which are NOT operations,
- * you should add them here
- */
-
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
@@ -29,8 +24,6 @@ export const request = (configuration = {}, method, path, options) => {
   const headers = makeBasicAuthHeader(username, password);
 
   const opts = {
-    parseAs: 'json',
-
     baseUrl,
 
     ...options,
