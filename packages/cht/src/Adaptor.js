@@ -28,9 +28,9 @@ import * as util from './Utils';
  * get("/api/v2/export/contacts");
 * @example <caption>Filter contacts given a name</caption>
  * get("/api/v2/export/contacts", {
-  "filters": {
+  query: {"filters": {
     "search": "jim"
-  }
+  }}
 });
  * @function
  * @public
