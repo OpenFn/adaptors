@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 2.1.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 5.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 4.3.4
 
 ### Patch Changes

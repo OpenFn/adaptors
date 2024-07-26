@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 2.12.4
 
 ### Patch Changes

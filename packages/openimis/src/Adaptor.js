@@ -39,6 +39,7 @@ export function execute(...operations) {
  * @example
  * login(state)
  * @function
+ * @private
  * @param {State} state - Runtime state.
  * @returns {State} state - but with a "token" added to the configuration key.
  */

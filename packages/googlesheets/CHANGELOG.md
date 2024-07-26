@@ -1,5 +1,11 @@
 # @openfn/language-googlesheets
 
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 2.5.2
 
 ### Patch Changes

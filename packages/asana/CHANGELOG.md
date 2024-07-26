@@ -1,5 +1,11 @@
 # @openfn/language-asana
 
+## 4.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 3.3.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-azure-storage
 
+## 2.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 1.1.1
 
 ### Patch Changes

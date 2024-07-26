@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-azure-storage",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "OpenFn adaptor for Azure Storage",
   "type": "module",
   "exports": {
@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@azure/storage-blob": "^12.15.0",
-    "@openfn/language-common": "^2.0.0"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",

@@ -1,5 +1,11 @@
 # @openfn/language-openfn
 
+## 2.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 1.4.3
 
 ### Patch Changes

@@ -149,9 +149,6 @@ importers:
       json2csv:
         specifier: ^5.0.7
         version: 5.0.7
-      language-http:
-        specifier: github:openfn/language-http#v2.4.12
-        version: github.com/openfn/language-http/2c7196a9369ea86afe53230771843c7c09bd3c3d
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -269,15 +266,9 @@ importers:
       mocha:
         specifier: ^9.2.2
         version: 9.2.2
-      nock:
-        specifier: ^13.3.2
-        version: 13.3.2
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
-      superagent-mock:
-        specifier: ^4.0.0
-        version: 4.0.0(superagent@8.0.9)
 
   packages/common:
     dependencies:
@@ -2441,7 +2432,7 @@ packages:
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -2683,7 +2674,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.0
       '@babel/types': 7.23.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -3818,7 +3809,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6188,6 +6179,17 @@ packages:
       supports-color: 8.1.1
     dev: true
 
+  /debug@4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+
   /debug@4.3.4(supports-color@8.1.1):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
     engines: {node: '>=6.0'}
@@ -8446,7 +8448,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8475,7 +8477,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10430,19 +10432,7 @@ packages:
     resolution: {integrity: sha512-1+XfJNYF1cjGB+TKMWi29eZ0b82QOvQs2YoLNzbpWGqFMtRQHTa57osqdGj4FrFPgkO4D4AZinzUJR9VvW3QUA==}
     engines: {node: '>= 10.13'}
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
-      json-stringify-safe: 5.0.1
-      lodash: 4.17.21
-      propagate: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /nock@13.3.2:
-    resolution: {integrity: sha512-CwbljitiWJhF1gL83NbanhoKs1l23TDlRioNraPTZrzZIEooPemrHRj5m0FZCPkB1ecdYCSWWGcHysJgX/ngnQ==}
-    engines: {node: '>= 10.13'}
-    dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
       propagate: 2.0.1
@@ -11853,7 +11843,7 @@ packages:
     resolution: {integrity: sha512-xA93uxUD/rogV7BV59agW/JHPGXeREMWiZc9jhcwY4YdZ7QOtC7qbomYg0n4wyk2lJhggjvKvhNX8wln/Aldhg==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       extend: 3.0.2
     transitivePeerDependencies:
       - supports-color
@@ -14096,26 +14086,4 @@ packages:
     version: 0.20.0
     engines: {node: '>=0.8'}
     hasBin: true
-    dev: false
-
-  github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6:
-    resolution: {tarball: https://codeload.github.com/openfn/language-common/tar.gz/b8047f82680d95387cbe4596f55e24e4d0b128c6}
-    name: language-common
-    version: 0.3.0
-    dependencies:
-      JSONPath: 0.10.0
-      lodash: 4.17.21
-    dev: false
-
-  github.com/openfn/language-http/2c7196a9369ea86afe53230771843c7c09bd3c3d:
-    resolution: {tarball: https://codeload.github.com/openfn/language-http/tar.gz/2c7196a9369ea86afe53230771843c7c09bd3c3d}
-    name: language-http
-    version: 2.4.12
-    dependencies:
-      cheerio: 1.0.0-rc.12
-      cheerio-tableparser: 1.0.1
-      csv-parse: 4.16.3
-      import: 0.0.6
-      language-common: github.com/openfn/language-common/b8047f82680d95387cbe4596f55e24e4d0b128c6
-      request: 2.88.2
     dev: false

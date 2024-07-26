@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 2.3.2
 
 ### Patch Changes

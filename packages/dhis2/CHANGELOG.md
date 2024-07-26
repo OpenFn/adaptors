@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 5.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 4.2.1
 
 ### Patch Changes

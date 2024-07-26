@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 6.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
 ## 5.0.2
 
 ### Patch Changes
