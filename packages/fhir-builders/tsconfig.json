@@ -1,0 +1,23 @@
+{
+  "include": ["src/**/*.ts"],
+  "exclude": ["node-modules"],
+  "compilerOptions": {
+    "module": "commonjs", // important for mocha
+
+    // TODO idk what options we need here
+    "allowJs": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strictNullChecks": false,
+    "target": "ES2020",
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true
+  }
+}
