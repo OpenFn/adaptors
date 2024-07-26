@@ -33,7 +33,7 @@ importers:
   packages/asana:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.0
+        specifier: workspace:*
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -67,7 +67,7 @@ importers:
         specifier: ^12.15.0
         version: 12.15.0
       '@openfn/language-common':
-        specifier: ^2.0.0
+        specifier: workspace:*
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -138,7 +138,7 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0
       '@openfn/language-common':
-        specifier: workspace:2.0.0
+        specifier: workspace:*
         version: link:../common
       csv-parse:
         specifier: ^4.16.3
@@ -322,7 +322,7 @@ importers:
   packages/dhis2:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.0
+        specifier: workspace:*
         version: link:../common
       axios:
         specifier: ^0.24.0
@@ -538,7 +538,7 @@ importers:
   packages/googlesheets:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.0
+        specifier: workspace:*
         version: link:../common
       googleapis:
         specifier: 100.0.0
@@ -1049,7 +1049,7 @@ importers:
   packages/mssql:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:2.0.0
+        specifier: workspace:*
         version: link:../common
       tedious:
         specifier: 15.1.0
@@ -1080,7 +1080,7 @@ importers:
   packages/mysql:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: workspace:*
         version: link:../common
       json-sql:
         specifier: ^0.3.10
@@ -1219,7 +1219,7 @@ importers:
   packages/openfn:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: workspace:*
         version: link:../common
       axios:
         specifier: ^0.21.1
@@ -1401,7 +1401,7 @@ importers:
   packages/openspp:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.0
+        specifier: workspace:*
         version: link:../common
       odoo-await:
         specifier: ^3.4.1
@@ -1435,7 +1435,7 @@ importers:
   packages/postgresql:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: workspace:*
         version: link:../common
       pg:
         specifier: ^8.3.2
@@ -1472,7 +1472,7 @@ importers:
   packages/primero:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: workspace:*
         version: link:../common
       cheerio:
         specifier: ^1.0.0-rc.10
@@ -1632,8 +1632,8 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
-        version: link:../common
+        specifier: ^1.15.1
+        version: 1.15.1
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
@@ -1709,7 +1709,7 @@ importers:
   packages/sftp:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: workspace:*
         version: link:../common
       lodash:
         specifier: ^4.17.21
@@ -1888,8 +1888,8 @@ importers:
   packages/twilio:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.0
-        version: link:../common
+        specifier: 1.15.1
+        version: 1.15.1
       twilio:
         specifier: ^3.83.2
         version: 3.83.3
@@ -2432,7 +2432,7 @@ packages:
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
       convert-source-map: 2.0.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -2674,7 +2674,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.0
       '@babel/types': 7.23.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -3809,7 +3809,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6179,17 +6179,6 @@ packages:
       supports-color: 8.1.1
     dev: true
 
-  /debug@4.3.4:
-    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
-    engines: {node: '>=6.0'}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-    dependencies:
-      ms: 2.1.2
-
   /debug@4.3.4(supports-color@8.1.1):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
     engines: {node: '>=6.0'}
@@ -8448,7 +8437,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8477,7 +8466,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10432,7 +10421,7 @@ packages:
     resolution: {integrity: sha512-1+XfJNYF1cjGB+TKMWi29eZ0b82QOvQs2YoLNzbpWGqFMtRQHTa57osqdGj4FrFPgkO4D4AZinzUJR9VvW3QUA==}
     engines: {node: '>= 10.13'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
       propagate: 2.0.1
@@ -11843,7 +11832,7 @@ packages:
     resolution: {integrity: sha512-xA93uxUD/rogV7BV59agW/JHPGXeREMWiZc9jhcwY4YdZ7QOtC7qbomYg0n4wyk2lJhggjvKvhNX8wln/Aldhg==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       extend: 3.0.2
     transitivePeerDependencies:
       - supports-color
