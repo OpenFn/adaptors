@@ -68,7 +68,7 @@ export function post(path, body, options, callback) {
 /**
  * Make a PUT request against the base url
  * @example <caption>Update settings</caption>
- * put("/api/v1/settings",{overwrite:true});
+ * put("/api/v1/settings",{query:{overwrite:true}});
  * @function
  * @public
  * @param {string} path - Path to resource

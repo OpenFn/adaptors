@@ -204,6 +204,9 @@ describe('put()', () => {
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
+        query: {
+          overwrite: true,
+        },
       })
       .reply(
         200,
@@ -227,7 +230,9 @@ describe('put()', () => {
     };
 
     const finalState = await put('/api/v1/settings', {
-      overwrite: true,
+      query: {
+        overwrite: true,
+      },
     })(state);
 
     expect(finalState.data).to.eql({
