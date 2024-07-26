@@ -1,5 +1,12 @@
 # @openfn/language-godata
 
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 3.5.0
 
 ### Minor Changes

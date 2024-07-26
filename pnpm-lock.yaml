@@ -686,7 +686,7 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^1.15.1
+        specifier: ^1.15.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':

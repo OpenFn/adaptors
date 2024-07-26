@@ -1,5 +1,12 @@
 # @openfn/language-cartodb
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 0.4.1
 
 ### Patch Changes

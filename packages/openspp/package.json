@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openspp",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "An OpenFn adaptor for working with the OpenSPP json rpc",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.14.0",
+    "@openfn/language-common": "^2.0.0",
     "odoo-await": "^3.4.1"
   },
   "devDependencies": {

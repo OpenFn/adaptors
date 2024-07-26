@@ -1,5 +1,12 @@
 # @openfn/language-googlesheets
 
+## 2.5.2
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 2.5.1
 
 ### Patch Changes

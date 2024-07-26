@@ -1,5 +1,13 @@
 # @openfn/language-satusehat
 
+## 1.1.4
+
+### Patch Changes
+
+- f51c5d0: Enforce that absolute urls must not be passed to HTTP functions
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 1.1.3
 
 ### Patch Changes

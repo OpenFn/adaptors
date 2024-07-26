@@ -1,5 +1,13 @@
 # @openfn/language-http
 
+## 6.4.2
+
+### Patch Changes
+
+- c803bab: In all functions, if baseUrl if set, path MUST be relative.
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 6.4.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 ## 1.15.1
 
+## 2.0.0
+
+### Major Changes
+
+- 4fe527c: - Remove axios-based http operations with cleaner, undici-based ones
+  - Removed axios export
+
 ### Patch Changes
 
 - 4c08444: document exported date-fns functions
