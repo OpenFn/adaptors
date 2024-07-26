@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-  http,
+  http, // IMPORTANT: this is the OLD axios-based HTTP
 } from '@openfn/language-common';
 
 /**
@@ -162,7 +162,7 @@ export {
   fields,
   fn,
   fnIf,
-  http,
+  http, // IMPORTANT: this is the OLD axios-based HTTP. The public documentation for this will be wrong.
   group,
   lastReferenceValue,
   merge,
