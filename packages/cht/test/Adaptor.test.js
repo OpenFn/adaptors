@@ -91,7 +91,7 @@ describe('get()', () => {
     expect(finalState.data).to.eql(data);
     expect(finalState.response.method).to.eql('GET');
   });
-  it('should make a get with parameters', async () => {
+  it('should make a get that returns xml', async () => {
     const data = '<?xml version="1.0"?>';
 
     testServer
@@ -116,6 +116,35 @@ describe('get()', () => {
     const finalState = await get('/api/v1/forms/undo_death_report.xml')(state);
 
     expect(finalState.data).to.eql(data);
+  });
+  it('should make a get with parameters', async () => {
+    const data = {
+      code: 'immunization_visit',
+    };
+
+    testServer
+      .intercept({
+        path: '/api/v2/export/reports',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, data, { headers: { 'content-type': 'application/json' } });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data,
+    };
+
+    const finalState = await get('/api/v2/export/reports', { limit: 1 })(state);
+
+    expect(finalState.data).to.eql(data);
+    expect(finalState.response.method).to.eql('GET');
   });
 });
 describe('post()', () => {
