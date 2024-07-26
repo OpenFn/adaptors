@@ -25,19 +25,19 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "2.0.0",
+    "@openfn/language-common": "1.15.1",
     "axios": "^0.21.2"
   },
   "devDependencies": {
+    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^4.2.0",
     "deep-eql": "^4.0.0",
+    "esno": "^0.16.3",
     "mocha": "^10.1.0",
     "nock": "^13.0.5",
-    "sinon": "^9.2.3",
-    "esno": "^0.16.3",
     "rimraf": "^3.0.2",
-    "@openfn/simple-ast": "0.4.1"
+    "sinon": "^9.2.3"
   },
   "type": "module",
   "exports": {
