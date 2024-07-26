@@ -1,5 +1,18 @@
 # @openfn/language-sftp
 
+## 2.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 1.1.2
 
 ### Patch Changes

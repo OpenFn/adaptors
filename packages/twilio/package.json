@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.14.0",
+    "@openfn/language-common": "1.15.1",
     "twilio": "^3.83.2"
   },
   "devDependencies": {

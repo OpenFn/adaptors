@@ -1,5 +1,13 @@
 # @openfn/language-openlmis
 
+## 1.0.2
+
+### Patch Changes
+
+- 940996b: Use common helper code to handle invalid absolute URLs
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 1.0.1
 
 ### Patch Changes

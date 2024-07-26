@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-cartodb",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "cartodb Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "JSONPath": "^0.10.0",
     "json-sql": "^0.3.8",
-    "@openfn/language-common": "^1.15.1",
+    "@openfn/language-common": "^2.0.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^3.7.0"
   },

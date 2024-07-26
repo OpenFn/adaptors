@@ -1,5 +1,23 @@
 # @openfn/language-asana
 
+## 4.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 3.3.1
+
+### Patch Changes
+
+- 510354a: Don't allow HTTP helpers to call out to different domains. This can
+  cause a security violation where credentials are sent to external servers. Use
+  generic HTTP helpers like `http.get` or `fetch` instead.
+- 510354a: Fix an issue where not passing a params argument would trigger an
+  exception
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 3.3.0
 
 ### Minor Changes
