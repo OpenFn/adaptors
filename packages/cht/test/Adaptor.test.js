@@ -126,6 +126,9 @@ describe('get()', () => {
       .intercept({
         path: '/api/v2/export/reports',
         method: 'GET',
+        query: {
+          limit: 1,
+        },
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
@@ -141,10 +144,10 @@ describe('get()', () => {
       data,
     };
 
-    const finalState = await get('/api/v2/export/reports', { limit: 1 })(state);
-
+    const finalState = await get('/api/v2/export/reports', {
+      query: { limit: 1 },
+    })(state);
     expect(finalState.data).to.eql(data);
-    expect(finalState.response.method).to.eql('GET');
   });
 });
 describe('post()', () => {
