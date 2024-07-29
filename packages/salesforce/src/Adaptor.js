@@ -191,7 +191,14 @@ export function query(qs, options = {}, callback = s => s) {
       const { done, totalSize, records, nextRecordsUrl } = qResult;
 
       fetchedRecords.push(...records);
-      result = [{ done, totalSize, nextRecordsUrl, records: fetchedRecords }];
+      result = [
+        {
+          done,
+          totalSize,
+          records: fetchedRecords,
+          ...(nextRecordsUrl && { nextRecordsUrl }),
+        },
+      ];
 
       if (!qResult.done && autoFetch) {
         console.log('Fetched records so far:', fetchedRecords.length);
