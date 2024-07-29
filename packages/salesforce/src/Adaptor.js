@@ -166,9 +166,9 @@ export function retrieve(sObject, id, callback) {
  */
 export function query(qs, options = {}, callback = s => s) {
   return async state => {
-    let done = false;
-    let qResult = null;
     let result = [];
+    let qResult = null;
+    let fetchedRecords = [];
 
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
@@ -187,36 +187,31 @@ export function query(qs, options = {}, callback = s => s) {
       throw err;
     }
 
-    if (qResult.totalSize > 0) {
-      console.log('Total records', qResult.totalSize);
+    const processRecords = async qResult => {
+      const { done, totalSize, records, nextRecordsUrl } = qResult;
 
-      while (!done) {
-        result.push(qResult);
+      fetchedRecords.push(...records);
+      result = [{ done, totalSize, nextRecordsUrl, records: fetchedRecords }];
 
-        if (qResult.done) {
-          done = true;
-        } else if (autoFetch) {
-          console.log(
-            'Fetched records so far',
-            result.map(ref => ref.records).flat().length
-          );
-          console.log('Fetching next records...');
-          try {
-            qResult = await connection.request({ url: qResult.nextRecordsUrl });
-          } catch (err) {
-            const { message, errorCode } = err;
-            console.log(`Error ${errorCode}: ${message}`);
-            throw err;
-          }
-        } else {
-          done = true;
+      if (!qResult.done && autoFetch) {
+        console.log('Fetched records so far:', fetchedRecords.length);
+        console.log('Fetching next records...');
+
+        try {
+          qResult = await connection.request({ url: qResult.nextRecordsUrl });
+          await processRecords(qResult);
+        } catch (err) {
+          const { message, errorCode } = err;
+          console.error(`Error ${errorCode}: ${message}`);
+          throw err;
         }
       }
+    };
 
-      console.log(
-        'Done ✔ retrieved records',
-        result.map(ref => ref.records).flat().length
-      );
+    if (qResult.totalSize > 0) {
+      console.log('Total records:', qResult.totalSize);
+      await processRecords(qResult);
+      console.log('Done ✔ retrieved records:', fetchedRecords.length);
     } else {
       result.push(qResult);
       console.log('No records found.');
