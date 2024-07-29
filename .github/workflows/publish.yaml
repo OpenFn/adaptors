@@ -21,7 +21,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
           pnpm publish -r --report-summary --publish-branch fix-asana-v1-errors
-          --access=public --tag 2.1.7 --dry-run --no-git-checks
+          --access=public --tag legacy --no-git-checks
 
       - run: pnpm slack:notify
         env:
