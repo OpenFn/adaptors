@@ -1,5 +1,11 @@
 # @openfn/language-asana
 
+## 2.1.7
+
+### Patch Changes
+
+- Improve serialization of axios error messages
+
 ## 2.1.6
 
 ### Patch Changes
