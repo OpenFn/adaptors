@@ -20,9 +20,9 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
-          pnpm publish -r --report-summary --publish-branch main --access=public
-          --tag 2.1.7 --dry-run
+          pnpm publish -r --report-summary --publish-branch fix-asana-v1-errors
+          --access=public --tag 2.1.7 --dry-run
 
-      # - run: pnpm slack:notify
-      #   env:
-      #     SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      - run: pnpm slack:notify
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
