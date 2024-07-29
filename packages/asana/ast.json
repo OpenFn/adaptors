@@ -3,7 +3,7 @@
     {
       "name": "getTask",
       "params": [
-        "taskGid",
+        "task_gid",
         "params",
         "callback"
       ],
@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTask(\"task_gid\",\n {\n   opt_fields: \"name,notes,assignee\"\n })"
           },
           {
             "title": "function",
@@ -31,7 +31,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "taskGid"
+            "name": "task_gid"
           },
           {
             "title": "param",
@@ -66,7 +66,7 @@
     {
       "name": "getTasks",
       "params": [
-        "projectGid",
+        "project_gid",
         "params",
         "callback"
       ],
@@ -80,7 +80,7 @@
           },
           {
             "title": "example",
-            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTasks(\"project_gid\",\n {\n   opt_fields: \"name,notes,assignee\"\n })"
           },
           {
             "title": "function",
@@ -94,7 +94,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "projectGid"
+            "name": "project_gid"
           },
           {
             "title": "param",
@@ -129,7 +129,7 @@
     {
       "name": "updateTask",
       "params": [
-        "taskGid",
+        "task_gid",
         "params",
         "callback"
       ],
@@ -143,7 +143,7 @@
           },
           {
             "title": "example",
-            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});"
+            "description": "updateTask(\"task_gid\",\n {\n   name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n }\n)"
           },
           {
             "title": "function",
@@ -157,7 +157,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "taskGid"
+            "name": "task_gid"
           },
           {
             "title": "param",
@@ -205,7 +205,7 @@
           },
           {
             "title": "example",
-            "description": "createTask({\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n  projects: [\"1206933955023739\"],\n});"
+            "description": "createTask(\n {\n   name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n }\n)"
           },
           {
             "title": "function",
@@ -245,7 +245,7 @@
     {
       "name": "upsertTask",
       "params": [
-        "projectGid",
+        "project_gid",
         "params",
         "callback"
       ],
@@ -259,7 +259,7 @@
           },
           {
             "title": "example",
-            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});"
+            "description": "upsertTask(\n \"1201382240880\",\n {\n   \"externalId\": \"name\",\n   \"data\": {\n     name: 'test', \"approval_status\": \"pending\", \"assignee\": \"12345\"\n   }\n\n }\n)"
           },
           {
             "title": "function",
@@ -273,7 +273,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "projectGid"
+            "name": "project_gid"
           },
           {
             "title": "param",
@@ -304,143 +304,6 @@
         ]
       },
       "valid": true
-    },
-    {
-      "name": "createTaskStory",
-      "params": [
-        "taskGid",
-        "params",
-        "callback"
-      ],
-      "docs": {
-        "description": "Options provided to the createTaskStory request",
-        "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "StoryOptions"
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "property",
-            "description": "The plain text of the comment to add. Cannot be used with html_text.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "text"
-          },
-          {
-            "title": "property",
-            "description": "Opt In. HTML formatted text for a comment. This will not include the name of the creator.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "html_text"
-          },
-          {
-            "title": "property",
-            "description": "Default to `false`. Whether the story should be pinned on the resource.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "is_pinned"
-          },
-          {
-            "title": "property",
-            "description": "The name of the sticker in this story. `null` if there is no sticker.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sticker_name"
-          },
-          {
-            "title": "property",
-            "description": "Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include.",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "opt_fields"
-          },
-          {
-            "title": "property",
-            "description": "Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "opt_pretty"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "request",
-      "params": [
-        "path",
-        "params",
-        "callback"
-      ],
-      "docs": {
-        "description": "Options provided to the Asana API request",
-        "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "RequestOptions"
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "property",
-            "description": "Body data to append to the request.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "property",
-            "description": "An object of query parameters to be encoded into the URL.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "property",
-            "description": "The HTTP method to use. Defaults to `GET`",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          }
-        ]
-      },
-      "valid": false
     }
   ],
   "exports": [],
@@ -475,59 +338,6 @@
               "name": "Function"
             },
             "name": "func"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "fnIf",
-      "params": [
-        "condition",
-        "operation"
-      ],
-      "docs": {
-        "description": "A custom operation that will only execute the function if the condition returns true",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-          },
-          {
-            "title": "param",
-            "description": "The condition that returns true",
-            "type": {
-              "type": "NameExpression",
-              "name": "Boolean"
-            },
-            "name": "condition"
-          },
-          {
-            "title": "param",
-            "description": "The operation needed to be executed.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            },
-            "name": "operation"
           },
           {
             "title": "returns",
@@ -919,92 +729,6 @@
         ]
       },
       "valid": true
-    },
-    {
-      "name": "cursor",
-      "params": [
-        "value",
-        "options"
-      ],
-      "docs": {
-        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "cursor($.cursor, { defaultValue: 'today' })",
-            "caption": "Use a cursor from state if present, or else use the default value"
-          },
-          {
-            "title": "example",
-            "description": "cursor(22)",
-            "caption": "Use a pagination cursor"
-          },
-          {
-            "title": "param",
-            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
-            "type": {
-              "type": "NameExpression",
-              "name": "any"
-            },
-            "name": "value"
-          },
-          {
-            "title": "param",
-            "description": "options to control the cursor.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "set the cursor key. Will persist through the whole run.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "options.key"
-          },
-          {
-            "title": "param",
-            "description": "the value to use if value is falsy",
-            "type": {
-              "type": "NameExpression",
-              "name": "any"
-            },
-            "name": "options.defaultValue"
-          },
-          {
-            "title": "param",
-            "description": "custom formatter for the final cursor value",
-            "type": {
-              "type": "NameExpression",
-              "name": "Function"
-            },
-            "name": "options.format"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": false
     }
   ]
 }
