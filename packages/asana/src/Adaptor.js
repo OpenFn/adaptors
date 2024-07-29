@@ -31,6 +31,14 @@ export function execute(...operations) {
   };
 }
 
+const handleError = e => {
+  if (e.code && e.message && e.response) {
+    console.log(JSON.stringify(e.response.data, null, 2));
+    throw new Error(`AxiosError: ${e.code} - ${e.message}`);
+  }
+  throw e;
+};
+
 /**
  * Get a single task of a given project.
  * @public
@@ -45,7 +53,7 @@ export function execute(...operations) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getTask(task_gid, params, callback) {
+export function getTask(task_gid, params = {}, callback) {
   return state => {
     task_gid = expandReferences(task_gid)(state);
     const { opt_fields } = expandReferences(params)(state);
@@ -71,7 +79,8 @@ export function getTask(task_gid, params, callback) {
         };
         if (callback) return callback(nextState);
         return nextState;
-      });
+      })
+      .catch(handleError);
   };
 }
 
@@ -115,7 +124,8 @@ export function getTasks(project_gid, params, callback) {
         };
         if (callback) return callback(nextState);
         return nextState;
-      });
+      })
+      .catch(handleError);
   };
 }
 
@@ -159,10 +169,7 @@ export function updateTask(task_gid, params, callback) {
         if (callback) return callback(nextState);
         return nextState;
       })
-      .catch(e => {
-        console.log('Asana says:', e.response.data);
-        throw e;
-      });
+      .catch(handleError);
   };
 }
 
@@ -204,10 +211,7 @@ export function createTask(params, callback) {
         if (callback) return callback(nextState);
         return nextState;
       })
-      .catch(e => {
-        console.log('Asana says:', e.response.data);
-        throw e;
-      });
+      .catch(handleError);
   };
 }
 
@@ -265,7 +269,8 @@ export function upsertTask(project_gid, params, callback) {
           console.log('No matching task found. Performing create.');
           return createTask(data, callback)(state);
         }
-      });
+      })
+      .catch(handleError);
   };
 }
 
