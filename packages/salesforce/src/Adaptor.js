@@ -200,13 +200,13 @@ export function query(qs, options = {}, callback = s => s) {
         },
       ];
 
-      if (!qResult.done && autoFetch) {
+      if (!done && autoFetch) {
         console.log('Fetched records so far:', fetchedRecords.length);
         console.log('Fetching next records...');
 
         try {
-          qResult = await connection.request({ url: qResult.nextRecordsUrl });
-          await processRecords(qResult);
+          const newResult = await connection.request({ url: nextRecordsUrl });
+          await processRecords(newResult);
         } catch (err) {
           const { message, errorCode } = err;
           console.error(`Error ${errorCode}: ${message}`);
