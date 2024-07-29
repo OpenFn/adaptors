@@ -22,6 +22,16 @@ import { request, prepareNextState } from './Utils';
  * @property {string} owner_id - Optional user of group UUID used when getting cases
  * @property {string} user_id - Optional UUID for all cases last modified by that user
  * @property {string} type - Optional case type to get all matching cases
+ * @property {string} date_modified - Optional date and time a case was last modified
+ * @property {string} date_opened - Optional date and time a case was last opened
+ * @property {string} case_type - Optional case type e.g pregnant_mother
+ * @property {string} date_closed - Optional date and time a case was closed
+ * @property {boolean} closed - Optional boolean for whether a case is closed or not
+ * @property {string} username - Optional name of the case owner including the domain
+ * @property {string} received_on - Optional field for the returned records that will be ordered according to server received_on date, starting from the oldest date
+ * @property {string} server_modified_on - The returned records will be ordered according to server_modified_on date, starting from the oldest date
+ * @property {boolean} include_archived - When set to 'true' archived forms will be included in the response.
+ * @property {string} format - Optional value used when getting groups to determine the return  data format.Default: json
  */
 
 /**
