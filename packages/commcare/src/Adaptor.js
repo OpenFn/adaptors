@@ -7,33 +7,6 @@ import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
 
 /**
- * Queries provided to the GET request
- * @typedef {Object} RequestQueries
- * @public
- * @property {number} limit - The maximum number of records to return. Default: 20. Maximum: 5000.
- * @property {number} offset - The number of records to offset in the results. Default: 0
- * @property {string} xmlns - Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)
- * @property {string} indexed_on_start - Optional date (and time). Will return only forms that have had data modified since the passed in date.
- * @property {string} indexed_on_end - Optional date (and time). Will return only forms that have had data modified before the passed in date.
- * @property {string} received_on_start - Optional date (and time). Will return only forms that were received after the passed in date.
- * @property {string} received_on_end - Optional date (and time). Will return only forms that were received before the passed in date.
- * @property {string} app_id - The returned records will be limited to the application defined
- * @property {string} case_id - A case UUID.  Will only return forms which updated that case.
- * @property {string} owner_id - Optional user of group UUID used when getting cases
- * @property {string} user_id - Optional UUID for all cases last modified by that user
- * @property {string} type - Optional case type to get all matching cases
- */
-
-/**
- * Queries provided to the submitXls request
- * @typedef {Object} RequestOptions
- * @public
- * @property {string} case_type - Optional case type
- * @property {string} search_field - Optional search field
- * @property {string} create_new_cases - Optional for allowing to create new cases. Default `:on`
- */
-
-/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for commcare.
  * @example
@@ -57,18 +30,19 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
+ * Make a GET request to any commcare endpoint. Data will be returned as JSON.
+ * The returned objects will be written to state.data.
  * Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
  * is paginated.
  * A `response` key will be added to state with the HTTP response and a `meta` key
  * @public
- * @example <caption>Get a list of cases</caption>
+ * @example <caption>Get a list of 20 cases</caption>
  * get("case", { limit: 20 })
  * @example <caption>Get a specific case </caption>
  * get("case/12345")
  * @function
  * @param {string} path - Path to resource
- * @param {RequestQueries} params - Optional request params such as limit and offset.
+ * @param {Object} params - Input parameters for the request. These vary by endpoin,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
  * @param {function} [callback] - Callback invoked once per page of data retrieved.
  * @returns {Operation}
  */
@@ -203,7 +177,7 @@ export function post(path, data, params = {}, callback = s => s) {
  * )
  * @function
  * @param {Object} formData - Object including form data.
- * @param {RequestOptions} params - Request params including case type.
+ * @param {Object} params - Input paramaters. See {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs}.
  * @returns {Operation}
  */
 export function submitXls(formData, params) {
@@ -291,11 +265,11 @@ export function submit(formData) {
  * Make a GET request to CommCare's Reports API
  * and POST the response to somewhere else.
  * @public
- * @example
- * fetchReportData(reportId, params, postUrl)
+ * @example Fetch 10 records from a report and post them to example.com
+ * fetchReportData("9aab0eeb88555a7b4568676883e7379a", { limit: 10 }, "https://www.example.com/api/")
  * @function
  * @param {String} reportId - API name of the report.
- * @param {RequestQueries} params - Query params, incl: limit, offset, and any custom report filters.
+ * @param {Object} params - Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.
  * @param {String} postUrl - Url to which the response object will be posted.
  * @returns {Operation}
  */
