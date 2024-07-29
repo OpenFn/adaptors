@@ -1,15 +1,12 @@
-
 import {
   execute as commonExecute,
   composeNextState,
-  chunk,
+  parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import csv from 'csvtojson';
-import { stat } from 'fs';
+import { isObjectEmpty, handleResponse } from './Utils';
 
-// import JSONStream from 'JSONStream';
-// import csv from 'csv-parser';
+let sftp = null;
 
 /**
  * Execute a sequence of operations.
@@ -29,39 +26,67 @@ export function execute(...operations) {
     data: null,
   };
 
-  return state => commonExecute(...operations)({ ...initialState, ...state });
+  return state =>
+    commonExecute(
+      connect,
+      ...operations,
+      disconnect
+    )({ ...initialState, ...state }).catch(e => {
+      disconnect(state);
+      throw e;
+    });
+}
+
+function connect(state) {
+  sftp = new Client();
+
+  return sftp.connect(state.configuration).then(() => {
+    console.log('Connected');
+    return state;
+  });
+}
+
+function disconnect(state) {
+  console.log('Disconnected');
+  sftp.end();
+  sftp = undefined;
+  return state;
 }
 
 /**
  * List files present in a directory
  * @public
  * @example
+ * <caption>basic files listing</caption>
  * list('/some/path/')
+ * @example
+ * <caption>list files with filters</caption>
+ * list('/some/path/', file=> {
+ *  return /foo.\.txt/.test(file.name);
+ * })
+ * @example
+ * <caption>list files with filters and use callback</caption>
+ * list(
+ *   "/some/path/",
+ *   (file) => /foo.\.txt/.test(file.name),
+ *   (state) => {
+ *     const latestFile = state.data.filter(
+ *       (file) => file.modifyTime <= new Date()
+ *     );
+ *     return { ...state, latestFile };
+ *   }
+ * );
  * @function
- * @param {string} dirPath - Path to resource
+ * @param {string} dirPath - Path to remote directory
+ * @param {function} filter - a filter function used to select return entries
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function list(dirPath) {
+export function list(dirPath, filter, callback) {
   return state => {
-    const sftp = new Client();
-
     return sftp
-      .connect(state.configuration)
-      .then(() => {
-        process.stdout.write('Connected. ✓\n');
-        return sftp.list(dirPath);
-      })
-      .then(files => {
-        // TODO: should we remove this?
-        // process.stdout.write(`File list: ${JSON.stringify(files, null, 2)}\n`);
-        const nextState = composeNextState(state, files);
-        sftp.end();
-        return nextState;
-      })
-      .catch(e => {
-        sftp.end();
-        console.log(e);
-      });
+      .list(dirPath, filter)
+      .then(files => handleResponse(files, state, callback));
   };
 }
 
@@ -70,46 +95,43 @@ export function list(dirPath) {
  * @public
  * @example
  * getCSV(
- *   '/some/path/to_file.csv'
+ *   '/some/path/to_file.csv',
+ *   {delimiter: ";", flatKeys: true }
  * );
  * @function
  * @param {string} filePath - Path to resource
+ * @param {{readStreamOptions: object,delimiter: string,noheader: boolean, quote: string, trim: boolean, flatKeys: boolean, output: string}} [parsingOptions] - Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more {@link https://github.com/Keyang/node-csvtojson#parameters on csvtojson docs}
  * @returns {Operation}
  */
-export function getCSV(filePath) {
-  return state => {
-    const sftp = new Client();
+export function getCSV(filePath, parsingOptions = {}) {
+  const defaultOptions = {
+    readStreamOptions: {
+      encoding: null,
+      autoClose: false,
+    },
+    columns: true,
+  };
 
+  return state => {
     let results = [];
 
-    return (
-      sftp
-        .connect(state.configuration)
-        .then(() => {
-          process.stdout.write('Connected. ✓\n');
-          return sftp.get(filePath);
-        })
-        // TODO: @Taylor is there a good reason we don't want this ?
-        // The logic below convert the CSV to a JSON
-        // .then(chunk => {
-        //   return csv()
-        //     .fromStream(Readable.from(chunk))
-        //     .subscribe(json => {
-        //       results.push(json);
-        //     });
-        // })
-        // .then(json => {
-        //   const nextState = composeNextState(state, json);
-        //   return nextState;
-        // })
-        // .then(chunk => {
-        //   results.push(chunk);
-        // })
+    const { readStreamOptions, ...csvDefaultOptions } = defaultOptions;
+    const useParser = !isObjectEmpty(parsingOptions);
+
+    if (useParser) {
+      const stream = sftp.createReadStream(filePath, readStreamOptions);
+      return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
+        state
+      );
+    } else {
+      return sftp
+        .get(filePath)
         .then(chunk => {
           results.push(chunk);
         })
         .then(() => {
-          process.stdout.write('Parsing rows to JSON.\n');
+          console.debug('Parsing rows to JSON.\n');
+          console.time('Stream finished');
           return new Promise((resolve, reject) => {
             const content = Buffer.concat(results).toString('utf8');
             resolve(content.split('\r\n'));
@@ -119,15 +141,10 @@ export function getCSV(filePath) {
           });
         })
         .then(state => {
-          console.log('Stream finished.');
-          sftp.end();
+          console.timeEnd('Stream finished');
           return state;
-        })
-        .catch(e => {
-          sftp.end();
-          throw e;
-        })
-    );
+        });
+    }
   };
 }
 
@@ -148,24 +165,14 @@ export function getCSV(filePath) {
  */
 export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
   return state => {
-    const sftp = new Client();
-
-    return sftp.connect(state.configuration).then(() => {
-      return sftp
-        .put(localFilePath, remoteFilePath, parsingOptions)
-        .then(res => {
-          const nextState = composeNextState(state, res);
-          return nextState;
-        })
-        .then(state => {
-          console.log('Upload finished.');
-          sftp.end();
-          return state;
-        })
-        .catch(e => {
-          throw e;
-        });
-    });
+    console.time('Upload finished');
+    return sftp
+      .put(localFilePath, remoteFilePath, parsingOptions)
+      .then(response => handleResponse(response, state))
+      .then(state => {
+        console.timeEnd('Upload finished');
+        return state;
+      });
   };
 }
 
@@ -184,22 +191,16 @@ export function putCSV(localFilePath, remoteFilePath, parsingOptions) {
  */
 export function getJSON(filePath, encoding) {
   return state => {
-    const sftp = new Client();
-
     let results = [];
 
     return sftp
-      .connect(state.configuration)
-      .then(() => {
-        process.stdout.write('Connected. ✓\n');
-        return sftp.get(filePath);
-      })
-
+      .get(filePath)
       .then(chunk => {
         results.push(chunk);
       })
       .then(() => {
-        process.stdout.write('Receiving stream.\n');
+        console.debug('Receiving stream.\n');
+        console.time('Stream finished');
 
         return new Promise((resolve, reject) => {
           const content = Buffer.concat(results).toString('utf8');
@@ -210,12 +211,8 @@ export function getJSON(filePath, encoding) {
         });
       })
       .then(state => {
-        console.log('Stream finished.');
-        sftp.end();
+        console.timeEnd('Stream finished');
         return state;
-      })
-      .catch(e => {
-        throw e;
       });
   };
 }
@@ -235,10 +232,10 @@ export function normalizeCSVarray(options, callback) {
     let results = [];
 
     state.data.map(data => {
-      const [keys, ...rest] = state.data
+      const [keys, ...rest] = data
         .shift()
         .split('\n')
-        .map(h => (h = h.replace(/"/g, '')));
+        .map(h => h.replace(/"/g, ''));
 
       results.push(keys);
     });
@@ -270,6 +267,7 @@ export * from 'lodash/fp';
 export {
   alterState,
   fn,
+  fnIf,
   dataPath,
   dataValue,
   each,
@@ -279,4 +277,6 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  chunk,
+  parseCsv,
 } from '@openfn/language-common';

@@ -1,14 +1,15 @@
 {
   "operations": [
     {
-      "name": "create",
+      "name": "post",
       "params": [
         "path",
-        "params",
+        "data",
+        "options",
         "callback"
       ],
       "docs": {
-        "description": "Creates a resource in a destination system using a POST request",
+        "description": "Send a HTTP POST request to the baseURL defined in config",
         "tags": [
           {
             "title": "public",
@@ -16,13 +17,14 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "create(\"/endpoint\", {\"foo\": \"bar\"})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"Bundle\",{\n  \"resourceType\": \"Bundle\"\n})",
+            "caption": "Create bundle"
           },
           {
             "title": "param",
@@ -35,7 +37,177 @@
           },
           {
             "title": "param",
-            "description": "data to create the new resource",
+            "description": "JSON data to append to the POST body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Additional options for the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "params",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Send a HTTP GET request to the baseURL defined in config",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');",
+            "caption": "Get a Patient resource by id"
+          },
+          {
+            "title": "example",
+            "description": "get(\"Claim\", { _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 })",
+            "caption": "Get a resource with query parameters"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Parameters to encode into the URL query",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Options to control the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "GetOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "create",
+      "params": [
+        "resourceType",
+        "resource",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Creates a new resource with a server assigned resourceType.\nThe resource object doesn't need resourceType or id",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "create('Patient', {\n  name: [\n    {\n      use: 'official',\n      family: 'La Paradisio',\n      given: ['Josephine', 'Nessa'],\n    },\n  ],\n});",
+            "caption": "Create a new patient"
+          },
+          {
+            "title": "param",
+            "description": "The resource type to create",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "The resource to create",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) FHIR parameters to control and configure resource creation",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -58,6 +230,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
@@ -66,11 +242,11 @@
     {
       "name": "createTransactionBundle",
       "params": [
-        "params",
+        "entries",
         "callback"
       ],
       "docs": {
-        "description": "Creates a transactionBundle for HAPI FHIR",
+        "description": "Create a transaction bundle to process multiple requests at once",
         "tags": [
           {
             "title": "public",
@@ -79,7 +255,7 @@
           },
           {
             "title": "example",
-            "description": "createTransactionBundle( {\"entry\": [{...},, {...}]})"
+            "description": "createTransactionBundle([\n  {\n    fullUrl: \"https://hapi.fhir.org/baseR4/Patient/592442\",\n    resource: {\n      resourceType: \"Patient\",\n      id: \"592442\",\n      name: [{ given: \"Caleb\", family: \"Cushing\" }],\n    },\n    request: {\n      method: \"POST\",\n      url: \"Patient\",\n    },\n  },\n]);"
           },
           {
             "title": "function",
@@ -88,12 +264,12 @@
           },
           {
             "title": "param",
-            "description": "data to create the new transaction",
+            "description": "array of transactions",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "array"
             },
-            "name": "params"
+            "name": "entries"
           },
           {
             "title": "param",
@@ -111,6 +287,77 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getClaim",
+      "params": [
+        "claimId",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Get Claim in a FHIR system",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "getClaim('',{ _include: \"Claim:patient\", _sort: \"-_lastUpdated\", _count: 200 });"
+          },
+          {
+            "title": "param",
+            "description": "claim id",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "claimId"
+          },
+          {
+            "title": "param",
+            "description": "query parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{FHIRHttpState}"
           }
         ]
       },
@@ -133,13 +380,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -149,6 +396,59 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
           },
           {
             "title": "returns",
@@ -176,13 +476,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -219,13 +519,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -262,13 +562,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -305,13 +605,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -349,13 +649,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -402,13 +702,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -454,13 +754,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -505,6 +805,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",

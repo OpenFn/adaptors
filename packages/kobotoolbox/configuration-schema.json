@@ -34,12 +34,8 @@
         "apiVersion": {
             "title": "API Version",
             "type": "string",
-            "default": "v2",
+            "placeholder": "v2",
             "description": "Kobotoolbox API version to use",
-            "enum": [
-                "v1",
-                "v2"
-            ],
             "minLength": 1,
             "examples": [
                 "v2"

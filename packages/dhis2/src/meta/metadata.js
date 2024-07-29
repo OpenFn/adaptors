@@ -1,8 +1,9 @@
-import { createEntity } from '@openfn/metadata';
+import { createEntity } from '@openfn/language-common/metadata';
 import dhis2helper from './helper.js';
 
 const metadata = async (configuration = {}, helper) => {
   if (!helper) {
+    // eslint-disable-next-line no-param-reassign
     helper = dhis2helper(configuration);
   }
 
@@ -29,7 +30,7 @@ const metadata = async (configuration = {}, helper) => {
 
   const attributes = (await helper.getAttributes()) ?? [];
   children.attributes =
-    attributes.attributes?.map(attr =>
+    attributes.trackedEntityAttributes?.map(attr =>
       createEntity(attr.id, 'attribute', {
         datatype: 'string',
         label: attr.displayName,

@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -51,7 +50,7 @@ export function execute(...operations) {
  */
 export function addContact(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -59,7 +58,7 @@ export function addContact(params, callback) {
 
     const config = {
       url,
-      data: params,
+      data: resolvedParams,
       headers: { Authorization: `Token ${token}` },
     };
 
@@ -93,7 +92,7 @@ export function addContact(params, callback) {
  */
 export function upsertContact(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -101,7 +100,7 @@ export function upsertContact(params, callback) {
 
     const config = {
       url,
-      data: params,
+      data: resolvedParams,
       headers: { Authorization: `Token ${token}` },
     };
 
@@ -163,7 +162,7 @@ export function upsertContact(params, callback) {
  */
 export function startFlow(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -171,7 +170,7 @@ export function startFlow(params, callback) {
 
     const config = {
       url,
-      data: params,
+      data: resolvedParams,
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
@@ -212,7 +211,7 @@ export function startFlow(params, callback) {
  */
 export function sendBroadcast(params, callback) {
   return state => {
-    params = expandReferences(params)(state);
+    const resolvedParams = expandReferences(params)(state);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -220,7 +219,7 @@ export function sendBroadcast(params, callback) {
 
     const config = {
       url,
-      data: params,
+      data: resolvedParams,
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
@@ -253,6 +252,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   http,
   lastReferenceValue,
   merge,

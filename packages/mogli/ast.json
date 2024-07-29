@@ -3,6 +3,102 @@
   "exports": [],
   "common": [
     {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "sourceValue",
       "params": [
         "path"
@@ -16,13 +112,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -59,13 +155,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "source('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "source('$.key')"
           },
           {
             "title": "param",
@@ -120,13 +216,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -163,13 +259,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -206,13 +302,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "referencePath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "referencePath('key')"
           },
           {
             "title": "param",
@@ -249,13 +345,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -293,13 +389,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -345,13 +441,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
           },
           {
             "title": "param",
@@ -390,13 +486,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "join('$.key','$.data','newKey')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "join('$.key','$.data','newKey')"
           },
           {
             "title": "param",
@@ -452,13 +548,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -504,13 +600,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -557,6 +653,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -598,13 +699,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "index()"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "index()"
           },
           {
             "title": "returns",
@@ -633,13 +734,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "param",
@@ -685,13 +786,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
           },
           {
             "title": "param",
@@ -730,13 +831,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",

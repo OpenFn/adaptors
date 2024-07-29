@@ -2,34 +2,63 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
-        "resource": {
-            "title": "Resource Url",
+        "baseUrl": {
+            "title": "Base Url",
             "type": "string",
-            "description": "The resource url to post transactionBundle in to the destination system",
+            "description": "The baseUrl",
             "examples": [
-                "resource_url"
+                "https://hapi.fhir.org"
             ]
         },
-        "authType": {
-            "title": "Auth Type",
-            "type": "string",
-            "description": "The type of authentication used to authenticate into the destination system",
+        "apiPath": {
+            "title": "API Path",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "placeholder": "R4",
+            "description": "FHIR api path",
+            "minLength": 1,
             "examples": [
-                "Basic"
+                "baseR4",
+                "R3",
+                "R4"
             ]
         },
-        "token": {
-            "title": "Token",
+        "username": {
+            "title": "Username",
             "type": "string",
-            "description": "The token  used to authenticate into the destination system",
+            "description": "Username",
             "examples": [
-                "@super!scretetoken"
+                "openfn_test"
+            ]
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "Password",
+            "writeOnly": true,
+            "examples": [
+                "@some(!)Str0ngp4ss0w0rd"
+            ]
+        },
+        "access_token": {
+            "title": "Access Token",
+            "type": "string",
+            "description": "Your FHIR access token",
+            "writeOnly": true,
+            "minLength": 1,
+            "examples": [
+                "the-long-access-token-from-your-auth"
             ]
         }
     },
     "required": [
-        "resource",
-        "authType",
-        "token"
+        "baseUrl",
+        "apiPath"
     ]
 }

@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+.DS_STORE
+
 # Generated jsdocs
 docs/
 
@@ -116,3 +118,6 @@ dist
 .fuse_*
 
 .vscode/
+
+
+/pnpm-publish-summary.json

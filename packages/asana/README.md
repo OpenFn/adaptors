@@ -16,6 +16,7 @@ definition.
 Using Asana's API requires having an API token. To generate that token, head to
 the [Asana developer console](https://app.asana.com/0/developer-console) and
 enter the **Personal access tokens** section.
+[For API Reference docs](https://developers.asana.com/docs/api-explorer)
 
 There you can click on **+New access token**. A prompt will be opened allowing
 you to give the token a name and then create it.

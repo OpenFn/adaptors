@@ -1,0 +1,15 @@
+{{#if virtual}}*{{/if}}{{#with (parentObject)}}{{#if virtual}}*{{/if~}}{{/with~}}
+{{#if name}}{{#sig~}}
+{{{@depOpen}~}}
+{{#if @prefix}}{{@prefix}} {{/if~}}
+<p><code>{{@parent~}}
+{{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{escape name}}}{{/if~}}
+{{#if @methodSign}}{{#if (isEvent)}} {{@methodSign}}{{else}}{{@methodSign}}{{/if}}{{/if~}}
+{{#if @returnSymbol}} {{@returnSymbol}}{{/if~}}
+{{!-- override the default signature renderer so that the types aren't nested in code --}}
+{{#if @returnTypes~}}{{#each @returnTypes}} {{this}}{{#unless @last}} |{{/unless~}}{{/each}}{{/if~}}
+{{#if @suffix}} {{@suffix}}{{/if~}}
+</code></p>
+{{{@depClose}~}}
+{{~/sig}}{{/if~}}
+{{#if virtual}}*{{/if}}{{#with (parentObject)}}{{#if virtual}}*{{/if~}}{{/with~}}

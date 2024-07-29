@@ -1,0 +1,16 @@
+getServicePoint('Agent 1');
+searchGroup([['name', 'ilike', 'test group']]);
+searchIndividual([['name', 'ilike', 'plants']]);
+getGroup('GRP_7NAAH42X');
+getIndividual('IND_EJFW8GUQ');
+getProgram('PROG_2023_00000128');
+getPrograms();
+getEnrolledPrograms('GRP_GQD9LVS5');
+unenroll('GRP_GQD9LVS5', 'PROG_2023_00000199');
+enroll('GRP_GQD9LVS5', 'PROG_2023_00000199');
+createGroup({ name: 'Test Adaptor' });
+createIndividual({ name: 'Test Adaptor' });
+updateIndividual('IND_8DUQL4M4', { name: 'Individual 1' });
+updateGroup('GRP_B2BRHJN2', { name: 'Group 1' });
+removeFromGroup('GRP_GQD9LVS5', 'IND_TK2TANVE');
+addToGroup('GRP_GQD9LVS5', 'IND_TK2TANVE', 'Head');

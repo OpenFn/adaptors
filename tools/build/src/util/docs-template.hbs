@@ -1,1 +1,95 @@
-{{>main}}
+{{#if (showMainIndex)~}}
+
+{{#globals kind="function" ~}}
+{{#if @first~}}
+
+<dl>
+{{/if~}}
+<dt>
+    {{#if name}}{{#sig no-gfm=true ~}}
+<a href="#{{toLowerCase (anchorName)}}">
+{{~{@codeOpen}~}}
+{{#if @prefix}}{{@prefix}} {{/if~}}
+{{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
+{{~#if @methodSign}}{{#if (isEvent)}} {{@methodSign}}{{else}}{{@methodSign}}{{/if}}{{/if~}}
+{{{@codeClose}~}}
+</a>
+{{~/sig}}{{/if~}}
+</dt>
+{{!-- <dd>{{{md (inlineLinks description)}}}</dd> --}}
+{{#if @last~}}</dl>
+{{/if~}}
+{{/globals~}}
+{{/if~}}
+
+{{#namespaces}}
+
+{{#if @first~}}
+This adaptor exports the following namespaced functions:
+
+<dl>
+{{/if}}
+<dt>
+    {{#sig no-gfm=true}}
+    <a href="#{{scope}}_{{name}}">{{scope}}.{{name}}{{@methodSign}}</a>
+    {{/sig}}
+</dt>
+{{#if @last~}}
+</dl>
+{{/if}}
+{{/namespaces}}
+
+{{#commonFns}}
+
+{{#if @first~}}
+This adaptor exports the following from common:
+<dl>
+{{/if~}}
+<dt>
+    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{externalName this}}</a>
+</dt>{{#if @last}}</dl>
+{{/if}}
+{{/commonFns}}
+
+{{#globals kind="function" ~}}
+{{#if @first~}}## Functions
+{{/if~}}
+
+### {{anchorName}}
+
+{{>sig-name}}
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+{{/globals~}}
+
+
+{{#namespaces}}
+
+{{#if newscope}}
+## {{scope}}
+
+These functions belong to the {{scope}} namespace.
+{{/if}}
+{{namespacedHeader scope name}}
+
+{{>sig-name}}
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+
+{{/namespaces}}
+
+{{#globals kind="typedef" access="public" ~}}
+{{#if @first~}}{{>heading-indent}} Interfaces
+
+{{/if~}}
+
+### {{anchorName}}
+{{>body}}
+{{>member-index~}}
+{{>separator~}}
+{{>members~}}
+{{/globals~}}

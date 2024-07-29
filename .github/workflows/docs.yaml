@@ -1,0 +1,54 @@
+name: Build & deploy adaptor documentation
+
+on:
+  workflow_run:
+    workflows: [Publish]
+    types:
+      - completed
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: 'Build docs to docs branch'
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    strategy:
+      matrix:
+        node-version: [18.17.1]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+      - name: Setup node ${{ matrix.node-version }}
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: config commit username
+        run: git config user.name $GH_USER
+        env:
+          GH_USER: ${{ secrets.GH_USER }}
+      - name: config commit email
+        run: git config user.email $GH_EMAIL
+        env:
+          GH_EMAIL: ${{ secrets.GH_EMAIL }}
+      - name: Installing packages
+        run: pnpm install --frozen-lockfile
+      - name: Build docs
+        run: pnpm build:adaptors docs
+      - name: Generate docs.json
+        run: pnpm docs:build
+      - name: Commit docs.json to docs branch
+        run: pnpm docs:publish
+
+      # Trigger a rebuild on the docs site to pull adaptor docs
+      - name: Trigger deploy on openFn/docs
+        run: |
+          sleep 10s && curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.WF_DEPLOY_KEY }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/openFn/docs/actions/workflows/5178103/dispatches \
+          -d '{"ref": "main"}'

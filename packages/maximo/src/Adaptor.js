@@ -7,8 +7,6 @@ import { resolve as resolveUrl } from 'url';
 import base64 from 'base-64';
 import utf8 from 'utf8';
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
@@ -44,6 +42,7 @@ export function execute(...operations) {
  *  postUrl: 'https://www.openfn.org/inbox/not-real',
  * });
  * @function
+ * @public
  * @param {object} params - data to make the fetch
  * @returns {Operation}
  */
@@ -81,8 +80,8 @@ export function fetch(params) {
             maxauth: encoded,
           },
         },
-        function (error, response, getResponseBody) {
-          error = assembleError({ error, response });
+        function (err, response, getResponseBody) {
+          const error = assembleError({ error: err, response });
           if (error) {
             console.error('GET failed.');
             console.log(response);
@@ -96,8 +95,8 @@ export function fetch(params) {
                 url: postUrl,
                 json: JSON.parse(getResponseBody),
               },
-              function (error, response, postResponseBody) {
-                error = assembleError({ error, response });
+              function (err, response, postResponseBody) {
+                const error = assembleError({ error: err, response });
                 if (error) {
                   console.error('POST failed.');
                   reject(error);
@@ -162,8 +161,8 @@ export function create(params) {
             maxauth: encoded,
           },
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
             console.log(body);
@@ -190,6 +189,7 @@ export function create(params) {
  *   update(params)
  * )(state)
  * @function
+ * @public
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
@@ -228,8 +228,8 @@ export function update(params) {
             patchtype: 'MERGE',
           },
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
             console.log(body);
@@ -255,6 +255,7 @@ export function update(params) {
  *   update75(params)
  * )(state)
  * @function
+ * @public
  * @param {object} params - data to make the update
  * @returns {Operation}
  */
@@ -293,8 +294,8 @@ export function update75(params) {
             patchtype: 'MERGE',
           },
         },
-        function (error, response, body) {
-          error = assembleError({ error, response });
+        function (err, response, body) {
+          const error = assembleError({ error: err, response });
           if (error) {
             reject(error);
             console.log(body);
@@ -318,6 +319,7 @@ export {
   fields,
   sourceValue,
   fn,
+  fnIf,
   alterState,
   each,
   merge,

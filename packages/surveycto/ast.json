@@ -1,5 +1,230 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "fetchSubmissions",
+      "params": [
+        "formId",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Options provided to `fetchSubmissions()`",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "FetchSubmissionOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "date",
+            "default": "0"
+          },
+          {
+            "title": "property",
+            "description": "Format the submission data type as  `csv` or `json`.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "format",
+            "default": "json"
+          },
+          {
+            "title": "property",
+            "description": "Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "status"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "request",
+      "params": [
+        "path",
+        "params",
+        "callback"
+      ],
+      "docs": {
+        "description": "Options provided to request()",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "An object of headers parameters.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "headers"
+          },
+          {
+            "title": "property",
+            "description": "Body data to append to the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "body"
+          },
+          {
+            "title": "property",
+            "description": "An object of query parameters to be encoded into the URL.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "query"
+          },
+          {
+            "title": "property",
+            "description": "The HTTP method to use.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "method",
+            "default": "GET"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).\nThis supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted into timestamp strings.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "cursor('today')\nfetchSubmissions('test', { date: $.cursor });",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    }
+  ],
   "exports": [],
   "common": [
     {
@@ -16,13 +241,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -32,6 +257,59 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
           },
           {
             "title": "returns",
@@ -59,13 +337,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -102,13 +380,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -145,13 +423,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -188,13 +466,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -232,13 +510,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -284,13 +562,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -337,6 +615,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -360,6 +643,133 @@
             "type": {
               "type": "NameExpression",
               "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "chunk",
+      "params": [
+        "array",
+        "chunkSize"
+      ],
+      "docs": {
+        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
+          },
+          {
+            "title": "param",
+            "description": "Array to be chunked",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "array"
+          },
+          {
+            "title": "param",
+            "description": "The maxiumum size of each chunks",
+            "type": {
+              "type": "NameExpression",
+              "name": "Integer"
+            },
+            "name": "chunkSize"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "parseCsv",
+      "params": [
+        "csvData",
+        "parsingOptions",
+        "callback"
+      ],
+      "docs": {
+        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A CSV string or a readable stream",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "String"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Stream"
+                }
+              ]
+            },
+            "name": "csvData"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options for converting CSV to JSON.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "parsingOptions"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

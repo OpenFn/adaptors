@@ -6,14 +6,9 @@ import {
   createIf,
   upsert,
   upsertIf,
-  steps,
-  each,
-  field,
-  fields,
-  sourceValue,
+  toUTF8,
+  execute,
 } from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
-import testData from './testData' assert { type: 'json' };
 
 const { expect } = chai;
 
@@ -170,49 +165,33 @@ describe('Adaptor', () => {
     });
   });
 
-  describe('nesting', () => {
-    let initialState;
-    let afterExecutionOf;
-
-    function executionWrapper(initialState) {
-      return operations => {
-        return execute(operations)(initialState);
+  describe('toUTF8', () => {
+    it('Transliterate unicode to ASCII representation', async () => {
+      const state = {
+        connection: {},
       };
-    }
 
-    let counter = 0;
-    const fakeConnection = {
-      create: function (sObject, attrs) {
-        return Promise.resolve({ sObject, fields: attrs, Id: (counter += 1) });
-      },
-    };
+      // Run toUTF8 inside an execute block to ensure that any-ascii gets loaded correctly
+      const convert = str => execute(state => toUTF8(str))(state);
 
-    beforeEach(() => {
-      initialState = {
-        connection: fakeConnection,
-        data: testData,
-        references: [],
-      };
-      afterExecutionOf = executionWrapper(initialState);
-    });
+      let result = await convert('άνθρωποι');
+      expect(result).to.eql('anthropoi');
 
-    it('works', done => {
-      let operations = steps(
-        each(
-          '$.data.store.book[*]',
-          create('Book', fields(field('title', sourceValue('$.data.title'))))
-        )
-      );
+      // Misc
+      result = await convert('☆ ♯ ♰ ⚄ ⛌');
+      expect(result).to.equal('* # + 5 X');
 
-      afterExecutionOf(operations)
-        .then(state => {
-          let references = state.references.reverse();
+      // Emojis
+      result = await convert('👑 🌴');
+      expect(result).to.eql(':crown: :palm_tree:');
 
-          expect(references.length).to.eql(4);
-          expect(references[0].fields.title).to.eql('Sayings of the Century');
-        })
-        .then(done)
-        .catch(done);
+      // Letterlike
+      result = await convert('№ ℳ ⅋ ⅍');
+      expect(result).to.eql('No M & A/S');
+
+      // Ordinal coordinator
+      result = await convert('Nhamaonha 6ª Classe 2023-10-09');
+      expect(result).to.eql('Nhamaonha 6a Classe 2023-10-09');
     });
   });
 });

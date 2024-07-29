@@ -67,7 +67,7 @@
       "name": "describeAll",
       "params": [],
       "docs": {
-        "description": "Outputs basic information about available sObjects.",
+        "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
         "tags": [
           {
             "title": "public",
@@ -101,7 +101,7 @@
         "sObject"
       ],
       "docs": {
-        "description": "Outputs basic information about an sObject to `STDOUT`.",
+        "description": "Prints an sObject metadata and pushes the result to state.references",
         "tags": [
           {
             "title": "public",
@@ -122,7 +122,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -167,7 +167,7 @@
             "description": "The sObject to retrieve",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -176,7 +176,7 @@
             "description": "The id of the record",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "id"
           },
@@ -185,7 +185,7 @@
             "description": "A callback to execute once the record is retrieved",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "function"
             },
             "name": "callback"
           },
@@ -204,10 +204,12 @@
     {
       "name": "query",
       "params": [
-        "qs"
+        "qs",
+        "options",
+        "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.",
+        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
         "tags": [
           {
             "title": "public",
@@ -216,7 +218,93 @@
           },
           {
             "title": "example",
-            "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+          },
+          {
+            "title": "example",
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
+            "caption": "Query more records if next records are available"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A query string. Must be less than `4000` characters in WHERE clause",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "qs"
+          },
+          {
+            "title": "param",
+            "description": "Options passed to the bulk api.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Fetch next records if available.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.autoFetch",
+            "default": "false"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the record is retrieved",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "bulkQuery",
+      "params": [
+        "qs",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
+            "caption": "The results will be available on `state.data`"
+          },
+          {
+            "title": "example",
+            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
           },
           {
             "title": "function",
@@ -228,9 +316,53 @@
             "description": "A query string.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "qs"
+          },
+          {
+            "title": "param",
+            "description": "Options passed to the bulk api.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Polling timeout in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollTimeout",
+            "default": "90000"
+          },
+          {
+            "title": "param",
+            "description": "Polling interval in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollInterval",
+            "default": "3000"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the record is retrieved",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -242,7 +374,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "bulk",
@@ -250,7 +382,7 @@
         "sObject",
         "operation",
         "options",
-        "fun"
+        "records"
       ],
       "docs": {
         "description": "Create and execute a bulk job.",
@@ -262,7 +394,13 @@
           },
           {
             "title": "example",
-            "description": "bulk('Patient__c', 'insert', { failOnError: true, pollInterval: 3000, pollTimeout: 240000 }, state => {\n  return state.data.someArray.map(x => {\n    return { 'Age__c': x.age, 'Name': x.name }\n  })\n});"
+            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
+            "caption": "Bulk insert"
+          },
+          {
+            "title": "example",
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);",
+            "caption": "Bulk upsert"
           },
           {
             "title": "function",
@@ -274,16 +412,16 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
           {
             "title": "param",
-            "description": "The bulk operation to be performed",
+            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "operation"
           },
@@ -292,18 +430,69 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
           },
           {
             "title": "param",
-            "description": "A function which takes state and returns an array.",
+            "description": "Polling timeout in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollTimeout",
+            "default": "240000"
+          },
+          {
+            "title": "param",
+            "description": "Polling interval in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollInterval",
+            "default": "6000"
+          },
+          {
+            "title": "param",
+            "description": "External id field.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.extIdField"
+          },
+          {
+            "title": "param",
+            "description": "Fail the operation on error.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.failOnError",
+            "default": "false"
+          },
+          {
+            "title": "param",
+            "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
-              "name": "Function"
+              "name": "array"
             },
-            "name": "fun"
+            "name": "records"
           },
           {
             "title": "returns",
@@ -315,7 +504,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "destroy",
@@ -346,7 +535,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -355,7 +544,7 @@
             "description": "Array of IDs of records to delete.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "attrs"
           },
@@ -364,7 +553,7 @@
             "description": "Options for the destroy delete operation.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
             },
             "name": "options"
           },
@@ -387,7 +576,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Create a new object.",
+        "description": "Create a new sObject record(s).",
         "tags": [
           {
             "title": "public",
@@ -396,7 +585,13 @@
           },
           {
             "title": "example",
-            "description": "create('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "create(\"Account\", { Name: \"My Account #1\" });",
+            "caption": "Single record creation"
+          },
+          {
+            "title": "example",
+            "description": "create(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+            "caption": "Multiple records creation"
           },
           {
             "title": "function",
@@ -408,16 +603,75 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the new record.",
             "type": {
               "type": "NameExpression",
-              "name": "Object"
+              "name": "object"
+            },
+            "name": "attrs"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "insert",
+      "params": [
+        "sObject",
+        "attrs"
+      ],
+      "docs": {
+        "description": "Alias for \"create(sObject, attrs)\".",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "insert(\"Account\", { Name: \"My Account #1\" });",
+            "caption": "Single record creation"
+          },
+          {
+            "title": "example",
+            "description": "insert(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+            "caption": "Multiple records creation"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "API name of the sObject.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sObject"
+          },
+          {
+            "title": "param",
+            "description": "Field attributes for the new record.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
             },
             "name": "attrs"
           },
@@ -441,7 +695,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Create a new object if conditions are met.",
+        "description": "Create a new sObject if conditions are met.\n\n**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**",
         "tags": [
           {
             "title": "public",
@@ -471,7 +725,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -479,8 +733,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -504,7 +776,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Upsert an object.",
+        "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
         "tags": [
           {
             "title": "public",
@@ -513,7 +785,13 @@
           },
           {
             "title": "example",
-            "description": "upsert('obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "upsert(\"UpsertTable__c\", \"ExtId__c\", { Name: \"Record #1\", ExtId__c : 'ID-0000001' });",
+            "caption": "Single record upsert"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\"UpsertTable__c\", \"ExtId__c\", [\n  { Name: \"Record #1\", ExtId__c : 'ID-0000001' },\n  { Name: \"Record #2\", ExtId__c : 'ID-0000002' },\n]);",
+            "caption": "Multiple record upsert"
           },
           {
             "title": "function",
@@ -525,7 +803,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -535,10 +813,10 @@
           },
           {
             "title": "param",
-            "description": "ID.",
+            "description": "The external ID of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "externalId"
           },
@@ -550,8 +828,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -580,7 +876,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Upsert if conditions are met.",
+        "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**",
         "tags": [
           {
             "title": "public",
@@ -610,7 +906,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -619,7 +915,7 @@
             "description": "ID.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "externalId"
           },
@@ -627,8 +923,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -651,7 +965,7 @@
         "attrs"
       ],
       "docs": {
-        "description": "Update an object.",
+        "description": "Update an sObject record or records.",
         "tags": [
           {
             "title": "public",
@@ -660,7 +974,13 @@
           },
           {
             "title": "example",
-            "description": "update('obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "update(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  Name: \"Updated Account #1\",\n});",
+            "caption": "Single record update"
+          },
+          {
+            "title": "example",
+            "description": "update(\"Account\", [\n  { Id: \"0010500000fxbcuAAA\", Name: \"Updated Account #1\" },\n  { Id: \"0010500000fxbcvAAA\", Name: \"Updated Account #2\" },\n]);",
+            "caption": "Multiple records update"
           },
           {
             "title": "function",
@@ -672,7 +992,7 @@
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
-              "name": "String"
+              "name": "string"
             },
             "name": "sObject"
           },
@@ -680,8 +1000,26 @@
             "title": "param",
             "description": "Field attributes for the new object.",
             "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "attrs"
           },
@@ -739,6 +1077,44 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "toUTF8",
+      "params": [
+        "input"
+      ],
+      "docs": {
+        "description": "Transliterates unicode characters to their best ASCII representation",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "A string with unicode characters",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "input"
+          },
+          {
+            "title": "returns",
+            "description": "ASCII representation of input string",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -757,13 +1133,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -773,6 +1149,59 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
           },
           {
             "title": "returns",
@@ -801,13 +1230,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "jsonValue({ a:1 }, 'a')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "jsonValue({ a:1 }, 'a')"
           },
           {
             "title": "param",
@@ -853,13 +1282,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -896,13 +1325,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "source('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "source('$.key')"
           },
           {
             "title": "param",
@@ -957,13 +1386,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -1000,13 +1429,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -1043,13 +1472,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "referencePath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "referencePath('key')"
           },
           {
             "title": "param",
@@ -1086,13 +1515,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -1130,13 +1559,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -1182,13 +1611,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
           },
           {
             "title": "param",
@@ -1227,13 +1656,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "join('$.key','$.data','newKey')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "join('$.key','$.data','newKey')"
           },
           {
             "title": "param",
@@ -1341,13 +1770,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -1393,13 +1822,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -1446,6 +1875,11 @@
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "param",
             "description": null,
             "type": {
@@ -1476,6 +1910,83 @@
       "valid": true
     },
     {
+      "name": "group",
+      "params": [
+        "arrayOfObjects",
+        "keyPath",
+        "callback"
+      ],
+      "docs": {
+        "description": "Groups an array of objects by a specified key path.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The array of objects to be grouped.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              ]
+            },
+            "name": "arrayOfObjects"
+          },
+          {
+            "title": "param",
+            "description": "The key path to group by.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "keyPath"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "index",
       "params": [],
       "docs": {
@@ -1487,13 +1998,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "index()"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "index()"
           },
           {
             "title": "returns",
@@ -1522,13 +2033,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
           },
           {
             "title": "param",
@@ -1574,13 +2085,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
           },
           {
             "title": "param",
@@ -1617,13 +2128,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field(\"destination_string__c\", humanProper(state.data.path_to_string))"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field(\"destination_string__c\", humanProper(state.data.path_to_string))"
           },
           {
             "title": "param",
@@ -1661,13 +2172,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "scrubEmojis('Dove🕊️⭐ 29')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "scrubEmojis('Dove🕊️⭐ 29')"
           },
           {
             "title": "param",
@@ -1714,13 +2225,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "chunk([1,2,3,4,5], 2)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "chunk([1,2,3,4,5], 2)"
           },
           {
             "title": "param",
@@ -1768,13 +2279,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",

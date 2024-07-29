@@ -1,37 +1,36 @@
-
-import {
-  setAuth,
-  setUrl,
-  mapToAxiosConfig,
-  tryJson,
-  assembleError,
-} from './Utils';
-
-import {
-  execute as commonExecute,
-  expandReferences,
-  composeNextState,
-  http,
-} from '@openfn/language-common';
-
-import nodeRequest from 'request';
-import cheerio from 'cheerio';
-import cheerioTableparser from 'cheerio-tableparser';
-import fs from 'fs';
-import parse from 'csv-parse';
-import tough from 'tough-cookie';
-
-const { axios } = http;
+import { execute as commonExecute } from '@openfn/language-common';
+import { request as sendRequest, xmlParser } from './Utils';
 
 /**
- * Execute a sequence of operations.
+ * Options provided to the HTTP request
+ * @typedef {Object} RequestOptions
+ * @public
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
+ * @property {object} query - An object of query parameters to be encoded into the URL.
+ * @property {object} headers - An object of headers to append to the request.
+ * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+ */
+
+/**
+ * State object
+ * @typedef {Object} HttpState
+ * @property data - the parsed response body
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
+
+/**
+ * Execute a sequence of operations
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -46,113 +45,47 @@ export function execute(...operations) {
   };
 }
 
-var cookiejar = new tough.CookieJar();
-var Cookie = tough.Cookie;
-
-axios.interceptors.request.use(config => {
-  cookiejar?.getCookies(config.url, (err, cookies) => {
-    config.headers.cookie = cookies?.join('; ');
-  });
-  return config;
-});
-
-function handleCookies(response) {
-  const { config, data, headers } = response;
-  if (config.keepCookie) {
-    let cookies;
-    let keepCookies = [];
-
-    if (headers['set-cookie']) {
-      if (headers['set-cookie'] instanceof Array) {
-        cookies = headers['set-cookie']?.map(Cookie.parse);
-      } else {
-        cookies = [Cookie.parse(headers['set-cookie'])];
-      }
-
-      headers['set-cookie']?.forEach(c => {
-        cookiejar.setCookie(Cookie.parse(c), config.url, (err, cookie) => {
-          keepCookies?.push(cookie?.cookieString());
-        });
-      });
-    }
-
-    const extendableData = Array.isArray(data) ? { body: data } : data;
-
-    return {
-      ...response,
-      data: {
-        ...extendableData,
-        __cookie: keepCookies?.length === 1 ? keepCookies[0] : keepCookies,
-        __headers: response.headers,
-      },
-    };
-  }
-
-  return response;
-}
-
-function handleResponse(state, response) {
-  console.log(
-    response.config.method.toUpperCase(),
-    'request succeeded with',
-    response.status,
-    '✓'
-  );
-
-  const compatibleResp = {
-    ...response,
-    httpStatus: response.status,
-    message: response.statusText,
-    data: tryJson(response.data),
-  };
-
-  const respWithCookies = handleCookies(compatibleResp);
-
-  return {
-    ...composeNextState(state, respWithCookies.data),
-    response: respWithCookies,
-  };
-}
-
-function handleCallback(state, callback) {
-  if (callback) return callback(state);
-  return state;
+/**
+ * Make a HTTP request
+ * @public
+ * @example
+ * request(
+ *   'GET',
+ *   '/myEndpoint',
+ *    {
+ *      query: {foo: 'bar', a: 1},
+ *      headers: {'content-type': 'application/json'},
+ *    }
+ * )
+ * @function
+ * @param {string} method - The HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} params - Query, Headers and Authentication parameters
+ * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
+ * @returns {Operation}
+ */
+export function request(method, path, params, callback) {
+  return sendRequest(method, path, params, callback);
 }
 
 /**
  * Make a GET request
  * @public
  * @example
- *  get('/myEndpoint', {
- *    query: {foo: 'bar', a: 1},
- *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
- *  })
+ * get('/myEndpoint', {
+ *   query: {foo: 'bar', a: 1},
+ *   headers: {'content-type': 'application/json'},
+ * })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Query, Headers and Authentication parameters
+ * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, params, callback) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    const url = setUrl(state.configuration, resolvedPath);
-
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
-    );
-
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
-
-    return http
-      .get(config)(state)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return sendRequest('GET', path, params, callback);
 }
 
 /**
@@ -162,33 +95,17 @@ export function get(path, params, callback) {
  *  post('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Authentication parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {operation}
  */
+
 export function post(path, params, callback) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    const url = setUrl(state.configuration, resolvedPath);
-
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
-    );
-
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
-
-    return http
-      .post(config)(state)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return sendRequest('POST', path, params, callback);
 }
 
 /**
@@ -198,33 +115,16 @@ export function post(path, params, callback) {
  *  put('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function put(path, params, callback) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    const url = setUrl(state.configuration, resolvedPath);
-
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
-    );
-
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
-
-    return http
-      .put(config)(state)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return sendRequest('PUT', path, params, callback);
 }
 
 /**
@@ -234,33 +134,16 @@ export function put(path, params, callback) {
  *  patch('/myEndpoint', {
  *    body: {'foo': 'bar'},
  *    headers: {'content-type': 'application/json'},
- *    authentication: {username: 'user', password: 'pass'}
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    const url = setUrl(state.configuration, resolvedPath);
-
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams?.auth
-    );
-
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
-
-    return http
-      .patch(config)(state)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return sendRequest('PATCH', path, params, callback);
 }
 
 /**
@@ -272,141 +155,50 @@ export function patch(path, params, callback) {
  *  })
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Body, Query, Headers and Auth parameters
+ * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function del(path, params, callback) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    const url = setUrl(state.configuration, resolvedPath);
-
-    const auth = setAuth(
-      state.configuration,
-      resolvedParams?.authentication ?? resolvedParams.auth
-    );
-
-    const config = mapToAxiosConfig({ ...resolvedParams, url, auth });
-
-    return http
-      .delete(config)(state)
-      .then(response => handleResponse(state, response))
-      .then(nextState => handleCallback(nextState, callback));
-  };
+  return sendRequest('DELETE', path, params, callback);
 }
 
 /**
  * Parse XML with the Cheerio parser
  * @public
  * @example
- *  parseXML(body, function($){
- *    return $("table[class=your_table]").parsetable(true, true, true);
- *  })
+ *  parseXML(
+ *   (state) => state.response,
+ *   ($) => {
+ *     return $("table[class=your_table]").parsetable(true, true, true);
+ *   }
+ * );
+ * @example <caption>Using parseXML with a callback</caption>
+ *  parseXML(
+ *   (state) => state.response,
+ *   ($) => {
+ *     return $("table[class=your_table]").parsetable(true, true, true);
+ *   },
+ *   (next) => ({ ...next, results: next.data.body })
+ * );
  * @function
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
+ * @param {function} callback - (Optional) Callback function
+ * @state data - the parsed XML as a JSON object
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
-export function parseXML(body, script) {
-  return state => {
-    const $ = cheerio.load(body);
-    cheerioTableparser($);
-
-    if (script) {
-      const result = script($);
-      try {
-        const r = JSON.parse(result);
-        return composeNextState(state, r);
-      } catch (e) {
-        return composeNextState(state, { body: result });
-      }
-    } else {
-      return composeNextState(state, { body: body });
-    }
-  };
+export function parseXML(body, script, callback) {
+  return xmlParser(body, script, callback);
 }
-
-/**
- * CSV-Parse for CSV conversion to JSON
- * @public
- * @example
- *  parseCSV("/home/user/someData.csv", {
- * 	  quoteChar: '"',
- * 	  header: false,
- * 	});
- * @function
- * @param {String} target - string or local file with CSV data
- * @param {Object} config - csv-parse config object
- * @returns {Operation}
- */
-export function parseCSV(target, config) {
-  return state => {
-    return new Promise((resolve, reject) => {
-      var csvData = [];
-
-      try {
-        fs.readFileSync(target);
-        fs.createReadStream(target)
-          .pipe(parse(config))
-          .on('data', csvrow => {
-            console.log(csvrow);
-            csvData.push(csvrow);
-          })
-          .on('end', () => {
-            console.log(csvData);
-            resolve(composeNextState(state, csvData));
-          });
-      } catch (err) {
-        var csvString;
-        if (typeof target === 'string') {
-          csvString = target;
-        } else {
-          csvString = expandReferences(target)(state);
-        }
-        csvData = parse(csvString, config, (err, output) => {
-          console.log(output);
-          resolve(composeNextState(state, output));
-        });
-      }
-    });
-  };
-}
-
-/**
- * Make a request using the 'request' node module. This module is deprecated.
- * @example
- *  request(params);
- * @function
- * @param {object} params - Query, Headers and Authentication parameters
- * @returns {Operation}
- */
-export function request(params) {
-  return state => {
-    const resolvedParams = http.expandRequestReferences(params)(state);
-
-    return new Promise((resolve, reject) => {
-      nodeRequest(resolvedParams, (error, response, body) => {
-        error = assembleError({ error, response, resolvedParams });
-        error && reject(error);
-
-        console.log(
-          '✓ Request succeeded. (The response body available in state.)'
-        );
-        const resp = tryJson(body);
-        resolve(resp);
-      });
-    });
-  };
-}
-
-export { axios };
 
 export {
   alterState,
   arrayToString,
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
@@ -414,7 +206,9 @@ export {
   field,
   fields,
   fn,
-  http,
+  fnIf,
+  chunk,
+  group,
   humanProper,
   lastReferenceValue,
   merge,
@@ -422,4 +216,5 @@ export {
   sourceValue,
   splitKeys,
   toArray,
+  parseCsv,
 } from '@openfn/language-common';

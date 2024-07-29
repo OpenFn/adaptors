@@ -7,10 +7,10 @@ import {
   each,
   field,
   fields,
-  sourceValue,
   dataValue,
+  execute,
 } from '../src/Adaptor';
-import { execute } from '../src/FakeAdaptor';
+
 import testData from './testData' assert { type: 'json' };
 
 describe('Adaptor', () => {
@@ -25,7 +25,7 @@ describe('Adaptor', () => {
   describe('createSMS', () => {
     it('makes a new SMS in Mogli', done => {
       const fakeConnection = {
-        instanceUrl: 'https://na8.salesforce.fake.com',
+        loginUrl: 'https://na8.salesforce.fake.com',
         accessToken: '8675309',
         createSMS: function () {
           return Promise.resolve({ Id: 10 });
@@ -48,60 +48,6 @@ describe('Adaptor', () => {
           // expect(spy.args[0]).to.eql(fields);
           expect(spy.called).to.eql(true);
           // expect(state.references[0]).to.eql({Id: 10})
-        })
-        .then(done)
-        .catch(done);
-    });
-  });
-
-  describe('nesting', () => {
-    let initialState;
-    let afterExecutionOf;
-
-    function executionWrapper(initialState) {
-      return operations => {
-        return execute(operations)(initialState);
-      };
-    }
-
-    let counter = 0;
-    const fakeConnection = {
-      createSMS: function (sObject, attrs) {
-        return Promise.resolve({ fields: attrs, Id: (counter += 1) });
-      },
-    };
-
-    beforeEach(() => {
-      initialState = {
-        connection: fakeConnection,
-        data: testData,
-        references: [],
-      };
-      afterExecutionOf = executionWrapper(initialState);
-    });
-
-    it('works', done => {
-      let operations = steps(
-        each(
-          '$.data.store.book[*]',
-          createSMS(
-            fields(
-              field('sender', dataValue('from_number')),
-              field('receivedAt', dataValue('timestamp')),
-              field('message', dataValue('message'))
-            )
-          )
-        )
-      );
-
-      afterExecutionOf(operations)
-        .then(state => {
-          console.log(state);
-          // TODO: finish tests...
-          // let references = state.references.reverse()
-
-          // expect(references.length).to.eql(4)
-          // expect(references[0].fields.title).to.eql("Sayings of the Century")
         })
         .then(done)
         .catch(done);

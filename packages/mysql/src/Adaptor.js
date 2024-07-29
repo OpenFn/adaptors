@@ -6,8 +6,6 @@ import { resolve as resolveUrl } from 'url';
 import mysql from 'mysql';
 import squel from 'squel';
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
@@ -71,6 +69,7 @@ function cleanupState(state) {
  *   ))
  * )(state)
  * @function
+ * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
  * @returns {Operation}
@@ -131,6 +130,7 @@ export function insert(table, fields) {
  *   ))
  * )(state)
  * @function
+ * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
  * @returns {Operation}
@@ -209,6 +209,7 @@ export function upsert(table, fields) {
  *   ]
  * )
  * @function
+ * @public
  * @param {string} table - The target table
  * @param {array} data - An array of objects or a function that returns an array
  * @returns {Operation}
@@ -216,7 +217,7 @@ export function upsert(table, fields) {
 export function upsertMany(table, data) {
   return function (state) {
     return new Promise(function (resolve, reject) {
-      const rows = expandReferences(data)(state); 
+      const rows = expandReferences(data)(state);
 
       if (!rows || rows.length === 0) {
         console.log('No records provided; skipping upsert.');
@@ -226,15 +227,13 @@ export function upsertMany(table, data) {
       const squelMysql = squel.useFlavour('mysql');
       const columns = Object.keys(rows[0]);
 
-      let upsertSql = squelMysql.insert()
-        .into(table)
-        .setFieldsRows(rows);
-      columns.map(c => { 
-        upsertSql = upsertSql.onDupUpdate(`${c}=values(${c})`)
+      let upsertSql = squelMysql.insert().into(table).setFieldsRows(rows);
+      columns.map(c => {
+        upsertSql = upsertSql.onDupUpdate(`${c}=values(${c})`);
       });
 
       const upsertString = upsertSql.toString();
-      
+
       let { connection } = state;
       connection.query(upsertString, function (err, results, fields) {
         if (err) {
@@ -263,6 +262,7 @@ export function upsertMany(table, data) {
  *   query({ sql: 'select * from users;' })
  * )(state)
  * @function
+ * @public
  * @param {object} options - Payload data for the message
  * @returns {Operation}
  */
@@ -304,6 +304,7 @@ export function query(options) {
  *   sqlString(state => "select * from items;")
  * )(state)
  * @function
+ * @public
  * @param {String} queryString - A query string (or function which takes state and returns a string)
  * @returns {Operation}
  */
@@ -319,6 +320,7 @@ export {
   sourceValue,
   alterState,
   fn,
+  fnIf,
   arrayToString,
   each,
   combine,

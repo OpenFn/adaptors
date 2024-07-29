@@ -25,7 +25,6 @@ export default (lang: string) => {
   console.log();
 
   const entry = findEntryPoint(root);
-  console.log(entry);
   const args = [
     '--allowJs',
     '--declaration',
