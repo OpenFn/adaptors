@@ -37,7 +37,11 @@ export function request(state, path, params, callback = s => s) {
     .then(callback)
     .catch(err => {
       console.log('Asana says:');
-      logResponse(err);
+      const body = err.body;
+      logResponse({
+        ...err,
+        body: JSON.stringify(body, null, 2),
+      });
 
       throw err;
     });
