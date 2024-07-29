@@ -93,7 +93,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "put(\"/api/v1/settings\",{overwrite:true});",
+            "description": "put(\"/api/v1/settings\",{query:{overwrite:true}});",
             "caption": "Update settings"
           },
           {
