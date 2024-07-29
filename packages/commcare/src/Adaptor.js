@@ -5,6 +5,13 @@ import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 
 import { request, prepareNextState } from './Utils';
+/**
+ * State object
+ * @typedef {Object} HttpState
+ * @state data - the response body (as JSON)
+ * @state response - the HTTP response from the CommCare server (excluding the body)
+ * @state references
+ */
 
 /**
  * Execute a sequence of operations.
@@ -30,20 +37,26 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to any commcare endpoint. Data will be returned as JSON.
- * The returned objects will be written to state.data.
- * Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
- * is paginated.
- * A `response` key will be added to state with the HTTP response and a `meta` key
+ * Make a GET request to any CommCare endpoint. Data will be returned to `state.data` as JSON.
+ * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
  * @public
- * @example <caption>Get a list of 20 cases</caption>
- * get("case", { limit: 20 })
- * @example <caption>Get a specific case </caption>
- * get("case/12345")
  * @function
+ * @example <caption>Get a specific case by id</caption>
+ * get("/case/12345")
+ * @example <caption>Get 20 cases</caption>
+ * get("/case", { limit: 20 })
+ * @example <caption>Get forms by app id</caption>
+ * get("/form", { app_id: "02bf50ab803a89ea4963799362874f0c" })
+ * @example <caption>Iterate over pages of data</caption>
+ * get("/case", {}, (state) => {
+ *    const page = state.data;
+ *    console.log(page) // a page of cases (as an array)
+ *    return state;
+ * })
  * @param {string} path - Path to resource
- * @param {Object} params - Input parameters for the request. These vary by endpoin,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
- * @param {function} [callback] - Callback invoked once per page of data retrieved.
+ * @param {Object} params - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
+ * @param {function} [callback] - Callback, to be invoked once per page of data retrieved.
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
@@ -131,6 +144,7 @@ export function get(path, params = {}, callback = s => s) {
  * @param {Object} params - Optional request params.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {HttpState}
  */
 export function post(path, data, params = {}, callback = s => s) {
   return async state => {
@@ -162,9 +176,11 @@ export function post(path, data, params = {}, callback = s => s) {
 }
 
 /**
- * Convert form data to xls then submit.
+ * Bulk upload data to CommCare. Accepts an array of objects, converts them into
+ * an xls representation, and uploads.
  * @public
- * @example
+ * @function
+ * @example Upload a single row of data
  * submitXls(
  *    [
  *      {name: 'Mamadou', phone: '000000'},
@@ -175,16 +191,16 @@ export function post(path, data, params = {}, callback = s => s) {
  *      create_new_cases: 'on',
  *    }
  * )
- * @function
- * @param {Object} formData - Object including form data.
- * @param {Object} params - Input paramaters. See {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs}.
+ * @param {array} data - Array of objects to upload
+ * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs}.
+ * @state data - the response from the CommCare Server
  * @returns {Operation}
  */
-export function submitXls(formData, params) {
+export function submitXls(data, params) {
   return async state => {
     const { domain } = state.configuration;
 
-    const [json] = expandReferences(state, formData);
+    const [json] = expandReferences(state, data);
     const { case_type, search_field, create_new_cases } = params;
 
     const path = `/a/${domain}/importer/excel/bulk_upload_api/`;
@@ -198,18 +214,18 @@ export function submitXls(formData, params) {
     const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xls' });
     // xlsx.writeFile(workbook, 'out.xls'); // If needing to write to filesystem
 
-    const data = new FormData();
+    const form = new FormData();
 
-    data.append('file', new Blob([buffer]), 'output.xls');
+    form.append('file', new Blob([buffer]), 'output.xls');
     // data.append('file', fs.createReadStream('out.xls'));
-    data.append('case_type', case_type);
-    data.append('search_field', search_field);
-    data.append('create_new_cases', create_new_cases);
+    form.append('case_type', case_type);
+    form.append('search_field', search_field);
+    form.append('create_new_cases', create_new_cases);
 
     try {
       const response = await request(state.configuration, path, {
         method: 'POST',
-        data,
+        data: form,
       });
 
       return prepareNextState(state, response);
@@ -220,8 +236,10 @@ export function submitXls(formData, params) {
 }
 
 /**
- * Submit form data
+ * Submit forms to CommCare. Accepts an array of JSON
+ * objects, converts them into XML, and submits to CommCare as an x-form.
  * @public
+ * @function
  * @example
  *  submit(
  *    fields(
@@ -234,13 +252,13 @@ export function submitXls(formData, params) {
  *      field("question2", "Some answer here.")
  *    )
  *  )
- * @function
- * @param {Object} formData - Object including form data.
+ * @param {Object} data - Object including form data.
+ * @state data - the response from the CommCare Server
  * @returns {Operation}
  */
-export function submit(formData) {
+export function submit(data) {
   return async state => {
-    const [jsonBody] = expandReferences(state, formData);
+    const [jsonBody] = expandReferences(state, data);
     const body = js2xmlparser('data', jsonBody);
 
     const { domain, appId } = state.configuration;
