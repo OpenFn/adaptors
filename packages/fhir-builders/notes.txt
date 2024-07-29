@@ -1,0 +1,29 @@
+The idea here is to create a bunch of helper functions to make it easy to create fhir data structures
+
+```
+patient(id)
+  .name({text: fullName, use 'official'})
+  .name({text: fullName, use 'official'})
+  .address(blah)
+```
+
+A couple of problems
+
+1. The builder function (name) and the actual data key (name) are often the same
+
+The only way I think to resolve this is to use a proxy of some kind and make the data ejectable
+
+toString() and toJSON() and serialize() will return the inner object. 
+
+but it really really bugs me.
+
+I want you to be able to just use native fetch to post the object without any inner transformation
+
+Is there any way in javascript to get and set with one key name, but to invoke on another?
+
+Maybe I need AI for this after all.
+
+
+2. I need to work out how to assert strong typings. The mixins pattern is a bit flexbile - I need patient() to have a really strong api (and I don't want that to be hard to define in ts)
+
+3. The constrcutor/factory pattern isn't right at the moment

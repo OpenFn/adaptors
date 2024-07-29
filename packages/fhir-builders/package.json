@@ -18,7 +18,9 @@
   "dependencies": {
     "@types/chai": "^4.3.16",
     "@types/expect": "^24.3.0",
+    "@types/fhir": "^0.0.41",
     "@types/mocha": "^10.0.7",
+    "fhir": "link:@@types/fhir",
     "ts-mocha": "^10.0.0"
   },
   "devDependencies": {

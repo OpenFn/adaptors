@@ -7,6 +7,7 @@ const base = (type, init = {}) => {
     ...init,
     resourceType: type,
   };
+  console.log('>', data);
   return data;
 };
 
