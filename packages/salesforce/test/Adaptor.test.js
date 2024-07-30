@@ -197,6 +197,33 @@ describe('Adaptor', () => {
   });
 
   describe('query', () => {
+    it('should properly pass the query string', async () => {
+      const fakeConnection = {
+        query: function () {
+          return Promise.resolve({
+            done: true,
+            totalSize: 1,
+            records: [{ Name: 'OpenFn' }],
+          });
+        },
+      };
+
+      let state = {
+        connection: fakeConnection,
+        references: [],
+        qs: 'select Name from Account',
+      };
+      let spy = sinon.spy(fakeConnection, 'query');
+
+      query('select Name from Account')(state).then(state => {
+        expect(spy.calledWith('select Name from Account')).to.eql(true);
+      });
+
+      query(state => state.qs)(state).then(state => {
+        expect(spy.calledWith('select Name from Account')).to.eql(true);
+      });
+    });
+
     it('should fetch all records', done => {
       const fakeConnection = {
         query: function () {
