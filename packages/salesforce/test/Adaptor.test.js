@@ -210,7 +210,7 @@ describe('Adaptor', () => {
       let state = { connection: fakeConnection, references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
 
-      query('select Name from Account', { autoFetch: true })(state)
+      query('select Name from Account')(state)
         .then(state => {
           expect(spy.called).to.eql(true);
           expect(state.references[0]).to.eql({
@@ -222,36 +222,47 @@ describe('Adaptor', () => {
         .then(done)
         .catch(done);
     });
-    it('should fetch all records if autoFetch is true and totalSize > 2000', done => {
+    it('should fetch all page if autoFetch is true', done => {
       const fakeConnection = {
         query: function () {
           return Promise.resolve({
+            done: false,
+            totalSize: 5713,
+            nextRecordsUrl:
+              '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
+            records: [{ Name: 'Open' }],
+          });
+        },
+        request: function () {
+          return Promise.resolve({
             done: true,
             totalSize: 5713,
-            records: [{ Name: 'OpenFn' }],
+            records: [{ Name: 'Fn' }],
           });
         },
       };
       let state = { connection: fakeConnection, references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
+      let spyReq = sinon.spy(fakeConnection, 'request');
 
       query('select Name from Account', { autoFetch: true })(state)
         .then(state => {
           expect(spy.called).to.eql(true);
+          expect(spyReq.called).to.eql(true);
           expect(state.references[0]).to.eql({
             done: true,
             totalSize: 5713,
-            records: [{ Name: 'OpenFn' }],
+            records: [{ Name: 'Open' }, { Name: 'Fn' }],
           });
         })
         .then(done)
         .catch(done);
     });
-    it('should return nextRecordsUrl if autoFetch is false and totalSize > 2000', done => {
+    it('should not fetch another page if autofetch is false', done => {
       const fakeConnection = {
         query: function () {
           return Promise.resolve({
-            done: true,
+            done: false,
             totalSize: 5713,
             nextRecordsUrl:
               '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
@@ -262,11 +273,11 @@ describe('Adaptor', () => {
       let state = { connection: fakeConnection, references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
 
-      query('select Name from Account', { autoFetch: true })(state)
+      query('select Name from Account')(state)
         .then(state => {
           expect(spy.called).to.eql(true);
           expect(state.references[0]).to.eql({
-            done: true,
+            done: false,
             totalSize: 5713,
             nextRecordsUrl:
               '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
