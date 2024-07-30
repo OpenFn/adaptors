@@ -1,0 +1,48 @@
+{
+  "name": "@openfn/language-redis",
+  "version": "1.0.0",
+  "description": "OpenFn redis adaptor",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "pnpm clean && build-adaptor redis",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "clean": "rimraf dist types docs",
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ],
+  "dependencies": {
+    "@openfn/language-common": "workspace:*",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "assertion-error": "2.0.0",
+    "chai": "4.3.6",
+    "deep-eql": "4.1.1",
+    "esno": "^0.16.3",
+    "mocha": "9.2.2",
+    "rimraf": "3.0.2",
+    "undici": "^5.22.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "types": "types/index.d.ts",
+  "main": "dist/index.cjs"
+}
