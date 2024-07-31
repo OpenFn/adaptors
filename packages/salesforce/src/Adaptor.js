@@ -180,9 +180,8 @@ export function query(qs, options = {}, callback = s => s) {
       options
     );
 
-    const { autoFetch: autoFetchOption, autofetch: autoFetchOptionAlias } =
-      resolvedOptions;
-    const autoFetch = autoFetchOption || autoFetchOptionAlias || false;
+    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
+
     if (autoFetch) {
       console.log('AutoFetch is enabled');
     }

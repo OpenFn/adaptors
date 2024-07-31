@@ -241,7 +241,7 @@ describe('Adaptor', () => {
       });
     });
 
-    it('should fetch up to 2000 records', done => {
+    it('should fetch 1 record', done => {
       const fakeConnection = {
         query: function () {
           return Promise.resolve({
