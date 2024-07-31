@@ -83,7 +83,7 @@ export const ERROR_ABSOLUTE_URL = 'Absolute URLs not suppored';
 // throws if a path is absolute
 export const assertRelativeUrl = path => {
   if (/https?:\/\//.test(path)) {
-    const e = new Error('');
+    const e = new Error('UNEXPECTED_ABSOLUTE_URL');
     e.code = 'UNEXPECTED_ABSOLUTE_URL';
     e.description =
       'An absolute URL was provided (https://...) but only a path (/a/b/c) is supported';

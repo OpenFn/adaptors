@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import { request, get, post, options } from '../src/http';
-import { enableMockClient } from '../src/util/http';
+import { assertRelativeUrl, enableMockClient } from '../src/util/http';
 
 const client = enableMockClient('https://a.com');
 
@@ -112,6 +112,34 @@ describe('options', () => {
         'Content-Type': 'application/json',
       },
     });
+  });
+});
+
+describe('assertRelativeUrl', () => {
+  specify('https://www.test.com is absolute', () => {
+    assert.throws(
+      () => assertRelativeUrl('https://www.test.com'),
+      'UNEXPECTED_ABSOLUTE_URL'
+    );
+  });
+
+  specify('http://www.test.com is absolute', () => {
+    assert.throws(
+      () => assertRelativeUrl('http://www.test.com'),
+      'UNEXPECTED_ABSOLUTE_URL'
+    );
+  });
+
+  specify('x/y/z is relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('x/y/z'));
+  });
+
+  specify('/x/y/z is relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('/x/y/z'));
+  });
+
+  specify('www.x.com is treated as relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('www.x.com'));
   });
 });
 
