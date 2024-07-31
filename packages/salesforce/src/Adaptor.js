@@ -179,11 +179,12 @@ export function query(qs, options = {}, callback = s => s) {
       console.log('AutoFetch is enabled');
     }
 
-    let result = {
+    const result = {
       done: true,
       totalSize: 0,
       records: [],
     };
+
     const processRecords = async res => {
       const { done, totalSize, records, nextRecordsUrl } = res;
 
@@ -216,7 +217,6 @@ export function query(qs, options = {}, callback = s => s) {
         await processRecords(qResult);
         console.log('Done ✔ retrieved records:', result.records.length);
       } else {
-        result = qResult;
         console.log('No records found.');
       }
     } catch (err) {
