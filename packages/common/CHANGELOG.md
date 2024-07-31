@@ -1,4 +1,9 @@
-v0.4.0
+## 1.15.1
+
+### Patch Changes
+
+- 4c08444: document exported date-fns functions
+- 73d0a02: Make documentation public
 
 ## 1.15.0
 

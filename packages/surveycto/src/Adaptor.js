@@ -31,6 +31,7 @@ export function execute(...operations) {
 /**
  * Options provided to `fetchSubmissions()`
  * @typedef {Object} FetchSubmissionOptions
+ * @public
  * @property {string} [date=0] - Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved.
  * @property {string} [format=json] - Format the submission data type as  `csv` or `json`.
  * @property {string} [status] - Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.
@@ -115,6 +116,7 @@ export function fetchSubmissions(formId, options, callback = s => s) {
 /**
  * Options provided to request()
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object} [headers] - An object of headers parameters.
  * @property {object} [body] - Body data to append to the request.
  * @property {object} [query] - An object of query parameters to be encoded into the URL.

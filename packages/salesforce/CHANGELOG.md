@@ -1,6 +1,6 @@
 # @openfn/language-salesforce
 
-## 4.8.1
+## 4.8.2
 
 ### Patch Changes
 
@@ -10,6 +10,14 @@
 
   For jobs which use `references[0][0]` to read query results, this is a
   breaking fix.
+
+## 4.8.1
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
 
 ## 4.8.0
 

@@ -30,6 +30,7 @@ export function execute(...operations) {
  * @example
  * getPatient("123")
  * @function
+ * @public
  * @param {string} uuid - A uuid for the patient
  * @param {function} [callback] - Optional callback to handle the response
  * @example <caption>Get a patient by uuid</caption>
@@ -70,6 +71,7 @@ export function getPatient(uuid, callback = s => s) {
  *   },
  * })
  * @function
+ * @public
  * @param {object} data - Data parameters of the encounter
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -100,6 +102,7 @@ export function createEncounter(data, callback = s => s) {
  *   limit: 1,
  * });
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} query - parameters for the request
  * @param {function} [callback] - Optional callback to handle the response
@@ -139,6 +142,7 @@ export function get(path, query, callback = s => s) {
  *   {}
  * );
  * @function
+ * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
  * @param {function} [callback] - Optional callback to handle the response
@@ -164,6 +168,7 @@ export function post(path, data, callback = s => s) {
  * @example
  * searchPatient({ q: "Sarah"})
  * @function
+ * @public
  * @param {object} query - Object with query for the patient.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -193,6 +198,7 @@ export function searchPatient(query, callback = s => s) {
  * @example
  * searchPerson({ q: "Sarah" })
  * @function
+ * @public
  * @param {object} query - object with query for the person
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -242,6 +248,7 @@ export function searchPerson(query, callback = s => s) {
  *   },
  * })
  * @function
+ * @public
  * @param {object} data - Object parameters of the patient
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -271,6 +278,7 @@ export function createPatient(data, callback = s => s) {
  * @example
  * getEncounter("123")
  * @function
+ * @public
  * @param {object} uuid - A uuid for the encounter
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -299,6 +307,7 @@ export function getEncounter(uuid, callback = s => s) {
  * @example
  * getEncounters({ patient: "123", fromdate: "2023-05-18" })
  * @function
+ * @public
  * @param {object} query - Object for the patient
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}

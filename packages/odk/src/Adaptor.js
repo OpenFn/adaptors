@@ -8,7 +8,6 @@ import * as util from './Utils';
 /**
  * State object
  * @typedef {Object} ODKHttpState
- * @private
  * @property data - the parsed response body
  * @property response - the response from the ODK HTTP server (with the body removed)
  * @property references - an array of all the previous data values
@@ -17,6 +16,7 @@ import * as util from './Utils';
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.

@@ -64,6 +64,7 @@ function cleanupState(state) {
  *   })),
  * }));
  * @function
+ * @public
  * @param {object} params - a listId, users, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -115,6 +116,7 @@ export function upsertMembers(params, callback = s => s) {
  *     .map((u) => u.email),
  * }));
  * @function
+ * @public
  * @param {object} params - a tagId, members, and a list
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -135,6 +137,7 @@ export function tagMembers(params, callback = s => s) {
  * @example
  * startBatch(params)
  * @function
+ * @public
  * @param {object} params - operations batch job
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -153,6 +156,7 @@ export function startBatch(params, callback = s => s) {
 /**
  * listBatches
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -170,6 +174,7 @@ export function listBatches(params, callback = s => s) {
 /**
  * listMembers
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -188,6 +193,7 @@ export function listMembers(params, callback = s => s) {
 /**
  * addMember to a list
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -206,6 +212,7 @@ export function addMember(params, callback = s => s) {
 /**
  * updateMember
  * @function
+ * @public
  * @param {object} params - a listId,subscriberHash and member
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -226,6 +233,7 @@ export function updateMember(params, callback = s => s) {
 /**
  * updateMemberTags
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -244,6 +252,7 @@ export function updateMemberTags(params, callback = s => s) {
 /**
  * archiveMember in a list
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -262,6 +271,7 @@ export function archiveMember(params, callback = s => s) {
 /**
  * Permanently delete a member from a list
  * @function
+ * @public
  * @param {object} params - a listId, and options
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -280,6 +290,7 @@ export function deleteMember(params, callback = s => s) {
 /**
  * Get information about all lists in the account.
  * @function
+ * @public
  * @param {object} query - Query parameters
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -298,6 +309,7 @@ export function listAudiences(query, callback = s => s) {
  * Get information about a specific list in your Mailchimp account.
  * Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
  * @function
+ * @public
  * @param {object} query - listId and query parameters
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -349,6 +361,7 @@ const assertOK = async (response, fullUrl) => {
  * @example <caption>Create a new account export in your Mailchimp account</caption>
  * request('POST','/accounts-export', {include_stages:[]});
  * @function
+ * @public
  * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
  * @param {string} path - The endpoint of the api to which the request should be made.
  * @param {Object} options - Additional options for the request (query, body only).
@@ -416,6 +429,7 @@ export function request(method, path, options, callback) {
  * @example <caption>Get a list of account exports for a given account</caption>
  * get('/account-exports');
  * @function
+ * @public
  * @param {string} path - The endpoint of the api to which the request should be made
  * @param {object} query - An object containing query parameters to be included in the request
  * @param {function} [callback] - (Optional) callback to handle the response
@@ -431,6 +445,7 @@ export function get(path, query, callback) {
  * @example <caption>Create a new account export in your Mailchimp account</caption>
  * post('/accounts-export', {include_stages:[]});
  * @function
+ * @public
  * @param {string} path - The endpoint of the api to which the request should be made.
  * @param {object} body - The data to be sent in the body of the request
  * @param {object} query - An object containing query parameters to be included in the request

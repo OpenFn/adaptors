@@ -1,12 +1,91 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { execute, submitXls, get, post } from '../src';
-import sinon from 'sinon';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
 const domain = 'my-domain';
 const app = 'my-app';
+
+const defaultObjects = [
+  { case_id: '1' },
+  { case_id: '2' },
+  { case_id: '3' },
+  { case_id: '4' },
+  { case_id: '5' },
+  { case_id: '6' },
+];
+const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
+  const next =
+    offset + limit < objects.length ? `offset=${offset + limit}&limit=1` : null;
+
+  return {
+    meta: {
+      limit: limit,
+      next: next,
+      offset: offset,
+      total_count: objects.length,
+    },
+    objects: objects.slice(offset, limit + offset),
+  };
+};
+
+describe('paginatedResponse', () => {
+  it('should handle offset=0 limit=1', () => {
+    const result = paginatedResponse(0, 1);
+    expect(result).to.eql({
+      meta: {
+        limit: 1,
+        offset: 0,
+        total_count: 6,
+        next: 'offset=1&limit=1',
+      },
+      objects: [{ case_id: '1' }],
+    });
+  });
+
+  it('should handle offset=3 limit=3', () => {
+    const result = paginatedResponse(3, 3);
+    expect(result.meta).to.eql({
+      limit: 3,
+      offset: 3,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(3);
+  });
+  it('should handle offset=5 limit=1', () => {
+    const result = paginatedResponse(5, 1);
+    expect(result.meta).to.eql({
+      limit: 1,
+      offset: 5,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(1);
+  });
+
+  it('should handle offset=0 limit=6', () => {
+    const result = paginatedResponse(0, 6);
+    expect(result.meta).to.eql({
+      limit: 6,
+      offset: 0,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(6);
+  });
+  it('should handle offset=5 limit=12', () => {
+    const result = paginatedResponse(5, 12);
+    expect(result.meta).to.eql({
+      limit: 12,
+      offset: 5,
+      total_count: 6,
+      next: null,
+    });
+    expect(result.objects.length).to.equal(1);
+  });
+});
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -106,14 +185,13 @@ describe('getCases', () => {
         method: 'GET',
       })
       .reply(200, () => {
-        // simulate a return from commcare
         return {
           meta: {
             limit: 1,
             next: null,
             offset: 0,
             previous: null,
-            total_count: 2,
+            total_count: 1,
           },
           objects: [
             {
@@ -165,7 +243,6 @@ describe('getCases', () => {
     expect(data[0]).to.haveOwnProperty('case_id');
     expect(response.meta.limit).to.equal(1);
   });
-
   it('should fetch a single case', async () => {
     testServer
       .intercept({
@@ -173,7 +250,6 @@ describe('getCases', () => {
         method: 'GET',
       })
       .reply(200, () => {
-        // simulate a return from commcare
         return {
           case_id: '12345',
           closed: false,
@@ -216,7 +292,6 @@ describe('getCases', () => {
     };
 
     const { data } = await execute(get('case/12345'))(state);
-
     expect(data.case_id).to.equal('12345');
     expect(data.properties.case_type).to.equal('pregnancy');
   });
@@ -228,14 +303,13 @@ describe('getCases', () => {
         method: 'GET',
       })
       .reply(200, () => {
-        // simulate a return from commcare
         return {
           meta: {
             limit: 1,
             next: null,
             offset: 0,
             previous: null,
-            total_count: 2,
+            total_count: 1,
           },
           objects: [
             {
@@ -280,13 +354,13 @@ describe('getCases', () => {
         password: 'password',
       },
     };
-
-    const callback = sinon.spy();
+    let callbackArg;
+    const callback = state => {
+      callbackArg = state;
+      return state;
+    };
 
     await execute(get('case', {}, callback))(state);
-
-    expect(callback.calledOnce).to.be.true;
-    const callbackArg = callback.firstCall.args[0];
     expect(callbackArg.data).to.deep.equal([
       {
         case_id: '12345',
@@ -318,6 +392,225 @@ describe('getCases', () => {
         xform_ids: ['xxxx'],
       },
     ]);
+  });
+});
+
+describe('get', () => {
+  it('should fetch the next page if the response has a meta.next property', async () => {
+    const objects = [
+      { case_id: '123' },
+      { case_id: '456' },
+      { case_id: '789' },
+    ];
+
+    let callCount = 0;
+
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        callCount++;
+        return paginatedResponse(req.query.offset, 1, objects);
+      })
+      .times(3);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await execute(get('case'))(state);
+    expect(callCount).to.equal(3);
+    expect(data.length).to.equal(3);
+    expect(response.meta.limit).to.equal(1);
+    expect(response.meta.offset).to.equal(2);
+  });
+
+  it('should call the callback once per page', async () => {
+    const objects = [
+      { case_id: '123' },
+      { case_id: '456' },
+      { case_id: '789' },
+    ];
+
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        return paginatedResponse(req.query.offset, 1, objects);
+      })
+      .times(3);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    let callbackArgCount = 0;
+    const callback = state => {
+      callbackArgCount++;
+      return state;
+    };
+
+    const { data, response } = await execute(get('case', {}, callback))(state);
+
+    expect(callbackArgCount).to.deep.equal(3);
+
+    expect(data.length).to.equal(3);
+    expect(response.meta.limit).to.equal(1);
+    expect(response.meta.offset).to.equal(2);
+  });
+
+  it('should not add limit and offset to the parameters of the first request if the user does not pass them', async () => {
+    testServer
+      .intercept({
+        // This will fail if query params are added to the url
+        path: '/a/my-domain/api/v0.5/case',
+        method: 'GET',
+      })
+      .reply(200, () => {
+        return {
+          meta: {
+            limit: 1,
+            next: null,
+            offset: 1,
+            previous: null,
+            total_count: 1,
+          },
+          objects: [],
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { response } = await execute(get('case'))(state);
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('should not auto-fetch if the user sets an offset', async () => {
+    let callCount = 0;
+
+    testServer
+      .intercept({
+        path: '/a/my-domain/api/v0.5/case',
+        method: 'GET',
+        query: {
+          offset: 1,
+        },
+      })
+      .reply(200, req => {
+        callCount++;
+
+        return paginatedResponse(req.query.offset, 1);
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(get('case', { offset: 1 }))(state);
+    expect(data.length).to.equal(1);
+    expect(callCount).to.equal(1);
+  });
+
+  it("should respect the user's limit while paginating", async () => {
+    testServer
+      .intercept({
+        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        method: 'GET',
+        query: {
+          limit: 2,
+        },
+      })
+      .reply(200, req => {
+        return paginatedResponse(req.query.offset, req.query.limit);
+      })
+      .times(5);
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const callback = state => {
+      expect(state.data.length).to.equal(2);
+      return state;
+    };
+
+    const { data } = await execute(get('case', { limit: 2 }, callback))(state);
+    expect(data.length).to.equal(6);
+  });
+
+  it('should call the callback once for a single request', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/case`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        return {
+          meta: {
+            limit: 1,
+            next: null,
+            offset: 0,
+            previous: null,
+            total_count: 1,
+          },
+          objects: { case_id: '123' },
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    let callbackArgCount = 0;
+    const callback = state => {
+      callbackArgCount++;
+      return state;
+    };
+
+    await execute(get('case', {}, callback))(state);
+    expect(callbackArgCount).to.deep.equal(1);
   });
 });
 

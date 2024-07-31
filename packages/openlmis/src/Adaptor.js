@@ -14,6 +14,7 @@ import * as util from './Utils';
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object} body - body data to append to the request.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.

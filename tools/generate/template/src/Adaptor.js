@@ -4,7 +4,6 @@ import * as util from './Utils';
 /**
  * State object
  * @typedef {Object} HttpState
- * @private
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
@@ -13,6 +12,7 @@ import * as util from './Utils';
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
