@@ -179,7 +179,13 @@ export function query(qs, options = {}, callback = s => s) {
       qs,
       options
     );
-    const { autoFetch = false } = resolvedOptions;
+
+    const { autoFetch: autoFetchOption, autofetch: autoFetchOptionAlias } =
+      resolvedOptions;
+    const autoFetch = autoFetchOption || autoFetchOptionAlias || false;
+    if (autoFetch) {
+      console.log('AutoFetch is enabled');
+    }
 
     console.log(`Executing query: ${resolvedQs}`);
     try {
