@@ -211,13 +211,30 @@ describe('Adaptor', () => {
       let state = {
         connection: fakeConnection,
         references: [],
-        qs: 'select Name from Account',
       };
       let spy = sinon.spy(fakeConnection, 'query');
 
       query('select Name from Account')(state).then(state => {
         expect(spy.calledWith('select Name from Account')).to.eql(true);
       });
+    });
+    it('should properly pass the query string from state', async () => {
+      const fakeConnection = {
+        query: function () {
+          return Promise.resolve({
+            done: true,
+            totalSize: 1,
+            records: [{ Name: 'OpenFn' }],
+          });
+        },
+      };
+
+      let state = {
+        connection: fakeConnection,
+        references: [],
+        qs: 'select Name from Account',
+      };
+      let spy = sinon.spy(fakeConnection, 'query');
 
       query(state => state.qs)(state).then(state => {
         expect(spy.calledWith('select Name from Account')).to.eql(true);
@@ -246,8 +263,7 @@ describe('Adaptor', () => {
             records: [{ Name: 'OpenFn' }],
           });
         })
-        .then(done)
-        .catch(done);
+        .then(done);
     });
     it('should fetch all page if autoFetch is true', done => {
       const fakeConnection = {
@@ -282,8 +298,7 @@ describe('Adaptor', () => {
             records: [{ Name: 'Open' }, { Name: 'Fn' }],
           });
         })
-        .then(done)
-        .catch(done);
+        .then(done);
     });
     it('should not fetch another page if autofetch is false', done => {
       const fakeConnection = {
@@ -311,8 +326,7 @@ describe('Adaptor', () => {
             records: [{ Name: 'OpenFn' }],
           });
         })
-        .then(done)
-        .catch(done);
+        .then(done);
     });
   });
 });

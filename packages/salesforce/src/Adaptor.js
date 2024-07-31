@@ -197,10 +197,9 @@ export function query(qs, options = {}, callback = s => s) {
       result.totalSize = totalSize;
       result.records.push(...records);
 
-      if (!done && nextRecordsUrl) {
+      if (!done && !autoFetch && nextRecordsUrl) {
         result.nextRecordsUrl = nextRecordsUrl;
       }
-
       if (!done && autoFetch) {
         console.log('Fetched records so far:', result.records.length);
         console.log('Fetching next records...');
