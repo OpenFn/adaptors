@@ -241,6 +241,29 @@ describe('Adaptor', () => {
       });
     });
 
+    it('should fetch 0 records', done => {
+      const fakeConnection = {
+        query: function () {
+          return Promise.resolve({
+            done: true,
+            totalSize: 0,
+            records: [],
+          });
+        },
+      };
+      const state = { connection: fakeConnection, references: [] };
+
+      query('select Name from Account')(state)
+        .then(state => {
+          expect(state.references[0]).to.eql({
+            done: true,
+            totalSize: 0,
+            records: [],
+          });
+        })
+        .then(done);
+    });
+
     it('should fetch 1 record', done => {
       const fakeConnection = {
         query: function () {
