@@ -308,22 +308,31 @@ describe('Adaptor', () => {
             totalSize: 5713,
             nextRecordsUrl:
               '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
-            records: [{ Name: 'OpenFn' }],
+            records: [{ Name: 'Open' }],
+          });
+        },
+        request: function () {
+          return Promise.resolve({
+            done: true,
+            totalSize: 5713,
+            records: [{ Name: 'Fn' }],
           });
         },
       };
       let state = { connection: fakeConnection, references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
+      let spyReq = sinon.spy(fakeConnection, 'request');
 
       query('select Name from Account')(state)
         .then(state => {
           expect(spy.called).to.eql(true);
+          expect(spyReq.called).to.eql(false);
           expect(state.references[0]).to.eql({
             done: false,
             totalSize: 5713,
             nextRecordsUrl:
               '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
-            records: [{ Name: 'OpenFn' }],
+            records: [{ Name: 'Open' }],
           });
         })
         .then(done);
