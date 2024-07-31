@@ -166,37 +166,26 @@ export function retrieve(sObject, id, callback) {
  */
 export function query(qs, options = {}, callback = s => s) {
   return async state => {
-    let qResult = null;
-    let result = {
-      done: true,
-      totalSize: 0,
-      records: [],
-    };
-
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
       state,
       qs,
       options
     );
-
+    console.log(`Executing query: ${resolvedQs}`);
     const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
 
     if (autoFetch) {
       console.log('AutoFetch is enabled');
     }
 
-    console.log(`Executing query: ${resolvedQs}`);
-    try {
-      qResult = await connection.query(resolvedQs);
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
-    }
-
-    const processRecords = async qResult => {
-      const { done, totalSize, records, nextRecordsUrl } = qResult;
+    let result = {
+      done: true,
+      totalSize: 0,
+      records: [],
+    };
+    const processRecords = async res => {
+      const { done, totalSize, records, nextRecordsUrl } = res;
 
       result.done = done;
       result.totalSize = totalSize;
@@ -220,13 +209,20 @@ export function query(qs, options = {}, callback = s => s) {
       }
     };
 
-    if (qResult.totalSize > 0) {
-      console.log('Total records:', qResult.totalSize);
-      await processRecords(qResult);
-      console.log('Done ✔ retrieved records:', result.records.length);
-    } else {
-      result = qResult;
-      console.log('No records found.');
+    try {
+      const qResult = await connection.query(resolvedQs);
+      if (qResult.totalSize > 0) {
+        console.log('Total records:', qResult.totalSize);
+        await processRecords(qResult);
+        console.log('Done ✔ retrieved records:', result.records.length);
+      } else {
+        result = qResult;
+        console.log('No records found.');
+      }
+    } catch (err) {
+      const { message, errorCode } = err;
+      console.log(`Error ${errorCode}: ${message}`);
+      throw err;
     }
 
     console.log(
