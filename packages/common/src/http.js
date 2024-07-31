@@ -95,14 +95,23 @@ export function options(opts = {}) {
  * @returns {Operation}
  */
 const req = function (method, url, options) {
-  return state => {
+  return async state => {
     const [resolvedMethod, resolvedUrl, resolvedOptions] = expandReferences(
       state,
       method,
       url,
       options
     );
-    return request(resolvedMethod, resolvedUrl, resolvedOptions);
+    const { body, ...responseWithoutBody } = await request(
+      resolvedMethod,
+      resolvedUrl,
+      resolvedOptions
+    );
+    return {
+      ...state,
+      response: responseWithoutBody,
+      data: body,
+    };
   };
 };
 export { req as request };

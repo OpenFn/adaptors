@@ -170,21 +170,25 @@ describe('request()', () => {
   it('should make a successful arbitary request', async () => {
     mock('/api/1', { method: 'TEST' });
 
-    const result = await request('TEST', 'https://a.com/api/1')();
+    const state = {};
+    const { response, data } = await request(
+      'TEST',
+      'https://a.com/api/1'
+    )(state);
 
-    expect(result.body).to.eql({ ok: true });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
   });
 
   it('should request with a query', async () => {
     mock('/api/2', { method: 'GET', query: { jam: 'jar' } });
 
-    const result = await request('GET', 'https://a.com/api/2', {
+    const { response, data } = await request('GET', 'https://a.com/api/2', {
       query: { jam: 'jar' },
     })();
 
-    expect(result.body).to.eql({ ok: true });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
   });
 
   it('should throw for a 404', async () => {
@@ -209,27 +213,27 @@ describe('request()', () => {
       },
     });
 
-    const result = await request(
+    const { response, data } = await request(
       'GET',
       'https://a.com/api/4',
       options().basic('u', 'p')
     )();
 
-    expect(result.body).to.eql({ ok: true });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
   });
 
   it('should expand references', async () => {
     mock('/api/5', { method: 'PATCH' });
 
-    const result = await request(
+    const { response, data } = await request(
       () => 'PATCH',
       () => 'https://a.com/api/5',
       () => ({ body: { x: 'y' } })
     )();
 
-    expect(result.body).to.eql({ x: 'y' });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ x: 'y' });
+    expect(response.statusCode).to.eql(200);
   });
 });
 
@@ -238,12 +242,12 @@ describe('get()', () => {
   it('should make a simple get request', async () => {
     mock('/api/100', { query: { name: 'lamine' } });
 
-    const result = await get('https://a.com/api/100', {
+    const { response, data } = await get('https://a.com/api/100', {
       query: { name: 'lamine' },
     })();
 
-    expect(result.body).to.eql({ ok: true });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
   });
 });
 
@@ -251,9 +255,11 @@ describe('post()', () => {
   it('should make a simple post request', async () => {
     mock('/api/101', { method: 'POST' });
 
-    const result = await post('https://a.com/api/101', { name: 'lamine' })();
+    const { response, data } = await post('https://a.com/api/101', {
+      name: 'lamine',
+    })();
 
-    expect(result.body).to.eql({ name: 'lamine' });
-    expect(result.statusCode).to.eql(200);
+    expect(data).to.eql({ name: 'lamine' });
+    expect(response.statusCode).to.eql(200);
   });
 });
