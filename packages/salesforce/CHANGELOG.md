@@ -1,5 +1,16 @@
 # @openfn/language-salesforce
 
+## 4.8.2
+
+### Patch Changes
+
+- ce08e7f: Fix `autoFetch` behaviour in `query()` function. All records are
+  merged into a single `records` array, and pushed to `[0]` in
+  `state.references`.
+
+  For jobs which use `references[0][0]` to read query results, this is a
+  breaking fix.
+
 ## 4.8.1
 
 ### Patch Changes
