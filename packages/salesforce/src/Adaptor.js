@@ -176,7 +176,7 @@ export function query(qs, options = {}, callback = s => s) {
     const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
 
     if (autoFetch) {
-      console.log('AutoFetch is enabled');
+      console.log('autoFetch is enabled: all records will be downloaded');
     }
 
     const result = {
