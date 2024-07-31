@@ -1,7 +1,3 @@
-/**
- * If you have any helper functions which are NOT operations,
- * you should add them here
- */
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
