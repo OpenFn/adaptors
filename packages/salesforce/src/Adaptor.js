@@ -166,9 +166,12 @@ export function retrieve(sObject, id, callback) {
  */
 export function query(qs, options = {}, callback = s => s) {
   return async state => {
-    let result = [];
     let qResult = null;
-    let fetchedRecords = [];
+    let result = {
+      done: true,
+      totalSize: 0,
+      records: [],
+    };
 
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = newExpandReferences(
@@ -190,18 +193,16 @@ export function query(qs, options = {}, callback = s => s) {
     const processRecords = async qResult => {
       const { done, totalSize, records, nextRecordsUrl } = qResult;
 
-      fetchedRecords.push(...records);
-      result = [
-        {
-          done,
-          totalSize,
-          records: fetchedRecords,
-          ...(nextRecordsUrl && { nextRecordsUrl }),
-        },
-      ];
+      result.done = done;
+      result.totalSize = totalSize;
+      result.records.push(...records);
+
+      if (!done && nextRecordsUrl) {
+        result.nextRecordsUrl = nextRecordsUrl;
+      }
 
       if (!done && autoFetch) {
-        console.log('Fetched records so far:', fetchedRecords.length);
+        console.log('Fetched records so far:', result.records.length);
         console.log('Fetching next records...');
 
         try {
@@ -218,9 +219,9 @@ export function query(qs, options = {}, callback = s => s) {
     if (qResult.totalSize > 0) {
       console.log('Total records:', qResult.totalSize);
       await processRecords(qResult);
-      console.log('Done ✔ retrieved records:', fetchedRecords.length);
+      console.log('Done ✔ retrieved records:', result.records.length);
     } else {
-      result.push(qResult);
+      result = qResult;
       console.log('No records found.');
     }
 
@@ -230,7 +231,7 @@ export function query(qs, options = {}, callback = s => s) {
 
     const nextState = {
       ...state,
-      references: [...result, ...state.references],
+      references: [result, ...state.references],
     };
     return callback(nextState);
   };
