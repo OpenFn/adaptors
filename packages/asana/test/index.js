@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { execute } from '../src';
+import { execute, request } from '../src';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -33,6 +33,19 @@ describe('execute', () => {
     execute()(state).then(finalState => {
       expect(finalState).to.eql({ references: [], data: null });
     });
+  });
+});
+
+describe('request', () => {
+  it('throws if an absolute URL is passed', async () => {
+    // happily the request won't actually be made, so we don't need to mock anything here
+    let err;
+    try {
+      await execute(request('https://www.blah.com/a/b/c'))({});
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.equal('BASE_URL_MISMATCH');
   });
 });
 

@@ -2,7 +2,9 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
+import nodepath from 'node:path';
 
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
@@ -23,6 +25,11 @@ export const prepareNextState = (state, response, callback = s => s) => {
 // and add authorisation headers
 // Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
+  // You might want to check that the path is not an absolute URL befor
+  // appending credentials commonRequest will do this for you if you
+  // pass a baseURL to it and you don't need to build a path here
+  // assertRelativeUrl(path);
+
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
   const { baseUrl, username, password } = configuration;
@@ -55,7 +62,9 @@ export const request = (configuration = {}, method, path, options) => {
   };
 
   // TODO you may want to add a prefix to the path
+  // use path.join to build the path safely
+  const safePath = nodepath.join(path);
 
   // Make the actual request
-  return commonRequest(method, path, options);
+  return commonRequest(method, safePath, options);
 };

@@ -88,7 +88,7 @@ export function getForms(projectId) {
 }
 
 /**
- * Make a GET request against the base URL.
+ * Make a GET request against the ODK server.
  * @example <caption>Get a list of available projects</caption>
  * get("v1/projects");
  * @example <caption>Get projects with query parameters</caption>
@@ -107,7 +107,7 @@ export function get(path, options) {
 }
 
 /**
- * Make a POST request against the base URL.
+ * Make a POST request against the ODK server.
  * @example <caption>Create a new project</caption>
  * post('v1/projects', { name: 'Project Name' });
  * @function
@@ -123,7 +123,7 @@ export function post(path, body, options) {
 }
 
 /**
- * Make a general HTTP request against the base URL.
+ * Make a general HTTP request against the ODK server.
  * @example <caption>Make a POST request to create a new project</caption>
  * request("POST", 'v1/projects', { name: 'Project Name' });
  * @function
@@ -155,10 +155,6 @@ export function request(method, path, body, options = {}) {
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for odk.
- * @example
-<caption> * execute(</caption>
- *   get("v1/projects")
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}

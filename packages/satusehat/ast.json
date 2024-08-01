@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a get request to any satusehat endpoint",
+        "description": "Make a GET request to Satusehat",
         "tags": [
           {
             "title": "public",
@@ -72,7 +72,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a post request to satusehat",
+        "description": "Make a POST request to Satusehat",
         "tags": [
           {
             "title": "example",
@@ -148,7 +148,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a put request to satusehat",
+        "description": "Make a PUT request to Satusehat",
         "tags": [
           {
             "title": "example",
@@ -224,7 +224,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a patch request to satusehat",
+        "description": "Make a PATCH request to Satusehat",
         "tags": [
           {
             "title": "example",

@@ -35,7 +35,7 @@ export function execute(...operations) {
   return commonExecute(util.authorize, ...operations);
 }
 /**
- * Make a GET request in OpenLMIS
+ * Send a GET request to OpenLMIS
  * @example <caption>Get all supplyLines</caption>
  * get("/supplyLines");
  * @function
@@ -51,7 +51,7 @@ export function get(path, options, callback) {
 }
 
 /**
- * Make a POST request in OpenLMIS
+ * Send a POST request to OpenLMIS
  * @example <caption>Creates new program</caption>
  * post("/programs", { name: "Bukayo", code: "abc" });
  * @function
@@ -67,7 +67,7 @@ export function post(path, body, callback) {
 }
 
 /**
- * Make a PUT request in OpenLMIS
+ * Send a PUT request to OpenLMIS
  * @example <caption>Update existing program</caption>
  * put("/programs/123", { name: "DigTalent", code: "123" });
  * @function
@@ -83,7 +83,7 @@ export function put(path, body, callback) {
 }
 
 /**
- * Make a general HTTP request in OpenLMIS
+ * Send a HTTP request to OpenLMIS
  * @example
  * request("POST", "/programs", { name: "WSH", code: "123" });
  * @function

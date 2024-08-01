@@ -254,8 +254,6 @@ describe('HTTP wrappers', () => {
       return error;
     });
 
-    expect(error.message).to.eql(
-      'Requests must be sent to the base URL: https://test.openlmis.org'
-    );
+    expect(error.code).to.eql('UNEXPECTED_ABSOLUTE_URL');
   });
 });

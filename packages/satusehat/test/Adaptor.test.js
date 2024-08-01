@@ -74,7 +74,26 @@ describe('execute', () => {
   });
 });
 
-describe('getOrganizations', () => {
+describe('get', () => {
+  it('throws if an absolute URL is passed', async () => {
+    const state = {
+      configuration: {
+        baseUrl,
+        clientId: 'someclientid',
+        clientSecret: 'someclientsecret',
+      },
+    };
+
+    // happily the request won't actually be made, so we don't need to mock anything here
+    let err;
+    try {
+      await execute(get('https://www.blah.com/a/b/c'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
+  });
+
   it('should fetch organizations', async () => {
     testServer
       .intercept({
@@ -190,7 +209,7 @@ describe('getOrganizations', () => {
   });
 });
 
-describe('Create organization', () => {
+describe('post', () => {
   it('should create an organization', async () => {
     testServer
       .intercept({
@@ -377,7 +396,7 @@ describe('Create organization', () => {
   });
 });
 
-describe('updateOrganization', () => {
+describe('put', () => {
   it('should update an organization', async () => {
     testServer
       .intercept({
@@ -418,7 +437,7 @@ describe('updateOrganization', () => {
   });
 });
 
-describe('partiallyUpdateOrganization', () => {
+describe('patch', () => {
   it('should partially update an organization', async () => {
     testServer
       .intercept({

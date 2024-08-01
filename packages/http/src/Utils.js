@@ -54,7 +54,9 @@ export function request(method, path, params, callback = s => s) {
 
     const baseUrl = state.configuration?.baseUrl;
 
-    addAuth(state.configuration, headers);
+    if (baseUrl) {
+      addAuth(state.configuration, headers);
+    }
 
     const maxRedirections =
       resolvedParams.maxRedirections ??

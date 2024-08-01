@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request in OpenLMIS",
+        "description": "Send a GET request to OpenLMIS",
         "tags": [
           {
             "title": "example",
@@ -79,7 +79,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request in OpenLMIS",
+        "description": "Send a POST request to OpenLMIS",
         "tags": [
           {
             "title": "example",
@@ -150,7 +150,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a PUT request in OpenLMIS",
+        "description": "Send a PUT request to OpenLMIS",
         "tags": [
           {
             "title": "example",
@@ -223,7 +223,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a general HTTP request in OpenLMIS",
+        "description": "Send a HTTP request to OpenLMIS",
         "tags": [
           {
             "title": "example",

@@ -32,7 +32,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a get request to any satusehat endpoint
+ * Make a GET request to Satusehat
  * @public
  * @example
  * get("Organization", {"name": "somename"})
@@ -50,21 +50,20 @@ export function get(path, params = {}, callback = s => s) {
       params
     );
     try {
-      const response = await request(state.configuration, `/${resolvedPath}`, {
+      const response = await request(state.configuration, resolvedPath, {
         method: 'GET',
         params: resolvedParams,
       });
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(JSON.stringify(e.body, null, 2));
       throw e;
     }
   };
 }
 
 /**
- * Make a post request to satusehat
+ * Make a POST request to Satusehat
  * @example
  * post(
  *   "Organization",
@@ -89,7 +88,7 @@ export function post(path, data, params = {}, callback = s => s) {
     );
 
     try {
-      const response = await request(state.configuration, `/${resolvedPath}`, {
+      const response = await request(state.configuration, resolvedPath, {
         method: 'POST',
         data: resolvedData,
         params: resolvedParams,
@@ -97,14 +96,13 @@ export function post(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(JSON.stringify(e.body, null, 2));
       throw e;
     }
   };
 }
 
 /**
- * Make a put request to satusehat
+ * Make a PUT request to Satusehat
  * @example
  * put(
  *   "Organization/123",
@@ -129,7 +127,7 @@ export function put(path, data, params = {}, callback = s => s) {
     );
 
     try {
-      const response = await request(state.configuration, `/${resolvedPath}`, {
+      const response = await request(state.configuration, resolvedPath, {
         method: 'PUT',
         data: resolvedData,
         params: resolvedParams,
@@ -137,14 +135,13 @@ export function put(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(JSON.stringify(e.body, null, 2));
       throw e;
     }
   };
 }
 
 /**
- * Make a patch request to satusehat
+ * Make a PATCH request to Satusehat
  * @example
  * patch(
  *   "Organization/123",
@@ -173,7 +170,7 @@ export function patch(path, data, params = {}, callback = s => s) {
     );
 
     try {
-      const response = await request(state.configuration, `/${resolvedPath}`, {
+      const response = await request(state.configuration, resolvedPath, {
         method: 'PATCH',
         data: JSON.stringify(resolvedData),
         params: resolvedParams,
@@ -182,7 +179,6 @@ export function patch(path, data, params = {}, callback = s => s) {
 
       return prepareNextState(state, response, callback);
     } catch (e) {
-      console.error(JSON.stringify(e.body, null, 2));
       throw e;
     }
   };

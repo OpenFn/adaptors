@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-  http,
+  http, // Important: this is the OLD axios-based http.
 } from '@openfn/language-common';
 
 const { axios } = http;
@@ -253,7 +253,7 @@ export {
   fields,
   fn,
   fnIf,
-  http,
+  http, // Important: this is the OLD axios-based http. Public docs will be incorrect.
   lastReferenceValue,
   merge,
   sourceValue,

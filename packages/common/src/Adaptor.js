@@ -13,10 +13,6 @@ import dateFns from 'date-fns';
 
 import { expandReferences as newExpandReferences, parseDate } from './util';
 
-export * as beta from './beta';
-export * as http from './http.deprecated';
-export * as dateFns from './dateFns';
-
 const schemaCache = {};
 
 /**

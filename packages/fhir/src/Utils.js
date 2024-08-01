@@ -1,12 +1,12 @@
 import nodepath from 'node:path';
 
+import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
   makeBasicAuthHeader,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
-
-import { composeNextState } from '@openfn/language-common';
 
 export function addAuth(configuration = {}, headers) {
   if (headers.Authorization) return;
@@ -30,11 +30,12 @@ export const prepareNextState = (state, response, callback) => {
 };
 
 export const request = (configuration, method, path, options = {}) => {
+  assertRelativeUrl(path);
+
   const { baseUrl, apiPath } = configuration;
   const { headers = {}, ...otherOptions } = options;
   const fullPath = nodepath.join(apiPath ?? '', path);
 
-  urlMatchesBase(path, baseUrl);
   addAuth(configuration, headers);
 
   const opts = {
@@ -50,13 +51,3 @@ export const request = (configuration, method, path, options = {}) => {
 
   return commonRequest(method, fullPath, opts).then(logResponse);
 };
-
-function urlMatchesBase(path, baseUrl) {
-  const base = new URL(baseUrl);
-  const url = new URL(path, baseUrl);
-
-  if (url.origin !== base.origin) {
-    throw new Error(`The URL ${path} does not match the base URL ${baseUrl}`);
-  }
-  return true;
-}

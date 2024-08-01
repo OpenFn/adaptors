@@ -56,6 +56,25 @@ describe('request()', () => {
 
     expect(result.data).to.eql('hello');
   });
+
+  it('should throw if url is absolute and does not match baseURL', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    let err;
+    try {
+      await execute(request('GET', 'https://www.something.net/greeting'))(
+        state
+      );
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err.code).to.eql('BASE_URL_MISMATCH');
+  });
 });
 
 describe('get()', () => {

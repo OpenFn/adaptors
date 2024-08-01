@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "A FHIR adaptor for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^1.14.0",
+    "@openfn/language-common": "workspace:^2.0.0",
     "undici": "^5.28.4"
   },
   "devDependencies": {

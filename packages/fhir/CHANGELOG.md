@@ -1,5 +1,13 @@
 # @openfn/language-fhir
 
+## 5.0.1
+
+### Patch Changes
+
+- 940996b: Use common helper code to handle invalid absolute URLs
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 5.0.0
 
 #### Added

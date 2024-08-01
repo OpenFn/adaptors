@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mongodb",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A language package for working with MongoDb",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.15.1",
+    "@openfn/language-common": "workspace:*",
     "mongodb": "^3.7.3"
   },
   "devDependencies": {

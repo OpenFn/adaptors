@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-beyonic",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "beyonic Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -31,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.15.1",
+    "@openfn/language-common": "workspace:*",
     "JSONPath": "^0.10.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^8.0.0"
