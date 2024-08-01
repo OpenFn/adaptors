@@ -458,63 +458,75 @@ export function post(path, data, options = {}) {
  * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
+ * @param {function} callback - A callback to execute once the record is retrieved
  * @returns {Operation}
  */
-export function query(qs, options = {}) {
+export function query(qs, options = {}, callback = s => s) {
   return async state => {
-    let done = false;
-    let qResult = null;
-    let result = [];
-
     const { connection } = state;
     const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
-    const { autoFetch = false } = resolvedOptions;
-
     console.log(`Executing query: ${resolvedQs}`);
+    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
+
+    if (autoFetch) {
+      console.log('autoFetch is enabled: all records will be downloaded');
+    }
+
+    const result = {
+      done: true,
+      totalSize: 0,
+      records: [],
+    };
+
+    const processRecords = async res => {
+      const { done, totalSize, records, nextRecordsUrl } = res;
+
+      result.done = done;
+      result.totalSize = totalSize;
+      result.records.push(...records);
+
+      if (!done && !autoFetch && nextRecordsUrl) {
+        result.nextRecordsUrl = nextRecordsUrl;
+      }
+      if (!done && autoFetch) {
+        console.log('Fetched records so far:', result.records.length);
+        console.log('Fetching next records...');
+
+        try {
+          const newResult = await connection.request({ url: nextRecordsUrl });
+          await processRecords(newResult);
+        } catch (err) {
+          const { message, errorCode } = err;
+          console.error(`Error ${errorCode}: ${message}`);
+          throw err;
+        }
+      }
+    };
+
     try {
-      qResult = await connection.query(resolvedQs);
+      const qResult = await connection.query(resolvedQs);
+      if (qResult.totalSize > 0) {
+        console.log('Total records:', qResult.totalSize);
+        await processRecords(qResult);
+        console.log('Done ✔ retrieved records:', result.records.length);
+      } else {
+        console.log('No records found.');
+      }
     } catch (err) {
       const { message, errorCode } = err;
       console.log(`Error ${errorCode}: ${message}`);
       throw err;
     }
 
-    if (qResult.totalSize > 0) {
-      console.log('Total records', qResult.totalSize);
+    console.log(
+      'Results retrieved and pushed to position [0] of the references array.'
+    );
 
-      while (!done) {
-        result.push(qResult);
-
-        if (qResult.done) {
-          done = true;
-        } else if (autoFetch) {
-          console.log(
-            'Fetched records so far',
-            result.map(ref => ref.records).flat().length
-          );
-          console.log('Fetching next records...');
-          try {
-            qResult = await connection.request({ url: qResult.nextRecordsUrl });
-          } catch (err) {
-            const { message, errorCode } = err;
-            console.log(`Error ${errorCode}: ${message}`);
-            throw err;
-          }
-        } else {
-          done = true;
-        }
-      }
-
-      console.log(
-        'Done ✔ retrieved records',
-        result.map(ref => ref.records).flat().length
-      );
-    } else {
-      result.push(qResult);
-      console.log('No records found.');
-    }
-
-    return composeNextState(state, result, result?.records);
+    const nextState = {
+      ...state,
+      references: [result, ...state.references],
+    };
+    return callback(nextState);
   };
 }
 
