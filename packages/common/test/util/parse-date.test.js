@@ -78,9 +78,7 @@ describe('parse date', () => {
 
   it('should return 2 days ago', () => {
     const target = startOfDay(subDays(new Date(), 2)).toLocaleString();
-    console.log(target);
     const result = parseDate('2 days ago').toLocaleString();
-    console.log(result);
     expect(result).eql(target);
   });
 
