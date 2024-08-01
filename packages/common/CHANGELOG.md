@@ -1,16 +1,37 @@
-## 1.15.1
-
 ## 2.0.0
+
+The 2.0 version of common removes axios and re-writes the `http` namespace.
+
+You can now use `http.request()` from any adaptor that exports it:
+
+```
+http.request(
+  'GET',
+  'https://jsonplaceholder.typicode.com/todos',
+  http.options().basic('user', 'pass')
+)
+```
+
+`http.get()` and `http.post()` are also available.
+
+These functions behave just like the HTTP adaptor's operations (except that they
+don't handle auth for you).
+
+Use the `http.options()` helper functiosn to set basic auth headers and set the
+content type to JSON.
 
 ### Major Changes
 
-- 4fe527c: - Remove axios-based http operations with cleaner, undici-based ones
-  - Removed axios export
+- Replace axios-based http operations with cleaner, undici-based ones
+- Removed axios export
+
+### Minor Changes
+
+- Add options helpers to http namespace
 
 ### Patch Changes
 
-- 4c08444: document exported date-fns functions
-- 73d0a02: Make documentation public
+- 4c08444: document `date-fns` functions
 
 ## 1.15.0
 
