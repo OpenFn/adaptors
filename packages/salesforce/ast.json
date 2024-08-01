@@ -464,7 +464,8 @@
       "name": "query",
       "params": [
         "qs",
-        "options"
+        "options",
+        "callback"
       ],
       "docs": {
         "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
@@ -518,6 +519,15 @@
             },
             "name": "options.autoFetch",
             "default": "false"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the record is retrieved",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
           },
           {
             "title": "returns",
