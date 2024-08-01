@@ -8,7 +8,7 @@ describe('Patient', () => {
     const p = patient({ id: 'x' });
     p.name({ given: ['rah'] });
     const json = p.toJSON(); // ok so we know this is a Patient...
-
+    json;
     console.log(p);
 
     const p2 = p.name({ text: 'joe', use: 'official' });

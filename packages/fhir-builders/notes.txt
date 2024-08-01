@@ -35,6 +35,7 @@ how will I suppose differnt fhir versions?
 
 One way would be to implement version 1, then have subclasses which extend and override 
 
+could be a lot of work
 
 ## typings
 
@@ -44,3 +45,8 @@ Ok so now...
 - and this is fully assisted, which is cool
 - toJSON also returns the correct object, so it ejects properly
 - I just need to work out how to type the builders now
+
+
+I've almost got it working, although on teh declaration side I have to explicitly pass the type. It doesn't seem to want to infer it.
+
+Next problem: in types/fhir what's with all the underscore values? They really cramp my style man

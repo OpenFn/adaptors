@@ -20,7 +20,15 @@ import { create } from '../builders';
 // };
 
 // back to the this approach
-const name = function (name: HumanName) {
+
+// types/fhir exports all these underscore keys which just get in the way of code assist
+// we could forcibly remove them like this
+// but would it be better to use our own definitions at this point?
+
+/**
+ * The patient name(s)
+ */
+const name = function (name: Omit<HumanName, '_family' | '_given'>) {
   if (!this.name) {
     this.name = [];
   }
