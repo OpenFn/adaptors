@@ -103,6 +103,25 @@ export function hget(key, field) {
   };
 }
 /**
+ * Get all fields and values of the hash stored at a specified key.
+ * @example
+ * hGetAll("noderedis:animals:1");
+ * @function
+ * @public
+ * @param {string} key - Key
+ * @returns {Operation}
+ * @state {RedisState}
+ */
+export function hGetAll(key) {
+  return async state => {
+    const [resolvedKey] = expandReferences(state, key);
+    console.log(`Fetching value of '${resolvedKey}' key`);
+    const result = await client.hGetAll(resolvedKey);
+
+    return composeNextState(state, result);
+  };
+}
+/**
  * Set the string value of a key
  * @example
  * set("patient", "mtuchi");
@@ -136,33 +155,43 @@ export function set(key, value) {
 export function hset(key, value) {
   return async state => {
     const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
-    console.log(`Setting '${resolvedValue}' value of '${resolvedKey}' key`);
+    console.log(`Setting values of '${resolvedKey}' key`);
     const result = await client.hSet(resolvedKey, resolvedValue);
     return composeNextState(state, result);
   };
 }
 
 /**
- * Set the string value of a key
+ * Incrementally iterating over a collection of keys in the currently selected database
  * @example
- * search("patient", "mtuchi");
+ * scan('*:20240524T172736Z*');
  * @function
  * @public
- * @param {string} index - Key
- * @param {string} query - Value
+ * @param {string} pattern - Key
+ * @param {object} options - Options
  * @returns {Operation}
  * @state {RedisState}
  */
-export function scan(index, query) {
+export function scan(pattern, options = {}) {
   return async state => {
-    const [resolvedIndex, resolvedQuery] = expandReferences(
+    const [resolvedPattern, resolvedOptions] = expandReferences(
       state,
-      index,
-      query
+      pattern,
+      options
     );
 
-    const result = await client.ft.search(resolvedIndex, resolvedQuery);
-    return composeNextState(state, result);
+    const { type = 'hash', cursor = 0, count } = resolvedOptions;
+
+    const result = await client.scan(cursor, {
+      MATCH: resolvedPattern,
+      COUNT: count,
+      TYPE: type,
+    });
+
+    return {
+      ...composeNextState(state, result.keys),
+      cursor: result.cursor,
+    };
   };
 }
 

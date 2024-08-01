@@ -105,6 +105,53 @@
       "valid": true
     },
     {
+      "name": "hGetAll",
+      "params": [
+        "key"
+      ],
+      "docs": {
+        "description": "Get all fields and values of the hash stored at a specified key.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "hGetAll(\"noderedis:animals:1\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Key",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "set",
       "params": [
         "key",
@@ -221,15 +268,15 @@
     {
       "name": "scan",
       "params": [
-        "index",
-        "query"
+        "pattern",
+        "options"
       ],
       "docs": {
-        "description": "Set the string value of a key",
+        "description": "Incrementally iterating over a collection of keys in the currently selected database",
         "tags": [
           {
             "title": "example",
-            "description": "search(\"patient\", \"mtuchi\");"
+            "description": "scan('*:20240524T172736Z*');"
           },
           {
             "title": "function",
@@ -248,16 +295,16 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "index"
+            "name": "pattern"
           },
           {
             "title": "param",
-            "description": "Value",
+            "description": "Options",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "object"
             },
-            "name": "query"
+            "name": "options"
           },
           {
             "title": "returns",
