@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.0",
+    "@openfn/language-common": "workspace:*",
     "form-data": "^4.0.0",
     "mailgun.js": "^9.2.0",
     "sync-request": "^6.0.0"

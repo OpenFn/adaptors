@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.0",
+    "@openfn/language-common": "workspace:*",
     "hive-driver": "0.2.0"
   },
   "devDependencies": {

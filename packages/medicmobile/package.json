@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.0",
+    "@openfn/language-common": "workspace:*",
     "lodash": "^4.17.21",
     "query-string": "^8.1.0",
     "request": "^2.88.2"
