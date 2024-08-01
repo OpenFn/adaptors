@@ -1,14 +1,15 @@
 {
   "operations": [
     {
-      "name": "relationship",
+      "name": "bulk",
       "params": [
-        "relationshipName",
-        "externalId",
-        "dataSource"
+        "sObjectName",
+        "operation",
+        "records",
+        "options"
       ],
       "docs": {
-        "description": "Adds a lookup relation or 'dome insert' to a record.",
+        "description": "Create and execute a bulk job.",
         "tags": [
           {
             "title": "public",
@@ -17,100 +18,13 @@
           },
           {
             "title": "example",
-            "description": "Data Sourced Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", dataSource(\"path\"))\nFixed Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", \"hello world\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "`__r` relationship field on the record.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "relationshipName"
-          },
-          {
-            "title": "param",
-            "description": "Salesforce ExternalID field.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "externalId"
-          },
-          {
-            "title": "param",
-            "description": "resolvable source.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "dataSource"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "describeAll",
-      "params": [],
-      "docs": {
-        "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),\n  { failOnError: true }\n);",
+            "caption": "Bulk insert"
           },
           {
             "title": "example",
-            "description": "describeAll()"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "describe",
-      "params": [
-        "sObject"
-      ],
-      "docs": {
-        "description": "Prints an sObject metadata and pushes the result to state.references",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "describe('obj_name')"
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+            "caption": "Bulk upsert"
           },
           {
             "title": "function",
@@ -124,120 +38,25 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "retrieve",
-      "params": [
-        "sObject",
-        "id",
-        "callback"
-      ],
-      "docs": {
-        "description": "Retrieves a Salesforce sObject(s).",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
+            "name": "sObjectName"
           },
           {
             "title": "param",
-            "description": "The sObject to retrieve",
+            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "operation"
           },
           {
             "title": "param",
-            "description": "The id of the record",
+            "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "array"
             },
-            "name": "id"
-          },
-          {
-            "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "query",
-      "params": [
-        "qs",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
-          },
-          {
-            "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
-            "caption": "Query more records if next records are available"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A query string. Must be less than `4000` characters in WHERE clause",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "qs"
+            "name": "records"
           },
           {
             "title": "param",
@@ -250,7 +69,19 @@
           },
           {
             "title": "param",
-            "description": "Fetch next records if available.",
+            "description": "External id field.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.extIdField"
+          },
+          {
+            "title": "param",
+            "description": "Skipping bulk operation if no records.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -258,17 +89,47 @@
                 "name": "boolean"
               }
             },
-            "name": "options.autoFetch",
+            "name": "options.allowNoOp",
             "default": "false"
           },
           {
             "title": "param",
-            "description": "A callback to execute once the record is retrieved",
+            "description": "Fail the operation on error.",
             "type": {
-              "type": "NameExpression",
-              "name": "function"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
             },
-            "name": "callback"
+            "name": "options.failOnError",
+            "default": "false"
+          },
+          {
+            "title": "param",
+            "description": "Polling interval in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollInterval",
+            "default": "6000"
+          },
+          {
+            "title": "param",
+            "description": "Polling timeout in milliseconds.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "options.pollTimeout",
+            "default": "240000"
           },
           {
             "title": "returns",
@@ -286,8 +147,7 @@
       "name": "bulkQuery",
       "params": [
         "qs",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
@@ -356,15 +216,6 @@
             "default": "3000"
           },
           {
-            "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -375,205 +226,12 @@
         ]
       },
       "valid": false
-    },
-    {
-      "name": "bulk",
-      "params": [
-        "sObject",
-        "operation",
-        "options",
-        "records"
-      ],
-      "docs": {
-        "description": "Create and execute a bulk job.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
-            "caption": "Bulk insert"
-          },
-          {
-            "title": "example",
-            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);",
-            "caption": "Bulk upsert"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "operation"
-          },
-          {
-            "title": "param",
-            "description": "Options passed to the bulk api.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "240000"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "6000"
-          },
-          {
-            "title": "param",
-            "description": "External id field.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.extIdField"
-          },
-          {
-            "title": "param",
-            "description": "Fail the operation on error.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.failOnError",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "an array of records, or a function which returns an array.",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "records"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "destroy",
-      "params": [
-        "sObject",
-        "attrs",
-        "options"
-      ],
-      "docs": {
-        "description": "Delete records of an object.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "Array of IDs of records to delete.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "attrs"
-          },
-          {
-            "title": "param",
-            "description": "Options for the destroy delete operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
     },
     {
       "name": "create",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
         "description": "Create a new sObject record(s).",
@@ -605,7 +263,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -614,7 +272,122 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "attrs"
+            "name": "records"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "describe",
+      "params": [
+        "sObjectName"
+      ],
+      "docs": {
+        "description": "Fetches and prints metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "describe()",
+            "caption": "Fetch metadata for all available sObjects"
+          },
+          {
+            "title": "example",
+            "description": "describe('Account')",
+            "caption": "Fetch metadata for Account sObject"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "sObjectName"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "destroy",
+      "params": [
+        "sObjectName",
+        "ids",
+        "options"
+      ],
+      "docs": {
+        "description": "Delete records of an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5'\n], { failOnError: true })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "API name of the sObject.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sObjectName"
+          },
+          {
+            "title": "param",
+            "description": "Array of IDs of records to delete.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "ids"
+          },
+          {
+            "title": "param",
+            "description": "Options for the destroy delete operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -631,11 +404,11 @@
     {
       "name": "insert",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
-        "description": "Alias for \"create(sObject, attrs)\".",
+        "description": "Alias for \"create(sObjectName, attrs)\".",
         "tags": [
           {
             "title": "public",
@@ -664,7 +437,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -673,7 +446,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "attrs"
+            "name": "records"
           },
           {
             "title": "returns",
@@ -688,11 +461,82 @@
       "valid": true
     },
     {
+      "name": "query",
+      "params": [
+        "qs",
+        "options"
+      ],
+      "docs": {
+        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+          },
+          {
+            "title": "example",
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
+            "caption": "Query more records if next records are available"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A query string. Must be less than `4000` characters in WHERE clause",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "qs"
+          },
+          {
+            "title": "param",
+            "description": "Options passed to the bulk api.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Fetch next records if available.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.autoFetch",
+            "default": "false"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "upsert",
       "params": [
-        "sObject",
+        "sObjectName",
         "externalId",
-        "attrs"
+        "records"
       ],
       "docs": {
         "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
@@ -724,11 +568,11 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "magic",
-            "description": "sObject - $.children[?(!@.meta.system)].name"
+            "description": "sObjectName - $.children[?(!@.meta.system)].name"
           },
           {
             "title": "param",
@@ -768,102 +612,11 @@
                 }
               ]
             },
-            "name": "attrs"
+            "name": "records"
           },
           {
             "title": "magic",
-            "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "upsertIf",
-      "params": [
-        "logical",
-        "sObject",
-        "externalId",
-        "attrs"
-      ],
-      "docs": {
-        "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "a logical statement that will be evaluated.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "logical"
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "externalId"
-          },
-          {
-            "title": "param",
-            "description": "Field attributes for the new object.",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "object"
-                },
-                {
-                  "type": "TypeApplication",
-                  "expression": {
-                    "type": "NameExpression",
-                    "name": "Array"
-                  },
-                  "applications": [
-                    {
-                      "type": "NameExpression",
-                      "name": "object"
-                    }
-                  ]
-                }
-              ]
-            },
-            "name": "attrs"
+            "description": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
             "title": "returns",
@@ -880,8 +633,8 @@
     {
       "name": "update",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
         "description": "Update an sObject record or records.",
@@ -913,7 +666,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -940,7 +693,7 @@
                 }
               ]
             },
-            "name": "attrs"
+            "name": "records"
           },
           {
             "title": "returns",
@@ -948,49 +701,6 @@
             "type": {
               "type": "NameExpression",
               "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "reference",
-      "params": [
-        "position"
-      ],
-      "docs": {
-        "description": "Get a reference ID by an index.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "reference(0)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Position for references array.",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "position"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
             }
           }
         ]
@@ -1029,6 +739,59 @@
             "type": {
               "type": "NameExpression",
               "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "retrieve",
+      "params": [
+        "sObjectName",
+        "id"
+      ],
+      "docs": {
+        "description": "Retrieves a Salesforce sObject(s).",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The sObject to retrieve",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sObjectName"
+          },
+          {
+            "title": "param",
+            "description": "The id of the record",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

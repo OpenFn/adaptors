@@ -13,13 +13,11 @@
 
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
-  field,
   chunk,
 } from '@openfn/language-common';
 
-import { expandReferences as newExpandReferences } from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 import flatten from 'lodash/flatten';
