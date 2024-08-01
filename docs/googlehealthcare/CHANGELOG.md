@@ -1,5 +1,12 @@
 # @openfn/language-googlehealthcare
 
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
 ## 1.1.0
 
 ### Minor Changes

@@ -90,12 +90,12 @@ This adaptor exports the following from common:
 
 <p><code>del(path, params, callback) ⇒ Operation</code></p>
 
-Make a DELETE request
+Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
@@ -119,12 +119,12 @@ del(`/myendpoint/${state => state.data.id}`, {
 
 <p><code>get(path, params, callback) ⇒ Operation</code></p>
 
-Make a GET request
+Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
@@ -190,12 +190,12 @@ parseXML(
 
 <p><code>patch(path, params, callback) ⇒ Operation</code></p>
 
-Make a PATCH request
+Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
@@ -220,12 +220,12 @@ patch('/myEndpoint', {
 
 <p><code>post(path, params, callback) ⇒ operation</code></p>
 
-Make a POST request
+Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
@@ -250,12 +250,12 @@ post('/myEndpoint', {
 
 <p><code>put(path, params, callback) ⇒ Operation</code></p>
 
-Make a PUT request
+Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
@@ -280,13 +280,13 @@ put('/myEndpoint', {
 
 <p><code>request(method, path, params, callback) ⇒ Operation</code></p>
 
-Make a HTTP request
+Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| method | <code>string</code> | The HTTP method to use |
-| path | <code>string</code> | Path to resource |
+| method | <code>string</code> | The HTTP method to use. |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 

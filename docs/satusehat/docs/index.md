@@ -60,7 +60,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, params, callback) ⇒ Operation</code></p>
 
-Make a get request to any satusehat endpoint
+Make a GET request to Satusehat
 
 
 | Param | Type | Description |
@@ -80,7 +80,7 @@ get("Organization", {"name": "somename"})
 
 <p><code>patch(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a patch request to satusehat
+Make a PATCH request to Satusehat
 
 
 | Param | Type | Description |
@@ -109,7 +109,7 @@ patch(
 
 <p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a post request to satusehat
+Make a POST request to Satusehat
 
 
 | Param | Type | Description |
@@ -134,7 +134,7 @@ post(
 
 <p><code>put(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a put request to satusehat
+Make a PUT request to Satusehat
 
 
 | Param | Type | Description |

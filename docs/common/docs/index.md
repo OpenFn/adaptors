@@ -63,38 +63,6 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#http_del">http.del(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_expandRequestReferences">http.expandRequestReferences(value)</a>
-</dt>
-
-<dt>
-    <a href="#http_get">http.get(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_head">http.head(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_options">http.options(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_patch">http.patch(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_post">http.post(requestParams)</a>
-</dt>
-
-<dt>
-    <a href="#http_put">http.put(requestParams)</a>
-</dt>
-
-<dt>
     <a href="#beta_each">beta.each(dataSource, operation)</a>
 </dt>
 
@@ -104,6 +72,22 @@ This adaptor exports the following namespaced functions:
 
 <dt>
     <a href="#dateFns_parse">dateFns.parse()</a>
+</dt>
+
+<dt>
+    <a href="#http_get">http.get(url, options)</a>
+</dt>
+
+<dt>
+    <a href="#http_options">http.options(options)</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(url, options)</a>
+</dt>
+
+<dt>
+    <a href="#http_request">http.request(method, url, options)</a>
 </dt>
 </dl>
 
@@ -720,194 +704,6 @@ each(function(state) {
 * * *
 
 
-## http
-
-These functions belong to the http namespace.
-### http.del {#http_del}
-
-<p><code>del(requestParams) ⇒ Operation</code></p>
-
-Make a DELETE request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Deleting a record with data that comes from state
-```js
-http.delete({
-   url: state => `https://www.example.com/api/items/${state.id}`,
- })(state);
-```
-
-* * *
-
-
-### http.expandRequestReferences {#http_expandRequestReferences}
-
-<p><code>expandRequestReferences(value) ⇒ Operation</code></p>
-
-Recursively resolves objects that have resolvable values (functions), but
-omits HTTP request specific modules like `FormData`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>object</code> | data |
-
-
-* * *
-
-
-### http.get {#http_get}
-
-<p><code>get(requestParams) ⇒ Operation</code></p>
-
-Make a GET request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Get an item with a specified id from state
-```js
- http.get({
-     url: state => `https://www.example.com/api/items/${state.id},
-     headers: {"content-type": "application/json"}
-});
-```
-
-* * *
-
-
-### http.head {#http_head}
-
-<p><code>head(requestParams) ⇒ Operation</code></p>
-
-Make a HEAD request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method
-```js
-http.head({
-  url: 'https://www.example.com/api/items',
-});
-```
-
-* * *
-
-
-### http.options {#http_options}
-
-<p><code>options(requestParams) ⇒ Operation</code></p>
-
-Make a OPTIONS request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Requests permitted communication options for a given URL or server, with data from state.
-```js
-http.options({
-  url: 'https://www.example.com/api/items',
-});
-```
-
-* * *
-
-
-### http.patch {#http_patch}
-
-<p><code>patch(requestParams) ⇒ Operation</code></p>
-
-Make a PATCH request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Applies partial modifications to a resource, with data from state.
-```js
-http.patch({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
-
-* * *
-
-
-### http.post {#http_post}
-
-<p><code>post(requestParams) ⇒ Operation</code></p>
-
-Make a POST request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Sending a payload with data that comes from state
-```js
-http.post({
-  url: "https://example.com",
-  data: (state) => state.data
-});
-```
-**Example:**  Capturing the response for later use in state 
-```js
-fn((state) => {
-  return http.post({
-    url: "https://example.com",
-    data: (state) => state.data
-  })(state).then(({response}) => {
-   state.responseData = response.data
-  })
-});
-```
-
-* * *
-
-
-### http.put {#http_put}
-
-<p><code>put(requestParams) ⇒ Operation</code></p>
-
-Make a PUT request
-
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example:** Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.
-```js
-http.put({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
-
-* * *
-
-
 ## beta
 
 These functions belong to the beta namespace.
@@ -963,4 +759,150 @@ The parse function from the date-fns library. See [https://date-fns.org/v3.6.0/d
 
 * * *
 
+
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(url, options) ⇒ Operation</code></p>
+
+Make a GET request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | URL to access |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+**Example:** Request a resource
+```js
+http.get('https://jsonplaceholder.typicode.com/todos')
+```
+**Example:** Request a resource with basic auth
+```js
+http.get(
+ 'https://jsonplaceholder.typicode.com/todos',
+ http.options().basic('user', 'pass')
+)
+```
+**Example:** Request a resource with oauth
+```js
+http.get(
+ 'https://jsonplaceholder.typicode.com/todos',
+ http.options().oauth($.configuration.access_token)
+)
+```
+
+* * *
+
+
+### http.options {#http_options}
+
+<p><code>options(options) ⇒ OptionsHelpers</code></p>
+
+Builder function to create request options. Returns an object with helpers to
+easily add commonly used options. The return object is chainable so you can set
+as many options as you want.
+Pass an object to set your own options.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | options to pass to the request |
+
+**Example:** Get with a query an oath token
+```js
+get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token)
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(url, options) ⇒ Operation</code></p>
+
+Make a POST request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | URL to access |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+**Example:** Post a JSON object (setting the content-type header)
+```js
+ http.post(
+   'https://jsonplaceholder.typicode.com/todos',
+   $.data,
+   options().json(),
+ })
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(method, url, options) ⇒ Operation</code></p>
+
+Make a HTTP request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | The HTTP method to use. |
+| url | <code>string</code> | URL to resource. |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+**Example**
+```js
+http.request(
+  'GET',
+  'https://jsonplaceholder.typicode.com/todos'
+)
+```
+
+* * *
+
+
+##  Interfaces
+
+### OptionsHelpers
+
+Helper functions provided by `http.options`.
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| json | <code>function</code> | Sets the `content-type' header to 'application/json' |
+| basic | <code>function</code> | Sets basic auth on the Authorization header. Pass username and password |
+| bearer | <code>function</code> | Sets a Bearer token on the Authorization header. Pass the token. |
+| oauth | <code>function</code> | Sets a Bearer token on the Authorization header. Pass the oauth token. |
+
+
+* * *
 

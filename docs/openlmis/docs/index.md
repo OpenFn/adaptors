@@ -54,7 +54,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options, [callback]) ⇒ Operation</code></p>
 
-Make a GET request in OpenLMIS
+Send a GET request to OpenLMIS
 
 
 | Param | Type | Description |
@@ -81,7 +81,7 @@ get("/supplyLines");
 
 <p><code>post(path, body, [callback]) ⇒ Operation</code></p>
 
-Make a POST request in OpenLMIS
+Send a POST request to OpenLMIS
 
 
 | Param | Type | Description |
@@ -108,7 +108,7 @@ post("/programs", { name: "Bukayo", code: "abc" });
 
 <p><code>put(path, body, [callback]) ⇒ Operation</code></p>
 
-Make a PUT request in OpenLMIS
+Send a PUT request to OpenLMIS
 
 
 | Param | Type | Description |
@@ -135,7 +135,7 @@ put("/programs/123", { name: "DigTalent", code: "123" });
 
 <p><code>request(method, path, body, options, [callback]) ⇒ Operation</code></p>
 
-Make a general HTTP request in OpenLMIS
+Send a HTTP request to OpenLMIS
 
 
 | Param | Type | Description |

@@ -162,20 +162,33 @@ getTasks("1206933955023739", {
 
 <p><code>request(path, params, callback) ⇒ Operation</code></p>
 
-Make a request in Asana API
+Make a HTTP request against the Asana API.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |
+| path | <code>string</code> | Path to resource (excluding api/version) |
+| params | [<code>RequestOptions</code>](#requestoptions) | (Optional) Query, body and method parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
 **Example**
 ```js
-request("/asanaEndpoint", {
+Get a task by id
+request("/tasks/1234");
+```
+**Example**
+```js
+Query for tasks in a given project
+request("/tasks", {
+  query: { project: "abc" },
+});
+```
+**Example**
+```js
+Create a new task
+request("/tasks", {
   method: "POST",
-  query: { foo: "bar", a: 1 },
+  body: { data: { name: "do the thing", completed: false } },
 });
 ```
 

@@ -56,7 +56,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
-Make a GET request against the base URL.
+Make a GET request against the ODK server.
 
 
 | Param | Type | Description |
@@ -144,7 +144,7 @@ getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/s
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
-Make a POST request against the base URL.
+Make a POST request against the ODK server.
 
 
 | Param | Type | Description |
@@ -171,7 +171,7 @@ post('v1/projects', { name: 'Project Name' });
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
-Make a general HTTP request against the base URL.
+Make a general HTTP request against the ODK server.
 
 
 | Param | Type | Description |
