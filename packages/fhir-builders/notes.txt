@@ -27,3 +27,20 @@ Maybe I need AI for this after all.
 2. I need to work out how to assert strong typings. The mixins pattern is a bit flexbile - I need patient() to have a really strong api (and I don't want that to be hard to define in ts)
 
 3. The constrcutor/factory pattern isn't right at the moment
+
+## Versions
+
+how will I suppose differnt fhir versions?
+
+
+One way would be to implement version 1, then have subclasses which extend and override 
+
+
+## typings
+
+Ok so now...
+
+- the builder takes a JSON object with any of the resource type
+- and this is fully assisted, which is cool
+- toJSON also returns the correct object, so it ejects properly
+- I just need to work out how to type the builders now
