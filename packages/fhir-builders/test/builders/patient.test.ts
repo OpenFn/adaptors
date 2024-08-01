@@ -6,7 +6,7 @@ describe('Patient', () => {
   // TODO maybe
   it('should create a patient with a name', () => {
     const p = patient({ id: 'x' });
-    p.
+    p.name({ given: ['rah'] });
     const json = p.toJSON(); // ok so we know this is a Patient...
 
     console.log(p);

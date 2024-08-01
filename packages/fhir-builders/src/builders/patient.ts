@@ -12,16 +12,31 @@ import { create } from '../builders';
 // like contacts[0].name
 // I suppose contacts does that?
 // or re-uses human name?
-const name = (data: any, name: HumanName) => {
-  if (!data.name) {
-    data.name = [];
+// const name = (data: any, name: HumanName) => {
+//   if (!data.name) {
+//     data.name = [];
+//   }
+//   data.name.push(humanName(name));
+// };
+
+// back to the this approach
+const name = function (name: HumanName) {
+  if (!this.name) {
+    this.name = [];
   }
-  data.name.push(humanName(name));
+  this.name.push(humanName(name));
 };
 
-// TODO how will I handle typings?
-const builder = create<Patient>('Patient', {
+// TODO annoyingly this does not work - I have to explicitly pass it in
+// Why doesn't the second generic get inferred from the second argument?
+// const builder = create<Patient>('Patient', {
+//   name,
+// });
+
+const mixins = {
   name,
-});
+};
+
+const builder = create<Patient, typeof mixins>('Patient', mixins);
 
 export default builder;
