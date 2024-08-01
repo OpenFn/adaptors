@@ -48,6 +48,63 @@
       "valid": true
     },
     {
+      "name": "hget",
+      "params": [
+        "key",
+        "field"
+      ],
+      "docs": {
+        "description": "Get the string value of a key\nIf the key does not exist the special value nil is returned.\nAn error is returned if the value stored at key is not a string, because GET only handles string values.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get(\"patient\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Key",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "Field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "field"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "set",
       "params": [
         "key",
@@ -87,6 +144,120 @@
               "name": "string"
             },
             "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "hset",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Set the string value of a key",
+        "tags": [
+          {
+            "title": "example",
+            "description": "set(\"patient\", \"mtuchi\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Key",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "Value",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "scan",
+      "params": [
+        "index",
+        "query"
+      ],
+      "docs": {
+        "description": "Set the string value of a key",
+        "tags": [
+          {
+            "title": "example",
+            "description": "search(\"patient\", \"mtuchi\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Key",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "index"
+          },
+          {
+            "title": "param",
+            "description": "Value",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "query"
           },
           {
             "title": "returns",

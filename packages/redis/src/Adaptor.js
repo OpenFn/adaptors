@@ -81,6 +81,28 @@ export function get(key) {
 }
 
 /**
+ * Get the string value of a key
+ * If the key does not exist the special value nil is returned.
+ * An error is returned if the value stored at key is not a string, because GET only handles string values.
+ * @example
+ * get("patient");
+ * @function
+ * @public
+ * @param {string} key - Key
+ * @param {string} field - Field
+ * @returns {Operation}
+ * @state {RedisState}
+ */
+export function hget(key, field) {
+  return async state => {
+    const [resolvedKey, resolvedField] = expandReferences(state, key, field);
+    console.log(`Fetching value of '${resolvedKey}' key`);
+    const result = await client.hGet(resolvedKey, resolvedField);
+
+    return composeNextState(state, result);
+  };
+}
+/**
  * Set the string value of a key
  * @example
  * set("patient", "mtuchi");
@@ -103,6 +125,26 @@ export function set(key, value) {
 /**
  * Set the string value of a key
  * @example
+ * set("patient", "mtuchi");
+ * @function
+ * @public
+ * @param {string} key - Key
+ * @param {string} value - Value
+ * @returns {Operation}
+ * @state {RedisState}
+ */
+export function hset(key, value) {
+  return async state => {
+    const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    console.log(`Setting '${resolvedValue}' value of '${resolvedKey}' key`);
+    const result = await client.hSet(resolvedKey, resolvedValue);
+    return composeNextState(state, result);
+  };
+}
+
+/**
+ * Set the string value of a key
+ * @example
  * search("patient", "mtuchi");
  * @function
  * @public
@@ -111,7 +153,7 @@ export function set(key, value) {
  * @returns {Operation}
  * @state {RedisState}
  */
-export function search(index, query) {
+export function scan(index, query) {
   return async state => {
     const [resolvedIndex, resolvedQuery] = expandReferences(
       state,
