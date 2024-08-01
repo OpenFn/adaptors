@@ -1,5 +1,4 @@
 import jsforce from 'jsforce';
-import { composeNextState } from '@openfn/language-common';
 
 function getConnection(state, options) {
   const { apiVersion } = state.configuration;
@@ -135,5 +134,3 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
     attempt++;
   }
 }
-
-export const prepareNextState = (state, data) => composeNextState(state, data);
