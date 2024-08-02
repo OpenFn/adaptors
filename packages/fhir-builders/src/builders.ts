@@ -9,6 +9,29 @@ type ResourceMap = {
 
 type versions = '4' | '5';
 
+export const createContext = (root, data, mixins) => {
+  const builder = {
+    root: () => root,
+    toJSON: () => root.toJSON(),
+    toString: () => root.toString(),
+  };
+
+  for (const key in mixins) {
+    Object.defineProperty(builder, key, {
+      enumerable: false,
+      value: function (...args) {
+        const context = {
+          _resource: data,
+          _scope: builder,
+        };
+        return mixins[key].call(context, ...args);
+      },
+    });
+  }
+
+  return builder as typeof builder & typeof mixins;
+};
+
 export function create<T extends keyof ResourceMap, Fns>(
   type: T,
   mixins: Record<versions, Fns>
@@ -45,8 +68,11 @@ export function create<T extends keyof ResourceMap, Fns>(
       Object.defineProperty(builder, key, {
         enumerable: false,
         value: function (...args) {
-          mixins[version][key].apply(data, args);
-          return this;
+          const context = {
+            _resource: data,
+            _scope: builder,
+          };
+          return mixins[version][key].call(context, ...args);
         },
       });
     }
