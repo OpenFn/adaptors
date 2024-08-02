@@ -1,6 +1,6 @@
 // builds patient types https://hl7.org/fhir/patient.html
 import type { HumanName, Patient } from 'fhir/r5';
-import { humanName } from './datatypes';
+import { humanName } from './v5/datatypes';
 import { create } from '../builders';
 
 // builder function for name

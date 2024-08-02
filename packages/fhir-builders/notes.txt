@@ -74,3 +74,18 @@ Ok so now...
 I've almost got it working, although on teh declaration side I have to explicitly pass the type. It doesn't seem to want to infer it.
 
 Next problem: in types/fhir what's with all the underscore values? They really cramp my style man
+
+
+
+##
+
+
+I am running into real troubles
+
+Versioning is a fairly big problem, although i might be on the virtuous path
+
+Migration though remains a big question
+
+Scoping of the chain is another problem which I'm not sure how to deal with. That needs a rethink. And is it an untidy API?
+
+Forget scaling - if I can't build a robust core here, I can't really justify the blog. I wanted production code alongside it.
