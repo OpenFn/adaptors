@@ -8,6 +8,8 @@ import { createClient } from 'redis';
 
 let client = null;
 
+export const setMockClient = fakeClient => (client = fakeClient);
+
 const connect = async state => {
   const {
     username,
@@ -41,6 +43,14 @@ const disconnect = async state => {
 };
 
 /**
+ * Options provided to the scan function
+ * @typedef {Object} ScanOptions
+ * @public
+ * @property {integer} [cursor=0] - A numeric value used to continue the iteration from where it left off. Initially, you start with 0.
+ * @property {string} [type='hash'] - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
+ * @property {integer} count - A hint to the server about how many elements to return in the call (default is 10).
+ */
+/**
  * State object
  * @typedef {Object} RedisState
  * @property data - the parsed response body
@@ -66,9 +76,9 @@ export function execute(...operations) {
  * get("patient");
  * @function
  * @public
- * @param {string} key - Key
- * @returns {Operation}
+ * @param {string} key - The name of the key
  * @state {RedisState}
+ * @returns {Operation}
  */
 export function get(key) {
   return async state => {
@@ -81,17 +91,15 @@ export function get(key) {
 }
 
 /**
- * Get the string value of a key
- * If the key does not exist the special value nil is returned.
- * An error is returned if the value stored at key is not a string, because GET only handles string values.
+ * HGET return the value associated with a specific field in a hash stored at a specified key.
  * @example
- * get("patient");
+ * hget("patient", "name");
  * @function
  * @public
- * @param {string} key - Key
+ * @param {string} key - The name of the key
  * @param {string} field - Field
- * @returns {Operation}
  * @state {RedisState}
+ * @returns {Operation}
  */
 export function hget(key, field) {
   return async state => {
@@ -103,14 +111,15 @@ export function hget(key, field) {
   };
 }
 /**
- * Get all fields and values of the hash stored at a specified key.
+ * HGETALL returns all fields and values of the hash stored at a specified key.
+ * In the returned value, every field name is followed by its value, so the length of the reply is twice the size of the hash.
  * @example
  * hGetAll("noderedis:animals:1");
  * @function
  * @public
- * @param {string} key - Key
- * @returns {Operation}
+ * @param {string} key - The name of the key
  * @state {RedisState}
+ * @returns {Operation}
  */
 export function hGetAll(key) {
   return async state => {
@@ -122,15 +131,16 @@ export function hGetAll(key) {
   };
 }
 /**
- * Set the string value of a key
+ * Set the string value of a key.
+ * If the key already exists, its value is updated. If the key doesn't exist, a new key-value pair is created.
  * @example
  * set("patient", "mtuchi");
  * @function
  * @public
- * @param {string} key - Key
- * @param {string} value - Value
- * @returns {Operation}
+ * @param {string} key - The name of the key
+ * @param {string} value - The value to set
  * @state {RedisState}
+ * @returns {Operation}
  */
 export function set(key, value) {
   return async state => {
@@ -142,15 +152,17 @@ export function set(key, value) {
 }
 
 /**
- * Set the string value of a key
+ * Sets the specified fields to their respective values in the hash stored at key.
+ * This function overwrites the values of specified fields that exist in the hash.
+ * If key doesn't exist, a new key holding a hash is created.
  * @example
  * set("patient", "mtuchi");
  * @function
  * @public
- * @param {string} key - Key
- * @param {string} value - Value
- * @returns {Operation}
+ * @param {string} key - The name of the key
+ * @param {string} value - The value to set
  * @state {RedisState}
+ * @returns {Operation}
  */
 export function hset(key, value) {
   return async state => {
@@ -167,10 +179,11 @@ export function hset(key, value) {
  * scan('*:20240524T172736Z*');
  * @function
  * @public
- * @param {string} pattern - Key
- * @param {object} options - Options
- * @returns {Operation}
+ * @param {string} pattern - A glob-style pattern
+ * @param {ScanOptions} options - Scan options
  * @state {RedisState}
+ * @state cursor - A numeric value used to continue the iteration from where it left off
+ * @returns {Operation}
  */
 export function scan(pattern, options = {}) {
   return async state => {

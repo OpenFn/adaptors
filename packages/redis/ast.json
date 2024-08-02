@@ -1,6 +1,67 @@
 {
   "operations": [
     {
+      "name": "execute",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Options provided to the scan function",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "ScanOptions"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "A numeric value used to continue the iteration from where it left off. Initially, you start with 0.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "integer"
+              }
+            },
+            "name": "cursor",
+            "default": "0"
+          },
+          {
+            "title": "property",
+            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "type",
+            "default": "'hash'"
+          },
+          {
+            "title": "property",
+            "description": "A hint to the server about how many elements to return in the call (default is 10).",
+            "type": {
+              "type": "NameExpression",
+              "name": "integer"
+            },
+            "name": "count"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "get",
       "params": [
         "key"
@@ -24,12 +85,16 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "The name of the key",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "key"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
           },
           {
             "title": "returns",
@@ -38,10 +103,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
@@ -54,11 +115,11 @@
         "field"
       ],
       "docs": {
-        "description": "Get the string value of a key\nIf the key does not exist the special value nil is returned.\nAn error is returned if the value stored at key is not a string, because GET only handles string values.",
+        "description": "HGET return the value associated with a specific field in a hash stored at a specified key.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patient\");"
+            "description": "hget(\"patient\", \"name\");"
           },
           {
             "title": "function",
@@ -72,7 +133,7 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "The name of the key",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -89,16 +150,16 @@
             "name": "field"
           },
           {
+            "title": "state",
+            "description": "{RedisState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
@@ -110,7 +171,7 @@
         "key"
       ],
       "docs": {
-        "description": "Get all fields and values of the hash stored at a specified key.",
+        "description": "HGETALL returns all fields and values of the hash stored at a specified key.\nIn the returned value, every field name is followed by its value, so the length of the reply is twice the size of the hash.",
         "tags": [
           {
             "title": "example",
@@ -128,12 +189,16 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "The name of the key",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "key"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
           },
           {
             "title": "returns",
@@ -142,10 +207,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
@@ -158,7 +219,7 @@
         "value"
       ],
       "docs": {
-        "description": "Set the string value of a key",
+        "description": "Set the string value of a key.\nIf the key already exists, its value is updated. If the key doesn't exist, a new key-value pair is created.",
         "tags": [
           {
             "title": "example",
@@ -176,7 +237,7 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "The name of the key",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -185,12 +246,16 @@
           },
           {
             "title": "param",
-            "description": "Value",
+            "description": "The value to set",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "value"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
           },
           {
             "title": "returns",
@@ -199,10 +264,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
@@ -215,7 +276,7 @@
         "value"
       ],
       "docs": {
-        "description": "Set the string value of a key",
+        "description": "Sets the specified fields to their respective values in the hash stored at key.\nThis function overwrites the values of specified fields that exist in the hash.\nIf key doesn't exist, a new key holding a hash is created.",
         "tags": [
           {
             "title": "example",
@@ -233,7 +294,7 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "The name of the key",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -242,12 +303,16 @@
           },
           {
             "title": "param",
-            "description": "Value",
+            "description": "The value to set",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "value"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
           },
           {
             "title": "returns",
@@ -256,10 +321,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
@@ -290,7 +351,7 @@
           },
           {
             "title": "param",
-            "description": "Key",
+            "description": "A glob-style pattern",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -299,12 +360,20 @@
           },
           {
             "title": "param",
-            "description": "Options",
+            "description": "Scan options",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "ScanOptions"
             },
             "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          },
+          {
+            "title": "state",
+            "description": "cursor - A numeric value used to continue the iteration from where it left off"
           },
           {
             "title": "returns",
@@ -313,10 +382,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{RedisState}"
           }
         ]
       },
