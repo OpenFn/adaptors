@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { get, set, hget, hset, hGetAll, scan, setMockClient } from '../src';
+import { get, set, setMockClient } from '../src';
 
 describe('get', () => {
   it('should get the string value of a key', async () => {
@@ -16,7 +16,8 @@ describe('get', () => {
       expect(state.data).to.eql('ok');
     });
   });
-  it('should return nil if key does not exist', async () => {
+
+  it('should return null if key does not exist', async () => {
     const state = {};
     const client = {
       get: () => Promise.resolve(null),
@@ -25,6 +26,20 @@ describe('get', () => {
 
     await get('not-found')(state).then(state => {
       expect(state.data).to.eql(null);
+    });
+  });
+  it('should set a value for a key', async () => {
+    const state = {};
+    const client = {
+      set: () => Promise.resolve('OK'),
+    };
+    setMockClient(client);
+
+    await set(
+      'name',
+      'kwaku'
+    )(state).then(state => {
+      expect(state.data).to.eql('OK');
     });
   });
 });
