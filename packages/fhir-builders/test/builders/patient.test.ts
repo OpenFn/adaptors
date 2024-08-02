@@ -5,7 +5,22 @@ import patient from '../../src/builders/patient';
 describe('Patient', () => {
   // TODO maybe
   it('should create a patient with a name', () => {
-    const p = patient({ id: 'x' });
+
+    const p = patient({
+      id: 'x',
+      name: [{
+
+      }]
+    });
+
+    p.name({ })
+
+
+
+
+
+
+
     p.name({ given: ['rah'] });
     const json = p.toJSON(); // ok so we know this is a Patient...
     json;

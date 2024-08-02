@@ -1,4 +1,15 @@
-export function create<Res, H>(type: string, mixins: H) {
+import { Patient } from 'fhir/r5';
+
+// Manually define this to map strings to types
+// Is there a better way?
+type ResourceMap = {
+  Patient: Patient;
+};
+
+export function create<Fns>(type: keyof ResourceMap, mixins: Fns) {
+  // Look up the returned resource type from the key
+  type Res = ResourceMap[typeof type];
+
   return (obj: Partial<Res>) => {
     // This is the resource under construction
     const data: Partial<Res> = {
@@ -32,6 +43,6 @@ export function create<Res, H>(type: string, mixins: H) {
       });
     }
 
-    return builder as typeof builder & H;
+    return builder as typeof builder & Fns;
   };
 }

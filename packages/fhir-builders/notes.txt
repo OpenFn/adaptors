@@ -37,6 +37,30 @@ One way would be to implement version 1, then have subclasses which extend and o
 
 could be a lot of work
 
+
+How much difference is there across versions? Here you go, there's a diff page: https://hl7.org/fhir/R5/diff.html
+
+Ok and it is immediately obvious that the list of differences here is huge. But I suppose you only have to look at CHANGED and maybe REMOVED things. When downgrading, you would remove anything newly added. When upgrading, you would remove anything removed and move/rename/port anything changed. That is a much smaller list I think
+
+Ok so here's my dream API:
+
+```
+patient({}, '4') // this will create a v4 patient
+  .toVersion('5') // this will auto migrate the patient to v5
+```
+
+The builders natively understand versions
+
+One nice thing about this API is I can take a v4 object, pass it into the constructor, and spit out a version
+
+But what's also true is that creating all this is a massive full time effort, and I don't really think AI can help me.
+
+What can I test on?
+
+Patient has only one small change, which is a default value
+
+Contract might be an interesting one to migrate - term.action.reason has changed to a Codeable concept.
+
 ## typings
 
 Ok so now...

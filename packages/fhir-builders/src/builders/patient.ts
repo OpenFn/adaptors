@@ -35,16 +35,8 @@ const name = function (name: Omit<HumanName, '_family' | '_given'>) {
   this.name.push(humanName(name));
 };
 
-// TODO annoyingly this does not work - I have to explicitly pass it in
-// Why doesn't the second generic get inferred from the second argument?
-// const builder = create<Patient>('Patient', {
-//   name,
-// });
-
-const mixins = {
+const builder = create('Patient', {
   name,
-};
-
-const builder = create<Patient, typeof mixins>('Patient', mixins);
+});
 
 export default builder;
