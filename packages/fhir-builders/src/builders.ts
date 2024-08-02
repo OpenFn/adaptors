@@ -21,8 +21,8 @@ export const createContext = (root, data, mixins) => {
       enumerable: false,
       value: function (...args) {
         const context = {
-          _resource: data,
-          _scope: builder,
+          resource: data,
+          scope: builder,
         };
         return mixins[key].call(context, ...args);
       },
@@ -69,8 +69,8 @@ export function create<T extends keyof ResourceMap, Fns>(
         enumerable: false,
         value: function (...args) {
           const context = {
-            _resource: data,
-            _scope: builder,
+            resource: data,
+            scope: builder,
           };
           return mixins[version][key].call(context, ...args);
         },

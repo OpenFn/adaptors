@@ -53,14 +53,28 @@ describe('Contract v5', () => {
 
     const json = c.toJSON();
 
-    console.log(c.toJSON());
     expect(json.term).to.eql({
       issued: 'today',
     });
   });
+
+  it('should set term.action.reason', () => {
+    const c = contract({}, '5')
+      .term()
+      .action()
+      // TODO would love a good example of this, docs are vague
+      .reason({ concept: 'Report', reference: '1234' });
+
+    const json = c.toJSON();
+
+    expect(json.term.action.reason).to.eql({
+      concept: 'Report',
+      reference: '1234',
+    });
+  });
 });
 
-describe.skip('Contract v4', () => {
+describe('Contract v4', () => {
   it('should create a contact', () => {
     const c = contract({}, '4');
 
@@ -68,5 +82,19 @@ describe.skip('Contract v4', () => {
 
     const json = c.toJSON();
     console.log(json);
+  });
+
+  it('should set term.action.reason', () => {
+    const c = contract({}, '4')
+      .term()
+      // TODO would love a good example of this, docs are vague
+      .action({ reason: 'cancelled', reasonCode: '1234' });
+
+    const json = c.toJSON();
+
+    expect(json.term.action).to.eql({
+      reason: 'cancelled',
+      reasonCode: '1234',
+    });
   });
 });
