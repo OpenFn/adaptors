@@ -2,4 +2,11 @@
 
 ## 1.0.0
 
-Initial release.
+Add the following operations
+
+- get(key)
+- hget(key, field)
+- set(key, field)
+- hset(key, value)
+- scan(pattern,options)
+- hGetAll(key)
