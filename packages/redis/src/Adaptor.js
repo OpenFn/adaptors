@@ -156,11 +156,11 @@ export function set(key, value) {
  * This function overwrites the values of specified fields that exist in the hash.
  * If key doesn't exist, a new key holding a hash is created.
  * @example
- * set("patient", "mtuchi");
+ * hset('patient', { name: 'mtuchi' });
  * @function
  * @public
  * @param {string} key - The name of the key
- * @param {string} value - The value to set
+ * @param {object} value - The values to set
  * @state {RedisState}
  * @returns {Operation}
  */

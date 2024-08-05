@@ -280,7 +280,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "set(\"patient\", \"mtuchi\");"
+            "description": "hset('patient', { name: 'mtuchi' });"
           },
           {
             "title": "function",
@@ -303,10 +303,10 @@
           },
           {
             "title": "param",
-            "description": "The value to set",
+            "description": "The values to set",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "object"
             },
             "name": "value"
           },
