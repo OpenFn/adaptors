@@ -26,8 +26,7 @@ jobs:
       - run:
           pnpm publish -r --report-summary --publish-branch main --access=public
 
-      - run: pnpm changeset tag
-      - run: git push --tags
+      - run: pnpm changeset tag && git push --tags
 
       - run: pnpm slack:notify
         env:
