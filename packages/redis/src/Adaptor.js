@@ -148,9 +148,11 @@ export function hGetAll(key) {
 export function set(key, value) {
   return async state => {
     const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    util.assertSetArgs(resolvedKey, resolvedValue);
     console.log(`Setting '${resolvedValue}' value of '${resolvedKey}' key`);
-    const result = await client.set(resolvedKey, resolvedValue);
-    return composeNextState(state, result);
+    await client.set(resolvedKey, resolvedValue);
+    console.log(`Set value for ${resolvedKey} key successfully`);
+    return state;
   };
 }
 
@@ -170,9 +172,12 @@ export function set(key, value) {
 export function hset(key, value) {
   return async state => {
     const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    util.asserthSetArgs(resolvedKey, resolvedValue);
     console.log(`Setting values of '${resolvedKey}' key`);
-    const result = await client.hSet(resolvedKey, resolvedValue);
-    return composeNextState(state, result);
+    await client.hSet(resolvedKey, resolvedValue);
+    console.log(`Set values for '${resolvedKey}' successfully`);
+
+    return state;
   };
 }
 

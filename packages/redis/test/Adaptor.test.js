@@ -98,28 +98,38 @@ describe('hget', () => {
 describe('set', () => {
   it('should set a value for a key', async () => {
     setMockClient({
-      set: async () => 'OK',
+      set: async (key, value) => {
+        expect(key).to.eql('name');
+        expect(value).to.eql('kwaku');
+        return 'OK';
+      },
     });
 
     const state = {};
     const result = await set('name', 'kwaku')(state);
-    expect(result.data).to.eql('OK');
+    expect(result).to.eql(state);
   });
   it('should expand references', async () => {
     setMockClient({
-      set: async () => 'OK',
+      set: async (key, value) => {
+        expect(key).to.eql('name');
+        expect(value).to.eql('fela');
+        return 'OK';
+      },
     });
-    const state = { key: 'name', value: 'mtuchi' };
+    const state = { key: 'name', value: 'fela' };
     const result = await set(
       s => s.key,
       s => s.value
     )(state);
-    expect(result.data).to.eql('OK');
+    expect(result).to.eql(state);
   });
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
-      set: async () => {
-        throw new Error('TypeError: Invalid argument type');
+      set: async (key, value) => {
+        expect(key).to.eql(undefined);
+        expect(value).to.eql(undefined);
+        throw new Error();
       },
     });
 
@@ -128,12 +138,15 @@ describe('set', () => {
       await set()(state);
     } catch (error) {
       expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
   it('should throw an error if value is not specified', async () => {
     setMockClient({
-      set: async () => {
-        throw new Error('TypeError: Invalid argument type');
+      set: async (key, value) => {
+        expect(key).to.eql('patient');
+        expect(value).to.eql(undefined);
+        throw new Error();
       },
     });
 
@@ -144,49 +157,44 @@ describe('set', () => {
       expect(error.message).to.eql('TypeError: Invalid argument type');
     }
   });
-  it('should throw an error if key is not specified', async () => {
-    setMockClient({
-      set: async () => {
-        throw new Error('TypeError: Invalid argument type');
-      },
-    });
-
-    const state = {};
-    try {
-      await set('', 'kwaku')(state);
-    } catch (error) {
-      expect(error.message).to.eql('TypeError: Invalid argument type');
-    }
-  });
 });
 
 describe('hset', () => {
   it('should set fields value for a specified key', async () => {
     setMockClient({
-      hSet: async () => 1,
+      hSet: async (key, value) => {
+        expect(key).to.eql('patient');
+        expect(value).to.eql({ name: 'kwaku' });
+
+        return 1;
+      },
     });
 
     const state = {};
     const result = await hset('patient', { name: 'kwaku' })(state);
-    expect(result.data).to.eql(1);
+
+    expect(result).to.eql(state);
   });
   it('should expand references', async () => {
     setMockClient({
-      hSet: async () => 1,
+      hSet: async (key, value) => {
+        expect(key).to.eql('patient');
+        expect(value).to.eql({ name: 'fela' });
+
+        return 1;
+      },
     });
-    const state = { key: 'patient', value: { name: 'mtuchi' } };
+    const state = { key: 'patient', value: { name: 'fela' } };
     const result = await hset(
       s => s.key,
       s => s.value
     )(state);
-    expect(result.data).to.eql(1);
+    expect(result).to.eql(state);
   });
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
       hSet: async () => {
-        const e = new Error('TypeError: Invalid argument type');
-        e.code = 'ARGUMENT_ERROR';
-        throw e;
+        throw new Error();
       },
     });
 
@@ -201,10 +209,7 @@ describe('hset', () => {
   it('should throw an error if value is not specified', async () => {
     setMockClient({
       hSet: async () => {
-        const e = new Error('TypeError: Invalid argument type');
-        e.code = 'ARGUMENT_ERROR';
-        e.fix = `Please pass an object for the value: Example {name: "john"}`;
-        throw e;
+        throw new Error();
       },
     });
 
@@ -215,24 +220,19 @@ describe('hset', () => {
       expect(error.message).to.eql('TypeError: Invalid argument type');
       expect(error.code).to.eql('ARGUMENT_ERROR');
       expect(error.fix).to.eql(
-        'Please pass an object for the value: Example {name: "john"}'
+        `Make sure to pass an object for the value: e.g., hset('patient', {name: "fela"})`
       );
     }
-  });
-  it('should set an empt key if key is not specified', async () => {
-    setMockClient({
-      hSet: async () => 0,
-    });
-
-    const state = {};
-    const result = await hset('', { name: 'kwaku' })(state);
-    expect(result.data).to.eql(0);
   });
 });
 describe('scan', () => {
   it('should return empty array if key not found', async () => {
     setMockClient({
-      scan: async () => ({ keys: [], cursor: 0 }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('*:abc*');
+        return { keys: [], cursor: 0 };
+      },
     });
     const state = {};
     const result = await scan('*:abc*')(state);
@@ -241,7 +241,12 @@ describe('scan', () => {
   });
   it('should return collection of keys', async () => {
     setMockClient({
-      scan: async () => ({ keys: ['noderedis:animals:1'], cursor: 0 }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('*:animals*');
+        expect(options.TYPE).to.eql('hash');
+        return { keys: ['noderedis:animals:1'], cursor: 0 };
+      },
     });
 
     const state = {};
@@ -251,10 +256,16 @@ describe('scan', () => {
   });
   it('should return all hash keys if no query is specified', async () => {
     setMockClient({
-      scan: async () => ({
-        keys: ['animals:1', 'family:name'],
-        cursor: 0,
-      }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql(undefined);
+        expect(options.TYPE).to.eql('hash');
+
+        return {
+          keys: ['animals:1', 'family:name'],
+          cursor: 0,
+        };
+      },
     });
 
     const state = {};
@@ -265,10 +276,15 @@ describe('scan', () => {
 
   it('should return all string keys', async () => {
     setMockClient({
-      scan: async () => ({
-        keys: ['animal', 'family'],
-        cursor: 0,
-      }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('');
+        expect(options.TYPE).to.eql('string');
+        return {
+          keys: ['animal', 'family'],
+          cursor: 0,
+        };
+      },
     });
 
     const state = {};
@@ -279,10 +295,15 @@ describe('scan', () => {
 
   it('should return a string key', async () => {
     setMockClient({
-      scan: async () => ({
-        keys: ['animal'],
-        cursor: 0,
-      }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('animal');
+        expect(options.TYPE).to.eql('string');
+        return {
+          keys: ['animal'],
+          cursor: 0,
+        };
+      },
     });
 
     const state = {};
@@ -293,7 +314,12 @@ describe('scan', () => {
 
   it('should expand referecence', async () => {
     setMockClient({
-      scan: async () => ({ keys: ['animals:1'], cursor: 0 }),
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('*:animals*');
+        expect(options.TYPE).to.eql('hash');
+        return { keys: ['animals:1'], cursor: 0 };
+      },
     });
 
     const state = { pattern: '*:animals*' };

@@ -21,3 +21,29 @@ export const asserthGetArgs = (key, field) => {
     `Ensure both key and field are strings for hget(): e.g., hget('patient', 'name').`
   );
 };
+
+export const asserthSetArgs = (key, value) => {
+  assertArgType(
+    key,
+    'string',
+    `Make sure to pass a string for the key: e.g., hset('patient', {name: "fela"})`
+  );
+  assertArgType(
+    value,
+    'object',
+    `Make sure to pass an object for the value: e.g., hset('patient', {name: "fela"})`
+  );
+};
+
+export const assertSetArgs = (key, value) => {
+  assertArgType(
+    key,
+    'string',
+    `Make sure both key and value are strings for set(): e.g., set('name', 'fela')`
+  );
+  assertArgType(
+    value,
+    'string',
+    `Make sure both key and value are strings for set(): e.g., set('name', 'fela')`
+  );
+};
