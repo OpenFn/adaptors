@@ -48,10 +48,10 @@ describe('hget', () => {
     const result = await hget('animals:1', 'cat')(state);
     expect(result.data).to.eql(null);
   });
-  it('should throw field value is not specified', async () => {
+  it('should throw if field value is not specified', async () => {
     setMockClient({
       hGet: async () => {
-        throw new Error('TypeError: Invalid argument type');
+        throw new Error();
       },
     });
     const state = {};
@@ -59,6 +59,10 @@ describe('hget', () => {
       await hget('animals:1')(state);
     } catch (error) {
       expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.description).to.eql(
+        `Expected a argument to be 'string', but was given: undefined`
+      );
+      expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
   it('should expand references', async () => {
@@ -68,9 +72,26 @@ describe('hget', () => {
     const state = { key: 'animals:1', value: 'species' };
     const result = await hget(
       s => s.key,
-      s => s.species
+      s => s.value
     )(state);
     expect(result.data).to.eql('cat');
+  });
+  it('should throw if wrong operation', async () => {
+    setMockClient({
+      hGet: async () => {
+        throw new Error(
+          'WRONGTYPE Operation against a key holding the wrong kind of value'
+        );
+      },
+    });
+    const state = {};
+    try {
+      await hget('patient', 'name')(state);
+    } catch (error) {
+      expect(error.message).to.eql(
+        'WRONGTYPE Operation against a key holding the wrong kind of value'
+      );
+    }
   });
 });
 
@@ -163,9 +184,9 @@ describe('hset', () => {
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
       hSet: async () => {
-        throw new Error(
-          'TypeError: Cannot convert undefined or null to object'
-        );
+        const e = new Error('TypeError: Invalid argument type');
+        e.code = 'ARGUMENT_ERROR';
+        throw e;
       },
     });
 
@@ -173,17 +194,17 @@ describe('hset', () => {
     try {
       await hset()(state);
     } catch (error) {
-      expect(error.message).to.eql(
-        'TypeError: Cannot convert undefined or null to object'
-      );
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
   it('should throw an error if value is not specified', async () => {
     setMockClient({
       hSet: async () => {
-        throw new Error(
-          'TypeError: Cannot convert undefined or null to object'
-        );
+        const e = new Error('TypeError: Invalid argument type');
+        e.code = 'ARGUMENT_ERROR';
+        e.fix = `Please pass an object for the value: Example {name: "john"}`;
+        throw e;
       },
     });
 
@@ -191,8 +212,10 @@ describe('hset', () => {
     try {
       await hset('patient')(state);
     } catch (error) {
-      expect(error.message).to.eql(
-        'TypeError: Cannot convert undefined or null to object'
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+      expect(error.fix).to.eql(
+        'Please pass an object for the value: Example {name: "john"}'
       );
     }
   });

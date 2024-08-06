@@ -5,6 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { createClient } from 'redis';
+import * as util from './Utils';
 
 let client = null;
 
@@ -104,8 +105,10 @@ export function get(key) {
 export function hget(key, field) {
   return async state => {
     const [resolvedKey, resolvedField] = expandReferences(state, key, field);
+    util.asserthGetArgs(resolvedKey, resolvedField);
     console.log(`Fetching value of '${resolvedKey}' key`);
     const result = await client.hGet(resolvedKey, resolvedField);
+    console.log({ result });
 
     return composeNextState(state, result);
   };
