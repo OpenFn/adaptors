@@ -2,11 +2,11 @@
 
 ## 1.0.0
 
-Add the following operations
+First release. Designed as a low-level wrapper around npm redis client.
 
 - get(key)
 - hget(key, field)
-- set(key, field)
+- hGetAll(key)
 - hset(key, value)
 - scan(pattern,options)
-- hGetAll(key)
+- set(key, field)
