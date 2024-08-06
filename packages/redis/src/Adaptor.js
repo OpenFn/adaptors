@@ -55,7 +55,7 @@ const disconnect = async state => {
 /**
  * State object
  * @typedef {Object} RedisState
- * @property data - the parsed response body
+ * @property data - the result returned from Redis
  * @property references - an array of all previous data objects used in the Job
  **/
 
@@ -71,10 +71,10 @@ export function execute(...operations) {
 }
 
 /**
- * Get the string value of a key
- * If the key does not exist the special value null is returned.
- * An error is returned if the value stored at key is not a string, because GET only handles string values.
- * @example
+ * Get the string value of a key.
+ * If the key does not exist, null is returned.
+ * An error is thrown if the value stored at key is not a string, because `get()` only handles string values.
+ * @example <caption>Get the value of the patient key</caption>
  * get("patient");
  * @function
  * @public
@@ -93,8 +93,8 @@ export function get(key) {
 }
 
 /**
- * HGET return the value associated with a specific field in a hash stored at a specified key.
- * @example
+ * Get the value associated with a specific field in a hash stored at a specified key.
+ * @example <caption>Get the value of the name field under the patient key</caption>
  * hget("patient", "name");
  * @function
  * @public
@@ -115,15 +115,16 @@ export function hget(key, field) {
     return composeNextState(state, result);
   };
 }
+
 /**
- * HGETALL returns all fields and values of the hash stored at a specified key.
- * In the returned value, every field name is followed by its value, so the length of the reply is twice the size of the hash.
- * @example
+ * Get all fields and values of a hash, as an object, for a specified key.
+ * @example <caption>Get the hash obejct at the noderedis:animals:1 key</caption>
  * hGetAll("noderedis:animals:1");
  * @function
  * @public
  * @param {string} key - The name of the key
  * @state {RedisState}
+ * @state data - The hash as an object
  * @returns {Operation}
  */
 export function hGetAll(key) {
@@ -136,16 +137,17 @@ export function hGetAll(key) {
     return composeNextState(state, result);
   };
 }
+
 /**
  * Set the string value of a key.
- * If the key already exists, its value is updated. If the key doesn't exist, a new key-value pair is created.
- * @example
+ * If the key already exists, its value is updated. Otherwise, a new key-value pair is created.
+ * @example <caption>Set the "patient" key to value "mtuchi"</caption>
  * set("patient", "mtuchi");
  * @function
  * @public
  * @param {string} key - The name of the key
  * @param {string} value - The value to set
- * @state {RedisState}
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function set(key, value) {
@@ -165,13 +167,15 @@ export function set(key, value) {
  * Sets the specified fields to their respective values in the hash stored at key.
  * This function overwrites the values of specified fields that exist in the hash.
  * If key doesn't exist, a new key holding a hash is created.
- * @example
+ * @example <caption>Set a field and value for the patient key</caption>
  * hset('patient', { name: 'mtuchi' });
+ * @example <caption>Set multiple field values for the patient key</caption>
+ * hset('patient', { name: 'victor', ihs_number: 12345  });
  * @function
  * @public
  * @param {string} key - The name of the key
  * @param {object} value - The values to set
- * @state {RedisState}
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function hset(key, value) {
@@ -188,14 +192,22 @@ export function hset(key, value) {
 }
 
 /**
- * Incrementally iterating over a collection of keys in the currently selected database
- * @example
+ * Returns all keys which patch the provided pattern.
+ * @example <caption>Scan for matching keys</caption>
  * scan('*:20240524T172736Z*');
+ * @example <caption>Scan for keys and fetch the string values inside</caption>
+ * scan('*:20240524T172736Z*');
+ * each($.data, get($.data).then((state) => {
+ *    state.results = state.results ?? [];
+ *    state.results.push(state.data)
+ *    return state;
+ * })
  * @function
  * @public
  * @param {string} pattern - A glob-style pattern
  * @param {ScanOptions} options - Scan options
  * @state {RedisState}
+ * @state data - an array of keys which match the pattern
  * @state cursor - A numeric value used to continue the iteration from where it left off
  * @returns {Operation}
  */
