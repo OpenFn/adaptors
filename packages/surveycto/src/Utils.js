@@ -20,10 +20,9 @@ const buildUrl = (configuration = {}, path) => {
   if (!servername) {
     throw 'Error: specify servername in your credentials';
   }
-  return nodepath.join(
-    `https://${servername}.surveycto.com/api`,
-    apiVersion,
-    path
+  return (
+    'https://' +
+    nodepath.join(`${servername}.surveycto.com/api`, apiVersion, path)
   );
 };
 

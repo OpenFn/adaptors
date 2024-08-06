@@ -71,7 +71,7 @@ export function execute(...operations) {
  * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function fetchSubmissions(formId, options, callback = s => s) {
+export function fetchSubmissions(formId, options = {}, callback = s => s) {
   return state => {
     const [resolvedFormId, resolvedOptions] = expandReferences(
       state,

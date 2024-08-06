@@ -1,11 +1,15 @@
 import { expect } from 'chai';
+import { enableMockClient } from '@openfn/language-common/util';
 
 import ClientFixtures, { fixtures } from './ClientFixtures';
 
 import Adaptor from '../src';
 import { convertDate, dateRegex } from '../src/Utils';
 
-const { execute, request } = Adaptor;
+const { execute, request, fetchSubmissions } = Adaptor;
+
+const baseUrl = 'https://test.surveycto.com';
+const mock = enableMockClient(baseUrl);
 
 describe('execute', () => {
   it.skip('executes each operation in sequence', done => {
@@ -54,6 +58,31 @@ describe('request', () => {
       err = e;
     }
     expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
+  });
+});
+
+describe('fetchSubmissions', () => {
+  it('should not blow up if 0 records returned', async () => {
+    const state = {
+      configuration: {
+        user: 'u',
+        password: 'p',
+        servername: 'test',
+      },
+    };
+
+    mock
+      .intercept({
+        path: /\/api\/v1\/forms\/data\/wide\/json\/my\-form/,
+        method: 'GET',
+      })
+      .reply(200, [], {
+        headers: { 'content-type': 'application/json' },
+      });
+
+    const result = await fetchSubmissions('my-form')(state);
+    expect(result.data).to.eql([]);
+    expect(result.response.statusCode).to.eql(200);
   });
 });
 
