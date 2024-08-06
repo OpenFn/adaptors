@@ -67,11 +67,12 @@
         "key"
       ],
       "docs": {
-        "description": "Get the string value of a key\nIf the key does not exist the special value null is returned.\nAn error is returned if the value stored at key is not a string, because GET only handles string values.",
+        "description": "Get the string value of a key.\nIf the key does not exist, null is returned.\nAn error is thrown if the value stored at key is not a string, because `get()` only handles string values.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patient\");"
+            "description": "get(\"patient\");",
+            "caption": "Get the value of the patient key"
           },
           {
             "title": "function",
@@ -115,11 +116,12 @@
         "field"
       ],
       "docs": {
-        "description": "HGET return the value associated with a specific field in a hash stored at a specified key.",
+        "description": "Get the value associated with a specific field in a hash stored at a specified key.",
         "tags": [
           {
             "title": "example",
-            "description": "hget(\"patient\", \"name\");"
+            "description": "hget(\"patient\", \"name\");",
+            "caption": "Get the value of the name field under the patient key"
           },
           {
             "title": "function",
@@ -171,11 +173,12 @@
         "key"
       ],
       "docs": {
-        "description": "HGETALL returns all fields and values of the hash stored at a specified key.\nIn the returned value, every field name is followed by its value, so the length of the reply is twice the size of the hash.",
+        "description": "Get all fields and values of a hash, as an object, for a specified key.",
         "tags": [
           {
             "title": "example",
-            "description": "hGetAll(\"noderedis:animals:1\");"
+            "description": "hGetAll(\"noderedis:animals:1\");",
+            "caption": "Get the hash obejct at the noderedis:animals:1 key"
           },
           {
             "title": "function",
@@ -201,6 +204,10 @@
             "description": "{RedisState}"
           },
           {
+            "title": "state",
+            "description": "data - The hash as an object"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -219,11 +226,12 @@
         "value"
       ],
       "docs": {
-        "description": "Set the string value of a key.\nIf the key already exists, its value is updated. If the key doesn't exist, a new key-value pair is created.",
+        "description": "Set the string value of a key.\nIf the key already exists, its value is updated. Otherwise, a new key-value pair is created.",
         "tags": [
           {
             "title": "example",
-            "description": "set(\"patient\", \"mtuchi\");"
+            "description": "set(\"patient\", \"mtuchi\");",
+            "caption": "Set the \"patient\" key to value \"mtuchi\""
           },
           {
             "title": "function",
@@ -255,7 +263,7 @@
           },
           {
             "title": "state",
-            "description": "{RedisState}"
+            "description": "references - an array of all previous data objects used in the Job"
           },
           {
             "title": "returns",
@@ -280,7 +288,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "hset('patient', { name: 'mtuchi' });"
+            "description": "hset('patient', { name: 'mtuchi' });",
+            "caption": "Set a field and value for the patient key"
+          },
+          {
+            "title": "example",
+            "description": "hset('patient', { name: 'victor', ihs_number: 12345  });",
+            "caption": "Set multiple field values for the patient key"
           },
           {
             "title": "function",
@@ -312,7 +326,7 @@
           },
           {
             "title": "state",
-            "description": "{RedisState}"
+            "description": "references - an array of all previous data objects used in the Job"
           },
           {
             "title": "returns",
@@ -333,11 +347,17 @@
         "options"
       ],
       "docs": {
-        "description": "Incrementally iterating over a collection of keys in the currently selected database",
+        "description": "Returns all keys which patch the provided pattern.",
         "tags": [
           {
             "title": "example",
-            "description": "scan('*:20240524T172736Z*');"
+            "description": "scan('*:20240524T172736Z*');",
+            "caption": "Scan for matching keys"
+          },
+          {
+            "title": "example",
+            "description": "scan('*:20240524T172736Z*');\neach($.data, get($.data).then((state) => {\n   state.results = state.results ?? [];\n   state.results.push(state.data)\n   return state;\n})",
+            "caption": "Scan for keys and fetch the string values inside"
           },
           {
             "title": "function",
@@ -370,6 +390,10 @@
           {
             "title": "state",
             "description": "{RedisState}"
+          },
+          {
+            "title": "state",
+            "description": "data - an array of keys which match the pattern"
           },
           {
             "title": "state",
