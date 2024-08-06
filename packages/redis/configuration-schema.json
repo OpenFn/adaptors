@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "host": {
+      "title": "Host",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Redis server hostname",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "redis.example.com"
+      ]
+    },
+    "database": {
+      "title": "Database Number",
+      "type": "integer",
+      "description": "Redis database number. New connections always use the database 0.",
+      "examples": [
+        0
+      ]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Redis Access Control username",
+      "examples": [
+        "test@openfn.org"
+      ]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Redis Access Control password",
+      "writeOnly": true,
+      "examples": [
+        "@some(!)Str0ngp4ss0w0rd"
+      ]
+    },
+    "port": {
+      "title": "Port",
+      "type": "string",
+      "description": "Redis server port",
+      "writeOnly": true,
+      "default": "6379",
+      "examples": [
+        "16652"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "host",
+    "password",
+    "username"
+  ]
+}
