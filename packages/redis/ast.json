@@ -67,7 +67,7 @@
         "key"
       ],
       "docs": {
-        "description": "Get the string value of a key\nIf the key does not exist the special value nil is returned.\nAn error is returned if the value stored at key is not a string, because GET only handles string values.",
+        "description": "Get the string value of a key\nIf the key does not exist the special value null is returned.\nAn error is returned if the value stored at key is not a string, because GET only handles string values.",
         "tags": [
           {
             "title": "example",

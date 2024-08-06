@@ -71,7 +71,7 @@ export function execute(...operations) {
 
 /**
  * Get the string value of a key
- * If the key does not exist the special value nil is returned.
+ * If the key does not exist the special value null is returned.
  * An error is returned if the value stored at key is not a string, because GET only handles string values.
  * @example
  * get("patient");
