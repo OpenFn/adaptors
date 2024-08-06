@@ -249,7 +249,7 @@ describe('scan', () => {
     expect(result.data).to.eql(['noderedis:animals:1']);
     expect(result.cursor).to.eql(0);
   });
-  it('should return all hash keys', async () => {
+  it('should return all hash keys if no query is specified', async () => {
     setMockClient({
       scan: async () => ({
         keys: ['animals:1', 'family:name'],
