@@ -126,9 +126,7 @@ describe('set', () => {
   });
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
-      set: async (key, value) => {
-        expect(key).to.eql(undefined);
-        expect(value).to.eql(undefined);
+      set: async () => {
         throw new Error();
       },
     });
@@ -143,9 +141,7 @@ describe('set', () => {
   });
   it('should throw an error if value is not specified', async () => {
     setMockClient({
-      set: async (key, value) => {
-        expect(key).to.eql('patient');
-        expect(value).to.eql(undefined);
+      set: async () => {
         throw new Error();
       },
     });
@@ -155,6 +151,24 @@ describe('set', () => {
       await set('patient')(state);
     } catch (error) {
       expect(error.message).to.eql('TypeError: Invalid argument type');
+    }
+  });
+  it('should throw an error if value is an object', async () => {
+    setMockClient({
+      set: async () => {
+        throw new Error();
+      },
+    });
+
+    const state = {};
+    try {
+      await set('patient', { name: 'kutai' })(state);
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+      expect(error.fix).to.eql(
+        `Make sure both key and value are strings for set(): e.g., set('name', 'fela')`
+      );
     }
   });
 });
