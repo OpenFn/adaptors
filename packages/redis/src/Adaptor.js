@@ -51,6 +51,7 @@ const disconnect = async state => {
  * @property {string} [type='hash'] - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
  * @property {integer} count - A hint to the server about how many elements to return in the call (default is 10).
  */
+
 /**
  * State object
  * @typedef {Object} RedisState
@@ -106,6 +107,7 @@ export function hget(key, field) {
   return async state => {
     const [resolvedKey, resolvedField] = expandReferences(state, key, field);
     util.asserthGetArgs(resolvedKey, resolvedField);
+
     console.log(`Fetching value of '${resolvedKey}' key`);
     const result = await client.hGet(resolvedKey, resolvedField);
     console.log({ result });
@@ -127,6 +129,7 @@ export function hget(key, field) {
 export function hGetAll(key) {
   return async state => {
     const [resolvedKey] = expandReferences(state, key);
+
     console.log(`Fetching value of '${resolvedKey}' key`);
     const result = await client.hGetAll(resolvedKey);
 
@@ -149,9 +152,11 @@ export function set(key, value) {
   return async state => {
     const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
     util.assertSetArgs(resolvedKey, resolvedValue);
+
     console.log(`Setting '${resolvedValue}' value of '${resolvedKey}' key`);
     await client.set(resolvedKey, resolvedValue);
     console.log(`Set value for ${resolvedKey} key successfully`);
+
     return state;
   };
 }
@@ -173,6 +178,7 @@ export function hset(key, value) {
   return async state => {
     const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
     util.asserthSetArgs(resolvedKey, resolvedValue);
+
     console.log(`Setting values of '${resolvedKey}' key`);
     await client.hSet(resolvedKey, resolvedValue);
     console.log(`Set values for '${resolvedKey}' successfully`);
