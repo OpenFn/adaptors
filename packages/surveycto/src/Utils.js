@@ -21,6 +21,7 @@ const buildUrl = (configuration = {}, path) => {
     throw 'Error: specify servername in your credentials';
   }
   return (
+    // Warning: nodepath will convert https:// into https:/
     'https://' +
     nodepath.join(`${servername}.surveycto.com/api`, apiVersion, path)
   );
