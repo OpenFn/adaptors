@@ -221,12 +221,12 @@ describe('hset', () => {
   });
   it('should set an empt key if key is not specified', async () => {
     setMockClient({
-      hSet: async () => 1,
+      hSet: async () => 0,
     });
 
     const state = {};
     const result = await hset('', { name: 'kwaku' })(state);
-    expect(result.data).to.eql(1);
+    expect(result.data).to.eql(0);
   });
 });
 describe('scan', () => {
