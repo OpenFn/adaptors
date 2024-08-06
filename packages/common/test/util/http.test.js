@@ -74,6 +74,16 @@ describe('parseUrl', () => {
     expect(url).to.eql('https://www.example.org/api/a/b/c');
   });
 
+  it('should work with matching absolute url and no base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'https://www.example.org/api/a/b/c'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
   it('should extract query parameters', () => {
     const { query } = parseUrl('a/b/c?x=1&y=2', 'https://www.example.org/api');
 

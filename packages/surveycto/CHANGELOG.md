@@ -1,5 +1,12 @@
 # @openfn/language-surveycto
 
+## 2.2.2
+
+### Patch Changes
+
+- d54ab59: Fix an issue assembling surveyCTO urls (which manifested as
+  `TypeError: Cannot read properties of undefined (reading 'toString'`)
+
 ## 2.2.1
 
 ### Patch Changes

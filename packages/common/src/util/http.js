@@ -118,6 +118,10 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
       }
     }
   } else if (baseUrl) {
+    // Note: we use path.join here because our "baseUrl" may not be a stict base url
+    //       Ie it may be https://example.com/api/v1
+    //       Doing new URl(path, base) will chop off the "base path" so to speak, and break stuff
+    //       Technically path.join will produce an invalid URL, but the URL parser handles it safely
     fullUrl = new URL(path.join(baseUrl, pathOrUrl));
   } else {
     // let this throw
