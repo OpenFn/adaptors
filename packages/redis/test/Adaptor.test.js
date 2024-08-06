@@ -64,7 +64,7 @@ describe('hget', () => {
     } catch (error) {
       expect(error.message).to.eql('TypeError: Invalid argument type');
       expect(error.description).to.eql(
-        `Expected a argument to be 'string', but was given: undefined`
+        `Expected argument to be 'string', but received: undefined`
       );
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }

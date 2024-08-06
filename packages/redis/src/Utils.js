@@ -3,7 +3,7 @@ const assertArgType = (arg, type, fix) => {
   if (typeof arg !== type) {
     const e = new Error('TypeError: Invalid argument type');
     e.code = 'ARGUMENT_ERROR';
-    e.description = `Expected a argument to be '${type}', but was given: ${typeof arg}`;
+    e.description = `Expected argument to be '${type}', but received: ${typeof arg}`;
     e.fix = fix;
 
     throw e;
