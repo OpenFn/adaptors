@@ -12,6 +12,7 @@ describe('get', () => {
     const result = await get('patient')(state);
     expect(result.data).to.eql('john doe');
   });
+
   it('should expand references', async () => {
     setMockClient({
       get: async () => 'mtuchi',
@@ -20,6 +21,7 @@ describe('get', () => {
     const result = await get(s => s.key)(state);
     expect(result.data).to.eql('mtuchi');
   });
+
   it('should return null if key does not exist', async () => {
     setMockClient({
       get: async () => null,
@@ -40,6 +42,7 @@ describe('hget', () => {
     const result = await hget('animals:1', 'species')(state);
     expect(result.data).to.eql('cat');
   });
+
   it('should return null if field value is not found', async () => {
     setMockClient({
       hGet: async () => null,
@@ -48,6 +51,7 @@ describe('hget', () => {
     const result = await hget('animals:1', 'cat')(state);
     expect(result.data).to.eql(null);
   });
+
   it('should throw if field value is not specified', async () => {
     setMockClient({
       hGet: async () => {
@@ -65,6 +69,7 @@ describe('hget', () => {
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
+
   it('should expand references', async () => {
     setMockClient({
       hGet: async () => 'cat',
@@ -76,6 +81,7 @@ describe('hget', () => {
     )(state);
     expect(result.data).to.eql('cat');
   });
+
   it('should throw if wrong operation', async () => {
     setMockClient({
       hGet: async () => {
@@ -109,6 +115,7 @@ describe('set', () => {
     const result = await set('name', 'kwaku')(state);
     expect(result).to.eql(state);
   });
+
   it('should expand references', async () => {
     setMockClient({
       set: async (key, value) => {
@@ -124,6 +131,7 @@ describe('set', () => {
     )(state);
     expect(result).to.eql(state);
   });
+
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
       set: async () => {
@@ -139,6 +147,7 @@ describe('set', () => {
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
+
   it('should throw an error if value is not specified', async () => {
     setMockClient({
       set: async () => {
@@ -153,6 +162,7 @@ describe('set', () => {
       expect(error.message).to.eql('TypeError: Invalid argument type');
     }
   });
+
   it('should throw an error if value is an object', async () => {
     setMockClient({
       set: async () => {
@@ -189,6 +199,7 @@ describe('hset', () => {
 
     expect(result).to.eql(state);
   });
+
   it('should expand references', async () => {
     setMockClient({
       hSet: async (key, value) => {
@@ -205,6 +216,7 @@ describe('hset', () => {
     )(state);
     expect(result).to.eql(state);
   });
+
   it('should throw an error if key and value is not specified', async () => {
     setMockClient({
       hSet: async () => {
@@ -220,6 +232,7 @@ describe('hset', () => {
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
+
   it('should throw an error if value is not specified', async () => {
     setMockClient({
       hSet: async () => {
@@ -239,6 +252,7 @@ describe('hset', () => {
     }
   });
 });
+
 describe('scan', () => {
   it('should return empty array if key not found', async () => {
     setMockClient({
@@ -253,6 +267,7 @@ describe('scan', () => {
     expect(result.data).to.eql([]);
     expect(result.cursor).to.eql(0);
   });
+
   it('should return collection of keys', async () => {
     setMockClient({
       scan: async (cursor, options) => {
@@ -268,6 +283,7 @@ describe('scan', () => {
     expect(result.data).to.eql(['noderedis:animals:1']);
     expect(result.cursor).to.eql(0);
   });
+
   it('should return all hash keys if no query is specified', async () => {
     setMockClient({
       scan: async (cursor, options) => {
