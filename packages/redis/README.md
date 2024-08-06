@@ -1,11 +1,12 @@
 # language-redis <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the redis API.
+An OpenFn **_adaptor_** for building integration jobs for use with the redis
+API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/redis-docs)
-for full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/redis-docs) for
+full technical documentation.
 
 ### Configuration
 
@@ -13,10 +14,10 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/redis-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `hset` function
 
 ```js
-post('patient', { name: 'Bukayo' });
+hset('patient', { name: 'Bukayo' });
 ```
 
 ## Development
