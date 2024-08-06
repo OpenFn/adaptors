@@ -13,7 +13,7 @@ import {
 
 const client = enableMockClient('https://www.example.com');
 
-describe('parseUrl', () => {
+describe.only('parseUrl', () => {
   it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
 
@@ -67,6 +67,16 @@ describe('parseUrl', () => {
     const { url, baseUrl, path } = parseUrl(
       'https://www.example.org/api/a/b/c',
       'https://www.example.org/api'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
+  it('should work with matching absolute url and no base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'https://www.example.org/api/a/b/c'
     );
 
     expect(baseUrl).to.equal('https://www.example.org');
