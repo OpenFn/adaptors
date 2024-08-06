@@ -66,7 +66,7 @@ export const dateRegex = /^(\w{3} \d{2}, \d{4} \d{2}:\d{2}(:\d{2})? (PM|AM))$/;
 
 /**
  * This function will attempt to convert any date representation into
- * a surveyCTO `MMM dd, yyy h:mm:ss a` string.
+ * a surveyCTO `MMM dd, yyyy hh:mm:ss a` string.
  * Strings already in this format will be ignored, other strings will be parsed
  * by the Date constructor.
  * Number values should be epoch or unix timestamps and will be converted to strings
@@ -93,7 +93,7 @@ export const convertDate = date => {
   const formatted = formatInTimeZone(
     dateObj.toISOString(),
     'UTC',
-    'MMM dd, yyy h:mm:ss a'
+    'MMM dd, yyyy hh:mm:ss a'
   );
 
   console.log(`Converted timestamp "${date}" to "${formatted}" (UTC)`);
