@@ -13,7 +13,7 @@ import {
 
 const client = enableMockClient('https://www.example.com');
 
-describe.only('parseUrl', () => {
+describe('parseUrl', () => {
   it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
 
