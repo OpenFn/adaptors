@@ -329,6 +329,7 @@ export {
   cursor,
   alterState,
   arrayToString,
+  dateFns,
   combine,
   dataPath,
   dataValue,
