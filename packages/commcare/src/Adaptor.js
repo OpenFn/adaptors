@@ -7,10 +7,10 @@ import xlsx from 'xlsx';
 import { request, prepareNextState } from './Utils';
 /**
  * State object
- * @typedef {Object} HttpState
- * @state data - the response body (as JSON)
- * @state response - the HTTP response from the CommCare server (excluding the body)
- * @state references
+ * @typedef {Object} CommcareHttpState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the CommCare server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
  */
 
 /**
@@ -37,26 +37,25 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to any CommCare endpoint. Data will be returned to `state.data` as JSON.
+ * Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.
  * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
  * @public
  * @function
  * @example <caption>Get a specific case by id</caption>
  * get("/case/12345")
- * @example <caption>Get 20 cases</caption>
- * get("/case", { limit: 20 })
+ * @example <caption>Get exactly 20 cases</caption>
+ * get("/case", { offset:0, limit: 20 })
  * @example <caption>Get forms by app id</caption>
  * get("/form", { app_id: "02bf50ab803a89ea4963799362874f0c" })
- * @example <caption>Iterate over pages of data</caption>
+ * @example <caption>Get all cases, 50 at a time, and add them to state</caption>
  * get("/case", {}, (state) => {
- *    const page = state.data;
- *    console.log(page) // a page of cases (as an array)
+ *    state.cases.push(...state.data) // adds 50 cases to the cases array
  *    return state;
  * })
  * @param {string} path - Path to resource
- * @param {Object} params - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
- * @param {function} [callback] - Callback, to be invoked once per page of data retrieved.
- * @state {HttpState}
+ * @param {Object} [params] - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
+ * @param {function} [callback] - Optional callback function. Invoked once per page of data retrieved.
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
@@ -134,17 +133,17 @@ export function get(path, params = {}, callback = s => s) {
 }
 
 /**
- * Make a post request to commcare
- * @example
- * post( "user", { "username":"test", "password":"somepassword" })
+ * Make a POST request to any CommCare endpoint.
+ * @example <caption>Post a user object to to the /user endpoint</caption>
+ * post("/user", { "username":"test", "password":"somepassword" })
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object or JSON which defines data that will be used to create a given instance of resource
- * @param {Object} params - Optional request params.
+ * @param {object} data - Object or JSON to use as the request body
+ * @param {Object} [params] - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @state {HttpState}
+ * @state {CommcareHttpState}
  */
 export function post(path, data, params = {}, callback = s => s) {
   return async state => {
@@ -177,10 +176,10 @@ export function post(path, data, params = {}, callback = s => s) {
 
 /**
  * Bulk upload data to CommCare. Accepts an array of objects, converts them into
- * an xls representation, and uploads.
+ * an XLS representation, and uploads.
  * @public
  * @function
- * @example Upload a single row of data
+ * @example <caption>Upload a single row of data</caption>
  * submitXls(
  *    [
  *      {name: 'Mamadou', phone: '000000'},
@@ -240,19 +239,17 @@ export function submitXls(data, params) {
  * objects, converts them into XML, and submits to CommCare as an x-form.
  * @public
  * @function
- * @example
+ * @example <caption>Submit a form to CommCare</caption>
  *  submit(
  *    fields(
- *      field("@", function(state) {
- *        return {
- *          "xmlns": "http://openrosa.org/formdesigner/form-id-here"
- *        };
+ *      field("@", (state) => ({
+ *          "xmlns": `http://openrosa.org/formdesigner/${state.formId}`
  *      }),
- *      field("question1", dataValue("answer1")),
- *      field("question2", "Some answer here.")
+ *      field("question1", (state) => state.data.answer1),
+ *      field("question2", (state) => state.data.answer2),
  *    )
  *  )
- * @param {Object} data - Object including form data.
+ * @param {Object} data - The form as a JSON object
  * @state data - the response from the CommCare Server
  * @returns {Operation}
  */
@@ -281,14 +278,18 @@ export function submit(data) {
 
 /**
  * Make a GET request to CommCare's Reports API
- * and POST the response to somewhere else.
+ * and POST the response somewhere else.
  * @public
- * @example Fetch 10 records from a report and post them to example.com
- * fetchReportData("9aab0eeb88555a7b4568676883e7379a", { limit: 10 }, "https://www.example.com/api/")
+ * @example <caption>Fetch 10 records from a report and post them to example.com</caption>
+ * fetchReportData(
+ *   "9aab0eeb88555a7b4568676883e7379a",
+ *   { limit: 10 },
+ *   "https://www.example.com/api/"
+ * )
  * @function
  * @param {String} reportId - API name of the report.
  * @param {Object} params - Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.
- * @param {String} postUrl - Url to which the response object will be posted.
+ * @param {String} postUrl - URL to which the response object will be posted.
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
