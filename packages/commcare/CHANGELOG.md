@@ -1,5 +1,16 @@
 # @openfn/language-commcare
 
+## 3.1.0
+
+### Minor Changes
+
+- Add `cursor()` function from common
+- Add `dateFns` helper from common
+
+### Patch Changes
+
+- 90d74c7: Revise documentation
+
 ## 3.0.0
 
 ### Major Changes
