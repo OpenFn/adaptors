@@ -2,13 +2,13 @@
 <dt>
     <a href="#fetchreportdata">fetchReportData(reportId, params, postUrl)</a></dt>
 <dt>
-    <a href="#get">get(path, params, [callback])</a></dt>
+    <a href="#get">get(path, [params], [callback])</a></dt>
 <dt>
-    <a href="#post">post(path, data, params, [callback])</a></dt>
+    <a href="#post">post(path, data, [params], [callback])</a></dt>
 <dt>
-    <a href="#submit">submit(formData)</a></dt>
+    <a href="#submit">submit(data)</a></dt>
 <dt>
-    <a href="#submitxls">submitXls(formData, params)</a></dt>
+    <a href="#submitxls">submitXls(data, params)</a></dt>
 </dl>
 
 
@@ -24,10 +24,16 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -63,92 +69,123 @@ This adaptor exports the following from common:
 <p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>
 
 Make a GET request to CommCare's Reports API
-and POST the response to somewhere else.
+and POST the response somewhere else.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | reportId | <code>String</code> | API name of the report. |
-| params | [<code>RequestQueries</code>](#requestqueries) | Query params, incl: limit, offset, and any custom report filters. |
-| postUrl | <code>String</code> | Url to which the response object will be posted. |
+| params | <code>Object</code> | Input parameters for the request, see [Commcare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data). |
+| postUrl | <code>String</code> | URL to which the response object will be posted. |
 
-**Example**
+**Example:** Fetch 10 records from a report and post them to example.com
 ```js
-fetchReportData(reportId, params, postUrl)
+fetchReportData(
+  "9aab0eeb88555a7b4568676883e7379a",
+  { limit: 10 },
+  "https://www.example.com/api/"
+)
 ```
 
 * * *
 
 ### get
 
-<p><code>get(path, params, [callback]) ⇒ Operation</code></p>
+<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
 
-Make a GET request to any commcare endpoint. The returned objects will be written to state.data.
-Unless an `offset` is passed, `get()` will automatically pull down all pages of data if the response
-is paginated.
-A `response` key will be added to state with the HTTP response and a `meta` key
+Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.
+Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | [<code>RequestQueries</code>](#requestqueries) | Optional request params such as limit and offset. |
-| [callback] | <code>function</code> | Callback invoked once per page of data retrieved. |
+| [params] | <code>Object</code> | Input parameters for the request. These vary by endpoint,  see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs). |
+| [callback] | <code>function</code> | Optional callback function. Invoked once per page of data retrieved. |
 
-**Example:** Get a list of cases
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Get a specific case by id
 ```js
-get("case", { limit: 20 })
+get("/case/12345")
 ```
-**Example:** Get a specific case 
+**Example:** Get exactly 20 cases
 ```js
-get("case/12345")
+get("/case", { offset:0, limit: 20 })
+```
+**Example:** Get forms by app id
+```js
+get("/form", { app_id: "02bf50ab803a89ea4963799362874f0c" })
+```
+**Example:** Get all cases, 50 at a time, and add them to state
+```js
+get("/case", {}, (state) => {
+   state.cases.push(...state.data) // adds 50 cases to the cases array
+   return state;
+})
 ```
 
 * * *
 
 ### post
 
-<p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
+<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
 
-Make a post request to commcare
+Make a POST request to any CommCare endpoint.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object or JSON which defines data that will be used to create a given instance of resource |
-| params | <code>Object</code> | Optional request params. |
+| data | <code>object</code> | Object or JSON to use as the request body |
+| [params] | <code>Object</code> | Optional request params |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Post a user object to to the /user endpoint
 ```js
-post( "user", { "username":"test", "password":"somepassword" })
+post("/user", { "username":"test", "password":"somepassword" })
 ```
 
 * * *
 
 ### submit
 
-<p><code>submit(formData) ⇒ Operation</code></p>
+<p><code>submit(data) ⇒ Operation</code></p>
 
-Submit form data
+Submit forms to CommCare. Accepts an array of JSON
+objects, converts them into XML, and submits to CommCare as an x-form.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| formData | <code>Object</code> | Object including form data. |
+| data | <code>Object</code> | The form as a JSON object |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the response from the CommCare Server |
+**Example:** Submit a form to CommCare
 ```js
-submit(
+ submit(
    fields(
-     field("@", function(state) {
-       return {
-         "xmlns": "http://openrosa.org/formdesigner/form-id-here"
-       };
+     field("@", (state) => ({
+         "xmlns": `http://openrosa.org/formdesigner/${state.formId}`
      }),
-     field("question1", dataValue("answer1")),
-     field("question2", "Some answer here.")
+     field("question1", (state) => state.data.answer1),
+     field("question2", (state) => state.data.answer2),
    )
  )
 ```
@@ -157,17 +194,23 @@ submit(
 
 ### submitXls
 
-<p><code>submitXls(formData, params) ⇒ Operation</code></p>
+<p><code>submitXls(data, params) ⇒ Operation</code></p>
 
-Convert form data to xls then submit.
+Bulk upload data to CommCare. Accepts an array of objects, converts them into
+an XLS representation, and uploads.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| formData | <code>Object</code> | Object including form data. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Request params including case type. |
+| data | <code>array</code> | Array of objects to upload |
+| params | <code>Object</code> | Input parameters, see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data). |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the response from the CommCare Server |
+**Example:** Upload a single row of data
 ```js
 submitXls(
    [
@@ -183,45 +226,4 @@ submitXls(
 
 * * *
 
-
-##  Interfaces
-
-### RequestOptions
-
-Queries provided to the submitXls request
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| case_type | <code>string</code> | Optional case type |
-| search_field | <code>string</code> | Optional search field |
-| create_new_cases | <code>string</code> | Optional for allowing to create new cases. Default `:on` |
-
-
-* * *
-
-### RequestQueries
-
-Queries provided to the GET request
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| limit | <code>number</code> | The maximum number of records to return. Default: 20. Maximum: 5000. |
-| offset | <code>number</code> | The number of records to offset in the results. Default: 0 |
-| xmlns | <code>string</code> | Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS) |
-| indexed_on_start | <code>string</code> | Optional date (and time). Will return only forms that have had data modified since the passed in date. |
-| indexed_on_end | <code>string</code> | Optional date (and time). Will return only forms that have had data modified before the passed in date. |
-| received_on_start | <code>string</code> | Optional date (and time). Will return only forms that were received after the passed in date. |
-| received_on_end | <code>string</code> | Optional date (and time). Will return only forms that were received before the passed in date. |
-| app_id | <code>string</code> | The returned records will be limited to the application defined |
-| case_id | <code>string</code> | A case UUID.  Will only return forms which updated that case. |
-| owner_id | <code>string</code> | Optional user of group UUID used when getting cases |
-| user_id | <code>string</code> | Optional UUID for all cases last modified by that user |
-| type | <code>string</code> | Optional case type to get all matching cases |
-
-
-* * *
 

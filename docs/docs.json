@@ -1926,15 +1926,49 @@
     "kind": "external-function"
   }
 ],
-{"name":"commcare","adaptor":"@openfn/language-commcare","version":"3.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#fetchreportdata\\\">fetchReportData(reportId, params, postUrl)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, params, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, params, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#submit\\\">submit(formData)</a></dt>\\n<dt>\\n    <a href=\\\"#submitxls\\\">submitXls(formData, params)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### fetchReportData\\n\\n<p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>\\n\\nMake a GET request to CommCare's Reports API\\nand POST the response to somewhere else.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| reportId | <code>String</code> | API name of the report. |\\n| params | [<code>RequestQueries</code>](#requestqueries) | Query params, incl: limit, offset, and any custom report filters. |\\n| postUrl | <code>String</code> | Url to which the response object will be posted. |\\n\\n**Example**\\n```js\\nfetchReportData(reportId, params, postUrl)\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, params, [callback]) ⇒ Operation</code></p>\\n\\nMake a GET request to any commcare endpoint. The returned objects will be written to state.data.\\nUnless an `offset` is passed, `get()` will automatically pull down all pages of data if the response\\nis paginated.\\nA `response` key will be added to state with the HTTP response and a `meta` key\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestQueries</code>](#requestqueries) | Optional request params such as limit and offset. |\\n| [callback] | <code>function</code> | Callback invoked once per page of data retrieved. |\\n\\n**Example:** Get a list of cases\\n```js\\nget(\\\"case\\\", { limit: 20 })\\n```\\n**Example:** Get a specific case \\n```js\\nget(\\\"case/12345\\\")\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>\\n\\nMake a post request to commcare\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object or JSON which defines data that will be used to create a given instance of resource |\\n| params | <code>Object</code> | Optional request params. |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n**Example**\\n```js\\npost( \\\"user\\\", { \\\"username\\\":\\\"test\\\", \\\"password\\\":\\\"somepassword\\\" })\\n```\\n\\n* * *\\n\\n### submit\\n\\n<p><code>submit(formData) ⇒ Operation</code></p>\\n\\nSubmit form data\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formData | <code>Object</code> | Object including form data. |\\n\\n**Example**\\n```js\\nsubmit(\\n   fields(\\n     field(\\\"@\\\", function(state) {\\n       return {\\n         \\\"xmlns\\\": \\\"http://openrosa.org/formdesigner/form-id-here\\\"\\n       };\\n     }),\\n     field(\\\"question1\\\", dataValue(\\\"answer1\\\")),\\n     field(\\\"question2\\\", \\\"Some answer here.\\\")\\n   )\\n )\\n```\\n\\n* * *\\n\\n### submitXls\\n\\n<p><code>submitXls(formData, params) ⇒ Operation</code></p>\\n\\nConvert form data to xls then submit.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formData | <code>Object</code> | Object including form data. |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Request params including case type. |\\n\\n**Example**\\n```js\\nsubmitXls(\\n   [\\n     {name: 'Mamadou', phone: '000000'},\\n   ],\\n   {\\n     case_type: 'student',\\n     search_field: 'external_id',\\n     create_new_cases: 'on',\\n   }\\n)\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nQueries provided to the submitXls request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| case_type | <code>string</code> | Optional case type |\\n| search_field | <code>string</code> | Optional search field |\\n| create_new_cases | <code>string</code> | Optional for allowing to create new cases. Default `:on` |\\n\\n\\n* * *\\n\\n### RequestQueries\\n\\nQueries provided to the GET request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| limit | <code>number</code> | The maximum number of records to return. Default: 20. Maximum: 5000. |\\n| offset | <code>number</code> | The number of records to offset in the results. Default: 0 |\\n| xmlns | <code>string</code> | Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS) |\\n| indexed_on_start | <code>string</code> | Optional date (and time). Will return only forms that have had data modified since the passed in date. |\\n| indexed_on_end | <code>string</code> | Optional date (and time). Will return only forms that have had data modified before the passed in date. |\\n| received_on_start | <code>string</code> | Optional date (and time). Will return only forms that were received after the passed in date. |\\n| received_on_end | <code>string</code> | Optional date (and time). Will return only forms that were received before the passed in date. |\\n| app_id | <code>string</code> | The returned records will be limited to the application defined |\\n| case_id | <code>string</code> | A case UUID.  Will only return forms which updated that case. |\\n| owner_id | <code>string</code> | Optional user of group UUID used when getting cases |\\n| user_id | <code>string</code> | Optional UUID for all cases last modified by that user |\\n| type | <code>string</code> | Optional case type to get all matching cases |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language CommCare\\n\\nLanguage Pack for interacting with the CommCare API.\\n\\nhttps://confluence.dimagi.com/display/commcarepublic/Download+Report+Data\\n\\nhttps://confluence.dimagi.com/display/commcarepublic/Submission+API\\n\\nhttps://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI\\n\\nAccepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec Accepted\\nX-Form Spec for Cases from Dimagi:\\nhttps://github.com/dimagi/commcare/wiki/casexml20\\n\\n## Documentation\\n\\n## Configuration\\n\\nView all the required and optional properties for `state.configuration` in the official [configuration-schema](https://docs.openfn.org/adaptors/packages/commcare-configuration-schema/) definition.\\n\\n- The \\\"appId\\\" is the UUID which designates your commcare project as different from\\neveryone elses. It can be found in the URL of your application when you first\\nenter it from the project screen. I.e., the last part of this url:\\n`https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`\\n\\n- Note that the username is your full email address.\\n\\n## `fetchReportData` to pull aggregate data from CommCare\\n\\nIt takes 3 arguments: reportId, params, and postUrl.\\n\\n```js\\nfetchReportData(\\n  'reportId',\\n  { limit: 10, offset: 2, state: 'Vermont' },\\n  'http://www.openfn.org/inbox/secret-uuid'\\n);\\n```\\n\\nsimple body target:\\n\\n```xml\\n<data xmlns=\\\"http://openrosa.org/formdesigner/39A2CA97-2EB8-4A9C-A0D1-6AA666666A66\\\">\\n    <firstname>Something</firstname>\\n    <lastname>Else</lastname>\\n    <age>29</age>\\n</data>\\n```\\n\\ncomplex body target:\\n\\n```xml\\n<?xml version='1.0' ?>\\n<data uiVersion=\\\"1\\\" version=\\\"17\\\" name=\\\"New Form\\\" xmlns:jrm=\\\"http://dev.commcarehq.org/jr/xforms\\\" xmlns=\\\"http://openrosa.org/formdesigner/1DFD8610-91E3-4409-BF8B-02D3B4FF3530\\\">\\n    <foo>bar</foo>\\n    <n0:case case_id=\\\"ddb8e2b3-7ce0-43e4-ad45-d7a2eebe9169\\\" user_id=\\\"user-xxx-eve\\\" date_modified=\\\"2013-04-19T16:53:02.799-04\\\" xmlns:n0=\\\"http://commcarehq.org/case/transaction/v2\\\">\\n        <n0:create>\\n            <n0:case_name>bar</n0:case_name>\\n            <n0:owner_id>user-xxx-eve</n0:owner_id>\\n            <n0:case_type>member</n0:case_type>\\n        </n0:create>\\n    </n0:case>\\n    <n1:meta xmlns:n1=\\\"http://openrosa.org/jr/xforms\\\">\\n        <n1:deviceID>A00000245706EE</n1:deviceID>\\n        <n1:timeStart>2013-04-19T16:52:41.000-04</n1:timeStart>\\n        <n1:timeEnd>2013-04-19T16:53:02.799-04</n1:timeEnd>\\n        <n1:username>eve</n1:username>\\n        <n1:userID>user-xxx-eve</n1:userID>\\n        <n1:instanceID>b58df19c-efd5-4ecf-9581-65dda8b8787c</n1:instanceID>\\n        <n2:appVersion xmlns:n2=\\\"http://commcarehq.org/xforms\\\">CommCare ODK, version \\\"2.4.1\\\"(10083). App v19. CommCare Version 2.4. Build 10083, built on: March-12-2013</n2:appVersion>\\n    </n1:meta>\\n</data>\\n```\\n\\n## Submitting data to CommCare HQ\\n\\n### Submit an XLS file\\n\\nThis function bulk submit a JSON object as xls file to CommCare HQ\\n\\n```js\\nsubmitXls([{ name: 'Mamadou', phone: '000000' }], {\\n  case_type: 'student',\\n  search_field: 'external_id',\\n  create_new_cases: 'on',\\n});\\n```\\n\\n### submit\\n\\nHere we're just building the most basic JSON object, that will be converted to\\nan XML object and posted as the <data /> element.\\n\\n```js\\nsubmit(\\n  fields(\\n    field('@', function (state) {\\n      return {\\n        xmlns:\\n          'http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9',\\n      };\\n    }),\\n    field('paitent_namentosh', dataValue('first_name')),\\n    field('question2', 'Some answer here.'),\\n    field('question3', 'HKS'),\\n    field('question4', 'item1'),\\n    field('question5', 69855),\\n    field('question6', 12)\\n  )\\n);\\n```\\n\\nAn open rosa form submission body should look like this:\\n\\n```xml\\n<?xml version=\\\"1.0\\\" ?>\\n<data name=\\\"Patient Registration\\\" uiVersion=\\\"1\\\" version=\\\"9\\\" xmlns=\\\"http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9\\\" xmlns:jrm=\\\"http://dev.commcarehq.org/jr/xforms\\\">\\n  <paitent_namentosh>Taylor</paitent_namentosh>\\n  <question2>Moruki</question2>\\n  <question3>Hks</question3>\\n  <question4>item1</question4>\\n  <question5>69855</question5>\\n  <question6>12</question6>\\n  <n0:meta xmlns:n0=\\\"http://openrosa.org/jr/xforms\\\">\\n    <n0:deviceID>358239055789384</n0:deviceID>\\n    <n0:timeStart>2015-08-21T16:21:59.807+02</n0:timeStart>\\n    <n0:timeEnd>2015-08-21T16:22:15.987+02</n0:timeEnd>\\n    <n0:username>openfn</n0:username>\\n    <n0:userID>5fe615b3af2834cb5dca59f7466d6174</n0:userID>\\n    <n0:instanceID>195e79eb-d823-46fe-9e4f-59b8327d5db2</n0:instanceID>\\n    <n1:appVersion xmlns:n1=\\\"http://commcarehq.org/xforms\\\">CommCare ODK, version &quot;2.22.0&quot;(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015</n1:appVersion>\\n  </n0:meta>\\n</data>\\n```\\n\\nSo the JSON emitted by your expression should look like this:\\n\\n```json\\n{\\n  \\\"data\\\": {\\n    \\\"name\\\": \\\"Patient Registration\\\",\\n    \\\"uiVersion\\\": \\\"1\\\",\\n    \\\"version\\\": \\\"9\\\",\\n    \\\"xmlns\\\": \\\"http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9\\\",\\n    \\\"xmlns:jrm\\\": \\\"http://dev.commcarehq.org/jr/xforms\\\",\\n    \\\"paitent_namentosh\\\": \\\"Taylor\\\",\\n    \\\"question2\\\": \\\" Moruki\\\",\\n    \\\"question3\\\": \\\"Hks\\\",\\n    \\\"question4\\\": \\\"item1\\\",\\n    \\\"question5\\\": \\\"69855\\\",\\n    \\\"question6\\\": \\\"12\\\",\\n    \\\"n0:meta\\\": {\\n      \\\"xmlns:n0\\\": \\\"http://openrosa.org/jr/xforms\\\",\\n      \\\"n0:deviceID\\\": \\\"358239055789384\\\",\\n      \\\"n0:timeStart\\\": \\\"2015-08-21T16:21:59.807+02\\\",\\n      \\\"n0:timeEnd\\\": \\\"2015-08-21T16:22:15.987+02\\\",\\n      \\\"n0:username\\\": \\\"openfn\\\",\\n      \\\"n0:userID\\\": \\\"5fe615b3af2834cb5dca59f7466d6174\\\",\\n      \\\"n0:instanceID\\\": \\\"195e79eb-d823-46fe-9e4f-59b8327d5db2\\\",\\n      \\\"n1:appVersion\\\": {\\n        \\\"xmlns:n1\\\": \\\"http://commcarehq.org/xforms\\\",\\n        \\\"$t\\\": \\\"CommCare ODK, version \\\\\\\"2.22.0\\\\\\\"(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015\\\"\\n      }\\n    }\\n  }\\n}\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-commcare\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 2.3.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.3.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.3.0\\n\\n### Minor Changes\\n\\n- ac4b4a0: `get()` will now automatically paginate responses (unless an offset\\n  is passed)\\n\\n## 2.2.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.2.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.1.0\\n\\n### Minor Changes\\n\\n- 0719de00: Implement better error handling and make post a public function\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 2.0.0\\n\\nRebase the commcare adaptor on the new HTTP helpers.\\n\\n### Major Changes\\n\\n- Remove superagents and language-http dependencies\\n- configuration schema: change applicationName to domain to match commcare's\\n  configuration.\\n- remove the `clientPost` function\\n\\n### Minor Changes\\n\\n- Implemented a get function for all get requests in commcare\\n- Create a generic post function that allows for posting JSON data\\n- Standardize auth to use either basic or APIKey across all operations\\n- configuration schema: add apiKey\\n- configuration schema: demote username and appId are optional\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.6.14\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.6.13\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.6.12\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.6.11\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.6.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n  - @openfn/language-http@5.0.4\\n\\n## 1.6.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n  - @openfn/language-http@5.0.3\\n\\n## 1.6.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n  - @openfn/language-http@5.0.2\\n\\n## 1.6.7\\n\\n### Patch Changes\\n\\n- 52c02c8: update xlsx package\\n\\n## 1.6.6\\n\\n### Patch Changes\\n\\n- 8205673: update superagent\\n\\n## 1.6.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n  - @openfn/language-http@5.0.1\\n\\n## 1.6.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [0b6f20b]\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-http@5.0.0\\n  - @openfn/language-common@1.10.1\\n\\n## 1.6.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n  - @openfn/language-http@4.3.3\\n\\n## 1.6.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n  - @openfn/language-http@4.3.2\\n\\n## 1.6.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n  - @openfn/language-http@4.3.1\\n\\n## 1.6.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n  - @openfn/language-http@4.3.0\\n\\n## 1.5.6\\n\\n### Patch Changes\\n\\n- e0406fa: update dependencies\\n\\n## 1.5.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n  - @openfn/language-http@4.2.8\\n\\n## 1.5.4\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n- Updated dependencies [14f481e]\\n  - @openfn/language-common@1.7.6\\n  - @openfn/language-http@4.2.7\\n\\n## 1.5.3\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n- Updated dependencies [f2aed32]\\n  - @openfn/language-http@4.2.5\\n\\n## 1.5.2\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n- 57f3513: Fix exports in index.js\\n- Updated dependencies [6d8de03]\\n  - @openfn/language-http@4.2.4\\n\\n## 1.5.1\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n  - @openfn/language-http@4.2.3\\n\\n## 1.5.0\\n\\n### Minor Changes\\n\\n- 5c050ed: Migrate CommCare\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- 94076b9: update dependency xlsx to ^0.18.0\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [9a2755e]\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-http@4.2.2\\n  - @openfn/language-common@1.7.4\\n\"","functions":["execute","fetchReportData","get","post","submit","submitXls"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"hostUrl":{"title":"Host URL","type":"string","description":"The CommCare host url","format":"uri","minLength":1,"examples":["https://www.commcarehq.org"]},"domain":{"title":"Domain","type":"string","description":"The CommCare domain name","minLength":1,"examples":["some-proof-of-concept"]},"apiKey":{"title":"API Key","type":"string","description":"The CommCare API Key","minLength":1,"examples":["the-long-uuid-provided-by-commcare-that-authenticates-requests"]},"appId":{"title":"App ID","type":"string","description":"Your CommCare project UUID","minLength":1,"examples":["the-long-uuid-in-the-url-that-designates-a-unique-commcare-project"]},"username":{"title":"Username","type":"string","description":"The username to log in to CommCare","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"The password to log in to CommCare","writeOnly":true,"minLength":1,"examples":["superscretepassword"]}},"type":"object","additionalProperties":true,"required":["hostUrl","domain"]}},
+{"name":"commcare","adaptor":"@openfn/language-commcare","version":"3.1.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#fetchreportdata\\\">fetchReportData(reportId, params, postUrl)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, [params], [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, [params], [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#submit\\\">submit(data)</a></dt>\\n<dt>\\n    <a href=\\\"#submitxls\\\">submitXls(data, params)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### fetchReportData\\n\\n<p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>\\n\\nMake a GET request to CommCare's Reports API\\nand POST the response somewhere else.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| reportId | <code>String</code> | API name of the report. |\\n| params | <code>Object</code> | Input parameters for the request, see [Commcare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data). |\\n| postUrl | <code>String</code> | URL to which the response object will be posted. |\\n\\n**Example:** Fetch 10 records from a report and post them to example.com\\n```js\\nfetchReportData(\\n  \\\"9aab0eeb88555a7b4568676883e7379a\\\",\\n  { limit: 10 },\\n  \\\"https://www.example.com/api/\\\"\\n)\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>\\n\\nMake a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.\\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| [params] | <code>Object</code> | Input parameters for the request. These vary by endpoint,  see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs). |\\n| [callback] | <code>function</code> | Optional callback function. Invoked once per page of data retrieved. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the CommCare server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Get a specific case by id\\n```js\\nget(\\\"/case/12345\\\")\\n```\\n**Example:** Get exactly 20 cases\\n```js\\nget(\\\"/case\\\", { offset:0, limit: 20 })\\n```\\n**Example:** Get forms by app id\\n```js\\nget(\\\"/form\\\", { app_id: \\\"02bf50ab803a89ea4963799362874f0c\\\" })\\n```\\n**Example:** Get all cases, 50 at a time, and add them to state\\n```js\\nget(\\\"/case\\\", {}, (state) => {\\n   state.cases.push(...state.data) // adds 50 cases to the cases array\\n   return state;\\n})\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>\\n\\nMake a POST request to any CommCare endpoint.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object or JSON to use as the request body |\\n| [params] | <code>Object</code> | Optional request params |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the CommCare server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Post a user object to to the /user endpoint\\n```js\\npost(\\\"/user\\\", { \\\"username\\\":\\\"test\\\", \\\"password\\\":\\\"somepassword\\\" })\\n```\\n\\n* * *\\n\\n### submit\\n\\n<p><code>submit(data) ⇒ Operation</code></p>\\n\\nSubmit forms to CommCare. Accepts an array of JSON\\nobjects, converts them into XML, and submits to CommCare as an x-form.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>Object</code> | The form as a JSON object |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the response from the CommCare Server |\\n**Example:** Submit a form to CommCare\\n```js\\n submit(\\n   fields(\\n     field(\\\"@\\\", (state) => ({\\n         \\\"xmlns\\\": `http://openrosa.org/formdesigner/${state.formId}`\\n     }),\\n     field(\\\"question1\\\", (state) => state.data.answer1),\\n     field(\\\"question2\\\", (state) => state.data.answer2),\\n   )\\n )\\n```\\n\\n* * *\\n\\n### submitXls\\n\\n<p><code>submitXls(data, params) ⇒ Operation</code></p>\\n\\nBulk upload data to CommCare. Accepts an array of objects, converts them into\\nan XLS representation, and uploads.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>array</code> | Array of objects to upload |\\n| params | <code>Object</code> | Input parameters, see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the response from the CommCare Server |\\n**Example:** Upload a single row of data\\n```js\\nsubmitXls(\\n   [\\n     {name: 'Mamadou', phone: '000000'},\\n   ],\\n   {\\n     case_type: 'student',\\n     search_field: 'external_id',\\n     create_new_cases: 'on',\\n   }\\n)\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language CommCare\\n\\nLanguage Pack for interacting with the CommCare API.\\n\\nhttps://confluence.dimagi.com/display/commcarepublic/Download+Report+Data\\n\\nhttps://confluence.dimagi.com/display/commcarepublic/Submission+API\\n\\nhttps://bitbucket.org/javarosa/javarosa/wiki/FormSubmissionAPI\\n\\nAccepted X-Form Spec from Dimagi: http://dimagi.github.io/xform-spec Accepted\\nX-Form Spec for Cases from Dimagi:\\nhttps://github.com/dimagi/commcare/wiki/casexml20\\n\\n## Documentation\\n\\n## Configuration\\n\\nView all the required and optional properties for `state.configuration` in the official [configuration-schema](https://docs.openfn.org/adaptors/packages/commcare-configuration-schema/) definition.\\n\\n- The \\\"appId\\\" is the UUID which designates your commcare project as different from\\neveryone elses. It can be found in the URL of your application when you first\\nenter it from the project screen. I.e., the last part of this url:\\n`https://www.commcarehq.org/a/YOUR_PROJECT/apps/view/YOUR_APP_ID/`\\n\\n- Note that the username is your full email address.\\n\\n## `fetchReportData` to pull aggregate data from CommCare\\n\\nIt takes 3 arguments: reportId, params, and postUrl.\\n\\n```js\\nfetchReportData(\\n  'reportId',\\n  { limit: 10, offset: 2, state: 'Vermont' },\\n  'http://www.openfn.org/inbox/secret-uuid'\\n);\\n```\\n\\nsimple body target:\\n\\n```xml\\n<data xmlns=\\\"http://openrosa.org/formdesigner/39A2CA97-2EB8-4A9C-A0D1-6AA666666A66\\\">\\n    <firstname>Something</firstname>\\n    <lastname>Else</lastname>\\n    <age>29</age>\\n</data>\\n```\\n\\ncomplex body target:\\n\\n```xml\\n<?xml version='1.0' ?>\\n<data uiVersion=\\\"1\\\" version=\\\"17\\\" name=\\\"New Form\\\" xmlns:jrm=\\\"http://dev.commcarehq.org/jr/xforms\\\" xmlns=\\\"http://openrosa.org/formdesigner/1DFD8610-91E3-4409-BF8B-02D3B4FF3530\\\">\\n    <foo>bar</foo>\\n    <n0:case case_id=\\\"ddb8e2b3-7ce0-43e4-ad45-d7a2eebe9169\\\" user_id=\\\"user-xxx-eve\\\" date_modified=\\\"2013-04-19T16:53:02.799-04\\\" xmlns:n0=\\\"http://commcarehq.org/case/transaction/v2\\\">\\n        <n0:create>\\n            <n0:case_name>bar</n0:case_name>\\n            <n0:owner_id>user-xxx-eve</n0:owner_id>\\n            <n0:case_type>member</n0:case_type>\\n        </n0:create>\\n    </n0:case>\\n    <n1:meta xmlns:n1=\\\"http://openrosa.org/jr/xforms\\\">\\n        <n1:deviceID>A00000245706EE</n1:deviceID>\\n        <n1:timeStart>2013-04-19T16:52:41.000-04</n1:timeStart>\\n        <n1:timeEnd>2013-04-19T16:53:02.799-04</n1:timeEnd>\\n        <n1:username>eve</n1:username>\\n        <n1:userID>user-xxx-eve</n1:userID>\\n        <n1:instanceID>b58df19c-efd5-4ecf-9581-65dda8b8787c</n1:instanceID>\\n        <n2:appVersion xmlns:n2=\\\"http://commcarehq.org/xforms\\\">CommCare ODK, version \\\"2.4.1\\\"(10083). App v19. CommCare Version 2.4. Build 10083, built on: March-12-2013</n2:appVersion>\\n    </n1:meta>\\n</data>\\n```\\n\\n## Submitting data to CommCare HQ\\n\\n### Submit an XLS file\\n\\nThis function bulk submit a JSON object as xls file to CommCare HQ\\n\\n```js\\nsubmitXls([{ name: 'Mamadou', phone: '000000' }], {\\n  case_type: 'student',\\n  search_field: 'external_id',\\n  create_new_cases: 'on',\\n});\\n```\\n\\n### submit\\n\\nHere we're just building the most basic JSON object, that will be converted to\\nan XML object and posted as the <data /> element.\\n\\n```js\\nsubmit(\\n  fields(\\n    field('@', function (state) {\\n      return {\\n        xmlns:\\n          'http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9',\\n      };\\n    }),\\n    field('paitent_namentosh', dataValue('first_name')),\\n    field('question2', 'Some answer here.'),\\n    field('question3', 'HKS'),\\n    field('question4', 'item1'),\\n    field('question5', 69855),\\n    field('question6', 12)\\n  )\\n);\\n```\\n\\nAn open rosa form submission body should look like this:\\n\\n```xml\\n<?xml version=\\\"1.0\\\" ?>\\n<data name=\\\"Patient Registration\\\" uiVersion=\\\"1\\\" version=\\\"9\\\" xmlns=\\\"http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9\\\" xmlns:jrm=\\\"http://dev.commcarehq.org/jr/xforms\\\">\\n  <paitent_namentosh>Taylor</paitent_namentosh>\\n  <question2>Moruki</question2>\\n  <question3>Hks</question3>\\n  <question4>item1</question4>\\n  <question5>69855</question5>\\n  <question6>12</question6>\\n  <n0:meta xmlns:n0=\\\"http://openrosa.org/jr/xforms\\\">\\n    <n0:deviceID>358239055789384</n0:deviceID>\\n    <n0:timeStart>2015-08-21T16:21:59.807+02</n0:timeStart>\\n    <n0:timeEnd>2015-08-21T16:22:15.987+02</n0:timeEnd>\\n    <n0:username>openfn</n0:username>\\n    <n0:userID>5fe615b3af2834cb5dca59f7466d6174</n0:userID>\\n    <n0:instanceID>195e79eb-d823-46fe-9e4f-59b8327d5db2</n0:instanceID>\\n    <n1:appVersion xmlns:n1=\\\"http://commcarehq.org/xforms\\\">CommCare ODK, version &quot;2.22.0&quot;(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015</n1:appVersion>\\n  </n0:meta>\\n</data>\\n```\\n\\nSo the JSON emitted by your expression should look like this:\\n\\n```json\\n{\\n  \\\"data\\\": {\\n    \\\"name\\\": \\\"Patient Registration\\\",\\n    \\\"uiVersion\\\": \\\"1\\\",\\n    \\\"version\\\": \\\"9\\\",\\n    \\\"xmlns\\\": \\\"http://openrosa.org/formdesigner/2BCC3E88-2D0D-4C07-8D4A-6B372F3799D9\\\",\\n    \\\"xmlns:jrm\\\": \\\"http://dev.commcarehq.org/jr/xforms\\\",\\n    \\\"paitent_namentosh\\\": \\\"Taylor\\\",\\n    \\\"question2\\\": \\\" Moruki\\\",\\n    \\\"question3\\\": \\\"Hks\\\",\\n    \\\"question4\\\": \\\"item1\\\",\\n    \\\"question5\\\": \\\"69855\\\",\\n    \\\"question6\\\": \\\"12\\\",\\n    \\\"n0:meta\\\": {\\n      \\\"xmlns:n0\\\": \\\"http://openrosa.org/jr/xforms\\\",\\n      \\\"n0:deviceID\\\": \\\"358239055789384\\\",\\n      \\\"n0:timeStart\\\": \\\"2015-08-21T16:21:59.807+02\\\",\\n      \\\"n0:timeEnd\\\": \\\"2015-08-21T16:22:15.987+02\\\",\\n      \\\"n0:username\\\": \\\"openfn\\\",\\n      \\\"n0:userID\\\": \\\"5fe615b3af2834cb5dca59f7466d6174\\\",\\n      \\\"n0:instanceID\\\": \\\"195e79eb-d823-46fe-9e4f-59b8327d5db2\\\",\\n      \\\"n1:appVersion\\\": {\\n        \\\"xmlns:n1\\\": \\\"http://commcarehq.org/xforms\\\",\\n        \\\"$t\\\": \\\"CommCare ODK, version \\\\\\\"2.22.0\\\\\\\"(370023). App v9. CommCare Version 2.22. Build 370023, built on: July-22-2015\\\"\\n      }\\n    }\\n  }\\n}\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-commcare\\n\\n## 3.1.0\\n\\n### Minor Changes\\n\\n- Add `cursor()` function from common\\n- Add `dateFns` helper from common\\n\\n### Patch Changes\\n\\n- 90d74c7: Revise documentation\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 2.3.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.3.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.3.0\\n\\n### Minor Changes\\n\\n- ac4b4a0: `get()` will now automatically paginate responses (unless an offset\\n  is passed)\\n\\n## 2.2.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.2.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.1.0\\n\\n### Minor Changes\\n\\n- 0719de00: Implement better error handling and make post a public function\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 2.0.0\\n\\nRebase the commcare adaptor on the new HTTP helpers.\\n\\n### Major Changes\\n\\n- Remove superagents and language-http dependencies\\n- configuration schema: change applicationName to domain to match commcare's\\n  configuration.\\n- remove the `clientPost` function\\n\\n### Minor Changes\\n\\n- Implemented a get function for all get requests in commcare\\n- Create a generic post function that allows for posting JSON data\\n- Standardize auth to use either basic or APIKey across all operations\\n- configuration schema: add apiKey\\n- configuration schema: demote username and appId are optional\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.6.14\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.6.13\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.6.12\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.6.11\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.6.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n  - @openfn/language-http@5.0.4\\n\\n## 1.6.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n  - @openfn/language-http@5.0.3\\n\\n## 1.6.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n  - @openfn/language-http@5.0.2\\n\\n## 1.6.7\\n\\n### Patch Changes\\n\\n- 52c02c8: update xlsx package\\n\\n## 1.6.6\\n\\n### Patch Changes\\n\\n- 8205673: update superagent\\n\\n## 1.6.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n  - @openfn/language-http@5.0.1\\n\\n## 1.6.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [0b6f20b]\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-http@5.0.0\\n  - @openfn/language-common@1.10.1\\n\\n## 1.6.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n  - @openfn/language-http@4.3.3\\n\\n## 1.6.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n  - @openfn/language-http@4.3.2\\n\\n## 1.6.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n  - @openfn/language-http@4.3.1\\n\\n## 1.6.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n  - @openfn/language-http@4.3.0\\n\\n## 1.5.6\\n\\n### Patch Changes\\n\\n- e0406fa: update dependencies\\n\\n## 1.5.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n  - @openfn/language-http@4.2.8\\n\\n## 1.5.4\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n- Updated dependencies [14f481e]\\n  - @openfn/language-common@1.7.6\\n  - @openfn/language-http@4.2.7\\n\\n## 1.5.3\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n- Updated dependencies [f2aed32]\\n  - @openfn/language-http@4.2.5\\n\\n## 1.5.2\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n- 57f3513: Fix exports in index.js\\n- Updated dependencies [6d8de03]\\n  - @openfn/language-http@4.2.4\\n\\n## 1.5.1\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n  - @openfn/language-http@4.2.3\\n\\n## 1.5.0\\n\\n### Minor Changes\\n\\n- 5c050ed: Migrate CommCare\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- 94076b9: update dependency xlsx to ^0.18.0\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [9a2755e]\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-http@4.2.2\\n  - @openfn/language-common@1.7.4\\n\"","functions":["fetchReportData","get","post","submit","submitXls"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"hostUrl":{"title":"Host URL","type":"string","description":"The CommCare host url","format":"uri","minLength":1,"examples":["https://www.commcarehq.org"]},"domain":{"title":"Domain","type":"string","description":"The CommCare domain name","minLength":1,"examples":["some-proof-of-concept"]},"apiKey":{"title":"API Key","type":"string","description":"The CommCare API Key","minLength":1,"examples":["the-long-uuid-provided-by-commcare-that-authenticates-requests"]},"appId":{"title":"App ID","type":"string","description":"Your CommCare project UUID","minLength":1,"examples":["the-long-uuid-in-the-url-that-designates-a-unique-commcare-project"]},"username":{"title":"Username","type":"string","description":"The username to log in to CommCare","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"The password to log in to CommCare","writeOnly":true,"minLength":1,"examples":["superscretepassword"]}},"type":"object","additionalProperties":true,"required":["hostUrl","domain"]}},
 [
+  {
+    "id": "CommcareHttpState",
+    "longname": "CommcareHttpState",
+    "name": "CommcareHttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the CommCare server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 8,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
+    },
+    "order": 0,
+    "newscope": true
+  },
   {
     "id": "fetchReportData",
     "longname": "fetchReportData",
     "name": "fetchReportData",
     "kind": "function",
     "scope": "global",
-    "description": "Make a GET request to CommCare's Reports API\nand POST the response to somewhere else.",
+    "description": "Make a GET request to CommCare's Reports API\nand POST the response somewhere else.",
     "params": [
       {
         "type": {
@@ -1948,10 +1982,10 @@
       {
         "type": {
           "names": [
-            "RequestQueries"
+            "Object"
           ]
         },
-        "description": "Query params, incl: limit, offset, and any custom report filters.",
+        "description": "Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.",
         "name": "params"
       },
       {
@@ -1960,12 +1994,12 @@
             "String"
           ]
         },
-        "description": "Url to which the response object will be posted.",
+        "description": "URL to which the response object will be posted.",
         "name": "postUrl"
       }
     ],
     "examples": [
-      "fetchReportData(reportId, params, postUrl)"
+      "<caption>Fetch 10 records from a report and post them to example.com</caption>\nfetchReportData(\n  \"9aab0eeb88555a7b4568676883e7379a\",\n  { limit: 10 },\n  \"https://www.example.com/api/\"\n)"
     ],
     "returns": [
       {
@@ -1978,12 +2012,11 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 302,
+      "lineno": 295,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
     },
-    "order": 7,
-    "newscope": true,
+    "order": 6,
     "level": 0
   },
   {
@@ -1992,7 +2025,7 @@
     "name": "get",
     "kind": "function",
     "scope": "global",
-    "description": "Make a GET request to any commcare endpoint. The returned objects will be written to state.data.\nUnless an `offset` is passed, `get()` will automatically pull down all pages of data if the response\nis paginated.\nA `response` key will be added to state with the HTTP response and a `meta` key",
+    "description": "Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
     "params": [
       {
         "type": {
@@ -2006,10 +2039,11 @@
       {
         "type": {
           "names": [
-            "RequestQueries"
+            "Object"
           ]
         },
-        "description": "Optional request params such as limit and offset.",
+        "optional": true,
+        "description": "Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.",
         "name": "params"
       },
       {
@@ -2019,13 +2053,15 @@
           ]
         },
         "optional": true,
-        "description": "Callback invoked once per page of data retrieved.",
+        "description": "Optional callback function. Invoked once per page of data retrieved.",
         "name": "callback"
       }
     ],
     "examples": [
-      "<caption>Get a list of cases</caption>\nget(\"case\", { limit: 20 })",
-      "<caption>Get a specific case </caption>\nget(\"case/12345\")"
+      "<caption>Get a specific case by id</caption>\nget(\"/case/12345\")",
+      "<caption>Get exactly 20 cases</caption>\nget(\"/case\", { offset:0, limit: 20 })",
+      "<caption>Get forms by app id</caption>\nget(\"/form\", { app_id: \"02bf50ab803a89ea4963799362874f0c\" })",
+      "<caption>Get all cases, 50 at a time, and add them to state</caption>\nget(\"/case\", {}, (state) => {\n   state.cases.push(...state.data) // adds 50 cases to the cases array\n   return state;\n})"
     ],
     "returns": [
       {
@@ -2038,11 +2074,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 75,
+      "lineno": 61,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
     },
-    "order": 3,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "CommcareHttpState"
+      }
+    ],
+    "order": 2,
     "level": 0
   },
   {
@@ -2051,7 +2094,7 @@
     "name": "post",
     "kind": "function",
     "scope": "global",
-    "description": "Make a post request to commcare",
+    "description": "Make a POST request to any CommCare endpoint.",
     "params": [
       {
         "type": {
@@ -2068,7 +2111,7 @@
             "object"
           ]
         },
-        "description": "Object or JSON which defines data that will be used to create a given instance of resource",
+        "description": "Object or JSON to use as the request body",
         "name": "data"
       },
       {
@@ -2077,7 +2120,8 @@
             "Object"
           ]
         },
-        "description": "Optional request params.",
+        "optional": true,
+        "description": "Optional request params",
         "name": "params"
       },
       {
@@ -2092,7 +2136,7 @@
       }
     ],
     "examples": [
-      "post( \"user\", { \"username\":\"test\", \"password\":\"somepassword\" })"
+      "<caption>Post a user object to to the /user endpoint</caption>\npost(\"/user\", { \"username\":\"test\", \"password\":\"somepassword\" })"
     ],
     "returns": [
       {
@@ -2105,192 +2149,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 161,
+      "lineno": 148,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
     },
-    "order": 4,
-    "level": 0
-  },
-  {
-    "id": "RequestOptions",
-    "longname": "RequestOptions",
-    "name": "RequestOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Queries provided to the submitXls request",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
+    "state": [
       {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional case type",
-        "name": "case_type"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional search field",
-        "name": "search_field"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional for allowing to create new cases. Default `:on`",
-        "name": "create_new_cases"
+        "name": null,
+        "description": "No description",
+        "type": "CommcareHttpState"
       }
     ],
-    "access": "public",
-    "meta": {
-      "lineno": 27,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
-    },
-    "order": 1,
-    "level": 0
-  },
-  {
-    "id": "RequestQueries",
-    "longname": "RequestQueries",
-    "name": "RequestQueries",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Queries provided to the GET request",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
-      {
-        "type": {
-          "names": [
-            "number"
-          ]
-        },
-        "description": "The maximum number of records to return. Default: 20. Maximum: 5000.",
-        "name": "limit"
-      },
-      {
-        "type": {
-          "names": [
-            "number"
-          ]
-        },
-        "description": "The number of records to offset in the results. Default: 0",
-        "name": "offset"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional form XML namespace. See the [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143979045/Finding+a+Form%27s+XMLNS)",
-        "name": "xmlns"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional date (and time). Will return only forms that have had data modified since the passed in date.",
-        "name": "indexed_on_start"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional date (and time). Will return only forms that have had data modified before the passed in date.",
-        "name": "indexed_on_end"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional date (and time). Will return only forms that were received after the passed in date.",
-        "name": "received_on_start"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional date (and time). Will return only forms that were received before the passed in date.",
-        "name": "received_on_end"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The returned records will be limited to the application defined",
-        "name": "app_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "A case UUID.  Will only return forms which updated that case.",
-        "name": "case_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional user of group UUID used when getting cases",
-        "name": "owner_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional UUID for all cases last modified by that user",
-        "name": "user_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Optional case type to get all matching cases",
-        "name": "type"
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 9,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
-    },
-    "order": 0,
+    "order": 3,
     "level": 0
   },
   {
@@ -2299,7 +2169,7 @@
     "name": "submit",
     "kind": "function",
     "scope": "global",
-    "description": "Submit form data",
+    "description": "Submit forms to CommCare. Accepts an array of JSON\nobjects, converts them into XML, and submits to CommCare as an x-form.",
     "params": [
       {
         "type": {
@@ -2307,12 +2177,12 @@
             "Object"
           ]
         },
-        "description": "Object including form data.",
-        "name": "formData"
+        "description": "The form as a JSON object",
+        "name": "data"
       }
     ],
     "examples": [
-      "submit(\n   fields(\n     field(\"@\", function(state) {\n       return {\n         \"xmlns\": \"http://openrosa.org/formdesigner/form-id-here\"\n       };\n     }),\n     field(\"question1\", dataValue(\"answer1\")),\n     field(\"question2\", \"Some answer here.\")\n   )\n )"
+      "<caption>Submit a form to CommCare</caption>\n submit(\n   fields(\n     field(\"@\", (state) => ({\n         \"xmlns\": `http://openrosa.org/formdesigner/${state.formId}`\n     }),\n     field(\"question1\", (state) => state.data.answer1),\n     field(\"question2\", (state) => state.data.answer2),\n   )\n )"
     ],
     "returns": [
       {
@@ -2325,11 +2195,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 267,
+      "lineno": 256,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
     },
-    "order": 6,
+    "state": [
+      {
+        "name": "data",
+        "description": "the response from the CommCare Server",
+        "type": null
+      }
+    ],
+    "order": 5,
     "level": 0
   },
   {
@@ -2338,29 +2215,29 @@
     "name": "submitXls",
     "kind": "function",
     "scope": "global",
-    "description": "Convert form data to xls then submit.",
+    "description": "Bulk upload data to CommCare. Accepts an array of objects, converts them into\nan XLS representation, and uploads.",
     "params": [
+      {
+        "type": {
+          "names": [
+            "array"
+          ]
+        },
+        "description": "Array of objects to upload",
+        "name": "data"
+      },
       {
         "type": {
           "names": [
             "Object"
           ]
         },
-        "description": "Object including form data.",
-        "name": "formData"
-      },
-      {
-        "type": {
-          "names": [
-            "RequestOptions"
-          ]
-        },
-        "description": "Request params including case type.",
+        "description": "Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs}.",
         "name": "params"
       }
     ],
     "examples": [
-      "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
+      "<caption>Upload a single row of data</caption>\nsubmitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)"
     ],
     "returns": [
       {
@@ -2373,11 +2250,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 209,
+      "lineno": 198,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/commcare/src"
     },
-    "order": 5,
+    "state": [
+      {
+        "name": "data",
+        "description": "the response from the CommCare Server",
+        "type": null
+      }
+    ],
+    "order": 4,
     "level": 0
   },
   {
@@ -2402,6 +2286,13 @@
     "kind": "external-function"
   },
   {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
     "id": "dataPath",
     "common": true,
     "name": "dataPath",
@@ -2414,6 +2305,13 @@
     "name": "dataValue",
     "scope": "global",
     "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
   },
   {
     "id": "each",
