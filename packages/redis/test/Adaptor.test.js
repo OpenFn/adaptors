@@ -254,6 +254,19 @@ describe('hset', () => {
 });
 
 describe('scan', () => {
+  it('should return json keys', async () => {
+    setMockClient({
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('*:abc*');
+        expect(options.TYPE).to.eql('ReJSON-RL');
+        return { keys: ['node:abc'], cursor: 0 };
+      },
+    });
+    const state = {};
+    const result = await scan('*:abc*', { type: 'json' })(state);
+    expect(result.data).to.eql(['node:abc']);
+  });
   it('should return empty array if key not found', async () => {
     setMockClient({
       scan: async (cursor, options) => {

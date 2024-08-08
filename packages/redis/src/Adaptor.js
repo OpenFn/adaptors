@@ -191,7 +191,8 @@ export function hset(key, value) {
 }
 
 /**
- * Returns all keys which patch the provided pattern.
+ * Returns all keys which match the provided pattern.
+ * scan iterates the whole database to find the matching keys
  * @example <caption>Scan for matching keys</caption>
  * scan('*:20240524T172736Z*');
  * @example <caption>Scan for keys and fetch the string values inside</caption>
@@ -225,7 +226,7 @@ export function scan(pattern, options = {}) {
       const reply = await client.scan(cursor, {
         MATCH: resolvedPattern,
         COUNT: count,
-        TYPE: type,
+        TYPE: type === 'json' ? 'ReJSON-RL' : type,
       });
       cursor = reply.cursor;
       for (const key of reply.keys) {
