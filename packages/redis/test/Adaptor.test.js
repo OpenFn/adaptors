@@ -422,19 +422,20 @@ describe('hGetAll', () => {
 });
 
 describe('jGet', () => {
-  it('should expand references', async () => {
-    setMockClient({
-      json: {
-        get: async key => {
-          expect(key).to.eql('animals:1');
-          return {
-            name: 'Fluffy',
-            species: 'cat',
-            age: '3',
-          };
-        },
+  const jGetClient = {
+    json: {
+      get: async key => {
+        expect(key).to.eql('animals:1');
+        return {
+          name: 'Fluffy',
+          species: 'cat',
+          age: '3',
+        };
       },
-    });
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(jGetClient);
     const state = { key: 'animals:1' };
     const result = await jGet(s => s.key)(state);
     expect(result.data).to.eql({
@@ -461,18 +462,7 @@ describe('jGet', () => {
     }
   });
   it('should get JSON document of specified key', async () => {
-    setMockClient({
-      json: {
-        get: async key => {
-          expect(key).to.eql('animals:1');
-          return {
-            name: 'Fluffy',
-            species: 'cat',
-            age: '3',
-          };
-        },
-      },
-    });
+    setMockClient(jGetClient);
 
     const state = {};
     const result = await jGet('animals:1')(state);
