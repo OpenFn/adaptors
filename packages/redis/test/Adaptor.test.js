@@ -254,6 +254,24 @@ describe('hset', () => {
 });
 
 describe('scan', () => {
+  it('should return all pages results', async () => {
+    const results = [
+      { keys: ['a'], cursor: 22 },
+      { keys: ['b', 'c'], cursor: 33 },
+      { keys: ['d'], cursor: 0 },
+    ];
+    setMockClient({
+      scan: async (cursor, options) => {
+        expect(options.TYPE).to.eql('string');
+        return results.shift();
+      },
+    });
+
+    const state = {};
+    const result = await scan('*', { type: 'string' })(state);
+
+    expect(result.data).to.eql(['a', 'b', 'c', 'd']);
+  });
   it('should return json keys', async () => {
     setMockClient({
       scan: async (cursor, options) => {
