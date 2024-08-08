@@ -47,8 +47,7 @@ const disconnect = async state => {
  * Options provided to the scan function
  * @typedef {Object} ScanOptions
  * @public
- * @property {integer} [cursor=0] - A numeric value used to continue the iteration from where it left off. Initially, you start with 0.
- * @property {string} [type='hash'] - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
+ * @property {string} type - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
  * @property {integer} count - A hint to the server about how many elements to return in the call (default is 10).
  */
 
@@ -208,7 +207,6 @@ export function hset(key, value) {
  * @param {ScanOptions} options - Scan options
  * @state {RedisState}
  * @state data - an array of keys which match the pattern
- * @state cursor - A numeric value used to continue the iteration from where it left off
  * @returns {Operation}
  */
 export function scan(pattern, options = {}) {
@@ -219,18 +217,23 @@ export function scan(pattern, options = {}) {
       options
     );
 
-    const { type = 'hash', cursor = 0, count } = resolvedOptions;
+    const { type, count } = resolvedOptions;
 
-    const result = await client.scan(cursor, {
-      MATCH: resolvedPattern,
-      COUNT: count,
-      TYPE: type,
-    });
+    let cursor = 0;
+    const result = [];
+    do {
+      const reply = await client.scan(cursor, {
+        MATCH: resolvedPattern,
+        COUNT: count,
+        TYPE: type,
+      });
+      cursor = reply.cursor;
+      for (const key of reply.keys) {
+        result.push(key);
+      }
+    } while (cursor !== 0);
 
-    return {
-      ...composeNextState(state, result.keys),
-      cursor: result.cursor,
-    };
+    return composeNextState(state, result);
   };
 }
 

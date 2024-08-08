@@ -24,29 +24,12 @@
           },
           {
             "title": "property",
-            "description": "A numeric value used to continue the iteration from where it left off. Initially, you start with 0.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "cursor",
-            "default": "0"
-          },
-          {
-            "title": "property",
             "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "type",
-            "default": "'hash'"
+            "name": "type"
           },
           {
             "title": "property",
@@ -394,10 +377,6 @@
           {
             "title": "state",
             "description": "data - an array of keys which match the pattern"
-          },
-          {
-            "title": "state",
-            "description": "cursor - A numeric value used to continue the iteration from where it left off"
           },
           {
             "title": "returns",
