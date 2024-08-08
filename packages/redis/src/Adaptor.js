@@ -47,7 +47,7 @@ const disconnect = async state => {
  * Options provided to the scan function
  * @typedef {Object} ScanOptions
  * @public
- * @property {string} type - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
+ * @property {string} type - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).
  * @property {integer} count - A hint to the server about how many elements to return in the call (default is 10).
  */
 

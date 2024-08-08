@@ -24,7 +24,7 @@
           },
           {
             "title": "property",
-            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).",
+            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).",
             "type": {
               "type": "NameExpression",
               "name": "string"
