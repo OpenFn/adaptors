@@ -48,3 +48,11 @@ export const assertSetArgs = (key, value) => {
     `Make sure both key and value are strings for set(): e.g., set('name', 'fela')`
   );
 };
+
+export const assertjGetArgs = key => {
+  assertArgType(
+    key,
+    'string',
+    `Make sure to pass a strings for jGet(): e.g., jGet('patient').`
+  );
+};

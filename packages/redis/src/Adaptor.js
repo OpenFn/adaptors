@@ -129,6 +129,7 @@ export function hget(key, field) {
 export function jGet(key) {
   return async state => {
     const [resolvedKey] = expandReferences(state, key);
+    util.assertjGetArgs(resolvedKey);
     console.log(`Fetching value of '${resolvedKey}' key`);
     const result = await client.json.get(resolvedKey);
 
