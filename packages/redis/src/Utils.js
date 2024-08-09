@@ -14,12 +14,12 @@ export const asserthGetArgs = (key, field) => {
   assertArgType(
     key,
     'string',
-    `Ensure both key and field are strings for hget(): e.g., hget('patient', 'name').`
+    `Ensure both key and field are strings for hget(): e.g., hget('patient', 'name')`
   );
   assertArgType(
     field,
     'string',
-    `Ensure both key and field are strings for hget(): e.g., hget('patient', 'name').`
+    `Ensure both key and field are strings for hget(): e.g., hget('patient', 'name')`
   );
 };
 
@@ -46,5 +46,13 @@ export const assertSetArgs = (key, value) => {
     value,
     'string',
     `Make sure both key and value are strings for set(): e.g., set('name', 'fela')`
+  );
+};
+
+export const assertjGetArgs = key => {
+  assertArgType(
+    key,
+    'string',
+    `Make sure to pass a string for jGet(): e.g., jGet('patient')`
   );
 };

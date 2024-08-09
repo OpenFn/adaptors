@@ -1,6 +1,15 @@
 import { expect } from 'chai';
 
-import { get, hget, hset, set, scan, setMockClient, hGetAll } from '../src';
+import {
+  get,
+  hget,
+  hset,
+  set,
+  scan,
+  setMockClient,
+  hGetAll,
+  jGet,
+} from '../src';
 
 describe('get', () => {
   it('should get the string value of a key', async () => {
@@ -426,6 +435,59 @@ describe('hGetAll', () => {
 
     const state = { key: 'animals:1' };
     const result = await hGetAll(s => s.key)(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+});
+
+describe('jGet', () => {
+  const jGetClient = {
+    json: {
+      get: async key => {
+        expect(key).to.eql('animals:1');
+        return {
+          name: 'Fluffy',
+          species: 'cat',
+          age: '3',
+        };
+      },
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(jGetClient);
+    const state = { key: 'animals:1' };
+    const result = await jGet(s => s.key)(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+  it('should throw if key not specified', async () => {
+    setMockClient({
+      json: {
+        get: async () => {
+          throw new Error();
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await jGet()(state);
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+    }
+  });
+  it('should get JSON document of specified key', async () => {
+    setMockClient(jGetClient);
+
+    const state = {};
+    const result = await jGet('animals:1')(state);
     expect(result.data).to.eql({
       name: 'Fluffy',
       species: 'cat',

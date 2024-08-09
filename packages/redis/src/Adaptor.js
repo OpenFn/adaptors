@@ -116,6 +116,27 @@ export function hget(key, field) {
 }
 
 /**
+ * Get the value at a specified path in a JSON document stored in a key
+ * @example <caption>Get JSON document value of the patient key</caption>
+ * jGet("patient");
+ * @function
+ * @public
+ * @param {string} key - The key at which the JSON document is stored.
+ * @state {RedisState}
+ * @returns {Operation}
+ */
+export function jGet(key) {
+  return async state => {
+    const [resolvedKey] = expandReferences(state, key);
+    util.assertjGetArgs(resolvedKey);
+    console.log(`Fetching value of '${resolvedKey}' key`);
+    const result = await client.json.get(resolvedKey);
+
+    return composeNextState(state, result);
+  };
+}
+
+/**
  * Get all fields and values of a hash, as an object, for a specified key.
  * @example <caption>Get the hash obejct at the noderedis:animals:1 key</caption>
  * hGetAll("noderedis:animals:1");

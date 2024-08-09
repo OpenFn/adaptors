@@ -151,6 +151,54 @@
       "valid": true
     },
     {
+      "name": "jGet",
+      "params": [
+        "key"
+      ],
+      "docs": {
+        "description": "Get the value at a specified path in a JSON document stored in a key",
+        "tags": [
+          {
+            "title": "example",
+            "description": "jGet(\"patient\");",
+            "caption": "Get JSON document value of the patient key"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The key at which the JSON document is stored.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "hGetAll",
       "params": [
         "key"
@@ -301,6 +349,69 @@
           {
             "title": "param",
             "description": "The values to set",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "value"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "jSet",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Creates a JSON object at the key",
+        "tags": [
+          {
+            "title": "example",
+            "description": "jSet('patient', { name: 'mtuchi' });",
+            "caption": "Set a field and value for the patient key"
+          },
+          {
+            "title": "example",
+            "description": "jSet('patient', { name: 'victor', ihs_number: 12345  });",
+            "caption": "Set multiple field values for the patient key"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The key to modify.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The JSON value to set",
             "type": {
               "type": "NameExpression",
               "name": "object"
