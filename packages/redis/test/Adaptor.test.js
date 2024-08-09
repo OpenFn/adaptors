@@ -8,7 +8,7 @@ import {
   scan,
   setMockClient,
   hGetAll,
-  jGet,
+  jSet,
 } from '../src';
 
 describe('get', () => {
@@ -443,33 +443,45 @@ describe('hGetAll', () => {
   });
 });
 
-describe('jGet', () => {
+describe('jSet', () => {
   const jGetClient = {
     json: {
-      get: async key => {
+      set: async (key, path, values) => {
+        expect(path).to.eql('$');
         expect(key).to.eql('animals:1');
-        return {
-          name: 'Fluffy',
-          species: 'cat',
-          age: '3',
-        };
+        expect(values).to.eql({ name: 'mammoth' });
+        return 'OK';
       },
     },
   };
   it('should expand references', async () => {
     setMockClient(jGetClient);
-    const state = { key: 'animals:1' };
-    const result = await jGet(s => s.key)(state);
-    expect(result.data).to.eql({
-      name: 'Fluffy',
-      species: 'cat',
-      age: '3',
-    });
+    const state = { value: { name: 'mammoth' } };
+    await jSet('animals:1', s => s.value)(state);
   });
-  it('should throw if key not specified', async () => {
+
+  it('should throw if existing key has a different redis type', async () => {
     setMockClient({
       json: {
-        get: async () => {
+        set: (key, path, values) => {
+          expect(path).to.eql('$');
+          expect(key).to.eql('hash-key');
+          expect(values).to.eql({ name: 'mammoth' });
+          throw new Error('Existing key has wrong Redis type');
+        },
+      },
+    });
+
+    try {
+      await jSet('hash-key', { name: 'mammoth' })({});
+    } catch (error) {
+      expect(error.message).to.eql('Existing key has wrong Redis type');
+    }
+  });
+  it('should throw if invalid params', async () => {
+    setMockClient({
+      json: {
+        set: () => {
           throw new Error();
         },
       },
@@ -477,21 +489,10 @@ describe('jGet', () => {
 
     const state = {};
     try {
-      await jGet()(state);
+      await jSet()(state);
     } catch (error) {
       expect(error.message).to.eql('TypeError: Invalid argument type');
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }
-  });
-  it('should get JSON document of specified key', async () => {
-    setMockClient(jGetClient);
-
-    const state = {};
-    const result = await jGet('animals:1')(state);
-    expect(result.data).to.eql({
-      name: 'Fluffy',
-      species: 'cat',
-      age: '3',
-    });
   });
 });

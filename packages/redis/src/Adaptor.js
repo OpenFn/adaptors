@@ -212,8 +212,32 @@ export function hset(key, value) {
 }
 
 /**
- * Returns all keys which match the provided pattern.
- * scan iterates the whole database to find the matching keys
+ * Creates a JSON object at the key
+ * @example <caption>Set a field and value for the patient key</caption>
+ * jSet('patient', { name: 'mtuchi' });
+ * @example <caption>Set multiple field values for the patient key</caption>
+ * jSet('patient', { name: 'victor', ihs_number: 12345  });
+ * @function
+ * @public
+ * @param {string} key - The key to modify.
+ * @param {object} value - The JSON value to set
+ * @state references - an array of all previous data objects used in the Job
+ * @returns {Operation}
+ */
+export function jSet(key, value) {
+  return async state => {
+    const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    util.assertjSetArgs(resolvedKey, resolvedValue);
+    console.log(`Setting values of '${resolvedKey}' key`);
+    await client.json.set(resolvedKey, '$', resolvedValue);
+    console.log(`Set value for ${resolvedKey} key successfully`);
+
+    return state;
+  };
+}
+
+/**
+ * Returns all keys which patch the provided pattern.
  * @example <caption>Scan for matching keys</caption>
  * scan('*:20240524T172736Z*');
  * @example <caption>Scan for keys and fetch the string values inside</caption>

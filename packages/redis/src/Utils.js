@@ -36,6 +36,19 @@ export const asserthSetArgs = (key, value) => {
   );
 };
 
+export const assertjSetArgs = (key, value) => {
+  assertArgType(
+    key,
+    'string',
+    `Make sure to pass a string for the key: e.g., jSet('patient', {name: "fela"})`
+  );
+  assertArgType(
+    value,
+    'object',
+    `Make sure to pass an object for the value: e.g., jSet('patient', {name: "fela"})`
+  );
+};
+
 export const assertSetArgs = (key, value) => {
   assertArgType(
     key,
