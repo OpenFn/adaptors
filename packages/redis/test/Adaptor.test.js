@@ -444,6 +444,59 @@ describe('hGetAll', () => {
   });
 });
 
+describe('jGet', () => {
+  const jGetClient = {
+    json: {
+      get: async key => {
+        expect(key).to.eql('animals:1');
+        return {
+          name: 'Fluffy',
+          species: 'cat',
+          age: '3',
+        };
+      },
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(jGetClient);
+    const state = { key: 'animals:1' };
+    const result = await jGet(s => s.key)(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+  it('should throw if key not specified', async () => {
+    setMockClient({
+      json: {
+        get: async () => {
+          throw new Error();
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await jGet()(state);
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+    }
+  });
+  it('should get JSON document of specified key', async () => {
+    setMockClient(jGetClient);
+
+    const state = {};
+    const result = await jGet('animals:1')(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+});
+
 describe('jSet', () => {
   const jSetClient = {
     json: {
@@ -494,7 +547,7 @@ describe('jSet', () => {
     }
   });
 
-  it.only('should always sets at the document root', async () => {
+  it('should always sets at the document root', async () => {
     setMockClient({
       json: {
         set: () => 'OK',
@@ -506,11 +559,7 @@ describe('jSet', () => {
 
     const state = {};
     await jSet('animals:1', { name: 'mammoth' })(state);
-
-    const result = jGet('animals:1')(state);
-
-    console.log({ result });
-
-    expect(result.data).to.eql({ a });
+    const result = await jGet('animals:1')(state);
+    expect(result.data).to.eql({ name: 'mammoth' });
   });
 });

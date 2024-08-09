@@ -378,7 +378,7 @@
         "value"
       ],
       "docs": {
-        "description": "Creates a JSON object at the key",
+        "description": "Creates a JSON object at the key\nThis function will overwrites the values for the specified key with the new object",
         "tags": [
           {
             "title": "example",
@@ -450,7 +450,7 @@
         "options"
       ],
       "docs": {
-        "description": "Returns all keys which match the provided pattern.\nscan iterates the whole database to find the matching keys",
+        "description": "Returns all keys which patch the provided pattern.",
         "tags": [
           {
             "title": "example",
