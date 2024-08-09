@@ -320,12 +320,12 @@
           {
             "title": "example",
             "description": "hset('patient', { name: 'mtuchi' });",
-            "caption": "Set a field and value for the patient key"
+            "caption": "Set a field and value for the `patient` key"
           },
           {
             "title": "example",
             "description": "hset('patient', { name: 'victor', ihs_number: 12345  });",
-            "caption": "Set multiple field values for the patient key"
+            "caption": "Set multiple field values for the `patient` key"
           },
           {
             "title": "function",
@@ -378,17 +378,12 @@
         "value"
       ],
       "docs": {
-        "description": "Creates a JSON object at the key\nThis function will overwrites the values for the specified key with the new object",
+        "description": "Creates a JSON object at the specified key. If the key already exists, the\nexisting value will be replaced by the new value.",
         "tags": [
           {
             "title": "example",
-            "description": "jSet('patient', \"{ name: 'mtuchi' }\");",
-            "caption": "Set a JSON string for the patient key"
-          },
-          {
-            "title": "example",
             "description": "jSet('patient', { name: 'victor', ihs_number: 12345  });",
-            "caption": "Set a JSON object for the patient key"
+            "caption": "Set a JSON object for the key `patient`"
           },
           {
             "title": "function",
@@ -411,7 +406,7 @@
           },
           {
             "title": "param",
-            "description": "The JSON string or The JSON value to set",
+            "description": "The JSON object or string value to set.",
             "type": {
               "type": "UnionType",
               "elements": [
@@ -459,7 +454,7 @@
           },
           {
             "title": "example",
-            "description": "scan('*:20240524T172736Z*');\neach($.data, get($.data).then((state) => {\n   state.results = state.results ?? [];\n   state.results.push(state.data)\n   return state;\n})",
+            "description": "scan('*:20240524T172736Z*');\neach($.data, get($.data).then((state) => {\n   state.results ??= [];\n   state.results.push(state.data)\n   return state;\n})",
             "caption": "Scan for keys and fetch the string values inside"
           },
           {
