@@ -187,9 +187,9 @@ export function set(key, value) {
  * Sets the specified fields to their respective values in the hash stored at key.
  * This function overwrites the values of specified fields that exist in the hash.
  * If key doesn't exist, a new key holding a hash is created.
- * @example <caption>Set a field and value for the patient key</caption>
+ * @example <caption>Set a field and value for the `patient` key</caption>
  * hset('patient', { name: 'mtuchi' });
- * @example <caption>Set multiple field values for the patient key</caption>
+ * @example <caption>Set multiple field values for the `patient` key</caption>
  * hset('patient', { name: 'victor', ihs_number: 12345  });
  * @function
  * @public
@@ -212,6 +212,30 @@ export function hset(key, value) {
 }
 
 /**
+ * Creates a JSON object at the specified key. If the key already exists, the
+ * existing value will be replaced by the new value.
+ * @example <caption>Set a JSON object for the key `patient`</caption>
+ * jSet('patient', { name: 'victor', ihs_number: 12345  });
+ * @function
+ * @public
+ * @param {string} key - The key to modify.
+ * @param {(string|object)} value - The JSON object or string value to set.
+ * @state references - an array of all previous data objects used in the Job
+ * @returns {Operation}
+ */
+export function jSet(key, value) {
+  return async state => {
+    const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    util.assertjSetArgs(resolvedKey, resolvedValue);
+    console.log(`Setting values of '${resolvedKey}' key`);
+    await client.json.set(resolvedKey, '$', resolvedValue);
+    console.log(`Set value for ${resolvedKey} key successfully`);
+
+    return state;
+  };
+}
+
+/**
  * Returns all keys which match the provided pattern.
  * scan iterates the whole database to find the matching keys
  * @example <caption>Scan for matching keys</caption>
@@ -219,7 +243,7 @@ export function hset(key, value) {
  * @example <caption>Scan for keys and fetch the string values inside</caption>
  * scan('*:20240524T172736Z*');
  * each($.data, get($.data).then((state) => {
- *    state.results = state.results ?? [];
+ *    state.results ??= [];
  *    state.results.push(state.data)
  *    return state;
  * })

@@ -378,17 +378,17 @@
         "value"
       ],
       "docs": {
-        "description": "Creates a JSON object at the key",
+        "description": "Creates a JSON object at the key\nThis function will overwrites the values for the specified key with the new object",
         "tags": [
           {
             "title": "example",
-            "description": "jSet('patient', { name: 'mtuchi' });",
-            "caption": "Set a field and value for the patient key"
+            "description": "jSet('patient', \"{ name: 'mtuchi' }\");",
+            "caption": "Set a JSON string for the patient key"
           },
           {
             "title": "example",
             "description": "jSet('patient', { name: 'victor', ihs_number: 12345  });",
-            "caption": "Set multiple field values for the patient key"
+            "caption": "Set a JSON object for the patient key"
           },
           {
             "title": "function",
@@ -411,10 +411,19 @@
           },
           {
             "title": "param",
-            "description": "The JSON value to set",
+            "description": "The JSON string or The JSON value to set",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                }
+              ]
             },
             "name": "value"
           },
