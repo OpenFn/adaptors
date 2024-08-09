@@ -550,16 +550,13 @@ describe('jSet', () => {
   it('should always sets results at the document root', async () => {
     setMockClient({
       json: {
-        set: () => 'OK',
-        get: () => {
-          return { name: 'mammoth' };
+        set: async (_key, path, _values) => {
+          expect(path).to.eql('$');
         },
       },
     });
 
     const state = {};
     await jSet('animals:1', { name: 'mammoth' })(state);
-    const result = await jGet('animals:1')(state);
-    expect(result.data).to.eql({ name: 'mammoth' });
   });
 });
