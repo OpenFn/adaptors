@@ -8,6 +8,10 @@
 <dt>
     <a href="#hset">hset(key, value)</a></dt>
 <dt>
+    <a href="#jget">jGet(key)</a></dt>
+<dt>
+    <a href="#jset">jSet(key, value)</a></dt>
+<dt>
     <a href="#scan">scan(pattern, options)</a></dt>
 <dt>
     <a href="#set">set(key, value)</a></dt>
@@ -148,13 +152,62 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
-**Example:** Set a field and value for the patient key
+**Example:** Set a field and value for the &#x60;patient&#x60; key
 ```js
 hset('patient', { name: 'mtuchi' });
 ```
-**Example:** Set multiple field values for the patient key
+**Example:** Set multiple field values for the &#x60;patient&#x60; key
 ```js
 hset('patient', { name: 'victor', ihs_number: 12345  });
+```
+
+* * *
+
+### jGet
+
+<p><code>jGet(key) ⇒ Operation</code></p>
+
+Get the value at a specified path in a JSON document stored in a key
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | The key at which the JSON document is stored. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the result returned from Redis |
+| references | an array of all previous data objects used in the Job |
+**Example:** Get JSON document value of the patient key
+```js
+jGet("patient");
+```
+
+* * *
+
+### jSet
+
+<p><code>jSet(key, value) ⇒ Operation</code></p>
+
+Creates a JSON object at the specified key. If the key already exists, the
+existing value will be replaced by the new value.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | The key to modify. |
+| value | <code>string</code> \| <code>object</code> | The JSON object or string value to set. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| references | an array of all previous data objects used in the Job |
+**Example:** Set a JSON object for the key &#x60;patient&#x60;
+```js
+jSet('patient', { name: 'victor', ihs_number: 12345  });
 ```
 
 * * *
@@ -163,7 +216,8 @@ hset('patient', { name: 'victor', ihs_number: 12345  });
 
 <p><code>scan(pattern, options) ⇒ Operation</code></p>
 
-Returns all keys which patch the provided pattern.
+Returns all keys which match the provided pattern.
+scan iterates the whole database to find the matching keys
 
 
 | Param | Type | Description |
@@ -177,7 +231,6 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | an array of keys which match the pattern |
 | references | an array of all previous data objects used in the Job |
-| cursor | A numeric value used to continue the iteration from where it left off |
 **Example:** Scan for matching keys
 ```js
 scan('*:20240524T172736Z*');
@@ -186,7 +239,7 @@ scan('*:20240524T172736Z*');
 ```js
 scan('*:20240524T172736Z*');
 each($.data, get($.data).then((state) => {
-   state.results = state.results ?? [];
+   state.results ??= [];
    state.results.push(state.data)
    return state;
 })
@@ -228,11 +281,10 @@ Options provided to the scan function
 
 **Properties**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [cursor] | <code>integer</code> | <code>0</code> | A numeric value used to continue the iteration from where it left off. Initially, you start with 0. |
-| [type] | <code>string</code> | <code>&quot;&#x27;hash&#x27;&quot;</code> | Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.). |
-| count | <code>integer</code> |  | A hint to the server about how many elements to return in the call (default is 10). |
+| Name | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream). |
+| count | <code>integer</code> | A hint to the server about how many elements to return in the call (default is 10). |
 
 
 * * *
