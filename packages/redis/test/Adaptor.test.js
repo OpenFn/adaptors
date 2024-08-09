@@ -1,6 +1,16 @@
 import { expect } from 'chai';
 
-import { get, hget, hset, set, scan, setMockClient, hGetAll } from '../src';
+import {
+  get,
+  hget,
+  hset,
+  set,
+  scan,
+  setMockClient,
+  hGetAll,
+  jGet,
+  jSet,
+} from '../src';
 
 describe('get', () => {
   it('should get the string value of a key', async () => {
@@ -254,6 +264,37 @@ describe('hset', () => {
 });
 
 describe('scan', () => {
+  it('should return all pages results', async () => {
+    const results = [
+      { keys: ['a'], cursor: 22 },
+      { keys: ['b', 'c'], cursor: 33 },
+      { keys: ['d'], cursor: 0 },
+    ];
+    setMockClient({
+      scan: async (cursor, options) => {
+        expect(options.TYPE).to.eql('string');
+        return results.shift();
+      },
+    });
+
+    const state = {};
+    const result = await scan('*', { type: 'string' })(state);
+
+    expect(result.data).to.eql(['a', 'b', 'c', 'd']);
+  });
+  it('should return json keys', async () => {
+    setMockClient({
+      scan: async (cursor, options) => {
+        expect(cursor).to.eql(0);
+        expect(options.MATCH).to.eql('*:abc*');
+        expect(options.TYPE).to.eql('ReJSON-RL');
+        return { keys: ['node:abc'], cursor: 0 };
+      },
+    });
+    const state = {};
+    const result = await scan('*:abc*', { type: 'json' })(state);
+    expect(result.data).to.eql(['node:abc']);
+  });
   it('should return empty array if key not found', async () => {
     setMockClient({
       scan: async (cursor, options) => {
@@ -265,7 +306,6 @@ describe('scan', () => {
     const state = {};
     const result = await scan('*:abc*')(state);
     expect(result.data).to.eql([]);
-    expect(result.cursor).to.eql(0);
   });
 
   it('should return collection of keys', async () => {
@@ -273,7 +313,6 @@ describe('scan', () => {
       scan: async (cursor, options) => {
         expect(cursor).to.eql(0);
         expect(options.MATCH).to.eql('*:animals*');
-        expect(options.TYPE).to.eql('hash');
         return { keys: ['noderedis:animals:1'], cursor: 0 };
       },
     });
@@ -281,15 +320,13 @@ describe('scan', () => {
     const state = {};
     const result = await scan('*:animals*')(state);
     expect(result.data).to.eql(['noderedis:animals:1']);
-    expect(result.cursor).to.eql(0);
   });
 
-  it('should return all hash keys if no query is specified', async () => {
+  it('should return all keys if no query is specified', async () => {
     setMockClient({
       scan: async (cursor, options) => {
         expect(cursor).to.eql(0);
         expect(options.MATCH).to.eql(undefined);
-        expect(options.TYPE).to.eql('hash');
 
         return {
           keys: ['animals:1', 'family:name'],
@@ -301,7 +338,6 @@ describe('scan', () => {
     const state = {};
     const result = await scan()(state);
     expect(result.data).to.eql(['animals:1', 'family:name']);
-    expect(result.cursor).to.eql(0);
   });
 
   it('should return all string keys', async () => {
@@ -320,7 +356,6 @@ describe('scan', () => {
     const state = {};
     const result = await scan('', { type: 'string' })(state);
     expect(result.data).to.eql(['animal', 'family']);
-    expect(result.cursor).to.eql(0);
   });
 
   it('should return a string key', async () => {
@@ -339,7 +374,6 @@ describe('scan', () => {
     const state = {};
     const result = await scan('animal', { type: 'string' })(state);
     expect(result.data).to.eql(['animal']);
-    expect(result.cursor).to.eql(0);
   });
 
   it('should expand referecence', async () => {
@@ -347,7 +381,6 @@ describe('scan', () => {
       scan: async (cursor, options) => {
         expect(cursor).to.eql(0);
         expect(options.MATCH).to.eql('*:animals*');
-        expect(options.TYPE).to.eql('hash');
         return { keys: ['animals:1'], cursor: 0 };
       },
     });
@@ -355,7 +388,6 @@ describe('scan', () => {
     const state = { pattern: '*:animals*' };
     const result = await scan(s => s.pattern)(state);
     expect(result.data).to.eql(['animals:1']);
-    expect(result.cursor).to.eql(0);
   });
 });
 
@@ -409,5 +441,122 @@ describe('hGetAll', () => {
       species: 'cat',
       age: '3',
     });
+  });
+});
+
+describe('jGet', () => {
+  const jGetClient = {
+    json: {
+      get: async key => {
+        expect(key).to.eql('animals:1');
+        return {
+          name: 'Fluffy',
+          species: 'cat',
+          age: '3',
+        };
+      },
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(jGetClient);
+    const state = { key: 'animals:1' };
+    const result = await jGet(s => s.key)(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+  it('should throw if key not specified', async () => {
+    setMockClient({
+      json: {
+        get: async () => {
+          throw new Error();
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await jGet()(state);
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+    }
+  });
+  it('should get JSON document of specified key', async () => {
+    setMockClient(jGetClient);
+
+    const state = {};
+    const result = await jGet('animals:1')(state);
+    expect(result.data).to.eql({
+      name: 'Fluffy',
+      species: 'cat',
+      age: '3',
+    });
+  });
+});
+
+describe('jSet', () => {
+  const jSetClient = {
+    json: {
+      set: async (key, path, values) => {
+        expect(path).to.eql('$');
+        expect(key).to.eql('animals:1');
+        expect(values).to.eql({ name: 'mammoth' });
+        return 'OK';
+      },
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(jSetClient);
+    const state = { value: { name: 'mammoth' } };
+    await jSet('animals:1', s => s.value)(state);
+  });
+
+  it('should throw if existing key has a different redis type', async () => {
+    setMockClient({
+      json: {
+        set: () => {
+          throw new Error('Existing key has wrong Redis type');
+        },
+      },
+    });
+
+    try {
+      await jSet('hash-key', { name: 'mammoth' })({});
+    } catch (error) {
+      expect(error.message).to.eql('Existing key has wrong Redis type');
+    }
+  });
+  it('should throw if invalid params', async () => {
+    setMockClient({
+      json: {
+        set: () => {
+          throw new Error();
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await jSet()(state);
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
+    }
+  });
+
+  it('should always sets results at the document root', async () => {
+    setMockClient({
+      json: {
+        set: async (_key, path, _values) => {
+          expect(path).to.eql('$');
+        },
+      },
+    });
+
+    const state = {};
+    await jSet('animals:1', { name: 'mammoth' })(state);
   });
 });

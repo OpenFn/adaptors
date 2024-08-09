@@ -47,8 +47,7 @@ const disconnect = async state => {
  * Options provided to the scan function
  * @typedef {Object} ScanOptions
  * @public
- * @property {integer} [cursor=0] - A numeric value used to continue the iteration from where it left off. Initially, you start with 0.
- * @property {string} [type='hash'] - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).
+ * @property {string} type - Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).
  * @property {integer} count - A hint to the server about how many elements to return in the call (default is 10).
  */
 
@@ -117,6 +116,27 @@ export function hget(key, field) {
 }
 
 /**
+ * Get the value at a specified path in a JSON document stored in a key
+ * @example <caption>Get JSON document value of the patient key</caption>
+ * jGet("patient");
+ * @function
+ * @public
+ * @param {string} key - The key at which the JSON document is stored.
+ * @state {RedisState}
+ * @returns {Operation}
+ */
+export function jGet(key) {
+  return async state => {
+    const [resolvedKey] = expandReferences(state, key);
+    util.assertjGetArgs(resolvedKey);
+    console.log(`Fetching value of '${resolvedKey}' key`);
+    const result = await client.json.get(resolvedKey);
+
+    return composeNextState(state, result);
+  };
+}
+
+/**
  * Get all fields and values of a hash, as an object, for a specified key.
  * @example <caption>Get the hash obejct at the noderedis:animals:1 key</caption>
  * hGetAll("noderedis:animals:1");
@@ -167,9 +187,9 @@ export function set(key, value) {
  * Sets the specified fields to their respective values in the hash stored at key.
  * This function overwrites the values of specified fields that exist in the hash.
  * If key doesn't exist, a new key holding a hash is created.
- * @example <caption>Set a field and value for the patient key</caption>
+ * @example <caption>Set a field and value for the `patient` key</caption>
  * hset('patient', { name: 'mtuchi' });
- * @example <caption>Set multiple field values for the patient key</caption>
+ * @example <caption>Set multiple field values for the `patient` key</caption>
  * hset('patient', { name: 'victor', ihs_number: 12345  });
  * @function
  * @public
@@ -192,13 +212,38 @@ export function hset(key, value) {
 }
 
 /**
- * Returns all keys which patch the provided pattern.
+ * Creates a JSON object at the specified key. If the key already exists, the
+ * existing value will be replaced by the new value.
+ * @example <caption>Set a JSON object for the key `patient`</caption>
+ * jSet('patient', { name: 'victor', ihs_number: 12345  });
+ * @function
+ * @public
+ * @param {string} key - The key to modify.
+ * @param {(string|object)} value - The JSON object or string value to set.
+ * @state references - an array of all previous data objects used in the Job
+ * @returns {Operation}
+ */
+export function jSet(key, value) {
+  return async state => {
+    const [resolvedKey, resolvedValue] = expandReferences(state, key, value);
+    util.assertjSetArgs(resolvedKey, resolvedValue);
+    console.log(`Setting values of '${resolvedKey}' key`);
+    await client.json.set(resolvedKey, '$', resolvedValue);
+    console.log(`Set value for ${resolvedKey} key successfully`);
+
+    return state;
+  };
+}
+
+/**
+ * Returns all keys which match the provided pattern.
+ * scan iterates the whole database to find the matching keys
  * @example <caption>Scan for matching keys</caption>
  * scan('*:20240524T172736Z*');
  * @example <caption>Scan for keys and fetch the string values inside</caption>
  * scan('*:20240524T172736Z*');
  * each($.data, get($.data).then((state) => {
- *    state.results = state.results ?? [];
+ *    state.results ??= [];
  *    state.results.push(state.data)
  *    return state;
  * })
@@ -208,7 +253,6 @@ export function hset(key, value) {
  * @param {ScanOptions} options - Scan options
  * @state {RedisState}
  * @state data - an array of keys which match the pattern
- * @state cursor - A numeric value used to continue the iteration from where it left off
  * @returns {Operation}
  */
 export function scan(pattern, options = {}) {
@@ -219,18 +263,23 @@ export function scan(pattern, options = {}) {
       options
     );
 
-    const { type = 'hash', cursor = 0, count } = resolvedOptions;
+    const { type, count } = resolvedOptions;
 
-    const result = await client.scan(cursor, {
-      MATCH: resolvedPattern,
-      COUNT: count,
-      TYPE: type,
-    });
+    let cursor = 0;
+    const result = [];
+    do {
+      const reply = await client.scan(cursor, {
+        MATCH: resolvedPattern,
+        COUNT: count,
+        TYPE: type === 'json' ? 'ReJSON-RL' : type,
+      });
+      cursor = reply.cursor;
+      for (const key of reply.keys) {
+        result.push(key);
+      }
+    } while (cursor !== 0);
 
-    return {
-      ...composeNextState(state, result.keys),
-      cursor: result.cursor,
-    };
+    return composeNextState(state, result);
   };
 }
 

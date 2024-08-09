@@ -24,29 +24,12 @@
           },
           {
             "title": "property",
-            "description": "A numeric value used to continue the iteration from where it left off. Initially, you start with 0.",
+            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "cursor",
-            "default": "0"
-          },
-          {
-            "title": "property",
-            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "type",
-            "default": "'hash'"
+            "name": "type"
           },
           {
             "title": "property",
@@ -150,6 +133,54 @@
               "name": "string"
             },
             "name": "field"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "jGet",
+      "params": [
+        "key"
+      ],
+      "docs": {
+        "description": "Get the value at a specified path in a JSON document stored in a key",
+        "tags": [
+          {
+            "title": "example",
+            "description": "jGet(\"patient\");",
+            "caption": "Get JSON document value of the patient key"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The key at which the JSON document is stored.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
           },
           {
             "title": "state",
@@ -341,13 +372,85 @@
       "valid": true
     },
     {
+      "name": "jSet",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Creates a JSON object at the key\nThis function will overwrites the values for the specified key with the new object",
+        "tags": [
+          {
+            "title": "example",
+            "description": "jSet('patient', \"{ name: 'mtuchi' }\");",
+            "caption": "Set a JSON string for the patient key"
+          },
+          {
+            "title": "example",
+            "description": "jSet('patient', { name: 'victor', ihs_number: 12345  });",
+            "caption": "Set a JSON object for the patient key"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The key to modify.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The JSON string or The JSON value to set",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                }
+              ]
+            },
+            "name": "value"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "scan",
       "params": [
         "pattern",
         "options"
       ],
       "docs": {
-        "description": "Returns all keys which patch the provided pattern.",
+        "description": "Returns all keys which match the provided pattern.\nscan iterates the whole database to find the matching keys",
         "tags": [
           {
             "title": "example",
@@ -394,10 +497,6 @@
           {
             "title": "state",
             "description": "data - an array of keys which match the pattern"
-          },
-          {
-            "title": "state",
-            "description": "cursor - A numeric value used to continue the iteration from where it left off"
           },
           {
             "title": "returns",
