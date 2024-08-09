@@ -42,11 +42,15 @@ export const assertjSetArgs = (key, value) => {
     'string',
     `Make sure to pass a string for the key: e.g., jSet('patient', {name: "fela"})`
   );
-  assertArgType(
-    value,
-    'object',
-    `Make sure to pass an object for the value: e.g., jSet('patient', {name: "fela"})`
-  );
+
+  if (!['string', 'object'].includes(typeof value)) {
+    const e = new Error('TypeError: Invalid argument type');
+    e.code = 'ARGUMENT_ERROR';
+    e.description = `Expected argument to be 'JSON string or JSON object', but received: ${typeof value}`;
+    e.fix = `Pass a JSON object or string for the value: e.g., jSet('patient', {name: "fela"}) or jSet('patient', "{name: 'fela'}")`;
+
+    throw e;
+  }
 };
 
 export const assertSetArgs = (key, value) => {

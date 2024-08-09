@@ -213,14 +213,14 @@ export function hset(key, value) {
 
 /**
  * Creates a JSON object at the key
- * @example <caption>Set a field and value for the patient key</caption>
- * jSet('patient', { name: 'mtuchi' });
- * @example <caption>Set multiple field values for the patient key</caption>
+ * @example <caption>Set a JSON string for the patient key</caption>
+ * jSet('patient', "{ name: 'mtuchi' }");
+ * @example <caption>Set a JSON object for the patient key</caption>
  * jSet('patient', { name: 'victor', ihs_number: 12345  });
  * @function
  * @public
  * @param {string} key - The key to modify.
- * @param {object} value - The JSON value to set
+ * @param {(string|object)} value - The JSON string or The JSON value to set
  * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
