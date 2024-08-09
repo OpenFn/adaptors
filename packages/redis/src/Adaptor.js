@@ -238,7 +238,8 @@ export function jSet(key, value) {
 }
 
 /**
- * Returns all keys which patch the provided pattern.
+ * Returns all keys which match the provided pattern.
+ * scan iterates the whole database to find the matching keys
  * @example <caption>Scan for matching keys</caption>
  * scan('*:20240524T172736Z*');
  * @example <caption>Scan for keys and fetch the string values inside</caption>

@@ -8,8 +8,8 @@ import {
   scan,
   setMockClient,
   hGetAll,
-  jSet,
   jGet,
+  jSet,
 } from '../src';
 
 describe('get', () => {

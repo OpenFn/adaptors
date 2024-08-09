@@ -450,7 +450,7 @@
         "options"
       ],
       "docs": {
-        "description": "Returns all keys which patch the provided pattern.",
+        "description": "Returns all keys which match the provided pattern.\nscan iterates the whole database to find the matching keys",
         "tags": [
           {
             "title": "example",
