@@ -24,29 +24,12 @@
           },
           {
             "title": "property",
-            "description": "A numeric value used to continue the iteration from where it left off. Initially, you start with 0.",
+            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "cursor",
-            "default": "0"
-          },
-          {
-            "title": "property",
-            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, etc.).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "type",
-            "default": "'hash'"
+            "name": "type"
           },
           {
             "title": "property",
@@ -347,7 +330,7 @@
         "options"
       ],
       "docs": {
-        "description": "Returns all keys which patch the provided pattern.",
+        "description": "Returns all keys which match the provided pattern.\nscan iterates the whole database to find the matching keys",
         "tags": [
           {
             "title": "example",
@@ -394,10 +377,6 @@
           {
             "title": "state",
             "description": "data - an array of keys which match the pattern"
-          },
-          {
-            "title": "state",
-            "description": "cursor - A numeric value used to continue the iteration from where it left off"
           },
           {
             "title": "returns",
