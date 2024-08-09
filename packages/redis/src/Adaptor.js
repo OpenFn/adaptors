@@ -213,6 +213,7 @@ export function hset(key, value) {
 
 /**
  * Creates a JSON object at the key
+ * This function will overwrites the values for the specified key with the new object
  * @example <caption>Set a JSON string for the patient key</caption>
  * jSet('patient', "{ name: 'mtuchi' }");
  * @example <caption>Set a JSON object for the patient key</caption>

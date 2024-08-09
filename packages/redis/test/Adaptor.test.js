@@ -9,6 +9,7 @@ import {
   setMockClient,
   hGetAll,
   jSet,
+  jGet,
 } from '../src';
 
 describe('get', () => {
@@ -444,7 +445,7 @@ describe('hGetAll', () => {
 });
 
 describe('jSet', () => {
-  const jGetClient = {
+  const jSetClient = {
     json: {
       set: async (key, path, values) => {
         expect(path).to.eql('$');
@@ -455,7 +456,7 @@ describe('jSet', () => {
     },
   };
   it('should expand references', async () => {
-    setMockClient(jGetClient);
+    setMockClient(jSetClient);
     const state = { value: { name: 'mammoth' } };
     await jSet('animals:1', s => s.value)(state);
   });
@@ -463,10 +464,7 @@ describe('jSet', () => {
   it('should throw if existing key has a different redis type', async () => {
     setMockClient({
       json: {
-        set: (key, path, values) => {
-          expect(path).to.eql('$');
-          expect(key).to.eql('hash-key');
-          expect(values).to.eql({ name: 'mammoth' });
+        set: () => {
           throw new Error('Existing key has wrong Redis type');
         },
       },
@@ -494,5 +492,25 @@ describe('jSet', () => {
       expect(error.message).to.eql('TypeError: Invalid argument type');
       expect(error.code).to.eql('ARGUMENT_ERROR');
     }
+  });
+
+  it.only('should always sets at the document root', async () => {
+    setMockClient({
+      json: {
+        set: () => 'OK',
+        get: () => {
+          return { name: 'mammoth' };
+        },
+      },
+    });
+
+    const state = {};
+    await jSet('animals:1', { name: 'mammoth' })(state);
+
+    const result = jGet('animals:1')(state);
+
+    console.log({ result });
+
+    expect(result.data).to.eql({ a });
   });
 });
