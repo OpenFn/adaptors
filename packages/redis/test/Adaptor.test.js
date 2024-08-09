@@ -547,7 +547,7 @@ describe('jSet', () => {
     }
   });
 
-  it('should always sets at the document root', async () => {
+  it('should always sets resutls at the document root', async () => {
     setMockClient({
       json: {
         set: () => 'OK',
