@@ -3,17 +3,10 @@
   "properties": {
     "host": {
       "title": "Host",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
+      "type": "string",
+      "minLength": 1,
       "description": "Redis server hostname",
       "format": "uri",
-      "minLength": 1,
       "examples": [
         "redis.example.com"
       ]
