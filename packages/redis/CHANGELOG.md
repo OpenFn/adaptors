@@ -1,5 +1,11 @@
 # @openfn/language-redis
 
+## 1.1.1
+
+### Patch Changes
+
+- 2b8ec34: - Update host type configuration-schema
+
 ## 1.1.0
 
 ### Minor Changes
