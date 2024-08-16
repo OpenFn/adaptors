@@ -3,6 +3,8 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './Utils';
 
+export { util };
+
 /**
  * State object
  * @typedef {Object} FHIRHttpState
@@ -168,8 +170,8 @@ export function get(path, params = {}, options = {}, callback = s => s) {
  *     },
  *   ],
  * });
- * @param {string} resourceType - The resource type to create
- * @param {object} resource - The resource to create
+ * @param {FhirResourceTypes} resourceType - The resource type to create
+ * @param {FhirResource} resource - The resource to create
  * @param {object} params - (Optional) FHIR parameters to control and configure resource creation
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}

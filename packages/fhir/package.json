@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:^2.0.0",
+    "@types/fhir": "^0.0.41",
     "undici": "^5.28.4"
   },
   "devDependencies": {

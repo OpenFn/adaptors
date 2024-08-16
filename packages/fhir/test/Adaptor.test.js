@@ -7,7 +7,8 @@ import {
   post,
   getClaim,
   createTransactionBundle,
-} from '../src/Adaptor.js';
+} from '../src/Adaptor';
+import { create } from '../src/Utils';
 import { fixtures } from './ClientFixtures';
 
 import MockAgent from './mockAgent.js';
@@ -73,6 +74,10 @@ describe('create', () => {
     )(state);
 
     expect(finalState.data).to.eql(fixtures.patientBundleCreateResponse);
+  });
+
+  it('should have typings', () => {
+    create('Patient', {});
   });
 });
 
@@ -249,5 +254,11 @@ describe('post', () => {
     });
 
     expect(error.code).to.eql('UNEXPECTED_ABSOLUTE_URL');
+  });
+});
+
+describe('util.create', () => {
+  it('should create a patient', () => {
+    create();
   });
 });

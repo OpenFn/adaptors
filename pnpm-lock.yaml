@@ -14,6 +14,15 @@ importers:
       '@openfn/buildtools':
         specifier: workspace:^1.0.2
         version: link:tools/build
+      '@openfn/language-common':
+        specifier: workspace:^
+        version: link:packages/common
+      '@openfn/language-dhis2':
+        specifier: workspace:^
+        version: link:packages/dhis2
+      '@openfn/language-fhir':
+        specifier: workspace:^
+        version: link:packages/fhir
       '@openfn/metadata':
         specifier: workspace:^1.0.1
         version: link:tools/metadata
@@ -469,6 +478,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:^2.0.0
         version: link:../common
+      '@types/fhir':
+        specifier: ^0.0.41
+        version: 0.0.41
       undici:
         specifier: ^5.28.4
         version: 5.28.4
@@ -3777,6 +3789,10 @@ packages:
     resolution: {integrity: sha512-erqUpFXksaeR2kejKnhnjZjbFxUpGZx4Z7ydNL9ie8tEhXPiZTsLeUDJ6aR1F8j5wWUAtOAQWUqkc7givBJbBA==}
     dependencies:
       '@types/node': 18.17.5
+    dev: false
+
+  /@types/fhir@0.0.41:
+    resolution: {integrity: sha512-MAQAFufNZBZ6V0F94Nhknmmh/E3iMXFK4n/L8RkSNjKtOJnvaAJERivNOj35VVx9VCQBJbE0BHSzikfBahoRhA==}
     dev: false
 
   /@types/form-data@0.0.33:
