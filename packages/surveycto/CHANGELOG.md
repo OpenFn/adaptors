@@ -1,5 +1,13 @@
 # @openfn/language-surveycto
 
+## 2.2.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 2.2.2
 
 ### Patch Changes

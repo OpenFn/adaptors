@@ -1,5 +1,13 @@
 # @openfn/language-msgraph
 
+## 0.7.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 0.7.2
 
 ### Patch Changes

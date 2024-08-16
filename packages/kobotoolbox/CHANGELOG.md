@@ -1,5 +1,13 @@
 # @openfn/language-kobotoolbox
 
+## 2.4.2
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 2.4.1
 
 ### Patch Changes

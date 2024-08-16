@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ocl",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "An OCL language package for use with Open Function",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "2.0.0"
+    "@openfn/language-common": "2.0.1"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
