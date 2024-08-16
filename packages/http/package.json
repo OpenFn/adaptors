@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "6.4.2",
+  "version": "6.4.3",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -10,6 +10,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

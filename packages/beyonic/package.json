@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-beyonic",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "beyonic Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -10,6 +10,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

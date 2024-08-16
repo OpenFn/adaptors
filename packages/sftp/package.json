@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-sftp",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An SFTP language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -10,6 +10,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

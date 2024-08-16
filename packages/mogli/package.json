@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mogli",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A Mogli SMS Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -47,6 +47,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

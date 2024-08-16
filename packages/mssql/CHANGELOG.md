@@ -1,5 +1,13 @@
 # @openfn/language-mssql
 
+## 5.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 5.0.0
 
 ### Major Changes

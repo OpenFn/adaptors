@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-googlehealthcare",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A Google Health Care language package for use with Open Function",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
@@ -27,7 +28,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.0"
+    "@openfn/language-common": "^2.0.1"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",

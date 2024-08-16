@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-kobotoolbox",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "A Kobo Toolbox Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.15.1"
+    "@openfn/language-common": "1.15.1"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",
@@ -42,6 +42,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

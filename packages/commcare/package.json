@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-commcare",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Commcare Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -45,6 +45,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

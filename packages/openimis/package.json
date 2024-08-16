@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-openimis",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An OpenIMIS adaptor for OpenFn",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
