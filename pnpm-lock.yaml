@@ -353,8 +353,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.28.0
+        version: 0.28.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -501,8 +501,8 @@ importers:
         specifier: ^2.0.1
         version: link:../common
       axios:
-        specifier: ^0.21.2
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -788,8 +788,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^0.21.2
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1250,8 +1250,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^0.21.1
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
@@ -1558,8 +1558,8 @@ importers:
         specifier: 1.15.1
         version: 1.15.1
       axios:
-        specifier: ^0.21.2
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -1595,8 +1595,8 @@ importers:
         specifier: 1.15.1
         version: 1.15.1
       axios:
-        specifier: ^0.21.2
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.3.0
@@ -1694,8 +1694,8 @@ importers:
         specifier: ^0.3.2
         version: 0.3.2
       axios:
-        specifier: ^0.21.4
-        version: 0.21.4
+        specifier: ^0.28.0
+        version: 0.28.0
       jsforce:
         specifier: ^1.11.1
         version: 1.11.1
@@ -4372,26 +4372,10 @@ packages:
     resolution: {integrity: sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==}
     dev: false
 
-  /axios@0.21.4:
-    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
-    dependencies:
-      follow-redirects: 1.15.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /axios@0.24.0:
-    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==}
-    dependencies:
-      follow-redirects: 1.15.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
   /axios@0.26.1:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.6
     transitivePeerDependencies:
       - debug
     dev: false
@@ -4399,8 +4383,18 @@ packages:
   /axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.6
       form-data: 4.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios@0.28.0:
+    resolution: {integrity: sha512-Tu7NYoGY4Yoc7I+Npf9HhUMtEEpV7ZiLH9yndTCoNhcpBH0kwcvFbzYN9/u5QKI5A6uefjsNNWaz5olJVYS62Q==}
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -4415,10 +4409,10 @@ packages:
       - debug
     dev: false
 
-  /axios@1.4.0:
-    resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
+  /axios@1.7.4:
+    resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.6
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -7823,6 +7817,16 @@ packages:
         optional: true
     dev: false
 
+  /follow-redirects@1.15.6:
+    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
   /for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
     dependencies:
@@ -8369,7 +8373,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.18.0
+      uglify-js: 3.19.2
     dev: false
 
   /har-schema@2.0.0:
@@ -9894,7 +9898,7 @@ packages:
   /mailgun.js@9.2.0:
     resolution: {integrity: sha512-XfcHtwdE39g6C0Rh54sp8fKfHYxmP5LNC5Z5zZPdgYte760UXCKlT5ilfoqK2MRY0BSXj4F0qEvYAmtao/y4vw==}
     dependencies:
-      axios: 1.4.0
+      axios: 1.7.4
       base-64: 1.0.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -13515,8 +13519,8 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: false
 
-  /uglify-js@3.18.0:
-    resolution: {integrity: sha512-SyVVbcNBCk0dzr9XL/R/ySrmYf0s372K6/hFklzgcp2lBFyXtw4I7BOdDjlLhE1aVqaI/SHWXWmYdlZxuyF38A==}
+  /uglify-js@3.19.2:
+    resolution: {integrity: sha512-S8KA6DDI47nQXJSi2ctQ629YzwOVs+bQML6DAtvy0wgNdpi+0ySpQK0g2pxBq2xfF2z3YCscu7NNA8nXT9PlIQ==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true

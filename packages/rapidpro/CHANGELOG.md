@@ -4,6 +4,7 @@
 
 ### Patch Changes
 
+- Update axios version to 0.28.0.
 - 8146c23: Fix typings in package.json
 - Updated dependencies [8146c23]
   - @openfn/language-common@2.0.1
