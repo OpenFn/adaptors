@@ -6,3 +6,13 @@ create('Contract', {
     //display
   },
 });
+
+create('Patient', {
+  address: [
+    {
+      country,
+    },
+  ],
+});
+
+create('');
