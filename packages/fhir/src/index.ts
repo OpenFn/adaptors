@@ -1,28 +1,24 @@
 import './types';
 
-// // export * as utils from './Utils';
+// We gonna have a problem with this in Lightning
+// the client won't download this typing
+import r5 from 'fhir/r5';
 
-import * as r5 from 'fhir/r5';
+interface FhirResources {
+  // can I automate this?
+  Patient: r5.Patient;
+  Contract: r5.Contract;
+  Bundle: r5.Bundle;
+}
 
-// this needs to override the built in sig
-/**
- * CREATE TWO ELECTRIC BOOGALOO
- */
-export declare function create(
-  resourceType: 'Patient' | 'Bundle',
-  resource: r5.Patient | r5.Bundle,
+export declare function create<R extends keyof FhirResources>(
+  resourceType: R,
+  // Exclude the duplicated underscored props from @types/fhir
+  // insane! https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+  resource: Omit<FhirResources[R], 'resourceType' | `_${string}`>,
   params: any,
   callback: any
 ): any;
-
-// export declare function jam(
-//   resourceType: 'Patient' | 'Bundle',
-//   resource: r5.Patient | r5.Bundle,
-//   params: any,
-//   callback: any
-// ): any;
-
-// // create()
 
 import * as Adaptor from './Adaptor';
 export default Adaptor;
