@@ -15,4 +15,10 @@ create('Patient', {
   ],
 });
 
-create('');
+create('', {});
+
+// v4 only
+create('Person', {
+  birthDate: '01/01/2001',
+  
+}, { version: 'r4' });
