@@ -38,7 +38,7 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "type": "module",
-  "types": "types/index.d.ts",
+  "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
