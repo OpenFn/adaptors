@@ -1944,8 +1944,8 @@ importers:
   packages/twilio:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.1
-        version: link:../common
+        specifier: 1.15.1
+        version: 1.15.1
       twilio:
         specifier: ^3.83.2
         version: 3.83.3
