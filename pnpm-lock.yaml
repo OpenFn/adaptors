@@ -1688,8 +1688,8 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.1
-        version: link:../common
+        specifier: 1.15.1
+        version: 1.15.1
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
