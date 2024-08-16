@@ -18,35 +18,53 @@ const findEntryPoint = (rootPath: string) => {
   }
 };
 
-export default (lang: string) => {
+const findCustomBuildScript = (rootPath: string) => {
+  const buildPath = `${rootPath}/build-dts.ts`;
+  if (existsSync(buildPath)) {
+    return buildPath;
+  }
+};
+
+export default async (lang: string) => {
   const root = resolvePath(lang);
   console.log();
   console.log('Building DTS');
   console.log();
 
-  const entry = findEntryPoint(root);
-  const args = [
-    '--allowJs',
-    '--declaration',
-    '--emitDeclarationOnly',
-    '--lib es2020',
-    `--declarationDir ${root}/types`,
-    `${entry}`,
-  ];
+  const custom = findCustomBuildScript(root);
+  if (custom) {
+    console.log('Loading custom build script....');
+    const builder = await import(custom);
+    await builder();
+    console.log('Done!');
+  } else {
+    const entry = findEntryPoint(root);
 
-  // Need to run the command out of the build tool dir
-  const cwd = path.dirname(url.fileURLToPath(import.meta.url));
-  return new Promise<void>(resolve => {
-    exec(
-      'pnpm exec tsc ' + args.join(' '),
-      {
-        cwd,
-      },
-      (err, stdout) => {
-        // Hide error reports (for now)
-        // console.log(stdout);
-        resolve();
-      }
-    );
-  });
+    console.log(entry);
+
+    const args = [
+      '--allowJs',
+      '--declaration',
+      '--emitDeclarationOnly',
+      '--lib es2020',
+      `--declarationDir ${root}/types`,
+      `${entry}`,
+    ];
+
+    // Need to run the command out of the build tool dir
+    const cwd = path.dirname(url.fileURLToPath(import.meta.url));
+    return new Promise<void>(resolve => {
+      exec(
+        'pnpm exec tsc ' + args.join(' '),
+        {
+          cwd,
+        },
+        (err, stdout) => {
+          // Hide error reports (for now)
+          // console.log(stdout);
+          resolve();
+        }
+      );
+    });
+  }
 };
