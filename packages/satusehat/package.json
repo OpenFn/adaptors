@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-satusehat",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "OpenFn Satusehat adaptor",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

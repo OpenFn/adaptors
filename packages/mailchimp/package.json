@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mailchimp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An OpenFn adaptor for use with Mailchimp",
   "main": "dist/index.cjs",
   "scripts": {
@@ -43,6 +43,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

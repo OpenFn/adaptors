@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-cht",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn CHT adaptor",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
