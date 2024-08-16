@@ -1,5 +1,13 @@
 # @openfn/language-progres
 
+## 1.4.4
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 1.4.3
 
 ### Patch Changes
