@@ -11,7 +11,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "esno build/generate-code.ts",
+    "build": "esno build/build.ts",
     "build:schema": "esno build/generate-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",

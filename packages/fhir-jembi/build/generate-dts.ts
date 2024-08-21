@@ -27,12 +27,7 @@ const generateDTS = (schema, mappings) => {
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
     .join('\n\n');
 
-  //const result = printer.printNode(ts.EmitHint.Unspecified, fn, resultFile);
-  // const result = printer.printList(ts.ListFormat.)
-
-  console.log();
-  console.log();
-  console.log(contents);
+  return contents;
 };
 
 // ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),

@@ -8,13 +8,7 @@ import { StatementKind } from 'ast-types/gen/kinds';
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
-const mappings = {
-  // simple mapping of the id field to start
-  id: true,
-};
-
-const generateCode = (_mappings, _schema) => {
-  const schema = generateSchema();
+const generateCode = (schema, mappings) => {
   // build an ast
   // convert the the ast to source
 
@@ -24,14 +18,10 @@ const generateCode = (_mappings, _schema) => {
 
   const fn = generateBuilder('Encounter', schema, mappings);
 
-  // console.log(fns);
-  console.log();
-  console.log();
-
-  console.log(print(fn).code);
-
-  generateDTS(schema, mappings);
+  return print(fn).code;
 };
+
+export default generateCode;
 
 const generateBuilder = (resourceName, schema, mappings) => {
   const body: StatementKind[] = [];
@@ -55,10 +45,8 @@ const mapProps = (schema, mappings) => {
   const props: StatementKind[] = [];
 
   for (const key in mappings) {
-    console.log(key);
     const spec = schema.props[key];
     if (spec) {
-      console.log('ok');
       if (spec.type === 'string') {
         props.push(mapSimpleProp(key));
       }
@@ -86,5 +74,3 @@ const initResource = () =>
   ]);
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
-
-generateCode();
