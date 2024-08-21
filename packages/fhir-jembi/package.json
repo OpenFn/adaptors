@@ -11,7 +11,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor fhir-jembi",
+    "build": "esno build/generate-code.ts",
+    "build:schema": "esno build/generate-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -27,7 +28,9 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "ast-types": "^0.14.2",
+    "recast": "^0.23.9"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
