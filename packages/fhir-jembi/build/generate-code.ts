@@ -2,6 +2,7 @@ import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print } from 'recast';
 
 import generateSchema from './generate-schema';
+import generateDTS from './generate-dts';
 import { StatementKind } from 'ast-types/gen/kinds';
 
 const RESOURCE_NAME = 'resource';
@@ -28,6 +29,8 @@ const generateCode = (_mappings, _schema) => {
   console.log();
 
   console.log(print(fn).code);
+
+  generateDTS(schema, mappings);
 };
 
 const generateBuilder = (resourceName, schema, mappings) => {
@@ -83,8 +86,5 @@ const initResource = () =>
   ]);
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
-
-// Note that I can build tyepscript types with typescripts own ast
-// https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 generateCode();

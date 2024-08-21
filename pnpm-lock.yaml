@@ -518,6 +518,9 @@ importers:
       recast:
         specifier: ^0.23.9
         version: 0.23.9
+      typescript:
+        specifier: 4.8.4
+        version: 4.8.4
     devDependencies:
       assertion-error:
         specifier: 2.0.0
