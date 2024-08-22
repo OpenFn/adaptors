@@ -3,6 +3,9 @@ import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
 import generateCode from './generate-code';
 
+// only generate builders for these resource types
+const types = ['Encounter', 'Patient', 'Observation'];
+
 const generate = async () => {
   // TODO This is still hard-coded to Encounter...
   const schema = generateSchema();
