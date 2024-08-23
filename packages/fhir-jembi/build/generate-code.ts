@@ -149,7 +149,10 @@ const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
     b.memberExpression(b.identifier('builders'), b.identifier('identifier')),
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
-      b.stringLiteral(defaultSystem),
+      defaultSystem
+        ? b.stringLiteral(defaultSystem)
+        : b.identifier('undefined'),
+      ,
     ]
   );
   if (schema.isArray) {

@@ -1,0 +1,166 @@
+{
+  "type": "Observation",
+  "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/respiratory-rate-observation",
+  "props": {
+    "id": {
+      "type": "string",
+      "isArray": false,
+      "defaults": {}
+    },
+    "meta": {
+      "type": "Meta",
+      "isArray": false,
+      "defaults": {}
+    },
+    "implicitRules": {
+      "type": "string",
+      "isArray": false,
+      "defaults": {}
+    },
+    "language": {
+      "type": "string",
+      "isArray": false,
+      "defaults": {}
+    },
+    "text": {
+      "type": "Narrative",
+      "isArray": false,
+      "defaults": {}
+    },
+    "contained": {
+      "type": "Resource",
+      "isArray": true,
+      "defaults": {}
+    },
+    "extension": {
+      "type": "Extension",
+      "isArray": true,
+      "defaults": {}
+    },
+    "modifierExtension": {
+      "type": "Extension",
+      "isArray": true,
+      "defaults": {}
+    },
+    "identifier": {
+      "type": "Identifier",
+      "isArray": true,
+      "defaults": {}
+    },
+    "basedOn": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "partOf": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "status": {
+      "type": "string",
+      "isArray": false,
+      "defaults": {}
+    },
+    "category": {
+      "type": "CodeableConcept",
+      "isArray": true,
+      "defaults": {}
+    },
+    "code": {
+      "type": "CodeableConcept",
+      "isArray": false,
+      "defaults": {}
+    },
+    "subject": {
+      "type": "Reference",
+      "isArray": false,
+      "defaults": {}
+    },
+    "focus": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "encounter": {
+      "type": "Reference",
+      "isArray": false,
+      "defaults": {}
+    },
+    "effective[x]": {
+      "type": "dateTime",
+      "isArray": false,
+      "defaults": {}
+    },
+    "issued": {
+      "type": "instant",
+      "isArray": false,
+      "defaults": {}
+    },
+    "performer": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "value[x]": {
+      "type": "CodeableConcept",
+      "isArray": false,
+      "defaults": {}
+    },
+    "dataAbsentReason": {
+      "type": "CodeableConcept",
+      "isArray": false,
+      "defaults": {}
+    },
+    "interpretation": {
+      "type": "CodeableConcept",
+      "isArray": true,
+      "defaults": {}
+    },
+    "note": {
+      "type": "Annotation",
+      "isArray": true,
+      "defaults": {}
+    },
+    "bodySite": {
+      "type": "CodeableConcept",
+      "isArray": false,
+      "defaults": {}
+    },
+    "method": {
+      "type": "CodeableConcept",
+      "isArray": false,
+      "defaults": {}
+    },
+    "specimen": {
+      "type": "Reference",
+      "isArray": false,
+      "defaults": {}
+    },
+    "device": {
+      "type": "Reference",
+      "isArray": false,
+      "defaults": {}
+    },
+    "referenceRange": {
+      "type": "BackboneElement",
+      "isArray": true,
+      "defaults": {}
+    },
+    "hasMember": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "derivedFrom": {
+      "type": "Reference",
+      "isArray": true,
+      "defaults": {}
+    },
+    "component": {
+      "type": "BackboneElement",
+      "isArray": true,
+      "defaults": {}
+    }
+  }
+}

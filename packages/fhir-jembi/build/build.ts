@@ -9,12 +9,12 @@ const mappings = {
     // or pass field: false to ignore it
     // (meta is always ignored)
   },
-  // Patient: {
-  //   id: true,
-  // },
-  // Observation: {
-  //   id: true,
-  // },
+  Patient: {
+    // id: true,
+  },
+  Observation: {
+    // id: true,
+  },
 };
 
 const generate = async () => {
