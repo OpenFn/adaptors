@@ -7,7 +7,19 @@ import input from './fixtures/input';
 
 describe('Encounter', () => {
   // TODO this is the full test
-  it('should map the whole input encounter', () => {
+  it.only('should map the whole input encounter', () => {
+    // TODO this actually won't ever quite work
+    // I think there will alway be some mappings, like visitType
+    const result = builders.createEncounter(input.Encounter.resource);
+
+    const expected = output.Encounter;
+
+    console.log(result);
+
+    expect(result).to.eql(expected);
+  });
+
+  it('should map a random encoutner', () => {
     const i = input.Encounter.resource;
     // this is more like what job code will look like
     const result = builders.createEncounter({

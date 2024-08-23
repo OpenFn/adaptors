@@ -48,7 +48,7 @@ export default generateCode;
 const generateBuilder = (resourceName, schema, mappings) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource());
+  body.push(initResource(resourceName));
 
   body.push(...mapProps(schema, mappings));
 
@@ -165,9 +165,17 @@ const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
   return ifPropInInput(name, ...statements);
 };
 
-const initResource = () =>
+const initResource = (resourceType: string) =>
   b.variableDeclaration('const', [
-    b.variableDeclarator(b.identifier(RESOURCE_NAME), b.objectExpression([])),
+    b.variableDeclarator(
+      b.identifier(RESOURCE_NAME),
+      b.objectExpression([
+        b.objectProperty(
+          b.identifier('resourceType'),
+          b.stringLiteral(resourceType)
+        ),
+      ])
+    ),
   ]);
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
