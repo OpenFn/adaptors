@@ -1,4 +1,4 @@
-import { builders } from "../src/Utils.js";
+import { builders } from "./Utils.js";
 
 export function createEncounter(props) {
     const resource = {
@@ -19,7 +19,7 @@ export function createEncounter(props) {
 
     if ("identifier" in props) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = builders.identifier(props.identifier, "http://moh.gov.et/fhir/hiv/identifier/encounter");
+        resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
     if ("status" in props) {
@@ -65,7 +65,9 @@ export function createEncounter(props) {
     }
 
     resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/target-facility-encounter"]
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/entry-from-outside-target-facility-encounter"
+        ]
     };
 
     return resource;
@@ -179,9 +181,7 @@ export function createObservation(props) {
     }
 
     resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/respiratory-rate-observation"
-        ]
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/heart-rate-observation"]
     };
 
     return resource;

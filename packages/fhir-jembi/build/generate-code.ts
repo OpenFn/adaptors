@@ -31,7 +31,7 @@ const generateCode = (schema, mappings) => {
     b.importDeclaration(
       [b.importSpecifier(b.identifier('builders'))],
       // TODO this path is wrong
-      b.stringLiteral('../src/Utils.js')
+      b.stringLiteral('./Utils.js')
     )
   );
 

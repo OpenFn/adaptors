@@ -31,7 +31,7 @@ export default async (lang: string) => {
   console.log('Building DTS');
   console.log();
 
-  const custom = findCustomBuildScript(root);
+  const custom = false; // findCustomBuildScript(root);
   if (custom) {
     console.log('Loading custom build script....');
     const builder = await import(custom);
