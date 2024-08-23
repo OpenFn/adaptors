@@ -38,7 +38,6 @@ const generate = async types => {
         url: spec.url,
         props,
       };
-      console.log(schema);
 
       for (const prop of spec.snapshot.element) {
         if (prop.path === resourceType) {
@@ -55,6 +54,7 @@ const generate = async types => {
 
         const isArray = prop.base.max === '*';
 
+        console.log(schema);
         props[path] = {
           type,
           isArray,

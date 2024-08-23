@@ -29,6 +29,8 @@ const generateBuilder = (resourceName, schema, mappings) => {
 
   body.push(...mapProps(schema, mappings));
 
+  body.push(addMeta(schema, mappings));
+
   body.push(returnResource());
 
   const fn = b.functionDeclaration(
@@ -43,12 +45,18 @@ const generateBuilder = (resourceName, schema, mappings) => {
 const mapProps = (schema, mappings) => {
   const props: StatementKind[] = [];
 
-  for (const key in mappings) {
+  for (const key in schema.props) {
+    // skip this prop if the mappings is false (or its meta, which is special)
+    if (mappings[key] === false || key === 'meta') {
+      continue;
+    }
+
     const spec = schema.props[key];
     if (spec) {
       if (spec.type === 'string') {
         props.push(mapSimpleProp(key));
       }
+      // TODO map other types
     } else {
       console.log('WARNING: schema does not define property', key);
     }
@@ -63,6 +71,22 @@ const mapSimpleProp = (propName, options = {}) => {
       '=',
       b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName)),
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
+    )
+  );
+};
+
+// this will ensure a meta prop on the data
+const addMeta = (schema, _mapping) => {
+  return b.expressionStatement(
+    b.assignmentExpression(
+      '=',
+      b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier('meta')),
+      b.objectExpression([
+        b.objectProperty(
+          b.identifier('profile'),
+          b.arrayExpression([b.stringLiteral(schema.url)])
+        ),
+      ])
     )
   );
 };
