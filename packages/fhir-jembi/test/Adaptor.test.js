@@ -7,7 +7,7 @@ import input from './fixtures/input';
 
 describe('Encounter', () => {
   // TODO this is the full test
-  it.only('should map the whole input encounter', () => {
+  it.skip('should map the whole input encounter', () => {
     // TODO this actually won't ever quite work
     // I think there will alway be some mappings, like visitType
     const result = builders.createEncounter(input.Encounter.resource);
@@ -19,7 +19,7 @@ describe('Encounter', () => {
     expect(result).to.eql(expected);
   });
 
-  it('should map a random encoutner', () => {
+  it('should map a random encounter', () => {
     const i = input.Encounter.resource;
     // this is more like what job code will look like
     const result = builders.createEncounter({
@@ -31,12 +31,16 @@ describe('Encounter', () => {
     // but obviously this test won't pass until we're done
     const expected = {
       id: 'e84781ed-5f02-40ac-8c97-e7280fb153e3',
+      resourceType: 'Encounter',
       identifier: [
         {
           value: '7834',
           system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',
         },
       ],
+      serviceProvider: {
+        reference: 'Organization/Patient.managingOrganization',
+      },
       meta: {
         profile: [
           'http://moh.gov.et/fhir/hiv/StructureDefinition/target-facility-encounter',
@@ -47,6 +51,17 @@ describe('Encounter', () => {
     expect(result).to.eql(expected);
 
     // TODO result should equal output.Encounter
+  });
+
+  // This is based on a mapping rule which might not last forever
+  // But it shows a cool option we have for mappings
+  it('should default the serviceProvider', () => {
+    const result = builders.createEncounter({});
+
+    const expected = {
+      reference: 'Organization/Patient.managingOrganization',
+    };
+    expect(result.serviceProvider).to.eql(expected);
   });
 
   // this is smaller tests while working

@@ -8,13 +8,21 @@ const mappings = {
     // Specify individual mapping rules for fields here
     // or pass field: false to ignore it
     // (meta is always ignored)
+
+    // serviceProvider will be defaulted
+    // (I don't really know if we want this but lets see!)
+    serviceProvider: {
+      defaults: {
+        reference: 'Organization/Patient.managingOrganization',
+      },
+    },
   },
-  Patient: {
-    // id: true,
-  },
-  Observation: {
-    // id: true,
-  },
+  // Patient: {
+  //   // id: true,
+  // },
+  // Observation: {
+  //   // id: true,
+  // },
 };
 
 const generate = async () => {
