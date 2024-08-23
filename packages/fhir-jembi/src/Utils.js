@@ -10,6 +10,12 @@
 // (is this correct? This will force an input value to be mapped to the new system)
 // Maybe the mapper can run some kind of conversion if neccessary?
 const identifier = (input, system) => {
+  // If an array of inputs is passed in, map each element of the array
+  // because it's very common to support a set of identifiers, rather than just one
+  if (Array.isArray(input)) {
+    return input.map(i => identifier(i, system));
+  }
+
   if (input) {
     if (typeof input === 'string') {
       return {

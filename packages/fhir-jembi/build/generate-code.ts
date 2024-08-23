@@ -1,5 +1,5 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
-import { print } from 'recast';
+import { print, parse } from 'recast';
 
 import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
@@ -140,12 +140,6 @@ const addMeta = (schema, _mapping) => {
   );
 };
 
-// mapIdentifier
-// this needs to read identifier from the source (as string or concept)
-// and call an Identifier helper
-// needs to default the system if not provided
-// TODO this needs to be robust if the incoming identifier is not an array
-// although tbh I think i always will be?
 const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
   const defaultSystem = schema.defaults?.system;
 
@@ -158,31 +152,16 @@ const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
       b.stringLiteral(defaultSystem),
     ]
   );
-
   if (schema.isArray) {
-    // If this is an array of identifiers, initialise a new array
-    statements.push(assignToInput(name, b.arrayExpression([])));
-    // Then map a new identifier object and add it to the array
-    // Note that we only support one input identifier at the moment though
-    // We really ought to be able to detect that that incoming object is an array
-    // and map each one
-    // Alternatively, builders.idenitifer should be smart enough that if it
-    // is given an array, it'll return an array
-    // That's probably nicer because it means less gnarly code gen
-    statements.push(
-      b.expressionStatement(
-        b.callExpression(
-          b.memberExpression(
-            b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(name)),
-            b.identifier('push')
-          ),
-          [createIdentifier]
-        )
-      )
-    );
-  } else {
-    statements.push(assignToInput(name, createIdentifier));
+    // if this is an array type, we should force the input to be an array
+    // TODO it's probably a bit naughty to mutate the input data?
+
+    const mexp = `${INPUT_NAME}.${name}`; // ie resource.identifier
+    const ast = parse(`if (!Array.isArray(${mexp})) { ${mexp} = [${mexp}]; }`);
+    statements.push(ast.program.body[0]);
   }
+
+  statements.push(assignToInput(name, createIdentifier));
   return ifPropInInput(name, ...statements);
 };
 
