@@ -5,16 +5,16 @@ import generateCode from './generate-code';
 
 const mappings = {
   Encounter: {
-    // simple mapping of the id field to start
-    // TODO: we should map fields we know how to to by default unless its explicitly false
-    id: true,
+    // Specify individual mapping rules for fields here
+    // or pass field: false to ignore it
+    // (meta is always ignored)
   },
-  Patient: {
-    id: true,
-  },
-  Observation: {
-    id: true,
-  },
+  // Patient: {
+  //   id: true,
+  // },
+  // Observation: {
+  //   id: true,
+  // },
 };
 
 const generate = async () => {

@@ -1,3 +1,4 @@
+import { writeFile } from 'node:fs/promises';
 /**
  * This file will generate a simple schema representation of a FHIR spec
  */
@@ -50,20 +51,37 @@ const generate = async types => {
           continue;
         }
 
+        const defaults: Record<string, any> = {};
         const type = getSimpleType(prop);
 
         const isArray = prop.base.max === '*';
 
-        console.log(schema);
+        if (type === 'Identifier') {
+          // TODO this isn't robust because it assumes a particular slicing
+          // It's the schema's job to unpick this slicing
+          // This is a quick fix - let's see how well it stands up!
+          const slicedValue = spec.snapshot.element.find(
+            e => e.path === `${prop.path}.system`
+          );
+          if (slicedValue && slicedValue.patternUri) {
+            defaults.system = slicedValue.patternUri;
+          }
+        }
+
         props[path] = {
           type,
           isArray,
+          defaults,
         };
       }
 
       result[resourceType] = schema;
+      // TODO maybe write the schema for debug?
+      await writeFile(
+        `./spec/${resourceType}.json`,
+        JSON.stringify(schema, null, 2)
+      );
     }
-    // TODO maybe write the schema for debug?
   }
   return result;
 };
