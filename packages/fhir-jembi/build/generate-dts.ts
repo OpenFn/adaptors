@@ -10,8 +10,7 @@ const b = ts.factory;
 // it's duplicating similar logic to work out types
 // maybe
 const generateDTS = (schema, mappings) => {
-  const typedef = generateType('Encounter', schema, mappings);
-  const fn = generateBuilder('Encounter', schema, mappings);
+  let contents = [];
 
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
@@ -23,11 +22,15 @@ const generateDTS = (schema, mappings) => {
     ts.ScriptKind.TS
   );
 
-  const contents = [typedef, fn]
+  for (const type in mappings) {
+    const typedef = generateType(type, schema[type], mappings[type]);
+    const fn = generateBuilder(type, schema[type], mappings[type]);
+    contents.push(typedef, fn);
+  }
+
+  return contents
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
     .join('\n\n');
-
-  return contents;
 };
 
 // ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
@@ -65,7 +68,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
   // rather than an actual function
   // Would it be easier at this point to string template it?
   const d = b.createFunctionDeclaration(
-    [],
+    [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
     undefined,
     `create${resourceName}`,
     [], // generics
@@ -80,7 +83,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
       ),
     ], // params
     undefined,
-    b.createBlock([])
+    undefined // body
   );
 
   return d;

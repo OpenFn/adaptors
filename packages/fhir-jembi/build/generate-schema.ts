@@ -2,11 +2,7 @@
  * This file will generate a simple schema representation of a FHIR spec
  */
 
-// hard code the spec for now
-import spec from './Encounter.spec.json' assert { type: 'json' };
-
 // here's a lookup of common type defs we can reuse
-
 const typeDefs = {
   'http://hl7.org/fhirpath/System.String': 'string',
   // TODO some types, like `status`, have an enum. Can we use it for validation?
@@ -26,39 +22,50 @@ const typeMappings = {
   uri: 'string',
 };
 
-const generate = () => {
-  const props = {};
-  // ie Encounter
-  const resourceType = spec.type;
+const generate = async types => {
+  const fullSpec = await import('../spec/spec.json', {
+    assert: { type: 'json ' },
+  });
+  const result = {};
+  for (const resourceType in fullSpec) {
+    if (types.includes(resourceType)) {
+      const spec = fullSpec[resourceType];
 
-  const schema = {
-    type: resourceType,
-    url: spec.url,
-    props,
-  };
+      const props = {};
 
-  for (const prop of spec.snapshot.element) {
-    if (prop.path === resourceType) {
-      continue;
+      const schema = {
+        type: resourceType,
+        url: spec.url,
+        props,
+      };
+      console.log(schema);
+
+      for (const prop of spec.snapshot.element) {
+        if (prop.path === resourceType) {
+          continue;
+        }
+        const path = prop.path.replace(`${resourceType}\.`, '');
+
+        if (path.includes('.')) {
+          console.log('skipping', path);
+          continue;
+        }
+
+        const type = getSimpleType(prop);
+
+        const isArray = prop.base.max === '*';
+
+        props[path] = {
+          type,
+          isArray,
+        };
+      }
+
+      result[resourceType] = schema;
     }
-    const path = prop.path.replace(`${resourceType}\.`, '');
-
-    if (path.includes('.')) {
-      console.log('skipping', path);
-      continue;
-    }
-
-    const type = getSimpleType(prop);
-
-    const isArray = prop.base.max === '*';
-
-    props[path] = {
-      type,
-      isArray,
-    };
+    // TODO maybe write the schema for debug?
   }
-
-  return schema;
+  return result;
 };
 
 /**
@@ -79,5 +86,3 @@ function getSimpleType(prop: any) {
 }
 
 export default generate;
-
-console.log(generate());

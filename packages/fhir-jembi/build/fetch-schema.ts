@@ -1,6 +1,6 @@
 import { createWriteStream } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { Readable } from 'node: stream';
+import { Readable } from 'node:stream';
 import yauzl from 'yauzl';
 
 const url =
@@ -32,6 +32,7 @@ function parseZip() {
 
     const onComplete = async () => {
       console.log('Done!');
+      console.log(Object.keys(result));
       await writeFile('./spec/spec.json', JSON.stringify(result));
 
       zipfile.close();
@@ -43,11 +44,18 @@ function parseZip() {
       zipfile.openReadStream(entry, function (err, readStream) {
         try {
           if (err) throw err;
-          readStream.on('end', function () {
+          readStream.on('end', async () => {
             const json = JSON.parse(text);
-            delete json.text;
-            result[json.resourceType] = json;
 
+            if (json.resourceType === 'StructureDefinition') {
+              delete json.text;
+              result[json.type] = json;
+
+              // await writeFile(
+              //   `./spec/${entry.fileName}`,
+              //   JSON.stringify(json, null, 2)
+              // );
+            }
             setTimeout(() => {
               zipfile.readEntry();
             }, 1);

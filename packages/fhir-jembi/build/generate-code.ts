@@ -9,16 +9,15 @@ const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
 const generateCode = (schema, mappings) => {
-  // build an ast
-  // convert the the ast to source
-
   const fns = [];
 
-  fns.push();
+  for (const type in mappings) {
+    fns.push(generateBuilder(type, schema[type], mappings[type]));
+  }
 
-  const fn = generateBuilder('Encounter', schema, mappings);
+  const program = b.program(fns);
 
-  return print(fn).code;
+  return print(program).code;
 };
 
 export default generateCode;

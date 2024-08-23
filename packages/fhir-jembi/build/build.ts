@@ -3,17 +3,22 @@ import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
 import generateCode from './generate-code';
 
-// only generate builders for these resource types
-const types = ['Encounter', 'Patient', 'Observation'];
+const mappings = {
+  Encounter: {
+    // simple mapping of the id field to start
+    // TODO: we should map fields we know how to to by default unless its explicitly false
+    id: true,
+  },
+  Patient: {
+    id: true,
+  },
+  Observation: {
+    id: true,
+  },
+};
 
 const generate = async () => {
-  // TODO This is still hard-coded to Encounter...
-  const schema = generateSchema();
-
-  const mappings = {
-    // simple mapping of the id field to start
-    id: true,
-  };
+  const schema = await generateSchema(Object.keys(mappings));
 
   const dts = generateDTS(schema, mappings);
   const src = generateCode(schema, mappings);
@@ -23,5 +28,4 @@ const generate = async () => {
   await writeFile('dist/index.d.ts', dts);
   await writeFile('dist/builders.js', src);
 };
-
 generate();
