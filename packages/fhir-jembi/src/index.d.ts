@@ -2,12 +2,12 @@ type EncounterProps = {
     serviceProvider: Reference;
 };
 
-declare function createEncounter(props: EncounterProps);
+declare function encounter(props: EncounterProps);
 
 type PatientProps = {};
 
-declare function createPatient(props: PatientProps);
+declare function patient(props: PatientProps);
 
 type ObservationProps = {};
 
-declare function createObservation(props: ObservationProps);
+declare function observation(props: ObservationProps);

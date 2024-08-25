@@ -4,6 +4,7 @@ import { print, parse } from 'recast';
 import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
 import { StatementKind } from 'ast-types/gen/kinds';
+import { getBuilderName } from './util';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -60,7 +61,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
   const fn = b.exportDeclaration(
     false,
     b.functionDeclaration(
-      b.identifier(`create${resourceName}`),
+      b.identifier(getBuilderName(resourceName)),
       [b.identifier(INPUT_NAME)],
       b.blockStatement(body)
     )

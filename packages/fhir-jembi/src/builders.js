@@ -1,6 +1,6 @@
 import { builders } from "./Utils.js";
 
-export function createEncounter(props) {
+export function encounter(props) {
     const resource = {
         resourceType: "Encounter"
     };
@@ -73,7 +73,7 @@ export function createEncounter(props) {
     return resource;
 }
 
-export function createPatient(props) {
+export function patient(props) {
     const resource = {
         resourceType: "Patient"
     };
@@ -114,7 +114,7 @@ export function createPatient(props) {
     return resource;
 }
 
-export function createObservation(props) {
+export function observation(props) {
     const resource = {
         resourceType: "Observation"
     };

@@ -2,6 +2,7 @@
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
+import { getBuilderName } from './util';
 
 const b = ts.factory;
 
@@ -70,7 +71,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
   const d = b.createFunctionDeclaration(
     [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
     undefined,
-    `create${resourceName}`,
+    getBuilderName(resourceName),
     [], // generics
     [
       b.createParameterDeclaration(
