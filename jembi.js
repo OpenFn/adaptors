@@ -3,9 +3,11 @@ import '@openfn/language-common';
 import { create, builders, b } from '@openfn/language-fhir-jembi';
 
 // and this should actually run
-console.log(builders);
+// console.log(builders);
 const encounter = b.encounter({});
 
 console.log(encounter);
+
+create('Patient', { id: 'big willy smith' })();
 
 console.log('hello');

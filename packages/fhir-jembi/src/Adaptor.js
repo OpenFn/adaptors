@@ -1,9 +1,11 @@
 // TODO temporily disabled because I've broken the fhir build
+import { expandReferences } from '@openfn/language-common/util';
 // import { util } from '@openfn/language-fhir';
 
 // This is only available at after build
 // @ts-ignore
-// import builders from './builders';
+import * as builders from './builders';
+import { getBuilderName } from '../build/util'; // hmm
 
 // TODO this is a lightweight wrapper around fhir create which uses the builder function
 // and typings
@@ -34,8 +36,11 @@ export const create = (resourceType, resource, params, callback = s => s) => {
     const [resolvedResourceType, resolvedResource, resolvedParams = {}] =
       expandReferences(state, resourceType, resource, params);
 
+    console.log(builders);
+
     // TODO warn if unsupported type
-    const r = builders[resolvedResourceType](resource);
+    const r = builders[getBuilderName(resolvedResourceType)](resource);
+    console.log(' >> ', r);
 
     const { version, ...paramsWithoutVersion } = resolvedParams;
 
