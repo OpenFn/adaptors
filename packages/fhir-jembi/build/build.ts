@@ -13,7 +13,7 @@ const generate = async () => {
 
   await mkdir('dist', { recursive: true });
 
-  await writeFile('dist/index.d.ts', dts);
-  await writeFile('dist/builders.js', src);
+  await writeFile('src/index.d.ts', dts);
+  await writeFile('src/builders.js', src);
 };
 generate();

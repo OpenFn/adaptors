@@ -24,3 +24,10 @@ I like that
 it's 20mb of data
 
 we can cut out the html though
+
+## typescript
+
+ok how did I do typescript with fhir? How did I test?
+
+Aha, there's test.js at the top of the repo. That should let me import and test
+the built adaptor

@@ -1,6 +1,6 @@
 import { expandReferences } from './util';
 import { request } from './util/http';
-import set from 'lodash/set';
+import set from 'lodash/set.js';
 
 /**
  * Helper functions provided by `http.options`.

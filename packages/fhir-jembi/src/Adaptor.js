@@ -1,7 +1,9 @@
-import { util } from '@openfn/language-fhir';
+// TODO temporily disabled because I've broken the fhir build
+// import { util } from '@openfn/language-fhir';
 
 // This is only available at after build
-import { builders } from './builders';
+// @ts-ignore
+// import builders from './builders';
 
 // TODO this is a lightweight wrapper around fhir create which uses the builder function
 // and typings
@@ -42,13 +44,13 @@ export const create = (resourceType, resource, params, callback = s => s) => {
       body: r,
     };
 
-    const response = await util.request(
-      state.configuration,
-      'POST',
-      resolvedResourceType,
-      opts
-    );
-    return util.prepareNextState(state, response, callback);
+    // const response = await util.request(
+    //   state.configuration,
+    //   'POST',
+    //   resolvedResourceType,
+    //   opts
+    // );
+    // return util.prepareNextState(state, response, callback);
   };
 };
 

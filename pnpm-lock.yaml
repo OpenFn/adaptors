@@ -23,6 +23,9 @@ importers:
       '@openfn/language-fhir':
         specifier: workspace:^
         version: link:packages/fhir
+      '@openfn/language-fhir-jembi':
+        specifier: workspace:^
+        version: link:packages/fhir-jembi
       '@openfn/metadata':
         specifier: workspace:^1.0.1
         version: link:tools/metadata
@@ -38,6 +41,9 @@ importers:
       eslint:
         specifier: 8.26.0
         version: 8.26.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
 
   packages/asana:
     dependencies:

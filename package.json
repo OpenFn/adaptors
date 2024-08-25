@@ -6,6 +6,7 @@
   "private": true,
   "packageManager": "pnpm@8.15.1",
   "scripts": {
+    "jembi": "node ./jembi.js",
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
     "docs:publish": "pnpm exec scripts/publish-docs.sh",
@@ -20,8 +21,7 @@
     "metadata": "pnpm -C tools/metadata cli",
     "slack:notify": "cd tools/slack && pnpm notify",
     "generate": "pnpm -C tools/generate cli generate",
-    "prerelease": "node scripts/prerelease.mjs --no-warnings",
-    "pwd": "pwd"
+    "prerelease": "node scripts/prerelease.mjs --no-warnings"
   },
   "author": "Open Function Group",
   "license": "ISC",
@@ -31,10 +31,12 @@
     "@openfn/language-common": "workspace:^",
     "@openfn/language-dhis2": "workspace:^",
     "@openfn/language-fhir": "workspace:^",
+    "@openfn/language-fhir-jembi": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
     "chokidar-cli": "^3.0.0",
-    "eslint": "8.26.0"
+    "eslint": "8.26.0",
+    "lodash": "^4.17.21"
   }
 }
