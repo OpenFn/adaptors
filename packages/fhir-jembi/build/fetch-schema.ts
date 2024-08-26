@@ -49,7 +49,7 @@ function parseZip() {
 
             if (json.resourceType === 'StructureDefinition') {
               delete json.text;
-              result[json.type] = json;
+              result[json.id] = json;
 
               // if (json.type === 'Encounter') {
               //   await writeFile(

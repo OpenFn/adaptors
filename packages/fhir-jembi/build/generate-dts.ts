@@ -29,9 +29,11 @@ const generateDTS = (schema, mappings) => {
   );
 
   for (const type in mappings) {
-    const typedef = generateType(type, schema[type], mappings[type]);
-    const fn = generateBuilder(type, schema[type], mappings[type]);
-    contents.push(typedef, fn);
+    if (schema[type]) {
+      const typedef = generateType(type, schema[type], mappings[type]);
+      const fn = generateBuilder(type, schema[type], mappings[type]);
+      contents.push(typedef, fn);
+    }
   }
 
   return contents

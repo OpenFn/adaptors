@@ -28,12 +28,25 @@ const generate = async types => {
     assert: { type: 'json ' },
   });
   const result = {};
-  for (const resourceType in fullSpec) {
+
+  const counts = {};
+
+  for (const id in fullSpec) {
+    const resourceType = fullSpec[id].type;
+
+    counts[resourceType] = (counts[resourceType] ?? 0) + 1;
+    if (result[resourceType]) {
+      console.log('WARNING: resource already defined for ', resourceType);
+      console.log('IGNORING ', id);
+      continue;
+    }
+
     if (types.includes(resourceType)) {
-      const spec = fullSpec[resourceType];
+      const spec = fullSpec[id];
 
       // For now, ignore this resource type variant
-      if (spec.id === 'entry-from-outside-target-facility-encounter') {
+      if (id === 'entry-from-outside-target-facility-encounter') {
+        console.log('IGNORING ', id);
         continue;
       }
 
@@ -88,6 +101,7 @@ const generate = async types => {
       );
     }
   }
+  console.log({ counts });
   return result;
 };
 
