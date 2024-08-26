@@ -17,11 +17,11 @@
  */
 export default {
   Encounter: {
-    identifier: {
-      // Force identifier to accept a string
-      // (the system will be defaulted)
-      type: 'string',
-    },
+    // identifier: {
+    //   // Force identifier to accept a string
+    //   // (the system will be defaulted)
+    //   type: 'string',
+    // },
     // Specify individual mapping rules for fields here
     // or pass field: false to ignore it
     // (meta is always ignored)
@@ -34,10 +34,10 @@ export default {
       },
     },
   },
-  Patient: {
-    // id: true,
-  },
-  Observation: {
-    // id: true,
-  },
+  // Patient: {
+  //   // id: true,
+  // },
+  // Observation: {
+  //   // id: true,
+  // },
 };

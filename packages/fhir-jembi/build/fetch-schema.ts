@@ -51,10 +51,12 @@ function parseZip() {
               delete json.text;
               result[json.type] = json;
 
-              // await writeFile(
-              //   `./spec/${entry.fileName}`,
-              //   JSON.stringify(json, null, 2)
-              // );
+              // if (json.type === 'Encounter') {
+              //   await writeFile(
+              //     `./spec/${entry.fileName}`,
+              //     JSON.stringify(json, null, 2)
+              //   );
+              // }
             }
             setTimeout(() => {
               zipfile.readEntry();

@@ -32,6 +32,11 @@ const generate = async types => {
     if (types.includes(resourceType)) {
       const spec = fullSpec[resourceType];
 
+      // For now, ignore this resource type variant
+      if (spec.id === 'entry-from-outside-target-facility-encounter') {
+        continue;
+      }
+
       const props = {};
 
       const schema = {
