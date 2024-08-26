@@ -1,0 +1,97 @@
+type EncounterProps = {
+    id: string;
+    meta: Meta;
+    implicitRules: string;
+    language: string;
+    text: Narrative;
+    contained: Resource;
+    extension: Extension;
+    modifierExtension: Extension;
+    identifier: string;
+    status: string;
+    statusHistory: BackboneElement;
+    class: Coding;
+    classHistory: BackboneElement;
+    type: CodeableConcept;
+    serviceType: CodeableConcept;
+    priority: CodeableConcept;
+    subject: Reference;
+    episodeOfCare: Reference;
+    basedOn: Reference;
+    participant: BackboneElement;
+    appointment: Reference;
+    period: Period;
+    length: Duration;
+    reasonCode: CodeableConcept;
+    reasonReference: Reference;
+    diagnosis: BackboneElement;
+    account: Reference;
+    hospitalization: BackboneElement;
+    location: BackboneElement;
+    serviceProvider: Reference;
+    partOf: Reference;
+};
+
+declare function encounter(props: EncounterProps);
+
+type PatientProps = {
+    id: string;
+    meta: Meta;
+    implicitRules: string;
+    language: string;
+    text: Narrative;
+    contained: Resource;
+    extension: Extension;
+    modifierExtension: Extension;
+    identifier: Identifier;
+    active: boolean;
+    name: HumanName;
+    telecom: ContactPoint;
+    gender: string;
+    birthDate: date;
+    address: Address;
+    maritalStatus: CodeableConcept;
+    photo: Attachment;
+    contact: BackboneElement;
+    communication: BackboneElement;
+    generalPractitioner: Reference;
+    managingOrganization: Reference;
+    link: BackboneElement;
+};
+
+declare function patient(props: PatientProps);
+
+type ObservationProps = {
+    id: string;
+    meta: Meta;
+    implicitRules: string;
+    language: string;
+    text: Narrative;
+    contained: Resource;
+    extension: Extension;
+    modifierExtension: Extension;
+    identifier: Identifier;
+    basedOn: Reference;
+    partOf: Reference;
+    status: string;
+    category: CodeableConcept;
+    code: CodeableConcept;
+    subject: Reference;
+    focus: Reference;
+    encounter: Reference;
+    issued: instant;
+    performer: Reference;
+    dataAbsentReason: CodeableConcept;
+    interpretation: CodeableConcept;
+    note: Annotation;
+    bodySite: CodeableConcept;
+    method: CodeableConcept;
+    specimen: Reference;
+    device: Reference;
+    referenceRange: BackboneElement;
+    hasMember: Reference;
+    derivedFrom: Reference;
+    component: BackboneElement;
+};
+
+declare function observation(props: ObservationProps);

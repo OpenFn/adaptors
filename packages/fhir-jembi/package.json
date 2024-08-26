@@ -40,6 +40,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "@openfn/language-fhir": "^5.0.2",
+    "@types/fhir": "^0.0.41",
     "ast-types": "^0.14.2",
     "recast": "^0.23.9",
     "typescript": "4.8.4",

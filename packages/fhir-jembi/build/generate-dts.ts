@@ -41,13 +41,32 @@ const generateDTS = (schema, mappings) => {
 const generateType = (resourceName, schema, mappings) => {
   const props = [];
 
-  for (const key in mappings) {
-    let type;
-    const s = schema.props[key];
-    if (s.type === 'string') {
+  // find the superset of schema keys and mappings keys
+  const allKeys = Object.keys(Object.assign({}, schema.props, mappings));
+
+  // Now for each key, build a type
+  // Note that mappings should overwrite schema if conflict
+  for (const key of allKeys) {
+    const s = schema.props[key] || {};
+    const m = mappings[key] || {};
+
+    if (m == false || m.type === false) {
+      // Ignore this key if it's mapped out
+      continue;
+    }
+
+    // TODO handle keys like deceased[x] in Patient
+    if (key.includes('[x]')) {
+      console.log(` >> Skipping typings for `, key);
+      continue;
+    }
+
+    let type = m.type || s.type || 'any';
+
+    if (type === 'string') {
       type = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
     } else {
-      type = b.createTypeReferenceNode(s.type);
+      type = b.createTypeReferenceNode(type);
     }
     // console.log(type);
 
