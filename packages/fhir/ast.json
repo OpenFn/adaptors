@@ -192,7 +192,7 @@
             "description": "The resource type to create",
             "type": {
               "type": "NameExpression",
-              "name": "FhirResourceTypes"
+              "name": "string"
             },
             "name": "resourceType"
           },
@@ -201,7 +201,7 @@
             "description": "The resource to create",
             "type": {
               "type": "NameExpression",
-              "name": "FhirResource"
+              "name": "object"
             },
             "name": "resource"
           },

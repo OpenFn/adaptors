@@ -1,5 +1,4 @@
 import nodepath from 'node:path';
-import r5 from 'fhir/r5';
 
 import { composeNextState } from '@openfn/language-common';
 import {
@@ -8,18 +7,6 @@ import {
   makeBasicAuthHeader,
   assertRelativeUrl,
 } from '@openfn/language-common/util';
-
-/**
- * Create a FHIR object. Code assist will be provided in Lightning
- * & the VSC extension
- * @returns
- */
-export function create(type, data, options = {}) {
-  return {
-    type: type,
-    ...data,
-  };
-}
 
 export function addAuth(configuration = {}, headers) {
   if (headers.Authorization) return;

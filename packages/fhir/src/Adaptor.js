@@ -3,8 +3,6 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './Utils';
 
-export { util };
-
 /**
  * State object
  * @typedef {Object} FHIRHttpState
@@ -170,22 +168,20 @@ export function get(path, params = {}, options = {}, callback = s => s) {
  *     },
  *   ],
  * });
- * @param {FhirResourceTypes} resourceType - The resource type to create
- * @param {FhirResource} resource - The resource to create
- * @param {object} params - (Optional) FHIR parameters to control and configure resource creation. You can specify a version ie r4 here.
+ * @param {string} resourceType - The resource type to create
+ * @param {object} resource - The resource to create
+ * @param {object} params - (Optional) FHIR parameters to control and configure resource creation
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  * @state {FHIRHttpState}
  */
 export function create(resourceType, resource, params, callback = s => s) {
   return async state => {
-    const [resolvedResourceType, resolvedResource, resolvedParams = {}] =
+    const [resolvedResourceType, resolvedResource, resolvedParams] =
       expandReferences(state, resourceType, resource, params);
 
-    const { version, ...paramsWithoutVersion } = resolvedParams;
-
     const opts = {
-      ...paramsWithoutVersion,
+      ...resolvedParams,
       body: { ...resolvedResource, resourceType: resolvedResourceType },
     };
 

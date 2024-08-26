@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A FHIR adaptor for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,8 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^2.0.0",
-    "@types/fhir": "^0.0.41",
+    "@openfn/language-common": "workspace:^2.0.1",
     "undici": "^5.28.4"
   },
   "devDependencies": {
@@ -38,12 +37,12 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "type": "module",
-  "types": "./types/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./types/index.d.ts"
+      "types": "./types/index.d.ts",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   }
