@@ -13,7 +13,7 @@ export type EncounterProps = {
     contained: Resource;
     extension: Extension;
     modifierExtension: Extension;
-    identifier: Identifier;
+    identifier: string;
     status: string;
     statusHistory: BackboneElement;
     class: Coding;

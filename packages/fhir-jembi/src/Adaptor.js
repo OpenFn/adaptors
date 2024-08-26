@@ -66,16 +66,16 @@ export const create = (resourceType, resource, params, callback = s => s) => {
 
 // TOOD this is causing me build issues - work out how to restore this later
 
-// export {
-//   dataPath,
-//   dataValue,
-//   // dateFns,
-//   cursor,
-//   each,
-//   field,
-//   fields,
-//   fn,
-//   lastReferenceValue,
-//   merge,
-//   sourceValue,
-// } from '@openfn/language-common';
+export {
+  //   dataPath,
+  //   dataValue,
+  //   // dateFns,
+  //   cursor,
+  //   each,
+  //   field,
+  //   fields,
+  fn,
+  //   lastReferenceValue,
+  //   merge,
+  //   sourceValue,
+} from '@openfn/language-common';
