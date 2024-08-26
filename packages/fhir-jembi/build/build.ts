@@ -1,9 +1,10 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { access, readFile, writeFile, mkdir } from 'node:fs/promises';
 import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
 import generateCode from './generate-code';
 
 import mappings from './mappings';
+import { fetchSchema } from './fetch-schema';
 
 const withDisclaimer = (src: string) => `
 // THIS FILE WAS AUTO-GENERATED
@@ -12,6 +13,12 @@ const withDisclaimer = (src: string) => `
 ${src}`;
 
 const generate = async () => {
+  try {
+    await access('./spec/spec.json');
+  } catch (e) {
+    await fetchSchema();
+  }
+
   const schema = await generateSchema(Object.keys(mappings));
 
   const dts = generateDTS(schema, mappings);

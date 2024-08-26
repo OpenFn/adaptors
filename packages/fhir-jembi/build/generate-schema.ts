@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
 /**
  * This file will generate a simple schema representation of a FHIR spec
@@ -24,7 +25,8 @@ const typeMappings = {
 };
 
 const generate = async types => {
-  const fullSpec = await import('../spec/spec.json', {
+  console.log(' >>> ', path.resolve('./spec/spec.json'));
+  const fullSpec = await import(path.resolve('./spec/spec.json'), {
     assert: { type: 'json ' },
   });
   const result = {};
