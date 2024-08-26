@@ -23,6 +23,11 @@ const generateDTS = (schema, mappings) => {
     ts.ScriptKind.TS
   );
 
+  // Add an explicit import of globals.d.ts
+  contents.push(
+    b.createImportDeclaration([], undefined, b.createStringLiteral('./globals'))
+  );
+
   for (const type in mappings) {
     const typedef = generateType(type, schema[type], mappings[type]);
     const fn = generateBuilder(type, schema[type], mappings[type]);
@@ -37,6 +42,12 @@ const generateDTS = (schema, mappings) => {
 // ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
 
 // TODO I really gonna need some utils here
+
+// Map some fhir types to js types
+const typeMap = {
+  date: 'string',
+  instant: 'string',
+};
 
 const generateType = (resourceName, schema, mappings) => {
   const props = [];
@@ -62,6 +73,7 @@ const generateType = (resourceName, schema, mappings) => {
     }
 
     let type = m.type || s.type || 'any';
+    type = typeMap[type] ?? type;
 
     if (type === 'string') {
       type = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
@@ -73,37 +85,43 @@ const generateType = (resourceName, schema, mappings) => {
     props.push(b.createPropertySignature([], key, undefined, type));
   }
 
-  const t = b.createTypeAliasDeclaration(
+  const t = b.createExportDeclaration(
     [],
-    `${resourceName}Props`,
-    [], // generics
-    b.createTypeLiteralNode(props)
+    false,
+    b.createTypeAliasDeclaration(
+      [],
+      `${resourceName}Props`,
+      [], // generics
+      b.createTypeLiteralNode(props)
+    )
   );
 
   return t;
 };
 
 const generateBuilder = (resourceName, schema, mappings) => {
-  // TODO all I really need now is for this to be a declare statement,
-  // rather than an actual function
-  // Would it be easier at this point to string template it?
-  const d = b.createFunctionDeclaration(
-    [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
-    undefined,
-    getBuilderName(resourceName),
-    [], // generics
-    [
-      b.createParameterDeclaration(
-        [],
-        undefined,
-        'props',
-        undefined,
-        //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-        b.createTypeReferenceNode(`${resourceName}Props`)
-      ),
-    ], // params
-    undefined,
-    undefined // body
+  // TODO I think this needs an export
+  const d = b.createExportDeclaration(
+    [],
+    false,
+    b.createFunctionDeclaration(
+      [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
+      undefined,
+      getBuilderName(resourceName),
+      [], // generics
+      [
+        b.createParameterDeclaration(
+          [],
+          undefined,
+          'props',
+          undefined,
+          //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+          b.createTypeReferenceNode(`${resourceName}Props`)
+        ),
+      ], // params
+      undefined,
+      undefined // body
+    )
   );
 
   return d;

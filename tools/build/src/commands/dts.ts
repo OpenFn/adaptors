@@ -61,7 +61,7 @@ export default async (lang: string) => {
         },
         (err, stdout) => {
           // Hide error reports (for now)
-          // console.log(stdout);
+          console.log(stdout);
           resolve();
         }
       );

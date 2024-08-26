@@ -4,5 +4,4 @@ export default path => ({
     index: `${path}/src/index.js`,
     Utils: `${path}/src/Utils.js`,
   },
-  externals: [`${path}/src/builders.js`],
 });

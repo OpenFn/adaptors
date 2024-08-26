@@ -65,3 +65,11 @@ type Resource = {
 // TODO humanname is a bit more complex.. maybe I should be exporting from fhir after all
 // interface HumanName extends HN {}
 // type HumanName = HN;
+
+// these are stubbed exports
+type Duration = {};
+type HumanName = {};
+type ContactPoint = {};
+type Address = {};
+type Annotation = {};
+type Attachment = {};
