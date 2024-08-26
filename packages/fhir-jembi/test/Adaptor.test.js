@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 // Note that we test against the build here
-import * as builders from '../dist/builders';
+import * as builders from '../src/builders';
 import output from './fixtures/output';
 import input from './fixtures/input';
 
@@ -10,8 +10,7 @@ describe('Encounter', () => {
   it.only('should map the whole input encounter', () => {
     // TODO this actually won't ever quite work
     // I think there will alway be some mappings, like visitType
-    const result = builders.createEncounter(input.Encounter.resource);
-
+    const result = builders.encounter(input.Encounter.resource);
     const expected = output.Encounter;
 
     console.log(result);

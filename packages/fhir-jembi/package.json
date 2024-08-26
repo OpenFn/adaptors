@@ -6,7 +6,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./types/index.d.ts"
     },
     "./utils": {
       "import": "./dist/utils.js",
@@ -21,6 +22,7 @@
   "scripts": {
     "build": "pnpm clean && esno build/build.ts && build-adaptor fhir-jembi",
     "build:src": "esno build/build.ts",
+    "build:adaptor": "pnpm build-adaptor fhir-jembi",
     "build:schema": "esno build/generate-schema.ts",
     "load-schema": "esno build/fetch-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",

@@ -5,7 +5,10 @@ import { expandReferences } from '@openfn/language-common/util';
 // This is only available at after build
 // @ts-ignore
 import * as builders from './builders';
-import { getBuilderName } from '../build/util'; // hmm
+// import { getBuilderName } from '../build/util'; // hmm
+
+export const getBuilderName = resourceName =>
+  resourceName[0].toLowerCase() + resourceName.slice(1);
 
 // TODO this is a lightweight wrapper around fhir create which uses the builder function
 // and typings
@@ -40,7 +43,9 @@ export const create = (resourceType, resource, params, callback = s => s) => {
 
     // TODO warn if unsupported type
     const r = builders[getBuilderName(resolvedResourceType)](resource);
-    console.log(' >> ', r);
+    console.log('CREATE: here is the jembi-fhir resource we generated:');
+    console.log(r);
+    console.log('This object has NOT been posted to fhir');
 
     const { version, ...paramsWithoutVersion } = resolvedParams;
 
@@ -59,16 +64,18 @@ export const create = (resourceType, resource, params, callback = s => s) => {
   };
 };
 
-export {
-  dataPath,
-  dataValue,
-  dateFns,
-  cursor,
-  each,
-  field,
-  fields,
-  fn,
-  lastReferenceValue,
-  merge,
-  sourceValue,
-} from '@openfn/language-common';
+// TOOD this is causing me build issues - work out how to restore this later
+
+// export {
+//   dataPath,
+//   dataValue,
+//   // dateFns,
+//   cursor,
+//   each,
+//   field,
+//   fields,
+//   fn,
+//   lastReferenceValue,
+//   merge,
+//   sourceValue,
+// } from '@openfn/language-common';

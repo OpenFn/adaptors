@@ -1,3 +1,7 @@
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MODIFY OR YOU WILL BE FIRED
+
 import { builders } from "./Utils.js";
 
 export function encounter(props) {
