@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-telerivet",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "telerivet Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -43,6 +43,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

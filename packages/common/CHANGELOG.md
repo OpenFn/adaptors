@@ -1,5 +1,11 @@
 ## 2.0.0
 
+## 2.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+
 The 2.0 version of common removes axios and re-writes the `http` namespace.
 
 You can now use `http.request()` from any adaptor that exports it:

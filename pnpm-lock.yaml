@@ -408,7 +408,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -482,7 +482,7 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:*
+        specifier: workspace:^2.0.1
         version: link:../common
       undici:
         specifier: ^5.28.4
@@ -559,7 +559,7 @@ importers:
   packages/godata:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../common
       axios:
         specifier: ^0.21.2
@@ -596,7 +596,7 @@ importers:
   packages/googlehealthcare:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -763,7 +763,7 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.15.1
+        specifier: 1.15.1
         version: 1.15.1
     devDependencies:
       '@openfn/simple-ast':
@@ -794,7 +794,7 @@ importers:
   packages/magpi:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.0
+        specifier: workspace:^2.0.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1249,7 +1249,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -1456,7 +1456,7 @@ importers:
   packages/openmrs:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -1749,7 +1749,7 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.15.1
+        specifier: 1.15.1
         version: 1.15.1
       any-ascii:
         specifier: ^0.3.2
@@ -1906,7 +1906,7 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.0
+        specifier: workspace:^2.0.1
         version: link:../common
       date-fns-tz:
         specifier: ^3.1.3
@@ -2185,7 +2185,7 @@ importers:
   tools/import-tests:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.0
+        specifier: workspace:^2.0.1
         version: link:../../packages/common
       mocha:
         specifier: ^10.1.0

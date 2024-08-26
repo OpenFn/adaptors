@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-testing",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn test adaptor. Internal use only.",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

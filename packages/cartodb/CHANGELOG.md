@@ -1,5 +1,13 @@
 # @openfn/language-cartodb
 
+## 0.4.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
 ## 0.4.2
 
 ### Patch Changes

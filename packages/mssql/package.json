@@ -1,10 +1,11 @@
 {
   "name": "@openfn/language-mssql",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "A Microsoft SQL language pack for OpenFn",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
