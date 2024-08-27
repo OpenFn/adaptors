@@ -82,6 +82,10 @@ const generateBuilder = (resourceName, schema, mappings) => {
 
   body.push(initResource(schema.type));
 
+  // this may be temporary
+  const setDefaults = parse('Object.assign(resource, props);');
+  body.push(...setDefaults.program.body);
+
   body.push(...mapProps(schema, mappings));
 
   body.push(addMeta(schema, mappings));

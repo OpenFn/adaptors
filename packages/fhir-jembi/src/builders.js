@@ -18,6 +18,8 @@ export function encounter_entry_from_outside_target_facility_encounter(props) {
         resourceType: "Encounter"
     };
 
+    Object.assign(resource, props);
+
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -90,6 +92,8 @@ export function encounter_target_facility_encounter(props) {
     const resource = {
         resourceType: "Encounter"
     };
+
+    Object.assign(resource, props);
 
     if ("id" in props) {
         resource.id = props.id;
