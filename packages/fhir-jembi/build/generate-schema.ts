@@ -31,11 +31,30 @@ const generate = async types => {
   const result: Record<string, Schema[]> = {};
 
   const counts = {};
+  const codes = {};
 
   for (const id in fullSpec) {
     const resourceType = fullSpec[id].type;
 
     counts[resourceType] = (counts[resourceType] ?? 0) + 1;
+
+    // attempt to track observations
+    if (resourceType === 'Observation') {
+      const code = fullSpec[id].differential.element.find(
+        d => d.path === 'Observation.code'
+      );
+      try {
+        const c = code.patternCodeableConcept?.coding[0].code;
+        console.log(c);
+        codes[c] = (codes[c] ?? 0) + 1;
+        await writeFile(
+          `./spec/${id}.json`,
+          JSON.stringify(fullSpec[id], null, 2)
+        );
+      } catch (e) {
+        console.log(code);
+      }
+    }
 
     if (types.includes(resourceType)) {
       const spec = fullSpec[id];
@@ -102,6 +121,7 @@ const generate = async types => {
   }
 
   console.log({ counts });
+  console.log({ codes });
   return result;
 };
 
