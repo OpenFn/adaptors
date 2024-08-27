@@ -38,10 +38,10 @@ export default {
       },
     },
   },
-  // Patient: {
-  //   // id: true,
-  // },
-  // Observation: {
-  //   // id: true,
-  // },
+  Patient: {
+    // id: true,
+  },
+  Observation: {
+    // id: true,
+  },
 };

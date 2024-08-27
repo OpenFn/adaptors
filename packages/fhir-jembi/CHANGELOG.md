@@ -2,6 +2,10 @@
 
 ## 0.0.4
 
+restore patient and observation types
+
+## 0.0.4
+
 add type variants add flat assignment of props to resource
 
 ## 0.0.3

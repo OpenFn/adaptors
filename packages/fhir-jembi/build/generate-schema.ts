@@ -39,22 +39,28 @@ const generate = async types => {
     counts[resourceType] = (counts[resourceType] ?? 0) + 1;
 
     // attempt to track observations
-    if (resourceType === 'Observation') {
-      const code = fullSpec[id].differential.element.find(
-        d => d.path === 'Observation.code'
-      );
-      try {
-        const c = code.patternCodeableConcept?.coding[0].code;
-        console.log(c);
-        codes[c] = (codes[c] ?? 0) + 1;
-        await writeFile(
-          `./spec/${id}.json`,
-          JSON.stringify(fullSpec[id], null, 2)
-        );
-      } catch (e) {
-        console.log(code);
-      }
-    }
+    // if (resourceType === 'Observation') {
+    //   const code = fullSpec[id].differential.element.find(
+    //     d => d.path === 'Observation.code'
+    //   );
+    //   try {
+    //     const c = code.patternCodeableConcept?.coding[0].code;
+    //     console.log(c);
+    //     codes[c] = (codes[c] ?? 0) + 1;
+    //     await writeFile(
+    //       `./spec/${id}.json`,
+    //       JSON.stringify(fullSpec[id], null, 2)
+    //     );
+    //   } catch (e) {
+    //     console.log(code);
+    //   }
+    // }
+    // if (resourceType === 'Patient') {
+    //   await writeFile(
+    //     `./spec/${id}.json`,
+    //     JSON.stringify(fullSpec[id], null, 2)
+    //   );
+    // }
 
     if (types.includes(resourceType)) {
       const spec = fullSpec[id];

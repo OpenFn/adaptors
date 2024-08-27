@@ -93,3 +93,48 @@ describe('Encounter', () => {
     expect(result.identifier).to.eql(expected);
   });
 });
+
+
+
+describe('Patient', () => {
+
+  it('should map a random patient', () => {
+    const input = {
+
+    }
+
+
+
+    // First off, there's only one patient type, so this string is not neccessary
+    // We can make the builder smarter there
+    const result = builders.patient('patient', {
+      id: i.id,
+      identifier: i.identifier[0],
+    });
+
+    // TODO expected should soon be the output fixture
+    // but obviously this test won't pass until we're done
+    const expected = {
+      id: 'e84781ed-5f02-40ac-8c97-e7280fb153e3',
+      resourceType: 'Encounter',
+      identifier: [
+        {
+          value: '7834',
+          system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',
+        },
+      ],
+      serviceProvider: {
+        reference: 'Organization/Patient.managingOrganization',
+      },
+      meta: {
+        profile: [
+          'http://moh.gov.et/fhir/hiv/StructureDefinition/target-facility-encounter',
+        ],
+      },
+    };
+
+    expect(result).to.eql(expected);
+
+    // TODO result should equal output.Encounter
+  });
+})
