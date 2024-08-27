@@ -1,8 +1,9 @@
 # @openfn/language-fhir-jembi
 
-## 0.0.4
+## 0.0.5
 
-restore patient and observation types
+- restore patient and observation types
+- hide internal builder functions
 
 ## 0.0.4
 
