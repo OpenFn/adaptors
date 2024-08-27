@@ -94,16 +94,9 @@ describe('Encounter', () => {
   });
 });
 
-
-
-describe('Patient', () => {
-
+describe.skip('Patient', () => {
   it('should map a random patient', () => {
-    const input = {
-
-    }
-
-
+    const input = {};
 
     // First off, there's only one patient type, so this string is not neccessary
     // We can make the builder smarter there
@@ -137,4 +130,4 @@ describe('Patient', () => {
 
     // TODO result should equal output.Encounter
   });
-})
+});

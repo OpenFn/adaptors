@@ -92,13 +92,10 @@ const generateBuilder = (resourceName, schema, mappings) => {
 
   body.push(returnResource());
 
-  const fn = b.exportDeclaration(
-    false,
-    b.functionDeclaration(
-      b.identifier(getBuilderName(resourceName)),
-      [b.identifier(INPUT_NAME)],
-      b.blockStatement(body)
-    )
+  const fn = b.functionDeclaration(
+    b.identifier(getBuilderName(resourceName)),
+    [b.identifier(INPUT_NAME)],
+    b.blockStatement(body)
   );
 
   return fn;

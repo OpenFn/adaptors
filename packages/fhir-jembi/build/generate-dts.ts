@@ -33,8 +33,10 @@ const generateDTS = (schema, mappings) => {
       for (const variant of schema[type]) {
         const name = getTypeName(variant);
         const typedef = generateType(name, variant, mappings[type]);
-        const fn = generateBuilder(name, variant, mappings[type]);
-        contents.push(typedef, fn);
+        contents.push(typedef);
+
+        // const fn = generateBuilder(name, variant, mappings[type]);
+        //contents.push(typedef, fn);
       }
     }
     // TODO generate a summary / top function
@@ -167,43 +169,37 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
     props.push(b.createPropertySignature([], key, undefined, type));
   }
 
-  const t = b.createExportDeclaration(
+  const t = b.createTypeAliasDeclaration(
     [],
-    false,
-    b.createTypeAliasDeclaration(
-      [],
-      `${resourceName}_Props`,
-      [], // generics
-      b.createTypeLiteralNode(props)
-    )
+    `${resourceName}_Props`,
+    [], // generics
+    b.createTypeLiteralNode(props)
   );
 
   return t;
 };
 
+// actually we don't need to generate the builder signature itself?
+// we only care about the entry signature
 const generateBuilder = (resourceName, schema, mappings) => {
   // TODO I think this needs an export
-  const d = b.createExportDeclaration(
-    [],
-    false,
-    b.createFunctionDeclaration(
-      [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
-      undefined,
-      getBuilderName(resourceName),
-      [], // generics
-      [
-        b.createParameterDeclaration(
-          [],
-          undefined,
-          'props',
-          undefined,
-          //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-          b.createTypeReferenceNode(`${resourceName}_Props`)
-        ),
-      ], // params
-      undefined,
-      undefined // body
-    )
+  const d = b.createFunctionDeclaration(
+    [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
+    undefined,
+    getBuilderName(resourceName),
+    [], // generics
+    [
+      b.createParameterDeclaration(
+        [],
+        undefined,
+        'props',
+        undefined,
+        //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+        b.createTypeReferenceNode(`${resourceName}_Props`)
+      ),
+    ], // params
+    undefined,
+    undefined // body
   );
 
   return d;
