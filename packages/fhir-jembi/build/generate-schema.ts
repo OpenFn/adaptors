@@ -25,11 +25,10 @@ const typeMappings = {
 };
 
 const generate = async types => {
-  console.log(' >>> ', path.resolve('./spec/spec.json'));
   const fullSpec = await import(path.resolve('./spec/spec.json'), {
     assert: { type: 'json ' },
   });
-  const result = {};
+  const result: Record<string, Schema[]> = {};
 
   const counts = {};
 
@@ -37,24 +36,20 @@ const generate = async types => {
     const resourceType = fullSpec[id].type;
 
     counts[resourceType] = (counts[resourceType] ?? 0) + 1;
-    if (result[resourceType]) {
-      console.log('WARNING: resource already defined for ', resourceType);
-      console.log('IGNORING ', id);
-      continue;
-    }
 
     if (types.includes(resourceType)) {
       const spec = fullSpec[id];
 
-      // For now, ignore this resource type variant
-      if (id === 'entry-from-outside-target-facility-encounter') {
-        console.log('IGNORING ', id);
-        continue;
-      }
+      // // For now, ignore this resource type variant
+      // if (id === 'entry-from-outside-target-facility-encounter') {
+      //   console.log('IGNORING ', id);
+      //   continue;
+      // }
 
       const props = {};
 
       const schema = {
+        id,
         type: resourceType,
         url: spec.url,
         props,
@@ -94,15 +89,18 @@ const generate = async types => {
           defaults,
         };
       }
-
-      result[resourceType] = schema;
-      // TODO maybe write the schema for debug?
-      await writeFile(
-        `./spec/${resourceType}.json`,
-        JSON.stringify(schema, null, 2)
-      );
+      result[resourceType] ??= [];
+      result[resourceType].push(schema);
     }
   }
+
+  for (const resourceType in result) {
+    await writeFile(
+      `./spec/${resourceType}.json`,
+      JSON.stringify(result[resourceType], null, 2)
+    );
+  }
+
   console.log({ counts });
   return result;
 };

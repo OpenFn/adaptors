@@ -21,7 +21,7 @@ describe('Encounter', () => {
   it('should map a random encounter', () => {
     const i = input.Encounter.resource;
     // this is more like what job code will look like
-    const result = builders.encounter({
+    const result = builders.encounter('target-facility-encounter', {
       id: i.id,
       identifier: i.identifier[0],
     });
@@ -55,7 +55,7 @@ describe('Encounter', () => {
   // This is based on a mapping rule which might not last forever
   // But it shows a cool option we have for mappings
   it('should default the serviceProvider', () => {
-    const result = builders.encounter({});
+    const result = builders.encounter('target-facility-encounter', {});
 
     const expected = {
       reference: 'Organization/Patient.managingOrganization',
@@ -65,7 +65,7 @@ describe('Encounter', () => {
 
   // this is smaller tests while working
   it('should map a single identifier string', () => {
-    const result = builders.encounter({
+    const result = builders.encounter('target-facility-encounter', {
       identifier: 'bob',
     });
 
@@ -79,7 +79,7 @@ describe('Encounter', () => {
   });
 
   it('should map an array of identifiers', () => {
-    const result = builders.encounter({
+    const result = builders.encounter('target-facility-encounter', {
       // this is the whole array (of one item)
       identifier: input.Encounter.resource.identifier,
     });

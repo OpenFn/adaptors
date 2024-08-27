@@ -2,7 +2,7 @@
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
-import { getBuilderName } from './util';
+import { getBuilderName, getTypeName } from './util';
 
 const b = ts.factory;
 
@@ -30,10 +30,17 @@ const generateDTS = (schema, mappings) => {
 
   for (const type in mappings) {
     if (schema[type]) {
-      const typedef = generateType(type, schema[type], mappings[type]);
-      const fn = generateBuilder(type, schema[type], mappings[type]);
-      contents.push(typedef, fn);
+      for (const variant of schema[type]) {
+        const name = getTypeName(variant);
+        const typedef = generateType(name, variant, mappings[type]);
+        const fn = generateBuilder(name, variant, mappings[type]);
+        contents.push(typedef, fn);
+      }
     }
+    // TODO generate a summary / top function
+    // also only create split types if there are variants,
+    // otherwise its overcomplicated
+    contents.push(...generateEntryFuction(type, schema[type]));
   }
 
   return contents
@@ -51,7 +58,80 @@ const typeMap = {
   instant: 'string',
 };
 
-const generateType = (resourceName, schema, mappings) => {
+// Ths generates an entry function which maps the variants
+const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
+  const result = [];
+
+  const v = `${resourceType}_variants`;
+
+  // ok not a real enum
+  // TODO maybe we could use keys rather than duplicate the declaration?
+  // An optimisation for later I think
+  const strs = b.createTypeAliasDeclaration(
+    [],
+    v,
+    [], // generics
+    b.createUnionTypeNode(schemas.map(({ id }) => b.createStringLiteral(id)))
+  );
+  result.push(strs);
+
+  // create the lookup table
+  const lookupTableName = `${resourceType}__lookups`;
+  const lookup = b.createTypeAliasDeclaration(
+    [],
+    lookupTableName,
+    [],
+    b.createTypeLiteralNode(
+      schemas.map(({ id }) =>
+        b.createPropertySignature(
+          [],
+          b.createStringLiteral(id),
+          undefined,
+          b.createIdentifier(`${resourceType}_${id}_Props`.replace(/-/g, '_'))
+        )
+      )
+    )
+  );
+  result.push(lookup);
+
+  const fn = b.createExportDeclaration(
+    [],
+    false,
+    b.createFunctionDeclaration(
+      [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
+      undefined,
+      getBuilderName(resourceType),
+      [b.createTypeParameterDeclaration([], 'T', b.createIdentifier(v))], // generics
+      [
+        b.createParameterDeclaration(
+          [],
+          undefined,
+          'type',
+          undefined,
+          b.createTypeReferenceNode(v)
+        ),
+        b.createParameterDeclaration(
+          [],
+          undefined,
+          'props',
+          undefined,
+          b.createIndexedAccessTypeNode(
+            b.createIdentifier(lookupTableName),
+            b.createIdentifier('T')
+          )
+        ),
+      ], // params
+      undefined,
+      undefined // body
+    )
+  );
+
+  result.push(fn);
+
+  return result;
+};
+
+const generateType = (resourceName: string, schema: Schema, mappings) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys
@@ -69,10 +149,10 @@ const generateType = (resourceName, schema, mappings) => {
     }
 
     // TODO handle keys like deceased[x] in Patient
-    if (key.includes('[x]')) {
-      console.log(` >> Skipping typings for `, key);
-      continue;
-    }
+    // if (key.includes('[x]')) {
+    //   console.log(` >> Skipping typings for `, key);
+    //   continue;
+    // }
 
     let type = m.type || s.type || 'any';
     type = typeMap[type] ?? type;
@@ -92,7 +172,7 @@ const generateType = (resourceName, schema, mappings) => {
     false,
     b.createTypeAliasDeclaration(
       [],
-      `${resourceName}Props`,
+      `${resourceName}_Props`,
       [], // generics
       b.createTypeLiteralNode(props)
     )
@@ -118,7 +198,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
           'props',
           undefined,
           //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-          b.createTypeReferenceNode(`${resourceName}Props`)
+          b.createTypeReferenceNode(`${resourceName}_Props`)
         ),
       ], // params
       undefined,

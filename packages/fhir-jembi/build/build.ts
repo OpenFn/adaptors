@@ -20,7 +20,6 @@ const generate = async () => {
   }
 
   const schema = await generateSchema(Object.keys(mappings));
-
   const dts = generateDTS(schema, mappings);
   const src = generateCode(schema, mappings);
 
@@ -28,13 +27,11 @@ const generate = async () => {
   await mkdir('types', { recursive: true });
 
   await writeFile('src/builders.d.ts', withDisclaimer(dts));
-  // maybe this needs to be in types actually?
-  // we're generaying these types manually, typescript won't do it
   await writeFile('types/builders.d.ts', withDisclaimer(dts));
 
   await writeFile('src/builders.js', withDisclaimer(src));
 
-  // tbh this code is on the wrong place - just need to get this working!
+  // // tbh this code is on the wrong place - just need to get this working!
   const globals = await readFile('src/globals.d.ts', 'utf8');
   await writeFile('types/globals.d.ts', withDisclaimer(globals));
 };

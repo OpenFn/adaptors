@@ -4,25 +4,12 @@ import { print, parse } from 'recast';
 import generateSchema from './generate-schema';
 import generateDTS from './generate-dts';
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName } from './util';
+import { getBuilderName, getTypeName } from './util';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
 // TODO
-
-type Mapping = {
-  // mapping rules for a particular key
-  // defaults, fn, etc
-  defaults?: Record<string, any>;
-};
-
-// Schema to describe a particular prop
-type Schema = {
-  type: string;
-  isArray: boolean;
-  defaults: Record<string, any>;
-};
 
 const generateCode = (schema, mappings) => {
   const statements: n.Statement[] = [];
@@ -31,13 +18,22 @@ const generateCode = (schema, mappings) => {
   statements.push(
     b.importDeclaration(
       [b.importSpecifier(b.identifier('builders'))],
-      // TODO this path is wrong
       b.stringLiteral('./Utils.js')
     )
   );
 
   for (const type in mappings) {
-    statements.push(generateBuilder(type, schema[type], mappings[type]));
+    // generate a builder for each variant
+    // statements.push(generateBuilder(type, schema[type], mappings[type]));
+    // now generate an entry
+
+    if (schema[type]) {
+      statements.push(generateEntry(type, schema[type]));
+      for (const variant of schema[type]) {
+        const name = getTypeName(variant);
+        statements.push(generateBuilder(name, variant, mappings[type]));
+      }
+    }
   }
 
   const program = b.program(statements);
@@ -47,10 +43,44 @@ const generateCode = (schema, mappings) => {
 
 export default generateCode;
 
+// TODO this isn't pretty but it works
+// Note that I really need to standardize name builders for these things
+const generateEntry = (resourceType: string, variants: Schema[]) => {
+  const map = b.variableDeclaration('const', [
+    b.variableDeclarator(
+      b.identifier('mappings'),
+      b.objectExpression(
+        variants.map(schema =>
+          b.objectProperty(
+            b.stringLiteral(schema.id),
+            b.identifier(
+              `${getBuilderName(resourceType)}_${schema.id.replace(/-/g, '_')}`
+            )
+          )
+        )
+      )
+    ),
+  ]);
+
+  // TODO handle errors for invalid types
+  const mapper = parse(`
+      return mappings[type](props)
+    `);
+
+  return b.exportDeclaration(
+    false,
+    b.functionDeclaration(
+      b.identifier(getBuilderName(resourceType)),
+      [b.identifier('type'), b.identifier(INPUT_NAME)],
+      b.blockStatement([map, ...mapper.program.body])
+    )
+  );
+};
+
 const generateBuilder = (resourceName, schema, mappings) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource(resourceName));
+  body.push(initResource(schema.type));
 
   body.push(...mapProps(schema, mappings));
 

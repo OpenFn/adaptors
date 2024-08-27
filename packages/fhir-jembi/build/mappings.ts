@@ -15,6 +15,10 @@
  *
  * You can prevent a key from being mapped by setting it to false here.
  */
+
+// TODO do mapping rules need to change per variant now?
+// hope not!
+// this is pretty high level
 export default {
   Encounter: {
     identifier: {
@@ -34,10 +38,10 @@ export default {
       },
     },
   },
-  Patient: {
-    // id: true,
-  },
-  Observation: {
-    // id: true,
-  },
+  // Patient: {
+  //   // id: true,
+  // },
+  // Observation: {
+  //   // id: true,
+  // },
 };
