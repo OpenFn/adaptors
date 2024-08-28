@@ -109,8 +109,6 @@ export function hget(key, field) {
 
     console.log(`Fetching value of '${resolvedKey}' key`);
     const result = await client.hGet(resolvedKey, resolvedField);
-    console.log({ result });
-
     return composeNextState(state, result);
   };
 }
@@ -133,6 +131,26 @@ export function jGet(key) {
     const result = await client.json.get(resolvedKey);
 
     return composeNextState(state, result);
+  };
+}
+
+/**
+ * Get the values at specified paths in JSON documents stored at multiple keys.
+ * @example <caption>Get JSON document values of the patient and doctor keys</caption>
+ * mGet(["patient", "doctor"]);
+ * @function
+ * @public
+ * @param {string[]} keys - The keys at which the JSON documents are stored.
+ * @state {RedisState}
+ * @returns {Operation}
+ */
+export function mGet(keys) {
+  return async state => {
+    const [resolvedKeys] = expandReferences(state, keys);
+    console.log(`Fetching values for ${resolvedKeys.length} keys`);
+    const results = await client.json.mGet(resolvedKeys, '$');
+
+    return composeNextState(state, results);
   };
 }
 
@@ -262,11 +280,13 @@ export function scan(pattern, options = {}) {
       pattern,
       options
     );
+    console.log(`Scanning for keys matching '${resolvedPattern}'`);
 
     const { type, count } = resolvedOptions;
 
     let cursor = 0;
     const result = [];
+
     do {
       const reply = await client.scan(cursor, {
         MATCH: resolvedPattern,
@@ -278,6 +298,8 @@ export function scan(pattern, options = {}) {
         result.push(key);
       }
     } while (cursor !== 0);
+
+    console.log(`Found ${result.length} keys`);
 
     return composeNextState(state, result);
   };

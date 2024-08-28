@@ -1,5 +1,13 @@
 # @openfn/language-redis
 
+## 1.2.0
+
+### Minor Changes
+
+- c1e3221: - Add `mGet()` function
+  - Remove console.log in `hget()`
+  - Add logging to `scan()`
+
 ## 1.1.2
 
 ### Patch Changes

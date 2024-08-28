@@ -199,6 +199,63 @@
       "valid": true
     },
     {
+      "name": "mGet",
+      "params": [
+        "keys"
+      ],
+      "docs": {
+        "description": "Get the values at specified paths in JSON documents stored at multiple keys.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "mGet([\"patient\", \"doctor\"]);",
+            "caption": "Get JSON document values of the patient and doctor keys"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The keys at which the JSON documents are stored.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "keys"
+          },
+          {
+            "title": "state",
+            "description": "{RedisState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "hGetAll",
       "params": [
         "key"
