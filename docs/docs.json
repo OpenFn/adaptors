@@ -17656,7 +17656,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 150,
+      "lineno": 168,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -17672,7 +17672,7 @@
         "type": null
       }
     ],
-    "order": 6,
+    "order": 7,
     "level": 0
   },
   {
@@ -17717,7 +17717,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 201,
+      "lineno": 219,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -17728,7 +17728,7 @@
         "type": null
       }
     ],
-    "order": 8,
+    "order": 9,
     "level": 0
   },
   {
@@ -17763,7 +17763,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 128,
+      "lineno": 126,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -17819,7 +17819,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 226,
+      "lineno": 244,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -17830,7 +17830,53 @@
         "type": null
       }
     ],
-    "order": 9,
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "mGet",
+    "longname": "mGet",
+    "name": "mGet",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get the values at specified paths in JSON documents stored at multiple keys.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "description": "The keys at which the JSON documents are stored.",
+        "name": "keys"
+      }
+    ],
+    "examples": [
+      "<caption>Get JSON document values of the patient and doctor keys</caption>\nmGet([\"patient\", \"doctor\"]);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 147,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "RedisState"
+      }
+    ],
+    "order": 6,
     "level": 0
   },
   {
@@ -17904,7 +17950,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 258,
+      "lineno": 276,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -17920,7 +17966,7 @@
         "type": null
       }
     ],
-    "order": 10,
+    "order": 11,
     "level": 0
   },
   {
@@ -18005,7 +18051,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 173,
+      "lineno": 191,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/redis/src"
     },
@@ -18016,7 +18062,7 @@
         "type": null
       }
     ],
-    "order": 7,
+    "order": 8,
     "level": 0
   },
   {
@@ -18104,7 +18150,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"redis","adaptor":"@openfn/language-redis","version":"1.1.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(key)</a></dt>\\n<dt>\\n    <a href=\\\"#hget\\\">hget(key, field)</a></dt>\\n<dt>\\n    <a href=\\\"#hgetall\\\">hGetAll(key)</a></dt>\\n<dt>\\n    <a href=\\\"#hset\\\">hset(key, value)</a></dt>\\n<dt>\\n    <a href=\\\"#jget\\\">jGet(key)</a></dt>\\n<dt>\\n    <a href=\\\"#jset\\\">jSet(key, value)</a></dt>\\n<dt>\\n    <a href=\\\"#scan\\\">scan(pattern, options)</a></dt>\\n<dt>\\n    <a href=\\\"#set\\\">set(key, value)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(key) ⇒ Operation</code></p>\\n\\nGet the string value of a key.\\nIf the key does not exist, null is returned.\\nAn error is thrown if the value stored at key is not a string, because `get()` only handles string values.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the value of the patient key\\n```js\\nget(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### hget\\n\\n<p><code>hget(key, field) ⇒ Operation</code></p>\\n\\nGet the value associated with a specific field in a hash stored at a specified key.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| field | <code>string</code> | Field |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the value of the name field under the patient key\\n```js\\nhget(\\\"patient\\\", \\\"name\\\");\\n```\\n\\n* * *\\n\\n### hGetAll\\n\\n<p><code>hGetAll(key) ⇒ Operation</code></p>\\n\\nGet all fields and values of a hash, as an object, for a specified key.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The hash as an object |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the hash obejct at the noderedis:animals:1 key\\n```js\\nhGetAll(\\\"noderedis:animals:1\\\");\\n```\\n\\n* * *\\n\\n### hset\\n\\n<p><code>hset(key, value) ⇒ Operation</code></p>\\n\\nSets the specified fields to their respective values in the hash stored at key.\\nThis function overwrites the values of specified fields that exist in the hash.\\nIf key doesn't exist, a new key holding a hash is created.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| value | <code>object</code> | The values to set |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set a field and value for the &#x60;patient&#x60; key\\n```js\\nhset('patient', { name: 'mtuchi' });\\n```\\n**Example:** Set multiple field values for the &#x60;patient&#x60; key\\n```js\\nhset('patient', { name: 'victor', ihs_number: 12345  });\\n```\\n\\n* * *\\n\\n### jGet\\n\\n<p><code>jGet(key) ⇒ Operation</code></p>\\n\\nGet the value at a specified path in a JSON document stored in a key\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The key at which the JSON document is stored. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get JSON document value of the patient key\\n```js\\njGet(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### jSet\\n\\n<p><code>jSet(key, value) ⇒ Operation</code></p>\\n\\nCreates a JSON object at the specified key. If the key already exists, the\\nexisting value will be replaced by the new value.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The key to modify. |\\n| value | <code>string</code> \\\\| <code>object</code> | The JSON object or string value to set. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set a JSON object for the key &#x60;patient&#x60;\\n```js\\njSet('patient', { name: 'victor', ihs_number: 12345  });\\n```\\n\\n* * *\\n\\n### scan\\n\\n<p><code>scan(pattern, options) ⇒ Operation</code></p>\\n\\nReturns all keys which match the provided pattern.\\nscan iterates the whole database to find the matching keys\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| pattern | <code>string</code> | A glob-style pattern |\\n| options | [<code>ScanOptions</code>](#scanoptions) | Scan options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of keys which match the pattern |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Scan for matching keys\\n```js\\nscan('*:20240524T172736Z*');\\n```\\n**Example:** Scan for keys and fetch the string values inside\\n```js\\nscan('*:20240524T172736Z*');\\neach($.data, get($.data).then((state) => {\\n   state.results ??= [];\\n   state.results.push(state.data)\\n   return state;\\n})\\n```\\n\\n* * *\\n\\n### set\\n\\n<p><code>set(key, value) ⇒ Operation</code></p>\\n\\nSet the string value of a key.\\nIf the key already exists, its value is updated. Otherwise, a new key-value pair is created.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| value | <code>string</code> | The value to set |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set the &quot;patient&quot; key to value &quot;mtuchi&quot;\\n```js\\nset(\\\"patient\\\", \\\"mtuchi\\\");\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### ScanOptions\\n\\nOptions provided to the scan function\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream). |\\n| count | <code>integer</code> | A hint to the server about how many elements to return in the call (default is 10). |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-redis <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the redis\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/redis-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/redis-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `hset` function\\n\\n```js\\nhset('patient', { name: 'Bukayo' });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-redis\\n\\n## 1.1.2\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- 2b8ec34: - Update host type configuration-schema\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- Add `jGet()` function\\n- Add `jSet()` function\\n- `scan()` now iterates the whole database\\n  - Removed `cursor` option from `scan`\\n  - Removed default value for `type` option\\n  - Mapped `json` data type to the redis internal type\\n\\n## 1.0.0\\n\\nFirst release. Designed as a low-level wrapper around npm redis client.\\n\\n- get(key)\\n- hget(key, field)\\n- hGetAll(key)\\n- hset(key, value)\\n- scan(pattern,options)\\n- set(key, field)\\n\"","functions":["execute","get","hGetAll","hget","hset","jGet","jSet","scan","set"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host","type":"string","minLength":1,"description":"Redis server hostname","format":"uri","examples":["redis.example.com"]},"database":{"title":"Database Number","type":"integer","description":"Redis database number. New connections always use the database 0.","examples":[0]},"username":{"title":"Username","type":"string","description":"Redis Access Control username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Redis Access Control password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"port":{"title":"Port","type":"string","description":"Redis server port","writeOnly":true,"default":"6379","examples":["16652"]}},"type":"object","additionalProperties":true,"required":["host","password","username"]}},
+{"name":"redis","adaptor":"@openfn/language-redis","version":"1.2.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(key)</a></dt>\\n<dt>\\n    <a href=\\\"#hget\\\">hget(key, field)</a></dt>\\n<dt>\\n    <a href=\\\"#hgetall\\\">hGetAll(key)</a></dt>\\n<dt>\\n    <a href=\\\"#hset\\\">hset(key, value)</a></dt>\\n<dt>\\n    <a href=\\\"#jget\\\">jGet(key)</a></dt>\\n<dt>\\n    <a href=\\\"#jset\\\">jSet(key, value)</a></dt>\\n<dt>\\n    <a href=\\\"#mget\\\">mGet(keys)</a></dt>\\n<dt>\\n    <a href=\\\"#scan\\\">scan(pattern, options)</a></dt>\\n<dt>\\n    <a href=\\\"#set\\\">set(key, value)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(key) ⇒ Operation</code></p>\\n\\nGet the string value of a key.\\nIf the key does not exist, null is returned.\\nAn error is thrown if the value stored at key is not a string, because `get()` only handles string values.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the value of the patient key\\n```js\\nget(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### hget\\n\\n<p><code>hget(key, field) ⇒ Operation</code></p>\\n\\nGet the value associated with a specific field in a hash stored at a specified key.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| field | <code>string</code> | Field |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the value of the name field under the patient key\\n```js\\nhget(\\\"patient\\\", \\\"name\\\");\\n```\\n\\n* * *\\n\\n### hGetAll\\n\\n<p><code>hGetAll(key) ⇒ Operation</code></p>\\n\\nGet all fields and values of a hash, as an object, for a specified key.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The hash as an object |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get the hash obejct at the noderedis:animals:1 key\\n```js\\nhGetAll(\\\"noderedis:animals:1\\\");\\n```\\n\\n* * *\\n\\n### hset\\n\\n<p><code>hset(key, value) ⇒ Operation</code></p>\\n\\nSets the specified fields to their respective values in the hash stored at key.\\nThis function overwrites the values of specified fields that exist in the hash.\\nIf key doesn't exist, a new key holding a hash is created.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| value | <code>object</code> | The values to set |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set a field and value for the &#x60;patient&#x60; key\\n```js\\nhset('patient', { name: 'mtuchi' });\\n```\\n**Example:** Set multiple field values for the &#x60;patient&#x60; key\\n```js\\nhset('patient', { name: 'victor', ihs_number: 12345  });\\n```\\n\\n* * *\\n\\n### jGet\\n\\n<p><code>jGet(key) ⇒ Operation</code></p>\\n\\nGet the value at a specified path in a JSON document stored in a key\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The key at which the JSON document is stored. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get JSON document value of the patient key\\n```js\\njGet(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### jSet\\n\\n<p><code>jSet(key, value) ⇒ Operation</code></p>\\n\\nCreates a JSON object at the specified key. If the key already exists, the\\nexisting value will be replaced by the new value.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The key to modify. |\\n| value | <code>string</code> \\\\| <code>object</code> | The JSON object or string value to set. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set a JSON object for the key &#x60;patient&#x60;\\n```js\\njSet('patient', { name: 'victor', ihs_number: 12345  });\\n```\\n\\n* * *\\n\\n### mGet\\n\\n<p><code>mGet(keys) ⇒ Operation</code></p>\\n\\nGet the values at specified paths in JSON documents stored at multiple keys.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| keys | <code>Array.&lt;string&gt;</code> | The keys at which the JSON documents are stored. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the result returned from Redis |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get JSON document values of the patient and doctor keys\\n```js\\nmGet([\\\"patient\\\", \\\"doctor\\\"]);\\n```\\n\\n* * *\\n\\n### scan\\n\\n<p><code>scan(pattern, options) ⇒ Operation</code></p>\\n\\nReturns all keys which match the provided pattern.\\nscan iterates the whole database to find the matching keys\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| pattern | <code>string</code> | A glob-style pattern |\\n| options | [<code>ScanOptions</code>](#scanoptions) | Scan options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of keys which match the pattern |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Scan for matching keys\\n```js\\nscan('*:20240524T172736Z*');\\n```\\n**Example:** Scan for keys and fetch the string values inside\\n```js\\nscan('*:20240524T172736Z*');\\neach($.data, get($.data).then((state) => {\\n   state.results ??= [];\\n   state.results.push(state.data)\\n   return state;\\n})\\n```\\n\\n* * *\\n\\n### set\\n\\n<p><code>set(key, value) ⇒ Operation</code></p>\\n\\nSet the string value of a key.\\nIf the key already exists, its value is updated. Otherwise, a new key-value pair is created.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The name of the key |\\n| value | <code>string</code> | The value to set |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Set the &quot;patient&quot; key to value &quot;mtuchi&quot;\\n```js\\nset(\\\"patient\\\", \\\"mtuchi\\\");\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### ScanOptions\\n\\nOptions provided to the scan function\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream). |\\n| count | <code>integer</code> | A hint to the server about how many elements to return in the call (default is 10). |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-redis <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the redis\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/redis-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/redis-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `hset` function\\n\\n```js\\nhset('patient', { name: 'Bukayo' });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-redis\\n\\n## 1.2.0\\n\\n### Minor Changes\\n\\n- c1e3221: - Add `mGet()` function\\n  - Remove console.log in `hget()`\\n  - Add logging to `scan()`\\n\\n## 1.1.2\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- 2b8ec34: - Update host type configuration-schema\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- Add `jGet()` function\\n- Add `jSet()` function\\n- `scan()` now iterates the whole database\\n  - Removed `cursor` option from `scan`\\n  - Removed default value for `type` option\\n  - Mapped `json` data type to the redis internal type\\n\\n## 1.0.0\\n\\nFirst release. Designed as a low-level wrapper around npm redis client.\\n\\n- get(key)\\n- hget(key, field)\\n- hGetAll(key)\\n- hset(key, value)\\n- scan(pattern,options)\\n- set(key, field)\\n\"","functions":["execute","get","hGetAll","hget","hset","jGet","jSet","mGet","scan","set"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host","type":"string","minLength":1,"description":"Redis server hostname","format":"uri","examples":["redis.example.com"]},"database":{"title":"Database Number","type":"integer","description":"Redis database number. New connections always use the database 0.","examples":[0]},"username":{"title":"Username","type":"string","description":"Redis Access Control username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Redis Access Control password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"port":{"title":"Port","type":"string","description":"Redis server port","writeOnly":true,"default":"6379","examples":["16652"]}},"type":"object","additionalProperties":true,"required":["host","password","username"]}},
 [
   {
     "id": "alterState",

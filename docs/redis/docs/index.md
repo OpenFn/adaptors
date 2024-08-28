@@ -12,6 +12,8 @@
 <dt>
     <a href="#jset">jSet(key, value)</a></dt>
 <dt>
+    <a href="#mget">mGet(keys)</a></dt>
+<dt>
     <a href="#scan">scan(pattern, options)</a></dt>
 <dt>
     <a href="#set">set(key, value)</a></dt>
@@ -208,6 +210,30 @@ This operation writes the following keys to state:
 **Example:** Set a JSON object for the key &#x60;patient&#x60;
 ```js
 jSet('patient', { name: 'victor', ihs_number: 12345  });
+```
+
+* * *
+
+### mGet
+
+<p><code>mGet(keys) ⇒ Operation</code></p>
+
+Get the values at specified paths in JSON documents stored at multiple keys.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| keys | <code>Array.&lt;string&gt;</code> | The keys at which the JSON documents are stored. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the result returned from Redis |
+| references | an array of all previous data objects used in the Job |
+**Example:** Get JSON document values of the patient and doctor keys
+```js
+mGet(["patient", "doctor"]);
 ```
 
 * * *
