@@ -41,6 +41,8 @@ const addExtension = (resource, url, value) => {
 
   if (value.coding) {
     obj.valueCodeableConcept = value;
+  } else {
+    obj.value = value;
   }
   // TODO we have to infer every value type here
 
@@ -48,7 +50,23 @@ const addExtension = (resource, url, value) => {
   resource.extension.push(obj);
 };
 
+// TODO should this also take display text?
+const coding = (value, system) => ({ value, system });
+
+const concept = (text, ...codings) => {
+  if (typeof text === 'string') {
+    return {
+      text,
+      coding: codings,
+    };
+  } else {
+    return { coding: [text, ...codings] };
+  }
+};
+
 export const builders = {
+  coding,
+  concept,
   identifier,
   addExtension,
 };

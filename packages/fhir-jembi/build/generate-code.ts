@@ -116,6 +116,9 @@ const mapProps = (schema, mappings) => {
         case 'Identifier':
           props.push(mapIdentifier(key, mappings[key] || {}, spec));
           break;
+        case 'CodeableConcept':
+          props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
+          break;
         default:
         // TODO: warn unused type
       }
@@ -178,6 +181,18 @@ const mapSimpleProp = (propName: string, mapping: Mapping) => {
   }
 
   return ifPropInInput(propName, [assignProp], elseSatement);
+};
+
+const mapCodeableConcept = (
+  propName: string,
+  mapping: Mapping,
+  _schema: Schema
+) => {
+  // TODO maybe if the schema says this is an array, we can
+  // massage the input or throw warnings
+  // otherwise I think this is just a simple mapping tbh
+
+  return mapSimpleProp(propName, mapping);
 };
 
 // Map a property of the input to some extension
