@@ -121,16 +121,14 @@ describe('Patient', () => {
     const religion = findExtension(
       input.extension,
       'http://hl7.org/fhir/StructureDefinition/patient-religion'
-    ).valueCodeableConcept.coding[0].display;
+    ).valueCodeableConcept.coding[0];
 
     const result = builders.patient('patient', {
       id: input.id,
-      // TODO are we SURE we can't do more here?
-      // I just want to wrap a string into a codeable concept
       religion: b.concept(
-        religion,
+        religion.display,
         b.coding(
-          '1036',
+          religion.code,
           'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation'
         )
       ),
