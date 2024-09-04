@@ -18,8 +18,6 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         resourceType: "Encounter"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -32,6 +30,22 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         resource.language = props.language;
     }
 
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
     if ("identifier" in props) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
@@ -39,6 +53,18 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
     if ("status" in props) {
         resource.status = props.status;
+    }
+
+    if ("statusHistory" in props) {
+        resource.statusHistory = props.statusHistory;
+    }
+
+    if ("class" in props) {
+        resource.class = props.class;
+    }
+
+    if ("classHistory" in props) {
+        resource.classHistory = props.classHistory;
     }
 
     if ("type" in props) {
@@ -65,12 +91,20 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         resource.basedOn = props.basedOn;
     }
 
+    if ("participant" in props) {
+        resource.participant = props.participant;
+    }
+
     if ("appointment" in props) {
         resource.appointment = props.appointment;
     }
 
     if ("period" in props) {
         resource.period = props.period;
+    }
+
+    if ("length" in props) {
+        resource.length = props.length;
     }
 
     if ("reasonCode" in props) {
@@ -81,8 +115,20 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         resource.reasonReference = props.reasonReference;
     }
 
+    if ("diagnosis" in props) {
+        resource.diagnosis = props.diagnosis;
+    }
+
     if ("account" in props) {
         resource.account = props.account;
+    }
+
+    if ("hospitalization" in props) {
+        resource.hospitalization = props.hospitalization;
+    }
+
+    if ("location" in props) {
+        resource.location = props.location;
     }
 
     if ("serviceProvider" in props) {
@@ -109,8 +155,6 @@ function encounter_target_facility_encounter(props) {
         resourceType: "Encounter"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -123,6 +167,22 @@ function encounter_target_facility_encounter(props) {
         resource.language = props.language;
     }
 
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
     if ("identifier" in props) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, "http://moh.gov.et/fhir/hiv/identifier/encounter");
@@ -130,6 +190,18 @@ function encounter_target_facility_encounter(props) {
 
     if ("status" in props) {
         resource.status = props.status;
+    }
+
+    if ("statusHistory" in props) {
+        resource.statusHistory = props.statusHistory;
+    }
+
+    if ("class" in props) {
+        resource.class = props.class;
+    }
+
+    if ("classHistory" in props) {
+        resource.classHistory = props.classHistory;
     }
 
     if ("type" in props) {
@@ -156,12 +228,20 @@ function encounter_target_facility_encounter(props) {
         resource.basedOn = props.basedOn;
     }
 
+    if ("participant" in props) {
+        resource.participant = props.participant;
+    }
+
     if ("appointment" in props) {
         resource.appointment = props.appointment;
     }
 
     if ("period" in props) {
         resource.period = props.period;
+    }
+
+    if ("length" in props) {
+        resource.length = props.length;
     }
 
     if ("reasonCode" in props) {
@@ -172,8 +252,20 @@ function encounter_target_facility_encounter(props) {
         resource.reasonReference = props.reasonReference;
     }
 
+    if ("diagnosis" in props) {
+        resource.diagnosis = props.diagnosis;
+    }
+
     if ("account" in props) {
         resource.account = props.account;
+    }
+
+    if ("hospitalization" in props) {
+        resource.hospitalization = props.hospitalization;
+    }
+
+    if ("location" in props) {
+        resource.location = props.location;
     }
 
     if ("serviceProvider" in props) {
@@ -206,8 +298,6 @@ function patient_patient(props) {
         resourceType: "Patient"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -220,17 +310,73 @@ function patient_patient(props) {
         resource.language = props.language;
     }
 
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
     if ("identifier" in props) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, "http://moh.gov.et/fhir/hiv/identifier/MRN");
+    }
+
+    if ("active" in props) {
+        resource.active = props.active;
+    }
+
+    if ("name" in props) {
+        resource.name = props.name;
+    }
+
+    if ("telecom" in props) {
+        resource.telecom = props.telecom;
     }
 
     if ("gender" in props) {
         resource.gender = props.gender;
     }
 
+    if ("birthDate" in props) {
+        resource.birthDate = props.birthDate;
+    }
+
+    if ("deceased[x]" in props) {
+        resource.deceased[x] = props.deceased[x];
+    }
+
+    if ("address" in props) {
+        resource.address = props.address;
+    }
+
     if ("maritalStatus" in props) {
         resource.maritalStatus = props.maritalStatus;
+    }
+
+    if ("multipleBirth[x]" in props) {
+        resource.multipleBirth[x] = props.multipleBirth[x];
+    }
+
+    if ("photo" in props) {
+        resource.photo = props.photo;
+    }
+
+    if ("contact" in props) {
+        resource.contact = props.contact;
+    }
+
+    if ("communication" in props) {
+        resource.communication = props.communication;
     }
 
     if ("generalPractitioner" in props) {
@@ -239,6 +385,10 @@ function patient_patient(props) {
 
     if ("managingOrganization" in props) {
         resource.managingOrganization = props.managingOrganization;
+    }
+
+    if ("link" in props) {
+        resource.link = props.link;
     }
 
     if ("religion" in props) {
@@ -366,8 +516,6 @@ function observation_active_tb_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -378,6 +526,22 @@ function observation_active_tb_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -417,6 +581,14 @@ function observation_active_tb_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -431,6 +603,10 @@ function observation_active_tb_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -449,12 +625,20 @@ function observation_active_tb_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -469,8 +653,6 @@ function observation_alt_ast_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -481,6 +663,22 @@ function observation_alt_ast_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -520,6 +718,14 @@ function observation_alt_ast_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -534,6 +740,10 @@ function observation_alt_ast_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -552,12 +762,20 @@ function observation_alt_ast_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -572,8 +790,6 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -584,6 +800,22 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -623,6 +855,14 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -637,6 +877,10 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -655,12 +899,20 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -677,8 +929,6 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -689,6 +939,22 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -728,6 +994,14 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -742,6 +1016,10 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -760,12 +1038,20 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -782,8 +1068,6 @@ function observation_art_eligibility_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -794,6 +1078,22 @@ function observation_art_eligibility_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -833,6 +1133,14 @@ function observation_art_eligibility_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -847,6 +1155,10 @@ function observation_art_eligibility_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -865,12 +1177,20 @@ function observation_art_eligibility_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -887,8 +1207,6 @@ function observation_art_followup_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -899,6 +1217,22 @@ function observation_art_followup_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -938,6 +1272,14 @@ function observation_art_followup_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -952,6 +1294,10 @@ function observation_art_followup_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -970,12 +1316,20 @@ function observation_art_followup_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -992,8 +1346,6 @@ function observation_art_followup_stopped_reasons_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1004,6 +1356,22 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1043,6 +1411,14 @@ function observation_art_followup_stopped_reasons_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1057,6 +1433,10 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1075,12 +1455,20 @@ function observation_art_followup_stopped_reasons_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1097,8 +1485,6 @@ function observation_art_not_started_plan_next_step_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1109,6 +1495,22 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1148,6 +1550,14 @@ function observation_art_not_started_plan_next_step_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1162,6 +1572,10 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1180,12 +1594,20 @@ function observation_art_not_started_plan_next_step_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1202,8 +1624,6 @@ function observation_arv_adherence_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1214,6 +1634,22 @@ function observation_arv_adherence_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1253,6 +1689,14 @@ function observation_arv_adherence_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1267,6 +1711,10 @@ function observation_arv_adherence_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1285,12 +1733,20 @@ function observation_arv_adherence_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1305,8 +1761,6 @@ function observation_arv_change_category_type_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1317,6 +1771,22 @@ function observation_arv_change_category_type_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1356,6 +1826,14 @@ function observation_arv_change_category_type_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1370,6 +1848,10 @@ function observation_arv_change_category_type_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1388,12 +1870,20 @@ function observation_arv_change_category_type_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1410,8 +1900,6 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1422,6 +1910,22 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1461,6 +1965,14 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1475,6 +1987,10 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1493,12 +2009,20 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1515,8 +2039,6 @@ function observation_arv_regimen_change_reason_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1527,6 +2049,22 @@ function observation_arv_regimen_change_reason_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1566,6 +2104,14 @@ function observation_arv_regimen_change_reason_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1580,6 +2126,10 @@ function observation_arv_regimen_change_reason_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1598,12 +2148,20 @@ function observation_arv_regimen_change_reason_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1620,8 +2178,6 @@ function observation_arv_regimen_changed_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1632,6 +2188,22 @@ function observation_arv_regimen_changed_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1671,6 +2243,14 @@ function observation_arv_regimen_changed_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1685,6 +2265,10 @@ function observation_arv_regimen_changed_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1703,12 +2287,20 @@ function observation_arv_regimen_changed_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1725,8 +2317,6 @@ function observation_arv_regimen_side_effects_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1737,6 +2327,22 @@ function observation_arv_regimen_side_effects_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1776,6 +2382,14 @@ function observation_arv_regimen_side_effects_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1790,6 +2404,10 @@ function observation_arv_regimen_side_effects_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1808,12 +2426,20 @@ function observation_arv_regimen_side_effects_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1830,8 +2456,6 @@ function observation_assessed_for_pain_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1842,6 +2466,22 @@ function observation_assessed_for_pain_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1881,6 +2521,14 @@ function observation_assessed_for_pain_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -1895,6 +2543,10 @@ function observation_assessed_for_pain_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -1913,12 +2565,20 @@ function observation_assessed_for_pain_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -1935,8 +2595,6 @@ function observation_blood_pressure(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -1947,6 +2605,22 @@ function observation_blood_pressure(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -1986,6 +2660,14 @@ function observation_blood_pressure(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2000,6 +2682,10 @@ function observation_blood_pressure(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2018,12 +2704,20 @@ function observation_blood_pressure(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2038,8 +2732,6 @@ function observation_bmi_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2050,6 +2742,22 @@ function observation_bmi_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2089,6 +2797,14 @@ function observation_bmi_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2103,6 +2819,10 @@ function observation_bmi_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2121,12 +2841,20 @@ function observation_bmi_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2141,8 +2869,6 @@ function observation_breastfeeding_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2153,6 +2879,22 @@ function observation_breastfeeding_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2192,6 +2934,14 @@ function observation_breastfeeding_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2206,6 +2956,10 @@ function observation_breastfeeding_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2224,12 +2978,20 @@ function observation_breastfeeding_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2246,8 +3008,6 @@ function observation_cd4_absolute_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2258,6 +3018,22 @@ function observation_cd4_absolute_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2297,6 +3073,14 @@ function observation_cd4_absolute_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2311,6 +3095,10 @@ function observation_cd4_absolute_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2329,12 +3117,20 @@ function observation_cd4_absolute_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2349,8 +3145,6 @@ function observation_cd4_percentage_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2361,6 +3155,22 @@ function observation_cd4_percentage_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2400,6 +3210,14 @@ function observation_cd4_percentage_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2414,6 +3232,10 @@ function observation_cd4_percentage_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2432,12 +3254,20 @@ function observation_cd4_percentage_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2454,8 +3284,6 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2466,6 +3294,22 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2505,6 +3349,14 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2519,6 +3371,10 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2537,12 +3393,20 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2559,8 +3423,6 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2571,6 +3433,22 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2610,6 +3488,14 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2624,6 +3510,10 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2642,12 +3532,20 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2664,8 +3562,6 @@ function observation_cervical_cancer_screening_method_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2676,6 +3572,22 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2715,6 +3627,14 @@ function observation_cervical_cancer_screening_method_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2729,6 +3649,10 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2747,12 +3671,20 @@ function observation_cervical_cancer_screening_method_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2769,8 +3701,6 @@ function observation_cervical_cancer_screening_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2781,6 +3711,22 @@ function observation_cervical_cancer_screening_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2820,6 +3766,14 @@ function observation_cervical_cancer_screening_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2834,6 +3788,10 @@ function observation_cervical_cancer_screening_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2852,12 +3810,20 @@ function observation_cervical_cancer_screening_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2874,8 +3840,6 @@ function observation_cervical_cancer_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2886,6 +3850,22 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -2925,6 +3905,14 @@ function observation_cervical_cancer_screening_result_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -2939,6 +3927,10 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -2957,12 +3949,20 @@ function observation_cervical_cancer_screening_result_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -2979,8 +3979,6 @@ function observation_cervical_cancer_screening_type_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -2991,6 +3989,22 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3030,6 +4044,14 @@ function observation_cervical_cancer_screening_type_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3044,6 +4066,10 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3062,12 +4088,20 @@ function observation_cervical_cancer_screening_type_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3084,8 +4118,6 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3096,6 +4128,22 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3135,6 +4183,14 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3149,6 +4205,10 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3167,12 +4227,20 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3189,8 +4257,6 @@ function observation_children_developmental_milestone_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3201,6 +4267,22 @@ function observation_children_developmental_milestone_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3240,6 +4322,14 @@ function observation_children_developmental_milestone_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3254,6 +4344,10 @@ function observation_children_developmental_milestone_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3272,12 +4366,20 @@ function observation_children_developmental_milestone_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3294,8 +4396,6 @@ function observation_confirmed_hiv_positive_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3306,6 +4406,22 @@ function observation_confirmed_hiv_positive_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3345,6 +4461,14 @@ function observation_confirmed_hiv_positive_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3359,6 +4483,10 @@ function observation_confirmed_hiv_positive_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3377,12 +4505,20 @@ function observation_confirmed_hiv_positive_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3399,8 +4535,6 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3411,6 +4545,22 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3450,6 +4600,14 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3464,6 +4622,10 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3482,12 +4644,20 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3504,8 +4674,6 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3516,6 +4684,22 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3555,6 +4739,14 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3569,6 +4761,10 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3587,12 +4783,20 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3609,8 +4813,6 @@ function observation_counseled_for_hiv_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3621,6 +4823,22 @@ function observation_counseled_for_hiv_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3660,6 +4878,14 @@ function observation_counseled_for_hiv_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3674,6 +4900,10 @@ function observation_counseled_for_hiv_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3692,12 +4922,20 @@ function observation_counseled_for_hiv_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3714,8 +4952,6 @@ function observation_creatine_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3726,6 +4962,22 @@ function observation_creatine_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3765,6 +5017,14 @@ function observation_creatine_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3779,6 +5039,10 @@ function observation_creatine_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3797,12 +5061,20 @@ function observation_creatine_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3817,8 +5089,6 @@ function observation_current_art_duration_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3829,6 +5099,22 @@ function observation_current_art_duration_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3868,6 +5154,14 @@ function observation_current_art_duration_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3882,6 +5176,10 @@ function observation_current_art_duration_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -3900,12 +5198,20 @@ function observation_current_art_duration_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -3922,8 +5228,6 @@ function observation_delivery_mode_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -3934,6 +5238,22 @@ function observation_delivery_mode_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -3973,6 +5293,14 @@ function observation_delivery_mode_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -3987,6 +5315,10 @@ function observation_delivery_mode_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4005,12 +5337,20 @@ function observation_delivery_mode_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4025,8 +5365,6 @@ function observation_delivery_place_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4037,6 +5375,22 @@ function observation_delivery_place_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4076,6 +5430,14 @@ function observation_delivery_place_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4090,6 +5452,10 @@ function observation_delivery_place_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4108,12 +5474,20 @@ function observation_delivery_place_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4130,8 +5504,6 @@ function observation_differentiated_service_delivery_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4142,6 +5514,22 @@ function observation_differentiated_service_delivery_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4181,6 +5569,14 @@ function observation_differentiated_service_delivery_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4195,6 +5591,10 @@ function observation_differentiated_service_delivery_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4213,12 +5613,20 @@ function observation_differentiated_service_delivery_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4235,8 +5643,6 @@ function observation_disclosure_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4247,6 +5653,22 @@ function observation_disclosure_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4286,6 +5708,14 @@ function observation_disclosure_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4300,6 +5730,10 @@ function observation_disclosure_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4318,12 +5752,20 @@ function observation_disclosure_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4340,8 +5782,6 @@ function observation_edema_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4352,6 +5792,22 @@ function observation_edema_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4391,6 +5847,14 @@ function observation_edema_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4405,6 +5869,10 @@ function observation_edema_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4423,12 +5891,20 @@ function observation_edema_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4443,8 +5919,6 @@ function observation_elicited_index_case_contacts_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4455,6 +5929,22 @@ function observation_elicited_index_case_contacts_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4494,6 +5984,14 @@ function observation_elicited_index_case_contacts_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4508,6 +6006,10 @@ function observation_elicited_index_case_contacts_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4526,12 +6028,20 @@ function observation_elicited_index_case_contacts_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4548,8 +6058,6 @@ function observation_enhanced_adherence_counselling_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4560,6 +6068,22 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4599,6 +6123,14 @@ function observation_enhanced_adherence_counselling_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4613,6 +6145,10 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4631,12 +6167,20 @@ function observation_enhanced_adherence_counselling_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4653,8 +6197,6 @@ function observation_estimated_delivery_date_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4665,6 +6207,22 @@ function observation_estimated_delivery_date_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4704,6 +6262,14 @@ function observation_estimated_delivery_date_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4718,6 +6284,10 @@ function observation_estimated_delivery_date_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4736,12 +6306,20 @@ function observation_estimated_delivery_date_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4758,8 +6336,6 @@ function observation_family_member_hiv_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4770,6 +6346,22 @@ function observation_family_member_hiv_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4809,6 +6401,14 @@ function observation_family_member_hiv_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4823,6 +6423,10 @@ function observation_family_member_hiv_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4841,12 +6445,20 @@ function observation_family_member_hiv_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4863,8 +6475,6 @@ function observation_family_planning_method_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4875,6 +6485,22 @@ function observation_family_planning_method_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -4914,6 +6540,14 @@ function observation_family_planning_method_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -4928,6 +6562,10 @@ function observation_family_planning_method_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -4946,12 +6584,20 @@ function observation_family_planning_method_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -4968,8 +6614,6 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -4980,6 +6624,22 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5019,6 +6679,14 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5033,6 +6701,10 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5051,12 +6723,20 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5073,8 +6753,6 @@ function observation_future_pregnancy_plans_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5085,6 +6763,22 @@ function observation_future_pregnancy_plans_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5124,6 +6818,14 @@ function observation_future_pregnancy_plans_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5138,6 +6840,10 @@ function observation_future_pregnancy_plans_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5156,12 +6862,20 @@ function observation_future_pregnancy_plans_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5178,8 +6892,6 @@ function observation_generic_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5190,6 +6902,22 @@ function observation_generic_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5229,6 +6957,14 @@ function observation_generic_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5243,6 +6979,10 @@ function observation_generic_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5261,12 +7001,20 @@ function observation_generic_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5281,8 +7029,6 @@ function observation_head_circumference_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5293,6 +7039,22 @@ function observation_head_circumference_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5332,6 +7094,14 @@ function observation_head_circumference_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5346,6 +7116,10 @@ function observation_head_circumference_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5364,12 +7138,20 @@ function observation_head_circumference_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5386,8 +7168,6 @@ function observation_health_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5398,6 +7178,22 @@ function observation_health_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5437,6 +7233,14 @@ function observation_health_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5451,6 +7255,10 @@ function observation_health_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5469,12 +7277,20 @@ function observation_health_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5489,8 +7305,6 @@ function observation_heart_rate_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5501,6 +7315,22 @@ function observation_heart_rate_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5540,6 +7370,14 @@ function observation_heart_rate_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5554,6 +7392,10 @@ function observation_heart_rate_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5572,12 +7414,20 @@ function observation_heart_rate_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5592,8 +7442,6 @@ function observation_height_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5604,6 +7452,22 @@ function observation_height_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5643,6 +7507,14 @@ function observation_height_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5657,6 +7529,10 @@ function observation_height_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5675,12 +7551,20 @@ function observation_height_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5695,8 +7579,6 @@ function observation_hgb_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5707,6 +7589,22 @@ function observation_hgb_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5746,6 +7644,14 @@ function observation_hgb_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5760,6 +7666,10 @@ function observation_hgb_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5778,12 +7688,20 @@ function observation_hgb_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5798,8 +7716,6 @@ function observation_highest_education_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5810,6 +7726,22 @@ function observation_highest_education_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5849,6 +7781,14 @@ function observation_highest_education_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5863,6 +7803,10 @@ function observation_highest_education_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5881,12 +7825,20 @@ function observation_highest_education_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -5903,8 +7855,6 @@ function observation_hiv_prevention_plan_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -5915,6 +7865,22 @@ function observation_hiv_prevention_plan_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -5954,6 +7920,14 @@ function observation_hiv_prevention_plan_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -5968,6 +7942,10 @@ function observation_hiv_prevention_plan_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -5986,12 +7964,20 @@ function observation_hiv_prevention_plan_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6008,8 +7994,6 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6020,6 +8004,22 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6059,6 +8059,14 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6073,6 +8081,10 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6091,12 +8103,20 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6113,8 +8133,6 @@ function observation_hiv_program_final_outcome_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6125,6 +8143,22 @@ function observation_hiv_program_final_outcome_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6164,6 +8198,14 @@ function observation_hiv_program_final_outcome_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6178,6 +8220,10 @@ function observation_hiv_program_final_outcome_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6196,12 +8242,20 @@ function observation_hiv_program_final_outcome_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6218,8 +8272,6 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6230,6 +8282,22 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6269,6 +8337,14 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6283,6 +8359,10 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6301,12 +8381,20 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6323,8 +8411,6 @@ function observation_hiv_program_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6335,6 +8421,22 @@ function observation_hiv_program_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6374,6 +8476,14 @@ function observation_hiv_program_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6388,6 +8498,10 @@ function observation_hiv_program_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6406,12 +8520,20 @@ function observation_hiv_program_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6428,8 +8550,6 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6440,6 +8560,22 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6479,6 +8615,14 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6493,6 +8637,10 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6511,12 +8659,20 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6533,8 +8689,6 @@ function observation_hiv_test_results_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6545,6 +8699,22 @@ function observation_hiv_test_results_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6584,6 +8754,14 @@ function observation_hiv_test_results_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6598,6 +8776,10 @@ function observation_hiv_test_results_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6616,12 +8798,20 @@ function observation_hiv_test_results_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6638,8 +8828,6 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6650,6 +8838,22 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6689,6 +8893,14 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6703,6 +8915,10 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6721,12 +8937,20 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6743,8 +8967,6 @@ function observation_inh_at_follow_up_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6755,6 +8977,22 @@ function observation_inh_at_follow_up_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6794,6 +9032,14 @@ function observation_inh_at_follow_up_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6808,6 +9054,10 @@ function observation_inh_at_follow_up_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6826,12 +9076,20 @@ function observation_inh_at_follow_up_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6848,8 +9106,6 @@ function observation_last_menstrual_period_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6860,6 +9116,22 @@ function observation_last_menstrual_period_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -6899,6 +9171,14 @@ function observation_last_menstrual_period_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -6913,6 +9193,10 @@ function observation_last_menstrual_period_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -6931,12 +9215,20 @@ function observation_last_menstrual_period_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -6953,8 +9245,6 @@ function observation_level_of_pain_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -6965,6 +9255,22 @@ function observation_level_of_pain_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7004,6 +9310,14 @@ function observation_level_of_pain_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7018,6 +9332,10 @@ function observation_level_of_pain_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7036,12 +9354,20 @@ function observation_level_of_pain_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7056,8 +9382,6 @@ function observation_maternal_hiv_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7068,6 +9392,22 @@ function observation_maternal_hiv_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7107,6 +9447,14 @@ function observation_maternal_hiv_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7121,6 +9469,10 @@ function observation_maternal_hiv_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7139,12 +9491,20 @@ function observation_maternal_hiv_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7161,8 +9521,6 @@ function observation_muac_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7173,6 +9531,22 @@ function observation_muac_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7212,6 +9586,14 @@ function observation_muac_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7226,6 +9608,10 @@ function observation_muac_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7244,12 +9630,20 @@ function observation_muac_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7264,8 +9658,6 @@ function observation_nutritional_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7276,6 +9668,22 @@ function observation_nutritional_screening_result_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7315,6 +9723,14 @@ function observation_nutritional_screening_result_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7329,6 +9745,10 @@ function observation_nutritional_screening_result_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7347,12 +9767,20 @@ function observation_nutritional_screening_result_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7369,8 +9797,6 @@ function observation_nutritional_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7381,6 +9807,22 @@ function observation_nutritional_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7420,6 +9862,14 @@ function observation_nutritional_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7434,6 +9884,10 @@ function observation_nutritional_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7452,12 +9906,20 @@ function observation_nutritional_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7474,8 +9936,6 @@ function observation_nutritional_suppliments_provided_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7486,6 +9946,22 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7525,6 +10001,14 @@ function observation_nutritional_suppliments_provided_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7539,6 +10023,10 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7557,12 +10045,20 @@ function observation_nutritional_suppliments_provided_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7579,8 +10075,6 @@ function observation_otz_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7591,6 +10085,22 @@ function observation_otz_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7630,6 +10140,14 @@ function observation_otz_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7644,6 +10162,10 @@ function observation_otz_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7662,12 +10184,20 @@ function observation_otz_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7682,8 +10212,6 @@ function observation_patient_functional_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7694,6 +10222,22 @@ function observation_patient_functional_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7733,6 +10277,14 @@ function observation_patient_functional_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7747,6 +10299,10 @@ function observation_patient_functional_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7765,12 +10321,20 @@ function observation_patient_functional_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7787,8 +10351,6 @@ function observation_patient_occupation_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7799,6 +10361,22 @@ function observation_patient_occupation_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7838,6 +10416,14 @@ function observation_patient_occupation_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7852,6 +10438,10 @@ function observation_patient_occupation_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7870,12 +10460,20 @@ function observation_patient_occupation_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7892,8 +10490,6 @@ function observation_patient_who_stage_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -7904,6 +10500,22 @@ function observation_patient_who_stage_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -7943,6 +10555,14 @@ function observation_patient_who_stage_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -7957,6 +10577,10 @@ function observation_patient_who_stage_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -7975,12 +10599,20 @@ function observation_patient_who_stage_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -7997,8 +10629,6 @@ function observation_physical_examinations_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8009,6 +10639,22 @@ function observation_physical_examinations_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8048,6 +10694,14 @@ function observation_physical_examinations_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8062,6 +10716,10 @@ function observation_physical_examinations_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8080,12 +10738,20 @@ function observation_physical_examinations_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8102,8 +10768,6 @@ function observation_pregnancy_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8114,6 +10778,22 @@ function observation_pregnancy_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8153,6 +10833,14 @@ function observation_pregnancy_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8167,6 +10855,10 @@ function observation_pregnancy_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8185,12 +10877,20 @@ function observation_pregnancy_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8207,8 +10907,6 @@ function observation_presenting_symptom_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8219,6 +10917,22 @@ function observation_presenting_symptom_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8258,6 +10972,14 @@ function observation_presenting_symptom_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8272,6 +10994,10 @@ function observation_presenting_symptom_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8290,12 +11016,20 @@ function observation_presenting_symptom_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8312,8 +11046,6 @@ function observation_reason_eligible_for_art_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8324,6 +11056,22 @@ function observation_reason_eligible_for_art_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8363,6 +11111,14 @@ function observation_reason_eligible_for_art_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8377,6 +11133,10 @@ function observation_reason_eligible_for_art_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8395,12 +11155,20 @@ function observation_reason_eligible_for_art_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8417,8 +11185,6 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8429,6 +11195,22 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8468,6 +11250,14 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8482,6 +11272,10 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8500,12 +11294,20 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8522,8 +11324,6 @@ function observation_resides_in_catchment_area_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8534,6 +11334,22 @@ function observation_resides_in_catchment_area_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8573,6 +11389,14 @@ function observation_resides_in_catchment_area_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8587,6 +11411,10 @@ function observation_resides_in_catchment_area_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8605,12 +11433,20 @@ function observation_resides_in_catchment_area_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8627,8 +11463,6 @@ function observation_respiratory_rate_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8639,6 +11473,22 @@ function observation_respiratory_rate_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8678,6 +11528,14 @@ function observation_respiratory_rate_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8692,6 +11550,10 @@ function observation_respiratory_rate_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8710,12 +11572,20 @@ function observation_respiratory_rate_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8732,8 +11602,6 @@ function observation_screened_for_tb_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8744,6 +11612,22 @@ function observation_screened_for_tb_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8783,6 +11667,14 @@ function observation_screened_for_tb_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8797,6 +11689,10 @@ function observation_screened_for_tb_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8815,12 +11711,20 @@ function observation_screened_for_tb_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8837,8 +11741,6 @@ function observation_target_population_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8849,6 +11751,22 @@ function observation_target_population_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8888,6 +11806,14 @@ function observation_target_population_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -8902,6 +11828,10 @@ function observation_target_population_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -8920,12 +11850,20 @@ function observation_target_population_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -8942,8 +11880,6 @@ function observation_tb_diagnostic_test_result_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -8954,6 +11890,22 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -8993,6 +11945,14 @@ function observation_tb_diagnostic_test_result_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9007,6 +11967,10 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9025,12 +11989,20 @@ function observation_tb_diagnostic_test_result_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9047,8 +12019,6 @@ function observation_tb_prophylaxis_type_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9059,6 +12029,22 @@ function observation_tb_prophylaxis_type_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9098,6 +12084,14 @@ function observation_tb_prophylaxis_type_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9112,6 +12106,10 @@ function observation_tb_prophylaxis_type_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9130,12 +12128,20 @@ function observation_tb_prophylaxis_type_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9152,8 +12158,6 @@ function observation_tb_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9164,6 +12168,22 @@ function observation_tb_screening_result_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9203,6 +12223,14 @@ function observation_tb_screening_result_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9217,6 +12245,10 @@ function observation_tb_screening_result_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9235,12 +12267,20 @@ function observation_tb_screening_result_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9257,8 +12297,6 @@ function observation_tb_treatment_started_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9269,6 +12307,22 @@ function observation_tb_treatment_started_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9308,6 +12362,14 @@ function observation_tb_treatment_started_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9322,6 +12384,10 @@ function observation_tb_treatment_started_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9340,12 +12406,20 @@ function observation_tb_treatment_started_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9362,8 +12436,6 @@ function observation_tb_treatment_status_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9374,6 +12446,22 @@ function observation_tb_treatment_status_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9413,6 +12501,14 @@ function observation_tb_treatment_status_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9427,6 +12523,10 @@ function observation_tb_treatment_status_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9445,12 +12545,20 @@ function observation_tb_treatment_status_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9467,8 +12575,6 @@ function observation_temperature_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9479,6 +12585,22 @@ function observation_temperature_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9518,6 +12640,14 @@ function observation_temperature_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9532,6 +12662,10 @@ function observation_temperature_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9550,12 +12684,20 @@ function observation_temperature_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9570,8 +12712,6 @@ function observation_tested_for_hiv_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9582,6 +12722,22 @@ function observation_tested_for_hiv_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9621,6 +12777,14 @@ function observation_tested_for_hiv_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9635,6 +12799,10 @@ function observation_tested_for_hiv_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9653,12 +12821,20 @@ function observation_tested_for_hiv_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9675,8 +12851,6 @@ function observation_therapeutic_supplementary_food_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9687,6 +12861,22 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9726,6 +12916,14 @@ function observation_therapeutic_supplementary_food_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9740,6 +12938,10 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9758,12 +12960,20 @@ function observation_therapeutic_supplementary_food_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9780,8 +12990,6 @@ function observation_tpt_eligbility_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9792,6 +13000,22 @@ function observation_tpt_eligbility_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9831,6 +13055,14 @@ function observation_tpt_eligbility_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9845,6 +13077,10 @@ function observation_tpt_eligbility_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9863,12 +13099,20 @@ function observation_tpt_eligbility_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9885,8 +13129,6 @@ function observation_tpt_started_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -9897,6 +13139,22 @@ function observation_tpt_started_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -9936,6 +13194,14 @@ function observation_tpt_started_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -9950,6 +13216,10 @@ function observation_tpt_started_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -9968,12 +13238,20 @@ function observation_tpt_started_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -9988,8 +13266,6 @@ function observation_treatment_completed_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10000,6 +13276,22 @@ function observation_treatment_completed_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10039,6 +13331,14 @@ function observation_treatment_completed_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10053,6 +13353,10 @@ function observation_treatment_completed_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10071,12 +13375,20 @@ function observation_treatment_completed_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -10093,8 +13405,6 @@ function observation_treatment_discontinued_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10105,6 +13415,22 @@ function observation_treatment_discontinued_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10144,6 +13470,14 @@ function observation_treatment_discontinued_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10158,6 +13492,10 @@ function observation_treatment_discontinued_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10176,12 +13514,20 @@ function observation_treatment_discontinued_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -10198,8 +13544,6 @@ function observation_viral_load_count_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10210,6 +13554,22 @@ function observation_viral_load_count_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10249,6 +13609,14 @@ function observation_viral_load_count_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10263,6 +13631,10 @@ function observation_viral_load_count_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10281,12 +13653,20 @@ function observation_viral_load_count_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -10303,8 +13683,6 @@ function observation_viral_load_indication_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10315,6 +13693,22 @@ function observation_viral_load_indication_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10354,6 +13748,14 @@ function observation_viral_load_indication_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10368,6 +13770,10 @@ function observation_viral_load_indication_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10386,12 +13792,20 @@ function observation_viral_load_indication_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -10408,8 +13822,6 @@ function observation_viral_load_performed_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10420,6 +13832,22 @@ function observation_viral_load_performed_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10459,6 +13887,14 @@ function observation_viral_load_performed_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10473,6 +13909,10 @@ function observation_viral_load_performed_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10491,12 +13931,20 @@ function observation_viral_load_performed_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {
@@ -10513,8 +13961,6 @@ function observation_weight_observation(props) {
         resourceType: "Observation"
     };
 
-    Object.assign(resource, props);
-
     if ("id" in props) {
         resource.id = props.id;
     }
@@ -10525,6 +13971,22 @@ function observation_weight_observation(props) {
 
     if ("language" in props) {
         resource.language = props.language;
+    }
+
+    if ("text" in props) {
+        resource.text = props.text;
+    }
+
+    if ("contained" in props) {
+        resource.contained = props.contained;
+    }
+
+    if ("extension" in props) {
+        resource.extension = props.extension;
+    }
+
+    if ("modifierExtension" in props) {
+        resource.modifierExtension = props.modifierExtension;
     }
 
     if ("identifier" in props) {
@@ -10564,6 +14026,14 @@ function observation_weight_observation(props) {
         resource.encounter = props.encounter;
     }
 
+    if ("effective[x]" in props) {
+        resource.effective[x] = props.effective[x];
+    }
+
+    if ("issued" in props) {
+        resource.issued = props.issued;
+    }
+
     if ("performer" in props) {
         resource.performer = props.performer;
     }
@@ -10578,6 +14048,10 @@ function observation_weight_observation(props) {
 
     if ("interpretation" in props) {
         resource.interpretation = props.interpretation;
+    }
+
+    if ("note" in props) {
+        resource.note = props.note;
     }
 
     if ("bodySite" in props) {
@@ -10596,12 +14070,20 @@ function observation_weight_observation(props) {
         resource.device = props.device;
     }
 
+    if ("referenceRange" in props) {
+        resource.referenceRange = props.referenceRange;
+    }
+
     if ("hasMember" in props) {
         resource.hasMember = props.hasMember;
     }
 
     if ("derivedFrom" in props) {
         resource.derivedFrom = props.derivedFrom;
+    }
+
+    if ("component" in props) {
+        resource.component = props.component;
     }
 
     resource.meta = {

@@ -2,8 +2,11 @@ import { expect } from 'chai';
 
 // Note that we test against the build here
 import * as builders from '../src/builders';
+import { findExtension, builders as b } from '../src/Utils';
 import output from './fixtures/output';
 import input from './fixtures/input';
+
+import fixtures from './fixtures';
 
 describe('Encounter', () => {
   // TODO this is the full test
@@ -95,6 +98,55 @@ describe('Encounter', () => {
 });
 
 describe('Patient', () => {
+  it.only('should convert CDR to NDR', () => {
+    const input = fixtures.cdr.patient;
+
+    // This has to go in mapping code, but should be re-usable across types
+    const mapIdentifiers = ids => {
+      const map = {
+        'http://cdr.aacahb.gov.et/SmartCareID':
+          'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
+        'http://cdr.aacahb.gov.et/MRN':
+          'http://moh.gov.et/fhir/hiv/identifier/MRN',
+        'http://cdr.aacahb.gov.et/UAN':
+          'http://moh.gov.et/fhir/hiv/identifier/UAN',
+      };
+
+      return ids.map(id => ({
+        ...id,
+        system: map[id.system] ?? id.system,
+      }));
+    };
+
+    const religion = findExtension(
+      input.extension,
+      'http://hl7.org/fhir/StructureDefinition/patient-religion'
+    ).valueCodeableConcept.coding[0].display;
+
+    const result = builders.patient('patient', {
+      id: input.id,
+      // TODO are we SURE we can't do more here?
+      // I just want to wrap a string into a codeable concept
+      religion: b.concept(
+        religion,
+        b.coding(
+          '1036',
+          'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation'
+        )
+      ),
+      identifier: mapIdentifiers(input.identifier),
+      name: input.name,
+      telecom: input.telecom,
+      gender: input.gender,
+      birthDate: input.birthDate,
+      maritalStatus: input.maritalStatus,
+      managingOrganization: input.managingOrganization,
+      // address: input.address
+    });
+
+    expect(result).to.eql(fixtures.ndr.patient);
+  });
+
   it('should set the religion extension', () => {
     const input = {
       religion: {

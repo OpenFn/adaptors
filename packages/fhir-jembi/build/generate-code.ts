@@ -78,8 +78,8 @@ const generateBuilder = (resourceName, schema, mappings) => {
   body.push(initResource(schema.type));
 
   // this may be temporary
-  const setDefaults = parse('Object.assign(resource, props);');
-  body.push(...setDefaults.program.body);
+  // const setDefaults = parse('Object.assign(resource, props);');
+  // body.push(...setDefaults.program.body);
 
   body.push(...mapProps(schema, mappings));
 
@@ -120,6 +120,8 @@ const mapProps = (schema, mappings) => {
           props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
           break;
         default:
+          console.warn(`WARNING: using simple mapping for ${schema.id}.${key}`);
+          props.push(mapSimpleProp(key, mappings[key]));
         // TODO: warn unused type
       }
     } else {

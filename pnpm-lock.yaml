@@ -524,6 +524,9 @@ importers:
       ast-types:
         specifier: ^0.14.2
         version: 0.14.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       recast:
         specifier: ^0.23.9
         version: 0.23.9

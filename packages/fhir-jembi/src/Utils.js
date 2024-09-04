@@ -1,5 +1,7 @@
 // utils includes little builder functions
 
+import _ from 'lodash';
+
 // rather than code gen these with all their complexity,
 // we can keep them in the library
 // we can even unit test them if we want
@@ -24,8 +26,10 @@ const identifier = (input, system) => {
       };
     } else if (system) {
       return {
-        ...input,
+        // Is system a default or override?
+        // Probably a default?
         system,
+        ...input,
       };
     } else {
       return input;
@@ -50,8 +54,18 @@ const addExtension = (resource, url, value) => {
   resource.extension.push(obj);
 };
 
+const findExtension = (arr, targetUrl, path) => {
+  const result = arr.find(ext => ext.url === targetUrl);
+  if (result && path) {
+    return _.get(result, path);
+  }
+  return result;
+};
+
+export { findExtension };
+
 // TODO should this also take display text?
-const coding = (value, system) => ({ value, system });
+const coding = (code, system) => ({ code, system });
 
 const concept = (text, ...codings) => {
   if (typeof text === 'string') {

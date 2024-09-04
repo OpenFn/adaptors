@@ -1,7 +1,32 @@
 import { expect } from 'chai';
-import { builders } from '../src/Utils';
+import { builders, findExtension } from '../src/Utils';
 
 const { identifier, addExtension, coding, concept } = builders;
+
+describe.only('findExtension()', () => {
+  it('should find an extension with a matching url', () => {
+    const items = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
+
+    const result = findExtension(items, 'b');
+    expect(result).to.eql({ url: 'b' });
+  });
+  it('should return undefined if nothing found', () => {
+    const items = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
+
+    const result = findExtension(items, 'z');
+    expect(result).to.be.undefined;
+  });
+  it('should resolve a path and return the value', () => {
+    const items = [
+      { url: 'a' },
+      { url: 'b', values: [11, 22, 33] },
+      { url: 'c' },
+    ];
+
+    const result = findExtension(items, 'b', 'values[2]');
+    expect(result).to.eql(33);
+  });
+});
 
 describe('identifier', () => {
   it('should map a string to an identifier with a system', () => {
@@ -54,7 +79,7 @@ describe('coding', () => {
   it('should create a simple coding', () => {
     const result = coding(123, 'www');
 
-    expect(result).to.eql({ value: 123, system: 'www' });
+    expect(result).to.eql({ code: 123, system: 'www' });
   });
 });
 
