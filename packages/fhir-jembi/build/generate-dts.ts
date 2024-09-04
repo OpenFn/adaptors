@@ -151,10 +151,10 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
     }
 
     // TODO handle keys like deceased[x] in Patient
-    // if (key.includes('[x]')) {
-    //   console.log(` >> Skipping typings for `, key);
-    //   continue;
-    // }
+    if (key.includes('[x]')) {
+      console.log(` >> Skipping typings for ${resourceName}.${key}`);
+      continue;
+    }
 
     let type = m.type || s.type || 'any';
     type = typeMap[type] ?? type;

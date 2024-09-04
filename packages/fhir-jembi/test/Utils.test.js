@@ -49,3 +49,11 @@ describe('identifier', () => {
   });
   // TODO is there some way to say if the provided system is an override or default?
 });
+
+// describe('coding', () => {
+//   it('should create a simple coding', () => {});
+// });
+
+// describe('codeableConcept', () => {});
+
+// describe('addExtension', () => {});

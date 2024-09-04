@@ -33,6 +33,22 @@ const identifier = (input, system) => {
   }
 };
 
+// Add an extension to a resource
+const addExtension = (resource, url, value) => {
+  const obj = {
+    url: url,
+  };
+
+  if (value.coding) {
+    obj.valueCodeableConcept = value;
+  }
+  // TODO we have to infer every value type here
+
+  resource.extension ??= [];
+  resource.extension.push(obj);
+};
+
 export const builders = {
   identifier,
+  addExtension,
 };

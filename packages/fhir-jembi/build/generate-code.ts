@@ -1,20 +1,15 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
-import generateSchema from './generate-schema';
-import generateDTS from './generate-dts';
 import { StatementKind } from 'ast-types/gen/kinds';
 import { getBuilderName, getTypeName } from './util';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
-// TODO
-
 const generateCode = (schema, mappings) => {
   const statements: n.Statement[] = [];
 
-  // todo import the builder helpers
   statements.push(
     b.importDeclaration(
       [b.importSpecifier(b.identifier('builders'))],
@@ -128,6 +123,15 @@ const mapProps = (schema, mappings) => {
       console.log('WARNING: schema does not define property', key);
     }
   }
+  // now handle any mapped keys
+  for (const key in mappings) {
+    if (mappings[key]) {
+      if (mappings[key].extension) {
+        props.push(mapExtension(key, mappings[key]));
+      }
+      // TODO handle other types of mappings
+    }
+  }
 
   return props;
 };
@@ -174,6 +178,26 @@ const mapSimpleProp = (propName: string, mapping: Mapping) => {
   }
 
   return ifPropInInput(propName, [assignProp], elseSatement);
+};
+
+// Map a property of the input to some extension
+// This will add a new object to the Extexsion array
+const mapExtension = (propName: string, mapping: Mapping) => {
+  const callBuilder = b.expressionStatement(
+    b.callExpression(
+      b.memberExpression(
+        b.identifier('builders'),
+        b.identifier('addExtension')
+      ),
+      [
+        b.identifier(RESOURCE_NAME),
+        b.stringLiteral(mapping.extension),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+      ]
+    )
+  );
+
+  return ifPropInInput(propName, [callBuilder]);
 };
 
 // this will ensure a meta prop on the data

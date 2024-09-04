@@ -94,8 +94,45 @@ describe('Encounter', () => {
   });
 });
 
-describe.skip('Patient', () => {
-  it('should map a random patient', () => {
+describe('Patient', () => {
+  it('should set the religion extension', () => {
+    const input = {
+      religion: {
+        // TODO: later, we we will out how to make it easier
+        // to capture the coding here, because this is heavyweight
+        coding: [
+          {
+            system:
+              'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation',
+            code: '1036',
+          },
+        ],
+        text: 'Orthodox',
+      },
+    };
+
+    const result = builders.patient('patient', {
+      religion: input.religion,
+    });
+
+    expect(result.extension).to.eql([
+      {
+        url: 'http://hl7.org/fhir/StructureDefinition/patient-religion',
+        valueCodeableConcept: {
+          coding: [
+            {
+              system:
+                'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation',
+              code: '1036',
+            },
+          ],
+          text: 'Orthodox',
+        },
+      },
+    ]);
+  });
+
+  it.skip('should map a random patient', () => {
     const input = {};
 
     // First off, there's only one patient type, so this string is not neccessary
