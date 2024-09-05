@@ -98,7 +98,7 @@ describe('Encounter', () => {
 });
 
 describe('Patient', () => {
-  it.only('should convert CDR to NDR', () => {
+  it('should convert CDR to NDR', () => {
     const input = fixtures.cdr.patient;
 
     // This has to go in mapping code, but should be re-usable across types
@@ -149,6 +149,49 @@ describe('Patient', () => {
     });
 
     expect(result).to.eql(fixtures.ndr.patient);
+  });
+
+  it.only('should set the address.residentiaTtype extension', () => {
+    const result = builders.patient('patient', {
+      // address can be passed as a single object and it'll map to an array
+      address: {
+        line: ['my house'],
+        // TODO should be able to get to here
+        // residentialType: 'Rural',
+
+        // ... but start here
+        residentialType: {
+          coding: [
+            {
+              system: 'http://snomed.info/sct',
+              code: '224804009',
+            },
+          ],
+          text: 'Rural',
+        },
+      },
+    });
+    console.log(JSON.stringify(result.address, null, 2));
+
+    expect(result.address).to.eql([
+      {
+        extension: [
+          {
+            url: 'http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type',
+            valueCodeableConcept: {
+              coding: [
+                {
+                  system: 'http://snomed.info/sct',
+                  code: '224804009',
+                },
+              ],
+              text: 'Rural',
+            },
+          },
+        ],
+        line: ['my house'],
+      },
+    ]);
   });
 
   it('should set the religion extension', () => {

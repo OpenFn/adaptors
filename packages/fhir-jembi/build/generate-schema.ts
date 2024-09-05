@@ -1,5 +1,24 @@
 import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
+
+export type PropDef = {
+  /** Typescript name of the type */
+  type?: string;
+
+  /** Human readable description */
+  desc?: string;
+
+  /** list of allowed values */
+  values?: string[];
+
+  /** Indicates that this property maps to an extension */
+  extension?: {
+    url: string;
+    // maybe a system too?
+    defaultSystem?: string;
+  };
+};
+
 /**
  * This file will generate a simple schema representation of a FHIR spec
  */
@@ -81,13 +100,18 @@ const generate = async types => {
       };
 
       for (const prop of spec.snapshot.element) {
+        // tmp
+        if (!prop.path.match('address')) {
+          continue;
+        }
         if (prop.path === resourceType) {
           continue;
         }
         const path = prop.path.replace(`${resourceType}\.`, '');
+        console.log(path);
 
         if (path.includes('.')) {
-          console.log('skipping', path);
+          parseProp(fullSpec, schema, path, prop);
           continue;
         }
 
@@ -109,9 +133,12 @@ const generate = async types => {
         }
 
         props[path] = {
+          // TODO type may only be useful if it uses a vanilla fhir type
           type,
           isArray,
           defaults,
+          // TODO this may replace type
+          typeDef: {},
         };
       }
       result[resourceType] ??= [];
@@ -131,6 +158,71 @@ const generate = async types => {
   return result;
 };
 
+// Parse a property of a resource, like address or id
+function parseProp(fullSpec, schema, path: string, data) {
+  let [parent, prop] = path.split('.');
+  // TODO skip if multiple dots
+  // console.log(parent, prop, schema.props);
+
+  if (prop === 'extension') {
+    if (data.sliceName) {
+      console.log(' >>', path);
+      prop = data.sliceName[0].toLowerCase() + data.sliceName.substring(1);
+    } else {
+      // extensions are bit different - we map each to a prop
+      return;
+    }
+  }
+
+  // TODO
+  if (schema.props[parent]) {
+    const def: PropDef = {};
+
+    // Now work out the type of the prop
+    if (data.type.length > 1) {
+      console.log('WARNING: MULTIPLE TYPES DETECTED FOR', path);
+    }
+    let [type] = data.type;
+
+    let simpleType;
+    if (
+      type.profile &&
+      type.profile.length &&
+      type.profile[0].match(/\/StructureDefinition/)
+    ) {
+      const typeId = type.profile[0].split('/').at(-1);
+      const spec = fullSpec[typeId];
+
+      // this tells us we need to map the incoming
+      // prop to an extension
+      def.extension = {
+        url: spec.url,
+        // TODO later we may be able to pull out code mappings
+        // look for extension.value[x] in the spec
+      };
+    } else {
+      simpleType = typeDefs[type.code] || type.code;
+    }
+
+    def.type = simpleType;
+    def.desc = data.short || data.definition;
+
+    // TODO: maybe lookup enum values. Not priority right now
+    // if (data.binding?.valueSet) {
+    //   /// see if we can look up the values
+    //   let [url, version] = def.valueSet.spit('|');
+    //   // we know that we want v4, so hard code the URL
+    //   if (url.startsWith('http://hl7.org/fhir/')) {
+    //     url = url.replace('http://hl7.org/fhir/', 'http://hl7.org/fhir/R4');
+    //   }
+    //   fetch;
+    //   def.values = [];
+    // }
+
+    schema.props[parent].typeDef[prop] = def;
+  }
+}
+
 /**
  * Work out a simple js type from the prop definition
  * This will feed type docs and auto mappings
@@ -147,5 +239,20 @@ function getSimpleType(prop: any) {
     return type.code;
   }
 }
+
+const valueSetCache = {};
+
+// This fucnction will let us fetch a valueset by URL and return the result
+// Useful for settig enums in types
+// async function fetchValueSet(url) {
+//   if (valueSetCache[url])
+
+//   let [url, version] = def.valueSet.spit('|')
+//   // we know that we want v4, so hard code the URL
+//   if (url.startsWith('http://hl7.org/fhir/')) {
+//     url = url.replace('http://hl7.org/fhir/', 'http://hl7.org/fhir/R4')
+//   }
+//   fetch
+// }
 
 export default generate;

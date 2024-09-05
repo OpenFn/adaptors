@@ -107,22 +107,28 @@ const mapProps = (schema, mappings) => {
 
     const spec = schema.props[key] as Schema;
     if (spec) {
-      switch (spec.type) {
-        case 'string':
-        case 'Reference':
-        case 'Period':
-          props.push(mapSimpleProp(key, mappings[key]));
-          break;
-        case 'Identifier':
-          props.push(mapIdentifier(key, mappings[key] || {}, spec));
-          break;
-        case 'CodeableConcept':
-          props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
-          break;
-        default:
-          console.warn(`WARNING: using simple mapping for ${schema.id}.${key}`);
-          props.push(mapSimpleProp(key, mappings[key]));
-        // TODO: warn unused type
+      if (spec.typeDef) {
+        props.push(mapTypeDef(key, spec));
+      } else {
+        switch (spec.type) {
+          case 'string':
+          case 'Reference':
+          case 'Period':
+            props.push(mapSimpleProp(key, mappings[key]));
+            break;
+          case 'Identifier':
+            props.push(mapIdentifier(key, mappings[key] || {}, spec));
+            break;
+          case 'CodeableConcept':
+            props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
+            break;
+          default:
+            console.warn(
+              `WARNING: using simple mapping for ${schema.id}.${key}`
+            );
+            props.push(mapSimpleProp(key, mappings[key]));
+          // TODO: warn unused type
+        }
       }
     } else {
       console.log('WARNING: schema does not define property', key);
@@ -142,13 +148,15 @@ const mapProps = (schema, mappings) => {
 };
 
 // This runs a block of code only if the named property is in the input object
+// TODO: don't use key in, use number || boolean || truthy
 const ifPropInInput = (
   prop: string,
   statements: StatementKind[],
-  alts?: StatementKind[]
+  alts?: StatementKind[],
+  inputName = INPUT_NAME
 ) =>
   b.ifStatement(
-    b.binaryExpression('in', b.stringLiteral(prop), b.identifier(INPUT_NAME)),
+    b.binaryExpression('in', b.stringLiteral(prop), b.identifier(inputName)),
     b.blockStatement(statements),
     alts ? b.blockStatement(alts) : null
   );
@@ -183,6 +191,138 @@ const mapSimpleProp = (propName: string, mapping: Mapping) => {
   }
 
   return ifPropInInput(propName, [assignProp], elseSatement);
+};
+
+// map a type def (ie, a nested object)
+// property by property
+// TODO this is designed to handle singletone and array types
+// The array stuff adds a lot of complication and I need tests on both formats
+const mapTypeDef = (propName: string, schema: Schema) => {
+  const statements: any[] = [];
+  // init the prop
+
+  statements.push(
+    b.variableDeclaration('let', [
+      b.variableDeclarator(
+        b.identifier('src'),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
+      ),
+    ])
+  );
+
+  if (schema.isArray) {
+    // if this is an array type, we should force the input to be an array
+    const ast = parse('if (!Array.isArray(src)) { src = [src]; }');
+    statements.push(...ast.program.body);
+
+    statements.push(
+      b.expressionStatement(
+        b.assignmentExpression(
+          '=',
+          b.memberExpression(
+            b.identifier(RESOURCE_NAME),
+            b.identifier(propName)
+          ),
+          b.arrayExpression([])
+        )
+      )
+    );
+  } else {
+    statements.push(
+      b.variableDeclaration('const', [
+        b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
+      ])
+    );
+  }
+
+  const assignments: any[] = [];
+  const inputName = schema.isArray ? 'item' : 'src';
+
+  // now assign to it
+  // const props = mapProps()
+  for (const prop in schema.typeDef) {
+    const body: any[] = [];
+    const spec = schema.typeDef[prop];
+
+    const sourceValue = b.memberExpression(
+      b.identifier(inputName),
+      b.identifier(prop)
+    );
+
+    if (spec.extension) {
+      body.push(
+        b.expressionStatement(
+          b.callExpression(
+            b.memberExpression(
+              b.identifier('builders'),
+              b.identifier('addExtension')
+            ),
+            [
+              b.identifier(propName),
+              b.stringLiteral(spec.extension.url),
+              sourceValue,
+            ]
+          )
+        )
+      );
+    } else {
+      body.push(
+        b.expressionStatement(
+          b.assignmentExpression(
+            '=',
+            b.memberExpression(b.identifier(propName), b.identifier(prop)),
+            sourceValue
+          )
+        )
+      );
+    }
+    assignments.push(ifPropInInput(prop, body, undefined, inputName));
+  }
+  if (schema.isArray) {
+    assignments.splice(
+      0,
+      0,
+      b.variableDeclaration('const', [
+        b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
+      ])
+    );
+    assignments.push(
+      b.expressionStatement(
+        b.callExpression(
+          b.memberExpression(
+            b.memberExpression(
+              b.identifier(RESOURCE_NAME),
+              b.identifier(propName)
+            ),
+            b.identifier('push')
+          ),
+          [b.identifier(propName)]
+        )
+      )
+    );
+    statements.push(
+      b.forOfStatement(
+        b.variableDeclaration('const', [b.identifier('item')]),
+        b.identifier('src'),
+        b.blockStatement(assignments)
+      )
+    );
+  } else {
+    statements.push(...assignments);
+  }
+
+  // if (schema.isArray) {
+  //   statements.push(
+  //     b.callExpression(
+  //       b.memberExpression(b.identifier(propName), b.identifier('push')),
+  //       [b.identifier(propName)]
+  //     )
+  //   );
+  // } else {
+  //   statements.push(assignToInput(propName, b.identifier(propName)));
+  // }
+
+  return ifPropInInput(propName, statements);
 };
 
 const mapCodeableConcept = (

@@ -3,6 +3,7 @@
 
 import ts from 'typescript';
 import { getBuilderName, getTypeName } from './util';
+import { PropDef } from './generate-schema';
 
 const b = ts.factory;
 
@@ -150,19 +151,24 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
       continue;
     }
 
-    // TODO handle keys like deceased[x] in Patient
-    if (key.includes('[x]')) {
-      console.log(` >> Skipping typings for ${resourceName}.${key}`);
-      continue;
-    }
-
-    let type = m.type || s.type || 'any';
-    type = typeMap[type] ?? type;
-
-    if (type === 'string') {
-      type = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+    let type;
+    if (s.typeDef) {
+      type = generateInlineType(s.typeDef);
     } else {
-      type = b.createTypeReferenceNode(type);
+      // TODO handle keys like deceased[x] in Patient
+      if (key.includes('[x]')) {
+        console.log(` >> Skipping typings for ${resourceName}.${key}`);
+        continue;
+      }
+
+      type = m.type || s.type || 'any';
+      type = typeMap[type] ?? type;
+
+      if (type === 'string') {
+        type = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+      } else {
+        type = b.createTypeReferenceNode(type);
+      }
     }
     // console.log(type);
 
@@ -177,6 +183,28 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
   );
 
   return t;
+};
+
+const generateInlineType = (typeDef: PropDef) => {
+  const props: ts.TypeElement[] = [];
+  for (const key in typeDef) {
+    const { type, desc } = typeDef[key];
+    let typeNode;
+    if (type === 'string') {
+      typeNode = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+    } else if (type) {
+      typeNode = b.createTypeReferenceNode(type);
+    } else {
+      // Default to any
+      typeNode = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+    }
+
+    if (desc) {
+      props.push(b.createJSDocComment(desc + '\n'));
+    }
+    props.push(b.createPropertySignature([], key, undefined, typeNode));
+  }
+  return b.createTypeLiteralNode(props);
 };
 
 // actually we don't need to generate the builder signature itself?
