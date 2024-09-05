@@ -1,5 +1,10 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.6
+
+- Support more types
+- remove generic property mapping - most props should map now
+
 ## 0.0.5
 
 - restore patient and observation types
