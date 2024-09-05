@@ -139,7 +139,13 @@ describe('Patient', () => {
       birthDate: input.birthDate,
       maritalStatus: input.maritalStatus,
       managingOrganization: input.managingOrganization,
-      // address: input.address
+      address: input.address.map(a =>
+        b.address({
+          ...a,
+          text: undefined, // remove the original text
+          residentialType: a.text, // use the incoming text as the residential type
+        })
+      ),
     });
 
     expect(result).to.eql(fixtures.ndr.patient);

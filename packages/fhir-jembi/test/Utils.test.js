@@ -83,6 +83,20 @@ describe('coding', () => {
   });
 });
 
+describe('address', () => {
+  it('should create an address', () => {
+    const result = coding(123, 'www');
+
+    expect(result).to.eql({ code: 123, system: 'www' });
+  });
+
+  it('should create an address with residential-type extension', () => {
+    const result = coding(123, 'www');
+
+    expect(result).to.eql({ code: 123, system: 'www' });
+  });
+});
+
 describe('codeableConcept', () => {
   it('should create a codeableConcept with 1 coding only', () => {
     const result = concept(coding(123, 'www'));

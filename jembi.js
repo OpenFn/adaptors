@@ -1,6 +1,6 @@
 import '@openfn/language-common';
 // // we should have type defs on this
-import { create, builders, b } from '@openfn/language-fhir-jembi';
+import { create, builders, b, util } from '@openfn/language-fhir-jembi';
 
 // and this should actually run
 // console.log(builders);
@@ -14,3 +14,7 @@ console.log(encounter);
 create('Patient', { id: 'big willy smith' })();
 
 console.log('hello');
+
+util.address({
+  
+})

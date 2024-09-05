@@ -78,9 +78,20 @@ const concept = (text, ...codings) => {
   }
 };
 
+const address = props => {
+  const result = {
+    ...props,
+  };
+
+  // TODO convert residentialType to an extension
+
+  return result;
+};
+
 export const builders = {
+  addExtension,
   coding,
   concept,
   identifier,
-  addExtension,
+  address,
 };

@@ -31,8 +31,12 @@ const generate = async () => {
 
   await writeFile('src/builders.js', withDisclaimer(src));
 
-  // // tbh this code is on the wrong place - just need to get this working!
+  // tbh this code is on the wrong place - just need to get this working!
   const globals = await readFile('src/globals.d.ts', 'utf8');
   await writeFile('types/globals.d.ts', withDisclaimer(globals));
+
+  // This too
+  const utils = await readFile('src/Utils.d.ts', 'utf8');
+  await writeFile('types/Utils.d.ts', withDisclaimer(utils));
 };
 generate();
