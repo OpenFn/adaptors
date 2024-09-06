@@ -2,7 +2,8 @@
 
 ## 0.0.10
 
-util.concept accepts codings as an array
+util.concept accepts codings as an array allow systems map to map system
+shorthands and longhands to new values
 
 ## 0.0.9
 
