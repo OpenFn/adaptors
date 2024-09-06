@@ -3,6 +3,7 @@
 // DO NOT MODIFY OR YOU WILL BE FIRED
 
 import { builders } from "./Utils.js";
+import _ from "lodash";
 
 export function encounter(type, props) {
     const mappings = {
@@ -18,44 +19,44 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         resourceType: "Encounter"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("statusHistory" in props) {
+    if (!_.isNil(props.statusHistory)) {
         let src = props.statusHistory;
         if (!Array.isArray(src)) { src = [src]; }
         resource.statusHistory = [];
@@ -63,19 +64,19 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         for (const item of src) {
             const statusHistory = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 statusHistory.modifierExtension = item.modifierExtension;
             }
 
-            if ("status" in item) {
+            if (!_.isNil(item.status)) {
                 statusHistory.status = item.status;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 statusHistory.period = item.period;
             }
 
@@ -83,11 +84,11 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         }
     }
 
-    if ("class" in props) {
+    if (!_.isNil(props.class)) {
         resource.class = props.class;
     }
 
-    if ("classHistory" in props) {
+    if (!_.isNil(props.classHistory)) {
         let src = props.classHistory;
         if (!Array.isArray(src)) { src = [src]; }
         resource.classHistory = [];
@@ -95,19 +96,19 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         for (const item of src) {
             const classHistory = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 classHistory.modifierExtension = item.modifierExtension;
             }
 
-            if ("class" in item) {
+            if (!_.isNil(item.class)) {
                 classHistory.class = item.class;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 classHistory.period = item.period;
             }
 
@@ -115,31 +116,31 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         }
     }
 
-    if ("type" in props) {
+    if (!_.isNil(props.type)) {
         resource.type = props.type;
     }
 
-    if ("serviceType" in props) {
+    if (!_.isNil(props.serviceType)) {
         resource.serviceType = props.serviceType;
     }
 
-    if ("priority" in props) {
+    if (!_.isNil(props.priority)) {
         resource.priority = props.priority;
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("episodeOfCare" in props) {
+    if (!_.isNil(props.episodeOfCare)) {
         resource.episodeOfCare = props.episodeOfCare;
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("participant" in props) {
+    if (!_.isNil(props.participant)) {
         let src = props.participant;
         if (!Array.isArray(src)) { src = [src]; }
         resource.participant = [];
@@ -147,23 +148,23 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         for (const item of src) {
             const participant = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 participant.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 participant.modifierExtension = item.modifierExtension;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 participant.type = item.type;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 participant.period = item.period;
             }
 
-            if ("individual" in item) {
+            if (!_.isNil(item.individual)) {
                 participant.individual = item.individual;
             }
 
@@ -171,27 +172,27 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         }
     }
 
-    if ("appointment" in props) {
+    if (!_.isNil(props.appointment)) {
         resource.appointment = props.appointment;
     }
 
-    if ("period" in props) {
+    if (!_.isNil(props.period)) {
         resource.period = props.period;
     }
 
-    if ("length" in props) {
+    if (!_.isNil(props.length)) {
         resource.length = props.length;
     }
 
-    if ("reasonCode" in props) {
+    if (!_.isNil(props.reasonCode)) {
         resource.reasonCode = props.reasonCode;
     }
 
-    if ("reasonReference" in props) {
+    if (!_.isNil(props.reasonReference)) {
         resource.reasonReference = props.reasonReference;
     }
 
-    if ("diagnosis" in props) {
+    if (!_.isNil(props.diagnosis)) {
         let src = props.diagnosis;
         if (!Array.isArray(src)) { src = [src]; }
         resource.diagnosis = [];
@@ -199,23 +200,23 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         for (const item of src) {
             const diagnosis = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 diagnosis.modifierExtension = item.modifierExtension;
             }
 
-            if ("condition" in item) {
+            if (!_.isNil(item.condition)) {
                 diagnosis.condition = item.condition;
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 diagnosis.use = item.use;
             }
 
-            if ("rank" in item) {
+            if (!_.isNil(item.rank)) {
                 diagnosis.rank = item.rank;
             }
 
@@ -223,60 +224,60 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         }
     }
 
-    if ("account" in props) {
+    if (!_.isNil(props.account)) {
         resource.account = props.account;
     }
 
-    if ("hospitalization" in props) {
+    if (!_.isNil(props.hospitalization)) {
         let src = props.hospitalization;
         const hospitalization = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             hospitalization.id = src.id;
         }
 
-        if ("modifierExtension" in src) {
+        if (!_.isNil(src.modifierExtension)) {
             hospitalization.modifierExtension = src.modifierExtension;
         }
 
-        if ("preAdmissionIdentifier" in src) {
+        if (!_.isNil(src.preAdmissionIdentifier)) {
             hospitalization.preAdmissionIdentifier = src.preAdmissionIdentifier;
         }
 
-        if ("origin" in src) {
+        if (!_.isNil(src.origin)) {
             hospitalization.origin = src.origin;
         }
 
-        if ("admitSource" in src) {
+        if (!_.isNil(src.admitSource)) {
             hospitalization.admitSource = src.admitSource;
         }
 
-        if ("reAdmission" in src) {
+        if (!_.isNil(src.reAdmission)) {
             hospitalization.reAdmission = src.reAdmission;
         }
 
-        if ("dietPreference" in src) {
+        if (!_.isNil(src.dietPreference)) {
             hospitalization.dietPreference = src.dietPreference;
         }
 
-        if ("specialCourtesy" in src) {
+        if (!_.isNil(src.specialCourtesy)) {
             hospitalization.specialCourtesy = src.specialCourtesy;
         }
 
-        if ("specialArrangement" in src) {
+        if (!_.isNil(src.specialArrangement)) {
             hospitalization.specialArrangement = src.specialArrangement;
         }
 
-        if ("destination" in src) {
+        if (!_.isNil(src.destination)) {
             hospitalization.destination = src.destination;
         }
 
-        if ("dischargeDisposition" in src) {
+        if (!_.isNil(src.dischargeDisposition)) {
             hospitalization.dischargeDisposition = src.dischargeDisposition;
         }
     }
 
-    if ("location" in props) {
+    if (!_.isNil(props.location)) {
         let src = props.location;
         if (!Array.isArray(src)) { src = [src]; }
         resource.location = [];
@@ -284,27 +285,27 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         for (const item of src) {
             const location = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 location.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 location.modifierExtension = item.modifierExtension;
             }
 
-            if ("location" in item) {
+            if (!_.isNil(item.location)) {
                 location.location = item.location;
             }
 
-            if ("status" in item) {
+            if (!_.isNil(item.status)) {
                 location.status = item.status;
             }
 
-            if ("physicalType" in item) {
+            if (!_.isNil(item.physicalType)) {
                 location.physicalType = item.physicalType;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 location.period = item.period;
             }
 
@@ -312,13 +313,13 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         }
     }
 
-    if ("serviceProvider" in props) {
+    if (!_.isNil(props.serviceProvider)) {
         resource.serviceProvider = props.serviceProvider;
     } else {
         resource.serviceProvider = {"reference":"Organization/Patient.managingOrganization"};
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
@@ -336,35 +337,35 @@ function encounter_target_facility_encounter(props) {
         resourceType: "Encounter"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         let src = props.identifier;
         if (!Array.isArray(src)) { src = [src]; }
         resource.identifier = [];
@@ -372,31 +373,31 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const identifier = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 identifier.id = item.id;
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 identifier.use = item.use;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 identifier.type = item.type;
             }
 
-            if ("system" in item) {
+            if (!_.isNil(item.system)) {
                 identifier.system = item.system;
             }
 
-            if ("value" in item) {
+            if (!_.isNil(item.value)) {
                 identifier.value = item.value;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 identifier.period = item.period;
             }
 
-            if ("assigner" in item) {
+            if (!_.isNil(item.assigner)) {
                 identifier.assigner = item.assigner;
             }
 
@@ -404,11 +405,11 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("statusHistory" in props) {
+    if (!_.isNil(props.statusHistory)) {
         let src = props.statusHistory;
         if (!Array.isArray(src)) { src = [src]; }
         resource.statusHistory = [];
@@ -416,19 +417,19 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const statusHistory = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 statusHistory.modifierExtension = item.modifierExtension;
             }
 
-            if ("status" in item) {
+            if (!_.isNil(item.status)) {
                 statusHistory.status = item.status;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 statusHistory.period = item.period;
             }
 
@@ -436,11 +437,11 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("class" in props) {
+    if (!_.isNil(props.class)) {
         resource.class = props.class;
     }
 
-    if ("classHistory" in props) {
+    if (!_.isNil(props.classHistory)) {
         let src = props.classHistory;
         if (!Array.isArray(src)) { src = [src]; }
         resource.classHistory = [];
@@ -448,19 +449,19 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const classHistory = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 classHistory.modifierExtension = item.modifierExtension;
             }
 
-            if ("class" in item) {
+            if (!_.isNil(item.class)) {
                 classHistory.class = item.class;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 classHistory.period = item.period;
             }
 
@@ -468,7 +469,7 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("type" in props) {
+    if (!_.isNil(props.type)) {
         let src = props.type;
         if (!Array.isArray(src)) { src = [src]; }
         resource.type = [];
@@ -476,11 +477,11 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const type = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 type.id = item.id;
             }
 
-            if ("visitType" in item) {
+            if (!_.isNil(item.visitType)) {
                 builders.addExtension(
                     type,
                     "http://moh.gov.et/fhir/hiv/StructureDefinition/encounter-visit-type",
@@ -488,11 +489,11 @@ function encounter_target_facility_encounter(props) {
                 );
             }
 
-            if ("coding" in item) {
+            if (!_.isNil(item.coding)) {
                 type.coding = item.coding;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 type.text = item.text;
             }
 
@@ -500,27 +501,27 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("serviceType" in props) {
+    if (!_.isNil(props.serviceType)) {
         resource.serviceType = props.serviceType;
     }
 
-    if ("priority" in props) {
+    if (!_.isNil(props.priority)) {
         resource.priority = props.priority;
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("episodeOfCare" in props) {
+    if (!_.isNil(props.episodeOfCare)) {
         resource.episodeOfCare = props.episodeOfCare;
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("participant" in props) {
+    if (!_.isNil(props.participant)) {
         let src = props.participant;
         if (!Array.isArray(src)) { src = [src]; }
         resource.participant = [];
@@ -528,23 +529,23 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const participant = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 participant.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 participant.modifierExtension = item.modifierExtension;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 participant.type = item.type;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 participant.period = item.period;
             }
 
-            if ("individual" in item) {
+            if (!_.isNil(item.individual)) {
                 participant.individual = item.individual;
             }
 
@@ -552,40 +553,40 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("appointment" in props) {
+    if (!_.isNil(props.appointment)) {
         resource.appointment = props.appointment;
     }
 
-    if ("period" in props) {
+    if (!_.isNil(props.period)) {
         let src = props.period;
         const period = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             period.id = src.id;
         }
 
-        if ("start" in src) {
+        if (!_.isNil(src.start)) {
             period.start = src.start;
         }
 
-        if ("end" in src) {
+        if (!_.isNil(src.end)) {
             period.end = src.end;
         }
     }
 
-    if ("length" in props) {
+    if (!_.isNil(props.length)) {
         resource.length = props.length;
     }
 
-    if ("reasonCode" in props) {
+    if (!_.isNil(props.reasonCode)) {
         resource.reasonCode = props.reasonCode;
     }
 
-    if ("reasonReference" in props) {
+    if (!_.isNil(props.reasonReference)) {
         resource.reasonReference = props.reasonReference;
     }
 
-    if ("diagnosis" in props) {
+    if (!_.isNil(props.diagnosis)) {
         let src = props.diagnosis;
         if (!Array.isArray(src)) { src = [src]; }
         resource.diagnosis = [];
@@ -593,23 +594,23 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const diagnosis = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 diagnosis.modifierExtension = item.modifierExtension;
             }
 
-            if ("condition" in item) {
+            if (!_.isNil(item.condition)) {
                 diagnosis.condition = item.condition;
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 diagnosis.use = item.use;
             }
 
-            if ("rank" in item) {
+            if (!_.isNil(item.rank)) {
                 diagnosis.rank = item.rank;
             }
 
@@ -617,60 +618,60 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("account" in props) {
+    if (!_.isNil(props.account)) {
         resource.account = props.account;
     }
 
-    if ("hospitalization" in props) {
+    if (!_.isNil(props.hospitalization)) {
         let src = props.hospitalization;
         const hospitalization = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             hospitalization.id = src.id;
         }
 
-        if ("modifierExtension" in src) {
+        if (!_.isNil(src.modifierExtension)) {
             hospitalization.modifierExtension = src.modifierExtension;
         }
 
-        if ("preAdmissionIdentifier" in src) {
+        if (!_.isNil(src.preAdmissionIdentifier)) {
             hospitalization.preAdmissionIdentifier = src.preAdmissionIdentifier;
         }
 
-        if ("origin" in src) {
+        if (!_.isNil(src.origin)) {
             hospitalization.origin = src.origin;
         }
 
-        if ("admitSource" in src) {
+        if (!_.isNil(src.admitSource)) {
             hospitalization.admitSource = src.admitSource;
         }
 
-        if ("reAdmission" in src) {
+        if (!_.isNil(src.reAdmission)) {
             hospitalization.reAdmission = src.reAdmission;
         }
 
-        if ("dietPreference" in src) {
+        if (!_.isNil(src.dietPreference)) {
             hospitalization.dietPreference = src.dietPreference;
         }
 
-        if ("specialCourtesy" in src) {
+        if (!_.isNil(src.specialCourtesy)) {
             hospitalization.specialCourtesy = src.specialCourtesy;
         }
 
-        if ("specialArrangement" in src) {
+        if (!_.isNil(src.specialArrangement)) {
             hospitalization.specialArrangement = src.specialArrangement;
         }
 
-        if ("destination" in src) {
+        if (!_.isNil(src.destination)) {
             hospitalization.destination = src.destination;
         }
 
-        if ("dischargeDisposition" in src) {
+        if (!_.isNil(src.dischargeDisposition)) {
             hospitalization.dischargeDisposition = src.dischargeDisposition;
         }
     }
 
-    if ("location" in props) {
+    if (!_.isNil(props.location)) {
         let src = props.location;
         if (!Array.isArray(src)) { src = [src]; }
         resource.location = [];
@@ -678,27 +679,27 @@ function encounter_target_facility_encounter(props) {
         for (const item of src) {
             const location = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 location.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 location.modifierExtension = item.modifierExtension;
             }
 
-            if ("location" in item) {
+            if (!_.isNil(item.location)) {
                 location.location = item.location;
             }
 
-            if ("status" in item) {
+            if (!_.isNil(item.status)) {
                 location.status = item.status;
             }
 
-            if ("physicalType" in item) {
+            if (!_.isNil(item.physicalType)) {
                 location.physicalType = item.physicalType;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 location.period = item.period;
             }
 
@@ -706,13 +707,13 @@ function encounter_target_facility_encounter(props) {
         }
     }
 
-    if ("serviceProvider" in props) {
+    if (!_.isNil(props.serviceProvider)) {
         resource.serviceProvider = props.serviceProvider;
     } else {
         resource.serviceProvider = {"reference":"Organization/Patient.managingOrganization"};
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
@@ -736,35 +737,35 @@ function patient_patient(props) {
         resourceType: "Patient"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         let src = props.identifier;
         if (!Array.isArray(src)) { src = [src]; }
         resource.identifier = [];
@@ -772,31 +773,31 @@ function patient_patient(props) {
         for (const item of src) {
             const identifier = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 identifier.id = item.id;
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 identifier.use = item.use;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 identifier.type = item.type;
             }
 
-            if ("system" in item) {
+            if (!_.isNil(item.system)) {
                 identifier.system = item.system;
             }
 
-            if ("value" in item) {
+            if (!_.isNil(item.value)) {
                 identifier.value = item.value;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 identifier.period = item.period;
             }
 
-            if ("assigner" in item) {
+            if (!_.isNil(item.assigner)) {
                 identifier.assigner = item.assigner;
             }
 
@@ -804,11 +805,11 @@ function patient_patient(props) {
         }
     }
 
-    if ("active" in props) {
+    if (!_.isNil(props.active)) {
         resource.active = props.active;
     }
 
-    if ("name" in props) {
+    if (!_.isNil(props.name)) {
         let src = props.name;
         if (!Array.isArray(src)) { src = [src]; }
         resource.name = [];
@@ -816,35 +817,35 @@ function patient_patient(props) {
         for (const item of src) {
             const name = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 name.id = item.id;
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 name.use = item.use;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 name.text = item.text;
             }
 
-            if ("family" in item) {
+            if (!_.isNil(item.family)) {
                 name.family = item.family;
             }
 
-            if ("given" in item) {
+            if (!_.isNil(item.given)) {
                 name.given = item.given;
             }
 
-            if ("prefix" in item) {
+            if (!_.isNil(item.prefix)) {
                 name.prefix = item.prefix;
             }
 
-            if ("suffix" in item) {
+            if (!_.isNil(item.suffix)) {
                 name.suffix = item.suffix;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 name.period = item.period;
             }
 
@@ -852,19 +853,19 @@ function patient_patient(props) {
         }
     }
 
-    if ("telecom" in props) {
+    if (!_.isNil(props.telecom)) {
         resource.telecom = props.telecom;
     }
 
-    if ("gender" in props) {
+    if (!_.isNil(props.gender)) {
         resource.gender = props.gender;
     }
 
-    if ("birthDate" in props) {
+    if (!_.isNil(props.birthDate)) {
         resource.birthDate = props.birthDate;
     }
 
-    if ("address" in props) {
+    if (!_.isNil(props.address)) {
         let src = props.address;
         if (!Array.isArray(src)) { src = [src]; }
         resource.address = [];
@@ -872,11 +873,11 @@ function patient_patient(props) {
         for (const item of src) {
             const address = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 address.id = item.id;
             }
 
-            if ("residentialType" in item) {
+            if (!_.isNil(item.residentialType)) {
                 builders.addExtension(
                     address,
                     "http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type",
@@ -884,43 +885,43 @@ function patient_patient(props) {
                 );
             }
 
-            if ("use" in item) {
+            if (!_.isNil(item.use)) {
                 address.use = item.use;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 address.type = item.type;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 address.text = item.text;
             }
 
-            if ("line" in item) {
+            if (!_.isNil(item.line)) {
                 address.line = item.line;
             }
 
-            if ("city" in item) {
+            if (!_.isNil(item.city)) {
                 address.city = item.city;
             }
 
-            if ("district" in item) {
+            if (!_.isNil(item.district)) {
                 address.district = item.district;
             }
 
-            if ("state" in item) {
+            if (!_.isNil(item.state)) {
                 address.state = item.state;
             }
 
-            if ("postalCode" in item) {
+            if (!_.isNil(item.postalCode)) {
                 address.postalCode = item.postalCode;
             }
 
-            if ("country" in item) {
+            if (!_.isNil(item.country)) {
                 address.country = item.country;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 address.period = item.period;
             }
 
@@ -928,15 +929,15 @@ function patient_patient(props) {
         }
     }
 
-    if ("maritalStatus" in props) {
+    if (!_.isNil(props.maritalStatus)) {
         resource.maritalStatus = props.maritalStatus;
     }
 
-    if ("photo" in props) {
+    if (!_.isNil(props.photo)) {
         resource.photo = props.photo;
     }
 
-    if ("contact" in props) {
+    if (!_.isNil(props.contact)) {
         let src = props.contact;
         if (!Array.isArray(src)) { src = [src]; }
         resource.contact = [];
@@ -944,39 +945,39 @@ function patient_patient(props) {
         for (const item of src) {
             const contact = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 contact.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 contact.modifierExtension = item.modifierExtension;
             }
 
-            if ("relationship" in item) {
+            if (!_.isNil(item.relationship)) {
                 contact.relationship = item.relationship;
             }
 
-            if ("name" in item) {
+            if (!_.isNil(item.name)) {
                 contact.name = item.name;
             }
 
-            if ("telecom" in item) {
+            if (!_.isNil(item.telecom)) {
                 contact.telecom = item.telecom;
             }
 
-            if ("address" in item) {
+            if (!_.isNil(item.address)) {
                 contact.address = item.address;
             }
 
-            if ("gender" in item) {
+            if (!_.isNil(item.gender)) {
                 contact.gender = item.gender;
             }
 
-            if ("organization" in item) {
+            if (!_.isNil(item.organization)) {
                 contact.organization = item.organization;
             }
 
-            if ("period" in item) {
+            if (!_.isNil(item.period)) {
                 contact.period = item.period;
             }
 
@@ -984,7 +985,7 @@ function patient_patient(props) {
         }
     }
 
-    if ("communication" in props) {
+    if (!_.isNil(props.communication)) {
         let src = props.communication;
         if (!Array.isArray(src)) { src = [src]; }
         resource.communication = [];
@@ -992,19 +993,19 @@ function patient_patient(props) {
         for (const item of src) {
             const communication = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 communication.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 communication.modifierExtension = item.modifierExtension;
             }
 
-            if ("language" in item) {
+            if (!_.isNil(item.language)) {
                 communication.language = item.language;
             }
 
-            if ("preferred" in item) {
+            if (!_.isNil(item.preferred)) {
                 communication.preferred = item.preferred;
             }
 
@@ -1012,15 +1013,15 @@ function patient_patient(props) {
         }
     }
 
-    if ("generalPractitioner" in props) {
+    if (!_.isNil(props.generalPractitioner)) {
         resource.generalPractitioner = props.generalPractitioner;
     }
 
-    if ("managingOrganization" in props) {
+    if (!_.isNil(props.managingOrganization)) {
         resource.managingOrganization = props.managingOrganization;
     }
 
-    if ("link" in props) {
+    if (!_.isNil(props.link)) {
         let src = props.link;
         if (!Array.isArray(src)) { src = [src]; }
         resource.link = [];
@@ -1028,19 +1029,19 @@ function patient_patient(props) {
         for (const item of src) {
             const link = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 link.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 link.modifierExtension = item.modifierExtension;
             }
 
-            if ("other" in item) {
+            if (!_.isNil(item.other)) {
                 link.other = item.other;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 link.type = item.type;
             }
 
@@ -1048,7 +1049,7 @@ function patient_patient(props) {
         }
     }
 
-    if ("religion" in props) {
+    if (!_.isNil(props.religion)) {
         builders.addExtension(
             resource,
             "http://hl7.org/fhir/StructureDefinition/patient-religion",
@@ -1173,64 +1174,64 @@ function observation_active_tb_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -1238,60 +1239,60 @@ function observation_active_tb_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -1299,35 +1300,35 @@ function observation_active_tb_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -1335,15 +1336,15 @@ function observation_active_tb_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -1351,23 +1352,23 @@ function observation_active_tb_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -1387,64 +1388,64 @@ function observation_alt_ast_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -1452,60 +1453,60 @@ function observation_alt_ast_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -1513,35 +1514,35 @@ function observation_alt_ast_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -1549,15 +1550,15 @@ function observation_alt_ast_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -1565,23 +1566,23 @@ function observation_alt_ast_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -1601,64 +1602,64 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -1666,60 +1667,60 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -1727,35 +1728,35 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -1763,7 +1764,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         let src = props.hasMember;
         if (!Array.isArray(src)) { src = [src]; }
         resource.hasMember = [];
@@ -1771,23 +1772,23 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         for (const item of src) {
             const hasMember = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 hasMember.id = item.id;
             }
 
-            if ("reference" in item) {
+            if (!_.isNil(item.reference)) {
                 hasMember.reference = item.reference;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 hasMember.type = item.type;
             }
 
-            if ("identifier" in item) {
+            if (!_.isNil(item.identifier)) {
                 hasMember.identifier = item.identifier;
             }
 
-            if ("display" in item) {
+            if (!_.isNil(item.display)) {
                 hasMember.display = item.display;
             }
 
@@ -1795,11 +1796,11 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         }
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -1807,23 +1808,23 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -1845,64 +1846,64 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -1910,60 +1911,60 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -1971,35 +1972,35 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -2007,15 +2008,15 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -2023,23 +2024,23 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -2061,64 +2062,64 @@ function observation_art_eligibility_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -2126,60 +2127,60 @@ function observation_art_eligibility_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -2187,35 +2188,35 @@ function observation_art_eligibility_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -2223,15 +2224,15 @@ function observation_art_eligibility_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -2239,23 +2240,23 @@ function observation_art_eligibility_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -2277,64 +2278,64 @@ function observation_art_followup_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -2342,60 +2343,60 @@ function observation_art_followup_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -2403,35 +2404,35 @@ function observation_art_followup_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -2439,15 +2440,15 @@ function observation_art_followup_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -2455,23 +2456,23 @@ function observation_art_followup_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -2493,64 +2494,64 @@ function observation_art_followup_stopped_reasons_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -2558,60 +2559,60 @@ function observation_art_followup_stopped_reasons_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -2619,35 +2620,35 @@ function observation_art_followup_stopped_reasons_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -2655,15 +2656,15 @@ function observation_art_followup_stopped_reasons_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -2671,23 +2672,23 @@ function observation_art_followup_stopped_reasons_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -2709,64 +2710,64 @@ function observation_art_not_started_plan_next_step_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -2774,60 +2775,60 @@ function observation_art_not_started_plan_next_step_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -2835,35 +2836,35 @@ function observation_art_not_started_plan_next_step_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -2871,15 +2872,15 @@ function observation_art_not_started_plan_next_step_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -2887,23 +2888,23 @@ function observation_art_not_started_plan_next_step_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -2925,64 +2926,64 @@ function observation_arv_adherence_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -2990,60 +2991,60 @@ function observation_arv_adherence_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -3051,35 +3052,35 @@ function observation_arv_adherence_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -3087,15 +3088,15 @@ function observation_arv_adherence_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -3103,23 +3104,23 @@ function observation_arv_adherence_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -3139,64 +3140,64 @@ function observation_arv_change_category_type_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -3204,60 +3205,60 @@ function observation_arv_change_category_type_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -3265,35 +3266,35 @@ function observation_arv_change_category_type_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -3301,15 +3302,15 @@ function observation_arv_change_category_type_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -3317,23 +3318,23 @@ function observation_arv_change_category_type_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -3355,64 +3356,64 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -3420,60 +3421,60 @@ function observation_arv_poor_adherence_reasons_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -3481,35 +3482,35 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -3517,15 +3518,15 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -3533,23 +3534,23 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -3571,64 +3572,64 @@ function observation_arv_regimen_change_reason_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -3636,60 +3637,60 @@ function observation_arv_regimen_change_reason_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -3697,35 +3698,35 @@ function observation_arv_regimen_change_reason_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -3733,15 +3734,15 @@ function observation_arv_regimen_change_reason_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -3749,23 +3750,23 @@ function observation_arv_regimen_change_reason_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -3787,64 +3788,64 @@ function observation_arv_regimen_changed_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -3852,60 +3853,60 @@ function observation_arv_regimen_changed_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -3913,35 +3914,35 @@ function observation_arv_regimen_changed_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -3949,15 +3950,15 @@ function observation_arv_regimen_changed_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -3965,23 +3966,23 @@ function observation_arv_regimen_changed_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -4003,64 +4004,64 @@ function observation_arv_regimen_side_effects_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -4068,60 +4069,60 @@ function observation_arv_regimen_side_effects_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -4129,35 +4130,35 @@ function observation_arv_regimen_side_effects_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -4165,15 +4166,15 @@ function observation_arv_regimen_side_effects_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -4181,23 +4182,23 @@ function observation_arv_regimen_side_effects_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -4219,64 +4220,64 @@ function observation_assessed_for_pain_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -4284,60 +4285,60 @@ function observation_assessed_for_pain_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -4345,35 +4346,35 @@ function observation_assessed_for_pain_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -4381,15 +4382,15 @@ function observation_assessed_for_pain_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -4397,23 +4398,23 @@ function observation_assessed_for_pain_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -4435,64 +4436,64 @@ function observation_blood_pressure(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -4500,60 +4501,60 @@ function observation_blood_pressure(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -4561,35 +4562,35 @@ function observation_blood_pressure(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -4597,15 +4598,15 @@ function observation_blood_pressure(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -4613,23 +4614,23 @@ function observation_blood_pressure(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -4649,64 +4650,64 @@ function observation_bmi_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -4714,60 +4715,60 @@ function observation_bmi_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -4775,35 +4776,35 @@ function observation_bmi_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -4811,15 +4812,15 @@ function observation_bmi_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -4827,23 +4828,23 @@ function observation_bmi_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -4863,64 +4864,64 @@ function observation_breastfeeding_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -4928,60 +4929,60 @@ function observation_breastfeeding_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -4989,35 +4990,35 @@ function observation_breastfeeding_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -5025,15 +5026,15 @@ function observation_breastfeeding_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -5041,23 +5042,23 @@ function observation_breastfeeding_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -5079,64 +5080,64 @@ function observation_cd4_absolute_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -5144,60 +5145,60 @@ function observation_cd4_absolute_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -5205,35 +5206,35 @@ function observation_cd4_absolute_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -5241,15 +5242,15 @@ function observation_cd4_absolute_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -5257,23 +5258,23 @@ function observation_cd4_absolute_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -5293,64 +5294,64 @@ function observation_cd4_percentage_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -5358,60 +5359,60 @@ function observation_cd4_percentage_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -5419,35 +5420,35 @@ function observation_cd4_percentage_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -5455,15 +5456,15 @@ function observation_cd4_percentage_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -5471,23 +5472,23 @@ function observation_cd4_percentage_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -5509,64 +5510,64 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -5574,60 +5575,60 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -5635,35 +5636,35 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -5671,15 +5672,15 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -5687,23 +5688,23 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -5725,64 +5726,64 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -5790,60 +5791,60 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -5851,35 +5852,35 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -5887,15 +5888,15 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -5903,23 +5904,23 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -5941,64 +5942,64 @@ function observation_cervical_cancer_screening_method_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -6006,60 +6007,60 @@ function observation_cervical_cancer_screening_method_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -6067,35 +6068,35 @@ function observation_cervical_cancer_screening_method_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -6103,15 +6104,15 @@ function observation_cervical_cancer_screening_method_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -6119,23 +6120,23 @@ function observation_cervical_cancer_screening_method_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -6157,64 +6158,64 @@ function observation_cervical_cancer_screening_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -6222,60 +6223,60 @@ function observation_cervical_cancer_screening_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -6283,35 +6284,35 @@ function observation_cervical_cancer_screening_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -6319,15 +6320,15 @@ function observation_cervical_cancer_screening_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -6335,23 +6336,23 @@ function observation_cervical_cancer_screening_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -6373,64 +6374,64 @@ function observation_cervical_cancer_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -6438,60 +6439,60 @@ function observation_cervical_cancer_screening_result_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -6499,35 +6500,35 @@ function observation_cervical_cancer_screening_result_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -6535,15 +6536,15 @@ function observation_cervical_cancer_screening_result_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -6551,23 +6552,23 @@ function observation_cervical_cancer_screening_result_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -6589,64 +6590,64 @@ function observation_cervical_cancer_screening_type_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -6654,60 +6655,60 @@ function observation_cervical_cancer_screening_type_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -6715,35 +6716,35 @@ function observation_cervical_cancer_screening_type_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -6751,15 +6752,15 @@ function observation_cervical_cancer_screening_type_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -6767,23 +6768,23 @@ function observation_cervical_cancer_screening_type_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -6805,64 +6806,64 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -6870,60 +6871,60 @@ function observation_cervical_cancer_treatment_received_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -6931,35 +6932,35 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -6967,15 +6968,15 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -6983,23 +6984,23 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -7021,64 +7022,64 @@ function observation_children_developmental_milestone_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -7086,60 +7087,60 @@ function observation_children_developmental_milestone_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -7147,35 +7148,35 @@ function observation_children_developmental_milestone_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -7183,15 +7184,15 @@ function observation_children_developmental_milestone_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -7199,23 +7200,23 @@ function observation_children_developmental_milestone_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -7237,64 +7238,64 @@ function observation_confirmed_hiv_positive_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -7302,60 +7303,60 @@ function observation_confirmed_hiv_positive_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -7363,35 +7364,35 @@ function observation_confirmed_hiv_positive_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -7399,15 +7400,15 @@ function observation_confirmed_hiv_positive_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -7415,23 +7416,23 @@ function observation_confirmed_hiv_positive_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -7453,64 +7454,64 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -7518,60 +7519,60 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -7579,35 +7580,35 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -7615,15 +7616,15 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -7631,23 +7632,23 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -7669,64 +7670,64 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -7734,60 +7735,60 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -7795,35 +7796,35 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -7831,15 +7832,15 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -7847,23 +7848,23 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -7885,64 +7886,64 @@ function observation_counseled_for_hiv_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -7950,60 +7951,60 @@ function observation_counseled_for_hiv_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -8011,35 +8012,35 @@ function observation_counseled_for_hiv_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -8047,15 +8048,15 @@ function observation_counseled_for_hiv_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -8063,23 +8064,23 @@ function observation_counseled_for_hiv_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -8101,64 +8102,64 @@ function observation_creatine_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -8166,60 +8167,60 @@ function observation_creatine_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -8227,35 +8228,35 @@ function observation_creatine_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -8263,15 +8264,15 @@ function observation_creatine_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -8279,23 +8280,23 @@ function observation_creatine_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -8315,64 +8316,64 @@ function observation_current_art_duration_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -8380,60 +8381,60 @@ function observation_current_art_duration_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -8441,35 +8442,35 @@ function observation_current_art_duration_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -8477,15 +8478,15 @@ function observation_current_art_duration_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -8493,23 +8494,23 @@ function observation_current_art_duration_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -8531,64 +8532,64 @@ function observation_delivery_mode_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -8596,60 +8597,60 @@ function observation_delivery_mode_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -8657,35 +8658,35 @@ function observation_delivery_mode_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -8693,15 +8694,15 @@ function observation_delivery_mode_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -8709,23 +8710,23 @@ function observation_delivery_mode_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -8745,64 +8746,64 @@ function observation_delivery_place_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -8810,60 +8811,60 @@ function observation_delivery_place_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -8871,35 +8872,35 @@ function observation_delivery_place_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -8907,15 +8908,15 @@ function observation_delivery_place_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -8923,23 +8924,23 @@ function observation_delivery_place_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -8961,64 +8962,64 @@ function observation_differentiated_service_delivery_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -9026,60 +9027,60 @@ function observation_differentiated_service_delivery_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -9087,35 +9088,35 @@ function observation_differentiated_service_delivery_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -9123,15 +9124,15 @@ function observation_differentiated_service_delivery_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -9139,23 +9140,23 @@ function observation_differentiated_service_delivery_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -9177,64 +9178,64 @@ function observation_disclosure_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -9242,60 +9243,60 @@ function observation_disclosure_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -9303,35 +9304,35 @@ function observation_disclosure_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -9339,15 +9340,15 @@ function observation_disclosure_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -9355,23 +9356,23 @@ function observation_disclosure_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -9393,64 +9394,64 @@ function observation_edema_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -9458,60 +9459,60 @@ function observation_edema_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -9519,35 +9520,35 @@ function observation_edema_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -9555,15 +9556,15 @@ function observation_edema_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -9571,23 +9572,23 @@ function observation_edema_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -9607,64 +9608,64 @@ function observation_elicited_index_case_contacts_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -9672,60 +9673,60 @@ function observation_elicited_index_case_contacts_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -9733,35 +9734,35 @@ function observation_elicited_index_case_contacts_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -9769,15 +9770,15 @@ function observation_elicited_index_case_contacts_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -9785,23 +9786,23 @@ function observation_elicited_index_case_contacts_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -9823,64 +9824,64 @@ function observation_enhanced_adherence_counselling_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -9888,60 +9889,60 @@ function observation_enhanced_adherence_counselling_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -9949,35 +9950,35 @@ function observation_enhanced_adherence_counselling_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -9985,15 +9986,15 @@ function observation_enhanced_adherence_counselling_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -10001,23 +10002,23 @@ function observation_enhanced_adherence_counselling_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -10039,64 +10040,64 @@ function observation_estimated_delivery_date_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -10104,60 +10105,60 @@ function observation_estimated_delivery_date_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -10165,35 +10166,35 @@ function observation_estimated_delivery_date_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -10201,15 +10202,15 @@ function observation_estimated_delivery_date_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -10217,23 +10218,23 @@ function observation_estimated_delivery_date_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -10255,64 +10256,64 @@ function observation_family_member_hiv_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -10320,60 +10321,60 @@ function observation_family_member_hiv_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -10381,35 +10382,35 @@ function observation_family_member_hiv_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -10417,15 +10418,15 @@ function observation_family_member_hiv_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -10433,23 +10434,23 @@ function observation_family_member_hiv_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -10471,64 +10472,64 @@ function observation_family_planning_method_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -10536,60 +10537,60 @@ function observation_family_planning_method_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -10597,35 +10598,35 @@ function observation_family_planning_method_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -10633,15 +10634,15 @@ function observation_family_planning_method_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -10649,23 +10650,23 @@ function observation_family_planning_method_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -10687,64 +10688,64 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -10752,60 +10753,60 @@ function observation_fluconazole_preventive_therapy_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -10813,35 +10814,35 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -10849,15 +10850,15 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -10865,23 +10866,23 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -10903,64 +10904,64 @@ function observation_future_pregnancy_plans_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -10968,60 +10969,60 @@ function observation_future_pregnancy_plans_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -11029,35 +11030,35 @@ function observation_future_pregnancy_plans_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -11065,15 +11066,15 @@ function observation_future_pregnancy_plans_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -11081,23 +11082,23 @@ function observation_future_pregnancy_plans_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -11119,64 +11120,64 @@ function observation_generic_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -11184,60 +11185,60 @@ function observation_generic_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -11245,35 +11246,35 @@ function observation_generic_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -11281,15 +11282,15 @@ function observation_generic_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -11297,23 +11298,23 @@ function observation_generic_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -11333,64 +11334,64 @@ function observation_head_circumference_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -11398,60 +11399,60 @@ function observation_head_circumference_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -11459,35 +11460,35 @@ function observation_head_circumference_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -11495,15 +11496,15 @@ function observation_head_circumference_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -11511,23 +11512,23 @@ function observation_head_circumference_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -11549,64 +11550,64 @@ function observation_health_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -11614,60 +11615,60 @@ function observation_health_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -11675,35 +11676,35 @@ function observation_health_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -11711,15 +11712,15 @@ function observation_health_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -11727,23 +11728,23 @@ function observation_health_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -11763,64 +11764,64 @@ function observation_heart_rate_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -11828,60 +11829,60 @@ function observation_heart_rate_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -11889,35 +11890,35 @@ function observation_heart_rate_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -11925,15 +11926,15 @@ function observation_heart_rate_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -11941,23 +11942,23 @@ function observation_heart_rate_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -11977,64 +11978,64 @@ function observation_height_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -12042,60 +12043,60 @@ function observation_height_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -12103,35 +12104,35 @@ function observation_height_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -12139,15 +12140,15 @@ function observation_height_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -12155,23 +12156,23 @@ function observation_height_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -12191,64 +12192,64 @@ function observation_hgb_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -12256,60 +12257,60 @@ function observation_hgb_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -12317,35 +12318,35 @@ function observation_hgb_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -12353,15 +12354,15 @@ function observation_hgb_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -12369,23 +12370,23 @@ function observation_hgb_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -12405,64 +12406,64 @@ function observation_highest_education_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -12470,60 +12471,60 @@ function observation_highest_education_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -12531,35 +12532,35 @@ function observation_highest_education_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -12567,15 +12568,15 @@ function observation_highest_education_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -12583,23 +12584,23 @@ function observation_highest_education_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -12621,64 +12622,64 @@ function observation_hiv_prevention_plan_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -12686,60 +12687,60 @@ function observation_hiv_prevention_plan_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -12747,35 +12748,35 @@ function observation_hiv_prevention_plan_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -12783,15 +12784,15 @@ function observation_hiv_prevention_plan_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -12799,23 +12800,23 @@ function observation_hiv_prevention_plan_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -12837,64 +12838,64 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -12902,60 +12903,60 @@ function observation_hiv_program_final_outcome_known_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -12963,35 +12964,35 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -12999,15 +13000,15 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -13015,23 +13016,23 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -13053,64 +13054,64 @@ function observation_hiv_program_final_outcome_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -13118,60 +13119,60 @@ function observation_hiv_program_final_outcome_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -13179,35 +13180,35 @@ function observation_hiv_program_final_outcome_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -13215,15 +13216,15 @@ function observation_hiv_program_final_outcome_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -13231,23 +13232,23 @@ function observation_hiv_program_final_outcome_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -13269,64 +13270,64 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -13334,60 +13335,60 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -13395,35 +13396,35 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -13431,15 +13432,15 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -13447,23 +13448,23 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -13485,64 +13486,64 @@ function observation_hiv_program_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -13550,60 +13551,60 @@ function observation_hiv_program_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -13611,35 +13612,35 @@ function observation_hiv_program_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -13647,15 +13648,15 @@ function observation_hiv_program_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -13663,23 +13664,23 @@ function observation_hiv_program_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -13701,64 +13702,64 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -13766,60 +13767,60 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -13827,35 +13828,35 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -13863,15 +13864,15 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -13879,23 +13880,23 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -13917,64 +13918,64 @@ function observation_hiv_test_results_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -13982,60 +13983,60 @@ function observation_hiv_test_results_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -14043,35 +14044,35 @@ function observation_hiv_test_results_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -14079,15 +14080,15 @@ function observation_hiv_test_results_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -14095,23 +14096,23 @@ function observation_hiv_test_results_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -14133,64 +14134,64 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -14198,60 +14199,60 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -14259,35 +14260,35 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -14295,15 +14296,15 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -14311,23 +14312,23 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -14349,64 +14350,64 @@ function observation_inh_at_follow_up_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -14414,60 +14415,60 @@ function observation_inh_at_follow_up_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -14475,35 +14476,35 @@ function observation_inh_at_follow_up_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -14511,15 +14512,15 @@ function observation_inh_at_follow_up_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -14527,23 +14528,23 @@ function observation_inh_at_follow_up_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -14565,64 +14566,64 @@ function observation_last_menstrual_period_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -14630,60 +14631,60 @@ function observation_last_menstrual_period_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -14691,35 +14692,35 @@ function observation_last_menstrual_period_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -14727,15 +14728,15 @@ function observation_last_menstrual_period_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -14743,23 +14744,23 @@ function observation_last_menstrual_period_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -14781,64 +14782,64 @@ function observation_level_of_pain_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -14846,60 +14847,60 @@ function observation_level_of_pain_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -14907,35 +14908,35 @@ function observation_level_of_pain_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -14943,15 +14944,15 @@ function observation_level_of_pain_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -14959,23 +14960,23 @@ function observation_level_of_pain_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -14995,64 +14996,64 @@ function observation_maternal_hiv_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -15060,60 +15061,60 @@ function observation_maternal_hiv_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -15121,35 +15122,35 @@ function observation_maternal_hiv_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -15157,15 +15158,15 @@ function observation_maternal_hiv_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -15173,23 +15174,23 @@ function observation_maternal_hiv_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -15211,64 +15212,64 @@ function observation_muac_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -15276,60 +15277,60 @@ function observation_muac_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -15337,35 +15338,35 @@ function observation_muac_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -15373,15 +15374,15 @@ function observation_muac_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -15389,23 +15390,23 @@ function observation_muac_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -15425,64 +15426,64 @@ function observation_nutritional_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -15490,60 +15491,60 @@ function observation_nutritional_screening_result_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -15551,35 +15552,35 @@ function observation_nutritional_screening_result_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -15587,15 +15588,15 @@ function observation_nutritional_screening_result_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -15603,23 +15604,23 @@ function observation_nutritional_screening_result_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -15641,64 +15642,64 @@ function observation_nutritional_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -15706,60 +15707,60 @@ function observation_nutritional_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -15767,35 +15768,35 @@ function observation_nutritional_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -15803,15 +15804,15 @@ function observation_nutritional_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -15819,23 +15820,23 @@ function observation_nutritional_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -15857,64 +15858,64 @@ function observation_nutritional_suppliments_provided_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -15922,60 +15923,60 @@ function observation_nutritional_suppliments_provided_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -15983,35 +15984,35 @@ function observation_nutritional_suppliments_provided_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -16019,15 +16020,15 @@ function observation_nutritional_suppliments_provided_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -16035,23 +16036,23 @@ function observation_nutritional_suppliments_provided_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -16073,64 +16074,64 @@ function observation_otz_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -16138,60 +16139,60 @@ function observation_otz_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -16199,35 +16200,35 @@ function observation_otz_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -16235,15 +16236,15 @@ function observation_otz_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -16251,23 +16252,23 @@ function observation_otz_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -16287,64 +16288,64 @@ function observation_patient_functional_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -16352,60 +16353,60 @@ function observation_patient_functional_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -16413,35 +16414,35 @@ function observation_patient_functional_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -16449,15 +16450,15 @@ function observation_patient_functional_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -16465,23 +16466,23 @@ function observation_patient_functional_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -16503,64 +16504,64 @@ function observation_patient_occupation_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -16568,60 +16569,60 @@ function observation_patient_occupation_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -16629,35 +16630,35 @@ function observation_patient_occupation_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -16665,15 +16666,15 @@ function observation_patient_occupation_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -16681,23 +16682,23 @@ function observation_patient_occupation_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -16719,64 +16720,64 @@ function observation_patient_who_stage_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -16784,60 +16785,60 @@ function observation_patient_who_stage_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -16845,35 +16846,35 @@ function observation_patient_who_stage_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -16881,15 +16882,15 @@ function observation_patient_who_stage_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -16897,23 +16898,23 @@ function observation_patient_who_stage_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -16935,64 +16936,64 @@ function observation_physical_examinations_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -17000,60 +17001,60 @@ function observation_physical_examinations_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -17061,35 +17062,35 @@ function observation_physical_examinations_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -17097,15 +17098,15 @@ function observation_physical_examinations_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -17113,23 +17114,23 @@ function observation_physical_examinations_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -17151,64 +17152,64 @@ function observation_pregnancy_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -17216,60 +17217,60 @@ function observation_pregnancy_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -17277,35 +17278,35 @@ function observation_pregnancy_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -17313,15 +17314,15 @@ function observation_pregnancy_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -17329,23 +17330,23 @@ function observation_pregnancy_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -17367,64 +17368,64 @@ function observation_presenting_symptom_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -17432,60 +17433,60 @@ function observation_presenting_symptom_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -17493,35 +17494,35 @@ function observation_presenting_symptom_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -17529,15 +17530,15 @@ function observation_presenting_symptom_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -17545,23 +17546,23 @@ function observation_presenting_symptom_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -17583,64 +17584,64 @@ function observation_reason_eligible_for_art_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -17648,60 +17649,60 @@ function observation_reason_eligible_for_art_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -17709,35 +17710,35 @@ function observation_reason_eligible_for_art_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -17745,15 +17746,15 @@ function observation_reason_eligible_for_art_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -17761,23 +17762,23 @@ function observation_reason_eligible_for_art_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -17799,64 +17800,64 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -17864,60 +17865,60 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -17925,35 +17926,35 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -17961,15 +17962,15 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -17977,23 +17978,23 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -18015,64 +18016,64 @@ function observation_resides_in_catchment_area_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -18080,60 +18081,60 @@ function observation_resides_in_catchment_area_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -18141,35 +18142,35 @@ function observation_resides_in_catchment_area_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -18177,15 +18178,15 @@ function observation_resides_in_catchment_area_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -18193,23 +18194,23 @@ function observation_resides_in_catchment_area_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -18231,64 +18232,64 @@ function observation_respiratory_rate_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -18296,60 +18297,60 @@ function observation_respiratory_rate_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -18357,35 +18358,35 @@ function observation_respiratory_rate_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -18393,15 +18394,15 @@ function observation_respiratory_rate_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -18409,23 +18410,23 @@ function observation_respiratory_rate_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -18447,64 +18448,64 @@ function observation_screened_for_tb_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -18512,60 +18513,60 @@ function observation_screened_for_tb_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -18573,35 +18574,35 @@ function observation_screened_for_tb_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -18609,15 +18610,15 @@ function observation_screened_for_tb_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -18625,23 +18626,23 @@ function observation_screened_for_tb_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -18663,64 +18664,64 @@ function observation_target_population_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -18728,60 +18729,60 @@ function observation_target_population_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -18789,35 +18790,35 @@ function observation_target_population_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -18825,15 +18826,15 @@ function observation_target_population_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -18841,23 +18842,23 @@ function observation_target_population_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -18879,64 +18880,64 @@ function observation_tb_diagnostic_test_result_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -18944,60 +18945,60 @@ function observation_tb_diagnostic_test_result_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -19005,35 +19006,35 @@ function observation_tb_diagnostic_test_result_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -19041,15 +19042,15 @@ function observation_tb_diagnostic_test_result_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -19057,23 +19058,23 @@ function observation_tb_diagnostic_test_result_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -19095,64 +19096,64 @@ function observation_tb_prophylaxis_type_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -19160,60 +19161,60 @@ function observation_tb_prophylaxis_type_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -19221,35 +19222,35 @@ function observation_tb_prophylaxis_type_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -19257,15 +19258,15 @@ function observation_tb_prophylaxis_type_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -19273,23 +19274,23 @@ function observation_tb_prophylaxis_type_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -19311,64 +19312,64 @@ function observation_tb_screening_result_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -19376,60 +19377,60 @@ function observation_tb_screening_result_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -19437,35 +19438,35 @@ function observation_tb_screening_result_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -19473,15 +19474,15 @@ function observation_tb_screening_result_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -19489,23 +19490,23 @@ function observation_tb_screening_result_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -19527,64 +19528,64 @@ function observation_tb_treatment_started_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -19592,60 +19593,60 @@ function observation_tb_treatment_started_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -19653,35 +19654,35 @@ function observation_tb_treatment_started_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -19689,15 +19690,15 @@ function observation_tb_treatment_started_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -19705,23 +19706,23 @@ function observation_tb_treatment_started_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -19743,64 +19744,64 @@ function observation_tb_treatment_status_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -19808,60 +19809,60 @@ function observation_tb_treatment_status_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -19869,35 +19870,35 @@ function observation_tb_treatment_status_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -19905,15 +19906,15 @@ function observation_tb_treatment_status_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -19921,23 +19922,23 @@ function observation_tb_treatment_status_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -19959,64 +19960,64 @@ function observation_temperature_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -20024,60 +20025,60 @@ function observation_temperature_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -20085,35 +20086,35 @@ function observation_temperature_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -20121,15 +20122,15 @@ function observation_temperature_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -20137,23 +20138,23 @@ function observation_temperature_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -20173,64 +20174,64 @@ function observation_tested_for_hiv_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -20238,60 +20239,60 @@ function observation_tested_for_hiv_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -20299,35 +20300,35 @@ function observation_tested_for_hiv_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -20335,15 +20336,15 @@ function observation_tested_for_hiv_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -20351,23 +20352,23 @@ function observation_tested_for_hiv_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -20389,64 +20390,64 @@ function observation_therapeutic_supplementary_food_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -20454,60 +20455,60 @@ function observation_therapeutic_supplementary_food_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -20515,35 +20516,35 @@ function observation_therapeutic_supplementary_food_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -20551,15 +20552,15 @@ function observation_therapeutic_supplementary_food_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -20567,23 +20568,23 @@ function observation_therapeutic_supplementary_food_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -20605,64 +20606,64 @@ function observation_tpt_eligbility_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -20670,60 +20671,60 @@ function observation_tpt_eligbility_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -20731,35 +20732,35 @@ function observation_tpt_eligbility_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -20767,15 +20768,15 @@ function observation_tpt_eligbility_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -20783,23 +20784,23 @@ function observation_tpt_eligbility_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -20821,64 +20822,64 @@ function observation_tpt_started_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -20886,60 +20887,60 @@ function observation_tpt_started_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -20947,35 +20948,35 @@ function observation_tpt_started_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -20983,15 +20984,15 @@ function observation_tpt_started_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -20999,23 +21000,23 @@ function observation_tpt_started_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -21035,64 +21036,64 @@ function observation_treatment_completed_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -21100,60 +21101,60 @@ function observation_treatment_completed_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -21161,35 +21162,35 @@ function observation_treatment_completed_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -21197,15 +21198,15 @@ function observation_treatment_completed_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -21213,23 +21214,23 @@ function observation_treatment_completed_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -21251,64 +21252,64 @@ function observation_treatment_discontinued_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -21316,60 +21317,60 @@ function observation_treatment_discontinued_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -21377,35 +21378,35 @@ function observation_treatment_discontinued_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -21413,15 +21414,15 @@ function observation_treatment_discontinued_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -21429,23 +21430,23 @@ function observation_treatment_discontinued_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -21467,64 +21468,64 @@ function observation_viral_load_count_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -21532,60 +21533,60 @@ function observation_viral_load_count_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -21593,35 +21594,35 @@ function observation_viral_load_count_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -21629,15 +21630,15 @@ function observation_viral_load_count_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -21645,23 +21646,23 @@ function observation_viral_load_count_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -21683,64 +21684,64 @@ function observation_viral_load_indication_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -21748,60 +21749,60 @@ function observation_viral_load_indication_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -21809,35 +21810,35 @@ function observation_viral_load_indication_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -21845,15 +21846,15 @@ function observation_viral_load_indication_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -21861,23 +21862,23 @@ function observation_viral_load_indication_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -21899,64 +21900,64 @@ function observation_viral_load_performed_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -21964,60 +21965,60 @@ function observation_viral_load_performed_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -22025,35 +22026,35 @@ function observation_viral_load_performed_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -22061,15 +22062,15 @@ function observation_viral_load_performed_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -22077,23 +22078,23 @@ function observation_viral_load_performed_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 
@@ -22115,64 +22116,64 @@ function observation_weight_observation(props) {
         resourceType: "Observation"
     };
 
-    if ("id" in props) {
+    if (!_.isNil(props.id)) {
         resource.id = props.id;
     }
 
-    if ("implicitRules" in props) {
+    if (!_.isNil(props.implicitRules)) {
         resource.implicitRules = props.implicitRules;
     }
 
-    if ("language" in props) {
+    if (!_.isNil(props.language)) {
         resource.language = props.language;
     }
 
-    if ("text" in props) {
+    if (!_.isNil(props.text)) {
         resource.text = props.text;
     }
 
-    if ("contained" in props) {
+    if (!_.isNil(props.contained)) {
         resource.contained = props.contained;
     }
 
-    if ("extension" in props) {
+    if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
     }
 
-    if ("modifierExtension" in props) {
+    if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
 
-    if ("identifier" in props) {
+    if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = builders.identifier(props.identifier, undefined);
     }
 
-    if ("basedOn" in props) {
+    if (!_.isNil(props.basedOn)) {
         resource.basedOn = props.basedOn;
     }
 
-    if ("partOf" in props) {
+    if (!_.isNil(props.partOf)) {
         resource.partOf = props.partOf;
     }
 
-    if ("status" in props) {
+    if (!_.isNil(props.status)) {
         resource.status = props.status;
     }
 
-    if ("category" in props) {
+    if (!_.isNil(props.category)) {
         resource.category = props.category;
     }
 
-    if ("code" in props) {
+    if (!_.isNil(props.code)) {
         let src = props.code;
         const code = {};
 
-        if ("id" in src) {
+        if (!_.isNil(src.id)) {
             code.id = src.id;
         }
 
-        if ("coding" in src) {
+        if (!_.isNil(src.coding)) {
             builders.addExtension(
                 code,
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
@@ -22180,60 +22181,60 @@ function observation_weight_observation(props) {
             );
         }
 
-        if ("text" in src) {
+        if (!_.isNil(src.text)) {
             code.text = src.text;
         }
     }
 
-    if ("subject" in props) {
+    if (!_.isNil(props.subject)) {
         resource.subject = props.subject;
     }
 
-    if ("focus" in props) {
+    if (!_.isNil(props.focus)) {
         resource.focus = props.focus;
     }
 
-    if ("encounter" in props) {
+    if (!_.isNil(props.encounter)) {
         resource.encounter = props.encounter;
     }
 
-    if ("issued" in props) {
+    if (!_.isNil(props.issued)) {
         resource.issued = props.issued;
     }
 
-    if ("performer" in props) {
+    if (!_.isNil(props.performer)) {
         resource.performer = props.performer;
     }
 
-    if ("dataAbsentReason" in props) {
+    if (!_.isNil(props.dataAbsentReason)) {
         resource.dataAbsentReason = props.dataAbsentReason;
     }
 
-    if ("interpretation" in props) {
+    if (!_.isNil(props.interpretation)) {
         resource.interpretation = props.interpretation;
     }
 
-    if ("note" in props) {
+    if (!_.isNil(props.note)) {
         resource.note = props.note;
     }
 
-    if ("bodySite" in props) {
+    if (!_.isNil(props.bodySite)) {
         resource.bodySite = props.bodySite;
     }
 
-    if ("method" in props) {
+    if (!_.isNil(props.method)) {
         resource.method = props.method;
     }
 
-    if ("specimen" in props) {
+    if (!_.isNil(props.specimen)) {
         resource.specimen = props.specimen;
     }
 
-    if ("device" in props) {
+    if (!_.isNil(props.device)) {
         resource.device = props.device;
     }
 
-    if ("referenceRange" in props) {
+    if (!_.isNil(props.referenceRange)) {
         let src = props.referenceRange;
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
@@ -22241,35 +22242,35 @@ function observation_weight_observation(props) {
         for (const item of src) {
             const referenceRange = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
             }
 
-            if ("low" in item) {
+            if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
             }
 
-            if ("high" in item) {
+            if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
             }
 
-            if ("type" in item) {
+            if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
             }
 
-            if ("appliesTo" in item) {
+            if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
             }
 
-            if ("age" in item) {
+            if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
             }
 
-            if ("text" in item) {
+            if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
             }
 
@@ -22277,15 +22278,15 @@ function observation_weight_observation(props) {
         }
     }
 
-    if ("hasMember" in props) {
+    if (!_.isNil(props.hasMember)) {
         resource.hasMember = props.hasMember;
     }
 
-    if ("derivedFrom" in props) {
+    if (!_.isNil(props.derivedFrom)) {
         resource.derivedFrom = props.derivedFrom;
     }
 
-    if ("component" in props) {
+    if (!_.isNil(props.component)) {
         let src = props.component;
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
@@ -22293,23 +22294,23 @@ function observation_weight_observation(props) {
         for (const item of src) {
             const component = {};
 
-            if ("id" in item) {
+            if (!_.isNil(item.id)) {
                 component.id = item.id;
             }
 
-            if ("modifierExtension" in item) {
+            if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
             }
 
-            if ("code" in item) {
+            if (!_.isNil(item.code)) {
                 component.code = item.code;
             }
 
-            if ("dataAbsentReason" in item) {
+            if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
             }
 
-            if ("interpretation" in item) {
+            if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
             }
 

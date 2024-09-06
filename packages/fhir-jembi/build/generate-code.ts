@@ -16,6 +16,12 @@ const generateCode = (schema, mappings) => {
       b.stringLiteral('./Utils.js')
     )
   );
+  statements.push(
+    b.importDeclaration(
+      [b.importDefaultSpecifier(b.identifier('_'))],
+      b.stringLiteral('lodash')
+    )
+  );
 
   for (const type in mappings) {
     // generate a builder for each variant
@@ -156,7 +162,13 @@ const ifPropInInput = (
   inputName = INPUT_NAME
 ) =>
   b.ifStatement(
-    b.binaryExpression('in', b.stringLiteral(prop), b.identifier(inputName)),
+    b.unaryExpression(
+      '!',
+      b.callExpression(
+        b.memberExpression(b.identifier('_'), b.identifier('isNil')),
+        [b.memberExpression(b.identifier(inputName), b.identifier(prop))]
+      )
+    ),
     b.blockStatement(statements),
     alts ? b.blockStatement(alts) : null
   );

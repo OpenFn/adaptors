@@ -8,6 +8,32 @@ import input from './fixtures/input';
 
 import fixtures from './fixtures';
 
+describe('General', () => {
+  it('should not try to map a value that is undefined', () => {
+    const result = builders.patient('patient', {
+      gender: undefined,
+    });
+
+    expect('gender' in result).be.false;
+  });
+
+  it('should not try to map a value that is null', () => {
+    const result = builders.patient('patient', {
+      gender: undefined,
+    });
+
+    expect('gender' in result).be.false;
+  });
+
+  it('should try to map a value that is 0', () => {
+    const result = builders.patient('patient', {
+      gender: 0,
+    });
+
+    expect(result.gender).to.equal(0);
+  });
+});
+
 describe('Encounter', () => {
   // TODO this is the full test
   it.skip('should map the whole input encounter', () => {
