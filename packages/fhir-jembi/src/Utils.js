@@ -11,7 +11,18 @@ import _ from 'lodash';
 // Note that if system is passed, it'll override
 // (is this correct? This will force an input value to be mapped to the new system)
 // Maybe the mapper can run some kind of conversion if neccessary?
-const identifier = (input, system) => {
+
+// TODO I don't think the system is actually useful here
+// Maybe it would be more useful to provide system mappings?
+// ie UAN - > http://moh.gov.et/fhir/hiv/identifier/UAN
+// and mapping code can add extra system mappings
+// I like this
+/**
+ * Create an identifier
+ * @public
+ * @function
+ */
+export const identifier = (input, system) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
   if (Array.isArray(input)) {
@@ -37,8 +48,12 @@ const identifier = (input, system) => {
   }
 };
 
-// Add an extension to a resource
-const addExtension = (resource, url, value) => {
+/**
+ * Add an extension to a resource (or object)
+ * @public
+ * @function
+ */
+export const addExtension = (resource, url, value) => {
   const obj = {
     url: url,
   };
@@ -54,7 +69,13 @@ const addExtension = (resource, url, value) => {
   resource.extension.push(obj);
 };
 
-const findExtension = (arr, targetUrl, path) => {
+// TODO this should take an object and find the extension in object.extension
+/**
+ * Find an extension with a given url in some array
+ * @public
+ * @function
+ */
+export const findExtension = (arr, targetUrl, path) => {
   const result = arr.find(ext => ext.url === targetUrl);
   if (result && path) {
     return _.get(result, path);
@@ -62,12 +83,22 @@ const findExtension = (arr, targetUrl, path) => {
   return result;
 };
 
-export { findExtension };
-
 // TODO should this also take display text?
-const coding = (code, system) => ({ code, system });
 
-const concept = (text, ...codings) => {
+/**
+ * Create a coding
+ * @public
+ * @function
+ */
+export const coding = (code, system) => ({ code, system });
+
+// TODO: accept an array of [code, system] "tuples" as codings
+/**
+ * Create a codeable concept
+ * @public
+ * @function
+ */
+export const concept = (text, ...codings) => {
   if (typeof text === 'string') {
     return {
       text,
@@ -76,22 +107,4 @@ const concept = (text, ...codings) => {
   } else {
     return { coding: [text, ...codings] };
   }
-};
-
-// const address = props => {
-//   const result = {
-//     ...props,
-//   };
-
-//   // TODO convert residentialType to an extension
-
-//   return result;
-// };
-
-export const builders = {
-  addExtension,
-  coding,
-  concept,
-  identifier,
-  // address,
 };

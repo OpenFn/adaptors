@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 // Note that we test against the build here
 import * as builders from '../src/builders';
-import { findExtension, builders as b } from '../src/Utils';
+import * as util from '../src/Utils';
 import output from './fixtures/output';
 import input from './fixtures/input';
 
@@ -150,9 +150,9 @@ describe('Patient', () => {
         const { text, ...address } = a;
         return {
           ...address,
-          residentialType: b.concept(
+          residentialType: util.concept(
             'Rural',
-            b.coding('224804009', 'http://snomed.info/sct')
+            util.coding('224804009', 'http://snomed.info/sct')
           ),
         };
       }
@@ -161,16 +161,16 @@ describe('Patient', () => {
       return a;
     };
 
-    const religion = findExtension(
+    const religion = util.findExtension(
       input.extension,
       'http://hl7.org/fhir/StructureDefinition/patient-religion'
     ).valueCodeableConcept.coding[0];
 
     const result = builders.patient('patient', {
       id: input.id,
-      religion: b.concept(
+      religion: util.concept(
         religion.display,
-        b.coding(
+        util.coding(
           religion.code,
           'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation'
         )

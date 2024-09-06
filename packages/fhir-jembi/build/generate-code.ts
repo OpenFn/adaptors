@@ -12,7 +12,7 @@ const generateCode = (schema, mappings) => {
 
   statements.push(
     b.importDeclaration(
-      [b.importSpecifier(b.identifier('builders'))],
+      [b.importNamespaceSpecifier(b.identifier('util'))],
       b.stringLiteral('./Utils.js')
     )
   );
@@ -262,7 +262,7 @@ const mapTypeDef = (propName: string, schema: Schema) => {
         b.expressionStatement(
           b.callExpression(
             b.memberExpression(
-              b.identifier('builders'),
+              b.identifier('util'),
               b.identifier('addExtension')
             ),
             [
@@ -339,10 +339,7 @@ const mapCodeableConcept = (
 const mapExtension = (propName: string, mapping: Mapping) => {
   const callBuilder = b.expressionStatement(
     b.callExpression(
-      b.memberExpression(
-        b.identifier('builders'),
-        b.identifier('addExtension')
-      ),
+      b.memberExpression(b.identifier('util'), b.identifier('addExtension')),
       [
         b.identifier(RESOURCE_NAME),
         b.stringLiteral(mapping.extension),
@@ -376,7 +373,7 @@ const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
   const statements: StatementKind[] = [];
 
   const createIdentifier = b.callExpression(
-    b.memberExpression(b.identifier('builders'), b.identifier('identifier')),
+    b.memberExpression(b.identifier('util'), b.identifier('identifier')),
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
       defaultSystem
