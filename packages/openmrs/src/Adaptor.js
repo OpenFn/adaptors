@@ -498,6 +498,8 @@ export {
   fnIf,
   field,
   fields,
+  cursor,
+  dateFns,
   sourceValue,
   merge,
   dataPath,
