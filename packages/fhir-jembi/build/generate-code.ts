@@ -336,6 +336,18 @@ const mapTypeDef = (propName: string, schema: Schema) => {
     );
   } else {
     statements.push(...assignments);
+    statements.push(
+      b.expressionStatement(
+        b.assignmentExpression(
+          '=',
+          b.memberExpression(
+            b.identifier(RESOURCE_NAME),
+            b.identifier(propName)
+          ),
+          b.identifier(propName)
+        )
+      )
+    );
   }
 
   return ifPropInInput(propName, statements);

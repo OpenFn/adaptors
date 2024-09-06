@@ -35,51 +35,53 @@ describe('General', () => {
 });
 
 describe('Encounter', () => {
-  // TODO this is the full test
-  it.skip('should map the whole input encounter', () => {
-    // TODO this actually won't ever quite work
-    // I think there will alway be some mappings, like visitType
-    const result = builders.encounter(input.Encounter.resource);
-    const expected = output.Encounter;
+  it.skip('should convert CDR to NDR', () => {
+    const input = fixtures.cdr.encounter;
 
-    console.log(result);
-
-    expect(result).to.eql(expected);
-  });
-
-  // TOOD remove this test and use the real data
-  it.skip('should map a random encounter', () => {
-    const i = input.Encounter.resource;
-    // this is more like what job code will look like
-    const result = builders.encounter('target-facility-encounter', {
-      id: i.id,
-      identifier: i.identifier[0],
+    util.setSystemMap({
+      'http://cdr.aacahb.gov.et/Encounter':
+        'http://moh.gov.et/fhir/hiv/identifier/encounter',
     });
 
-    // TODO expected should soon be the output fixture
-    // but obviously this test won't pass until we're done
-    const expected = {
-      id: 'e84781ed-5f02-40ac-8c97-e7280fb153e3',
-      resourceType: 'Encounter',
-      identifier: [
-        {
-          value: '7834',
-          system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',
-        },
-      ],
-      serviceProvider: {
-        reference: 'Organization/Patient.managingOrganization',
-      },
-      meta: {
-        profile: [
-          'http://moh.gov.et/fhir/hiv/StructureDefinition/target-facility-encounter',
-        ],
-      },
-    };
+    const visitType = util.findExtension(
+      input,
+      'http://cdr.aacahb.gov.et/visit-type'
+    );
 
-    expect(result).to.eql(expected);
+    const result = builders.encounter('target-facility-encounter', {
+      id: input.id,
+      status: input.status,
+      class: input.class,
+      identifier: input.identifier,
+      // TODO I'm not sure how these map?
+      serviceType: input.serviceType[0],
+      period: input.period,
+      subject: input.subject,
+      // TODO why is this automated wrong?
+      // is the test data wrong?
+      serviceProvider: input.serviceProvider,
 
-    // TODO result should equal output.Encounter
+      // TODO this won't map the system properly right now
+      // because we don't handle codeable concepts very smartly
+      serviceType: {
+        coding: input.serviceType.coding.slice(0, 1),
+      },
+      type: input.type,
+      // visitType: visitType,
+    });
+
+    // Handle the visit type extension manually
+    util.addExtension(
+      result.type[0],
+      'http://moh.gov.et/fhir/hiv/StructureDefinition/encounter-visit-type',
+      util.concept([
+        visitType.valueString,
+        'http://moh.gov.et/fhir/hiv/CodeSystem/encounter-visit-type-code-system',
+      ])
+    ),
+      console.log(result);
+
+    expect(result).to.eql(fixtures.ndr.encounter);
   });
 
   // This is based on a mapping rule which might not last forever
