@@ -1,5 +1,9 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.9
+
+Fix utils namespace
+
 ## 0.0.8
 
 Ignore nullish keys in mapping (ie, passing undefined will not set a key on the
