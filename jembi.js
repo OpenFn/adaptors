@@ -18,7 +18,7 @@ console.log('hello');
 const patient = b.patient('patient', {
   address: [
     {
-      residentialType: 
+      residentialType: 'Rural',
     },
   ],
 });

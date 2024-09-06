@@ -78,15 +78,15 @@ const concept = (text, ...codings) => {
   }
 };
 
-const address = props => {
-  const result = {
-    ...props,
-  };
+// const address = props => {
+//   const result = {
+//     ...props,
+//   };
 
-  // TODO convert residentialType to an extension
+//   // TODO convert residentialType to an extension
 
-  return result;
-};
+//   return result;
+// };
 
 export const builders = {
   addExtension,

@@ -49,7 +49,6 @@ const generateDTS = (schema, mappings) => {
   // console.log(item);
 
   return contents
-    .slice(1, 2) // ok so index 2 is the problem
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
     .join('\n\n');
 };
@@ -172,6 +171,9 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
       } else {
         type = b.createTypeReferenceNode(type);
       }
+    }
+    if (s.desc) {
+      props.push(b.createJSDocComment(s.desc + '\n'));
     }
     props.push(b.createPropertySignature([], key, undefined, type));
   }

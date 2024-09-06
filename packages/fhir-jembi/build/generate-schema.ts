@@ -119,7 +119,6 @@ const generate = async types => {
         const path = prop.path.replace(`${resourceType}\.`, '');
 
         if (path.includes('.')) {
-          console.log('@', prop.path);
           parseProp(fullSpec, schema, path, prop);
           continue;
         }
@@ -146,8 +145,7 @@ const generate = async types => {
           type,
           isArray,
           defaults,
-          // // TODO this may replace type
-          // typeDef: {},
+          desc: prop.short || prop.definition,
         };
       }
       result[resourceType] ??= [];
