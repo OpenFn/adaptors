@@ -1,5 +1,10 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.8
+
+Ignore nullish keys in mapping (ie, passing undefined will not set a key on the
+new object)
+
 ## 0.0.7
 
 - restore all builders
