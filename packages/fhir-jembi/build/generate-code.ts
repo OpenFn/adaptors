@@ -123,9 +123,9 @@ const mapProps = (schema, mappings) => {
             props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
             break;
           default:
-            console.warn(
-              `WARNING: using simple mapping for ${schema.id}.${key}`
-            );
+            // console.warn(
+            //   `WARNING: using simple mapping for ${schema.id}.${key}`
+            // );
             props.push(mapSimpleProp(key, mappings[key]));
           // TODO: warn unused type
         }
@@ -193,13 +193,11 @@ const mapSimpleProp = (propName: string, mapping: Mapping) => {
   return ifPropInInput(propName, [assignProp], elseSatement);
 };
 
-// map a type def (ie, a nested object)
-// property by property
+// map a type def (ie, a nested object) property by property
 // TODO this is designed to handle singletone and array types
 // The array stuff adds a lot of complication and I need tests on both formats
 const mapTypeDef = (propName: string, schema: Schema) => {
   const statements: any[] = [];
-  // init the prop
 
   statements.push(
     b.variableDeclaration('let', [
@@ -238,8 +236,6 @@ const mapTypeDef = (propName: string, schema: Schema) => {
   const assignments: any[] = [];
   const inputName = schema.isArray ? 'item' : 'src';
 
-  // now assign to it
-  // const props = mapProps()
   for (const prop in schema.typeDef) {
     const body: any[] = [];
     const spec = schema.typeDef[prop];
@@ -310,17 +306,6 @@ const mapTypeDef = (propName: string, schema: Schema) => {
   } else {
     statements.push(...assignments);
   }
-
-  // if (schema.isArray) {
-  //   statements.push(
-  //     b.callExpression(
-  //       b.memberExpression(b.identifier(propName), b.identifier('push')),
-  //       [b.identifier(propName)]
-  //     )
-  //   );
-  // } else {
-  //   statements.push(assignToInput(propName, b.identifier(propName)));
-  // }
 
   return ifPropInInput(propName, statements);
 };

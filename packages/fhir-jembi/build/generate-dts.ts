@@ -45,8 +45,11 @@ const generateDTS = (schema, mappings) => {
     // otherwise its overcomplicated
     contents.push(...generateEntryFuction(type, schema[type]));
   }
+  // const item = contents[1];
+  // console.log(item);
 
   return contents
+    .slice(1, 2) // ok so index 2 is the problem
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
     .join('\n\n');
 };
@@ -170,8 +173,6 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
         type = b.createTypeReferenceNode(type);
       }
     }
-    // console.log(type);
-
     props.push(b.createPropertySignature([], key, undefined, type));
   }
 

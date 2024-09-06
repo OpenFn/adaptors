@@ -32,7 +32,10 @@ const typeDefs = {
 
   // TODO should I capture this like a generic type, or is a name easier to map to?
   // because with a name I can probably do more
-  Coding: { system: 'string', coding: 'string ' },
+  //Coding: { system: 'string', coding: 'string ' },
+  Coding: 'Coding',
+
+  positiveInt: 'number',
 };
 
 const typeMappings = {
@@ -41,6 +44,7 @@ const typeMappings = {
   // For now, count all codes as strings
   code: 'string',
   uri: 'string',
+  positiveInt: 'number',
 };
 
 const generate = async types => {
@@ -100,17 +104,22 @@ const generate = async types => {
       };
 
       for (const prop of spec.snapshot.element) {
-        // tmp
-        if (!prop.path.match('address')) {
+        // // tmp
+        // if (!prop.path.match('address')) {
+        //   continue;
+        // }
+        if (/\[x\]/.test(prop.path)) {
+          // TODO warn?
+          console.log('SKIP ', prop.path);
           continue;
         }
         if (prop.path === resourceType) {
           continue;
         }
         const path = prop.path.replace(`${resourceType}\.`, '');
-        console.log(path);
 
         if (path.includes('.')) {
+          console.log('@', prop.path);
           parseProp(fullSpec, schema, path, prop);
           continue;
         }
@@ -137,8 +146,8 @@ const generate = async types => {
           type,
           isArray,
           defaults,
-          // TODO this may replace type
-          typeDef: {},
+          // // TODO this may replace type
+          // typeDef: {},
         };
       }
       result[resourceType] ??= [];
@@ -162,7 +171,12 @@ const generate = async types => {
 function parseProp(fullSpec, schema, path: string, data) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
-  // console.log(parent, prop, schema.props);
+  console.log(parent, prop);
+
+  if (/\[x\]/.test(prop)) {
+    // TODO warn?
+    return;
+  }
 
   if (prop === 'extension') {
     if (data.sliceName) {
@@ -178,8 +192,12 @@ function parseProp(fullSpec, schema, path: string, data) {
   if (schema.props[parent]) {
     const def: PropDef = {};
 
+    if (!data.type) {
+      return;
+    }
+
     // Now work out the type of the prop
-    if (data.type.length > 1) {
+    if (data?.type?.length > 1) {
       console.log('WARNING: MULTIPLE TYPES DETECTED FOR', path);
     }
     let [type] = data.type;
@@ -193,13 +211,17 @@ function parseProp(fullSpec, schema, path: string, data) {
       const typeId = type.profile[0].split('/').at(-1);
       const spec = fullSpec[typeId];
 
-      // this tells us we need to map the incoming
-      // prop to an extension
-      def.extension = {
-        url: spec.url,
-        // TODO later we may be able to pull out code mappings
-        // look for extension.value[x] in the spec
-      };
+      if (spec) {
+        // this tells us we need to map the incoming
+        // prop to an extension
+        def.extension = {
+          url: spec.url,
+          // TODO later we may be able to pull out code mappings
+          // look for extension.value[x] in the spec
+        };
+      } else {
+        console.log('WARNING: spec not found for ', typeId);
+      }
     } else {
       simpleType = typeDefs[type.code] || type.code;
     }
@@ -219,7 +241,10 @@ function parseProp(fullSpec, schema, path: string, data) {
     //   def.values = [];
     // }
 
-    schema.props[parent].typeDef[prop] = def;
+    if (Object.keys(def).length) {
+      schema.props[parent].typeDef ??= {};
+      schema.props[parent].typeDef[prop] = def;
+    }
   }
 }
 

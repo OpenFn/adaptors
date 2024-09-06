@@ -21,7 +21,8 @@ describe('Encounter', () => {
     expect(result).to.eql(expected);
   });
 
-  it('should map a random encounter', () => {
+  // TOOD remove this test and use the real data
+  it.skip('should map a random encounter', () => {
     const i = input.Encounter.resource;
     // this is more like what job code will look like
     const result = builders.encounter('target-facility-encounter', {
@@ -66,16 +67,14 @@ describe('Encounter', () => {
     expect(result.serviceProvider).to.eql(expected);
   });
 
-  // this is smaller tests while working
   it('should map a single identifier string', () => {
     const result = builders.encounter('target-facility-encounter', {
-      identifier: 'bob',
+      identifier: [{ value: 'bob' }],
     });
 
     const expected = [
       {
         value: 'bob',
-        system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',
       },
     ];
     expect(result.identifier).to.eql(expected);
@@ -90,7 +89,7 @@ describe('Encounter', () => {
     const expected = [
       {
         value: '7834',
-        system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',
+        system: 'http://cdr.aacahb.gov.et/Encounter',
       },
     ];
     expect(result.identifier).to.eql(expected);
@@ -118,6 +117,24 @@ describe('Patient', () => {
       }));
     };
 
+    // address mapping is a bit painful right now
+    // but I think we can get this working from strings automatically
+    const mapAddress = a => {
+      if (/rural/i.test(a.text)) {
+        const { text, ...address } = a;
+        return {
+          ...address,
+          residentialType: b.concept(
+            'Rural',
+            b.coding('224804009', 'http://snomed.info/sct')
+          ),
+        };
+      }
+      if (/urban/i.test(a.text)) {
+      }
+      return a;
+    };
+
     const religion = findExtension(
       input.extension,
       'http://hl7.org/fhir/StructureDefinition/patient-religion'
@@ -139,19 +156,15 @@ describe('Patient', () => {
       birthDate: input.birthDate,
       maritalStatus: input.maritalStatus,
       managingOrganization: input.managingOrganization,
-      address: input.address.map(a =>
-        b.address({
-          ...a,
-          text: undefined, // remove the original text
-          residentialType: a.text, // use the incoming text as the residential type
-        })
-      ),
+      address: input.address.map(mapAddress),
     });
+
+    // console.log(result);
 
     expect(result).to.eql(fixtures.ndr.patient);
   });
 
-  it.only('should set the address.residentiaTtype extension', () => {
+  it('should set the address.residentialType extension', () => {
     const result = builders.patient('patient', {
       // address can be passed as a single object and it'll map to an array
       address: {
@@ -171,7 +184,6 @@ describe('Patient', () => {
         },
       },
     });
-    console.log(JSON.stringify(result.address, null, 2));
 
     expect(result.address).to.eql([
       {

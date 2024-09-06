@@ -79,16 +79,16 @@ export default {
   ],
   gender: 'female',
   birthDate: '1983-03-10',
-  // address: [
-  //   {
-  //     type: 'physical',
-  //     text: 'Rural',
-  //     state: 'Addis Ababa',
-  //     city: 'Cherkos sub city',
-  //     district: '10',
-  //     line: ['17', '927/5'],
-  //   },
-  // ],
+  address: [
+    {
+      type: 'physical',
+      text: 'Rural',
+      state: 'Addis Ababa',
+      city: 'Cherkos sub city',
+      district: '10',
+      line: ['17', '927/5'],
+    },
+  ],
   maritalStatus: {
     coding: [
       {

@@ -15,6 +15,10 @@ create('Patient', { id: 'big willy smith' })();
 
 console.log('hello');
 
-util.address({
-  
-})
+const patient = b.patient('patient', {
+  address: [
+    {
+      residentialType: 
+    },
+  ],
+});

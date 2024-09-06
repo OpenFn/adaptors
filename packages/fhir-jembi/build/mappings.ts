@@ -20,33 +20,35 @@
 // hope not!
 // this is pretty high level
 export default {
-  // Encounter: {
-  //   identifier: {
-  //     // Force identifier to accept a string
-  //     // (the system will be defaulted)
-  //     type: 'string',
-  //   },
-  //   // Specify individual mapping rules for fields here
-  //   // or pass field: false to ignore it
-  //   // (meta is always ignored)
+  Encounter: {
+    identifier: {
+      // Force identifier to accept a string
+      // (the system will be defaulted)
+      type: 'string',
+    },
+    // Specify individual mapping rules for fields here
+    // or pass field: false to ignore it
+    // (meta is always ignored)
 
-  //   // serviceProvider will be defaulted
-  //   // (I don't really know if we want this but lets see!)
-  //   serviceProvider: {
-  //     defaults: {
-  //       reference: 'Organization/Patient.managingOrganization',
-  //     },
-  //   },
-  // },
+    // serviceProvider will be defaulted
+    // (I don't really know if we want this but lets see!)
+    serviceProvider: {
+      defaults: {
+        reference: 'Organization/Patient.managingOrganization',
+      },
+    },
+  },
   Patient: {
-    // id: true,
-    // map the `religion` key to the patient.religion extension
+    // This should automap now, probably as patientReligion
+    // But it doesn't??
+
+    // manually map the `religion` key to the patient.religion extension
     religion: {
       type: 'CodeableConcept',
       extension: 'http://hl7.org/fhir/StructureDefinition/patient-religion',
     },
   },
-  // Observation: {
-  //   // id: true,
-  // },
+  Observation: {
+    // id: true,
+  },
 };

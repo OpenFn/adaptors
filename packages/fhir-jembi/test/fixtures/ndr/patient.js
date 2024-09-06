@@ -68,28 +68,29 @@ export default {
   ],
   gender: 'female',
   birthDate: '1983-03-10',
-  // address: [
-  //   {
-  //     extension: [
-  //       {
-  //         url: 'http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type',
-  //         valueCodeableConcept: {
-  //           coding: [
-  //             {
-  //               system: 'http://snomed.info/sct',
-  //               code: '224804009',
-  //             },
-  //           ],
-  //           text: 'Rural',
-  //         },
-  //       },
-  //     ],
-  //     line: ['17', '927/5'],
-  //     city: 'Cherkos sub city',
-  //     district: '10',
-  //     state: 'Addis Ababa',
-  //   },
-  // ],
+  address: [
+    {
+      type: 'physical', // TODO should this be here?
+      extension: [
+        {
+          url: 'http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type',
+          valueCodeableConcept: {
+            coding: [
+              {
+                system: 'http://snomed.info/sct',
+                code: '224804009',
+              },
+            ],
+            text: 'Rural',
+          },
+        },
+      ],
+      line: ['17', '927/5'],
+      city: 'Cherkos sub city',
+      district: '10',
+      state: 'Addis Ababa',
+    },
+  ],
   maritalStatus: {
     coding: [
       {
