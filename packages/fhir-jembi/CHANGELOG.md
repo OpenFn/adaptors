@@ -1,17 +1,10 @@
 # @openfn/language-fhir-jembi
 
-## 0.0.11
-
-Fix prop mapping which arent in an array
-
-## 0.0.10
-
-util.concept accepts codings as an array allow systems map to map system
-shorthands and longhands to new values
-
 ## 0.0.9
 
-Fix utils namespace
+Fix prop mapping which arent in an array util.concept accepts codings as an
+array allow systems map to map system shorthands and longhands to new values Fix
+utils namespace
 
 ## 0.0.8
 

@@ -125,14 +125,15 @@ export const coding = (code, system) => ({ code, system });
  */
 export const concept = (text, ...codings) => {
   const result = {};
+  let incomingCodings = codings;
   if (typeof text === 'string') {
     result.text = text;
   } else {
-    codings = [text].concat(codings);
+    incomingCodings = [text].concat(codings);
   }
 
   const c = [];
-  for (const item of codings) {
+  for (const item of incomingCodings) {
     if (Array.isArray(item)) {
       c.push(coding(item[0], item[1]));
     } else {
