@@ -61,8 +61,8 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.statusHistory = [];
 
-        for (const item of src) {
-            const statusHistory = {};
+        for (let item of src) {
+            let statusHistory = {};
 
             if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
@@ -93,8 +93,8 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.classHistory = [];
 
-        for (const item of src) {
-            const classHistory = {};
+        for (let item of src) {
+            let classHistory = {};
 
             if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
@@ -145,8 +145,8 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.participant = [];
 
-        for (const item of src) {
-            const participant = {};
+        for (let item of src) {
+            let participant = {};
 
             if (!_.isNil(item.id)) {
                 participant.id = item.id;
@@ -197,8 +197,8 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.diagnosis = [];
 
-        for (const item of src) {
-            const diagnosis = {};
+        for (let item of src) {
+            let diagnosis = {};
 
             if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
@@ -282,8 +282,8 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.location = [];
 
-        for (const item of src) {
-            const location = {};
+        for (let item of src) {
+            let location = {};
 
             if (!_.isNil(item.id)) {
                 location.id = item.id;
@@ -370,8 +370,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.identifier = [];
 
-        for (const item of src) {
-            const identifier = {};
+        for (let item of src) {
+            let identifier = {};
 
             if (!_.isNil(item.id)) {
                 identifier.id = item.id;
@@ -401,6 +401,7 @@ function encounter_target_facility_encounter(props) {
                 identifier.assigner = item.assigner;
             }
 
+            identifier = util.mapSystems(identifier);
             resource.identifier.push(identifier);
         }
     }
@@ -414,8 +415,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.statusHistory = [];
 
-        for (const item of src) {
-            const statusHistory = {};
+        for (let item of src) {
+            let statusHistory = {};
 
             if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
@@ -446,8 +447,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.classHistory = [];
 
-        for (const item of src) {
-            const classHistory = {};
+        for (let item of src) {
+            let classHistory = {};
 
             if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
@@ -474,8 +475,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.type = [];
 
-        for (const item of src) {
-            const type = {};
+        for (let item of src) {
+            let type = {};
 
             if (!_.isNil(item.id)) {
                 type.id = item.id;
@@ -526,8 +527,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.participant = [];
 
-        for (const item of src) {
-            const participant = {};
+        for (let item of src) {
+            let participant = {};
 
             if (!_.isNil(item.id)) {
                 participant.id = item.id;
@@ -591,8 +592,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.diagnosis = [];
 
-        for (const item of src) {
-            const diagnosis = {};
+        for (let item of src) {
+            let diagnosis = {};
 
             if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
@@ -676,8 +677,8 @@ function encounter_target_facility_encounter(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.location = [];
 
-        for (const item of src) {
-            const location = {};
+        for (let item of src) {
+            let location = {};
 
             if (!_.isNil(item.id)) {
                 location.id = item.id;
@@ -770,8 +771,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.identifier = [];
 
-        for (const item of src) {
-            const identifier = {};
+        for (let item of src) {
+            let identifier = {};
 
             if (!_.isNil(item.id)) {
                 identifier.id = item.id;
@@ -801,6 +802,7 @@ function patient_patient(props) {
                 identifier.assigner = item.assigner;
             }
 
+            identifier = util.mapSystems(identifier);
             resource.identifier.push(identifier);
         }
     }
@@ -814,8 +816,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.name = [];
 
-        for (const item of src) {
-            const name = {};
+        for (let item of src) {
+            let name = {};
 
             if (!_.isNil(item.id)) {
                 name.id = item.id;
@@ -870,8 +872,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.address = [];
 
-        for (const item of src) {
-            const address = {};
+        for (let item of src) {
+            let address = {};
 
             if (!_.isNil(item.id)) {
                 address.id = item.id;
@@ -942,8 +944,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.contact = [];
 
-        for (const item of src) {
-            const contact = {};
+        for (let item of src) {
+            let contact = {};
 
             if (!_.isNil(item.id)) {
                 contact.id = item.id;
@@ -990,8 +992,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.communication = [];
 
-        for (const item of src) {
-            const communication = {};
+        for (let item of src) {
+            let communication = {};
 
             if (!_.isNil(item.id)) {
                 communication.id = item.id;
@@ -1026,8 +1028,8 @@ function patient_patient(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.link = [];
 
-        for (const item of src) {
-            const link = {};
+        for (let item of src) {
+            let link = {};
 
             if (!_.isNil(item.id)) {
                 link.id = item.id;
@@ -1297,8 +1299,8 @@ function observation_active_tb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -1349,8 +1351,8 @@ function observation_active_tb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -1511,8 +1513,8 @@ function observation_alt_ast_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -1563,8 +1565,8 @@ function observation_alt_ast_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -1725,8 +1727,8 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -1769,8 +1771,8 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.hasMember = [];
 
-        for (const item of src) {
-            const hasMember = {};
+        for (let item of src) {
+            let hasMember = {};
 
             if (!_.isNil(item.id)) {
                 hasMember.id = item.id;
@@ -1805,8 +1807,8 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -1969,8 +1971,8 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -2021,8 +2023,8 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -2185,8 +2187,8 @@ function observation_art_eligibility_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -2237,8 +2239,8 @@ function observation_art_eligibility_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -2401,8 +2403,8 @@ function observation_art_followup_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -2453,8 +2455,8 @@ function observation_art_followup_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -2617,8 +2619,8 @@ function observation_art_followup_stopped_reasons_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -2669,8 +2671,8 @@ function observation_art_followup_stopped_reasons_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -2833,8 +2835,8 @@ function observation_art_not_started_plan_next_step_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -2885,8 +2887,8 @@ function observation_art_not_started_plan_next_step_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -3049,8 +3051,8 @@ function observation_arv_adherence_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -3101,8 +3103,8 @@ function observation_arv_adherence_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -3263,8 +3265,8 @@ function observation_arv_change_category_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -3315,8 +3317,8 @@ function observation_arv_change_category_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -3479,8 +3481,8 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -3531,8 +3533,8 @@ function observation_arv_poor_adherence_reasons_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -3695,8 +3697,8 @@ function observation_arv_regimen_change_reason_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -3747,8 +3749,8 @@ function observation_arv_regimen_change_reason_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -3911,8 +3913,8 @@ function observation_arv_regimen_changed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -3963,8 +3965,8 @@ function observation_arv_regimen_changed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -4127,8 +4129,8 @@ function observation_arv_regimen_side_effects_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -4179,8 +4181,8 @@ function observation_arv_regimen_side_effects_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -4343,8 +4345,8 @@ function observation_assessed_for_pain_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -4395,8 +4397,8 @@ function observation_assessed_for_pain_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -4559,8 +4561,8 @@ function observation_blood_pressure(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -4611,8 +4613,8 @@ function observation_blood_pressure(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -4773,8 +4775,8 @@ function observation_bmi_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -4825,8 +4827,8 @@ function observation_bmi_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -4987,8 +4989,8 @@ function observation_breastfeeding_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -5039,8 +5041,8 @@ function observation_breastfeeding_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -5203,8 +5205,8 @@ function observation_cd4_absolute_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -5255,8 +5257,8 @@ function observation_cd4_absolute_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -5417,8 +5419,8 @@ function observation_cd4_percentage_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -5469,8 +5471,8 @@ function observation_cd4_percentage_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -5633,8 +5635,8 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -5685,8 +5687,8 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -5849,8 +5851,8 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -5901,8 +5903,8 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -6065,8 +6067,8 @@ function observation_cervical_cancer_screening_method_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -6117,8 +6119,8 @@ function observation_cervical_cancer_screening_method_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -6281,8 +6283,8 @@ function observation_cervical_cancer_screening_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -6333,8 +6335,8 @@ function observation_cervical_cancer_screening_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -6497,8 +6499,8 @@ function observation_cervical_cancer_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -6549,8 +6551,8 @@ function observation_cervical_cancer_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -6713,8 +6715,8 @@ function observation_cervical_cancer_screening_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -6765,8 +6767,8 @@ function observation_cervical_cancer_screening_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -6929,8 +6931,8 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -6981,8 +6983,8 @@ function observation_cervical_cancer_treatment_received_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -7145,8 +7147,8 @@ function observation_children_developmental_milestone_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -7197,8 +7199,8 @@ function observation_children_developmental_milestone_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -7361,8 +7363,8 @@ function observation_confirmed_hiv_positive_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -7413,8 +7415,8 @@ function observation_confirmed_hiv_positive_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -7577,8 +7579,8 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -7629,8 +7631,8 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -7793,8 +7795,8 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -7845,8 +7847,8 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -8009,8 +8011,8 @@ function observation_counseled_for_hiv_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -8061,8 +8063,8 @@ function observation_counseled_for_hiv_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -8225,8 +8227,8 @@ function observation_creatine_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -8277,8 +8279,8 @@ function observation_creatine_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -8439,8 +8441,8 @@ function observation_current_art_duration_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -8491,8 +8493,8 @@ function observation_current_art_duration_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -8655,8 +8657,8 @@ function observation_delivery_mode_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -8707,8 +8709,8 @@ function observation_delivery_mode_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -8869,8 +8871,8 @@ function observation_delivery_place_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -8921,8 +8923,8 @@ function observation_delivery_place_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -9085,8 +9087,8 @@ function observation_differentiated_service_delivery_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -9137,8 +9139,8 @@ function observation_differentiated_service_delivery_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -9301,8 +9303,8 @@ function observation_disclosure_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -9353,8 +9355,8 @@ function observation_disclosure_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -9517,8 +9519,8 @@ function observation_edema_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -9569,8 +9571,8 @@ function observation_edema_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -9731,8 +9733,8 @@ function observation_elicited_index_case_contacts_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -9783,8 +9785,8 @@ function observation_elicited_index_case_contacts_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -9947,8 +9949,8 @@ function observation_enhanced_adherence_counselling_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -9999,8 +10001,8 @@ function observation_enhanced_adherence_counselling_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -10163,8 +10165,8 @@ function observation_estimated_delivery_date_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -10215,8 +10217,8 @@ function observation_estimated_delivery_date_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -10379,8 +10381,8 @@ function observation_family_member_hiv_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -10431,8 +10433,8 @@ function observation_family_member_hiv_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -10595,8 +10597,8 @@ function observation_family_planning_method_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -10647,8 +10649,8 @@ function observation_family_planning_method_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -10811,8 +10813,8 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -10863,8 +10865,8 @@ function observation_fluconazole_preventive_therapy_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -11027,8 +11029,8 @@ function observation_future_pregnancy_plans_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -11079,8 +11081,8 @@ function observation_future_pregnancy_plans_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -11243,8 +11245,8 @@ function observation_generic_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -11295,8 +11297,8 @@ function observation_generic_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -11457,8 +11459,8 @@ function observation_head_circumference_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -11509,8 +11511,8 @@ function observation_head_circumference_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -11673,8 +11675,8 @@ function observation_health_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -11725,8 +11727,8 @@ function observation_health_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -11887,8 +11889,8 @@ function observation_heart_rate_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -11939,8 +11941,8 @@ function observation_heart_rate_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -12101,8 +12103,8 @@ function observation_height_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -12153,8 +12155,8 @@ function observation_height_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -12315,8 +12317,8 @@ function observation_hgb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -12367,8 +12369,8 @@ function observation_hgb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -12529,8 +12531,8 @@ function observation_highest_education_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -12581,8 +12583,8 @@ function observation_highest_education_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -12745,8 +12747,8 @@ function observation_hiv_prevention_plan_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -12797,8 +12799,8 @@ function observation_hiv_prevention_plan_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -12961,8 +12963,8 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -13013,8 +13015,8 @@ function observation_hiv_program_final_outcome_known_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -13177,8 +13179,8 @@ function observation_hiv_program_final_outcome_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -13229,8 +13231,8 @@ function observation_hiv_program_final_outcome_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -13393,8 +13395,8 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -13445,8 +13447,8 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -13609,8 +13611,8 @@ function observation_hiv_program_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -13661,8 +13663,8 @@ function observation_hiv_program_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -13825,8 +13827,8 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -13877,8 +13879,8 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -14041,8 +14043,8 @@ function observation_hiv_test_results_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -14093,8 +14095,8 @@ function observation_hiv_test_results_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -14257,8 +14259,8 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -14309,8 +14311,8 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -14473,8 +14475,8 @@ function observation_inh_at_follow_up_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -14525,8 +14527,8 @@ function observation_inh_at_follow_up_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -14689,8 +14691,8 @@ function observation_last_menstrual_period_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -14741,8 +14743,8 @@ function observation_last_menstrual_period_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -14905,8 +14907,8 @@ function observation_level_of_pain_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -14957,8 +14959,8 @@ function observation_level_of_pain_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -15119,8 +15121,8 @@ function observation_maternal_hiv_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -15171,8 +15173,8 @@ function observation_maternal_hiv_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -15335,8 +15337,8 @@ function observation_muac_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -15387,8 +15389,8 @@ function observation_muac_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -15549,8 +15551,8 @@ function observation_nutritional_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -15601,8 +15603,8 @@ function observation_nutritional_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -15765,8 +15767,8 @@ function observation_nutritional_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -15817,8 +15819,8 @@ function observation_nutritional_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -15981,8 +15983,8 @@ function observation_nutritional_suppliments_provided_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -16033,8 +16035,8 @@ function observation_nutritional_suppliments_provided_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -16197,8 +16199,8 @@ function observation_otz_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -16249,8 +16251,8 @@ function observation_otz_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -16411,8 +16413,8 @@ function observation_patient_functional_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -16463,8 +16465,8 @@ function observation_patient_functional_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -16627,8 +16629,8 @@ function observation_patient_occupation_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -16679,8 +16681,8 @@ function observation_patient_occupation_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -16843,8 +16845,8 @@ function observation_patient_who_stage_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -16895,8 +16897,8 @@ function observation_patient_who_stage_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -17059,8 +17061,8 @@ function observation_physical_examinations_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -17111,8 +17113,8 @@ function observation_physical_examinations_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -17275,8 +17277,8 @@ function observation_pregnancy_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -17327,8 +17329,8 @@ function observation_pregnancy_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -17491,8 +17493,8 @@ function observation_presenting_symptom_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -17543,8 +17545,8 @@ function observation_presenting_symptom_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -17707,8 +17709,8 @@ function observation_reason_eligible_for_art_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -17759,8 +17761,8 @@ function observation_reason_eligible_for_art_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -17923,8 +17925,8 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -17975,8 +17977,8 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -18139,8 +18141,8 @@ function observation_resides_in_catchment_area_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -18191,8 +18193,8 @@ function observation_resides_in_catchment_area_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -18355,8 +18357,8 @@ function observation_respiratory_rate_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -18407,8 +18409,8 @@ function observation_respiratory_rate_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -18571,8 +18573,8 @@ function observation_screened_for_tb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -18623,8 +18625,8 @@ function observation_screened_for_tb_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -18787,8 +18789,8 @@ function observation_target_population_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -18839,8 +18841,8 @@ function observation_target_population_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -19003,8 +19005,8 @@ function observation_tb_diagnostic_test_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -19055,8 +19057,8 @@ function observation_tb_diagnostic_test_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -19219,8 +19221,8 @@ function observation_tb_prophylaxis_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -19271,8 +19273,8 @@ function observation_tb_prophylaxis_type_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -19435,8 +19437,8 @@ function observation_tb_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -19487,8 +19489,8 @@ function observation_tb_screening_result_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -19651,8 +19653,8 @@ function observation_tb_treatment_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -19703,8 +19705,8 @@ function observation_tb_treatment_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -19867,8 +19869,8 @@ function observation_tb_treatment_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -19919,8 +19921,8 @@ function observation_tb_treatment_status_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -20083,8 +20085,8 @@ function observation_temperature_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -20135,8 +20137,8 @@ function observation_temperature_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -20297,8 +20299,8 @@ function observation_tested_for_hiv_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -20349,8 +20351,8 @@ function observation_tested_for_hiv_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -20513,8 +20515,8 @@ function observation_therapeutic_supplementary_food_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -20565,8 +20567,8 @@ function observation_therapeutic_supplementary_food_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -20729,8 +20731,8 @@ function observation_tpt_eligbility_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -20781,8 +20783,8 @@ function observation_tpt_eligbility_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -20945,8 +20947,8 @@ function observation_tpt_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -20997,8 +20999,8 @@ function observation_tpt_started_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -21159,8 +21161,8 @@ function observation_treatment_completed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -21211,8 +21213,8 @@ function observation_treatment_completed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -21375,8 +21377,8 @@ function observation_treatment_discontinued_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -21427,8 +21429,8 @@ function observation_treatment_discontinued_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -21591,8 +21593,8 @@ function observation_viral_load_count_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -21643,8 +21645,8 @@ function observation_viral_load_count_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -21807,8 +21809,8 @@ function observation_viral_load_indication_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -21859,8 +21861,8 @@ function observation_viral_load_indication_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -22023,8 +22025,8 @@ function observation_viral_load_performed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -22075,8 +22077,8 @@ function observation_viral_load_performed_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
@@ -22239,8 +22241,8 @@ function observation_weight_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.referenceRange = [];
 
-        for (const item of src) {
-            const referenceRange = {};
+        for (let item of src) {
+            let referenceRange = {};
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
@@ -22291,8 +22293,8 @@ function observation_weight_observation(props) {
         if (!Array.isArray(src)) { src = [src]; }
         resource.component = [];
 
-        for (const item of src) {
-            const component = {};
+        for (let item of src) {
+            let component = {};
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;

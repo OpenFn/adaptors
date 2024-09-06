@@ -2,6 +2,31 @@
 
 import _ from 'lodash';
 
+const systemMap = {
+  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
+  MRN: 'http://moh.gov.et/fhir/hiv/identifier/MRN',
+  UAN: 'http://moh.gov.et/fhir/hiv/identifier/UAN',
+};
+
+// so what does this take?
+export const mapSystems = obj => {
+  if (Array.isArray(obj)) {
+    return obj.map(mapSystems);
+  }
+
+  if (obj.system in systemMap) {
+    return {
+      ...obj,
+      system: systemMap[obj.system],
+    };
+  }
+  return obj;
+};
+
+export const setSystemMap = newMappings => {
+  Object.assign(systemMap, newMappings);
+};
+
 // rather than code gen these with all their complexity,
 // we can keep them in the library
 // we can even unit test them if we want
@@ -31,19 +56,19 @@ export const identifier = (input, system) => {
 
   if (input) {
     if (typeof input === 'string') {
-      return {
+      return mapSystems({
         value: input,
         system,
-      };
+      });
     } else if (system) {
-      return {
+      return mapSystems({
         // Is system a default or override?
         // Probably a default?
         system,
         ...input,
-      };
+      });
     } else {
-      return input;
+      return mapSystems(input);
     }
   }
 };

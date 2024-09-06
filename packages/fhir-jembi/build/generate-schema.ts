@@ -147,7 +147,12 @@ const generate = async types => {
           defaults,
           desc: prop.short || prop.definition,
         };
+
+        if (path.endsWith('.system')) {
+          props[path].hasSystem = true;
+        }
       }
+
       result[resourceType] ??= [];
       result[resourceType].push(schema);
     }
@@ -226,6 +231,11 @@ function parseProp(fullSpec, schema, path: string, data) {
 
     def.type = simpleType;
     def.desc = data.short || data.definition;
+
+    // TODO is there a better formalism for this?
+    if (prop === 'system') {
+      schema.props[parent].hasSystem = true;
+    }
 
     // TODO: maybe lookup enum values. Not priority right now
     // if (data.binding?.valueSet) {

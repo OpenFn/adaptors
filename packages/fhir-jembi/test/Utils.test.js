@@ -62,6 +62,14 @@ describe('identifier', () => {
     ]);
   });
 
+  it('should use the system map', () => {
+    const result = identifier({ value: 'bob', system: 'UAN' });
+    expect(result).to.eql({
+      value: 'bob',
+      system: 'http://moh.gov.et/fhir/hiv/identifier/UAN',
+    });
+  });
+
   // TODO is there some way to say if the provided system is an override or default?
 });
 

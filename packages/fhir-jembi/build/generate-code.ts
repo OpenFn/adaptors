@@ -286,11 +286,30 @@ const mapTypeDef = (propName: string, schema: Schema) => {
     }
     assignments.push(ifPropInInput(prop, body, undefined, inputName));
   }
+
+  if (schema.hasSystem) {
+    assignments.push(
+      b.expressionStatement(
+        b.assignmentExpression(
+          '=',
+          b.identifier(propName),
+          b.callExpression(
+            b.memberExpression(
+              b.identifier('util'),
+              b.identifier('mapSystems')
+            ),
+            [b.identifier(propName)]
+          )
+        )
+      )
+    );
+  }
+
   if (schema.isArray) {
     assignments.splice(
       0,
       0,
-      b.variableDeclaration('const', [
+      b.variableDeclaration('let', [
         b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
       ])
     );
@@ -310,7 +329,7 @@ const mapTypeDef = (propName: string, schema: Schema) => {
     );
     statements.push(
       b.forOfStatement(
-        b.variableDeclaration('const', [b.identifier('item')]),
+        b.variableDeclaration('let', [b.identifier('item')]),
         b.identifier('src'),
         b.blockStatement(assignments)
       )

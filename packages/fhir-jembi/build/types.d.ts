@@ -13,4 +13,6 @@ type Schema = {
   type: string;
   isArray: boolean;
   defaults: Record<string, any>;
+  /** True if this prop includes a system */
+  hasSystem?: boolean;
 };

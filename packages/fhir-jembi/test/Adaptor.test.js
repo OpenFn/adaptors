@@ -126,22 +126,15 @@ describe('Patient', () => {
   it('should convert CDR to NDR', () => {
     const input = fixtures.cdr.patient;
 
-    // This has to go in mapping code, but should be re-usable across types
-    const mapIdentifiers = ids => {
-      const map = {
-        'http://cdr.aacahb.gov.et/SmartCareID':
-          'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
-        'http://cdr.aacahb.gov.et/MRN':
-          'http://moh.gov.et/fhir/hiv/identifier/MRN',
-        'http://cdr.aacahb.gov.et/UAN':
-          'http://moh.gov.et/fhir/hiv/identifier/UAN',
-      };
-
-      return ids.map(id => ({
-        ...id,
-        system: map[id.system] ?? id.system,
-      }));
-    };
+    // set system mappings - identifier should use this automagically
+    util.setSystemMap({
+      'http://cdr.aacahb.gov.et/SmartCareID':
+        'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
+      'http://cdr.aacahb.gov.et/MRN':
+        'http://moh.gov.et/fhir/hiv/identifier/MRN',
+      'http://cdr.aacahb.gov.et/UAN':
+        'http://moh.gov.et/fhir/hiv/identifier/UAN',
+    });
 
     // address mapping is a bit painful right now
     // but I think we can get this working from strings automatically
@@ -175,7 +168,7 @@ describe('Patient', () => {
           'http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation'
         )
       ),
-      identifier: mapIdentifiers(input.identifier),
+      identifier: input.identifier,
       name: input.name,
       telecom: input.telecom,
       gender: input.gender,
