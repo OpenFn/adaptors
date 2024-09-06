@@ -162,7 +162,7 @@ describe('Patient', () => {
     };
 
     const religion = util.findExtension(
-      input.extension,
+      input,
       'http://hl7.org/fhir/StructureDefinition/patient-religion'
     ).valueCodeableConcept.coding[0];
 

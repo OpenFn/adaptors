@@ -1,5 +1,9 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.10
+
+util.concept accepts codings as an array
+
 ## 0.0.9
 
 Fix utils namespace

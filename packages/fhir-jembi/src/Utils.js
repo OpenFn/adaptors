@@ -75,8 +75,8 @@ export const addExtension = (resource, url, value) => {
  * @public
  * @function
  */
-export const findExtension = (arr, targetUrl, path) => {
-  const result = arr.find(ext => ext.url === targetUrl);
+export const findExtension = (obj, targetUrl, path) => {
+  const result = obj.extension.find(ext => ext.url === targetUrl);
   if (result && path) {
     return _.get(result, path);
   }
@@ -92,19 +92,29 @@ export const findExtension = (arr, targetUrl, path) => {
  */
 export const coding = (code, system) => ({ code, system });
 
-// TODO: accept an array of [code, system] "tuples" as codings
 /**
- * Create a codeable concept
+ * Create a codeable concept. Codings can be coding objects or
+ * [code, system] tuples
  * @public
  * @function
  */
 export const concept = (text, ...codings) => {
+  const result = {};
   if (typeof text === 'string') {
-    return {
-      text,
-      coding: codings,
-    };
+    result.text = text;
   } else {
-    return { coding: [text, ...codings] };
+    codings = [text].concat(codings);
   }
+
+  const c = [];
+  for (const item of codings) {
+    if (Array.isArray(item)) {
+      c.push(coding(item[0], item[1]));
+    } else {
+      c.push(item);
+    }
+  }
+  result.coding = c;
+
+  return result;
 };

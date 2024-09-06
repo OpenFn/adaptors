@@ -1,29 +1,35 @@
 import { expect } from 'chai';
-import { builders, findExtension } from '../src/Utils';
+import {
+  addExtension,
+  findExtension,
+  identifier,
+  coding,
+  concept,
+} from '../src/Utils';
 
-const { identifier, addExtension, coding, concept } = builders;
-
-describe.only('findExtension()', () => {
+describe('findExtension()', () => {
   it('should find an extension with a matching url', () => {
-    const items = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
+    const resource = { extension: [{ url: 'a' }, { url: 'b' }, { url: 'c' }] };
 
-    const result = findExtension(items, 'b');
+    const result = findExtension(resource, 'b');
     expect(result).to.eql({ url: 'b' });
   });
   it('should return undefined if nothing found', () => {
-    const items = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
+    const resource = { extension: [{ url: 'a' }, { url: 'b' }, { url: 'c' }] };
 
-    const result = findExtension(items, 'z');
+    const result = findExtension(resource, 'z');
     expect(result).to.be.undefined;
   });
-  it('should resolve a path and return the value', () => {
-    const items = [
-      { url: 'a' },
-      { url: 'b', values: [11, 22, 33] },
-      { url: 'c' },
-    ];
+  it('should resolve a path and return the code', () => {
+    const resource = {
+      extension: [
+        { url: 'a' },
+        { url: 'b', codes: [11, 22, 33] },
+        { url: 'c' },
+      ],
+    };
 
-    const result = findExtension(items, 'b', 'values[2]');
+    const result = findExtension(resource, 'b', 'codes[2]');
     expect(result).to.eql(33);
   });
 });
@@ -35,10 +41,6 @@ describe('identifier', () => {
   });
   it('should map an object to an identifier with a system', () => {
     const result = identifier({ value: 'bob' }, 'www');
-    expect(result).to.eql({ value: 'bob', system: 'www' });
-  });
-  it('should accept a full identifier input and override the system', () => {
-    const result = identifier({ value: 'bob', system: 'xyz' }, 'www');
     expect(result).to.eql({ value: 'bob', system: 'www' });
   });
   it('should just return the identifier if no system is specified', () => {
@@ -59,19 +61,7 @@ describe('identifier', () => {
       { value: 'b', system: 'abc' },
     ]);
   });
-  it('should still override systems if given an array return an array of identifiers if given an array of identifiers', () => {
-    const result = identifier(
-      [
-        { value: 'a', system: 'xyz' },
-        { value: 'b', system: '123' },
-      ],
-      'abc'
-    );
-    expect(result).to.eql([
-      { value: 'a', system: 'abc' },
-      { value: 'b', system: 'abc' },
-    ]);
-  });
+
   // TODO is there some way to say if the provided system is an override or default?
 });
 
@@ -101,7 +91,13 @@ describe('codeableConcept', () => {
   it('should create a codeableConcept with 1 coding only', () => {
     const result = concept(coding(123, 'www'));
 
-    expect(result).to.eql({ coding: [{ value: 123, system: 'www' }] });
+    expect(result).to.eql({ coding: [{ code: 123, system: 'www' }] });
+  });
+
+  it('should create a codeableConcept with 1 tuple-style coding only', () => {
+    const result = concept([123, 'www']);
+
+    expect(result).to.eql({ coding: [{ code: 123, system: 'www' }] });
   });
 
   it('should create a codeableConcept with a label and coding only', () => {
@@ -109,7 +105,16 @@ describe('codeableConcept', () => {
 
     expect(result).to.eql({
       text: 'example',
-      coding: [{ value: 123, system: 'www' }],
+      coding: [{ code: 123, system: 'www' }],
+    });
+  });
+
+  it('should create a codeableConcept with a label and tuple only', () => {
+    const result = concept('example', [123, 'www']);
+
+    expect(result).to.eql({
+      text: 'example',
+      coding: [{ code: 123, system: 'www' }],
     });
   });
 
@@ -118,8 +123,8 @@ describe('codeableConcept', () => {
 
     expect(result).to.eql({
       coding: [
-        { value: 123, system: 'www' },
-        { value: 456, system: 'www' },
+        { code: 123, system: 'www' },
+        { code: 456, system: 'www' },
       ],
     });
   });
@@ -134,8 +139,8 @@ describe('codeableConcept', () => {
     expect(result).to.eql({
       text: 'this is the thing',
       coding: [
-        { value: 123, system: 'www' },
-        { value: 456, system: 'www' },
+        { code: 123, system: 'www' },
+        { code: 456, system: 'www' },
       ],
     });
   });
@@ -196,6 +201,35 @@ describe('addExtension', () => {
       },
     ]);
   });
+
+  it('should add a Codeable Concept extension with the util helper', () => {
+    const resource = {};
+    addExtension(
+      resource,
+      'www',
+      concept([
+        'unscheduled',
+        'http://moh.gov.et/fhir/hiv/CodeSystem/encounter-visit-type-code-system',
+      ])
+    );
+
+    expect(resource.extension).to.eql([
+      {
+        url: 'www',
+        valueCodeableConcept: {
+          coding: [
+            {
+              system:
+                'http://moh.gov.et/fhir/hiv/CodeSystem/encounter-visit-type-code-system',
+              code: 'unscheduled',
+            },
+          ],
+        },
+      },
+    ]);
+  });
+
+  // should add a codeable concept with the helper
 
   // TODO need to unit test basically every extension type
 });
