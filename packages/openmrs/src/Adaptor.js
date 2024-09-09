@@ -27,8 +27,6 @@ export function execute(...operations) {
 
 /**
  * Gets patient matching a uuid
- * @example
- * getPatient("123")
  * @function
  * @public
  * @param {string} uuid - A uuid for the patient
@@ -179,36 +177,13 @@ export function searchPatient(query, callback = s => s) {
 
     console.log('Searching for patient with query:', resolvedQuery);
 
-    let response;
-    let requestQuery = resolvedQuery;
-    let allowPagination = isNaN(requestQuery.startIndex);
-
-    do {
-      // Make the first request
-      const res = await request(
-        state,
-        'GET',
-        '/ws/rest/v1/patient',
-        {},
-        requestQuery
-      );
-
-      response
-        ? response.body.results.push(...res.body.results)
-        : (response = res);
-
-      if (res?.body?.links?.[0]?.rel === 'next') {
-        const urlObj = new URL(res.body.links[0].uri);
-        const params = new URLSearchParams(urlObj.search);
-        const startIndex = params.get('startIndex');
-
-        requestQuery = { ...requestQuery, startIndex };
-      } else {
-        delete response.body.links;
-        // Exit the loop when no more data is available
-        break;
-      }
-    } while (allowPagination);
+    const response = await request(
+      state,
+      'GET',
+      '/ws/rest/v1/patient',
+      {},
+      resolvedQuery
+    );
 
     return prepareNextState(state, response, callback);
   };
@@ -338,35 +313,13 @@ export function getEncounters(query, callback = s => s) {
     const [resolvedQuery] = expandReferences(state, query);
     console.log('Fetching encounters by query', resolvedQuery);
 
-    let response;
-    let requestQuery = resolvedQuery;
-    let allowPagination = isNaN(requestQuery.startIndex);
-
-    do {
-      const res = await request(
-        state,
-        'GET',
-        `/ws/rest/v1/encounter/`,
-        {},
-        requestQuery
-      );
-
-      response
-        ? response.body.results.push(...res.body.results)
-        : (response = res);
-
-      if (res?.body?.links?.[0]?.rel === 'next') {
-        const urlObj = new URL(res.body.links[0].uri);
-        const params = new URLSearchParams(urlObj.search);
-        const startIndex = params.get('startIndex');
-
-        requestQuery = { ...requestQuery, startIndex };
-      } else {
-        delete response.body.links;
-        // Exit the loop when no more data is available
-        break;
-      }
-    } while (allowPagination);
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/`,
+      {},
+      resolvedQuery
+    );
     console.log(`Found ${response.body.results.length} results`);
 
     return prepareNextState(state, response, callback);
@@ -541,8 +494,6 @@ export {
   fnIf,
   field,
   fields,
-  cursor,
-  dateFns,
   sourceValue,
   merge,
   dataPath,
