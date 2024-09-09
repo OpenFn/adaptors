@@ -55,7 +55,7 @@ const autoFetchRequest = async (method, url, options) => {
     )?.uri;
 
     if (nextUrl) {
-      console.log(`Found ${response.body.results.length} results`);
+      console.log(`Fetched ${response.body.results.length} results`);
       console.log(`Fetching next page from ${nextUrl}`);
       const urlObj = new URL(nextUrl);
       const params = new URLSearchParams(urlObj.search);
