@@ -15,7 +15,7 @@ export const prepareNextState = (state, response, callback) => {
   return callback(nextState);
 };
 
-export function request(state, method, path, data, params) {
+export async function request(state, method, path, data, params) {
   const { instanceUrl, username, password } = state.configuration;
   const headers = makeBasicAuthHeader(username, password);
 
@@ -31,19 +31,13 @@ export function request(state, method, path, data, params) {
 
   const url = `${instanceUrl}${path}`;
 
-  return autoFetchRequest(method, url, options);
-}
-
-const autoFetchRequest = async (method, url, options) => {
   let allResponses;
-  let reqQuery = options?.query;
-  let allowPagination = isNaN(reqQuery?.startIndex);
+  let query = options?.query;
+  let allowPagination = isNaN(query?.startIndex);
 
   do {
-    const response = await commonRequest(method, url, {
-      ...options,
-      query: reqQuery ?? {},
-    });
+    const requestOptions = query ? { ...options, query } : options;
+    const response = await commonRequest(method, url, requestOptions);
     logResponse(response);
 
     allResponses
@@ -61,7 +55,7 @@ const autoFetchRequest = async (method, url, options) => {
       const params = new URLSearchParams(urlObj.search);
       const startIndex = params.get('startIndex');
 
-      reqQuery = { ...reqQuery, startIndex };
+      query = { ...query, startIndex };
     } else {
       delete allResponses.body.links;
       break;
@@ -69,4 +63,4 @@ const autoFetchRequest = async (method, url, options) => {
   } while (allowPagination);
 
   return allResponses;
-};
+}
