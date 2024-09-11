@@ -58,63 +58,6 @@
       "valid": true
     },
     {
-      "name": "createEncounter",
-      "params": [
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "Creates an encounter",
-        "tags": [
-          {
-            "title": "example",
-            "description": "createEncounter({\n  encounterDatetime: '2023-05-25T06:08:25.000+0000',\n  patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n  encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',\n  location: 'ba685651-ed3b-4e63-9b35-78893060758a',\n  encounterProviders: [],\n  visit: {\n    patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n    visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',\n    startDatetime: '2023-05-25T06:08:25.000+0000',\n    stopDatetime: '2023-05-25T06:09:25.000+0000',\n  },\n})",
-            "caption": "Create an encounter"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Data parameters of the encounter",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "get",
       "params": [
         "path",
@@ -359,62 +302,6 @@
       "valid": true
     },
     {
-      "name": "createPatient",
-      "params": [
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "Creates a new patient",
-        "tags": [
-          {
-            "title": "example",
-            "description": "createPatient({\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Object parameters of the patient",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "getEncounter",
       "params": [
         "uuid",
@@ -588,6 +475,16 @@
             "title": "example",
             "description": "create(\"person\", {\n  names: [\n    {\n      givenName: \"Mohit\",\n      familyName: \"Kumar\",\n    },\n  ],\n  gender: \"M\",\n  birthdate: \"1997-09-02\",\n  addresses: [\n    {\n      address1: \"30, Vivekananda Layout, Munnekolal,Marathahalli\",\n      cityVillage: \"Bengaluru\",\n      country: \"India\",\n      postalCode: \"560037\",\n    },\n  ],\n});",
             "caption": "Create a person"
+          },
+          {
+            "title": "example",
+            "description": "create(\"encounter\", {\n  encounterDatetime: '2023-05-25T06:08:25.000+0000',\n  patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n  encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',\n  location: 'ba685651-ed3b-4e63-9b35-78893060758a',\n  encounterProviders: [],\n  visit: {\n    patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n    visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',\n    startDatetime: '2023-05-25T06:08:25.000+0000',\n    stopDatetime: '2023-05-25T06:09:25.000+0000',\n  },\n})",
+            "caption": "Create an encounter"
+          },
+          {
+            "title": "example",
+            "description": "create(\"patient\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
+            "caption": "Create a patient"
           }
         ]
       },
