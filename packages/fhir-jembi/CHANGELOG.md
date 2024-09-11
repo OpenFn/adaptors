@@ -2,9 +2,10 @@
 
 ## 0.0.9
 
-Fix prop mapping which arent in an array util.concept accepts codings as an
-array allow systems map to map system shorthands and longhands to new values Fix
-utils namespace
+- Fix prop mapping which arent in an array util.
+- concept accepts codings as anarray allow systems map to map system shorthands
+  and longhands to new values
+- Fix utils namespace
 
 ## 0.0.8
 
