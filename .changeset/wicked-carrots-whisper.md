@@ -5,7 +5,7 @@
 - Add pagination support on request helper function
 - Remove `createEncounter` and `createPatient` functions
 
-### Breaking Changes
+### Migration Guide
 
 The `createEncounter` and `createPatient` functions have been removed from the
 OpenMRS adaptor. These functions were used to create new encounters and
