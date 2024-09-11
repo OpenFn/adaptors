@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { request } from '../src/Utils';
 
 import {
-  execute,
   get,
   post,
-  searchPatient,
+  execute,
   getPatient,
   searchPerson,
+  searchPatient,
 } from '../src';
 
 const testServer = enableMockClient('https://fn.openmrs.org');
@@ -61,7 +61,7 @@ describe('execute', () => {
 });
 
 describe('request', () => {
-  it('should search for a patient', async () => {
+  it('should GET with a query', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
@@ -132,6 +132,26 @@ describe('request', () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah', limit: 1 },
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {
+          results: [{ display: 'Sarah 1' }],
+          links: [
+            {
+              rel: 'next',
+              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
+              resourceAlias: null,
+            },
+          ],
+        },
+        { ...jsonHeaders }
+      );
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
         query: { q: 'Sarah', limit: 1, startIndex: 1 },
         method: 'GET',
       })
@@ -157,18 +177,15 @@ describe('request', () => {
 });
 
 describe('get', () => {
-  before(() => {
+  it('should get an encounter by uuid', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
         method: 'GET',
       })
       .reply(200, { uuid: '123' }, { ...jsonHeaders });
-  });
 
-  it('should get an encounter by uuid', async () => {
     const state = { configuration };
-
     const { data } = await execute(get('encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
@@ -176,7 +193,7 @@ describe('get', () => {
 });
 
 describe('post', () => {
-  before(() => {
+  it('should post an encounter', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter',
@@ -185,11 +202,8 @@ describe('post', () => {
       .reply(200, ({ body }) => body, {
         ...jsonHeaders,
       });
-  });
 
-  it('should post an encounter', async () => {
     const state = { configuration };
-
     const { data } = await execute(
       post('encounter', {
         patient: '123',
@@ -210,7 +224,7 @@ describe('post', () => {
 });
 
 describe('getPatient', () => {
-  before(() => {
+  it('should get a patient by uuid', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
@@ -221,11 +235,8 @@ describe('getPatient', () => {
         { uuid: 'b52ec6f9-0e26-424c-a4a1-c64f9d571eb3' },
         { ...jsonHeaders }
       );
-  });
 
-  it('should get a patient by uuid', async () => {
     const state = { configuration };
-
     const { data } = await execute(
       getPatient('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3')
     )(state);
@@ -235,24 +246,13 @@ describe('getPatient', () => {
 });
 
 describe('searchPerson', () => {
-  before(() => {
+  it('should search for a person', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/person?q=Sarah',
         method: 'GET',
       })
-      .reply(
-        200,
-        { results: [{ display: 'Sarah' }] },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  });
-
-  it('should search for a person', async () => {
+      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
     const state = { configuration };
 
     const { data } = await execute(
@@ -266,26 +266,15 @@ describe('searchPerson', () => {
 });
 
 describe('searchPatient', () => {
-  before(() => {
+  it('should search for a patient', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient?q=Sarah',
         method: 'GET',
       })
-      .reply(
-        200,
-        { results: [{ display: 'Sarah' }] },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  });
+      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
 
-  it('should search for a patient', async () => {
     const state = { configuration };
-
     const { data } = await execute(
       searchPatient({
         q: 'Sarah',
