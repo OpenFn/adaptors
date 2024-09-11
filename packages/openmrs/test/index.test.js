@@ -1,6 +1,7 @@
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 import { request } from '../src/Utils';
+import testData from './fixtures.json' assert { type: 'json' };
 
 import {
   get,
@@ -204,23 +205,13 @@ describe('post', () => {
         ...jsonHeaders,
       });
 
-    const state = { configuration };
-    const { data } = await execute(
-      post('encounter', {
-        patient: '123',
-        encounterType: '123',
-        location: '123',
-        encounterProviders: [],
-        visit: {
-          patient: '123',
-          visitType: '123',
-          startDatetime: '2023-05-25T06:08:25.000+0000',
-          stopDatetime: '2023-05-25T06:09:25.000+0000',
-        },
-      })
-    )(state);
+    const { encounter } = testData;
+    const state = { configuration, encounter };
+    const { data } = await execute(post('encounter', state => state.encounter))(
+      state
+    );
 
-    expect(data.patient).to.eql('123');
+    expect(data.patient).to.eql('1fdaa696-e759-4a7d-a066-f1ae557c151b');
   });
 });
 
@@ -235,33 +226,49 @@ describe('create', () => {
         ...jsonHeaders,
       });
 
-    const patient = {
-      identifiers: [
-        {
-          identifier: '4023287',
-          identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
-          preferred: true,
-        },
-      ],
-      person: {
-        gender: 'M',
-        age: 42,
-        birthdate: '1970-01-01T00:00:00.000+0100',
-        birthdateEstimated: false,
-        names: [
-          {
-            givenName: 'Doe',
-            familyName: 'John',
-          },
-        ],
-      },
-    };
+    const { patient } = testData;
     const state = { configuration, patient };
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
 
     expect(data).to.eql(patient);
+  });
+  it('should throw an error if the resource is not found', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/wrong-resource',
+        method: 'POST',
+      })
+      .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
+
+    const state = { configuration };
+    try {
+      await execute(create('wrong-resource'))(state);
+    } catch (error) {
+      expect(error.body.error).to.eql('Not Found');
+    }
+  });
+  it('should expand references', async () => {
+    const { patient } = testData;
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        method: 'POST',
+      })
+      .reply(
+        200,
+        ({ body }) => {
+          expect(body).to.eql(JSON.stringify(patient));
+          return body;
+        },
+        {
+          ...jsonHeaders,
+        }
+      );
+
+    const state = { configuration, patient };
+    await execute(create('patient', state => state.patient))(state);
   });
 });
 
