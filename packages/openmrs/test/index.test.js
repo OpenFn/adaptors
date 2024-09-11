@@ -175,6 +175,7 @@ describe('request', () => {
     );
 
     expect(body.results[0].display).to.eql('Sarah 2');
+    expect(body.results.length).to.eql(1);
   });
 });
 
