@@ -27,8 +27,6 @@ export function execute(...operations) {
 
 /**
  * Gets patient matching a uuid
- * @example
- * getPatient("123")
  * @function
  * @public
  * @param {string} uuid - A uuid for the patient
@@ -175,7 +173,7 @@ export function post(path, data, callback = s => s) {
  */
 export function searchPatient(query, callback = s => s) {
   return async state => {
-    const [resolvedQuery = {}] = expandReferences(state, query);
+    const [resolvedQuery] = expandReferences(state, query);
 
     console.log('Searching for patient with query:', resolvedQuery);
 
@@ -186,8 +184,6 @@ export function searchPatient(query, callback = s => s) {
       {},
       resolvedQuery
     );
-
-    console.log(`Found ${response.body.results.length} patients`);
 
     return prepareNextState(state, response, callback);
   };
@@ -324,8 +320,8 @@ export function getEncounters(query, callback = s => s) {
       {},
       resolvedQuery
     );
+    console.log(`Found ${response.body.results.length} results`);
 
-    console.log(`Found ${response.body.results.length}} results`);
     return prepareNextState(state, response, callback);
   };
 }

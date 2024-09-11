@@ -10,10 +10,6 @@
         "description": "Gets patient matching a uuid",
         "tags": [
           {
-            "title": "example",
-            "description": "getPatient(\"123\")"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
