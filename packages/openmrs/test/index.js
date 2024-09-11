@@ -5,6 +5,7 @@ import { request } from '../src/Utils';
 import {
   get,
   post,
+  create,
   execute,
   getPatient,
   searchPerson,
@@ -220,6 +221,47 @@ describe('post', () => {
     )(state);
 
     expect(data.patient).to.eql('123');
+  });
+});
+
+describe('create', () => {
+  it('should create a patient', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body, {
+        ...jsonHeaders,
+      });
+
+    const patient = {
+      identifiers: [
+        {
+          identifier: '4023287',
+          identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
+          preferred: true,
+        },
+      ],
+      person: {
+        gender: 'M',
+        age: 42,
+        birthdate: '1970-01-01T00:00:00.000+0100',
+        birthdateEstimated: false,
+        names: [
+          {
+            givenName: 'Doe',
+            familyName: 'John',
+          },
+        ],
+      },
+    };
+    const state = { configuration, patient };
+    const { data } = await execute(create('patient', state => state.patient))(
+      state
+    );
+
+    expect(data).to.eql(patient);
   });
 });
 

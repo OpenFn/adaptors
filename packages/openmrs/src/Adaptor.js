@@ -53,46 +53,6 @@ export function getPatient(uuid, callback = s => s) {
 }
 
 /**
- * Creates an encounter
- * @example <caption>Create an encounter</caption>
- * createEncounter({
- *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
- *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
- *   encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',
- *   location: 'ba685651-ed3b-4e63-9b35-78893060758a',
- *   encounterProviders: [],
- *   visit: {
- *     patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
- *     visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',
- *     startDatetime: '2023-05-25T06:08:25.000+0000',
- *     stopDatetime: '2023-05-25T06:09:25.000+0000',
- *   },
- * })
- * @function
- * @public
- * @param {object} data - Data parameters of the encounter
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function createEncounter(data, callback = s => s) {
-  return async state => {
-    const [resolvedData] = expandReferences(state, data);
-
-    console.log(`Creating an encounter.`);
-
-    const response = await request(
-      state,
-      'POST',
-      '/ws/rest/v1/encounter',
-      resolvedData
-    );
-
-    console.log(`Created encounter with new UUID: ${response.body.id}`);
-    return prepareNextState(state, response, callback);
-  };
-}
-
-/**
  * Make a get request to any OpenMRS endpoint
  * @example
  * get("patient", {
@@ -220,56 +180,6 @@ export function searchPerson(query, callback = s => s) {
 }
 
 /**
- * Creates a new patient
- * @example
- * createPatient({
- *   identifiers: [
- *     {
- *       identifier: '4023287',
- *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
- *       preferred: true,
- *     },
- *   ],
- *   person: {
- *     gender: 'M',
- *     age: 42,
- *     birthdate: '1970-01-01T00:00:00.000+0100',
- *     birthdateEstimated: false,
- *     names: [
- *       {
- *         givenName: 'Doe',
- *         familyName: 'John',
- *       },
- *     ],
- *   },
- * })
- * @function
- * @public
- * @param {object} data - Object parameters of the patient
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function createPatient(data, callback = s => s) {
-  return async state => {
-    const [resolvedData] = expandReferences(state, data);
-    console.log(`Creating a patient.`);
-
-    const response = await request(
-      state,
-      'POST',
-      '/ws/rest/v1/person',
-      resolvedData
-    );
-
-    console.log(
-      `Successfully created a patient with UUID: ${response?.body?.uuid}`
-    );
-
-    return prepareNextState(state, response, callback);
-  };
-}
-
-/**
  * Gets encounter matching a uuid
  * @example
  * getEncounter("123")
@@ -353,6 +263,42 @@ export function getEncounters(query, callback = s => s) {
  *     },
  *   ],
  * });
+ * @example <caption>Create an encounter</caption>
+ * create("encounter", {
+ *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
+ *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
+ *   encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',
+ *   location: 'ba685651-ed3b-4e63-9b35-78893060758a',
+ *   encounterProviders: [],
+ *   visit: {
+ *     patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
+ *     visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',
+ *     startDatetime: '2023-05-25T06:08:25.000+0000',
+ *     stopDatetime: '2023-05-25T06:09:25.000+0000',
+ *   },
+ * })
+ * @example <caption>Create a patient</caption>
+ * create("patient", {
+ *   identifiers: [
+ *     {
+ *       identifier: '4023287',
+ *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
+ *       preferred: true,
+ *     },
+ *   ],
+ *   person: {
+ *     gender: 'M',
+ *     age: 42,
+ *     birthdate: '1970-01-01T00:00:00.000+0100',
+ *     birthdateEstimated: false,
+ *     names: [
+ *       {
+ *         givenName: 'Doe',
+ *         familyName: 'John',
+ *       },
+ *     ],
+ *   },
+ * })
  */
 export function create(resourceType, data, callback = s => s) {
   return async state => {
