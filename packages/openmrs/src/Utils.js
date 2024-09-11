@@ -40,10 +40,11 @@ export async function request(state, method, path, data, params) {
     const response = await commonRequest(method, url, requestOptions);
     logResponse(response);
 
-    allResponses
-      ? allResponses.body.results.push(...response.body.results)
-      : (allResponses = response);
-
+    if (allResponses) {
+      allResponses.body.results.push(...response.body.results);
+    } else {
+      allResponses = response;
+    }
     const nextUrl = response?.body?.links?.find(
       link => link.rel === 'next'
     )?.uri;
