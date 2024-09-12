@@ -2,10 +2,6 @@
 <dt>
     <a href="#create">create(resourceType, data, [callback])</a></dt>
 <dt>
-    <a href="#createencounter">createEncounter(data, [callback])</a></dt>
-<dt>
-    <a href="#createpatient">createPatient(data, [callback])</a></dt>
-<dt>
     <a href="#get">get(path, query, [callback])</a></dt>
 <dt>
     <a href="#getencounter">getEncounter(uuid, [callback])</a></dt>
@@ -35,10 +31,16 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -100,24 +102,9 @@ create("person", {
   ],
 });
 ```
-
-* * *
-
-### createEncounter
-
-<p><code>createEncounter(data, [callback]) ⇒ Operation</code></p>
-
-Creates an encounter
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | Data parameters of the encounter |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
 **Example:** Create an encounter
 ```js
-createEncounter({
+create("encounter", {
   encounterDatetime: '2023-05-25T06:08:25.000+0000',
   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
   encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',
@@ -131,24 +118,9 @@ createEncounter({
   },
 })
 ```
-
-* * *
-
-### createPatient
-
-<p><code>createPatient(data, [callback]) ⇒ Operation</code></p>
-
-Creates a new patient
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | Object parameters of the patient |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** Create a patient
 ```js
-createPatient({
+create("patient", {
   identifiers: [
     {
       identifier: '4023287',
@@ -246,10 +218,6 @@ Gets patient matching a uuid
 | uuid | <code>string</code> | A uuid for the patient |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**
-```js
-getPatient("123")
-```
 **Example:** Get a patient by uuid
 ```js
 getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
