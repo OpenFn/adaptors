@@ -1,5 +1,9 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.10
+
+- Improvements to observation (map references, default static values, and handle value)
+
 ## 0.0.9
 
 - Fix prop mapping which arent in an array util.
