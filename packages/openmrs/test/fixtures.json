@@ -1,0 +1,36 @@
+{
+    "patient": {
+        "identifiers": [
+            {
+                "identifier": "4023287",
+                "identifierType": "05a29f94-c0ed-11e2-94be-8c13b969e334",
+                "preferred": true
+            }
+        ],
+        "person": {
+            "gender": "M",
+            "age": 42,
+            "birthdate": "1970-01-01T00:00:00.000+0100",
+            "birthdateEstimated": false,
+            "names": [
+                {
+                    "givenName": "Doe",
+                    "familyName": "John"
+                }
+            ]
+        }
+    },
+    "encounter": {
+        "patient": "1fdaa696-e759-4a7d-a066-f1ae557c151b",
+        "encounterDatetime": "2023-05-25T06:08:25.000+0000",
+        "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+        "location": "ba685651-ed3b-4e63-9b35-78893060758a",
+        "encounterProviders": [],
+        "visit": {
+            "patient": "1fdaa696-e759-4a7d-a066-f1ae557c151b",
+            "visitType": "7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+            "startDatetime": "2023-05-25T06:08:25.000+0000",
+            "stopDatetime": "2023-05-25T06:09:25.000+0000"
+        }
+    }
+}
