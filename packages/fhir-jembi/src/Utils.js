@@ -144,3 +144,23 @@ export const concept = (text, ...codings) => {
 
   return result;
 };
+
+// opts is { type, identifier, display}
+export const reference = (ref, opts) => {
+  // if passed a rull reference, just return it
+  if (ref.reference) {
+    return ref;
+  }
+
+  const result = {};
+
+  if (typeof ref === 'string') {
+    result.reference = ref;
+  }
+
+  if (opts) {
+    Object.assign(result, opts);
+  }
+
+  return result;
+};

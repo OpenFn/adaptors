@@ -32,6 +32,16 @@ describe('General', () => {
 
     expect(result.gender).to.equal(0);
   });
+
+  it('should map a Reference string', () => {
+    const result = builders.observation('patient-occupation-observation', {
+      subject: 'patient/123',
+    });
+
+    expect(result.subject).to.eql({
+      reference: 'patient/123',
+    });
+  });
 });
 
 describe('Encounter', () => {

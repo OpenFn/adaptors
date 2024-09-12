@@ -6,6 +6,7 @@ import {
   coding,
   concept,
 } from '../src/Utils';
+import { reference } from '../src/Utils';
 
 describe('findExtension()', () => {
   it('should find an extension with a matching url', () => {
@@ -237,7 +238,43 @@ describe('addExtension', () => {
     ]);
   });
 
-  // should add a codeable concept with the helper
-
   // TODO need to unit test basically every extension type
+  // should add a codeable concept with the helper
+});
+
+describe('reference', () => {
+  it('should just return an existing reference', () => {
+    const r = { reference: 'patient/a' };
+    const result = reference(r);
+
+    expect(result).to.eql(r);
+  });
+
+  it('should accept a string id', () => {
+    const result = reference('x');
+
+    expect(result).to.eql({ reference: 'x' });
+  });
+
+  it('should apply options', () => {
+    const result = reference('x', {
+      display: 'd',
+      type: 't',
+      identifier: 'i',
+    });
+
+    expect(result).to.eql({
+      reference: 'x',
+      display: 'd',
+      type: 't',
+      identifier: 'i',
+    });
+  });
+
+  // this is the behaviour right now - should we change it?
+  it('should apply options not in the spec', () => {
+    const result = reference('x', { foo: 'bar' });
+
+    expect(result).to.eql({ reference: 'x', foo: 'bar' });
+  });
 });

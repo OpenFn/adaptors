@@ -118,9 +118,11 @@ const mapProps = (schema, mappings) => {
       } else {
         switch (spec.type) {
           case 'string':
-          case 'Reference':
           case 'Period':
             props.push(mapSimpleProp(key, mappings[key]));
+            break;
+          case 'Reference':
+            props.push(mapReference(key, mappings[key], spec));
             break;
           case 'Identifier':
             props.push(mapIdentifier(key, mappings[key] || {}, spec));
@@ -382,6 +384,15 @@ const mapExtension = (propName: string, mapping: Mapping) => {
   return ifPropInInput(propName, [callBuilder]);
 };
 
+const mapReference = (propName: string, _mapping: Mapping, _schema: Schema) => {
+  const callBuilder = b.callExpression(
+    b.memberExpression(b.identifier('util'), b.identifier('reference')),
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
+  );
+
+  return ifPropInInput(propName, [assignToInput(propName, callBuilder)]);
+};
+
 // this will ensure a meta prop on the data
 const addMeta = (schema, _mapping) => {
   return b.expressionStatement(
@@ -398,7 +409,7 @@ const addMeta = (schema, _mapping) => {
   );
 };
 
-const mapIdentifier = (name: string, mapping: Mapping, schema: Schema) => {
+const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   const defaultSystem = schema.defaults?.system;
 
   const statements: StatementKind[] = [];

@@ -129,15 +129,15 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.episodeOfCare)) {
-        resource.episodeOfCare = props.episodeOfCare;
+        resource.episodeOfCare = util.reference(props.episodeOfCare);
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.participant)) {
@@ -173,7 +173,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.appointment)) {
-        resource.appointment = props.appointment;
+        resource.appointment = util.reference(props.appointment);
     }
 
     if (!_.isNil(props.period)) {
@@ -189,7 +189,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
-        resource.reasonReference = props.reasonReference;
+        resource.reasonReference = util.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.diagnosis)) {
@@ -225,7 +225,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.account)) {
-        resource.account = props.account;
+        resource.account = util.reference(props.account);
     }
 
     if (!_.isNil(props.hospitalization)) {
@@ -316,13 +316,11 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.serviceProvider)) {
-        resource.serviceProvider = props.serviceProvider;
-    } else {
-        resource.serviceProvider = {"reference":"Organization/Patient.managingOrganization"};
+        resource.serviceProvider = util.reference(props.serviceProvider);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     resource.meta = {
@@ -513,15 +511,15 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.episodeOfCare)) {
-        resource.episodeOfCare = props.episodeOfCare;
+        resource.episodeOfCare = util.reference(props.episodeOfCare);
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.participant)) {
@@ -557,7 +555,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.appointment)) {
-        resource.appointment = props.appointment;
+        resource.appointment = util.reference(props.appointment);
     }
 
     if (!_.isNil(props.period)) {
@@ -588,7 +586,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
-        resource.reasonReference = props.reasonReference;
+        resource.reasonReference = util.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.diagnosis)) {
@@ -624,7 +622,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.account)) {
-        resource.account = props.account;
+        resource.account = util.reference(props.account);
     }
 
     if (!_.isNil(props.hospitalization)) {
@@ -715,13 +713,11 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.serviceProvider)) {
-        resource.serviceProvider = props.serviceProvider;
-    } else {
-        resource.serviceProvider = {"reference":"Organization/Patient.managingOrganization"};
+        resource.serviceProvider = util.reference(props.serviceProvider);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     resource.meta = {
@@ -1022,11 +1018,11 @@ function patient_patient(props) {
     }
 
     if (!_.isNil(props.generalPractitioner)) {
-        resource.generalPractitioner = props.generalPractitioner;
+        resource.generalPractitioner = util.reference(props.generalPractitioner);
     }
 
     if (!_.isNil(props.managingOrganization)) {
-        resource.managingOrganization = props.managingOrganization;
+        resource.managingOrganization = util.reference(props.managingOrganization);
     }
 
     if (!_.isNil(props.link)) {
@@ -1216,11 +1212,11 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -1255,15 +1251,15 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -1271,7 +1267,7 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -1295,11 +1291,11 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -1347,11 +1343,11 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -1432,11 +1428,11 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -1471,15 +1467,15 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -1487,7 +1483,7 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -1511,11 +1507,11 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -1563,11 +1559,11 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -1648,11 +1644,11 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -1687,15 +1683,15 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -1703,7 +1699,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -1727,11 +1723,11 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -1811,7 +1807,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -1894,11 +1890,11 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -1933,15 +1929,15 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -1949,7 +1945,7 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -1973,11 +1969,11 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -2025,11 +2021,11 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -2112,11 +2108,11 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -2151,15 +2147,15 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -2167,7 +2163,7 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -2191,11 +2187,11 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -2243,11 +2239,11 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -2330,11 +2326,11 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -2369,15 +2365,15 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -2385,7 +2381,7 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -2409,11 +2405,11 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -2461,11 +2457,11 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -2548,11 +2544,11 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -2587,15 +2583,15 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -2603,7 +2599,7 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -2627,11 +2623,11 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -2679,11 +2675,11 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -2766,11 +2762,11 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -2805,15 +2801,15 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -2821,7 +2817,7 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -2845,11 +2841,11 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -2897,11 +2893,11 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -2984,11 +2980,11 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -3023,15 +3019,15 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -3039,7 +3035,7 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -3063,11 +3059,11 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -3115,11 +3111,11 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -3200,11 +3196,11 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -3239,15 +3235,15 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -3255,7 +3251,7 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -3279,11 +3275,11 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -3331,11 +3327,11 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -3418,11 +3414,11 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -3457,15 +3453,15 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -3473,7 +3469,7 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -3497,11 +3493,11 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -3549,11 +3545,11 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -3636,11 +3632,11 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -3675,15 +3671,15 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -3691,7 +3687,7 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -3715,11 +3711,11 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -3767,11 +3763,11 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -3854,11 +3850,11 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -3893,15 +3889,15 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -3909,7 +3905,7 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -3933,11 +3929,11 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -3985,11 +3981,11 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -4072,11 +4068,11 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -4111,15 +4107,15 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -4127,7 +4123,7 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -4151,11 +4147,11 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -4203,11 +4199,11 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -4290,11 +4286,11 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -4329,15 +4325,15 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -4345,7 +4341,7 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -4369,11 +4365,11 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -4421,11 +4417,11 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -4508,11 +4504,11 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -4547,15 +4543,15 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -4563,7 +4559,7 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -4587,11 +4583,11 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -4639,11 +4635,11 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -4724,11 +4720,11 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -4763,15 +4759,15 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -4779,7 +4775,7 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -4803,11 +4799,11 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -4855,11 +4851,11 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -4940,11 +4936,11 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -4979,15 +4975,15 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -4995,7 +4991,7 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -5019,11 +5015,11 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -5071,11 +5067,11 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -5158,11 +5154,11 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -5197,15 +5193,15 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -5213,7 +5209,7 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -5237,11 +5233,11 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -5289,11 +5285,11 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -5374,11 +5370,11 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -5413,15 +5409,15 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -5429,7 +5425,7 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -5453,11 +5449,11 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -5505,11 +5501,11 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -5592,11 +5588,11 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -5631,15 +5627,15 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -5647,7 +5643,7 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -5671,11 +5667,11 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -5723,11 +5719,11 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -5810,11 +5806,11 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -5849,15 +5845,15 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -5865,7 +5861,7 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -5889,11 +5885,11 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -5941,11 +5937,11 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -6028,11 +6024,11 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -6067,15 +6063,15 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -6083,7 +6079,7 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -6107,11 +6103,11 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -6159,11 +6155,11 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -6246,11 +6242,11 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -6285,15 +6281,15 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -6301,7 +6297,7 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -6325,11 +6321,11 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -6377,11 +6373,11 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -6464,11 +6460,11 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -6503,15 +6499,15 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -6519,7 +6515,7 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -6543,11 +6539,11 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -6595,11 +6591,11 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -6682,11 +6678,11 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -6721,15 +6717,15 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -6737,7 +6733,7 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -6761,11 +6757,11 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -6813,11 +6809,11 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -6900,11 +6896,11 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -6939,15 +6935,15 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -6955,7 +6951,7 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -6979,11 +6975,11 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -7031,11 +7027,11 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -7118,11 +7114,11 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -7157,15 +7153,15 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -7173,7 +7169,7 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -7197,11 +7193,11 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -7249,11 +7245,11 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -7336,11 +7332,11 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -7375,15 +7371,15 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -7391,7 +7387,7 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -7415,11 +7411,11 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -7467,11 +7463,11 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -7554,11 +7550,11 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -7593,15 +7589,15 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -7609,7 +7605,7 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -7633,11 +7629,11 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -7685,11 +7681,11 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -7772,11 +7768,11 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -7811,15 +7807,15 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -7827,7 +7823,7 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -7851,11 +7847,11 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -7903,11 +7899,11 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -7990,11 +7986,11 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -8029,15 +8025,15 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -8045,7 +8041,7 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -8069,11 +8065,11 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -8121,11 +8117,11 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -8208,11 +8204,11 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -8247,15 +8243,15 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -8263,7 +8259,7 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -8287,11 +8283,11 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -8339,11 +8335,11 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -8424,11 +8420,11 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -8463,15 +8459,15 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -8479,7 +8475,7 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -8503,11 +8499,11 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -8555,11 +8551,11 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -8642,11 +8638,11 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -8681,15 +8677,15 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -8697,7 +8693,7 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -8721,11 +8717,11 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -8773,11 +8769,11 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -8858,11 +8854,11 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -8897,15 +8893,15 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -8913,7 +8909,7 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -8937,11 +8933,11 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -8989,11 +8985,11 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -9076,11 +9072,11 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -9115,15 +9111,15 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -9131,7 +9127,7 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -9155,11 +9151,11 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -9207,11 +9203,11 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -9294,11 +9290,11 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -9333,15 +9329,15 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -9349,7 +9345,7 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -9373,11 +9369,11 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -9425,11 +9421,11 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -9512,11 +9508,11 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -9551,15 +9547,15 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -9567,7 +9563,7 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -9591,11 +9587,11 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -9643,11 +9639,11 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -9728,11 +9724,11 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -9767,15 +9763,15 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -9783,7 +9779,7 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -9807,11 +9803,11 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -9859,11 +9855,11 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -9946,11 +9942,11 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -9985,15 +9981,15 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -10001,7 +9997,7 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -10025,11 +10021,11 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -10077,11 +10073,11 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -10164,11 +10160,11 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -10203,15 +10199,15 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -10219,7 +10215,7 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -10243,11 +10239,11 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -10295,11 +10291,11 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -10382,11 +10378,11 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -10421,15 +10417,15 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -10437,7 +10433,7 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -10461,11 +10457,11 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -10513,11 +10509,11 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -10600,11 +10596,11 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -10639,15 +10635,15 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -10655,7 +10651,7 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -10679,11 +10675,11 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -10731,11 +10727,11 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -10818,11 +10814,11 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -10857,15 +10853,15 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -10873,7 +10869,7 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -10897,11 +10893,11 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -10949,11 +10945,11 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -11036,11 +11032,11 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -11075,15 +11071,15 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -11091,7 +11087,7 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -11115,11 +11111,11 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -11167,11 +11163,11 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -11254,11 +11250,11 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -11293,15 +11289,15 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -11309,7 +11305,7 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -11333,11 +11329,11 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -11385,11 +11381,11 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -11470,11 +11466,11 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -11509,15 +11505,15 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -11525,7 +11521,7 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -11549,11 +11545,11 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -11601,11 +11597,11 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -11688,11 +11684,11 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -11727,15 +11723,15 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -11743,7 +11739,7 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -11767,11 +11763,11 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -11819,11 +11815,11 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -11904,11 +11900,11 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -11943,15 +11939,15 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -11959,7 +11955,7 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -11983,11 +11979,11 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -12035,11 +12031,11 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -12120,11 +12116,11 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -12159,15 +12155,15 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -12175,7 +12171,7 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -12199,11 +12195,11 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -12251,11 +12247,11 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -12336,11 +12332,11 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -12375,15 +12371,15 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -12391,7 +12387,7 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -12415,11 +12411,11 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -12467,11 +12463,11 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -12552,11 +12548,11 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -12591,15 +12587,15 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -12607,7 +12603,7 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -12631,11 +12627,11 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -12683,11 +12679,11 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -12770,11 +12766,11 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -12809,15 +12805,15 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -12825,7 +12821,7 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -12849,11 +12845,11 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -12901,11 +12897,11 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -12988,11 +12984,11 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -13027,15 +13023,15 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -13043,7 +13039,7 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -13067,11 +13063,11 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -13119,11 +13115,11 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -13206,11 +13202,11 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -13245,15 +13241,15 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -13261,7 +13257,7 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -13285,11 +13281,11 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -13337,11 +13333,11 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -13424,11 +13420,11 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -13463,15 +13459,15 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -13479,7 +13475,7 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -13503,11 +13499,11 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -13555,11 +13551,11 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -13642,11 +13638,11 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -13681,15 +13677,15 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -13697,7 +13693,7 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -13721,11 +13717,11 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -13773,11 +13769,11 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -13860,11 +13856,11 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -13899,15 +13895,15 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -13915,7 +13911,7 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -13939,11 +13935,11 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -13991,11 +13987,11 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -14078,11 +14074,11 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -14117,15 +14113,15 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -14133,7 +14129,7 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -14157,11 +14153,11 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -14209,11 +14205,11 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -14296,11 +14292,11 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -14335,15 +14331,15 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -14351,7 +14347,7 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -14375,11 +14371,11 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -14427,11 +14423,11 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -14514,11 +14510,11 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -14553,15 +14549,15 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -14569,7 +14565,7 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -14593,11 +14589,11 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -14645,11 +14641,11 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -14732,11 +14728,11 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -14771,15 +14767,15 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -14787,7 +14783,7 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -14811,11 +14807,11 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -14863,11 +14859,11 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -14950,11 +14946,11 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -14989,15 +14985,15 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -15005,7 +15001,7 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -15029,11 +15025,11 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -15081,11 +15077,11 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -15166,11 +15162,11 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -15205,15 +15201,15 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -15221,7 +15217,7 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -15245,11 +15241,11 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -15297,11 +15293,11 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -15384,11 +15380,11 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -15423,15 +15419,15 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -15439,7 +15435,7 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -15463,11 +15459,11 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -15515,11 +15511,11 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -15600,11 +15596,11 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -15639,15 +15635,15 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -15655,7 +15651,7 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -15679,11 +15675,11 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -15731,11 +15727,11 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -15818,11 +15814,11 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -15857,15 +15853,15 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -15873,7 +15869,7 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -15897,11 +15893,11 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -15949,11 +15945,11 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -16036,11 +16032,11 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -16075,15 +16071,15 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -16091,7 +16087,7 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -16115,11 +16111,11 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -16167,11 +16163,11 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -16254,11 +16250,11 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -16293,15 +16289,15 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -16309,7 +16305,7 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -16333,11 +16329,11 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -16385,11 +16381,11 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -16470,11 +16466,11 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -16509,15 +16505,15 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -16525,7 +16521,7 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -16549,11 +16545,11 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -16601,11 +16597,11 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -16688,11 +16684,11 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -16727,15 +16723,15 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -16743,7 +16739,7 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -16767,11 +16763,11 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -16819,11 +16815,11 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -16906,11 +16902,11 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -16945,15 +16941,15 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -16961,7 +16957,7 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -16985,11 +16981,11 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -17037,11 +17033,11 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -17124,11 +17120,11 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -17163,15 +17159,15 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -17179,7 +17175,7 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -17203,11 +17199,11 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -17255,11 +17251,11 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -17342,11 +17338,11 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -17381,15 +17377,15 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -17397,7 +17393,7 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -17421,11 +17417,11 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -17473,11 +17469,11 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -17560,11 +17556,11 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -17599,15 +17595,15 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -17615,7 +17611,7 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -17639,11 +17635,11 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -17691,11 +17687,11 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -17778,11 +17774,11 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -17817,15 +17813,15 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -17833,7 +17829,7 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -17857,11 +17853,11 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -17909,11 +17905,11 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -17996,11 +17992,11 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -18035,15 +18031,15 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -18051,7 +18047,7 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -18075,11 +18071,11 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -18127,11 +18123,11 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -18214,11 +18210,11 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -18253,15 +18249,15 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -18269,7 +18265,7 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -18293,11 +18289,11 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -18345,11 +18341,11 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -18432,11 +18428,11 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -18471,15 +18467,15 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -18487,7 +18483,7 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -18511,11 +18507,11 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -18563,11 +18559,11 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -18650,11 +18646,11 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -18689,15 +18685,15 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -18705,7 +18701,7 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -18729,11 +18725,11 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -18781,11 +18777,11 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -18868,11 +18864,11 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -18907,15 +18903,15 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -18923,7 +18919,7 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -18947,11 +18943,11 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -18999,11 +18995,11 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -19086,11 +19082,11 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -19125,15 +19121,15 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -19141,7 +19137,7 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -19165,11 +19161,11 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -19217,11 +19213,11 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -19304,11 +19300,11 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -19343,15 +19339,15 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -19359,7 +19355,7 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -19383,11 +19379,11 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -19435,11 +19431,11 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -19522,11 +19518,11 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -19561,15 +19557,15 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -19577,7 +19573,7 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -19601,11 +19597,11 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -19653,11 +19649,11 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -19740,11 +19736,11 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -19779,15 +19775,15 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -19795,7 +19791,7 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -19819,11 +19815,11 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -19871,11 +19867,11 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -19958,11 +19954,11 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -19997,15 +19993,15 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -20013,7 +20009,7 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -20037,11 +20033,11 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -20089,11 +20085,11 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -20176,11 +20172,11 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -20215,15 +20211,15 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -20231,7 +20227,7 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -20255,11 +20251,11 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -20307,11 +20303,11 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -20392,11 +20388,11 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -20431,15 +20427,15 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -20447,7 +20443,7 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -20471,11 +20467,11 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -20523,11 +20519,11 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -20610,11 +20606,11 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -20649,15 +20645,15 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -20665,7 +20661,7 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -20689,11 +20685,11 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -20741,11 +20737,11 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -20828,11 +20824,11 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -20867,15 +20863,15 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -20883,7 +20879,7 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -20907,11 +20903,11 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -20959,11 +20955,11 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -21046,11 +21042,11 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -21085,15 +21081,15 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -21101,7 +21097,7 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -21125,11 +21121,11 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -21177,11 +21173,11 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -21262,11 +21258,11 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -21301,15 +21297,15 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -21317,7 +21313,7 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -21341,11 +21337,11 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -21393,11 +21389,11 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -21480,11 +21476,11 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -21519,15 +21515,15 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -21535,7 +21531,7 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -21559,11 +21555,11 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -21611,11 +21607,11 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -21698,11 +21694,11 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -21737,15 +21733,15 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -21753,7 +21749,7 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -21777,11 +21773,11 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -21829,11 +21825,11 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -21916,11 +21912,11 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -21955,15 +21951,15 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -21971,7 +21967,7 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -21995,11 +21991,11 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -22047,11 +22043,11 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -22134,11 +22130,11 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -22173,15 +22169,15 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -22189,7 +22185,7 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -22213,11 +22209,11 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -22265,11 +22261,11 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
@@ -22352,11 +22348,11 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
-        resource.basedOn = props.basedOn;
+        resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = props.partOf;
+        resource.partOf = util.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -22391,15 +22387,15 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = props.subject;
+        resource.subject = util.reference(props.subject);
     }
 
     if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
+        resource.focus = util.reference(props.focus);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = props.encounter;
+        resource.encounter = util.reference(props.encounter);
     }
 
     if (!_.isNil(props.issued)) {
@@ -22407,7 +22403,7 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = props.performer;
+        resource.performer = util.reference(props.performer);
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
@@ -22431,11 +22427,11 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = props.specimen;
+        resource.specimen = util.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = props.device;
+        resource.device = util.reference(props.device);
     }
 
     if (!_.isNil(props.referenceRange)) {
@@ -22483,11 +22479,11 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
-        resource.hasMember = props.hasMember;
+        resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
-        resource.derivedFrom = props.derivedFrom;
+        resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.component)) {
