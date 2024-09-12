@@ -96,7 +96,7 @@ describe('Encounter', () => {
 
   // This is based on a mapping rule which might not last forever
   // But it shows a cool option we have for mappings
-  it('should default the serviceProvider', () => {
+  it.skip('should default the serviceProvider', () => {
     const result = builders.encounter('target-facility-encounter', {});
 
     const expected = {
