@@ -310,3 +310,23 @@ describe('Patient', () => {
     // TODO result should equal output.Encounter
   });
 });
+
+
+describe.only('Observartion', () => {
+  it('should default code', () => {
+    const o = builders.observation('patient-occupation-observation', {})
+
+    expect(o.code).to.eql({"coding":[{"system":"http://loinc.org","code":"85658-3"}]})
+  })
+
+  it.only('should default category', () => {
+    const o = builders.observation('patient-occupation-observation', {})
+    console.log(o)
+    expect(o.category).to.eql({"coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+        "code": "social-history"
+      }
+    ]})
+  });
+})

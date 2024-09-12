@@ -119,7 +119,7 @@ const mapProps = (schema, mappings) => {
         switch (spec.type) {
           case 'string':
           case 'Period':
-            props.push(mapSimpleProp(key, mappings[key]));
+            props.push(mapSimpleProp(key, mappings[key], spec));
             break;
           case 'Reference':
             props.push(mapReference(key, mappings[key], spec));
@@ -185,26 +185,32 @@ const assignToInput = (prop: string, rhs) =>
     )
   );
 
+  // this generates a statement to add the default
+const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
+  const defaults = mapping?.defaults ?? schema?.defaults;
+  if (defaults) {
+    // generate an assignment statement using the mappings
+    const parsed = parse(
+      `${RESOURCE_NAME}.${propName} = ${JSON.stringify(defaults)};`,
+      {}
+    );
+    return parsed.program.body;
+  }
+}
+
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
-const mapSimpleProp = (propName: string, mapping: Mapping) => {
+const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
     b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
   );
 
-  let elseSatement;
-  if (mapping?.defaults) {
-    // generate an assignment statement using the mappings
-    const parsed = parse(
-      `${RESOURCE_NAME}.${propName} = ${JSON.stringify(mapping.defaults)};`,
-      {}
-    );
-    elseSatement = parsed.program.body;
-  }
 
-  return ifPropInInput(propName, [assignProp], elseSatement);
+  const elseStatement = addDefaults(propName, mapping, schema)
+
+  return ifPropInInput(propName, [assignProp], elseStatement);
 };
 
 // map a type def (ie, a nested object) property by property
@@ -252,6 +258,7 @@ const mapTypeDef = (propName: string, schema: Schema) => {
 
   for (const prop in schema.typeDef) {
     const body: any[] = [];
+    const alts: any[] = [];
     const spec = schema.typeDef[prop];
 
     const sourceValue = b.memberExpression(
@@ -286,7 +293,8 @@ const mapTypeDef = (propName: string, schema: Schema) => {
         )
       );
     }
-    assignments.push(ifPropInInput(prop, body, undefined, inputName));
+
+    assignments.push(ifPropInInput(prop, body, alts, inputName));
   }
 
   if (schema.hasSystem) {
@@ -352,19 +360,25 @@ const mapTypeDef = (propName: string, schema: Schema) => {
     );
   }
 
-  return ifPropInInput(propName, statements);
+  let elseStmnt;
+  const d = addDefaults(propName, undefined, schema)
+  if (d) {
+    elseStmnt = d
+  }
+
+  return ifPropInInput(propName, statements, elseStmnt);
 };
 
 const mapCodeableConcept = (
   propName: string,
   mapping: Mapping,
-  _schema: Schema
+  schema: Schema
 ) => {
   // TODO maybe if the schema says this is an array, we can
   // massage the input or throw warnings
   // otherwise I think this is just a simple mapping tbh
 
-  return mapSimpleProp(propName, mapping);
+  return mapSimpleProp(propName, mapping, schema);
 };
 
 // Map a property of the input to some extension

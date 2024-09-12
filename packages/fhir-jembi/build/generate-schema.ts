@@ -17,6 +17,9 @@ export type PropDef = {
     // maybe a system too?
     defaultSystem?: string;
   };
+
+  /** A default value which will be used if none is provided  */
+  default?: any;
 };
 
 /**
@@ -78,9 +81,9 @@ const generate = async types => {
     //     console.log(code);
     //   }
     // }
-    // if (resourceType === 'Patient') {
+    // if (id === 'patient-occupation-observation') {
     //   await writeFile(
-    //     `./spec/${id}.json`,
+    //     `./spec/${id}.spec.json`,
     //     JSON.stringify(fullSpec[id], null, 2)
     //   );
     // }
@@ -123,10 +126,16 @@ const generate = async types => {
           continue;
         }
 
-        const defaults: Record<string, any> = {};
+        let defaults: Record<string, any> = {};
         const type = getSimpleType(prop);
 
         const isArray = prop.base.max === '*';
+
+        // TODO may need to map other pattern types
+        // TODO how do we know if a pattern is mandatory? Is this OK to do?
+        if (prop.patternCodeableConcept) {
+          defaults = prop.patternCodeableConcept;
+        }
 
         if (type === 'Identifier') {
           // TODO this isn't robust because it assumes a particular slicing
@@ -144,9 +153,12 @@ const generate = async types => {
           // TODO type may only be useful if it uses a vanilla fhir type
           type,
           isArray,
-          defaults,
           desc: prop.short || prop.definition,
         };
+
+        if (Object.keys(defaults).length) {
+          props[path].defaults = defaults;
+        }
 
         if (path.endsWith('.system')) {
           props[path].hasSystem = true;
@@ -174,7 +186,6 @@ const generate = async types => {
 function parseProp(fullSpec, schema, path: string, data) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
-  console.log(parent, prop);
 
   if (/\[x\]/.test(prop)) {
     // TODO warn?
@@ -183,7 +194,6 @@ function parseProp(fullSpec, schema, path: string, data) {
 
   if (prop === 'extension') {
     if (data.sliceName) {
-      console.log(' >>', path);
       prop = data.sliceName[0].toLowerCase() + data.sliceName.substring(1);
     } else {
       // extensions are bit different - we map each to a prop

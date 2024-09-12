@@ -66,19 +66,23 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 statusHistory.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.status)) {
                 statusHistory.status = item.status;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 statusHistory.period = item.period;
-            }
+            } else
+                {}
 
             resource.statusHistory.push(statusHistory);
         }
@@ -98,19 +102,23 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 classHistory.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.class)) {
                 classHistory.class = item.class;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 classHistory.period = item.period;
-            }
+            } else
+                {}
 
             resource.classHistory.push(classHistory);
         }
@@ -150,23 +158,28 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 participant.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 participant.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 participant.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 participant.period = item.period;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.individual)) {
                 participant.individual = item.individual;
-            }
+            } else
+                {}
 
             resource.participant.push(participant);
         }
@@ -202,23 +215,28 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 diagnosis.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.condition)) {
                 diagnosis.condition = item.condition;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 diagnosis.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.rank)) {
                 diagnosis.rank = item.rank;
-            }
+            } else
+                {}
 
             resource.diagnosis.push(diagnosis);
         }
@@ -234,47 +252,58 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
         if (!_.isNil(src.id)) {
             hospitalization.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.modifierExtension)) {
             hospitalization.modifierExtension = src.modifierExtension;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.preAdmissionIdentifier)) {
             hospitalization.preAdmissionIdentifier = src.preAdmissionIdentifier;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.origin)) {
             hospitalization.origin = src.origin;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.admitSource)) {
             hospitalization.admitSource = src.admitSource;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.reAdmission)) {
             hospitalization.reAdmission = src.reAdmission;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.dietPreference)) {
             hospitalization.dietPreference = src.dietPreference;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.specialCourtesy)) {
             hospitalization.specialCourtesy = src.specialCourtesy;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.specialArrangement)) {
             hospitalization.specialArrangement = src.specialArrangement;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.destination)) {
             hospitalization.destination = src.destination;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.dischargeDisposition)) {
             hospitalization.dischargeDisposition = src.dischargeDisposition;
-        }
+        } else
+            {}
 
         resource.hospitalization = hospitalization;
     }
@@ -289,27 +318,33 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 location.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 location.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.location)) {
                 location.location = item.location;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.status)) {
                 location.status = item.status;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.physicalType)) {
                 location.physicalType = item.physicalType;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 location.period = item.period;
-            }
+            } else
+                {}
 
             resource.location.push(location);
         }
@@ -375,35 +410,44 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 identifier.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 identifier.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 identifier.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.system)) {
                 identifier.system = item.system;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.value)) {
                 identifier.value = item.value;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 identifier.period = item.period;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.assigner)) {
                 identifier.assigner = item.assigner;
-            }
+            } else
+                {}
 
             identifier = util.mapSystems(identifier);
             resource.identifier.push(identifier);
         }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/encounter"};
     }
 
     if (!_.isNil(props.status)) {
@@ -420,19 +464,23 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 statusHistory.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 statusHistory.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.status)) {
                 statusHistory.status = item.status;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 statusHistory.period = item.period;
-            }
+            } else
+                {}
 
             resource.statusHistory.push(statusHistory);
         }
@@ -452,19 +500,23 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 classHistory.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 classHistory.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.class)) {
                 classHistory.class = item.class;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 classHistory.period = item.period;
-            }
+            } else
+                {}
 
             resource.classHistory.push(classHistory);
         }
@@ -480,7 +532,8 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 type.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.visitType)) {
                 util.addExtension(
@@ -488,15 +541,18 @@ function encounter_target_facility_encounter(props) {
                     "http://moh.gov.et/fhir/hiv/StructureDefinition/encounter-visit-type",
                     item.visitType
                 );
-            }
+            } else
+                {}
 
             if (!_.isNil(item.coding)) {
                 type.coding = item.coding;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 type.text = item.text;
-            }
+            } else
+                {}
 
             resource.type.push(type);
         }
@@ -532,23 +588,28 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 participant.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 participant.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 participant.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 participant.period = item.period;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.individual)) {
                 participant.individual = item.individual;
-            }
+            } else
+                {}
 
             resource.participant.push(participant);
         }
@@ -564,15 +625,18 @@ function encounter_target_facility_encounter(props) {
 
         if (!_.isNil(src.id)) {
             period.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.start)) {
             period.start = src.start;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.end)) {
             period.end = src.end;
-        }
+        } else
+            {}
 
         resource.period = period;
     }
@@ -599,23 +663,28 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 diagnosis.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 diagnosis.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.condition)) {
                 diagnosis.condition = item.condition;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 diagnosis.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.rank)) {
                 diagnosis.rank = item.rank;
-            }
+            } else
+                {}
 
             resource.diagnosis.push(diagnosis);
         }
@@ -631,47 +700,58 @@ function encounter_target_facility_encounter(props) {
 
         if (!_.isNil(src.id)) {
             hospitalization.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.modifierExtension)) {
             hospitalization.modifierExtension = src.modifierExtension;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.preAdmissionIdentifier)) {
             hospitalization.preAdmissionIdentifier = src.preAdmissionIdentifier;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.origin)) {
             hospitalization.origin = src.origin;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.admitSource)) {
             hospitalization.admitSource = src.admitSource;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.reAdmission)) {
             hospitalization.reAdmission = src.reAdmission;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.dietPreference)) {
             hospitalization.dietPreference = src.dietPreference;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.specialCourtesy)) {
             hospitalization.specialCourtesy = src.specialCourtesy;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.specialArrangement)) {
             hospitalization.specialArrangement = src.specialArrangement;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.destination)) {
             hospitalization.destination = src.destination;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.dischargeDisposition)) {
             hospitalization.dischargeDisposition = src.dischargeDisposition;
-        }
+        } else
+            {}
 
         resource.hospitalization = hospitalization;
     }
@@ -686,27 +766,33 @@ function encounter_target_facility_encounter(props) {
 
             if (!_.isNil(item.id)) {
                 location.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 location.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.location)) {
                 location.location = item.location;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.status)) {
                 location.status = item.status;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.physicalType)) {
                 location.physicalType = item.physicalType;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 location.period = item.period;
-            }
+            } else
+                {}
 
             resource.location.push(location);
         }
@@ -778,35 +864,44 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 identifier.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 identifier.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 identifier.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.system)) {
                 identifier.system = item.system;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.value)) {
                 identifier.value = item.value;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 identifier.period = item.period;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.assigner)) {
                 identifier.assigner = item.assigner;
-            }
+            } else
+                {}
 
             identifier = util.mapSystems(identifier);
             resource.identifier.push(identifier);
         }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/MRN"};
     }
 
     if (!_.isNil(props.active)) {
@@ -823,35 +918,43 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 name.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 name.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 name.text = item.text;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.family)) {
                 name.family = item.family;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.given)) {
                 name.given = item.given;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.prefix)) {
                 name.prefix = item.prefix;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.suffix)) {
                 name.suffix = item.suffix;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 name.period = item.period;
-            }
+            } else
+                {}
 
             resource.name.push(name);
         }
@@ -879,7 +982,8 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 address.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.residentialType)) {
                 util.addExtension(
@@ -887,47 +991,58 @@ function patient_patient(props) {
                     "http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type",
                     item.residentialType
                 );
-            }
+            } else
+                {}
 
             if (!_.isNil(item.use)) {
                 address.use = item.use;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 address.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 address.text = item.text;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.line)) {
                 address.line = item.line;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.city)) {
                 address.city = item.city;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.district)) {
                 address.district = item.district;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.state)) {
                 address.state = item.state;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.postalCode)) {
                 address.postalCode = item.postalCode;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.country)) {
                 address.country = item.country;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 address.period = item.period;
-            }
+            } else
+                {}
 
             resource.address.push(address);
         }
@@ -951,39 +1066,48 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 contact.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 contact.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.relationship)) {
                 contact.relationship = item.relationship;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.name)) {
                 contact.name = item.name;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.telecom)) {
                 contact.telecom = item.telecom;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.address)) {
                 contact.address = item.address;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.gender)) {
                 contact.gender = item.gender;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.organization)) {
                 contact.organization = item.organization;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.period)) {
                 contact.period = item.period;
-            }
+            } else
+                {}
 
             resource.contact.push(contact);
         }
@@ -999,19 +1123,23 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 communication.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 communication.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.language)) {
                 communication.language = item.language;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.preferred)) {
                 communication.preferred = item.preferred;
-            }
+            } else
+                {}
 
             resource.communication.push(communication);
         }
@@ -1035,19 +1163,23 @@ function patient_patient(props) {
 
             if (!_.isNil(item.id)) {
                 link.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 link.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.other)) {
                 link.other = item.other;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 link.type = item.type;
-            }
+            } else
+                {}
 
             resource.link.push(link);
         }
@@ -1225,6 +1357,8 @@ function observation_active_tb_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -1233,7 +1367,8 @@ function observation_active_tb_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -1241,13 +1376,17 @@ function observation_active_tb_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP89688-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -1308,35 +1447,43 @@ function observation_active_tb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -1360,23 +1507,28 @@ function observation_active_tb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -1441,6 +1593,8 @@ function observation_alt_ast_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -1449,7 +1603,8 @@ function observation_alt_ast_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -1457,13 +1612,17 @@ function observation_alt_ast_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"24325-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -1524,35 +1683,43 @@ function observation_alt_ast_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -1576,23 +1743,28 @@ function observation_alt_ast_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -1657,6 +1829,8 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -1665,7 +1839,8 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -1673,13 +1848,17 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP149760-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -1740,35 +1919,43 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -1784,23 +1971,28 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 hasMember.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.reference)) {
                 hasMember.reference = item.reference;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 hasMember.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.identifier)) {
                 hasMember.identifier = item.identifier;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.display)) {
                 hasMember.display = item.display;
-            }
+            } else
+                {}
 
             resource.hasMember.push(hasMember);
         }
@@ -1820,23 +2012,28 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -1903,6 +2100,8 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -1911,7 +2110,8 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -1919,13 +2119,17 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA21590-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -1986,35 +2190,43 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -2038,23 +2250,28 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -2121,6 +2338,8 @@ function observation_art_eligibility_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -2129,7 +2348,8 @@ function observation_art_eligibility_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -2137,13 +2357,17 @@ function observation_art_eligibility_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171121004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -2204,35 +2428,43 @@ function observation_art_eligibility_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -2256,23 +2488,28 @@ function observation_art_eligibility_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -2339,6 +2576,8 @@ function observation_art_followup_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -2347,7 +2586,8 @@ function observation_art_followup_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -2355,13 +2595,17 @@ function observation_art_followup_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"47248-0"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -2422,35 +2666,43 @@ function observation_art_followup_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -2474,23 +2726,28 @@ function observation_art_followup_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -2557,6 +2814,8 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -2565,7 +2824,8 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -2573,13 +2833,17 @@ function observation_art_followup_stopped_reasons_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"91382-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -2640,35 +2904,43 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -2692,23 +2964,28 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -2775,6 +3052,8 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -2783,7 +3062,8 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -2791,13 +3071,17 @@ function observation_art_not_started_plan_next_step_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP127912-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -2858,35 +3142,43 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -2910,23 +3202,28 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -2993,6 +3290,8 @@ function observation_arv_adherence_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -3001,7 +3300,8 @@ function observation_arv_adherence_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -3009,13 +3309,17 @@ function observation_arv_adherence_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"418633004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -3076,35 +3380,43 @@ function observation_arv_adherence_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -3128,23 +3440,28 @@ function observation_arv_adherence_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -3209,6 +3526,8 @@ function observation_arv_change_category_type_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -3217,7 +3536,8 @@ function observation_arv_change_category_type_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -3225,13 +3545,17 @@ function observation_arv_change_category_type_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -3292,35 +3616,43 @@ function observation_arv_change_category_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -3344,23 +3676,28 @@ function observation_arv_change_category_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -3427,6 +3764,8 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -3435,7 +3774,8 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -3443,13 +3783,17 @@ function observation_arv_poor_adherence_reasons_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"397695000"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -3510,35 +3854,43 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -3562,23 +3914,28 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -3645,6 +4002,8 @@ function observation_arv_regimen_change_reason_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -3653,7 +4012,8 @@ function observation_arv_regimen_change_reason_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -3661,13 +4021,17 @@ function observation_arv_regimen_change_reason_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL354-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -3728,35 +4092,43 @@ function observation_arv_regimen_change_reason_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -3780,23 +4152,28 @@ function observation_arv_regimen_change_reason_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -3863,6 +4240,8 @@ function observation_arv_regimen_changed_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -3871,7 +4250,8 @@ function observation_arv_regimen_changed_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -3879,13 +4259,17 @@ function observation_arv_regimen_changed_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -3946,35 +4330,43 @@ function observation_arv_regimen_changed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -3998,23 +4390,28 @@ function observation_arv_regimen_changed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -4081,6 +4478,8 @@ function observation_arv_regimen_side_effects_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -4089,7 +4488,8 @@ function observation_arv_regimen_side_effects_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -4097,13 +4497,17 @@ function observation_arv_regimen_side_effects_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"401207004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4164,35 +4568,43 @@ function observation_arv_regimen_side_effects_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -4216,23 +4628,28 @@ function observation_arv_regimen_side_effects_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -4299,6 +4716,8 @@ function observation_assessed_for_pain_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -4307,7 +4726,8 @@ function observation_assessed_for_pain_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -4315,13 +4735,17 @@ function observation_assessed_for_pain_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP428833-0"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4382,35 +4806,43 @@ function observation_assessed_for_pain_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -4434,23 +4866,28 @@ function observation_assessed_for_pain_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -4517,6 +4954,8 @@ function observation_blood_pressure(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -4525,7 +4964,8 @@ function observation_blood_pressure(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -4533,13 +4973,17 @@ function observation_blood_pressure(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"85354-9"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4600,35 +5044,43 @@ function observation_blood_pressure(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -4652,23 +5104,28 @@ function observation_blood_pressure(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -4733,6 +5190,8 @@ function observation_bmi_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -4741,7 +5200,8 @@ function observation_bmi_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -4749,13 +5209,17 @@ function observation_bmi_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"39156-5"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4816,35 +5280,43 @@ function observation_bmi_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -4868,23 +5340,28 @@ function observation_bmi_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -4949,6 +5426,8 @@ function observation_breastfeeding_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -4957,7 +5436,8 @@ function observation_breastfeeding_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -4965,13 +5445,17 @@ function observation_breastfeeding_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"63895-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -5032,35 +5516,43 @@ function observation_breastfeeding_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -5084,23 +5576,28 @@ function observation_breastfeeding_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -5167,6 +5664,8 @@ function observation_cd4_absolute_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -5175,7 +5674,8 @@ function observation_cd4_absolute_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -5183,13 +5683,17 @@ function observation_cd4_absolute_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"32515-9"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -5250,35 +5754,43 @@ function observation_cd4_absolute_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -5302,23 +5814,28 @@ function observation_cd4_absolute_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -5383,6 +5900,8 @@ function observation_cd4_percentage_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -5391,7 +5910,8 @@ function observation_cd4_percentage_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -5399,13 +5919,17 @@ function observation_cd4_percentage_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"32516-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -5466,35 +5990,43 @@ function observation_cd4_percentage_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -5518,23 +6050,28 @@ function observation_cd4_percentage_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -5601,6 +6138,8 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -5609,7 +6148,8 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -5617,13 +6157,17 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171153008"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -5684,35 +6228,43 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -5736,23 +6288,28 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -5819,6 +6376,8 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -5827,7 +6386,8 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -5835,13 +6395,17 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"409063005"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -5902,35 +6466,43 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -5954,23 +6526,28 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -6037,6 +6614,8 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -6045,7 +6624,8 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -6053,13 +6633,17 @@ function observation_cervical_cancer_screening_method_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171149006"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6120,35 +6704,43 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -6172,23 +6764,28 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -6255,6 +6852,8 @@ function observation_cervical_cancer_screening_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -6263,7 +6862,8 @@ function observation_cervical_cancer_screening_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -6271,13 +6871,17 @@ function observation_cervical_cancer_screening_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"243877001"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6338,35 +6942,43 @@ function observation_cervical_cancer_screening_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -6390,23 +7002,28 @@ function observation_cervical_cancer_screening_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -6473,6 +7090,8 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -6481,7 +7100,8 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -6489,13 +7109,17 @@ function observation_cervical_cancer_screening_result_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"21864-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6556,35 +7180,43 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -6608,23 +7240,28 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -6691,6 +7328,8 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -6699,7 +7338,8 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -6707,13 +7347,17 @@ function observation_cervical_cancer_screening_type_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"413744002"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6774,35 +7418,43 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -6826,23 +7478,28 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -6909,6 +7566,8 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -6917,7 +7576,8 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -6925,13 +7585,17 @@ function observation_cervical_cancer_treatment_received_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA13405-8"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6992,35 +7656,43 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -7044,23 +7716,28 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -7127,6 +7804,8 @@ function observation_children_developmental_milestone_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -7135,7 +7814,8 @@ function observation_children_developmental_milestone_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -7143,13 +7823,17 @@ function observation_children_developmental_milestone_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"364673002"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -7210,35 +7894,43 @@ function observation_children_developmental_milestone_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -7262,23 +7954,28 @@ function observation_children_developmental_milestone_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -7353,7 +8050,8 @@ function observation_confirmed_hiv_positive_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -7361,11 +8059,13 @@ function observation_confirmed_hiv_positive_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
     }
@@ -7428,35 +8128,43 @@ function observation_confirmed_hiv_positive_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -7480,23 +8188,28 @@ function observation_confirmed_hiv_positive_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -7563,6 +8276,8 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -7571,7 +8286,8 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -7579,13 +8295,17 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"418633004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -7646,35 +8366,43 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -7698,23 +8426,28 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -7781,6 +8514,8 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -7789,7 +8524,8 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -7797,13 +8533,17 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"18998-5"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -7864,35 +8604,43 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -7916,23 +8664,28 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -7999,6 +8752,8 @@ function observation_counseled_for_hiv_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -8007,7 +8762,8 @@ function observation_counseled_for_hiv_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -8015,13 +8771,17 @@ function observation_counseled_for_hiv_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"313077009"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8082,35 +8842,43 @@ function observation_counseled_for_hiv_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -8134,23 +8902,28 @@ function observation_counseled_for_hiv_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -8217,6 +8990,8 @@ function observation_creatine_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -8225,7 +9000,8 @@ function observation_creatine_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -8233,13 +9009,17 @@ function observation_creatine_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"2160-0"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8300,35 +9080,43 @@ function observation_creatine_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -8352,23 +9140,28 @@ function observation_creatine_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -8433,6 +9226,8 @@ function observation_current_art_duration_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -8441,7 +9236,8 @@ function observation_current_art_duration_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -8449,13 +9245,17 @@ function observation_current_art_duration_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45239-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8516,35 +9316,43 @@ function observation_current_art_duration_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -8568,23 +9376,28 @@ function observation_current_art_duration_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -8651,6 +9464,8 @@ function observation_delivery_mode_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -8659,7 +9474,8 @@ function observation_delivery_mode_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -8667,13 +9483,17 @@ function observation_delivery_mode_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL2193-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8734,35 +9554,43 @@ function observation_delivery_mode_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -8786,23 +9614,28 @@ function observation_delivery_mode_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -8867,6 +9700,8 @@ function observation_delivery_place_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -8875,7 +9710,8 @@ function observation_delivery_place_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -8883,13 +9719,17 @@ function observation_delivery_place_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"72150-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8950,35 +9790,43 @@ function observation_delivery_place_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -9002,23 +9850,28 @@ function observation_delivery_place_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -9085,6 +9938,8 @@ function observation_differentiated_service_delivery_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -9093,7 +9948,8 @@ function observation_differentiated_service_delivery_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -9101,13 +9957,17 @@ function observation_differentiated_service_delivery_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/dsd-assessment-code-system","code":"DSD-Assessment"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -9168,35 +10028,43 @@ function observation_differentiated_service_delivery_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -9220,23 +10088,28 @@ function observation_differentiated_service_delivery_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -9303,6 +10176,8 @@ function observation_disclosure_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -9311,7 +10186,8 @@ function observation_disclosure_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -9319,13 +10195,17 @@ function observation_disclosure_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"55277-8"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -9386,35 +10266,43 @@ function observation_disclosure_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -9438,23 +10326,28 @@ function observation_disclosure_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -9521,6 +10414,8 @@ function observation_edema_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -9529,7 +10424,8 @@ function observation_edema_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -9537,13 +10433,17 @@ function observation_edema_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"44966-0"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -9604,35 +10504,43 @@ function observation_edema_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -9656,23 +10564,28 @@ function observation_edema_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -9737,6 +10650,8 @@ function observation_elicited_index_case_contacts_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -9745,7 +10660,8 @@ function observation_elicited_index_case_contacts_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -9753,13 +10669,17 @@ function observation_elicited_index_case_contacts_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"365951004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -9820,35 +10740,43 @@ function observation_elicited_index_case_contacts_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -9872,23 +10800,28 @@ function observation_elicited_index_case_contacts_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -9955,6 +10888,8 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -9963,7 +10898,8 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -9971,13 +10907,17 @@ function observation_enhanced_adherence_counselling_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"410265008"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -10038,35 +10978,43 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -10090,23 +11038,28 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -10173,6 +11126,8 @@ function observation_estimated_delivery_date_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -10181,7 +11136,8 @@ function observation_estimated_delivery_date_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -10189,13 +11145,17 @@ function observation_estimated_delivery_date_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"11778-8"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -10256,35 +11216,43 @@ function observation_estimated_delivery_date_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -10308,23 +11276,28 @@ function observation_estimated_delivery_date_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -10391,6 +11364,8 @@ function observation_family_member_hiv_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -10399,7 +11374,8 @@ function observation_family_member_hiv_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -10407,13 +11383,17 @@ function observation_family_member_hiv_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"10157-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -10474,35 +11454,43 @@ function observation_family_member_hiv_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -10526,23 +11514,28 @@ function observation_family_member_hiv_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -10609,6 +11602,8 @@ function observation_family_planning_method_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -10617,7 +11612,8 @@ function observation_family_planning_method_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -10625,13 +11621,17 @@ function observation_family_planning_method_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"243816001"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -10692,35 +11692,43 @@ function observation_family_planning_method_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -10744,23 +11752,28 @@ function observation_family_planning_method_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -10827,6 +11840,8 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -10835,7 +11850,8 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -10843,13 +11859,17 @@ function observation_fluconazole_preventive_therapy_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"18924-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -10910,35 +11930,43 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -10962,23 +11990,28 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -11045,6 +12078,8 @@ function observation_future_pregnancy_plans_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -11053,7 +12088,8 @@ function observation_future_pregnancy_plans_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -11061,13 +12097,17 @@ function observation_future_pregnancy_plans_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"86645-9"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -11128,35 +12168,43 @@ function observation_future_pregnancy_plans_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -11180,23 +12228,28 @@ function observation_future_pregnancy_plans_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -11271,7 +12324,8 @@ function observation_generic_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -11279,11 +12333,13 @@ function observation_generic_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
     }
@@ -11346,35 +12402,43 @@ function observation_generic_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -11398,23 +12462,28 @@ function observation_generic_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -11479,6 +12548,8 @@ function observation_head_circumference_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -11487,7 +12558,8 @@ function observation_head_circumference_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -11495,13 +12567,17 @@ function observation_head_circumference_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"9843-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -11562,35 +12638,43 @@ function observation_head_circumference_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -11614,23 +12698,28 @@ function observation_head_circumference_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -11697,6 +12786,8 @@ function observation_health_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -11705,7 +12796,8 @@ function observation_health_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -11713,13 +12805,17 @@ function observation_health_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"11323-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -11780,35 +12876,43 @@ function observation_health_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -11832,23 +12936,28 @@ function observation_health_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -11913,6 +13022,8 @@ function observation_heart_rate_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -11921,7 +13032,8 @@ function observation_heart_rate_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -11929,13 +13041,17 @@ function observation_heart_rate_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"8867-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -11996,35 +13112,43 @@ function observation_heart_rate_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -12048,23 +13172,28 @@ function observation_heart_rate_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -12129,6 +13258,8 @@ function observation_height_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -12137,7 +13268,8 @@ function observation_height_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -12145,13 +13277,17 @@ function observation_height_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"8302-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -12212,35 +13348,43 @@ function observation_height_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -12264,23 +13408,28 @@ function observation_height_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -12345,6 +13494,8 @@ function observation_hgb_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -12353,7 +13504,8 @@ function observation_hgb_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -12361,13 +13513,17 @@ function observation_hgb_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"718-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -12428,35 +13584,43 @@ function observation_hgb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -12480,23 +13644,28 @@ function observation_hgb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -12561,6 +13730,8 @@ function observation_highest_education_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -12569,7 +13740,8 @@ function observation_highest_education_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -12577,13 +13749,17 @@ function observation_highest_education_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"82589-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -12644,35 +13820,43 @@ function observation_highest_education_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -12696,23 +13880,28 @@ function observation_highest_education_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -12779,6 +13968,8 @@ function observation_hiv_prevention_plan_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -12787,7 +13978,8 @@ function observation_hiv_prevention_plan_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -12795,13 +13987,17 @@ function observation_hiv_prevention_plan_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"439057000"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -12862,35 +14058,43 @@ function observation_hiv_prevention_plan_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -12914,23 +14118,28 @@ function observation_hiv_prevention_plan_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -12997,6 +14206,8 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -13005,7 +14216,8 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -13013,13 +14225,17 @@ function observation_hiv_program_final_outcome_known_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"18776-5"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -13080,35 +14296,43 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -13132,23 +14356,28 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -13215,6 +14444,8 @@ function observation_hiv_program_final_outcome_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -13223,7 +14454,8 @@ function observation_hiv_program_final_outcome_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -13231,13 +14463,17 @@ function observation_hiv_program_final_outcome_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"63939-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -13298,35 +14534,43 @@ function observation_hiv_program_final_outcome_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -13350,23 +14594,28 @@ function observation_hiv_program_final_outcome_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -13433,6 +14682,8 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -13441,7 +14692,8 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -13449,13 +14701,17 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"87534-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -13516,35 +14772,43 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -13568,23 +14832,28 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -13651,6 +14920,8 @@ function observation_hiv_program_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -13659,7 +14930,8 @@ function observation_hiv_program_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -13667,13 +14939,17 @@ function observation_hiv_program_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP95599-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -13734,35 +15010,43 @@ function observation_hiv_program_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -13786,23 +15070,28 @@ function observation_hiv_program_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -13869,6 +15158,8 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -13877,7 +15168,8 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -13885,13 +15177,17 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"47249-8"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -13952,35 +15248,43 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -14004,23 +15308,28 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -14087,6 +15396,8 @@ function observation_hiv_test_results_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -14095,7 +15406,8 @@ function observation_hiv_test_results_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -14103,13 +15415,17 @@ function observation_hiv_test_results_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL5696-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -14170,35 +15486,43 @@ function observation_hiv_test_results_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -14222,23 +15546,28 @@ function observation_hiv_test_results_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -14305,6 +15634,8 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -14313,7 +15644,8 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -14321,13 +15653,17 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45231-8"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -14388,35 +15724,43 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -14440,23 +15784,28 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -14523,6 +15872,8 @@ function observation_inh_at_follow_up_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -14531,7 +15882,8 @@ function observation_inh_at_follow_up_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -14539,13 +15891,17 @@ function observation_inh_at_follow_up_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA21590-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -14606,35 +15962,43 @@ function observation_inh_at_follow_up_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -14658,23 +16022,28 @@ function observation_inh_at_follow_up_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -14741,6 +16110,8 @@ function observation_last_menstrual_period_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -14749,7 +16120,8 @@ function observation_last_menstrual_period_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -14757,13 +16129,17 @@ function observation_last_menstrual_period_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"8665-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -14824,35 +16200,43 @@ function observation_last_menstrual_period_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -14876,23 +16260,28 @@ function observation_last_menstrual_period_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -14959,6 +16348,8 @@ function observation_level_of_pain_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -14967,7 +16358,8 @@ function observation_level_of_pain_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -14975,13 +16367,17 @@ function observation_level_of_pain_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL5953-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -15042,35 +16438,43 @@ function observation_level_of_pain_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -15094,23 +16498,28 @@ function observation_level_of_pain_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -15175,6 +16584,8 @@ function observation_maternal_hiv_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -15183,7 +16594,8 @@ function observation_maternal_hiv_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -15191,13 +16603,17 @@ function observation_maternal_hiv_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"75179-2"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -15258,35 +16674,43 @@ function observation_maternal_hiv_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -15310,23 +16734,28 @@ function observation_maternal_hiv_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -15393,6 +16822,8 @@ function observation_muac_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -15401,7 +16832,8 @@ function observation_muac_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -15409,13 +16841,17 @@ function observation_muac_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"284473002"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -15476,35 +16912,43 @@ function observation_muac_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -15528,23 +16972,28 @@ function observation_muac_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -15609,6 +17058,8 @@ function observation_nutritional_screening_result_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -15617,7 +17068,8 @@ function observation_nutritional_screening_result_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -15625,13 +17077,17 @@ function observation_nutritional_screening_result_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"39201-9"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -15692,35 +17148,43 @@ function observation_nutritional_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -15744,23 +17208,28 @@ function observation_nutritional_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -15827,6 +17296,8 @@ function observation_nutritional_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -15835,7 +17306,8 @@ function observation_nutritional_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -15843,13 +17315,17 @@ function observation_nutritional_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"101819-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -15910,35 +17386,43 @@ function observation_nutritional_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -15962,23 +17446,28 @@ function observation_nutritional_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -16045,6 +17534,8 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -16053,7 +17544,8 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -16061,13 +17553,17 @@ function observation_nutritional_suppliments_provided_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"373453009"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -16128,35 +17624,43 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -16180,23 +17684,28 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -16263,6 +17772,8 @@ function observation_otz_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -16271,7 +17782,8 @@ function observation_otz_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -16279,13 +17791,17 @@ function observation_otz_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP7652-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -16346,35 +17862,43 @@ function observation_otz_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -16398,23 +17922,28 @@ function observation_otz_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -16479,6 +18008,8 @@ function observation_patient_functional_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -16487,7 +18018,8 @@ function observation_patient_functional_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -16495,13 +18027,17 @@ function observation_patient_functional_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"75276-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -16562,35 +18098,43 @@ function observation_patient_functional_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -16614,23 +18158,28 @@ function observation_patient_functional_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -16697,6 +18246,8 @@ function observation_patient_occupation_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -16705,7 +18256,8 @@ function observation_patient_occupation_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -16713,13 +18265,17 @@ function observation_patient_occupation_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"85658-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -16780,35 +18336,43 @@ function observation_patient_occupation_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -16832,23 +18396,28 @@ function observation_patient_occupation_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -16915,6 +18484,8 @@ function observation_patient_who_stage_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -16923,7 +18494,8 @@ function observation_patient_who_stage_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -16931,13 +18503,17 @@ function observation_patient_who_stage_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45233-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -16998,35 +18574,43 @@ function observation_patient_who_stage_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -17050,23 +18634,28 @@ function observation_patient_who_stage_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -17133,6 +18722,8 @@ function observation_physical_examinations_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -17141,7 +18732,8 @@ function observation_physical_examinations_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -17149,13 +18741,17 @@ function observation_physical_examinations_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"29544-4"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -17216,35 +18812,43 @@ function observation_physical_examinations_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -17268,23 +18872,28 @@ function observation_physical_examinations_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -17351,6 +18960,8 @@ function observation_pregnancy_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -17359,7 +18970,8 @@ function observation_pregnancy_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -17367,13 +18979,17 @@ function observation_pregnancy_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"11449-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -17434,35 +19050,43 @@ function observation_pregnancy_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -17486,23 +19110,28 @@ function observation_pregnancy_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -17569,6 +19198,8 @@ function observation_presenting_symptom_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -17577,7 +19208,8 @@ function observation_presenting_symptom_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -17585,13 +19217,17 @@ function observation_presenting_symptom_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"56817-0"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -17652,35 +19288,43 @@ function observation_presenting_symptom_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -17704,23 +19348,28 @@ function observation_presenting_symptom_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -17787,6 +19436,8 @@ function observation_reason_eligible_for_art_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -17795,7 +19446,8 @@ function observation_reason_eligible_for_art_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -17803,13 +19455,17 @@ function observation_reason_eligible_for_art_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45232-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -17870,35 +19526,43 @@ function observation_reason_eligible_for_art_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -17922,23 +19586,28 @@ function observation_reason_eligible_for_art_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -18005,6 +19674,8 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -18013,7 +19684,8 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -18021,13 +19693,17 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/tpt-eligibility-status-code-system","code":"TPT-Reason-Not-Eligible"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -18088,35 +19764,43 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -18140,23 +19824,28 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -18223,6 +19912,8 @@ function observation_resides_in_catchment_area_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -18231,7 +19922,8 @@ function observation_resides_in_catchment_area_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -18239,13 +19931,17 @@ function observation_resides_in_catchment_area_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA21920-6"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -18306,35 +20002,43 @@ function observation_resides_in_catchment_area_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -18358,23 +20062,28 @@ function observation_resides_in_catchment_area_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -18441,6 +20150,8 @@ function observation_respiratory_rate_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -18449,7 +20160,8 @@ function observation_respiratory_rate_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -18457,13 +20169,17 @@ function observation_respiratory_rate_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"9279-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -18524,35 +20240,43 @@ function observation_respiratory_rate_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -18576,23 +20300,28 @@ function observation_respiratory_rate_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -18667,7 +20396,8 @@ function observation_screened_for_tb_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -18675,13 +20405,17 @@ function observation_screened_for_tb_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171126009"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -18742,35 +20476,43 @@ function observation_screened_for_tb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -18794,23 +20536,28 @@ function observation_screened_for_tb_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -18877,6 +20624,8 @@ function observation_target_population_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -18885,7 +20634,8 @@ function observation_target_population_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -18893,13 +20643,17 @@ function observation_target_population_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"385436007"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -18960,35 +20714,43 @@ function observation_target_population_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -19012,23 +20774,28 @@ function observation_target_population_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -19095,6 +20862,8 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -19103,7 +20872,8 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -19111,11 +20881,13 @@ function observation_tb_diagnostic_test_result_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
     }
@@ -19178,35 +20950,43 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -19230,23 +21010,28 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -19313,6 +21098,8 @@ function observation_tb_prophylaxis_type_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -19321,7 +21108,8 @@ function observation_tb_prophylaxis_type_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -19329,13 +21117,17 @@ function observation_tb_prophylaxis_type_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP149760-3"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -19396,35 +21188,43 @@ function observation_tb_prophylaxis_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -19448,23 +21248,28 @@ function observation_tb_prophylaxis_type_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -19531,6 +21336,8 @@ function observation_tb_screening_result_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -19539,7 +21346,8 @@ function observation_tb_screening_result_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -19547,13 +21355,17 @@ function observation_tb_screening_result_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"429599001"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -19614,35 +21426,43 @@ function observation_tb_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -19666,23 +21486,28 @@ function observation_tb_screening_result_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -19749,6 +21574,8 @@ function observation_tb_treatment_started_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -19757,7 +21584,8 @@ function observation_tb_treatment_started_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -19765,13 +21593,17 @@ function observation_tb_treatment_started_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45242-5"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -19832,35 +21664,43 @@ function observation_tb_treatment_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -19884,23 +21724,28 @@ function observation_tb_treatment_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -19967,6 +21812,8 @@ function observation_tb_treatment_status_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -19975,7 +21822,8 @@ function observation_tb_treatment_status_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -19983,13 +21831,17 @@ function observation_tb_treatment_status_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"45241-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -20050,35 +21902,43 @@ function observation_tb_treatment_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -20102,23 +21962,28 @@ function observation_tb_treatment_status_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -20185,6 +22050,8 @@ function observation_temperature_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -20193,7 +22060,8 @@ function observation_temperature_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -20201,13 +22069,17 @@ function observation_temperature_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"8310-5"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -20268,35 +22140,43 @@ function observation_temperature_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -20320,23 +22200,28 @@ function observation_temperature_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -20401,6 +22286,8 @@ function observation_tested_for_hiv_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -20409,7 +22296,8 @@ function observation_tested_for_hiv_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -20417,13 +22305,17 @@ function observation_tested_for_hiv_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171121004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -20484,35 +22376,43 @@ function observation_tested_for_hiv_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -20536,23 +22436,28 @@ function observation_tested_for_hiv_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -20619,6 +22524,8 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -20627,7 +22534,8 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -20635,13 +22543,17 @@ function observation_therapeutic_supplementary_food_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"41829006"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -20702,35 +22614,43 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -20754,23 +22674,28 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -20837,6 +22762,8 @@ function observation_tpt_eligbility_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -20845,7 +22772,8 @@ function observation_tpt_eligbility_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -20853,13 +22781,17 @@ function observation_tpt_eligbility_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/tpt-eligibility-status-code-system","code":"Eligible-For-TPT"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -20920,35 +22852,43 @@ function observation_tpt_eligbility_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -20972,23 +22912,28 @@ function observation_tpt_eligbility_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -21055,6 +23000,8 @@ function observation_tpt_started_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -21063,7 +23010,8 @@ function observation_tpt_started_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -21071,13 +23019,17 @@ function observation_tpt_started_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"422181004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -21138,35 +23090,43 @@ function observation_tpt_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -21190,23 +23150,28 @@ function observation_tpt_started_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -21271,6 +23236,8 @@ function observation_treatment_completed_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -21279,7 +23246,8 @@ function observation_treatment_completed_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -21287,13 +23255,17 @@ function observation_treatment_completed_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182992009"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -21354,35 +23326,43 @@ function observation_treatment_completed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -21406,23 +23386,28 @@ function observation_treatment_completed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -21489,6 +23474,8 @@ function observation_treatment_discontinued_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -21497,7 +23484,8 @@ function observation_treatment_discontinued_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -21505,13 +23493,17 @@ function observation_treatment_discontinued_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182840001"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -21572,35 +23564,43 @@ function observation_treatment_discontinued_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -21624,23 +23624,28 @@ function observation_treatment_discontinued_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -21707,6 +23712,8 @@ function observation_viral_load_count_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -21715,7 +23722,8 @@ function observation_viral_load_count_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -21723,13 +23731,17 @@ function observation_viral_load_count_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"315124004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -21790,35 +23802,43 @@ function observation_viral_load_count_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -21842,23 +23862,28 @@ function observation_viral_load_count_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -21925,6 +23950,8 @@ function observation_viral_load_indication_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -21933,7 +23960,8 @@ function observation_viral_load_indication_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -21941,11 +23969,13 @@ function observation_viral_load_indication_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
     }
@@ -22008,35 +24038,43 @@ function observation_viral_load_indication_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -22060,23 +24098,28 @@ function observation_viral_load_indication_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -22143,6 +24186,8 @@ function observation_viral_load_performed_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -22151,7 +24196,8 @@ function observation_viral_load_performed_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -22159,13 +24205,17 @@ function observation_viral_load_performed_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"315124004"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -22226,35 +24276,43 @@ function observation_viral_load_performed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -22278,23 +24336,28 @@ function observation_viral_load_performed_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
@@ -22361,6 +24424,8 @@ function observation_weight_observation(props) {
 
     if (!_.isNil(props.category)) {
         resource.category = props.category;
+    } else {
+        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
     }
 
     if (!_.isNil(props.code)) {
@@ -22369,7 +24434,8 @@ function observation_weight_observation(props) {
 
         if (!_.isNil(src.id)) {
             code.id = src.id;
-        }
+        } else
+            {}
 
         if (!_.isNil(src.coding)) {
             util.addExtension(
@@ -22377,13 +24443,17 @@ function observation_weight_observation(props) {
                 "http://moh.gov.et/fhir/hiv/StructureDefinition/strict-coding",
                 src.coding
             );
-        }
+        } else
+            {}
 
         if (!_.isNil(src.text)) {
             code.text = src.text;
-        }
+        } else
+            {}
 
         resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"29463-7"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -22444,35 +24514,43 @@ function observation_weight_observation(props) {
 
             if (!_.isNil(item.id)) {
                 referenceRange.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 referenceRange.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.low)) {
                 referenceRange.low = item.low;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.high)) {
                 referenceRange.high = item.high;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.type)) {
                 referenceRange.type = item.type;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.appliesTo)) {
                 referenceRange.appliesTo = item.appliesTo;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.age)) {
                 referenceRange.age = item.age;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.text)) {
                 referenceRange.text = item.text;
-            }
+            } else
+                {}
 
             resource.referenceRange.push(referenceRange);
         }
@@ -22496,23 +24574,28 @@ function observation_weight_observation(props) {
 
             if (!_.isNil(item.id)) {
                 component.id = item.id;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.modifierExtension)) {
                 component.modifierExtension = item.modifierExtension;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.code)) {
                 component.code = item.code;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.dataAbsentReason)) {
                 component.dataAbsentReason = item.dataAbsentReason;
-            }
+            } else
+                {}
 
             if (!_.isNil(item.interpretation)) {
                 component.interpretation = item.interpretation;
-            }
+            } else
+                {}
 
             resource.component.push(component);
         }
