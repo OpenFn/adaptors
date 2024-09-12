@@ -164,3 +164,32 @@ export const reference = (ref, opts) => {
 
   return result;
 };
+
+/** Convert an incoming value to one of a nummber of types based on the key, eg valueString, valueCodeableConcept */
+export const composite = (object, key, value) => {
+  const k = [key];
+
+
+  if (value.coding) {
+    k.push('CodeableConcept')
+  }
+  else if (typeof value === 'string') {
+    k.push('String')
+  }
+  else if (typeof value === 'boolean') {
+    k.push('Boolean')
+  }
+  else if (typeof value === 'number') {
+    k.push('Integer')
+  }
+  // TODO: other data types need mapping
+
+  if (k.length === 2) {
+    const finalKey = k.join('')
+    object[finalKey] = value;
+  } else {
+    console.warn(`WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`);
+  }
+
+}
+

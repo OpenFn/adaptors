@@ -738,6 +738,10 @@ type Patient_patient_Props = {
      *  */
     birthDate: string;
     /**
+     * Indicates if the individual is deceased or not
+     *  */
+    deceased: boolean;
+    /**
      * An address for the individual
      *  */
     address: {
@@ -794,6 +798,10 @@ type Patient_patient_Props = {
      * Marital (civil) status of a patient
      *  */
     maritalStatus: CodeableConcept;
+    /**
+     * Whether patient is part of a multiple birth
+     *  */
+    multipleBirth: boolean;
     /**
      * Image of the patient
      *  */
@@ -983,6 +991,10 @@ type Observation_active_tb_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -990,6 +1002,27 @@ type Observation_active_tb_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -1079,6 +1112,10 @@ type Observation_active_tb_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -1173,6 +1210,10 @@ type Observation_alt_ast_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -1180,6 +1221,23 @@ type Observation_alt_ast_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -1269,6 +1327,10 @@ type Observation_alt_ast_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Coded form of the unit
+         *  */
+        value: string;
         /**
          * Why the component result is missing
          *  */
@@ -1363,6 +1425,10 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -1370,6 +1436,23 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -1481,6 +1564,10 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
          *  */
         code: CodeableConcept;
         /**
+         * Actual component result
+         *  */
+        value: Quantity;
+        /**
          * Why the component result is missing
          *  */
         dataAbsentReason: CodeableConcept;
@@ -1574,6 +1661,10 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -1581,6 +1672,23 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -1670,6 +1778,10 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -1764,6 +1876,10 @@ type Observation_art_eligibility_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -1771,6 +1887,23 @@ type Observation_art_eligibility_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -1860,6 +1993,10 @@ type Observation_art_eligibility_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -1954,6 +2091,10 @@ type Observation_art_followup_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -1961,6 +2102,27 @@ type Observation_art_followup_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -2050,6 +2212,10 @@ type Observation_art_followup_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -2144,6 +2310,10 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -2151,6 +2321,27 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reasons ART Stopped
+         *  */
+        stopReason: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -2240,6 +2431,10 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -2334,6 +2529,10 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -2341,6 +2540,23 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -2430,6 +2646,10 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -2524,6 +2744,10 @@ type Observation_arv_adherence_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -2531,6 +2755,23 @@ type Observation_arv_adherence_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -2620,6 +2861,10 @@ type Observation_arv_adherence_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -2714,6 +2959,10 @@ type Observation_arv_change_category_type_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -2721,6 +2970,23 @@ type Observation_arv_change_category_type_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -2810,6 +3076,10 @@ type Observation_arv_change_category_type_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -2904,6 +3174,10 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -2911,6 +3185,27 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reasons For Poor ARV Adherence
+         *  */
+        poorAdherenceReasons: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3000,6 +3295,10 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -3094,6 +3393,10 @@ type Observation_arv_regimen_change_reason_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -3101,6 +3404,27 @@ type Observation_arv_regimen_change_reason_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Viral Load/CD4 Count Classifications Indicating Treatment Failure
+         *  */
+        treatmentFailureIndication: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3190,6 +3514,10 @@ type Observation_arv_regimen_change_reason_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -3284,6 +3612,10 @@ type Observation_arv_regimen_changed_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -3291,6 +3623,23 @@ type Observation_arv_regimen_changed_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3380,6 +3729,10 @@ type Observation_arv_regimen_changed_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -3474,6 +3827,10 @@ type Observation_arv_regimen_side_effects_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -3481,6 +3838,27 @@ type Observation_arv_regimen_side_effects_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * ARV Regimen Side Effects
+         *  */
+        aRVSideEffects: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3570,6 +3948,10 @@ type Observation_arv_regimen_side_effects_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -3664,6 +4046,10 @@ type Observation_assessed_for_pain_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -3671,6 +4057,23 @@ type Observation_assessed_for_pain_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3760,6 +4163,10 @@ type Observation_assessed_for_pain_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -3854,6 +4261,10 @@ type Observation_blood_pressure_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -3861,6 +4272,23 @@ type Observation_blood_pressure_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -3950,6 +4378,10 @@ type Observation_blood_pressure_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Coded form of the unit
+         *  */
+        value: string;
         /**
          * Why the component result is missing
          *  */
@@ -4044,6 +4476,10 @@ type Observation_bmi_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -4051,6 +4487,23 @@ type Observation_bmi_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -4140,6 +4593,10 @@ type Observation_bmi_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -4234,6 +4691,10 @@ type Observation_breastfeeding_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -4241,6 +4702,23 @@ type Observation_breastfeeding_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -4330,6 +4808,10 @@ type Observation_breastfeeding_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -4424,6 +4906,10 @@ type Observation_cd4_absolute_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -4431,6 +4917,23 @@ type Observation_cd4_absolute_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -4520,6 +5023,10 @@ type Observation_cd4_absolute_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -4614,6 +5121,10 @@ type Observation_cd4_percentage_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -4621,6 +5132,23 @@ type Observation_cd4_percentage_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -4710,6 +5238,10 @@ type Observation_cd4_percentage_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -4804,6 +5336,10 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -4811,6 +5347,23 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -4900,6 +5453,10 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -4994,6 +5551,10 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5001,6 +5562,23 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -5090,6 +5668,10 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -5184,6 +5766,10 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5191,6 +5777,23 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -5280,6 +5883,10 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -5374,6 +5981,10 @@ type Observation_cervical_cancer_screening_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5381,6 +5992,23 @@ type Observation_cervical_cancer_screening_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -5470,6 +6098,10 @@ type Observation_cervical_cancer_screening_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -5564,6 +6196,10 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5571,6 +6207,23 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -5660,6 +6313,10 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -5754,6 +6411,10 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5761,6 +6422,23 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -5850,6 +6528,10 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -5944,6 +6626,10 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -5951,6 +6637,23 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6040,6 +6743,10 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -6134,6 +6841,10 @@ type Observation_children_developmental_milestone_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -6141,6 +6852,23 @@ type Observation_children_developmental_milestone_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6230,6 +6958,10 @@ type Observation_children_developmental_milestone_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -6324,6 +7056,10 @@ type Observation_confirmed_hiv_positive_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -6331,6 +7067,23 @@ type Observation_confirmed_hiv_positive_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6420,6 +7173,10 @@ type Observation_confirmed_hiv_positive_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -6514,6 +7271,10 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -6521,6 +7282,23 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6610,6 +7388,10 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -6704,6 +7486,10 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -6711,6 +7497,23 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6800,6 +7603,10 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -6894,6 +7701,10 @@ type Observation_counseled_for_hiv_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -6901,6 +7712,27 @@ type Observation_counseled_for_hiv_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -6990,6 +7822,10 @@ type Observation_counseled_for_hiv_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -7084,6 +7920,10 @@ type Observation_creatine_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -7091,6 +7931,23 @@ type Observation_creatine_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -7180,6 +8037,10 @@ type Observation_creatine_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -7274,6 +8135,10 @@ type Observation_current_art_duration_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -7281,6 +8146,23 @@ type Observation_current_art_duration_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -7370,6 +8252,10 @@ type Observation_current_art_duration_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -7464,6 +8350,10 @@ type Observation_delivery_mode_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -7471,6 +8361,23 @@ type Observation_delivery_mode_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -7560,6 +8467,10 @@ type Observation_delivery_mode_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -7654,6 +8565,10 @@ type Observation_delivery_place_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -7661,6 +8576,23 @@ type Observation_delivery_place_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -7750,6 +8682,10 @@ type Observation_delivery_place_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -7844,6 +8780,10 @@ type Observation_differentiated_service_delivery_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -7851,6 +8791,23 @@ type Observation_differentiated_service_delivery_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -7940,6 +8897,10 @@ type Observation_differentiated_service_delivery_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8034,6 +8995,10 @@ type Observation_disclosure_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8041,6 +9006,23 @@ type Observation_disclosure_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -8130,6 +9112,10 @@ type Observation_disclosure_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8224,6 +9210,10 @@ type Observation_edema_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8231,6 +9221,23 @@ type Observation_edema_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -8320,6 +9327,10 @@ type Observation_edema_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8414,6 +9425,10 @@ type Observation_elicited_index_case_contacts_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8421,6 +9436,23 @@ type Observation_elicited_index_case_contacts_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -8510,6 +9542,10 @@ type Observation_elicited_index_case_contacts_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8604,6 +9640,10 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8611,6 +9651,23 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -8700,6 +9757,10 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8794,6 +9855,10 @@ type Observation_estimated_delivery_date_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8801,6 +9866,23 @@ type Observation_estimated_delivery_date_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -8890,6 +9972,10 @@ type Observation_estimated_delivery_date_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -8984,6 +10070,10 @@ type Observation_family_member_hiv_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -8991,6 +10081,23 @@ type Observation_family_member_hiv_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -9080,6 +10187,10 @@ type Observation_family_member_hiv_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -9174,6 +10285,10 @@ type Observation_family_planning_method_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -9181,6 +10296,27 @@ type Observation_family_planning_method_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Family Planning Method
+         *  */
+        method: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -9270,6 +10406,10 @@ type Observation_family_planning_method_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -9364,6 +10504,10 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -9371,6 +10515,23 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -9460,6 +10621,10 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -9554,6 +10719,10 @@ type Observation_future_pregnancy_plans_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -9561,6 +10730,23 @@ type Observation_future_pregnancy_plans_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -9650,6 +10836,10 @@ type Observation_future_pregnancy_plans_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -9744,6 +10934,10 @@ type Observation_generic_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -9751,6 +10945,23 @@ type Observation_generic_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -9840,6 +11051,10 @@ type Observation_generic_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -9934,6 +11149,10 @@ type Observation_head_circumference_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -9941,6 +11160,23 @@ type Observation_head_circumference_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10030,6 +11266,10 @@ type Observation_head_circumference_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -10124,6 +11364,10 @@ type Observation_health_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -10131,6 +11375,23 @@ type Observation_health_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10220,6 +11481,10 @@ type Observation_health_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -10314,6 +11579,10 @@ type Observation_heart_rate_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -10321,6 +11590,23 @@ type Observation_heart_rate_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10410,6 +11696,10 @@ type Observation_heart_rate_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -10504,6 +11794,10 @@ type Observation_height_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -10511,6 +11805,23 @@ type Observation_height_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10600,6 +11911,10 @@ type Observation_height_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -10694,6 +12009,10 @@ type Observation_hgb_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -10701,6 +12020,23 @@ type Observation_hgb_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10790,6 +12126,10 @@ type Observation_hgb_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -10884,6 +12224,10 @@ type Observation_highest_education_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -10891,6 +12235,23 @@ type Observation_highest_education_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -10980,6 +12341,10 @@ type Observation_highest_education_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -11074,6 +12439,10 @@ type Observation_hiv_prevention_plan_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -11081,6 +12450,27 @@ type Observation_hiv_prevention_plan_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * HIV Prevention Plan
+         *  */
+        hIVPreventionPlan: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -11170,6 +12560,10 @@ type Observation_hiv_prevention_plan_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -11264,6 +12658,10 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -11271,6 +12669,27 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -11360,6 +12779,10 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -11454,6 +12877,10 @@ type Observation_hiv_program_final_outcome_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -11461,6 +12888,23 @@ type Observation_hiv_program_final_outcome_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -11550,6 +12994,10 @@ type Observation_hiv_program_final_outcome_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -11644,6 +13092,10 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -11651,6 +13103,23 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -11740,6 +13209,10 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -11834,6 +13307,10 @@ type Observation_hiv_program_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -11841,6 +13318,27 @@ type Observation_hiv_program_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -11930,6 +13428,10 @@ type Observation_hiv_program_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12024,6 +13526,10 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12031,6 +13537,23 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -12120,6 +13643,10 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12214,6 +13741,10 @@ type Observation_hiv_test_results_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12221,6 +13752,23 @@ type Observation_hiv_test_results_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -12310,6 +13858,10 @@ type Observation_hiv_test_results_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12404,6 +13956,10 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12411,6 +13967,23 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -12500,6 +14073,10 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12594,6 +14171,10 @@ type Observation_inh_at_follow_up_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12601,6 +14182,23 @@ type Observation_inh_at_follow_up_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -12690,6 +14288,10 @@ type Observation_inh_at_follow_up_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12784,6 +14386,10 @@ type Observation_last_menstrual_period_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12791,6 +14397,23 @@ type Observation_last_menstrual_period_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -12880,6 +14503,10 @@ type Observation_last_menstrual_period_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -12974,6 +14601,10 @@ type Observation_level_of_pain_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -12981,6 +14612,23 @@ type Observation_level_of_pain_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -13070,6 +14718,10 @@ type Observation_level_of_pain_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -13164,6 +14816,10 @@ type Observation_maternal_hiv_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -13171,6 +14827,23 @@ type Observation_maternal_hiv_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -13260,6 +14933,10 @@ type Observation_maternal_hiv_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -13354,6 +15031,10 @@ type Observation_muac_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -13361,6 +15042,23 @@ type Observation_muac_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -13450,6 +15148,10 @@ type Observation_muac_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -13544,6 +15246,10 @@ type Observation_nutritional_screening_result_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -13551,6 +15257,23 @@ type Observation_nutritional_screening_result_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -13640,6 +15363,10 @@ type Observation_nutritional_screening_result_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -13734,6 +15461,10 @@ type Observation_nutritional_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -13741,6 +15472,23 @@ type Observation_nutritional_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -13830,6 +15578,10 @@ type Observation_nutritional_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -13924,6 +15676,10 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -13931,6 +15687,23 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14020,6 +15793,10 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -14114,6 +15891,10 @@ type Observation_otz_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -14121,6 +15902,27 @@ type Observation_otz_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14210,6 +16012,10 @@ type Observation_otz_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -14304,6 +16110,10 @@ type Observation_patient_functional_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -14311,6 +16121,23 @@ type Observation_patient_functional_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14400,6 +16227,10 @@ type Observation_patient_functional_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -14494,6 +16325,10 @@ type Observation_patient_occupation_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -14501,6 +16336,23 @@ type Observation_patient_occupation_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14590,6 +16442,10 @@ type Observation_patient_occupation_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -14684,6 +16540,10 @@ type Observation_patient_who_stage_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -14691,6 +16551,23 @@ type Observation_patient_who_stage_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14780,6 +16657,10 @@ type Observation_patient_who_stage_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -14874,6 +16755,10 @@ type Observation_physical_examinations_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -14881,6 +16766,23 @@ type Observation_physical_examinations_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -14970,6 +16872,10 @@ type Observation_physical_examinations_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -15064,6 +16970,10 @@ type Observation_pregnancy_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -15071,6 +16981,23 @@ type Observation_pregnancy_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -15160,6 +17087,10 @@ type Observation_pregnancy_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -15254,6 +17185,10 @@ type Observation_presenting_symptom_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -15261,6 +17196,23 @@ type Observation_presenting_symptom_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -15350,6 +17302,10 @@ type Observation_presenting_symptom_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -15444,6 +17400,10 @@ type Observation_reason_eligible_for_art_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -15451,6 +17411,27 @@ type Observation_reason_eligible_for_art_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reasons Why Eligible for ART
+         *  */
+        whyEligible: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -15540,6 +17521,10 @@ type Observation_reason_eligible_for_art_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -15634,6 +17619,10 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -15641,6 +17630,23 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -15730,6 +17736,10 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -15824,6 +17834,10 @@ type Observation_resides_in_catchment_area_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -15831,6 +17845,23 @@ type Observation_resides_in_catchment_area_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -15920,6 +17951,10 @@ type Observation_resides_in_catchment_area_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16014,6 +18049,10 @@ type Observation_respiratory_rate_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16021,6 +18060,23 @@ type Observation_respiratory_rate_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -16110,6 +18166,10 @@ type Observation_respiratory_rate_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16204,6 +18264,10 @@ type Observation_screened_for_tb_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16211,6 +18275,27 @@ type Observation_screened_for_tb_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -16300,6 +18385,10 @@ type Observation_screened_for_tb_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16394,6 +18483,10 @@ type Observation_target_population_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16401,6 +18494,23 @@ type Observation_target_population_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -16490,6 +18600,10 @@ type Observation_target_population_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16584,6 +18698,10 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16591,6 +18709,23 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -16680,6 +18815,10 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16774,6 +18913,10 @@ type Observation_tb_prophylaxis_type_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16781,6 +18924,23 @@ type Observation_tb_prophylaxis_type_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -16870,6 +19030,10 @@ type Observation_tb_prophylaxis_type_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -16964,6 +19128,10 @@ type Observation_tb_screening_result_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -16971,6 +19139,23 @@ type Observation_tb_screening_result_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -17060,6 +19245,10 @@ type Observation_tb_screening_result_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -17154,6 +19343,10 @@ type Observation_tb_treatment_started_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -17161,6 +19354,27 @@ type Observation_tb_treatment_started_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -17250,6 +19464,10 @@ type Observation_tb_treatment_started_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -17344,6 +19562,10 @@ type Observation_tb_treatment_status_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -17351,6 +19573,23 @@ type Observation_tb_treatment_status_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -17440,6 +19679,10 @@ type Observation_tb_treatment_status_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -17534,6 +19777,10 @@ type Observation_temperature_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -17541,6 +19788,23 @@ type Observation_temperature_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -17630,6 +19894,10 @@ type Observation_temperature_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -17724,6 +19992,10 @@ type Observation_tested_for_hiv_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -17731,6 +20003,27 @@ type Observation_tested_for_hiv_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -17820,6 +20113,10 @@ type Observation_tested_for_hiv_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -17914,6 +20211,10 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -17921,6 +20222,23 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18010,6 +20328,10 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -18104,6 +20426,10 @@ type Observation_tpt_eligbility_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -18111,6 +20437,23 @@ type Observation_tpt_eligbility_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18200,6 +20543,10 @@ type Observation_tpt_eligbility_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -18294,6 +20641,10 @@ type Observation_tpt_started_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -18301,6 +20652,23 @@ type Observation_tpt_started_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18390,6 +20758,10 @@ type Observation_tpt_started_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -18484,6 +20856,10 @@ type Observation_treatment_completed_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -18491,6 +20867,23 @@ type Observation_treatment_completed_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18580,6 +20973,10 @@ type Observation_treatment_completed_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -18674,6 +21071,10 @@ type Observation_treatment_discontinued_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -18681,6 +21082,23 @@ type Observation_treatment_discontinued_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18770,6 +21188,10 @@ type Observation_treatment_discontinued_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -18864,6 +21286,10 @@ type Observation_viral_load_count_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -18871,6 +21297,23 @@ type Observation_viral_load_count_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -18960,6 +21403,10 @@ type Observation_viral_load_count_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -19054,6 +21501,10 @@ type Observation_viral_load_indication_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -19061,6 +21512,23 @@ type Observation_viral_load_indication_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -19150,6 +21618,10 @@ type Observation_viral_load_indication_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -19244,6 +21716,10 @@ type Observation_viral_load_performed_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -19251,6 +21727,23 @@ type Observation_viral_load_performed_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -19340,6 +21833,10 @@ type Observation_viral_load_performed_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */
@@ -19434,6 +21931,10 @@ type Observation_weight_observation_Props = {
      *  */
     encounter: Reference;
     /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
      * Date/Time this version was made available
      *  */
     issued: string;
@@ -19441,6 +21942,23 @@ type Observation_weight_observation_Props = {
      * Who is responsible for the observation
      *  */
     performer: Reference;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
     /**
      * Why the result is missing
      *  */
@@ -19530,6 +22048,10 @@ type Observation_weight_observation_Props = {
          * Type of component observation (code / type)
          *  */
         code: CodeableConcept;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
         /**
          * Why the component result is missing
          *  */

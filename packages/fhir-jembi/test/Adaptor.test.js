@@ -312,21 +312,36 @@ describe('Patient', () => {
 });
 
 
-describe.only('Observartion', () => {
+describe('Observation', () => {
   it('should default code', () => {
     const o = builders.observation('patient-occupation-observation', {})
 
-    expect(o.code).to.eql({"coding":[{"system":"http://loinc.org","code":"85658-3"}]})
+    expect(o.code).to.eql({ "coding": [{ "system": "http://loinc.org", "code": "85658-3" }] })
   })
 
-  it.only('should default category', () => {
+  it('should default category', () => {
     const o = builders.observation('patient-occupation-observation', {})
-    console.log(o)
-    expect(o.category).to.eql({"coding": [
-      {
-        "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-        "code": "social-history"
-      }
-    ]})
+    expect(o.category).to.eql({
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "social-history"
+        }
+      ]
+    })
+  });
+
+  it('should assign value', () => {
+    const o = builders.observation('patient-occupation-observation', {
+      value: util.concept(['value', 'system'])
+    })
+    expect(o.valueCodeableConcept).to.eql({
+      "coding": [
+        {
+          "system": "system",
+          "code": "value"
+        }
+      ]
+    })
   });
 })

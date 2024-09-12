@@ -113,7 +113,11 @@ const mapProps = (schema, mappings) => {
 
     const spec = schema.props[key] as Schema;
     if (spec) {
-      if (spec.typeDef) {
+      if (spec.isComposite) {
+        // TODO a composite def may also have a typedef - how do we handle this?
+        // maybe it's ok just to assign the top object hey?
+        props.push(mapComposite(key, mappings[key], spec));
+      } else if (spec.typeDef) {
         props.push(mapTypeDef(key, spec));
       } else {
         switch (spec.type) {
@@ -185,7 +189,7 @@ const assignToInput = (prop: string, rhs) =>
     )
   );
 
-  // this generates a statement to add the default
+// this generates a statement to add the default
 const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
   const defaults = mapping?.defaults ?? schema?.defaults;
   if (defaults) {
@@ -196,7 +200,7 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
     );
     return parsed.program.body;
   }
-}
+};
 
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
@@ -207,8 +211,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
     b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
   );
 
-
-  const elseStatement = addDefaults(propName, mapping, schema)
+  const elseStatement = addDefaults(propName, mapping, schema);
 
   return ifPropInInput(propName, [assignProp], elseStatement);
 };
@@ -361,9 +364,9 @@ const mapTypeDef = (propName: string, schema: Schema) => {
   }
 
   let elseStmnt;
-  const d = addDefaults(propName, undefined, schema)
+  const d = addDefaults(propName, undefined, schema);
   if (d) {
-    elseStmnt = d
+    elseStmnt = d;
   }
 
   return ifPropInInput(propName, statements, elseStmnt);
@@ -405,6 +408,20 @@ const mapReference = (propName: string, _mapping: Mapping, _schema: Schema) => {
   );
 
   return ifPropInInput(propName, [assignToInput(propName, callBuilder)]);
+};
+
+const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
+  const callBuilder = b.callExpression(
+    b.memberExpression(b.identifier('util'), b.identifier('composite')),
+    // util.composite(resource, 'x'', input.x)
+    [
+      b.identifier(RESOURCE_NAME),
+      b.stringLiteral(propName),
+      b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+    ]
+  );
+
+  return ifPropInInput(propName, [b.expressionStatement(callBuilder)]);
 };
 
 // this will ensure a meta prop on the data

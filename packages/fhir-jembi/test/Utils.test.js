@@ -5,8 +5,9 @@ import {
   identifier,
   coding,
   concept,
+  composite,
+  reference
 } from '../src/Utils';
-import { reference } from '../src/Utils';
 
 describe('findExtension()', () => {
   it('should find an extension with a matching url', () => {
@@ -278,3 +279,36 @@ describe('reference', () => {
     expect(result).to.eql({ reference: 'x', foo: 'bar' });
   });
 });
+
+describe.only('composite', () => {
+  it('should add a string value', () => {
+    const resource = {};
+
+    composite(resource, 'value', 'xyz')
+
+    expect(resource.valueString).to.eql('xyz')
+  })
+
+  it('should add a boolean value', () => {
+    const resource = {};
+
+    composite(resource, 'name', false)
+
+    expect(resource.nameBoolean).to.be.false
+  })
+
+  it('should add a codeableConcept value', () => {
+    const resource = {};
+
+    composite(resource, 'value', concept(['a', 'b']))
+
+    expect(resource.valueCodeableConcept).to.eql({
+      "coding": [
+        {
+          "code": "a",
+          "system": "b"
+        }
+      ]
+    })
+  })
+})

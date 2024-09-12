@@ -20,6 +20,9 @@ export type PropDef = {
 
   /** A default value which will be used if none is provided  */
   default?: any;
+
+  /** This is a composite resource type (joe's words), like value[x] */
+  isComposite: boolean;
 };
 
 /**
@@ -107,15 +110,24 @@ const generate = async types => {
       };
 
       for (const prop of spec.snapshot.element) {
-        // // tmp
-        // if (!prop.path.match('address')) {
+        let isComposite = false;
+
+        // if (prop.path.endsWith('[x]')) {
+        //   isComposite = true;
+        //   prop.path = prop.path.substring(0, prop.path.length - 3);
+        // } else if (/\[x\]/.test(prop.path)) {
+        //   // TODO this isn't great
+        //   // because we won't build a typedef for the composite value
+        //   // Maybe later I can work it out
         //   continue;
         // }
+        // Actually I think this works?
         if (/\[x\]/.test(prop.path)) {
-          // TODO warn?
-          console.log('SKIP ', prop.path);
-          continue;
+          isComposite = true;
+
+          prop.path = prop.path.replace('[x]', '');
         }
+
         if (prop.path === resourceType) {
           continue;
         }
@@ -154,6 +166,7 @@ const generate = async types => {
           type,
           isArray,
           desc: prop.short || prop.definition,
+          isComposite,
         };
 
         if (Object.keys(defaults).length) {
