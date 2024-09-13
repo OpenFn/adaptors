@@ -346,7 +346,7 @@ describe('Observation', () => {
   });
 })
 
-describe.only('MedicationDispense', () => {
+describe('MedicationDispense', () => {
   it('should map from a cdr MedicationDispense', () => {
     const input = fixtures.cdr.medicationDispense;
 
@@ -392,5 +392,4 @@ describe.only('MedicationDispense', () => {
 
 
   })
-
 })
