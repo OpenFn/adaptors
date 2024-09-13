@@ -250,7 +250,7 @@ const mapTypeDef = (propName: string, schema: Schema) => {
     );
   } else {
     statements.push(
-      b.variableDeclaration('const', [
+      b.variableDeclaration('let', [
         b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
       ])
     );

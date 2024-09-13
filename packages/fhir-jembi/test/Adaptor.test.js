@@ -345,3 +345,45 @@ describe('Observation', () => {
     })
   });
 })
+
+describe.only('MedicationDispense', () => {
+  it('should map from a cdr MedicationDispense', () => {
+    const input = fixtures.cdr.medicationDispense;
+
+    let ref;
+    if (input.medicationCodeableConcept?.codings) {
+      ref = input.medicationCodeableConcept.codings.find(({ system }) => system === 'http://cdr.aacahb.gov.et/hiv-regimen-codes')
+    }
+
+    const handover = util.findExtension(input, 'http://cdr.aacahb.gov.et/dose-end-date')
+
+    const result = builders.medicationDispense('arv-medication-dispense', {
+      id: input.id,
+
+      status: input.status,
+
+      // TODO: need to support reference as a reference or codeable concept
+      // also I don't see reference on the incoming data example? is it context.reference?
+      medicationReference: ref?.code && [ref.code],
+
+      subject: input.subject,
+      context: input.context,
+
+      // TODO this should refer to the MedicationRequest created
+      // Do we know what that is?
+      //authorizingPrescription: {}
+
+      quantity: input.quantity,
+      daysSupply: input.daysSupply,
+
+      whenHandedOver: handover.valueDateTime,
+
+    })
+    console.log(result)
+
+    expect(result).to.equal(fixtures.ndr.medicationDispense)
+
+
+  })
+
+})

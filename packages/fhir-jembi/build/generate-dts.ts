@@ -39,11 +39,12 @@ const generateDTS = (schema, mappings) => {
         // const fn = generateBuilder(name, variant, mappings[type]);
         //contents.push(typedef, fn);
       }
+
+      // TODO generate a summary / top function
+      // also only create split types if there are variants,
+      // otherwise its overcomplicated
+      contents.push(...generateEntryFuction(type, schema[type]));
     }
-    // TODO generate a summary / top function
-    // also only create split types if there are variants,
-    // otherwise its overcomplicated
-    contents.push(...generateEntryFuction(type, schema[type]));
   }
   // const item = contents[1];
   // console.log(item);
