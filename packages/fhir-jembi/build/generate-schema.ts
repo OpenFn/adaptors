@@ -84,12 +84,12 @@ const generate = async types => {
     //     console.log(code);
     //   }
     // }
-    // if (id === 'patient-occupation-observation') {
-    //   await writeFile(
-    //     `./spec/${id}.spec.json`,
-    //     JSON.stringify(fullSpec[id], null, 2)
-    //   );
-    // }
+    if (id === 'arv-medication-dispense') {
+      await writeFile(
+        `./spec/${id}.spec.json`,
+        JSON.stringify(fullSpec[id], null, 2)
+      );
+    }
 
     if (types.includes(resourceType)) {
       const spec = fullSpec[id];

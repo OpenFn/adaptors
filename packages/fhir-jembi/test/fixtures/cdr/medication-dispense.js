@@ -20,18 +20,23 @@ export default {
   "context": {
     "reference": "Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3"
   },
-  "medicationCodeableConcept": {
-    "coding": [
-      {
-        "system": "http://snomed.info/sct",
-        "code": "874950001",
-        "display": "Product containing only efavirenz and lamivudine and tenofovir"
-      },
-      {
-        "system": "http://cdr.aacahb.gov.et/hiv-regimen-codes",
-        "code": "null"
-      }
-    ]
+  // JC removed this for now....
+  // "medicationCodeableConcept": {
+  //   "coding": [
+  //     {
+  //       "system": "http://snomed.info/sct",
+  //       "code": "874950001",
+  //       "display": "Product containing only efavirenz and lamivudine and tenofovir"
+  //     },
+  //     {
+  //       "system": "http://cdr.aacahb.gov.et/hiv-regimen-codes",
+  //       "code": "abc" // JC changed
+  //     }
+  //   ]
+  // },
+  // .. and added this instead
+  reference: {
+    "reference": "Medication/ARVMedicationExample"
   },
   "subject": {
     "reference": "Patient/"

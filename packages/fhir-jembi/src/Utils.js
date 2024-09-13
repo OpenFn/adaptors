@@ -172,6 +172,8 @@ export const composite = (object, key, value) => {
 
   if (value.coding) {
     k.push('CodeableConcept')
+  } else if (value.reference) {
+    k.push('Reference')
   }
   else if (typeof value === 'string') {
     k.push('String')

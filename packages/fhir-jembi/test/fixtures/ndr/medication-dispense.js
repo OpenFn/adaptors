@@ -12,9 +12,9 @@ export default {
   daysSupply: { unit: 'Day', system: 'http://unitsofmeasure.org', code: 'd' },
   whenHandedOver: '01/01/1970',
   // Bit of confusion over whether this is really an array
-  medicationReference: [{
+  medicationReference: {
     "reference": "Medication/ARVMedicationExample"
-  }],
+  },
   meta: {
     profile: [
       'http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-dispense'
