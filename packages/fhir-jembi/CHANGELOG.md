@@ -1,5 +1,11 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.11
+
+- Add builders for MedicationDispense and Medication
+- Tighten extension mapping
+
+
 ## 0.0.10
 
 - Improvements to observation (map references, default static values, and handle value)
