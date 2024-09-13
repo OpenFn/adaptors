@@ -101,7 +101,7 @@ export const addExtension = (resource, url, value) => {
  * @function
  */
 export const findExtension = (obj, targetUrl, path) => {
-  const result = obj.extension.find(ext => ext.url === targetUrl);
+  const result = obj.extension?.find(ext => ext.url === targetUrl);
   if (result && path) {
     return _.get(result, path);
   }

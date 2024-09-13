@@ -1,10 +1,13 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.12
+
+- Make util.findExtension safe for resources without an extension
+
 ## 0.0.11
 
 - Add builders for MedicationDispense and Medication
 - Tighten extension mapping
-
 
 ## 0.0.10
 
