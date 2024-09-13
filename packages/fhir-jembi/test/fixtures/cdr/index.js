@@ -1,9 +1,11 @@
 import patient from './patient.js';
 import encounter from './encounter.js';
 import medicationDispense from './medication-dispense.js';
+import medication from './medication.js';
 
 export default {
   patient,
   encounter,
-  medicationDispense
+  medicationDispense,
+  medication
 };

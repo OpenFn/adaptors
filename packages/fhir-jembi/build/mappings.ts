@@ -52,4 +52,5 @@ export default {
     // id: true,
   },
   MedicationDispense: {},
+  Medication: {},
 };

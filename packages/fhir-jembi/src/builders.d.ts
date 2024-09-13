@@ -972,7 +972,7 @@ type Observation_active_tb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1017,7 +1017,7 @@ type Observation_active_tb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1066,11 +1066,11 @@ type Observation_active_tb_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -1191,7 +1191,7 @@ type Observation_alt_ast_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1232,7 +1232,7 @@ type Observation_alt_ast_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1281,11 +1281,11 @@ type Observation_alt_ast_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -1406,7 +1406,7 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1447,7 +1447,7 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1496,11 +1496,11 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -1642,7 +1642,7 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1683,7 +1683,7 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1732,11 +1732,11 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -1857,7 +1857,7 @@ type Observation_art_eligibility_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1898,7 +1898,7 @@ type Observation_art_eligibility_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -1947,11 +1947,11 @@ type Observation_art_eligibility_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -2072,7 +2072,7 @@ type Observation_art_followup_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2117,7 +2117,7 @@ type Observation_art_followup_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2166,11 +2166,11 @@ type Observation_art_followup_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -2291,7 +2291,7 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2336,7 +2336,7 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2385,11 +2385,11 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -2510,7 +2510,7 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2551,7 +2551,7 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2600,11 +2600,11 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -2725,7 +2725,7 @@ type Observation_arv_adherence_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2766,7 +2766,7 @@ type Observation_arv_adherence_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2815,11 +2815,11 @@ type Observation_arv_adherence_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -2940,7 +2940,7 @@ type Observation_arv_change_category_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -2981,7 +2981,7 @@ type Observation_arv_change_category_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3030,11 +3030,11 @@ type Observation_arv_change_category_type_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -3155,7 +3155,7 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3200,7 +3200,7 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3249,11 +3249,11 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -3374,7 +3374,7 @@ type Observation_arv_regimen_change_reason_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3419,7 +3419,7 @@ type Observation_arv_regimen_change_reason_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3468,11 +3468,11 @@ type Observation_arv_regimen_change_reason_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -3593,7 +3593,7 @@ type Observation_arv_regimen_changed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3634,7 +3634,7 @@ type Observation_arv_regimen_changed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3683,11 +3683,11 @@ type Observation_arv_regimen_changed_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -3808,7 +3808,7 @@ type Observation_arv_regimen_side_effects_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3853,7 +3853,7 @@ type Observation_arv_regimen_side_effects_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -3902,11 +3902,11 @@ type Observation_arv_regimen_side_effects_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -4027,7 +4027,7 @@ type Observation_assessed_for_pain_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4068,7 +4068,7 @@ type Observation_assessed_for_pain_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4117,11 +4117,11 @@ type Observation_assessed_for_pain_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -4242,7 +4242,7 @@ type Observation_blood_pressure_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4283,7 +4283,7 @@ type Observation_blood_pressure_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4332,11 +4332,11 @@ type Observation_blood_pressure_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -4457,7 +4457,7 @@ type Observation_bmi_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4498,7 +4498,7 @@ type Observation_bmi_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4547,11 +4547,11 @@ type Observation_bmi_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -4672,7 +4672,7 @@ type Observation_breastfeeding_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4713,7 +4713,7 @@ type Observation_breastfeeding_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4762,11 +4762,11 @@ type Observation_breastfeeding_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -4887,7 +4887,7 @@ type Observation_cd4_absolute_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4928,7 +4928,7 @@ type Observation_cd4_absolute_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -4977,11 +4977,11 @@ type Observation_cd4_absolute_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -5102,7 +5102,7 @@ type Observation_cd4_percentage_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5143,7 +5143,7 @@ type Observation_cd4_percentage_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5192,11 +5192,11 @@ type Observation_cd4_percentage_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -5317,7 +5317,7 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5358,7 +5358,7 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5407,11 +5407,11 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -5532,7 +5532,7 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5573,7 +5573,7 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5622,11 +5622,11 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -5747,7 +5747,7 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5788,7 +5788,7 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -5837,11 +5837,11 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -5962,7 +5962,7 @@ type Observation_cervical_cancer_screening_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6003,7 +6003,7 @@ type Observation_cervical_cancer_screening_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6052,11 +6052,11 @@ type Observation_cervical_cancer_screening_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -6177,7 +6177,7 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6218,7 +6218,7 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6267,11 +6267,11 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -6392,7 +6392,7 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6433,7 +6433,7 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6482,11 +6482,11 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -6607,7 +6607,7 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6648,7 +6648,7 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6697,11 +6697,11 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -6822,7 +6822,7 @@ type Observation_children_developmental_milestone_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6863,7 +6863,7 @@ type Observation_children_developmental_milestone_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -6912,11 +6912,11 @@ type Observation_children_developmental_milestone_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -7037,7 +7037,7 @@ type Observation_confirmed_hiv_positive_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7078,7 +7078,7 @@ type Observation_confirmed_hiv_positive_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7127,11 +7127,11 @@ type Observation_confirmed_hiv_positive_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -7252,7 +7252,7 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7293,7 +7293,7 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7342,11 +7342,11 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -7467,7 +7467,7 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7508,7 +7508,7 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7557,11 +7557,11 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -7682,7 +7682,7 @@ type Observation_counseled_for_hiv_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7727,7 +7727,7 @@ type Observation_counseled_for_hiv_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7776,11 +7776,11 @@ type Observation_counseled_for_hiv_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -7901,7 +7901,7 @@ type Observation_creatine_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7942,7 +7942,7 @@ type Observation_creatine_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -7991,11 +7991,11 @@ type Observation_creatine_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -8116,7 +8116,7 @@ type Observation_current_art_duration_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8157,7 +8157,7 @@ type Observation_current_art_duration_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8206,11 +8206,11 @@ type Observation_current_art_duration_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -8331,7 +8331,7 @@ type Observation_delivery_mode_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8372,7 +8372,7 @@ type Observation_delivery_mode_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8421,11 +8421,11 @@ type Observation_delivery_mode_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -8546,7 +8546,7 @@ type Observation_delivery_place_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8587,7 +8587,7 @@ type Observation_delivery_place_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8636,11 +8636,11 @@ type Observation_delivery_place_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -8761,7 +8761,7 @@ type Observation_differentiated_service_delivery_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8802,7 +8802,7 @@ type Observation_differentiated_service_delivery_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -8851,11 +8851,11 @@ type Observation_differentiated_service_delivery_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -8976,7 +8976,7 @@ type Observation_disclosure_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9017,7 +9017,7 @@ type Observation_disclosure_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9066,11 +9066,11 @@ type Observation_disclosure_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -9191,7 +9191,7 @@ type Observation_edema_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9232,7 +9232,7 @@ type Observation_edema_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9281,11 +9281,11 @@ type Observation_edema_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -9406,7 +9406,7 @@ type Observation_elicited_index_case_contacts_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9447,7 +9447,7 @@ type Observation_elicited_index_case_contacts_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9496,11 +9496,11 @@ type Observation_elicited_index_case_contacts_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -9621,7 +9621,7 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9662,7 +9662,7 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9711,11 +9711,11 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -9836,7 +9836,7 @@ type Observation_estimated_delivery_date_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9877,7 +9877,7 @@ type Observation_estimated_delivery_date_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -9926,11 +9926,11 @@ type Observation_estimated_delivery_date_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -10051,7 +10051,7 @@ type Observation_family_member_hiv_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10092,7 +10092,7 @@ type Observation_family_member_hiv_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10141,11 +10141,11 @@ type Observation_family_member_hiv_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -10266,7 +10266,7 @@ type Observation_family_planning_method_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10311,7 +10311,7 @@ type Observation_family_planning_method_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10360,11 +10360,11 @@ type Observation_family_planning_method_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -10485,7 +10485,7 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10526,7 +10526,7 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10575,11 +10575,11 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -10700,7 +10700,7 @@ type Observation_future_pregnancy_plans_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10741,7 +10741,7 @@ type Observation_future_pregnancy_plans_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10790,11 +10790,11 @@ type Observation_future_pregnancy_plans_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -10915,7 +10915,7 @@ type Observation_generic_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -10956,7 +10956,7 @@ type Observation_generic_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11005,11 +11005,11 @@ type Observation_generic_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -11130,7 +11130,7 @@ type Observation_head_circumference_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11171,7 +11171,7 @@ type Observation_head_circumference_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11220,11 +11220,11 @@ type Observation_head_circumference_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -11345,7 +11345,7 @@ type Observation_health_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11386,7 +11386,7 @@ type Observation_health_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11435,11 +11435,11 @@ type Observation_health_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -11560,7 +11560,7 @@ type Observation_heart_rate_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11601,7 +11601,7 @@ type Observation_heart_rate_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11650,11 +11650,11 @@ type Observation_heart_rate_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -11775,7 +11775,7 @@ type Observation_height_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11816,7 +11816,7 @@ type Observation_height_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -11865,11 +11865,11 @@ type Observation_height_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -11990,7 +11990,7 @@ type Observation_hgb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12031,7 +12031,7 @@ type Observation_hgb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12080,11 +12080,11 @@ type Observation_hgb_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -12205,7 +12205,7 @@ type Observation_highest_education_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12246,7 +12246,7 @@ type Observation_highest_education_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12295,11 +12295,11 @@ type Observation_highest_education_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -12420,7 +12420,7 @@ type Observation_hiv_prevention_plan_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12465,7 +12465,7 @@ type Observation_hiv_prevention_plan_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12514,11 +12514,11 @@ type Observation_hiv_prevention_plan_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -12639,7 +12639,7 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12684,7 +12684,7 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12733,11 +12733,11 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -12858,7 +12858,7 @@ type Observation_hiv_program_final_outcome_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12899,7 +12899,7 @@ type Observation_hiv_program_final_outcome_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -12948,11 +12948,11 @@ type Observation_hiv_program_final_outcome_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -13073,7 +13073,7 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13114,7 +13114,7 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13163,11 +13163,11 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -13288,7 +13288,7 @@ type Observation_hiv_program_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13333,7 +13333,7 @@ type Observation_hiv_program_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13382,11 +13382,11 @@ type Observation_hiv_program_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -13507,7 +13507,7 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13548,7 +13548,7 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13597,11 +13597,11 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -13722,7 +13722,7 @@ type Observation_hiv_test_results_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13763,7 +13763,7 @@ type Observation_hiv_test_results_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13812,11 +13812,11 @@ type Observation_hiv_test_results_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -13937,7 +13937,7 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -13978,7 +13978,7 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14027,11 +14027,11 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -14152,7 +14152,7 @@ type Observation_inh_at_follow_up_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14193,7 +14193,7 @@ type Observation_inh_at_follow_up_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14242,11 +14242,11 @@ type Observation_inh_at_follow_up_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -14367,7 +14367,7 @@ type Observation_last_menstrual_period_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14408,7 +14408,7 @@ type Observation_last_menstrual_period_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14457,11 +14457,11 @@ type Observation_last_menstrual_period_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -14582,7 +14582,7 @@ type Observation_level_of_pain_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14623,7 +14623,7 @@ type Observation_level_of_pain_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14672,11 +14672,11 @@ type Observation_level_of_pain_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -14797,7 +14797,7 @@ type Observation_maternal_hiv_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14838,7 +14838,7 @@ type Observation_maternal_hiv_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -14887,11 +14887,11 @@ type Observation_maternal_hiv_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -15012,7 +15012,7 @@ type Observation_muac_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15053,7 +15053,7 @@ type Observation_muac_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15102,11 +15102,11 @@ type Observation_muac_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -15227,7 +15227,7 @@ type Observation_nutritional_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15268,7 +15268,7 @@ type Observation_nutritional_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15317,11 +15317,11 @@ type Observation_nutritional_screening_result_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -15442,7 +15442,7 @@ type Observation_nutritional_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15483,7 +15483,7 @@ type Observation_nutritional_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15532,11 +15532,11 @@ type Observation_nutritional_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -15657,7 +15657,7 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15698,7 +15698,7 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15747,11 +15747,11 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -15872,7 +15872,7 @@ type Observation_otz_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15917,7 +15917,7 @@ type Observation_otz_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -15966,11 +15966,11 @@ type Observation_otz_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -16091,7 +16091,7 @@ type Observation_patient_functional_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16132,7 +16132,7 @@ type Observation_patient_functional_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16181,11 +16181,11 @@ type Observation_patient_functional_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -16306,7 +16306,7 @@ type Observation_patient_occupation_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16347,7 +16347,7 @@ type Observation_patient_occupation_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16396,11 +16396,11 @@ type Observation_patient_occupation_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -16521,7 +16521,7 @@ type Observation_patient_who_stage_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16562,7 +16562,7 @@ type Observation_patient_who_stage_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16611,11 +16611,11 @@ type Observation_patient_who_stage_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -16736,7 +16736,7 @@ type Observation_physical_examinations_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16777,7 +16777,7 @@ type Observation_physical_examinations_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16826,11 +16826,11 @@ type Observation_physical_examinations_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -16951,7 +16951,7 @@ type Observation_pregnancy_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -16992,7 +16992,7 @@ type Observation_pregnancy_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17041,11 +17041,11 @@ type Observation_pregnancy_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -17166,7 +17166,7 @@ type Observation_presenting_symptom_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17207,7 +17207,7 @@ type Observation_presenting_symptom_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17256,11 +17256,11 @@ type Observation_presenting_symptom_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -17381,7 +17381,7 @@ type Observation_reason_eligible_for_art_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17426,7 +17426,7 @@ type Observation_reason_eligible_for_art_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17475,11 +17475,11 @@ type Observation_reason_eligible_for_art_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -17600,7 +17600,7 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17641,7 +17641,7 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17690,11 +17690,11 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -17815,7 +17815,7 @@ type Observation_resides_in_catchment_area_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17856,7 +17856,7 @@ type Observation_resides_in_catchment_area_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -17905,11 +17905,11 @@ type Observation_resides_in_catchment_area_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -18030,7 +18030,7 @@ type Observation_respiratory_rate_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18071,7 +18071,7 @@ type Observation_respiratory_rate_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18120,11 +18120,11 @@ type Observation_respiratory_rate_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -18245,7 +18245,7 @@ type Observation_screened_for_tb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18290,7 +18290,7 @@ type Observation_screened_for_tb_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18339,11 +18339,11 @@ type Observation_screened_for_tb_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -18464,7 +18464,7 @@ type Observation_target_population_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18505,7 +18505,7 @@ type Observation_target_population_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18554,11 +18554,11 @@ type Observation_target_population_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -18679,7 +18679,7 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18720,7 +18720,7 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18769,11 +18769,11 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -18894,7 +18894,7 @@ type Observation_tb_prophylaxis_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18935,7 +18935,7 @@ type Observation_tb_prophylaxis_type_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -18984,11 +18984,11 @@ type Observation_tb_prophylaxis_type_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -19109,7 +19109,7 @@ type Observation_tb_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19150,7 +19150,7 @@ type Observation_tb_screening_result_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19199,11 +19199,11 @@ type Observation_tb_screening_result_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -19324,7 +19324,7 @@ type Observation_tb_treatment_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19369,7 +19369,7 @@ type Observation_tb_treatment_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19418,11 +19418,11 @@ type Observation_tb_treatment_started_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -19543,7 +19543,7 @@ type Observation_tb_treatment_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19584,7 +19584,7 @@ type Observation_tb_treatment_status_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19633,11 +19633,11 @@ type Observation_tb_treatment_status_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -19758,7 +19758,7 @@ type Observation_temperature_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19799,7 +19799,7 @@ type Observation_temperature_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -19848,11 +19848,11 @@ type Observation_temperature_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -19973,7 +19973,7 @@ type Observation_tested_for_hiv_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20018,7 +20018,7 @@ type Observation_tested_for_hiv_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20067,11 +20067,11 @@ type Observation_tested_for_hiv_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -20192,7 +20192,7 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20233,7 +20233,7 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20282,11 +20282,11 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -20407,7 +20407,7 @@ type Observation_tpt_eligbility_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20448,7 +20448,7 @@ type Observation_tpt_eligbility_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20497,11 +20497,11 @@ type Observation_tpt_eligbility_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -20622,7 +20622,7 @@ type Observation_tpt_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20663,7 +20663,7 @@ type Observation_tpt_started_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20712,11 +20712,11 @@ type Observation_tpt_started_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -20837,7 +20837,7 @@ type Observation_treatment_completed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20878,7 +20878,7 @@ type Observation_treatment_completed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -20927,11 +20927,11 @@ type Observation_treatment_completed_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -21052,7 +21052,7 @@ type Observation_treatment_discontinued_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21093,7 +21093,7 @@ type Observation_treatment_discontinued_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21142,11 +21142,11 @@ type Observation_treatment_discontinued_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -21267,7 +21267,7 @@ type Observation_viral_load_count_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21308,7 +21308,7 @@ type Observation_viral_load_count_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21357,11 +21357,11 @@ type Observation_viral_load_count_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -21482,7 +21482,7 @@ type Observation_viral_load_indication_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21523,7 +21523,7 @@ type Observation_viral_load_indication_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21572,11 +21572,11 @@ type Observation_viral_load_indication_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -21697,7 +21697,7 @@ type Observation_viral_load_performed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21738,7 +21738,7 @@ type Observation_viral_load_performed_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21787,11 +21787,11 @@ type Observation_viral_load_performed_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -21912,7 +21912,7 @@ type Observation_weight_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -21953,7 +21953,7 @@ type Observation_weight_observation_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -22002,11 +22002,11 @@ type Observation_weight_observation_Props = {
         /**
          * Low Range, if relevant
          *  */
-        low: any;
+        low: Quantity;
         /**
          * High Range, if relevant
          *  */
-        high: any;
+        high: Quantity;
         /**
          * Reference range qualifier
          *  */
@@ -22232,7 +22232,7 @@ type MedicationDispense_arv_medication_dispense_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -22468,7 +22468,7 @@ type MedicationDispense_cotrimoxazole_preventive_therapy_medication_dispense_Pro
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -22704,7 +22704,7 @@ type MedicationDispense_generic_medication_dispense_Props = {
         /**
          * A reference to a code defined by a terminology system
          *  */
-        coding: any;
+        coding: Coding;
         /**
          * Plain text representation of the concept
          *  */
@@ -22885,3 +22885,367 @@ type MedicationDispense__lookups = {
 };
 
 export declare function medicationDispense<T extends MedicationDispense_variants>(type: MedicationDispense_variants, props: MedicationDispense__lookups[T]);;
+
+type Medication_arv_regimen_medication_Props = {
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Business identifier for this medication
+     *  */
+    identifier: Identifier;
+    /**
+     * Codes that identify this medication
+     *  */
+    code: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * active | inactive | entered-in-error
+     *  */
+    status: string;
+    /**
+     * Manufacturer of the item
+     *  */
+    manufacturer: Reference;
+    /**
+     * powder | tablets | capsule +
+     *  */
+    form: CodeableConcept;
+    /**
+     * Amount of drug in package
+     *  */
+    amount: Ratio;
+    /**
+     * Active or inactive ingredient
+     *  */
+    ingredient: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * The actual ingredient or content
+         *  */
+        item: CodeableConcept;
+        /**
+         * Active ingredient indicator
+         *  */
+        isActive: boolean;
+        /**
+         * Quantity of ingredient present
+         *  */
+        strength: Ratio;
+    };
+    /**
+     * Details about packaged medications
+     *  */
+    batch: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Identifier assigned to batch
+         *  */
+        lotNumber: string;
+        /**
+         * When batch will expire
+         *  */
+        expirationDate: dateTime;
+    };
+};
+
+type Medication_oi_medication_Props = {
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Business identifier for this medication
+     *  */
+    identifier: Identifier;
+    /**
+     * Codes that identify this medication
+     *  */
+    code: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * active | inactive | entered-in-error
+     *  */
+    status: string;
+    /**
+     * Manufacturer of the item
+     *  */
+    manufacturer: Reference;
+    /**
+     * powder | tablets | capsule +
+     *  */
+    form: CodeableConcept;
+    /**
+     * Amount of drug in package
+     *  */
+    amount: Ratio;
+    /**
+     * Active or inactive ingredient
+     *  */
+    ingredient: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * The actual ingredient or content
+         *  */
+        item: CodeableConcept;
+        /**
+         * Active ingredient indicator
+         *  */
+        isActive: boolean;
+        /**
+         * Quantity of ingredient present
+         *  */
+        strength: Ratio;
+    };
+    /**
+     * Details about packaged medications
+     *  */
+    batch: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Identifier assigned to batch
+         *  */
+        lotNumber: string;
+        /**
+         * When batch will expire
+         *  */
+        expirationDate: dateTime;
+    };
+};
+
+type Medication_tpt_medication_Props = {
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Business identifier for this medication
+     *  */
+    identifier: Identifier;
+    /**
+     * Codes that identify this medication
+     *  */
+    code: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * active | inactive | entered-in-error
+     *  */
+    status: string;
+    /**
+     * Manufacturer of the item
+     *  */
+    manufacturer: Reference;
+    /**
+     * powder | tablets | capsule +
+     *  */
+    form: CodeableConcept;
+    /**
+     * Amount of drug in package
+     *  */
+    amount: Ratio;
+    /**
+     * Active or inactive ingredient
+     *  */
+    ingredient: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * The actual ingredient or content
+         *  */
+        item: CodeableConcept;
+        /**
+         * Active ingredient indicator
+         *  */
+        isActive: boolean;
+        /**
+         * Quantity of ingredient present
+         *  */
+        strength: Ratio;
+    };
+    /**
+     * Details about packaged medications
+     *  */
+    batch: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Identifier assigned to batch
+         *  */
+        lotNumber: string;
+        /**
+         * When batch will expire
+         *  */
+        expirationDate: dateTime;
+    };
+};
+
+type Medication_variants = "arv-regimen-medication" | "oi-medication" | "tpt-medication";
+
+type Medication__lookups = {
+    "arv-regimen-medication": Medication_arv_regimen_medication_Props;
+    "oi-medication": Medication_oi_medication_Props;
+    "tpt-medication": Medication_tpt_medication_Props;
+};
+
+export declare function medication<T extends Medication_variants>(type: Medication_variants, props: Medication__lookups[T]);;

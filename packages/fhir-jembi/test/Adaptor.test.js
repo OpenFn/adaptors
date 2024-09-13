@@ -366,29 +366,50 @@ describe('MedicationDispense', () => {
 
     const result = builders.medicationDispense('arv-medication-dispense', {
       id: input.id,
-
       status: input.status,
+      subject: input.subject,
+      context: input.context,
+      quantity: input.quantity,
+      daysSupply: input.daysSupply,
+      whenHandedOver: handover.valueDateTime,
 
       // TODO: need to support reference as a reference or codeable concept
       // also I don't see reference on the incoming data example? is it context.reference?
       medication: ref,
 
-      subject: input.subject,
-      context: input.context,
 
       // TODO this should refer to the MedicationRequest created
       // Do we know what that is?
       //authorizingPrescription: {}
-
-      quantity: input.quantity,
-      daysSupply: input.daysSupply,
-
-      whenHandedOver: handover.valueDateTime,
-
     })
-    console.log(result)
 
     expect(result).to.eql(fixtures.ndr.medicationDispense)
+
+
+  })
+})
+
+describe("Medication", () => {
+  it('should map from a cdr Medication', () => {
+    const input = fixtures.cdr.medication;
+
+
+    const [coding] = input.form.coding;
+
+    const result = builders.medication('arv-regimen-medication', {
+
+      id: input.id,
+
+      // Not sure how strict to be on mapping here?
+      // First we need to map the system and coding: looks like
+      // NDR uses a fixed system ofhttp://cdr.aacahb.gov.et/hiv-regimen-codes I think?
+      // Also the text seems to be mapped differently, idk if this is important
+      // (seems cosmetic)
+      code: util.concept(coding.display, [coding.code, coding.system])
+
+    })
+
+    expect(result).to.eql(fixtures.ndr.medication)
 
 
   })

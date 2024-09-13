@@ -84,7 +84,7 @@ const generate = async types => {
     //     console.log(code);
     //   }
     // }
-    if (id === 'arv-medication-dispense') {
+    if (id === 'arv-regimen-medication') {
       await writeFile(
         `./spec/${id}.spec.json`,
         JSON.stringify(fullSpec[id], null, 2)
@@ -230,6 +230,7 @@ function parseProp(fullSpec, schema, path: string, data) {
 
     let simpleType;
     if (
+      type.code === 'Extension' &&
       type.profile &&
       type.profile.length &&
       type.profile[0].match(/\/StructureDefinition/)
