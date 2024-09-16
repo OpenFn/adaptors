@@ -44,6 +44,10 @@ describe('General', () => {
   });
 });
 
+// TODO: I want all these mapping types declared in the code somewhere
+// https://docs.google.com/spreadsheets/d/1CYYhDy25Uc4-9fwtj7HHTPzBxIW480H6rRqP0ZKxYXI/edit?gid=1486293516#gid=1486293516
+// Just for discoverablilty
+
 describe('Encounter', () => {
   it.skip('should convert CDR to NDR', () => {
     const input = fixtures.cdr.encounter;
@@ -389,6 +393,7 @@ describe('MedicationDispense', () => {
   })
 })
 
+// medication request
 describe("Medication", () => {
   it('should map from a cdr Medication', () => {
     const input = fixtures.cdr.medication;
@@ -414,3 +419,34 @@ describe("Medication", () => {
 
   })
 })
+
+describe.only("Care Plan", () => {
+  it('should map from a cdr CarePlan', () => {
+    const input = fixtures.cdr.careplan;
+
+
+    const result = builders.carePlan('art-follow-up-careplan', {
+
+      id: input.id,
+      status: input.status,
+      intent: input.intent,
+      created: input.created,
+      // maybe?
+      reference: input.reference,
+      subject: input.subject,
+      encounter: input.encounter,
+
+      // TODO how do we map activity?
+      // need to handle backbone elements properly
+      
+
+    })
+
+    console.log(JSON.stringify(result, null, 2))
+    
+    // TODO category needs to be an array
+    expect(result).to.eql(fixtures.ndr.careplan)
+
+
+  })
+});

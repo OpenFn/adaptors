@@ -280,7 +280,7 @@ describe('reference', () => {
   });
 });
 
-describe.only('composite', () => {
+describe('composite', () => {
   it('should add a string value', () => {
     const resource = {};
 
