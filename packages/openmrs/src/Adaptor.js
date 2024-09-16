@@ -411,26 +411,21 @@ export function upsert(
       `/ws/rest/v1/${resolvedResource}`,
       {},
       resolvedQuery
-    )
-      .then(resp => {
-        const resource = resp.body.results;
-        if (resource.length > 1) {
-          throw new RangeError(
-            `Found more than one record for your request; cannot upsert on non-unique attribute.`
-          );
-        } else if (resource.length === 0) {
-          console.log(`No ${resolvedResource} found.`);
-          return create(resolvedResource, resolvedData)(state);
-        } else {
-          console.log(`One ${resolvedResource} found.`);
-          const path = resource[0]?.uuid;
-          return update(resolvedResource, path, resolvedData)(state);
-        }
-      })
-      .then(result => {
-        const { body } = result.response;
-        return prepareNextState(state, body, callback);
-      });
+    ).then(resp => {
+      const resource = resp.body.results;
+      if (resource.length > 1) {
+        throw new RangeError(
+          `Found more than one record for your request; cannot upsert on non-unique attribute.`
+        );
+      } else if (resource.length === 0) {
+        console.log(`No ${resolvedResource} found.`);
+        return create(resolvedResource, resolvedData, callback)(state);
+      } else {
+        console.log(`One ${resolvedResource} found.`);
+        const path = resource[0]?.uuid;
+        return update(resolvedResource, path, resolvedData, callback)(state);
+      }
+    });
   };
 }
 
