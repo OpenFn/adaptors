@@ -146,8 +146,11 @@ export const concept = (text, ...codings) => {
 };
 
 // opts is { type, identifier, display}
+// TODO if passed a full resource, return a ref to its id
+// TODO: should the id be like `resource/id` ?
+// I see the pattern a lot but I don't know if its formal
 export const reference = (ref, opts) => {
-  // if passed a rull reference, just return it
+  // if passed full reference, just return it
   if (ref.reference) {
     return ref;
   }

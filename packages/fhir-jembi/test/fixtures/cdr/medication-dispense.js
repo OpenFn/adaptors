@@ -39,7 +39,7 @@ export default {
     "reference": "Medication/ARVMedicationExample"
   },
   "subject": {
-    "reference": "Patient/"
+    "reference": "Patient/30119"
   },
   "quantity": {
     "value": null,

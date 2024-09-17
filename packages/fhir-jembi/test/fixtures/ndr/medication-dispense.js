@@ -3,8 +3,10 @@ export default {
   resourceType: 'MedicationDispense',
   id: 'be953504-07b6-43e3-af33-8f8a6d6518ac',
   status: 'completed',
-  subject: { reference: 'Patient/' },
-  context: { reference: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3' },
+  subject: { reference: 'Patient/30119' }, // edited patient id
+  context: {
+    reference: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3',
+  },
   quantity: {
     system: 'http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm',
     code: 'TAB'
