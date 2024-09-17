@@ -401,13 +401,24 @@ const mapExtension = (propName: string, mapping: Mapping) => {
   return ifPropInInput(propName, [callBuilder]);
 };
 
-const mapReference = (propName: string, _mapping: Mapping, _schema: Schema) => {
+const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
+  const statements: StatementKind[] = [];
+
+  if (schema.isArray) {
+    const mexp = `${INPUT_NAME}.${propName}`; // ie resource.identifier
+    const ast = parse(`if (!Array.isArray(${mexp})) { ${mexp} = [${mexp}]; }`);
+    statements.push(ast.program.body[0]);
+  }
+
+
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('util'), b.identifier('reference')),
     [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
-  return ifPropInInput(propName, [assignToInput(propName, callBuilder)]);
+  statements.push(assignToInput(propName, callBuilder))
+
+  return ifPropInInput(propName, statements);
 };
 
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {

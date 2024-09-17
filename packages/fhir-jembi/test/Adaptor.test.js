@@ -308,7 +308,7 @@ describe.only('Everything', () => {
 
   // TODO: category confusion again - array or object?
   // TODO: I can't work out what I'm mapping value to
-  it.skip('should map Observation - ART Followup Status', () => {
+  it.only('should map Observation - ART Followup Status', () => {
     const input = fixtures.cdr.medicationDispense;
 
     // hmm, I've taken this from the sheet but it doesn't feel right
@@ -321,7 +321,7 @@ describe.only('Everything', () => {
         end:  "2024-01-25",
       },
       serviceProvider: {
-        reference: 'abc'
+        reference: 'Organization/5852'
       }
     }
 
@@ -330,9 +330,10 @@ describe.only('Everything', () => {
       status: "final",
       subject: input.subject,
       encounter: input.context,
-      effective: encounter.period,
+      effective: encounter.period.start,
 
-      
+      performer: encounter.serviceProvider,
+
       // TODO this won't do anything in the test
       value: ext && util.concept(ext)
     
@@ -591,7 +592,7 @@ describe('Encounter', () => {
         'http://moh.gov.et/fhir/hiv/CodeSystem/encounter-visit-type-code-system',
       ])
     ),
-      console.log(result);
+    console.log(result);
 
     expect(result).to.eql(fixtures.ndr.encounter);
   });

@@ -285,6 +285,15 @@ describe('reference', () => {
 
     expect(result).to.eql({ reference: 'x', foo: 'bar' });
   });
+
+  it('should return an array of references', () => {
+    const a = { reference: 'patient/a' };
+    const b = { reference: 'patient/a' };
+
+    const result = reference([a, b]);
+
+    expect(result).to.eql([a, b]);
+  })
 });
 
 describe('composite', () => {
@@ -366,6 +375,6 @@ describe('composite', () => {
 
     composite(resource, 'value', '2020-09-19')
 
-    expect(resource.valueDatetime).to.eql('2020-09-19')
+    expect(resource.valueDateTime).to.eql('2020-09-19')
   });
 })

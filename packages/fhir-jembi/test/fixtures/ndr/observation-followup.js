@@ -37,12 +37,13 @@ export default {
           "reference": "Organization/5852"
       }
   ],
-  "valueCodeableConcept": {
-      "coding": [
-          {
-              "system": "http://loinc.org",
-              "code": "63936-9"
-          }
-      ]
-  }
+  // TODO not sure about mapping this yet
+//   "valueCodeableConcept": {
+//       "coding": [
+//           {
+//               "system": "http://loinc.org",
+//               "code": "63936-9"
+//           }
+//       ]
+//   }
 }

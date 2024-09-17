@@ -141,10 +141,12 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.episodeOfCare)) {
+        if (!Array.isArray(props.episodeOfCare)) { props.episodeOfCare = [props.episodeOfCare]; }
         resource.episodeOfCare = util.reference(props.episodeOfCare);
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -186,6 +188,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.appointment)) {
+        if (!Array.isArray(props.appointment)) { props.appointment = [props.appointment]; }
         resource.appointment = util.reference(props.appointment);
     }
 
@@ -202,6 +205,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -243,6 +247,7 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.account)) {
+        if (!Array.isArray(props.account)) { props.account = [props.account]; }
         resource.account = util.reference(props.account);
     }
 
@@ -571,10 +576,12 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.episodeOfCare)) {
+        if (!Array.isArray(props.episodeOfCare)) { props.episodeOfCare = [props.episodeOfCare]; }
         resource.episodeOfCare = util.reference(props.episodeOfCare);
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -616,6 +623,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.appointment)) {
+        if (!Array.isArray(props.appointment)) { props.appointment = [props.appointment]; }
         resource.appointment = util.reference(props.appointment);
     }
 
@@ -650,6 +658,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -691,6 +700,7 @@ function encounter_target_facility_encounter(props) {
     }
 
     if (!_.isNil(props.account)) {
+        if (!Array.isArray(props.account)) { props.account = [props.account]; }
         resource.account = util.reference(props.account);
     }
 
@@ -1154,6 +1164,7 @@ function patient_patient(props) {
     }
 
     if (!_.isNil(props.generalPractitioner)) {
+        if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
         resource.generalPractitioner = util.reference(props.generalPractitioner);
     }
 
@@ -1352,10 +1363,12 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -1398,6 +1411,7 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -1414,6 +1428,7 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -1502,10 +1517,12 @@ function observation_active_tb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -1597,10 +1614,12 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -1643,6 +1662,7 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -1659,6 +1679,7 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -1747,10 +1768,12 @@ function observation_alt_ast_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -1842,10 +1865,12 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -1888,6 +1913,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -1904,6 +1930,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -2029,6 +2056,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -2122,10 +2150,12 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -2168,6 +2198,7 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -2184,6 +2215,7 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -2272,10 +2304,12 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -2369,10 +2403,12 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -2415,6 +2451,7 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -2431,6 +2468,7 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -2519,10 +2557,12 @@ function observation_art_eligibility_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -2616,10 +2656,12 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -2662,6 +2704,7 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -2678,6 +2721,7 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -2766,10 +2810,12 @@ function observation_art_followup_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -2863,10 +2909,12 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -2909,6 +2957,7 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -2925,6 +2974,7 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -3013,10 +3063,12 @@ function observation_art_followup_stopped_reasons_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -3110,10 +3162,12 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -3156,6 +3210,7 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -3172,6 +3227,7 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -3260,10 +3316,12 @@ function observation_art_not_started_plan_next_step_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -3357,10 +3415,12 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -3403,6 +3463,7 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -3419,6 +3480,7 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -3507,10 +3569,12 @@ function observation_arv_adherence_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -3602,10 +3666,12 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -3648,6 +3714,7 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -3664,6 +3731,7 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -3752,10 +3820,12 @@ function observation_arv_change_category_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -3849,10 +3919,12 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -3895,6 +3967,7 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -3911,6 +3984,7 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -3999,10 +4073,12 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -4096,10 +4172,12 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -4142,6 +4220,7 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -4158,6 +4237,7 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -4246,10 +4326,12 @@ function observation_arv_regimen_change_reason_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -4343,10 +4425,12 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -4389,6 +4473,7 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -4405,6 +4490,7 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -4493,10 +4579,12 @@ function observation_arv_regimen_changed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -4590,10 +4678,12 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -4636,6 +4726,7 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -4652,6 +4743,7 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -4740,10 +4832,12 @@ function observation_arv_regimen_side_effects_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -4837,10 +4931,12 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -4883,6 +4979,7 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -4899,6 +4996,7 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -4987,10 +5085,12 @@ function observation_assessed_for_pain_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -5084,10 +5184,12 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -5130,6 +5232,7 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -5146,6 +5249,7 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -5234,10 +5338,12 @@ function observation_blood_pressure(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -5329,10 +5435,12 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -5375,6 +5483,7 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -5391,6 +5500,7 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -5479,10 +5589,12 @@ function observation_bmi_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -5574,10 +5686,12 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -5620,6 +5734,7 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -5636,6 +5751,7 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -5724,10 +5840,12 @@ function observation_breastfeeding_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -5821,10 +5939,12 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -5867,6 +5987,7 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -5883,6 +6004,7 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -5971,10 +6093,12 @@ function observation_cd4_absolute_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -6066,10 +6190,12 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -6112,6 +6238,7 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -6128,6 +6255,7 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -6216,10 +6344,12 @@ function observation_cd4_percentage_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -6313,10 +6443,12 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -6359,6 +6491,7 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -6375,6 +6508,7 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -6463,10 +6597,12 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -6560,10 +6696,12 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -6606,6 +6744,7 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -6622,6 +6761,7 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -6710,10 +6850,12 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -6807,10 +6949,12 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -6853,6 +6997,7 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -6869,6 +7014,7 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -6957,10 +7103,12 @@ function observation_cervical_cancer_screening_method_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -7054,10 +7202,12 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -7100,6 +7250,7 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -7116,6 +7267,7 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -7204,10 +7356,12 @@ function observation_cervical_cancer_screening_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -7301,10 +7455,12 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -7347,6 +7503,7 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -7363,6 +7520,7 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -7451,10 +7609,12 @@ function observation_cervical_cancer_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -7548,10 +7708,12 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -7594,6 +7756,7 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -7610,6 +7773,7 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -7698,10 +7862,12 @@ function observation_cervical_cancer_screening_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -7795,10 +7961,12 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -7841,6 +8009,7 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -7857,6 +8026,7 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -7945,10 +8115,12 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -8042,10 +8214,12 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -8088,6 +8262,7 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -8104,6 +8279,7 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -8192,10 +8368,12 @@ function observation_children_developmental_milestone_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -8289,10 +8467,12 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -8331,6 +8511,7 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -8347,6 +8528,7 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -8435,10 +8617,12 @@ function observation_confirmed_hiv_positive_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -8532,10 +8716,12 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -8578,6 +8764,7 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -8594,6 +8781,7 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -8682,10 +8870,12 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -8779,10 +8969,12 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -8825,6 +9017,7 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -8841,6 +9034,7 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -8929,10 +9123,12 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -9026,10 +9222,12 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -9072,6 +9270,7 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -9088,6 +9287,7 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -9176,10 +9376,12 @@ function observation_counseled_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -9273,10 +9475,12 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -9319,6 +9523,7 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -9335,6 +9540,7 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -9423,10 +9629,12 @@ function observation_creatine_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -9518,10 +9726,12 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -9564,6 +9774,7 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -9580,6 +9791,7 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -9668,10 +9880,12 @@ function observation_current_art_duration_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -9765,10 +9979,12 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -9811,6 +10027,7 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -9827,6 +10044,7 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -9915,10 +10133,12 @@ function observation_delivery_mode_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -10010,10 +10230,12 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -10056,6 +10278,7 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -10072,6 +10295,7 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -10160,10 +10384,12 @@ function observation_delivery_place_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -10257,10 +10483,12 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -10303,6 +10531,7 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -10319,6 +10548,7 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -10407,10 +10637,12 @@ function observation_differentiated_service_delivery_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -10504,10 +10736,12 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -10550,6 +10784,7 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -10566,6 +10801,7 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -10654,10 +10890,12 @@ function observation_disclosure_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -10751,10 +10989,12 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -10797,6 +11037,7 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -10813,6 +11054,7 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -10901,10 +11143,12 @@ function observation_edema_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -10996,10 +11240,12 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -11042,6 +11288,7 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -11058,6 +11305,7 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -11146,10 +11394,12 @@ function observation_elicited_index_case_contacts_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -11243,10 +11493,12 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -11289,6 +11541,7 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -11305,6 +11558,7 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -11393,10 +11647,12 @@ function observation_enhanced_adherence_counselling_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -11490,10 +11746,12 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -11536,6 +11794,7 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -11552,6 +11811,7 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -11640,10 +11900,12 @@ function observation_estimated_delivery_date_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -11737,10 +11999,12 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -11783,6 +12047,7 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -11799,6 +12064,7 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -11887,10 +12153,12 @@ function observation_family_member_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -11984,10 +12252,12 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -12030,6 +12300,7 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -12046,6 +12317,7 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -12134,10 +12406,12 @@ function observation_family_planning_method_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -12231,10 +12505,12 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -12277,6 +12553,7 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -12293,6 +12570,7 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -12381,10 +12659,12 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -12478,10 +12758,12 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -12524,6 +12806,7 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -12540,6 +12823,7 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -12628,10 +12912,12 @@ function observation_future_pregnancy_plans_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -12725,10 +13011,12 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -12767,6 +13055,7 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -12783,6 +13072,7 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -12871,10 +13161,12 @@ function observation_generic_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -12966,10 +13258,12 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -13012,6 +13306,7 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -13028,6 +13323,7 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -13116,10 +13412,12 @@ function observation_head_circumference_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -13213,10 +13511,12 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -13259,6 +13559,7 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -13275,6 +13576,7 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -13363,10 +13665,12 @@ function observation_health_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -13458,10 +13762,12 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -13504,6 +13810,7 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -13520,6 +13827,7 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -13608,10 +13916,12 @@ function observation_heart_rate_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -13703,10 +14013,12 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -13749,6 +14061,7 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -13765,6 +14078,7 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -13853,10 +14167,12 @@ function observation_height_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -13948,10 +14264,12 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -13994,6 +14312,7 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -14010,6 +14329,7 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -14098,10 +14418,12 @@ function observation_hgb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -14193,10 +14515,12 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -14239,6 +14563,7 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -14255,6 +14580,7 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -14343,10 +14669,12 @@ function observation_highest_education_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -14440,10 +14768,12 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -14486,6 +14816,7 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -14502,6 +14833,7 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -14590,10 +14922,12 @@ function observation_hiv_prevention_plan_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -14687,10 +15021,12 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -14733,6 +15069,7 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -14749,6 +15086,7 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -14837,10 +15175,12 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -14934,10 +15274,12 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -14980,6 +15322,7 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -14996,6 +15339,7 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -15084,10 +15428,12 @@ function observation_hiv_program_final_outcome_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -15181,10 +15527,12 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -15227,6 +15575,7 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -15243,6 +15592,7 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -15331,10 +15681,12 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -15428,10 +15780,12 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -15474,6 +15828,7 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -15490,6 +15845,7 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -15578,10 +15934,12 @@ function observation_hiv_program_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -15675,10 +16033,12 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -15721,6 +16081,7 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -15737,6 +16098,7 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -15825,10 +16187,12 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -15922,10 +16286,12 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -15968,6 +16334,7 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -15984,6 +16351,7 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -16072,10 +16440,12 @@ function observation_hiv_test_results_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -16169,10 +16539,12 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -16215,6 +16587,7 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -16231,6 +16604,7 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -16319,10 +16693,12 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -16416,10 +16792,12 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -16462,6 +16840,7 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -16478,6 +16857,7 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -16566,10 +16946,12 @@ function observation_inh_at_follow_up_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -16663,10 +17045,12 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -16709,6 +17093,7 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -16725,6 +17110,7 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -16813,10 +17199,12 @@ function observation_last_menstrual_period_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -16910,10 +17298,12 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -16956,6 +17346,7 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -16972,6 +17363,7 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -17060,10 +17452,12 @@ function observation_level_of_pain_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -17155,10 +17549,12 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -17201,6 +17597,7 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -17217,6 +17614,7 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -17305,10 +17703,12 @@ function observation_maternal_hiv_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -17402,10 +17802,12 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -17448,6 +17850,7 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -17464,6 +17867,7 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -17552,10 +17956,12 @@ function observation_muac_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -17647,10 +18053,12 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -17693,6 +18101,7 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -17709,6 +18118,7 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -17797,10 +18207,12 @@ function observation_nutritional_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -17894,10 +18306,12 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -17940,6 +18354,7 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -17956,6 +18371,7 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -18044,10 +18460,12 @@ function observation_nutritional_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -18141,10 +18559,12 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -18187,6 +18607,7 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -18203,6 +18624,7 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -18291,10 +18713,12 @@ function observation_nutritional_suppliments_provided_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -18388,10 +18812,12 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -18434,6 +18860,7 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -18450,6 +18877,7 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -18538,10 +18966,12 @@ function observation_otz_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -18633,10 +19063,12 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -18679,6 +19111,7 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -18695,6 +19128,7 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -18783,10 +19217,12 @@ function observation_patient_functional_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -18880,10 +19316,12 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -18926,6 +19364,7 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -18942,6 +19381,7 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -19030,10 +19470,12 @@ function observation_patient_occupation_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -19127,10 +19569,12 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -19173,6 +19617,7 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -19189,6 +19634,7 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -19277,10 +19723,12 @@ function observation_patient_who_stage_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -19374,10 +19822,12 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -19420,6 +19870,7 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -19436,6 +19887,7 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -19524,10 +19976,12 @@ function observation_physical_examinations_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -19621,10 +20075,12 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -19667,6 +20123,7 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -19683,6 +20140,7 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -19771,10 +20229,12 @@ function observation_pregnancy_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -19868,10 +20328,12 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -19914,6 +20376,7 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -19930,6 +20393,7 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -20018,10 +20482,12 @@ function observation_presenting_symptom_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -20115,10 +20581,12 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -20161,6 +20629,7 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -20177,6 +20646,7 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -20265,10 +20735,12 @@ function observation_reason_eligible_for_art_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -20362,10 +20834,12 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -20408,6 +20882,7 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -20424,6 +20899,7 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -20512,10 +20988,12 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -20609,10 +21087,12 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -20655,6 +21135,7 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -20671,6 +21152,7 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -20759,10 +21241,12 @@ function observation_resides_in_catchment_area_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -20856,10 +21340,12 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -20902,6 +21388,7 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -20918,6 +21405,7 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -21006,10 +21494,12 @@ function observation_respiratory_rate_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -21103,10 +21593,12 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -21147,6 +21639,7 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -21163,6 +21656,7 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -21251,10 +21745,12 @@ function observation_screened_for_tb_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -21348,10 +21844,12 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -21394,6 +21892,7 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -21410,6 +21909,7 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -21498,10 +21998,12 @@ function observation_target_population_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -21595,10 +22097,12 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -21639,6 +22143,7 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -21655,6 +22160,7 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -21743,10 +22249,12 @@ function observation_tb_diagnostic_test_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -21840,10 +22348,12 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -21886,6 +22396,7 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -21902,6 +22413,7 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -21990,10 +22502,12 @@ function observation_tb_prophylaxis_type_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -22087,10 +22601,12 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -22133,6 +22649,7 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -22149,6 +22666,7 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -22237,10 +22755,12 @@ function observation_tb_screening_result_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -22334,10 +22854,12 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -22380,6 +22902,7 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -22396,6 +22919,7 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -22484,10 +23008,12 @@ function observation_tb_treatment_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -22581,10 +23107,12 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -22627,6 +23155,7 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -22643,6 +23172,7 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -22731,10 +23261,12 @@ function observation_tb_treatment_status_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -22828,10 +23360,12 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -22874,6 +23408,7 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -22890,6 +23425,7 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -22978,10 +23514,12 @@ function observation_temperature_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -23073,10 +23611,12 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -23119,6 +23659,7 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -23135,6 +23676,7 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -23223,10 +23765,12 @@ function observation_tested_for_hiv_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -23320,10 +23864,12 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -23366,6 +23912,7 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -23382,6 +23929,7 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -23470,10 +24018,12 @@ function observation_therapeutic_supplementary_food_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -23567,10 +24117,12 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -23613,6 +24165,7 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -23629,6 +24182,7 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -23717,10 +24271,12 @@ function observation_tpt_eligbility_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -23814,10 +24370,12 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -23860,6 +24418,7 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -23876,6 +24435,7 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -23964,10 +24524,12 @@ function observation_tpt_started_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -24059,10 +24621,12 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -24105,6 +24669,7 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -24121,6 +24686,7 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -24209,10 +24775,12 @@ function observation_treatment_completed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -24306,10 +24874,12 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -24352,6 +24922,7 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -24368,6 +24939,7 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -24456,10 +25028,12 @@ function observation_treatment_discontinued_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -24553,10 +25127,12 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -24599,6 +25175,7 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -24615,6 +25192,7 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -24703,10 +25281,12 @@ function observation_viral_load_count_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -24800,10 +25380,12 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -24844,6 +25426,7 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -24860,6 +25443,7 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -24948,10 +25532,12 @@ function observation_viral_load_indication_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -25045,10 +25631,12 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -25091,6 +25679,7 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -25107,6 +25696,7 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -25195,10 +25785,12 @@ function observation_viral_load_performed_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -25292,10 +25884,12 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -25338,6 +25932,7 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = util.reference(props.focus);
     }
 
@@ -25354,6 +25949,7 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = util.reference(props.performer);
     }
 
@@ -25442,10 +26038,12 @@ function observation_weight_observation(props) {
     }
 
     if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
         resource.hasMember = util.reference(props.hasMember);
     }
 
     if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
         resource.derivedFrom = util.reference(props.derivedFrom);
     }
 
@@ -25551,6 +26149,7 @@ function medicationAdministration_arv_medication_administration(props) {
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -25579,6 +26178,7 @@ function medicationAdministration_arv_medication_administration(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -25623,6 +26223,7 @@ function medicationAdministration_arv_medication_administration(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -25631,6 +26232,7 @@ function medicationAdministration_arv_medication_administration(props) {
     }
 
     if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
         resource.device = util.reference(props.device);
     }
 
@@ -25686,6 +26288,7 @@ function medicationAdministration_arv_medication_administration(props) {
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -25741,6 +26344,7 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -25769,6 +26373,7 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -25813,6 +26418,7 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -25821,6 +26427,7 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
     }
 
     if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
         resource.device = util.reference(props.device);
     }
 
@@ -25876,6 +26483,7 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -25931,6 +26539,7 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -25959,6 +26568,7 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -26003,6 +26613,7 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -26011,6 +26622,7 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     }
 
     if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
         resource.device = util.reference(props.device);
     }
 
@@ -26066,6 +26678,7 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -26127,6 +26740,7 @@ function medicationDispense_arv_medication_dispense(props) {
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -26155,6 +26769,7 @@ function medicationDispense_arv_medication_dispense(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -26195,6 +26810,7 @@ function medicationDispense_arv_medication_dispense(props) {
     }
 
     if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
         resource.authorizingPrescription = util.reference(props.authorizingPrescription);
     }
 
@@ -26291,6 +26907,7 @@ function medicationDispense_arv_medication_dispense(props) {
     }
 
     if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
         resource.receiver = util.reference(props.receiver);
     }
 
@@ -26340,10 +26957,12 @@ function medicationDispense_arv_medication_dispense(props) {
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -26393,6 +27012,7 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -26421,6 +27041,7 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -26461,6 +27082,7 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
     }
 
     if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
         resource.authorizingPrescription = util.reference(props.authorizingPrescription);
     }
 
@@ -26557,6 +27179,7 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
     }
 
     if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
         resource.receiver = util.reference(props.receiver);
     }
 
@@ -26606,10 +27229,12 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -26661,6 +27286,7 @@ function medicationDispense_generic_medication_dispense(props) {
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -26689,6 +27315,7 @@ function medicationDispense_generic_medication_dispense(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -26729,6 +27356,7 @@ function medicationDispense_generic_medication_dispense(props) {
     }
 
     if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
         resource.authorizingPrescription = util.reference(props.authorizingPrescription);
     }
 
@@ -26825,6 +27453,7 @@ function medicationDispense_generic_medication_dispense(props) {
     }
 
     if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
         resource.receiver = util.reference(props.receiver);
     }
 
@@ -26874,10 +27503,12 @@ function medicationDispense_generic_medication_dispense(props) {
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -27025,6 +27656,7 @@ function medicationRequest_arv_medication_request(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -27076,6 +27708,7 @@ function medicationRequest_arv_medication_request(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -27088,6 +27721,7 @@ function medicationRequest_arv_medication_request(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -27100,6 +27734,7 @@ function medicationRequest_arv_medication_request(props) {
     }
 
     if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
         resource.insurance = util.reference(props.insurance);
     }
 
@@ -27195,10 +27830,12 @@ function medicationRequest_arv_medication_request(props) {
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -27333,6 +27970,7 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -27384,6 +28022,7 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -27396,6 +28035,7 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -27408,6 +28048,7 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
     }
 
     if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
         resource.insurance = util.reference(props.insurance);
     }
 
@@ -27503,10 +28144,12 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -27643,6 +28286,7 @@ function medicationRequest_generic_medication_request(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -27694,6 +28338,7 @@ function medicationRequest_generic_medication_request(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -27706,6 +28351,7 @@ function medicationRequest_generic_medication_request(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -27718,6 +28364,7 @@ function medicationRequest_generic_medication_request(props) {
     }
 
     if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
         resource.insurance = util.reference(props.insurance);
     }
 
@@ -27813,10 +28460,12 @@ function medicationRequest_generic_medication_request(props) {
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -27953,6 +28602,7 @@ function medicationRequest_tpt_medication_request(props) {
     }
 
     if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = util.reference(props.supportingInformation);
     }
 
@@ -28004,6 +28654,7 @@ function medicationRequest_tpt_medication_request(props) {
     }
 
     if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = util.reference(props.reasonReference);
     }
 
@@ -28016,6 +28667,7 @@ function medicationRequest_tpt_medication_request(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
@@ -28028,6 +28680,7 @@ function medicationRequest_tpt_medication_request(props) {
     }
 
     if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
         resource.insurance = util.reference(props.insurance);
     }
 
@@ -28123,10 +28776,12 @@ function medicationRequest_tpt_medication_request(props) {
     }
 
     if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
         resource.detectedIssue = util.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = util.reference(props.eventHistory);
     }
 
@@ -28647,14 +29302,17 @@ function carePlan_art_follow_up_careplan(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
         resource.replaces = util.reference(props.replaces);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -28724,22 +29382,27 @@ function carePlan_art_follow_up_careplan(props) {
     }
 
     if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
         resource.contributor = util.reference(props.contributor);
     }
 
     if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
         resource.careTeam = util.reference(props.careTeam);
     }
 
     if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = util.reference(props.addresses);
     }
 
     if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = util.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
         resource.goal = util.reference(props.goal);
     }
 
@@ -28801,14 +29464,17 @@ function carePlan_cervical_cancer_care_plan(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
         resource.replaces = util.reference(props.replaces);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -28855,22 +29521,27 @@ function carePlan_cervical_cancer_care_plan(props) {
     }
 
     if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
         resource.contributor = util.reference(props.contributor);
     }
 
     if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
         resource.careTeam = util.reference(props.careTeam);
     }
 
     if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = util.reference(props.addresses);
     }
 
     if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = util.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
         resource.goal = util.reference(props.goal);
     }
 
@@ -28932,14 +29603,17 @@ function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
         resource.replaces = util.reference(props.replaces);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -29009,22 +29683,27 @@ function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
     }
 
     if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
         resource.contributor = util.reference(props.contributor);
     }
 
     if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
         resource.careTeam = util.reference(props.careTeam);
     }
 
     if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = util.reference(props.addresses);
     }
 
     if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = util.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
         resource.goal = util.reference(props.goal);
     }
 
@@ -29088,14 +29767,17 @@ function carePlan_tb_treatment_careplan(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
         resource.replaces = util.reference(props.replaces);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -29165,22 +29847,27 @@ function carePlan_tb_treatment_careplan(props) {
     }
 
     if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
         resource.contributor = util.reference(props.contributor);
     }
 
     if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
         resource.careTeam = util.reference(props.careTeam);
     }
 
     if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = util.reference(props.addresses);
     }
 
     if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = util.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
         resource.goal = util.reference(props.goal);
     }
 
@@ -29242,14 +29929,17 @@ function carePlan_tpt_careplan(props) {
     }
 
     if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = util.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
         resource.replaces = util.reference(props.replaces);
     }
 
     if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = util.reference(props.partOf);
     }
 
@@ -29319,22 +30009,27 @@ function carePlan_tpt_careplan(props) {
     }
 
     if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
         resource.contributor = util.reference(props.contributor);
     }
 
     if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
         resource.careTeam = util.reference(props.careTeam);
     }
 
     if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = util.reference(props.addresses);
     }
 
     if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = util.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
         resource.goal = util.reference(props.goal);
     }
 

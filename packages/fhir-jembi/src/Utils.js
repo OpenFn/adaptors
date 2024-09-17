@@ -158,6 +158,9 @@ export const cc = concept;
 // TODO: should the id be like `resource/id` ?
 // I see the pattern a lot but I don't know if its formal
 export const reference = (ref, opts) => {
+  if (Array.isArray(ref)) {
+    return ref.map(reference, opts)
+  }
   // If passed a resource, generate a reference to this resource
   if (ref.resourceType && ref.id) {
     // TODO is this right? Or just the id?
@@ -200,7 +203,7 @@ export const composite = (object, key, value) => {
     k.push('Period')
   } else if (typeof value === 'string') {
     if (datetimeregex.test(value)) {
-      k.push('Datetime')
+      k.push('DateTime')
     } else {
       k.push('String')
     }
