@@ -1379,7 +1379,7 @@ function observation_active_tb_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -1630,7 +1630,7 @@ function observation_alt_ast_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -1881,7 +1881,7 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -2166,7 +2166,7 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -2419,7 +2419,7 @@ function observation_art_eligibility_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -2672,7 +2672,7 @@ function observation_art_followup_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -2925,7 +2925,7 @@ function observation_art_followup_stopped_reasons_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -3178,7 +3178,7 @@ function observation_art_not_started_plan_next_step_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -3431,7 +3431,7 @@ function observation_arv_adherence_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -3682,7 +3682,7 @@ function observation_arv_change_category_type_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -3935,7 +3935,7 @@ function observation_arv_poor_adherence_reasons_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -4188,7 +4188,7 @@ function observation_arv_regimen_change_reason_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -4441,7 +4441,7 @@ function observation_arv_regimen_changed_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -4694,7 +4694,7 @@ function observation_arv_regimen_side_effects_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -4947,7 +4947,7 @@ function observation_assessed_for_pain_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -5200,7 +5200,7 @@ function observation_blood_pressure(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -5451,7 +5451,7 @@ function observation_bmi_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -5702,7 +5702,7 @@ function observation_breastfeeding_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -5955,7 +5955,7 @@ function observation_cd4_absolute_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -6206,7 +6206,7 @@ function observation_cd4_percentage_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -6459,7 +6459,7 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -6712,7 +6712,7 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -6965,7 +6965,7 @@ function observation_cervical_cancer_screening_method_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -7218,7 +7218,7 @@ function observation_cervical_cancer_screening_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -7471,7 +7471,7 @@ function observation_cervical_cancer_screening_result_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -7724,7 +7724,7 @@ function observation_cervical_cancer_screening_type_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -7977,7 +7977,7 @@ function observation_cervical_cancer_treatment_received_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -8230,7 +8230,7 @@ function observation_children_developmental_milestone_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -8732,7 +8732,7 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -8985,7 +8985,7 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -9238,7 +9238,7 @@ function observation_counseled_for_hiv_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -9491,7 +9491,7 @@ function observation_creatine_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -9742,7 +9742,7 @@ function observation_current_art_duration_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -9995,7 +9995,7 @@ function observation_delivery_mode_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -10246,7 +10246,7 @@ function observation_delivery_place_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -10499,7 +10499,7 @@ function observation_differentiated_service_delivery_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -10752,7 +10752,7 @@ function observation_disclosure_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -11005,7 +11005,7 @@ function observation_edema_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -11256,7 +11256,7 @@ function observation_elicited_index_case_contacts_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -11509,7 +11509,7 @@ function observation_enhanced_adherence_counselling_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -11762,7 +11762,7 @@ function observation_estimated_delivery_date_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -12015,7 +12015,7 @@ function observation_family_member_hiv_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -12268,7 +12268,7 @@ function observation_family_planning_method_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -12521,7 +12521,7 @@ function observation_fluconazole_preventive_therapy_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -12774,7 +12774,7 @@ function observation_future_pregnancy_plans_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -13274,7 +13274,7 @@ function observation_head_circumference_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -13527,7 +13527,7 @@ function observation_health_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -13778,7 +13778,7 @@ function observation_heart_rate_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -14029,7 +14029,7 @@ function observation_height_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -14280,7 +14280,7 @@ function observation_hgb_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -14531,7 +14531,7 @@ function observation_highest_education_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -14784,7 +14784,7 @@ function observation_hiv_prevention_plan_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -15037,7 +15037,7 @@ function observation_hiv_program_final_outcome_known_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -15290,7 +15290,7 @@ function observation_hiv_program_final_outcome_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -15543,7 +15543,7 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -15796,7 +15796,7 @@ function observation_hiv_program_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -16049,7 +16049,7 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -16302,7 +16302,7 @@ function observation_hiv_test_results_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -16555,7 +16555,7 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -16808,7 +16808,7 @@ function observation_inh_at_follow_up_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -17061,7 +17061,7 @@ function observation_last_menstrual_period_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -17314,7 +17314,7 @@ function observation_level_of_pain_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -17565,7 +17565,7 @@ function observation_maternal_hiv_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -17818,7 +17818,7 @@ function observation_muac_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -18069,7 +18069,7 @@ function observation_nutritional_screening_result_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -18322,7 +18322,7 @@ function observation_nutritional_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -18575,7 +18575,7 @@ function observation_nutritional_suppliments_provided_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -18828,7 +18828,7 @@ function observation_otz_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -19079,7 +19079,7 @@ function observation_patient_functional_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -19332,7 +19332,7 @@ function observation_patient_occupation_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -19585,7 +19585,7 @@ function observation_patient_who_stage_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -19838,7 +19838,7 @@ function observation_physical_examinations_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -20091,7 +20091,7 @@ function observation_pregnancy_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -20344,7 +20344,7 @@ function observation_presenting_symptom_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -20597,7 +20597,7 @@ function observation_reason_eligible_for_art_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -20850,7 +20850,7 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -21103,7 +21103,7 @@ function observation_resides_in_catchment_area_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -21356,7 +21356,7 @@ function observation_respiratory_rate_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -21860,7 +21860,7 @@ function observation_target_population_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"social-history"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -22113,7 +22113,7 @@ function observation_tb_diagnostic_test_result_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -22364,7 +22364,7 @@ function observation_tb_prophylaxis_type_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -22617,7 +22617,7 @@ function observation_tb_screening_result_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -22870,7 +22870,7 @@ function observation_tb_treatment_started_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -23123,7 +23123,7 @@ function observation_tb_treatment_status_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -23376,7 +23376,7 @@ function observation_temperature_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -23627,7 +23627,7 @@ function observation_tested_for_hiv_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -23880,7 +23880,7 @@ function observation_therapeutic_supplementary_food_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -24133,7 +24133,7 @@ function observation_tpt_eligbility_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -24386,7 +24386,7 @@ function observation_tpt_started_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -24637,7 +24637,7 @@ function observation_treatment_completed_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -24890,7 +24890,7 @@ function observation_treatment_discontinued_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -25143,7 +25143,7 @@ function observation_viral_load_count_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -25396,7 +25396,7 @@ function observation_viral_load_indication_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"laboratory"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -25647,7 +25647,7 @@ function observation_viral_load_performed_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -25900,7 +25900,7 @@ function observation_weight_observation(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]};
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"vital-signs"}]}];
     }
 
     if (!_.isNil(props.code)) {
@@ -29350,7 +29350,7 @@ function carePlan_art_follow_up_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = {"coding":[{"system":"http://loinc.org","code":"LP66375-4"}]};
+        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP66375-4"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29489,7 +29489,7 @@ function carePlan_cervical_cancer_care_plan(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = {"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]};
+        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29651,7 +29651,7 @@ function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = {"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]};
+        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29815,7 +29815,7 @@ function carePlan_tb_treatment_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = {"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]};
+        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29977,7 +29977,7 @@ function carePlan_tpt_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = {"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]};
+        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
     }
 
     if (!_.isNil(props.title)) {

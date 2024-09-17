@@ -80,7 +80,7 @@ describe.only('Everything', () => {
 
     const result = builders.observation('highest-education-observation', {
       status: input.status ?? 'final',
-      effectiveDateTime: input.period?.start,
+      effective: input.period?.start,
       value: ext.valueString,
       subject: input.id,
     })
@@ -98,7 +98,7 @@ describe.only('Everything', () => {
 
     const result = builders.observation('patient-occupation-observation', {
       status: input.status ?? 'final',
-      effectiveDateTime: input.period?.start,
+      effective: input.period?.start,
       value: util.concept(ext.valueString),
       subject: input.id,
     })
@@ -116,7 +116,7 @@ describe.only('Everything', () => {
 
     const result = builders.observation('target-population-observation', {
       status: input.status ?? 'final',
-      effectiveDateTime: input.period?.start,
+      effective: input.period?.start,
       value: ext.valueString,
       subject: input.id,
     })
@@ -124,8 +124,8 @@ describe.only('Everything', () => {
     expect(result).to.eql(fixtures.ndr.observationPopulation);
   })
 
-  // this fails on teh system map for coding
-  it.skip('should map Encounter (target-facility-encounter)', () => {
+  // TODO: some display labels/text doesn't map quite right, see data. Is this important?
+  it('should map Encounter (target-facility-encounter)', () => {
     const input = fixtures.cdr.encounter;
 
     util.setSystemMap({
@@ -145,18 +145,17 @@ describe.only('Everything', () => {
       status: input.status,
       class: input.class,
       identifier: input.identifier,
-      // TODO I'm not sure how these map?
-      serviceType: input.serviceType[0],
       period: input.period,
       subject: input.subject,
-      // TODO why is this automated wrong?
-      // is the test data wrong?
       serviceProvider: input.serviceProvider,
 
       // TODO this won't map the system properly right now
       // because we don't handle codeable concepts very smartly
       serviceType: {
-        coding: input.serviceType.coding.slice(0, 1),
+        coding: input.serviceType.coding.slice(0, 1).map((coding) => ({
+          ...coding,
+          system: "http://moh.gov.et/fhir/hiv/CodeSystem/encounter-service-type-code-system"
+        })),
       },
       type: input.type,
       // visitType: visitType,
@@ -217,9 +216,8 @@ describe.only('Everything', () => {
     expect(result).to.eql(fixtures.ndr.medicationDispense)
   })
 
-  // TODO: array issue on Category
   // TODO: handle activity (as array of Backbone Elements)
-  it.skip('should map CarePlan - ARV Treatment', () => {
+  it('should map CarePlan - ARV Treatment', () => {
     const input = fixtures.cdr.careplan;
 
 
@@ -306,9 +304,8 @@ describe.only('Everything', () => {
     expect(result).to.eql(fixtures.ndr.medication)
   })
 
-  // TODO: category confusion again - array or object?
   // TODO: I can't work out what I'm mapping value to
-  it.only('should map Observation - ART Followup Status', () => {
+  it('should map Observation - ART Followup Status', () => {
     const input = fixtures.cdr.medicationDispense;
 
     // hmm, I've taken this from the sheet but it doesn't feel right

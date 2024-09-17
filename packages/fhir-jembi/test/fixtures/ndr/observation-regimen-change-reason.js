@@ -2,14 +2,14 @@
 export default {
   "resourceType": "Observation",
   "status": "final",
-  "category": {
+  "category": [{
     "coding": [
       {
         "system": "http://terminology.hl7.org/CodeSystem/observation-category",
         "code": "therapy"
       }
     ]
-  },
+  }],
   "code": {
     "coding": [
       {
@@ -24,9 +24,9 @@ export default {
   "encounter": {
     "reference": "Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3"
   },
-  "performer": {
+  "performer": [{
     "reference": "abc"
-  },
+  }],
   "valueCodeableConcept": {
     "text": "Virologic-Failure",
     "coding": [

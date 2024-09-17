@@ -146,7 +146,7 @@ const generate = async types => {
         // TODO may need to map other pattern types
         // TODO how do we know if a pattern is mandatory? Is this OK to do?
         if (prop.patternCodeableConcept) {
-          defaults = prop.patternCodeableConcept;
+          defaults = isArray ? [prop.patternCodeableConcept] : prop.patternCodeableConcept;
         }
 
         if (type === 'Identifier') {

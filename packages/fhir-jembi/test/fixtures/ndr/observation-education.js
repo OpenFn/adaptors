@@ -1,14 +1,14 @@
 export default {
   "resourceType": "Observation",
   "status": "final",
-  "category": {
+  "category": [{
     "coding": [
       {
         "system": "http://terminology.hl7.org/CodeSystem/observation-category",
         "code": "social-history"
       }
     ]
-  },
+  }],
   "code": {
     "coding": [
       {

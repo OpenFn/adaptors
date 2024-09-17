@@ -1,5 +1,4 @@
 // Note that I've generated this structure, it's not from an example
-// Is that bad? That's probably bad
 export default {
   resourceType: 'MedicationRequest',
   identifier: [
@@ -23,8 +22,8 @@ export default {
   medicationReference: { reference: 'Medication/f29d782985424800b3b309b60e39c229' },
   subject: { reference: 'Patient/30119' },
   encounter: { reference: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3' },
-  reasonReference: { reference: 'observartion/arv-regimen-changed-observation' },
-  basedOn: { reference: 'CarePlan/beffffab-5aec-43ad-9c31-3ecb90246b82CarePlan171' },
+  reasonReference: [{ reference: 'observartion/arv-regimen-changed-observation' }],
+  basedOn: [{ reference: 'CarePlan/beffffab-5aec-43ad-9c31-3ecb90246b82CarePlan171' }],
   dispenseRequest: {},
   meta: {
     profile: [
