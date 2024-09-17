@@ -257,6 +257,13 @@ describe('reference', () => {
     expect(result).to.eql({ reference: 'x' });
   });
 
+  it('should generate a reference to some resource', () => {
+    const r = { id: 'x', resourceType: 'Thing' };
+    const result = reference(r);
+
+    expect(result).to.eql({ reference: 'Thing/x' });
+  });
+
   it('should apply options', () => {
     const result = reference('x', {
       display: 'd',

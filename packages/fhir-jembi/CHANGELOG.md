@@ -1,5 +1,10 @@
 # @openfn/language-fhir-jembi
 
+# next
+
+- reference will generate a reference to a resource if you pass it in (in form type/id)
+- add aliases for util.ref, util.id, util.cc
+
 ## 0.0.12
 
 - Make util.findExtension safe for resources without an extension

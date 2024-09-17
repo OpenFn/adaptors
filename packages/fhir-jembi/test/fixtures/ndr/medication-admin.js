@@ -21,7 +21,7 @@ export default {
   //     "end": "2013-04-08"
   // },
   "request": {
-      "reference": "ARVMedicationRequestInitiatedARTExample"
+      "reference": "MedicationRequest/ARVMedicationRequestInitiatedARTExample"
   },
   // "note": [
   //     {

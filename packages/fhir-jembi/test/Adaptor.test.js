@@ -254,13 +254,13 @@ describe.only('Everything', () => {
       // id: TODO shoudl we generate ids?
 
       // TODO: we should be able to pass a string here and the adaptor just handles it
-      medication: util.reference(medication.id),
+      medication: util.ref(medication),
       
       // TODO this should just be `reason` (which accepts a reference)
       // TODO dispense.statusReasonCodeableConcept must be converted to an observrtion and referenced here
-      reasonReference: util.reference('observartion/arv-regimen-changed-observation'),
+      reasonReference: util.ref('observartion/arv-regimen-changed-observation'),
 
-      basedOn: util.reference(plan.id),
+      basedOn: util.ref(plan),
       
       // TODO this one isn't mapping at all
       // should just take a simple assignment?
@@ -277,8 +277,8 @@ describe.only('Everything', () => {
       doNotPerform: true, // where does this map from?
 
       // TODO I should be able to pass a whole resource into reference and it'll ref the id
-      subject: util.reference(dispense.subject),
-      encounter: util.reference(dispense.context),
+      subject: util.ref(dispense.subject),
+      encounter: util.ref(dispense.context),
 
       // TODO where do I map this from?
       // authoredOn: 
@@ -482,7 +482,7 @@ describe.only('Everything', () => {
       medication: dispense.medication,
       subject: dispense.subject,
       context: dispense.context,
-      request: util.reference(request.id)
+      request: util.reference(request)
       
       // TODO I know this doesn't map yet
       // effectivePeriod: encounter.period,

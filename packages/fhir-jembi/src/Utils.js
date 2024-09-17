@@ -73,6 +73,8 @@ export const identifier = (input, system) => {
   }
 };
 
+export const id = identifier
+
 /**
  * Add an extension to a resource (or object)
  * @public
@@ -145,12 +147,20 @@ export const concept = (text, ...codings) => {
   return result;
 };
 
+// codebaleconcept alias
+export const cc = concept;
+
 // opts is { type, identifier, display}
 // TODO if passed a full resource, return a ref to its id
 // TODO: should the id be like `resource/id` ?
 // I see the pattern a lot but I don't know if its formal
 export const reference = (ref, opts) => {
-  // if passed full reference, just return it
+  // If passed a resource, generate a reference to this resource
+  if (ref.resourceType && ref.id) {
+    // TODO is this right? Or just the id?
+    return { reference: `${ref.resourceType}/${ref.id}`}
+  }
+  // if passed an existing reference object, just return it
   if (ref.reference) {
     return ref;
   }
@@ -167,6 +177,8 @@ export const reference = (ref, opts) => {
 
   return result;
 };
+
+export const ref = reference;
 
 /** Convert an incoming value to one of a nummber of types based on the key, eg valueString, valueCodeableConcept */
 export const composite = (object, key, value) => {

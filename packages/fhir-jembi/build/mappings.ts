@@ -2,7 +2,7 @@
  * This file specifies the mapping rules for each Resource Type
  *
  * Only rules with a key in the mappings object here will have a builder
- * generated for them
+ * generated for themp
  *
  * For each resource type, all keys in the constructor will be automatically
  * mapped to the jembi resource.
