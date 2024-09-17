@@ -25740,3 +25740,202 @@ type CarePlan__lookups = {
 };
 
 export declare function carePlan<T extends CarePlan_variants>(type: CarePlan_variants, props: CarePlan__lookups[T]);;
+
+type RelatedPerson_related_person_Props = {
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * A human identifier for this person
+     *  */
+    identifier: Identifier;
+    /**
+     * Whether this related person's record is in active use
+     *  */
+    active: boolean;
+    /**
+     * The patient this person is related to
+     *  */
+    patient: Reference;
+    /**
+     * The nature of the relationship
+     *  */
+    relationship: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * A name associated with the person
+     *  */
+    name: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * usual | official | temp | nickname | anonymous | old | maiden
+         *  */
+        use: string;
+        /**
+         * Text representation of the full name
+         *  */
+        text: string;
+        /**
+         * Family name (often called 'Surname')
+         *  */
+        family: string;
+        /**
+         * Given names (not always 'first'). Includes middle names
+         *  */
+        given: string;
+        /**
+         * Parts that come before the name
+         *  */
+        prefix: string;
+        /**
+         * Parts that come after the name
+         *  */
+        suffix: string;
+        /**
+         * Time period when name was/is in use
+         *  */
+        period: Period;
+    };
+    /**
+     * A contact detail for the person
+     *  */
+    telecom: ContactPoint;
+    /**
+     * male | female | other | unknown
+     *  */
+    gender: string;
+    /**
+     * The date on which the related person was born
+     *  */
+    birthDate: string;
+    /**
+     * Address where the related person can be contacted or visited
+     *  */
+    address: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * home | work | temp | old | billing - purpose of this address
+         *  */
+        use: string;
+        /**
+         * postal | physical | both
+         *  */
+        type: string;
+        /**
+         * Text representation of the address
+         *  */
+        text: string;
+        /**
+         * Street name, number, direction & P.O. Box etc.
+         *  */
+        line: string;
+        /**
+         * Name of city, town etc.
+         *  */
+        city: string;
+        /**
+         * District name (aka county)
+         *  */
+        district: string;
+        /**
+         * Sub-unit of country (abbreviations ok)
+         *  */
+        state: string;
+        /**
+         * Postal code for area
+         *  */
+        postalCode: string;
+        /**
+         * Country (e.g. can be ISO 3166 2 or 3 letter code)
+         *  */
+        country: string;
+        /**
+         * Time period when address was/is in use
+         *  */
+        period: Period;
+    };
+    /**
+     * Image of the person
+     *  */
+    photo: Attachment;
+    /**
+     * Period of time that this relationship is considered valid
+     *  */
+    period: Period;
+    /**
+     * A language which may be used to communicate with about the patient's health
+     *  */
+    communication: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * The language which can be used to communicate with the patient about his or her health
+         *  */
+        language: CodeableConcept;
+        /**
+         * Language preference indicator
+         *  */
+        preferred: boolean;
+    };
+};
+
+type RelatedPerson_variants = "related-person";
+
+type RelatedPerson__lookups = {
+    "related-person": RelatedPerson_related_person_Props;
+};
+
+export declare function relatedPerson<T extends RelatedPerson_variants>(type: RelatedPerson_variants, props: RelatedPerson__lookups[T]);;

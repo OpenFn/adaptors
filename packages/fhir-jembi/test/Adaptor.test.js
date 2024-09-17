@@ -69,8 +69,23 @@ describe.only('Everything', () => {
     expect(result).to.eql(fixtures.ndr.patient);
   });
 
-  it.skip('should match Related Person', () => {
+  it('should match Related Person', () => {
+    const input = fixtures.cdr.patient;
 
+    const result = builders.relatedPerson('related-person', {
+      id: 'ChildRelatedPersonExample',
+      patient: input,
+      // TODO where will this information come from?
+      relationship: util.concept('Child', ['CHILD', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode']),
+      name: [{
+        family : "Adams",
+        given : ["Mary"]
+      }],
+      gender: "female",
+      birthDate: "1973-04-12",
+    })
+
+    expect(result).to.eql(fixtures.ndr.relatedChild);
   })
 
   it('should map Observation (highest education)', () => {

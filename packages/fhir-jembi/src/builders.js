@@ -30043,3 +30043,262 @@ function carePlan_tpt_careplan(props) {
 
     return resource;
 }
+
+export function relatedPerson(type, props) {
+    const mappings = {
+        "related-person": relatedPerson_related_person
+    };
+
+    return mappings[type](props)
+}
+
+function relatedPerson_related_person(props) {
+    const resource = {
+        resourceType: "RelatedPerson"
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.active)) {
+        resource.active = props.active;
+    }
+
+    if (!_.isNil(props.patient)) {
+        resource.patient = util.reference(props.patient);
+    }
+
+    if (!_.isNil(props.relationship)) {
+        let src = props.relationship;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.relationship = [];
+
+        for (let item of src) {
+            let relationship = {};
+
+            if (!_.isNil(item.id)) {
+                relationship.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                relationship.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                relationship.text = item.text;
+            } else
+                {}
+
+            resource.relationship.push(relationship);
+        }
+    }
+
+    if (!_.isNil(props.name)) {
+        let src = props.name;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.name = [];
+
+        for (let item of src) {
+            let name = {};
+
+            if (!_.isNil(item.id)) {
+                name.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                name.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                name.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.family)) {
+                name.family = item.family;
+            } else
+                {}
+
+            if (!_.isNil(item.given)) {
+                name.given = item.given;
+            } else
+                {}
+
+            if (!_.isNil(item.prefix)) {
+                name.prefix = item.prefix;
+            } else
+                {}
+
+            if (!_.isNil(item.suffix)) {
+                name.suffix = item.suffix;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                name.period = item.period;
+            } else
+                {}
+
+            resource.name.push(name);
+        }
+    }
+
+    if (!_.isNil(props.telecom)) {
+        resource.telecom = props.telecom;
+    }
+
+    if (!_.isNil(props.gender)) {
+        resource.gender = props.gender;
+    }
+
+    if (!_.isNil(props.birthDate)) {
+        resource.birthDate = props.birthDate;
+    }
+
+    if (!_.isNil(props.address)) {
+        let src = props.address;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.address = [];
+
+        for (let item of src) {
+            let address = {};
+
+            if (!_.isNil(item.id)) {
+                address.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                address.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                address.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                address.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.line)) {
+                address.line = item.line;
+            } else
+                {}
+
+            if (!_.isNil(item.city)) {
+                address.city = item.city;
+            } else
+                {}
+
+            if (!_.isNil(item.district)) {
+                address.district = item.district;
+            } else
+                {}
+
+            if (!_.isNil(item.state)) {
+                address.state = item.state;
+            } else
+                {}
+
+            if (!_.isNil(item.postalCode)) {
+                address.postalCode = item.postalCode;
+            } else
+                {}
+
+            if (!_.isNil(item.country)) {
+                address.country = item.country;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                address.period = item.period;
+            } else
+                {}
+
+            resource.address.push(address);
+        }
+    }
+
+    if (!_.isNil(props.photo)) {
+        resource.photo = props.photo;
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.communication)) {
+        let src = props.communication;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.communication = [];
+
+        for (let item of src) {
+            let communication = {};
+
+            if (!_.isNil(item.id)) {
+                communication.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                communication.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.language)) {
+                communication.language = item.language;
+            } else
+                {}
+
+            if (!_.isNil(item.preferred)) {
+                communication.preferred = item.preferred;
+            } else
+                {}
+
+            resource.communication.push(communication);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/related-person"]
+    };
+
+    return resource;
+}

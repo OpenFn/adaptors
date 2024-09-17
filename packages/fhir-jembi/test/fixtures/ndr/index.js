@@ -1,4 +1,5 @@
 import patient from './patient.js';
+import relatedChild from './related-person-child.js';
 import encounter from './encounter.js';
 import medicationDispense from './medication-dispense.js';
 import medicationRequest from './medication-request.js';
@@ -28,5 +29,6 @@ export default {
   observationRegimenChanged,
   observationRegimenChangedReason,
   observationCategoryType,
-  medicationAdmin
+  medicationAdmin,
+  relatedChild,
 };

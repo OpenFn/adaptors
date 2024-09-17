@@ -57,5 +57,6 @@ export default {
   Medication: {},
   CarePlan: {
     activity: false // TODO I need to look closely at this
-  }
+  },
+  RelatedPerson: {}
 };
