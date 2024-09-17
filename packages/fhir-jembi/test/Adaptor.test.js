@@ -458,8 +458,8 @@ describe.only('Everything', () => {
       
       value: switchType.valueString
     });
-    console.log(JSON.stringify(result, null, 2))
-    expect(result).to.eql(fixtures.ndr.observationRegimenChangedReason)
+    // console.log(JSON.stringify(result, null, 2))
+    expect(result).to.eql(fixtures.ndr.observationCategoryType)
   })
 
   // TODO no data for this one again, but it's a straightforward operation
@@ -467,33 +467,31 @@ describe.only('Everything', () => {
 
   })
 
-  it.only('should map Medication Administration - ARV', () => {
+  it('should map Medication Administration - ARV', () => {
     const dispense = fixtures.cdr.medicationDispense;
     const request = fixtures.cdr.medicationRequest;
 
-    const encounter =  {
-      id: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3',
-      period: {
-        start:  "2024-01-25",
-        end:  "2024-01-25",
-      },
-      serviceProvider: {
-        reference: 'abc'
-      }
+    //  TMP - force this in and it should parse
+    dispense.medication = {
+      "reference": "Medication/ARVMedicationExample"
     }
-
+    
     const result = builders.medicationAdministration('arv-medication-administration', {
-      // id
+      id: 'ARVMedicationAdministrationExample', // where does this come from?
       status: 'completed',
       medication: dispense.medication,
       subject: dispense.subject,
-      encounter: dispense.context,
-      effectivePeriod: encounter.period,
+      context: dispense.context,
       request: util.reference(request.id)
+      
+      // TODO I know this doesn't map yet
+      // effectivePeriod: encounter.period,
+
+      // TODO what about note?
 
     })
 
-    console.log(JSON.stringify(result, null, 2))
+    // console.log(JSON.stringify(result, null, 2))
 
     expect(result).to.eql(fixtures.ndr.medicationAdmin)
   })
