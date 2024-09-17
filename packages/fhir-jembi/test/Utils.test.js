@@ -318,4 +318,54 @@ describe('composite', () => {
       ]
     })
   })
+
+  it('should add a period value', () => {
+    const resource = {};
+
+    composite(resource, 'value', { start: 'x', end: 'y' })
+
+    expect(resource.valuePeriod).to.eql({
+       start: 'x',
+       end: 'y'
+    })
+  });
+
+  it('should add a period value with only start', () => {
+    const resource = {};
+
+    composite(resource, 'value', { start: 'x' })
+
+    expect(resource.valuePeriod).to.eql({
+       start: 'x'
+    })
+  });
+
+  it('should add a period value with only end', () => {
+    const resource = {};
+
+    composite(resource, 'value', { end: 'y' })
+
+    expect(resource.valuePeriod).to.eql({
+       end: 'y'
+    })
+  });
+
+  it('should add a period value', () => {
+    const resource = {};
+
+    composite(resource, 'value', { start: 'x', end: 'y' })
+
+    expect(resource.valuePeriod).to.eql({
+       start: 'x',
+       end: 'y'
+    })
+  });
+
+  it('should add a datetime value', () => {
+    const resource = {};
+
+    composite(resource, 'value', '2020-09-19')
+
+    expect(resource.valueDatetime).to.eql('2020-09-19')
+  });
 })

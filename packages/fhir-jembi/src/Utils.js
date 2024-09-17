@@ -8,6 +8,9 @@ const systemMap = {
   UAN: 'http://moh.gov.et/fhir/hiv/identifier/UAN',
 };
 
+// https://hl7.org/fhir/R4/datatypes.html#dateTime
+const datetimeregex = /([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?/
+
 // so what does this take?
 export const mapSystems = obj => {
   if (Array.isArray(obj)) {
@@ -184,19 +187,26 @@ export const ref = reference;
 export const composite = (object, key, value) => {
   const k = [key];
 
+  // TODO identify date time and period
+  // is there a better way we can do this?
+  // like how would we tell date time from a string?
 
   if (value.coding) {
     k.push('CodeableConcept')
   } else if (value.reference) {
     k.push('Reference')
-  }
-  else if (typeof value === 'string') {
-    k.push('String')
-  }
-  else if (typeof value === 'boolean') {
+  } else if (value.start || value.end) {
+    // TODO maybe we should test that start/end are datetimes using that fancy regex?
+    k.push('Period')
+  } else if (typeof value === 'string') {
+    if (datetimeregex.test(value)) {
+      k.push('Datetime')
+    } else {
+      k.push('String')
+    }
+  } else if (typeof value === 'boolean') {
     k.push('Boolean')
-  }
-  else if (typeof value === 'number') {
+  } else if (typeof value === 'number') {
     k.push('Integer')
   }
   // TODO: other data types need mapping

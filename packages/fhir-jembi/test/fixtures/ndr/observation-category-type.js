@@ -27,6 +27,7 @@ export default {
     "reference": "abc"
   },
   "valueString": "abc",
+  "effectiveDatetime": "2024-01-25",
   "meta": {
     "profile": [
       "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-change-category-type-observation"

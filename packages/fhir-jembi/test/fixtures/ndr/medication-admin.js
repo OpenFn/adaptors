@@ -16,10 +16,10 @@ export default {
   "context": {
       "reference": "Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3"
   },
-  // "effectivePeriod": {
-  //     "start": "2012-12-09",
-  //     "end": "2013-04-08"
-  // },
+  "effectivePeriod": {
+      "start": "2012-12-09",
+      "end": "2013-04-08"
+  },
   "request": {
       "reference": "MedicationRequest/ARVMedicationRequestInitiatedARTExample"
   },

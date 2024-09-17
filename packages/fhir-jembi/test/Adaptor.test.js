@@ -9,7 +9,6 @@ import input from './fixtures/input';
 import fixtures from './fixtures';
 
 
-// trying to organise
 describe.only('Everything', () => {
 
   it('should map Patient', () => {
@@ -315,20 +314,23 @@ describe.only('Everything', () => {
     // hmm, I've taken this from the sheet but it doesn't feel right
     const ext = util.findExtension(input, 'http://cdr.aacahb.gov.et/medication-stopped-reason')
 
+    const encounter =  {
+      id: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3',
+      period: {
+        start:  "2024-01-25",
+        end:  "2024-01-25",
+      },
+      serviceProvider: {
+        reference: 'abc'
+      }
+    }
+
     const result = builders.observation('art-followup-status-observation', {
       // id: ??
       status: "final",
       subject: input.subject,
       encounter: input.context,
-      
-      // This is what the  spec says...
-      // but I think I need to FIND the reference and pull the values out of it
-      // effectiveDateTime: input.context?.reference?.period?.start,
-      // // TODO this is not mapped yet (datetime I think)
-      // effectivePeriod: input.context?.reference?.period,
-
-      // TODO hard-coding these values for now
-      effectiveDateTime: "2024-01-25",
+      effective: encounter.period,
 
       
       // TODO this won't do anything in the test
@@ -453,7 +455,7 @@ describe.only('Everything', () => {
       status: 'final',
       subject: input.subject,
       encounter: input.context,
-      effectiveDateTime: encounter.period.start,
+      effective: encounter.period.start,
       performer: encounter.serviceProvider,
       
       value: switchType.valueString
@@ -470,6 +472,13 @@ describe.only('Everything', () => {
   it('should map Medication Administration - ARV', () => {
     const dispense = fixtures.cdr.medicationDispense;
     const request = fixtures.cdr.medicationRequest;
+    const encounter =  {
+      id: 'Encounter/e84781ed-5f02-40ac-8c97-e7280fb153e3',
+      period: {
+        start:  "2012-12-09",
+        end:  "2013-04-08",
+      },
+    }
 
     //  TMP - force this in and it should parse
     dispense.medication = {
@@ -482,12 +491,11 @@ describe.only('Everything', () => {
       medication: dispense.medication,
       subject: dispense.subject,
       context: dispense.context,
-      request: util.reference(request)
-      
-      // TODO I know this doesn't map yet
-      // effectivePeriod: encounter.period,
+      request: util.reference(request),
+      effective: encounter.period,
 
       // TODO what about note?
+      // No mappings in spreadsheet
 
     })
 
