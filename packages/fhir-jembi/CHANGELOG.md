@@ -1,5 +1,9 @@
 # @openfn/language-fhir-jembi
 
+# 0.0.14
+
+- add relatedPerson builder
+
 # 0.0.13
 
 - reference will generate a reference to a resource if you pass it in (in form type/id)
