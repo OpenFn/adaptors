@@ -478,17 +478,37 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   return ifPropInInput(name, statements);
 };
 
-const initResource = (resourceType: string) =>
-  b.variableDeclaration('const', [
+const initResource = (resourceType: string) => {
+  const rt = b.objectProperty(
+    b.identifier('resourceType'),
+    b.stringLiteral(resourceType)
+  );
+
+  const t = `<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>${resourceType}</b></p></div>`;
+  const text = b.objectProperty(
+    b.identifier('text'),
+    b.objectExpression([
+      b.objectProperty(
+        b.identifier('status'),
+        b.stringLiteral('generated')
+      ),
+      b.objectProperty(
+        b.identifier('div'),
+        b.stringLiteral(t)
+      )
+    ])
+  );
+
+
+  return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
       b.objectExpression([
-        b.objectProperty(
-          b.identifier('resourceType'),
-          b.stringLiteral(resourceType)
-        ),
+        rt,
+        text    
       ])
     ),
   ]);
+}
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));

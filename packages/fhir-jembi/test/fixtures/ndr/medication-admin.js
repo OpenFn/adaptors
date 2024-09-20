@@ -6,6 +6,11 @@ export default {
           "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-administration"
       ]
   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+  },
+
   "status": "completed",
   "medicationReference": {
       "reference": "Medication/ARVMedicationExample"

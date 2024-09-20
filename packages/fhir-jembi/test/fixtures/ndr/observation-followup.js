@@ -45,5 +45,9 @@ export default {
 //               "code": "63936-9"
 //           }
 //       ]
-//   }
+//   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+  },
 }

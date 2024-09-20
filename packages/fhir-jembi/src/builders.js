@@ -16,7 +16,12 @@ export function encounter(type, props) {
 
 function encounter_entry_from_outside_target_facility_encounter(props) {
     const resource = {
-        resourceType: "Encounter"
+        resourceType: "Encounter",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Encounter</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -374,7 +379,12 @@ function encounter_entry_from_outside_target_facility_encounter(props) {
 
 function encounter_target_facility_encounter(props) {
     const resource = {
-        resourceType: "Encounter"
+        resourceType: "Encounter",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Encounter</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -833,7 +843,12 @@ export function patient(type, props) {
 
 function patient_patient(props) {
     const resource = {
-        resourceType: "Patient"
+        resourceType: "Patient",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Patient</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -1326,7 +1341,12 @@ export function observation(type, props) {
 
 function observation_active_tb_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -1577,7 +1597,12 @@ function observation_active_tb_observation(props) {
 
 function observation_alt_ast_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -1828,7 +1853,12 @@ function observation_alt_ast_observation(props) {
 
 function observation_alternate_tb_prophylaxis_type_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -2113,7 +2143,12 @@ function observation_alternate_tb_prophylaxis_type_observation(props) {
 
 function observation_alternate_tpt_at_follow_up_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -2366,7 +2401,12 @@ function observation_alternate_tpt_at_follow_up_observation(props) {
 
 function observation_art_eligibility_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -2619,7 +2659,12 @@ function observation_art_eligibility_status_observation(props) {
 
 function observation_art_followup_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -2872,7 +2917,12 @@ function observation_art_followup_status_observation(props) {
 
 function observation_art_followup_stopped_reasons_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -3125,7 +3175,12 @@ function observation_art_followup_stopped_reasons_observation(props) {
 
 function observation_art_not_started_plan_next_step_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -3378,7 +3433,12 @@ function observation_art_not_started_plan_next_step_observation(props) {
 
 function observation_arv_adherence_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -3629,7 +3689,12 @@ function observation_arv_adherence_observation(props) {
 
 function observation_arv_change_category_type_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -3882,7 +3947,12 @@ function observation_arv_change_category_type_observation(props) {
 
 function observation_arv_poor_adherence_reasons_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -4135,7 +4205,12 @@ function observation_arv_poor_adherence_reasons_observation(props) {
 
 function observation_arv_regimen_change_reason_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -4388,7 +4463,12 @@ function observation_arv_regimen_change_reason_observation(props) {
 
 function observation_arv_regimen_changed_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -4641,7 +4721,12 @@ function observation_arv_regimen_changed_observation(props) {
 
 function observation_arv_regimen_side_effects_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -4894,7 +4979,12 @@ function observation_arv_regimen_side_effects_observation(props) {
 
 function observation_assessed_for_pain_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -5147,7 +5237,12 @@ function observation_assessed_for_pain_observation(props) {
 
 function observation_blood_pressure(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -5398,7 +5493,12 @@ function observation_blood_pressure(props) {
 
 function observation_bmi_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -5649,7 +5749,12 @@ function observation_bmi_observation(props) {
 
 function observation_breastfeeding_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -5902,7 +6007,12 @@ function observation_breastfeeding_status_observation(props) {
 
 function observation_cd4_absolute_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -6153,7 +6263,12 @@ function observation_cd4_absolute_observation(props) {
 
 function observation_cd4_percentage_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -6406,7 +6521,12 @@ function observation_cd4_percentage_observation(props) {
 
 function observation_cervical_cancer_screening_accepted_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -6659,7 +6779,12 @@ function observation_cervical_cancer_screening_accepted_observation(props) {
 
 function observation_cervical_cancer_screening_counselling_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -6912,7 +7037,12 @@ function observation_cervical_cancer_screening_counselling_status_observation(pr
 
 function observation_cervical_cancer_screening_method_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -7165,7 +7295,12 @@ function observation_cervical_cancer_screening_method_observation(props) {
 
 function observation_cervical_cancer_screening_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -7418,7 +7553,12 @@ function observation_cervical_cancer_screening_observation(props) {
 
 function observation_cervical_cancer_screening_result_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -7671,7 +7811,12 @@ function observation_cervical_cancer_screening_result_observation(props) {
 
 function observation_cervical_cancer_screening_type_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -7924,7 +8069,12 @@ function observation_cervical_cancer_screening_type_observation(props) {
 
 function observation_cervical_cancer_treatment_received_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -8177,7 +8327,12 @@ function observation_cervical_cancer_treatment_received_observation(props) {
 
 function observation_children_developmental_milestone_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -8430,7 +8585,12 @@ function observation_children_developmental_milestone_observation(props) {
 
 function observation_confirmed_hiv_positive_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -8679,7 +8839,12 @@ function observation_confirmed_hiv_positive_observation(props) {
 
 function observation_cotrimoxazole_preventive_therapy_adherence_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -8932,7 +9097,12 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
 
 function observation_cotrimoxazole_preventive_therapy_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -9185,7 +9355,12 @@ function observation_cotrimoxazole_preventive_therapy_observation(props) {
 
 function observation_counseled_for_hiv_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -9438,7 +9613,12 @@ function observation_counseled_for_hiv_observation(props) {
 
 function observation_creatine_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -9689,7 +9869,12 @@ function observation_creatine_observation(props) {
 
 function observation_current_art_duration_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -9942,7 +10127,12 @@ function observation_current_art_duration_observation(props) {
 
 function observation_delivery_mode_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -10193,7 +10383,12 @@ function observation_delivery_mode_observation(props) {
 
 function observation_delivery_place_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -10446,7 +10641,12 @@ function observation_delivery_place_observation(props) {
 
 function observation_differentiated_service_delivery_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -10699,7 +10899,12 @@ function observation_differentiated_service_delivery_observation(props) {
 
 function observation_disclosure_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -10952,7 +11157,12 @@ function observation_disclosure_status_observation(props) {
 
 function observation_edema_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -11203,7 +11413,12 @@ function observation_edema_observation(props) {
 
 function observation_elicited_index_case_contacts_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -11456,7 +11671,12 @@ function observation_elicited_index_case_contacts_observation(props) {
 
 function observation_enhanced_adherence_counselling_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -11709,7 +11929,12 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
 function observation_estimated_delivery_date_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -11962,7 +12187,12 @@ function observation_estimated_delivery_date_observation(props) {
 
 function observation_family_member_hiv_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -12215,7 +12445,12 @@ function observation_family_member_hiv_status_observation(props) {
 
 function observation_family_planning_method_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -12468,7 +12703,12 @@ function observation_family_planning_method_observation(props) {
 
 function observation_fluconazole_preventive_therapy_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -12721,7 +12961,12 @@ function observation_fluconazole_preventive_therapy_observation(props) {
 
 function observation_future_pregnancy_plans_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -12974,7 +13219,12 @@ function observation_future_pregnancy_plans_observation(props) {
 
 function observation_generic_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -13221,7 +13471,12 @@ function observation_generic_observation(props) {
 
 function observation_head_circumference_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -13474,7 +13729,12 @@ function observation_head_circumference_observation(props) {
 
 function observation_health_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -13725,7 +13985,12 @@ function observation_health_status_observation(props) {
 
 function observation_heart_rate_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -13976,7 +14241,12 @@ function observation_heart_rate_observation(props) {
 
 function observation_height_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -14227,7 +14497,12 @@ function observation_height_observation(props) {
 
 function observation_hgb_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -14478,7 +14753,12 @@ function observation_hgb_observation(props) {
 
 function observation_highest_education_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -14731,7 +15011,12 @@ function observation_highest_education_observation(props) {
 
 function observation_hiv_prevention_plan_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -14984,7 +15269,12 @@ function observation_hiv_prevention_plan_observation(props) {
 
 function observation_hiv_program_final_outcome_known_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -15237,7 +15527,12 @@ function observation_hiv_program_final_outcome_known_observation(props) {
 
 function observation_hiv_program_final_outcome_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -15490,7 +15785,12 @@ function observation_hiv_program_final_outcome_observation(props) {
 
 function observation_hiv_program_reason_art_not_started_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -15743,7 +16043,12 @@ function observation_hiv_program_reason_art_not_started_observation(props) {
 
 function observation_hiv_program_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -15996,7 +16301,12 @@ function observation_hiv_program_status_observation(props) {
 
 function observation_hiv_status_disclosure_at_enrollment_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -16249,7 +16559,12 @@ function observation_hiv_status_disclosure_at_enrollment_observation(props) {
 
 function observation_hiv_test_results_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -16502,7 +16817,12 @@ function observation_hiv_test_results_observation(props) {
 
 function observation_hiv_treatment_prior_enrollment_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -16755,7 +17075,12 @@ function observation_hiv_treatment_prior_enrollment_observation(props) {
 
 function observation_inh_at_follow_up_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -17008,7 +17333,12 @@ function observation_inh_at_follow_up_observation(props) {
 
 function observation_last_menstrual_period_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -17261,7 +17591,12 @@ function observation_last_menstrual_period_observation(props) {
 
 function observation_level_of_pain_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -17512,7 +17847,12 @@ function observation_level_of_pain_observation(props) {
 
 function observation_maternal_hiv_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -17765,7 +18105,12 @@ function observation_maternal_hiv_status_observation(props) {
 
 function observation_muac_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -18016,7 +18361,12 @@ function observation_muac_observation(props) {
 
 function observation_nutritional_screening_result_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -18269,7 +18619,12 @@ function observation_nutritional_screening_result_observation(props) {
 
 function observation_nutritional_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -18522,7 +18877,12 @@ function observation_nutritional_status_observation(props) {
 
 function observation_nutritional_suppliments_provided_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -18775,7 +19135,12 @@ function observation_nutritional_suppliments_provided_observation(props) {
 
 function observation_otz_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -19026,7 +19391,12 @@ function observation_otz_observation(props) {
 
 function observation_patient_functional_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -19279,7 +19649,12 @@ function observation_patient_functional_status_observation(props) {
 
 function observation_patient_occupation_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -19532,7 +19907,12 @@ function observation_patient_occupation_observation(props) {
 
 function observation_patient_who_stage_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -19785,7 +20165,12 @@ function observation_patient_who_stage_observation(props) {
 
 function observation_physical_examinations_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -20038,7 +20423,12 @@ function observation_physical_examinations_observation(props) {
 
 function observation_pregnancy_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -20291,7 +20681,12 @@ function observation_pregnancy_status_observation(props) {
 
 function observation_presenting_symptom_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -20544,7 +20939,12 @@ function observation_presenting_symptom_observation(props) {
 
 function observation_reason_eligible_for_art_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -20797,7 +21197,12 @@ function observation_reason_eligible_for_art_observation(props) {
 
 function observation_reason_not_eligbile_for_tpt_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -21050,7 +21455,12 @@ function observation_reason_not_eligbile_for_tpt_observation(props) {
 
 function observation_resides_in_catchment_area_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -21303,7 +21713,12 @@ function observation_resides_in_catchment_area_observation(props) {
 
 function observation_respiratory_rate_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -21556,7 +21971,12 @@ function observation_respiratory_rate_observation(props) {
 
 function observation_screened_for_tb_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -21807,7 +22227,12 @@ function observation_screened_for_tb_observation(props) {
 
 function observation_target_population_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -22060,7 +22485,12 @@ function observation_target_population_observation(props) {
 
 function observation_tb_diagnostic_test_result_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -22311,7 +22741,12 @@ function observation_tb_diagnostic_test_result_observation(props) {
 
 function observation_tb_prophylaxis_type_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -22564,7 +22999,12 @@ function observation_tb_prophylaxis_type_observation(props) {
 
 function observation_tb_screening_result_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -22817,7 +23257,12 @@ function observation_tb_screening_result_observation(props) {
 
 function observation_tb_treatment_started_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -23070,7 +23515,12 @@ function observation_tb_treatment_started_observation(props) {
 
 function observation_tb_treatment_status_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -23323,7 +23773,12 @@ function observation_tb_treatment_status_observation(props) {
 
 function observation_temperature_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -23574,7 +24029,12 @@ function observation_temperature_observation(props) {
 
 function observation_tested_for_hiv_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -23827,7 +24287,12 @@ function observation_tested_for_hiv_observation(props) {
 
 function observation_therapeutic_supplementary_food_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -24080,7 +24545,12 @@ function observation_therapeutic_supplementary_food_observation(props) {
 
 function observation_tpt_eligbility_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -24333,7 +24803,12 @@ function observation_tpt_eligbility_observation(props) {
 
 function observation_tpt_started_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -24584,7 +25059,12 @@ function observation_tpt_started_observation(props) {
 
 function observation_treatment_completed_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -24837,7 +25317,12 @@ function observation_treatment_completed_observation(props) {
 
 function observation_treatment_discontinued_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -25090,7 +25575,12 @@ function observation_treatment_discontinued_observation(props) {
 
 function observation_viral_load_count_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -25343,7 +25833,12 @@ function observation_viral_load_count_observation(props) {
 
 function observation_viral_load_indication_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -25594,7 +26089,12 @@ function observation_viral_load_indication_observation(props) {
 
 function observation_viral_load_performed_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -25847,7 +26347,12 @@ function observation_viral_load_performed_observation(props) {
 
 function observation_weight_observation(props) {
     const resource = {
-        resourceType: "Observation"
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -26108,7 +26613,12 @@ export function medicationAdministration(type, props) {
 
 function medicationAdministration_arv_medication_administration(props) {
     const resource = {
-        resourceType: "MedicationAdministration"
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -26303,7 +26813,12 @@ function medicationAdministration_arv_medication_administration(props) {
 
 function medicationAdministration_cotrimoxazole_preventive_therapy_medication_administration(props) {
     const resource = {
-        resourceType: "MedicationAdministration"
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -26498,7 +27013,12 @@ function medicationAdministration_cotrimoxazole_preventive_therapy_medication_ad
 
 function medicationAdministration_fluconazole_preventive_therapy_medication_administration(props) {
     const resource = {
-        resourceType: "MedicationAdministration"
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -26703,7 +27223,12 @@ export function medicationDispense(type, props) {
 
 function medicationDispense_arv_medication_dispense(props) {
     const resource = {
-        resourceType: "MedicationDispense"
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -26975,7 +27500,12 @@ function medicationDispense_arv_medication_dispense(props) {
 
 function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense(props) {
     const resource = {
-        resourceType: "MedicationDispense"
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -27249,7 +27779,12 @@ function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense
 
 function medicationDispense_generic_medication_dispense(props) {
     const resource = {
-        resourceType: "MedicationDispense"
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -27534,7 +28069,12 @@ export function medicationRequest(type, props) {
 
 function medicationRequest_arv_medication_request(props) {
     const resource = {
-        resourceType: "MedicationRequest"
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -27848,7 +28388,12 @@ function medicationRequest_arv_medication_request(props) {
 
 function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(props) {
     const resource = {
-        resourceType: "MedicationRequest"
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -28164,7 +28709,12 @@ function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(p
 
 function medicationRequest_generic_medication_request(props) {
     const resource = {
-        resourceType: "MedicationRequest"
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -28480,7 +29030,12 @@ function medicationRequest_generic_medication_request(props) {
 
 function medicationRequest_tpt_medication_request(props) {
     const resource = {
-        resourceType: "MedicationRequest"
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -28804,7 +29359,12 @@ export function medication(type, props) {
 
 function medication_arv_regimen_medication(props) {
     const resource = {
-        resourceType: "Medication"
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -28951,7 +29511,12 @@ function medication_arv_regimen_medication(props) {
 
 function medication_oi_medication(props) {
     const resource = {
-        resourceType: "Medication"
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29098,7 +29663,12 @@ function medication_oi_medication(props) {
 
 function medication_tpt_medication(props) {
     const resource = {
-        resourceType: "Medication"
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29257,7 +29827,12 @@ export function carePlan(type, props) {
 
 function carePlan_art_follow_up_careplan(props) {
     const resource = {
-        resourceType: "CarePlan"
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29419,7 +29994,12 @@ function carePlan_art_follow_up_careplan(props) {
 
 function carePlan_cervical_cancer_care_plan(props) {
     const resource = {
-        resourceType: "CarePlan"
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29558,7 +30138,12 @@ function carePlan_cervical_cancer_care_plan(props) {
 
 function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
     const resource = {
-        resourceType: "CarePlan"
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29722,7 +30307,12 @@ function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
 
 function carePlan_tb_treatment_careplan(props) {
     const resource = {
-        resourceType: "CarePlan"
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -29884,7 +30474,12 @@ function carePlan_tb_treatment_careplan(props) {
 
 function carePlan_tpt_careplan(props) {
     const resource = {
-        resourceType: "CarePlan"
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {
@@ -30054,7 +30649,12 @@ export function relatedPerson(type, props) {
 
 function relatedPerson_related_person(props) {
     const resource = {
-        resourceType: "RelatedPerson"
+        resourceType: "RelatedPerson",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
+        }
     };
 
     if (!_.isNil(props.id)) {

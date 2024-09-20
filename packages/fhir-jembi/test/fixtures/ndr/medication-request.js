@@ -29,5 +29,9 @@ export default {
     profile: [
       'http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-request'
     ]
-  }
+  },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+  },
 }

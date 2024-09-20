@@ -6,6 +6,10 @@ export default {
       'http://moh.gov.et/fhir/hiv/StructureDefinition/target-facility-encounter',
     ],
   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Encounter</b></p></div>"
+  },
   identifier: [
     {
       system: 'http://moh.gov.et/fhir/hiv/identifier/encounter',

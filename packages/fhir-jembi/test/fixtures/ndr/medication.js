@@ -14,5 +14,9 @@ export default {
       }
     ],
     "text": "Tablet dose form (qualifier value)"
-  }
+  },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+  },
 }

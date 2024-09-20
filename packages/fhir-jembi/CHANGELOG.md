@@ -1,5 +1,9 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.16
+
+- Add `text` to each resource type
+
 ## 0.0.15
 
 - Update schema to lateest version

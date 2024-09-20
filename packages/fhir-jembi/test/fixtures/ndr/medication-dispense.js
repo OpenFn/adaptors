@@ -22,4 +22,8 @@ export default {
       'http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-dispense'
     ]
   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+  },
 }

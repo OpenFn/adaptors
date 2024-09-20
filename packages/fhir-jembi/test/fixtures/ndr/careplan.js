@@ -6,6 +6,10 @@ export default {
           "http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan"
       ]
   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+  },
   "status": "active",
   "intent": "order",
   "category": [

@@ -28,5 +28,9 @@ export default {
     "profile": [
       "http://moh.gov.et/fhir/hiv/StructureDefinition/patient-occupation-observation"
     ]
-  }
+  },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+  },
 }

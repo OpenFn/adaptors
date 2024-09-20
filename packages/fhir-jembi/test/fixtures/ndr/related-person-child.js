@@ -19,5 +19,9 @@ export default {
     "given" : ["Mary"]
   }],
   "gender" : "female",
-  "birthDate" : "1973-04-12"
+  "birthDate" : "1973-04-12",
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
+  },
 }

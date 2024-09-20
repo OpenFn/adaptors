@@ -103,4 +103,8 @@ export default {
   managingOrganization: {
     reference: 'Organization/009a6a861c1b45778c0cbedadefe52a4',
   },
+  text: {
+    status: "generated",
+    div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Patient</b></p></div>"
+  },
 };
