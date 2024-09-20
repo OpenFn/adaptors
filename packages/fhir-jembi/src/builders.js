@@ -29350,7 +29350,7 @@ function carePlan_art_follow_up_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP66375-4"}]}];
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"art-follow-up-care-plan"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29489,7 +29489,7 @@ function carePlan_cervical_cancer_care_plan(props) {
     if (!_.isNil(props.category)) {
         resource.category = props.category;
     } else {
-        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cervical-cancer-care-plan"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29651,7 +29651,7 @@ function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cotrimoxazole-care-plan"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29815,7 +29815,7 @@ function carePlan_tb_treatment_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-treatment-care-plan"}]}];
     }
 
     if (!_.isNil(props.title)) {
@@ -29977,7 +29977,7 @@ function carePlan_tpt_careplan(props) {
             resource.category.push(category);
         }
     } else {
-        resource.category = [{"coding":[{"system":"http://loinc.org","code":"LP173209-0"}]}];
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-preventive-therapy-care-plan"}]}];
     }
 
     if (!_.isNil(props.title)) {

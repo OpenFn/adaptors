@@ -11,9 +11,9 @@ export default {
   "category": [
       {
           "coding": [
-              {
-                  "system": "http://loinc.org",
-                  "code": "LP66375-4"
+            {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "art-follow-up-care-plan"
               }
           ],
           // "text": "ART" TODO I think we need to support this?
