@@ -926,7 +926,7 @@ describe('cursor', () => {
   });
 
   // testing the log output is hard here, I've only verified it manally
-  it.only('should log the correct message with multiple arguments', () => {
+  it('should log the correct message with multiple arguments', () => {
     const state = {};
     let originalLog;
     let consoleOutput = [];
