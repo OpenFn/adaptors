@@ -199,6 +199,7 @@ export const composite = (object, key, value) => {
   // TODO Is this a bit cheeky? A bit presumptuous?
   else if ((value.id && value.meta && value.resourceType)) {
     k.push('Reference')
+    // eslint-disable-next-line no-param-reassign
     value = reference(value)
   } else if (value.start || value.end) {
     // TODO maybe we should test that start/end are datetimes using that fancy regex?
