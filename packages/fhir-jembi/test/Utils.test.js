@@ -161,25 +161,25 @@ describe('addExtension', () => {
     const resource = {
       extension: [{ url: 'xyz' }],
     };
-    addExtension(resource, 'www', {});
+    addExtension(resource, 'www', 'x');
 
     expect(resource.extension).to.eql([
       { url: 'xyz' },
       {
         url: 'www',
-        value: {},
+        valueString: 'x',
       },
     ]);
   });
 
   it('should add a new extensions array to a resource', () => {
     const resource = {};
-    addExtension(resource, 'www', {});
+    addExtension(resource, 'www', 'y');
 
     expect(resource.extension).to.eql([
       {
         url: 'www',
-        value: {},
+        valueString: 'y'
       },
     ]);
   });
@@ -208,6 +208,18 @@ describe('addExtension', () => {
             },
           ],
         },
+      },
+    ]);
+  });
+
+  it('should add datetime extension as a string', () => {
+    const resource = {};
+    addExtension(resource, 'www', '2001-01-01');
+
+    expect(resource.extension).to.eql([
+      {
+        url: 'www',
+        valueDateTime: '2001-01-01'
       },
     ]);
   });

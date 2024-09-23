@@ -88,12 +88,7 @@ export const addExtension = (resource, url, value) => {
     url: url,
   };
 
-  if (value.coding) {
-    obj.valueCodeableConcept = value;
-  } else {
-    obj.value = value;
-  }
-  // TODO we have to infer every value type here
+  composite(obj, 'value', value)
 
   resource.extension ??= [];
   resource.extension.push(obj);
@@ -201,6 +196,8 @@ export const composite = (object, key, value) => {
   } else if (value.start || value.end) {
     // TODO maybe we should test that start/end are datetimes using that fancy regex?
     k.push('Period')
+  } else if (value.dateTime) {
+    k.push('DateTime')
   } else if (typeof value === 'string') {
     if (datetimeregex.test(value)) {
       k.push('DateTime')

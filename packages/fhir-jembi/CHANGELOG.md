@@ -1,5 +1,11 @@
 # @openfn/language-fhir-jembi
 
+
+## 0.0.17
+
+- support more types in addExtension
+
+
 ## 0.0.16
 
 - Add `text` to each resource type
