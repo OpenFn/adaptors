@@ -349,6 +349,30 @@ describe('Observation', () => {
 })
 
 describe('MedicationDispense', () => {
+
+  // TODO ensure medication maps to medicationReference
+   it('should map medication -> medicationReference if medication is a resource', () => {
+      const result = builders.medicationDispense('arv-medication-dispense', {
+        medication: {
+          id: 'abc',
+          // need to bluff the builder
+          resourceType: 'medication',
+          meta: {}
+        }
+      });
+
+      expect(result.medicationReference).to.eql({ reference: 'medication/abc' })
+
+   });
+
+   it('should map medication -> medicationReference if medication is a reference', () => {
+    const result = builders.medicationDispense('arv-medication-dispense', {
+      medication: util.reference('medication/abc')
+    });
+
+    expect(result.medicationReference).to.eql({ reference: 'medication/abc' })
+  });
+
   // it('should map from a cdr MedicationDispense', () => {
   //   const input = fixtures.cdr.medicationDispense;
 

@@ -389,4 +389,20 @@ describe('composite', () => {
 
     expect(resource.valueDateTime).to.eql('2020-09-19')
   });
+
+  it('should add a reference value', () => {
+    const resource = {};
+
+    composite(resource, 'value', { reference: 'r' })
+
+    expect(resource.valueReference).to.eql({ reference: 'r' })
+  })
+
+  it('should add a reference value if passed a resource', () => {
+    const resource = {};
+
+    composite(resource, 'value', { id: 'x', resourceType: 'T', meta: {} })
+
+    expect(resource.valueReference).to.eql({ reference: 'T/x' })
+  })
 })

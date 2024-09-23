@@ -191,8 +191,15 @@ export const composite = (object, key, value) => {
 
   if (value.coding) {
     k.push('CodeableConcept')
-  } else if (value.reference) {
+  } 
+  else if (value.reference) {
     k.push('Reference')
+  }
+  // if the incoming value is a reference or another resource, make it a reference
+  // TODO Is this a bit cheeky? A bit presumptuous?
+  else if ((value.id && value.meta && value.resourceType)) {
+    k.push('Reference')
+    value = reference(value)
   } else if (value.start || value.end) {
     // TODO maybe we should test that start/end are datetimes using that fancy regex?
     k.push('Period')

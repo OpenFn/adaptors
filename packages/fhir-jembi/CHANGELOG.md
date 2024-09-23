@@ -1,5 +1,8 @@
 # @openfn/language-fhir-jembi
 
+## 0.0.18
+
+- Make composite types smarter when passed a Resource (convert it to a reference)
 
 ## 0.0.17
 
