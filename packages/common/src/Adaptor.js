@@ -877,12 +877,12 @@ export function cursor(value, options = {}) {
             // See https://date-fns.org/v3.6.0/docs/format
             dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
 
-        console.log(`Setting cursor "${cursor}" to: ${formatted}`);
+        console.log(`Setting ${cursorKey} "${cursor}" to: ${formatted}`);
         return state;
       }
     }
     state[cursorKey] = format?.(cursor) ?? cursor;
-    console.log('Setting cursor to:', state[cursorKey]);
+    console.log(`Setting ${cursorKey} to:`, state[cursorKey]);
 
     return state;
   };
