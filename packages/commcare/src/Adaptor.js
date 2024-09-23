@@ -4,7 +4,7 @@ import { Blob } from 'node:buffer';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 
-import { request, prepareNextState } from './Utils';
+import * as util from './Utils';
 /**
  * State object
  * @typedef {Object} CommcareHttpState
@@ -82,7 +82,7 @@ export function get(path, params = {}, callback = s => s) {
 
       do {
         // Make the first request
-        const response = await request(
+        const response = await util.request(
           state.configuration,
           `/a/${domain}/api/v0.5/${resolvedPath}`,
           {
@@ -92,7 +92,7 @@ export function get(path, params = {}, callback = s => s) {
           }
         );
 
-        nextState = prepareNextState(state, response, callback);
+        nextState = util.prepareNextState(state, response, callback);
         // If the server tells us there's another page of data, setup
         // the next request to get it
         if (response?.body?.meta?.next) {
@@ -156,7 +156,7 @@ export function post(path, data, params = {}, callback = s => s) {
     );
 
     try {
-      const response = await request(
+      const response = await util.request(
         state.configuration,
         `/a/${domain}/api/v0.5/${resolvedPath}`,
         {
@@ -167,7 +167,7 @@ export function post(path, data, params = {}, callback = s => s) {
         }
       );
 
-      return prepareNextState(state, response, callback);
+      return util.prepareNextState(state, response, callback);
     } catch (e) {
       throw e.body.error ?? e;
     }
@@ -222,12 +222,12 @@ export function submitXls(data, params) {
     form.append('create_new_cases', create_new_cases);
 
     try {
-      const response = await request(state.configuration, path, {
+      const response = await util.request(state.configuration, path, {
         method: 'POST',
         data: form,
       });
 
-      return prepareNextState(state, response);
+      return util.prepareNextState(state, response);
     } catch (e) {
       throw e.body ?? e;
     }
@@ -265,14 +265,14 @@ export function submit(data) {
     console.log('Raw JSON body: '.concat(JSON.stringify(jsonBody)));
     console.log('X-form submission: '.concat(body));
 
-    const response = await request(state.configuration, path, {
+    const response = await util.request(state.configuration, path, {
       method: 'POST',
       data: body,
       contentType: 'text/xml',
       parseAs: 'text',
     });
 
-    return prepareNextState(state, response);
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -298,12 +298,12 @@ export function fetchReportData(reportId, params, postUrl) {
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
-    const { body: reportData } = await request(state.configuration, path, {
+    const { body: reportData } = await util.request(state.configuration, path, {
       method: 'GET',
       contentType: 'application/json',
     });
 
-    await request(state.configuration, postUrl, {
+    await util.request(state.configuration, postUrl, {
       method: 'POST',
       params,
       data: reportData,
@@ -316,6 +316,37 @@ export function fetchReportData(reportId, params, postUrl) {
   };
 }
 
+/**
+ * Make a general HTTP request against the Commcare server.
+ * @example <caption>Make a GET request to get cases</caption>
+ * request("GET", "/a/asri/api/v0.5/case");
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the body
+ * @param {RequestOptions} options - Optional request params
+ * @returns {Operation}
+ * @state {CommcareHttpState}
+ */
+export function request(method, path, body, options = {}) {
+  return async state => {
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
+      expandReferences(state, method, path, body, options);
+    try {
+      const response = await util.request(state.configuration, resolvedPath, {
+        method: resolvedMethod,
+        data: resolvedBody,
+        params: resolvedOptions,
+        contentType: 'application/json',
+      });
+
+      return util.prepareNextState(state, response);
+    } catch (e) {
+      throw e;
+    }
+  };
+}
 export {
   fn,
   fnIf,

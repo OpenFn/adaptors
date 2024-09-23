@@ -342,6 +342,84 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "body",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a general HTTP request against the Commcare server.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "request(\"POST\", \"/user\", { \"username\":\"test\", \"password\":\"somepassword\" });",
+            "caption": "Make a POST request to create a new user"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Optional request params",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{CommcareHttpState}"
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

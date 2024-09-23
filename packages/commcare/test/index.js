@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post } from '../src';
+import { execute, submitXls, get, post, request } from '../src';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -651,5 +651,39 @@ describe('createUser', () => {
 
     expect(data).to.haveOwnProperty('id');
     expect(response.statusCode).to.equal(201);
+  });
+});
+
+
+describe('HTTP wrappers', () => {
+  it('makes a GET request', async () => {
+    testServer
+      .intercept({
+        path: `/a/asri/api/v0.5/case`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        // simulate a return from commcare
+        return {
+          "case_id": "1",
+        };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data, response } = await 
+      request('GET', '/a/asri/api/v0.5/case')
+    (state);
+
+    expect(data).to.haveOwnProperty('case_id');
+    expect(response.statusCode).to.equal(200);
   });
 });
