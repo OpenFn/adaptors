@@ -926,6 +926,23 @@ describe('cursor', () => {
   });
 
   // testing the log output is hard here, I've only verified it manally
+  it.only('should log the correct message with multiple arguments', () => {
+    const state = {};
+    let originalLog;
+    let consoleOutput = [];
+    // Setup: Override console.log
+    originalLog = console.log;
+    console.log = (...args) => consoleOutput.push(args);
+
+    cursor(1234, { key: 'lastRunDateTime' })(state);
+    expect(consoleOutput[0]).to.deep.equal([
+      'Setting lastRunDateTime to:',
+      1234,
+    ]);
+
+    // Teardown: Restore console.log
+    console.log = originalLog;
+  });
   it('should use an object', () => {
     const state = {};
     const c = { page: 22, next: 23 };
