@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-redis",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "OpenFn redis adaptor",
   "type": "module",
   "exports": {
