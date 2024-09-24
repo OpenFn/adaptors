@@ -1,5 +1,11 @@
 ## 2.0.0
 
+## 2.0.2
+
+### Patch Changes
+
+- 77a690f: improve cursor setup message
+
 ## 2.0.1
 
 ### Patch Changes
