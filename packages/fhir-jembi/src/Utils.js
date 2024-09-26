@@ -11,7 +11,6 @@ const systemMap = {
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
 const datetimeregex = /([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?/
 
-// so what does this take?
 export const mapSystems = obj => {
   if (Array.isArray(obj)) {
     return obj.map(mapSystems);
@@ -26,29 +25,32 @@ export const mapSystems = obj => {
   return obj;
 };
 
+/**
+ * Define a set of mapped system values.
+ * 
+ * Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
+ * @public
+ * @function
+ * @example <caption>Set shortcut sustem mappings</caption>
+ * util.setSystemMap({
+ *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
+ * });
+ * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
+};
+
+ */
 export const setSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
 };
 
-// rather than code gen these with all their complexity,
-// we can keep them in the library
-// we can even unit test them if we want
-
-// Create an identifier
-// input can be a Full identifier, an Identifier with just a value, or a string value
-// Note that if system is passed, it'll override
-// (is this correct? This will force an input value to be mapped to the new system)
-// Maybe the mapper can run some kind of conversion if neccessary?
-
-// TODO I don't think the system is actually useful here
-// Maybe it would be more useful to provide system mappings?
-// ie UAN - > http://moh.gov.et/fhir/hiv/identifier/UAN
-// and mapping code can add extra system mappings
-// I like this
 /**
- * Create an identifier
+ * Create an identifier resource. Systems will be mapped against the system map.
+ * The input can be a string value, or an identifier object.
+ * If input is an array of identifiers, an array of mapped/parsed values will be returned.
  * @public
  * @function
+ * @param input - an array of strings, or a identifier value as a string or object
+ * @param {string} [system] - the string system to use by default if
  */
 export const identifier = (input, system) => {
   // If an array of inputs is passed in, map each element of the array
@@ -76,12 +78,23 @@ export const identifier = (input, system) => {
   }
 };
 
+/** 
+ * Alias for util.identifier()
+ * @public
+ * @function
+ */
 export const id = identifier
 
 /**
- * Add an extension to a resource (or object)
+ * Add an extension to a resource (or object).
+ * An object will be created and added to an `extension` array on the provided resource. 
+ * The extension array will be set if it does not exist on the resource.
+ * The value will be smartly written to the object, ie, valueDateTime or valueReference or valueString
  * @public
  * @function
+ * @param resource - a FHIR resource object to add an extension too
+ * @param {string} url - the URL to set for the extension
+ * @param value - the value that the extension should contain
  */
 export const addExtension = (resource, url, value) => {
   const obj = {
@@ -94,11 +107,13 @@ export const addExtension = (resource, url, value) => {
   resource.extension.push(obj);
 };
 
-// TODO this should take an object and find the extension in object.extension
 /**
  * Find an extension with a given url in some array
  * @public
  * @function
+ * @param obj - a fhir resource
+ * @param {string} targetUrl - the extension URL you want to find
+ * @param {string} [path] - a path to extract from the resource. Optional.
  */
 export const findExtension = (obj, targetUrl, path) => {
   const result = obj.extension?.find(ext => ext.url === targetUrl);
@@ -111,17 +126,25 @@ export const findExtension = (obj, targetUrl, path) => {
 // TODO should this also take display text?
 
 /**
- * Create a coding
+ * Create a coding object { code, system }. Systems will be mapped using the system map.
  * @public
  * @function
+ * @param {string} code - the code value
+ * @param {stting} system - URL to the system. Well be mapped using the system map.
  */
-export const coding = (code, system) => ({ code, system });
+export const coding = (code, system) => ({ code, system: mapSystems(system) });
 
 /**
- * Create a codeable concept. Codings can be coding objects or
+ * Create a codeableConcept. Codings can be coding objects or
  * [code, system] tuples
+ * if the first argument is a string, it will be set as the text.
+ * Systems will be mapped with the system map
  * @public
  * @function
+ * @example <caption><Create a codeableConcept</caption>
+ * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
+ * * @example <caption><Create a codeableConcept with text</caption>
+ * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
  */
 export const concept = (text, ...codings) => {
   const result = {};
@@ -145,13 +168,23 @@ export const concept = (text, ...codings) => {
   return result;
 };
 
-// codebaleconcept alias
+/** 
+ * Alias for util.concept()
+ * @public
+ * @function
+ */
 export const cc = concept;
 
-// opts is { type, identifier, display}
-// TODO if passed a full resource, return a ref to its id
-// TODO: should the id be like `resource/id` ?
-// I see the pattern a lot but I don't know if its formal
+/** 
+ * Create a reference object of the form { reference }
+ * If ref is an array, each item will be mapped and an array returned.
+ * If ref is a FHIR resource, a reference to it will be generated
+ * If ref is a string, it'll be treated as a reference id and returned as an object
+ * If ref is a valid FHIR reference, it'll just be returned.
+ * @public
+ * @function
+ * @param ref - the thing to generate a reference from
+ */
 export const reference = (ref, opts) => {
   if (Array.isArray(ref)) {
     return ref.map(reference, opts)
@@ -159,7 +192,7 @@ export const reference = (ref, opts) => {
   // If passed a resource, generate a reference to this resource
   if (ref.resourceType && ref.id) {
     // TODO is this right? Or just the id?
-    return { reference: `${ref.resourceType}/${ref.id}`}
+    return { reference: `${ref.resourceType}/${ref.id}` }
   }
   // if passed an existing reference object, just return it
   if (ref.reference) {
@@ -179,9 +212,25 @@ export const reference = (ref, opts) => {
   return result;
 };
 
+/** 
+ * Alias for util.reference()
+ * @public
+ * @function
+ */
 export const ref = reference;
 
-/** Convert an incoming value to one of a nummber of types based on the key, eg valueString, valueCodeableConcept */
+/** 
+ * Write a value to the target object using a typed key
+ * Ie, if key is `value` and the value is a date time string,
+ * this function will write `valueDateTime` to the object.
+ * 
+ * This function is poorly named.
+ * @public
+ * @function
+ * @param object - the object to write the composite key to
+ * @param {string} key - the base key to use to write the value
+ * @param value - some value to write to the object
+ */
 export const composite = (object, key, value) => {
   const k = [key];
 
@@ -191,7 +240,7 @@ export const composite = (object, key, value) => {
 
   if (value.coding) {
     k.push('CodeableConcept')
-  } 
+  }
   else if (value.reference) {
     k.push('Reference')
   }
