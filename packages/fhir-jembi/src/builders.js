@@ -5,6 +5,13 @@
 import * as util from "./Utils.js";
 import _ from "lodash";
 
+/**
+  * Create a FHIR Encounter resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function encounter(type, props) {
     const mappings = {
         "entry-from-outside-target-facility-encounter": encounter_entry_from_outside_target_facility_encounter,
@@ -833,6 +840,13 @@ function encounter_target_facility_encounter(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR Patient resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function patient(type, props) {
     const mappings = {
         "patient": patient_patient
@@ -1234,6 +1248,13 @@ function patient_patient(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR MedicationAdministration resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function medicationAdministration(type, props) {
     const mappings = {
         "arv-medication-administration": medicationAdministration_arv_medication_administration,
@@ -1844,6 +1865,13 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
     return resource;
 }
 
+/**
+  * Create a FHIR MedicationDispense resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function medicationDispense(type, props) {
     const mappings = {
         "arv-medication-dispense": medicationDispense_arv_medication_dispense,
@@ -2689,6 +2717,13 @@ function medicationDispense_generic_medication_dispense(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR MedicationRequest resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function medicationRequest(type, props) {
     const mappings = {
         "arv-medication-request": medicationRequest_arv_medication_request,
@@ -3980,6 +4015,13 @@ function medicationRequest_tpt_medication_request(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR Medication resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function medication(type, props) {
     const mappings = {
         "arv-regimen-medication": medication_arv_regimen_medication,
@@ -4446,6 +4488,13 @@ function medication_tpt_medication(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR CarePlan resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function carePlan(type, props) {
     const mappings = {
         "art-follow-up-careplan": carePlan_art_follow_up_careplan,
@@ -5543,6 +5592,13 @@ function carePlan_tpt_careplan(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR RelatedPerson resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function relatedPerson(type, props) {
     const mappings = {
         "related-person": relatedPerson_related_person
@@ -5807,6 +5863,13 @@ function relatedPerson_related_person(props) {
     return resource;
 }
 
+/**
+  * Create a FHIR Observation resource.
+  * @public
+  * @function
+  * @param {string} type - the profile id for the resource variant
+  * @param props - properties to apply to the resource
+ */
 export function observation(type, props) {
     const mappings = {
         "active-tb-observation": observation_active_tb_observation,

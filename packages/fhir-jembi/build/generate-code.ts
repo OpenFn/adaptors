@@ -33,6 +33,7 @@ const generateCode = (schema, mappings) => {
       for (const profile of schema[type]) {
         const overriddes = Object.assign({}, mappings[type].any, mappings[type][profile.id])
         const name = getTypeName(profile);
+
         statements.push(generateBuilder(name, profile, overriddes));
       }
     }
@@ -48,6 +49,15 @@ export default generateCode;
 // TODO this isn't pretty but it works
 // Note that I really need to standardize name builders for these things
 const generateEntry = (resourceType: string, variants: Schema[]) => {
+  const comment = parse(`/**
+  * Create a FHIR ${resourceType} resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
+ */
+`)
+
   const map = b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier('mappings'),
@@ -63,20 +73,24 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
       )
     ),
   ]);
-
   // TODO handle errors for invalid types
   const mapper = parse(`
-      return mappings[type](props)
-    `);
-
-  return b.exportDeclaration(
+    return mappings[type](props)
+`);
+    
+  const ex = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
       [b.identifier('type'), b.identifier(INPUT_NAME)],
       b.blockStatement([map, ...mapper.program.body])
-    )
+    ),
   );
+  
+  ex.comments = comment.program.comments;
+  ex.comments[0].leading = true;
+    
+  return ex;
 };
 
 const generateBuilder = (resourceName, schema, mappings) => {
