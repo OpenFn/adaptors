@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 5.0.4
+
+### Patch Changes
+
+- d3ac969: use reject instead of throwwq
+
 ## 5.0.3
 
 ### Patch Changes
