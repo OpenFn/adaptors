@@ -84,11 +84,7 @@ export function execute(...operations) {
       createConnection,
       ...operations,
       cleanupState
-    )({ ...initialState, ...state }).catch(e => {
-      console.error(e);
-      console.error('Unhandled error in the operations. Exiting process.');
-      process.exit(1);
-    });
+    )({ ...initialState, ...state });
   };
 }
 
