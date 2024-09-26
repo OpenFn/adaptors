@@ -1,13 +1,17 @@
 # language-fhir-ndr-et <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the
-FHIR API for NDR Ethopia.
+An OpenFn **_adaptor_** for building integration jobs for use with the FHIR API
+for NDR Ethopia.
 
 ## Documentation
 
 This adaptor is largely auto-generated from the spec at
 https://build.fhir.org/ig/jembi/ethiopia-hiv/branches/master/definitions.json.zip.
 See below for more details about that.
+
+We **strongly** recommend not editing generated source files by hand! Better to
+update the spec, mappings, or code generation rules. Otherwise your changes will
+be lost.
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/fhir-ndr-et-docs)
 for full technical documentation.
@@ -25,6 +29,9 @@ builder functions and typings, but not generate all the other adaptor stuff,
 like docs and dist.
 
 Run `pnpm build` to generate source AND build the actual adaptor.
+
+The first time the source build runs, a new "spec" file will be downloaded. To
+force a new download (ie to update the spec) delete `./spec/spec.json`
 
 ## How to use
 
@@ -61,19 +68,19 @@ thing.
 See Resources.tests.js for some examples of creating the supported resources
 from inputs.
 
-As well as the builders, the adaptor also exports util functions to make it easy
-to create references, codeableconcepts, codings and so on.
+As well as the builders, the adaptor also exports util functions to make it a
+bit easier to create references, codeableconcepts, codings and so on.
 
 So you can do stuff like this:
 
-```
+```js
 fn(() => {
   const encounter = builders.encounter('target-facility-encounter', {
     id,
     subject: util.reference('some-resource-id'),
     class: util.coding([value, system]),
   });
-})
+});
 ```
 
 ## Code Generation
@@ -100,20 +107,19 @@ The schema contains a simple expression of rules that our builder function will
 need to apply. It looks a bit like this:
 
 ```json
-  {
-    "id": "arv-regimen-medication",
-    "type": "Medication",
-    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication",
-    "props": {
-      "id": {
-        "type": "string",
-        "isArray": false,
-        "desc": "Logical id of this artifact",
-        "isComposite": false,
-        "defaults": {}
-      }
-      // ...
+{
+  "id": "arv-regimen-medication",
+  "type": "Medication",
+  "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication",
+  "props": {
+    "id": {
+      "type": "string",
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false,
+      "defaults": {}
     }
+    // ...
   }
 }
 ```

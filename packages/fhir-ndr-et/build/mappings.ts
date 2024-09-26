@@ -17,11 +17,14 @@
  */
 
 export default {
-  Encounter: {
-    any: {},
-  },
+  // Every resource type here will have builders generated for it
+  Encounter: {},
   Patient: {
+    // This is where we specify rules for different profiles
+    // Stuff under the special key "any" will apply to all profiles
     any: {
+      // Here we provide mapping rules per property
+
       // manually map the `religion` key to the patient.religion extension
       religion: {
         type: 'CodeableConcept',
@@ -36,6 +39,7 @@ export default {
   CarePlan: {},
   RelatedPerson: {},
   Observation: {
+    // For observations, we include a bunch of specfific mapping defaults
     // The schema doesn't include text in the codes
     // so we have to manually set each one here
     'arv-change-category-type-observation': {
