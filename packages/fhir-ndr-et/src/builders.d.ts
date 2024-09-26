@@ -275,7 +275,6 @@ type Encounter_entry_from_outside_target_facility_encounter_Props = {
      * Another Encounter this encounter is part of
      *  */
     partOf: Reference;
-    any: any;
 };
 
 type Encounter_target_facility_encounter_Props = {
@@ -608,7 +607,6 @@ type Encounter_target_facility_encounter_Props = {
      * Another Encounter this encounter is part of
      *  */
     partOf: Reference;
-    any: any;
 };
 
 type Encounter_variants = "entry-from-outside-target-facility-encounter" | "target-facility-encounter";
@@ -899,7 +897,7 @@ type Patient_patient_Props = {
          *  */
         type: string;
     };
-    any: any;
+    religion: CodeableConcept;
 };
 
 type Patient_variants = "patient";
@@ -4899,12 +4897,6 @@ type Observation_active_tb_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_alt_ast_observation_Props = {
@@ -5120,12 +5112,6 @@ type Observation_alt_ast_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_alternate_tb_prophylaxis_type_observation_Props = {
@@ -5362,12 +5348,6 @@ type Observation_alternate_tb_prophylaxis_type_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_alternate_tpt_at_follow_up_observation_Props = {
@@ -5583,12 +5563,6 @@ type Observation_alternate_tpt_at_follow_up_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_art_eligibility_status_observation_Props = {
@@ -5804,12 +5778,6 @@ type Observation_art_eligibility_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_art_followup_status_observation_Props = {
@@ -6029,12 +5997,6 @@ type Observation_art_followup_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_art_followup_stopped_reasons_observation_Props = {
@@ -6254,12 +6216,6 @@ type Observation_art_followup_stopped_reasons_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_art_not_started_plan_next_step_observation_Props = {
@@ -6475,12 +6431,6 @@ type Observation_art_not_started_plan_next_step_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_adherence_observation_Props = {
@@ -6696,12 +6646,6 @@ type Observation_arv_adherence_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_change_category_type_observation_Props = {
@@ -6917,12 +6861,6 @@ type Observation_arv_change_category_type_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_poor_adherence_reasons_observation_Props = {
@@ -7142,12 +7080,6 @@ type Observation_arv_poor_adherence_reasons_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_regimen_change_reason_observation_Props = {
@@ -7367,12 +7299,6 @@ type Observation_arv_regimen_change_reason_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_regimen_changed_observation_Props = {
@@ -7588,12 +7514,6 @@ type Observation_arv_regimen_changed_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_arv_regimen_side_effects_observation_Props = {
@@ -7813,12 +7733,6 @@ type Observation_arv_regimen_side_effects_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_assessed_for_pain_observation_Props = {
@@ -8034,12 +7948,6 @@ type Observation_assessed_for_pain_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_blood_pressure_Props = {
@@ -8255,12 +8163,6 @@ type Observation_blood_pressure_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_bmi_observation_Props = {
@@ -8476,12 +8378,6 @@ type Observation_bmi_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_breastfeeding_status_observation_Props = {
@@ -8697,12 +8593,6 @@ type Observation_breastfeeding_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cd4_absolute_observation_Props = {
@@ -8918,12 +8808,6 @@ type Observation_cd4_absolute_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cd4_percentage_observation_Props = {
@@ -9139,12 +9023,6 @@ type Observation_cd4_percentage_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_accepted_observation_Props = {
@@ -9360,12 +9238,6 @@ type Observation_cervical_cancer_screening_accepted_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_counselling_status_observation_Props = {
@@ -9581,12 +9453,6 @@ type Observation_cervical_cancer_screening_counselling_status_observation_Props 
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_method_observation_Props = {
@@ -9802,12 +9668,6 @@ type Observation_cervical_cancer_screening_method_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_observation_Props = {
@@ -10023,12 +9883,6 @@ type Observation_cervical_cancer_screening_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_result_observation_Props = {
@@ -10244,12 +10098,6 @@ type Observation_cervical_cancer_screening_result_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_screening_type_observation_Props = {
@@ -10465,12 +10313,6 @@ type Observation_cervical_cancer_screening_type_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cervical_cancer_treatment_received_observation_Props = {
@@ -10686,12 +10528,6 @@ type Observation_cervical_cancer_treatment_received_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_children_developmental_milestone_observation_Props = {
@@ -10907,12 +10743,6 @@ type Observation_children_developmental_milestone_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_confirmed_hiv_positive_observation_Props = {
@@ -11128,12 +10958,6 @@ type Observation_confirmed_hiv_positive_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = {
@@ -11349,12 +11173,6 @@ type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = 
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
@@ -11570,12 +11388,6 @@ type Observation_cotrimoxazole_preventive_therapy_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_counseled_for_hiv_observation_Props = {
@@ -11795,12 +11607,6 @@ type Observation_counseled_for_hiv_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_creatine_observation_Props = {
@@ -12016,12 +11822,6 @@ type Observation_creatine_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_current_art_duration_observation_Props = {
@@ -12237,12 +12037,6 @@ type Observation_current_art_duration_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_delivery_mode_observation_Props = {
@@ -12458,12 +12252,6 @@ type Observation_delivery_mode_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_delivery_place_observation_Props = {
@@ -12679,12 +12467,6 @@ type Observation_delivery_place_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_differentiated_service_delivery_observation_Props = {
@@ -12900,12 +12682,6 @@ type Observation_differentiated_service_delivery_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_disclosure_status_observation_Props = {
@@ -13121,12 +12897,6 @@ type Observation_disclosure_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_edema_observation_Props = {
@@ -13342,12 +13112,6 @@ type Observation_edema_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_elicited_index_case_contacts_observation_Props = {
@@ -13563,12 +13327,6 @@ type Observation_elicited_index_case_contacts_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_enhanced_adherence_counselling_observation_Props = {
@@ -13784,12 +13542,6 @@ type Observation_enhanced_adherence_counselling_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_estimated_delivery_date_observation_Props = {
@@ -14005,12 +13757,6 @@ type Observation_estimated_delivery_date_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_family_member_hiv_status_observation_Props = {
@@ -14226,12 +13972,6 @@ type Observation_family_member_hiv_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_family_planning_method_observation_Props = {
@@ -14451,12 +14191,6 @@ type Observation_family_planning_method_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_fluconazole_preventive_therapy_observation_Props = {
@@ -14672,12 +14406,6 @@ type Observation_fluconazole_preventive_therapy_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_future_pregnancy_plans_observation_Props = {
@@ -14893,12 +14621,6 @@ type Observation_future_pregnancy_plans_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_generic_observation_Props = {
@@ -15114,12 +14836,6 @@ type Observation_generic_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_head_circumference_observation_Props = {
@@ -15335,12 +15051,6 @@ type Observation_head_circumference_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_health_status_observation_Props = {
@@ -15556,12 +15266,6 @@ type Observation_health_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_heart_rate_observation_Props = {
@@ -15777,12 +15481,6 @@ type Observation_heart_rate_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_height_observation_Props = {
@@ -15998,12 +15696,6 @@ type Observation_height_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hgb_observation_Props = {
@@ -16219,12 +15911,6 @@ type Observation_hgb_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_highest_education_observation_Props = {
@@ -16440,12 +16126,6 @@ type Observation_highest_education_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_prevention_plan_observation_Props = {
@@ -16665,12 +16345,6 @@ type Observation_hiv_prevention_plan_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_program_final_outcome_known_observation_Props = {
@@ -16890,12 +16564,6 @@ type Observation_hiv_program_final_outcome_known_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_program_final_outcome_observation_Props = {
@@ -17111,12 +16779,6 @@ type Observation_hiv_program_final_outcome_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_program_reason_art_not_started_observation_Props = {
@@ -17332,12 +16994,6 @@ type Observation_hiv_program_reason_art_not_started_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_program_status_observation_Props = {
@@ -17557,12 +17213,6 @@ type Observation_hiv_program_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
@@ -17778,12 +17428,6 @@ type Observation_hiv_status_disclosure_at_enrollment_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_test_results_observation_Props = {
@@ -17999,12 +17643,6 @@ type Observation_hiv_test_results_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_hiv_treatment_prior_enrollment_observation_Props = {
@@ -18220,12 +17858,6 @@ type Observation_hiv_treatment_prior_enrollment_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_inh_at_follow_up_observation_Props = {
@@ -18441,12 +18073,6 @@ type Observation_inh_at_follow_up_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_last_menstrual_period_observation_Props = {
@@ -18662,12 +18288,6 @@ type Observation_last_menstrual_period_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_level_of_pain_observation_Props = {
@@ -18883,12 +18503,6 @@ type Observation_level_of_pain_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_maternal_hiv_status_observation_Props = {
@@ -19104,12 +18718,6 @@ type Observation_maternal_hiv_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_muac_observation_Props = {
@@ -19325,12 +18933,6 @@ type Observation_muac_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_nutritional_screening_result_observation_Props = {
@@ -19546,12 +19148,6 @@ type Observation_nutritional_screening_result_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_nutritional_status_observation_Props = {
@@ -19767,12 +19363,6 @@ type Observation_nutritional_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_nutritional_suppliments_provided_observation_Props = {
@@ -19988,12 +19578,6 @@ type Observation_nutritional_suppliments_provided_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_otz_observation_Props = {
@@ -20213,12 +19797,6 @@ type Observation_otz_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_patient_functional_status_observation_Props = {
@@ -20434,12 +20012,6 @@ type Observation_patient_functional_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_patient_occupation_observation_Props = {
@@ -20655,12 +20227,6 @@ type Observation_patient_occupation_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_patient_who_stage_observation_Props = {
@@ -20876,12 +20442,6 @@ type Observation_patient_who_stage_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_physical_examinations_observation_Props = {
@@ -21097,12 +20657,6 @@ type Observation_physical_examinations_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_pregnancy_status_observation_Props = {
@@ -21318,12 +20872,6 @@ type Observation_pregnancy_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_presenting_symptom_observation_Props = {
@@ -21539,12 +21087,6 @@ type Observation_presenting_symptom_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_reason_eligible_for_art_observation_Props = {
@@ -21764,12 +21306,6 @@ type Observation_reason_eligible_for_art_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_reason_not_eligbile_for_tpt_observation_Props = {
@@ -21985,12 +21521,6 @@ type Observation_reason_not_eligbile_for_tpt_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_resides_in_catchment_area_observation_Props = {
@@ -22206,12 +21736,6 @@ type Observation_resides_in_catchment_area_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_respiratory_rate_observation_Props = {
@@ -22427,12 +21951,6 @@ type Observation_respiratory_rate_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_screened_for_tb_observation_Props = {
@@ -22652,12 +22170,6 @@ type Observation_screened_for_tb_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_target_population_observation_Props = {
@@ -22873,12 +22385,6 @@ type Observation_target_population_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tb_diagnostic_test_result_observation_Props = {
@@ -23094,12 +22600,6 @@ type Observation_tb_diagnostic_test_result_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tb_prophylaxis_type_observation_Props = {
@@ -23315,12 +22815,6 @@ type Observation_tb_prophylaxis_type_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tb_screening_result_observation_Props = {
@@ -23536,12 +23030,6 @@ type Observation_tb_screening_result_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tb_treatment_started_observation_Props = {
@@ -23761,12 +23249,6 @@ type Observation_tb_treatment_started_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tb_treatment_status_observation_Props = {
@@ -23982,12 +23464,6 @@ type Observation_tb_treatment_status_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_temperature_observation_Props = {
@@ -24203,12 +23679,6 @@ type Observation_temperature_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tested_for_hiv_observation_Props = {
@@ -24428,12 +23898,6 @@ type Observation_tested_for_hiv_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_therapeutic_supplementary_food_observation_Props = {
@@ -24649,12 +24113,6 @@ type Observation_therapeutic_supplementary_food_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tpt_eligbility_observation_Props = {
@@ -24870,12 +24328,6 @@ type Observation_tpt_eligbility_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_tpt_started_observation_Props = {
@@ -25091,12 +24543,6 @@ type Observation_tpt_started_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_treatment_completed_observation_Props = {
@@ -25312,12 +24758,6 @@ type Observation_treatment_completed_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_treatment_discontinued_observation_Props = {
@@ -25533,12 +24973,6 @@ type Observation_treatment_discontinued_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_viral_load_count_observation_Props = {
@@ -25754,12 +25188,6 @@ type Observation_viral_load_count_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_viral_load_indication_observation_Props = {
@@ -25975,12 +25403,6 @@ type Observation_viral_load_indication_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_viral_load_performed_observation_Props = {
@@ -26196,12 +25618,6 @@ type Observation_viral_load_performed_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_weight_observation_Props = {
@@ -26417,12 +25833,6 @@ type Observation_weight_observation_Props = {
          *  */
         interpretation: CodeableConcept;
     };
-    arv-change-category-type-observation: any;
-    highest-education-observation: any;
-    patient-occupation-observation: any;
-    target-population-observation: any;
-    arv-regimen-changed-observation: any;
-    arv-regimen-change-reason-observation: any;
 };
 
 type Observation_variants = "active-tb-observation" | "alt-ast-observation" | "alternate-tb-prophylaxis-type-observation" | "alternate-tpt-at-follow-up-observation" | "art-eligibility-status-observation" | "art-followup-status-observation" | "art-followup-stopped-reasons-observation" | "art-not-started-plan-next-step-observation" | "arv-adherence-observation" | "arv-change-category-type-observation" | "arv-poor-adherence-reasons-observation" | "arv-regimen-change-reason-observation" | "arv-regimen-changed-observation" | "arv-regimen-side-effects-observation" | "assessed-for-pain-observation" | "blood-pressure" | "bmi-observation" | "breastfeeding-status-observation" | "cd4-absolute-observation" | "cd4-percentage-observation" | "cervical-cancer-screening-accepted-observation" | "cervical-cancer-screening-counselling-status-observation" | "cervical-cancer-screening-method-observation" | "cervical-cancer-screening-observation" | "cervical-cancer-screening-result-observation" | "cervical-cancer-screening-type-observation" | "cervical-cancer-treatment-received-observation" | "children-developmental-milestone-observation" | "confirmed-hiv-positive-observation" | "cotrimoxazole-preventive-therapy-adherence-observation" | "cotrimoxazole-preventive-therapy-observation" | "counseled-for-hiv-observation" | "creatine-observation" | "current-art-duration-observation" | "delivery-mode-observation" | "delivery-place-observation" | "differentiated-service-delivery-observation" | "disclosure-status-observation" | "edema-observation" | "elicited-index-case-contacts-observation" | "enhanced-adherence-counselling-observation" | "estimated-delivery-date-observation" | "family-member-hiv-status-observation" | "family-planning-method-observation" | "fluconazole-preventive-therapy-observation" | "future-pregnancy-plans-observation" | "generic-observation" | "head-circumference-observation" | "health-status-observation" | "heart-rate-observation" | "height-observation" | "hgb-observation" | "highest-education-observation" | "hiv-prevention-plan-observation" | "hiv-program-final-outcome-known-observation" | "hiv-program-final-outcome-observation" | "hiv-program-reason-art-not-started-observation" | "hiv-program-status-observation" | "hiv-status-disclosure-at-enrollment-observation" | "hiv-test-results-observation" | "hiv-treatment-prior-enrollment-observation" | "inh-at-follow-up-observation" | "last-menstrual-period-observation" | "level-of-pain-observation" | "maternal-hiv-status-observation" | "muac-observation" | "nutritional-screening-result-observation" | "nutritional-status-observation" | "nutritional-suppliments-provided-observation" | "otz-observation" | "patient-functional-status-observation" | "patient-occupation-observation" | "patient-who-stage-observation" | "physical-examinations-observation" | "pregnancy-status-observation" | "presenting-symptom-observation" | "reason-eligible-for-art-observation" | "reason-not-eligbile-for-tpt-observation" | "resides-in-catchment-area-observation" | "respiratory-rate-observation" | "screened-for-tb-observation" | "target-population-observation" | "tb-diagnostic-test-result-observation" | "tb-prophylaxis-type-observation" | "tb-screening-result-observation" | "tb-treatment-started-observation" | "tb-treatment-status-observation" | "temperature-observation" | "tested-for-hiv-observation" | "therapeutic-supplementary-food-observation" | "tpt-eligbility-observation" | "tpt-started-observation" | "treatment-completed-observation" | "treatment-discontinued-observation" | "viral-load-count-observation" | "viral-load-indication-observation" | "viral-load-performed-observation" | "weight-observation";

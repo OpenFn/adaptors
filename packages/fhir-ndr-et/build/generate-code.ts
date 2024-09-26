@@ -31,10 +31,10 @@ const generateCode = (schema, mappings) => {
     if (schema[type]) {
       statements.push(generateEntry(type, schema[type]));
       for (const profile of schema[type]) {
-        const overriddes = Object.assign({}, mappings[type].any, mappings[type][profile.id])
+        const overrides = Object.assign({}, mappings[type].any, mappings[type][profile.id])
         const name = getTypeName(profile);
 
-        statements.push(generateBuilder(name, profile, overriddes));
+        statements.push(generateBuilder(name, profile, overrides));
       }
     }
   }

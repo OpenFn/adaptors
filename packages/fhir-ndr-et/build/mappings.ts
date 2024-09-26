@@ -16,18 +16,12 @@
  * You can prevent a key from being mapped by setting it to false here.
  */
 
-// TODO do mapping rules need to change per variant now?
-// hope not!
-// this is pretty high level
 export default {
   Encounter: {
     any: {},
   },
   Patient: {
     any: {
-      // This should automap now, probably as patientReligion
-      // But it doesn't??
-
       // manually map the `religion` key to the patient.religion extension
       religion: {
         type: 'CodeableConcept',

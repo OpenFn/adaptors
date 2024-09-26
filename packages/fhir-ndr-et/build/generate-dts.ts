@@ -31,23 +31,16 @@ const generateDTS = (schema, mappings) => {
 
   for (const type in mappings) {
     if (schema[type]) {
-      for (const variant of schema[type]) {
-        const name = getTypeName(variant);
-        const typedef = generateType(name, variant, mappings[type]);
+      for (const profile of schema[type]) {
+        const name = getTypeName(profile);
+        const overrides = Object.assign({}, mappings[type].any, mappings[type][profile])
+        const typedef = generateType(name, profile, overrides);
         contents.push(typedef);
-
-        // const fn = generateBuilder(name, variant, mappings[type]);
-        //contents.push(typedef, fn);
       }
 
-      // TODO generate a summary / top function
-      // also only create split types if there are variants,
-      // otherwise its overcomplicated
       contents.push(...generateEntryFuction(type, schema[type]));
     }
   }
-  // const item = contents[1];
-  // console.log(item);
 
   return contents
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
