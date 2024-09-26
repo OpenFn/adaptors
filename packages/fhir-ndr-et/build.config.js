@@ -2,6 +2,6 @@
 export default path => ({
   entry: {
     index: `${path}/src/index.js`,
-    Utils: `${path}/src/Utils.js`,
+    utils: `${path}/src/utils.js`,
   },
 });

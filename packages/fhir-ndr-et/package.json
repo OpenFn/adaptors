@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-fhir-jembi",
-  "version": "0.0.19",
-  "description": "OpenFn fhir-jembi adaptor",
+  "name": "@openfn/language-fhir-ndr-et",
+  "version": "0.1.0",
+  "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",
   "exports": {
     ".": {
@@ -20,9 +20,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && esno build/build.ts && build-adaptor fhir-jembi",
+    "build": "pnpm clean && esno build/build.ts && build-adaptor fhir-ndr-et",
     "build:src": "esno build/build.ts",
-    "build:adaptor": "pnpm build-adaptor fhir-jembi",
+    "build:adaptor": "pnpm build-adaptor fhir-ndr-et",
     "build:schema": "esno build/generate-schema.ts",
     "load-schema": "esno build/fetch-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",

@@ -2,15 +2,15 @@
 // THIS FILE WAS AUTO-GENERATED
 // DO NOT MODIFY OR YOU WILL BE FIRED
 
-import * as util from "./Utils.js";
+import * as util from "./utils.js";
 import _ from "lodash";
 
 /**
   * Create a FHIR Encounter resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function encounter(type, props) {
     const mappings = {
@@ -844,8 +844,8 @@ function encounter_target_facility_encounter(props) {
   * Create a FHIR Patient resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function patient(type, props) {
     const mappings = {
@@ -1252,8 +1252,8 @@ function patient_patient(props) {
   * Create a FHIR MedicationAdministration resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function medicationAdministration(type, props) {
     const mappings = {
@@ -1869,8 +1869,8 @@ function medicationAdministration_fluconazole_preventive_therapy_medication_admi
   * Create a FHIR MedicationDispense resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function medicationDispense(type, props) {
     const mappings = {
@@ -2721,8 +2721,8 @@ function medicationDispense_generic_medication_dispense(props) {
   * Create a FHIR MedicationRequest resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function medicationRequest(type, props) {
     const mappings = {
@@ -4019,8 +4019,8 @@ function medicationRequest_tpt_medication_request(props) {
   * Create a FHIR Medication resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function medication(type, props) {
     const mappings = {
@@ -4492,8 +4492,8 @@ function medication_tpt_medication(props) {
   * Create a FHIR CarePlan resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function carePlan(type, props) {
     const mappings = {
@@ -5596,8 +5596,8 @@ function carePlan_tpt_careplan(props) {
   * Create a FHIR RelatedPerson resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function relatedPerson(type, props) {
     const mappings = {
@@ -5867,8 +5867,8 @@ function relatedPerson_related_person(props) {
   * Create a FHIR Observation resource.
   * @public
   * @function
-  * @param {string} type - the profile id for the resource variant
-  * @param props - properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
  */
 export function observation(type, props) {
     const mappings = {

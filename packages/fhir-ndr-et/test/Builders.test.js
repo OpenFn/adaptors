@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 // Note that we test against the build here
 import * as builders from '../src/builders';
-import * as util from '../src/Utils';
+import * as util from '../src/utils';
 import output from './fixtures/output';
 import input from './fixtures/input';
 

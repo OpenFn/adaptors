@@ -35,8 +35,8 @@ const generate = async () => {
   const globals = await readFile('src/globals.d.ts', 'utf8');
   await writeFile('types/globals.d.ts', withDisclaimer(globals));
 
-  // This too
-  const utils = await readFile('src/Utils.d.ts', 'utf8');
-  await writeFile('types/Utils.d.ts', withDisclaimer(utils));
+  // // This too
+  // const utils = await readFile('src/utils.d.ts', 'utf8');
+  // await writeFile('types/utils.d.ts', withDisclaimer(utils));
 };
 generate();

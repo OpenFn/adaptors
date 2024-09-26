@@ -13,7 +13,7 @@ const generateCode = (schema, mappings) => {
   statements.push(
     b.importDeclaration(
       [b.importNamespaceSpecifier(b.identifier('util'))],
-      b.stringLiteral('./Utils.js')
+      b.stringLiteral('./utils.js')
     )
   );
   statements.push(

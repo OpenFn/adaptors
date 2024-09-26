@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import * as builders from '../src/builders';
-import * as util from '../src/Utils';
+import * as util from '../src/utils';
 
 import fixtures from './fixtures';
 

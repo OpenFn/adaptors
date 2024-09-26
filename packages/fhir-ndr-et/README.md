@@ -1,7 +1,7 @@
-# language-fhir-jembi <img src='./assets/square.png' width="30" height="30"/>
+# language-fhir-ndr-et <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
-fhir-jembi API.
+FHIR API for NDR Ethopia.
 
 ## Documentation
 
@@ -9,13 +9,13 @@ This adaptor is largely auto-generated from the spec at
 https://build.fhir.org/ig/jembi/ethiopia-hiv/branches/master/definitions.json.zip.
 See below for more details about that.
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/fhir-jembi-docs)
+View the [docs site](https://docs.openfn.org/adaptors/packages/fhir-ndr-et-docs)
 for full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-jembi-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-ndr-et-configuration-schema/)
 for required and optional `configuration` properties.
 
 ## Building
@@ -38,7 +38,7 @@ this:
 fn(() => {
   const encounter = builders.encounter('target-facility-encounter', {
     id,
-    /* add props as neede*/
+    /* add props as needed */
   });
 })
 ```
@@ -148,7 +148,7 @@ code.
 Using the schema information and mapping overrides, we generate code statements
 to take the input data passed as the second argument, and apply it smartly to a
 new FHIR resource, which we finally return. We lean heavily on the util
-functions in `src/Utils.js` to simplify this.
+functions in `src/utils.js` to simplify this.
 
 Once we've got our code, we have to generate matching TypeScript definitions for
 each builder. This ensures that we get code assist and intellisense on our
