@@ -30,9 +30,10 @@ const generateCode = (schema, mappings) => {
 
     if (schema[type]) {
       statements.push(generateEntry(type, schema[type]));
-      for (const variant of schema[type]) {
-        const name = getTypeName(variant);
-        statements.push(generateBuilder(name, variant, mappings[type]));
+      for (const profile of schema[type]) {
+        const overriddes = Object.assign({}, mappings[type].any, mappings[type][profile.id])
+        const name = getTypeName(profile);
+        statements.push(generateBuilder(name, profile, overriddes));
       }
     }
   }
@@ -118,7 +119,7 @@ const mapProps = (schema, mappings) => {
         // maybe it's ok just to assign the top object hey?
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
-        props.push(mapTypeDef(key, spec));
+        props.push(mapTypeDef(key, mappings[key], spec));
       } else {
         switch (spec.type) {
           case 'string':
@@ -138,7 +139,7 @@ const mapProps = (schema, mappings) => {
             // console.warn(
             //   `WARNING: using simple mapping for ${schema.id}.${key}`
             // );
-            props.push(mapSimpleProp(key, mappings[key]));
+            props.push(mapSimpleProp(key, mappings[key], spec));
           // TODO: warn unused type
         }
       }
@@ -205,6 +206,9 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
 const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
+  if (propName === 'code') {
+    
+  }
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
@@ -219,7 +223,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 // map a type def (ie, a nested object) property by property
 // TODO this is designed to handle singletone and array types
 // The array stuff adds a lot of complication and I need tests on both formats
-const mapTypeDef = (propName: string, schema: Schema) => {
+const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   const statements: any[] = [];
 
   statements.push(
@@ -364,7 +368,7 @@ const mapTypeDef = (propName: string, schema: Schema) => {
   }
 
   let elseStmnt;
-  const d = addDefaults(propName, undefined, schema);
+  const d = addDefaults(propName, mapping, schema);
   if (d) {
     elseStmnt = d;
   }

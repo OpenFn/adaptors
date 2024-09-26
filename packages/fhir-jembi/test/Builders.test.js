@@ -318,7 +318,7 @@ describe('Observation', () => {
   it('should default code', () => {
     const o = builders.observation('patient-occupation-observation', {})
 
-    expect(o.code).to.eql({ "coding": [{ "system": "http://loinc.org", "code": "85658-3" }] })
+    expect(o.code).to.eql({ "coding": [{ "system": "http://loinc.org", "code": "85658-3" }], "text": "Occupation" })
   })
 
   it('should default category', () => {

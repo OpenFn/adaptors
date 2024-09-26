@@ -16,7 +16,8 @@ export default {
         "system": "http://snomed.info/sct",
         "code": "182838006"
       }
-    ]
+    ],
+    "text" : "ARV regimen change"
   },
   "subject": {
     "reference": "Patient/30119"

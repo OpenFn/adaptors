@@ -15,7 +15,8 @@ export default {
         "system": "http://snomed.info/sct",
         "code": "385436007"
       }
-    ]
+    ],
+    "text" : "Target population"
   },
   "subject": {
     "reference": "b335d5b78135460d92b34a856d998493"

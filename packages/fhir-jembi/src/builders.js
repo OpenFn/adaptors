@@ -1234,6 +1234,4579 @@ function patient_patient(props) {
     return resource;
 }
 
+export function medicationAdministration(type, props) {
+    const mappings = {
+        "arv-medication-administration": medicationAdministration_arv_medication_administration,
+        "cotrimoxazole-preventive-therapy-medication-administration": medicationAdministration_cotrimoxazole_preventive_therapy_medication_administration,
+        "fluconazole-preventive-therapy-medication-administration": medicationAdministration_fluconazole_preventive_therapy_medication_administration
+    };
+
+    return mappings[type](props)
+}
+
+function medicationAdministration_arv_medication_administration(props) {
+    const resource = {
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiates)) {
+        resource.instantiates = props.instantiates;
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        resource.reasonCode = props.reasonCode;
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.request)) {
+        resource.request = util.reference(props.request);
+    }
+
+    if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosage)) {
+        let src = props.dosage;
+        let dosage = {};
+
+        if (!_.isNil(src.id)) {
+            dosage.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dosage.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            dosage.text = src.text;
+        } else
+            {}
+
+        if (!_.isNil(src.site)) {
+            dosage.site = src.site;
+        } else
+            {}
+
+        if (!_.isNil(src.route)) {
+            dosage.route = src.route;
+        } else
+            {}
+
+        if (!_.isNil(src.method)) {
+            dosage.method = src.method;
+        } else
+            {}
+
+        if (!_.isNil(src.dose)) {
+            dosage.dose = src.dose;
+        } else
+            {}
+
+        if (!_.isNil(src.rate)) {
+            dosage.rate = src.rate;
+        } else
+            {}
+
+        resource.dosage = dosage;
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-administration"
+        ]
+    };
+
+    return resource;
+}
+
+function medicationAdministration_cotrimoxazole_preventive_therapy_medication_administration(props) {
+    const resource = {
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiates)) {
+        resource.instantiates = props.instantiates;
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        resource.reasonCode = props.reasonCode;
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.request)) {
+        resource.request = util.reference(props.request);
+    }
+
+    if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosage)) {
+        let src = props.dosage;
+        let dosage = {};
+
+        if (!_.isNil(src.id)) {
+            dosage.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dosage.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            dosage.text = src.text;
+        } else
+            {}
+
+        if (!_.isNil(src.site)) {
+            dosage.site = src.site;
+        } else
+            {}
+
+        if (!_.isNil(src.route)) {
+            dosage.route = src.route;
+        } else
+            {}
+
+        if (!_.isNil(src.method)) {
+            dosage.method = src.method;
+        } else
+            {}
+
+        if (!_.isNil(src.dose)) {
+            dosage.dose = src.dose;
+        } else
+            {}
+
+        if (!_.isNil(src.rate)) {
+            dosage.rate = src.rate;
+        } else
+            {}
+
+        resource.dosage = dosage;
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-administration"
+        ]
+    };
+
+    return resource;
+}
+
+function medicationAdministration_fluconazole_preventive_therapy_medication_administration(props) {
+    const resource = {
+        resourceType: "MedicationAdministration",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiates)) {
+        resource.instantiates = props.instantiates;
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        resource.reasonCode = props.reasonCode;
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.request)) {
+        resource.request = util.reference(props.request);
+    }
+
+    if (!_.isNil(props.device)) {
+        if (!Array.isArray(props.device)) { props.device = [props.device]; }
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosage)) {
+        let src = props.dosage;
+        let dosage = {};
+
+        if (!_.isNil(src.id)) {
+            dosage.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dosage.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            dosage.text = src.text;
+        } else
+            {}
+
+        if (!_.isNil(src.site)) {
+            dosage.site = src.site;
+        } else
+            {}
+
+        if (!_.isNil(src.route)) {
+            dosage.route = src.route;
+        } else
+            {}
+
+        if (!_.isNil(src.method)) {
+            dosage.method = src.method;
+        } else
+            {}
+
+        if (!_.isNil(src.dose)) {
+            dosage.dose = src.dose;
+        } else
+            {}
+
+        if (!_.isNil(src.rate)) {
+            dosage.rate = src.rate;
+        } else
+            {}
+
+        resource.dosage = dosage;
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/fluconazole-preventive-therapy-medication-administration"
+        ]
+    };
+
+    return resource;
+}
+
+export function medicationDispense(type, props) {
+    const mappings = {
+        "arv-medication-dispense": medicationDispense_arv_medication_dispense,
+        "cotrimoxazole-preventive-therapy-medication-dispense": medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense,
+        "generic-medication-dispense": medicationDispense_generic_medication_dispense
+    };
+
+    return mappings[type](props)
+}
+
+function medicationDispense_arv_medication_dispense(props) {
+    const resource = {
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        util.composite(resource, "statusReason", props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.location)) {
+        resource.location = util.reference(props.location);
+    }
+
+    if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
+        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = props.type;
+    }
+
+    if (!_.isNil(props.quantity)) {
+        let src = props.quantity;
+        let quantity = {};
+
+        if (!_.isNil(src.id)) {
+            quantity.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            quantity.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            quantity.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            quantity.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            quantity.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            quantity.code = src.code;
+        } else
+            {}
+
+        quantity = util.mapSystems(quantity);
+        resource.quantity = quantity;
+    }
+
+    if (!_.isNil(props.daysSupply)) {
+        let src = props.daysSupply;
+        let daysSupply = {};
+
+        if (!_.isNil(src.id)) {
+            daysSupply.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            daysSupply.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            daysSupply.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            daysSupply.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            daysSupply.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            daysSupply.code = src.code;
+        } else
+            {}
+
+        daysSupply = util.mapSystems(daysSupply);
+        resource.daysSupply = daysSupply;
+    }
+
+    if (!_.isNil(props.whenPrepared)) {
+        resource.whenPrepared = props.whenPrepared;
+    }
+
+    if (!_.isNil(props.whenHandedOver)) {
+        resource.whenHandedOver = props.whenHandedOver;
+    }
+
+    if (!_.isNil(props.destination)) {
+        resource.destination = util.reference(props.destination);
+    }
+
+    if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
+        resource.receiver = util.reference(props.receiver);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.wasSubstituted)) {
+            substitution.wasSubstituted = src.wasSubstituted;
+        } else
+            {}
+
+        if (!_.isNil(src.type)) {
+            substitution.type = src.type;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        if (!_.isNil(src.responsibleParty)) {
+            substitution.responsibleParty = src.responsibleParty;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-dispense"]
+    };
+
+    return resource;
+}
+
+function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense(props) {
+    const resource = {
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        util.composite(resource, "statusReason", props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.location)) {
+        resource.location = util.reference(props.location);
+    }
+
+    if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
+        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = props.type;
+    }
+
+    if (!_.isNil(props.quantity)) {
+        let src = props.quantity;
+        let quantity = {};
+
+        if (!_.isNil(src.id)) {
+            quantity.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            quantity.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            quantity.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            quantity.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            quantity.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            quantity.code = src.code;
+        } else
+            {}
+
+        quantity = util.mapSystems(quantity);
+        resource.quantity = quantity;
+    }
+
+    if (!_.isNil(props.daysSupply)) {
+        let src = props.daysSupply;
+        let daysSupply = {};
+
+        if (!_.isNil(src.id)) {
+            daysSupply.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            daysSupply.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            daysSupply.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            daysSupply.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            daysSupply.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            daysSupply.code = src.code;
+        } else
+            {}
+
+        daysSupply = util.mapSystems(daysSupply);
+        resource.daysSupply = daysSupply;
+    }
+
+    if (!_.isNil(props.whenPrepared)) {
+        resource.whenPrepared = props.whenPrepared;
+    }
+
+    if (!_.isNil(props.whenHandedOver)) {
+        resource.whenHandedOver = props.whenHandedOver;
+    }
+
+    if (!_.isNil(props.destination)) {
+        resource.destination = util.reference(props.destination);
+    }
+
+    if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
+        resource.receiver = util.reference(props.receiver);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.wasSubstituted)) {
+            substitution.wasSubstituted = src.wasSubstituted;
+        } else
+            {}
+
+        if (!_.isNil(src.type)) {
+            substitution.type = src.type;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        if (!_.isNil(src.responsibleParty)) {
+            substitution.responsibleParty = src.responsibleParty;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-dispense"
+        ]
+    };
+
+    return resource;
+}
+
+function medicationDispense_generic_medication_dispense(props) {
+    const resource = {
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        util.composite(resource, "statusReason", props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = util.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let performer = {};
+
+            if (!_.isNil(item.id)) {
+                performer.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                performer.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.function)) {
+                performer.function = item.function;
+            } else
+                {}
+
+            if (!_.isNil(item.actor)) {
+                performer.actor = item.actor;
+            } else
+                {}
+
+            resource.performer.push(performer);
+        }
+    }
+
+    if (!_.isNil(props.location)) {
+        resource.location = util.reference(props.location);
+    }
+
+    if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
+        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = props.type;
+    }
+
+    if (!_.isNil(props.quantity)) {
+        let src = props.quantity;
+        let quantity = {};
+
+        if (!_.isNil(src.id)) {
+            quantity.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            quantity.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            quantity.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            quantity.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            quantity.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            quantity.code = src.code;
+        } else
+            {}
+
+        quantity = util.mapSystems(quantity);
+        resource.quantity = quantity;
+    }
+
+    if (!_.isNil(props.daysSupply)) {
+        let src = props.daysSupply;
+        let daysSupply = {};
+
+        if (!_.isNil(src.id)) {
+            daysSupply.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.value)) {
+            daysSupply.value = src.value;
+        } else
+            {}
+
+        if (!_.isNil(src.comparator)) {
+            daysSupply.comparator = src.comparator;
+        } else
+            {}
+
+        if (!_.isNil(src.unit)) {
+            daysSupply.unit = src.unit;
+        } else
+            {}
+
+        if (!_.isNil(src.system)) {
+            daysSupply.system = src.system;
+        } else
+            {}
+
+        if (!_.isNil(src.code)) {
+            daysSupply.code = src.code;
+        } else
+            {}
+
+        daysSupply = util.mapSystems(daysSupply);
+        resource.daysSupply = daysSupply;
+    }
+
+    if (!_.isNil(props.whenPrepared)) {
+        resource.whenPrepared = props.whenPrepared;
+    }
+
+    if (!_.isNil(props.whenHandedOver)) {
+        resource.whenHandedOver = props.whenHandedOver;
+    }
+
+    if (!_.isNil(props.destination)) {
+        resource.destination = util.reference(props.destination);
+    }
+
+    if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
+        resource.receiver = util.reference(props.receiver);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.wasSubstituted)) {
+            substitution.wasSubstituted = src.wasSubstituted;
+        } else
+            {}
+
+        if (!_.isNil(src.type)) {
+            substitution.type = src.type;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        if (!_.isNil(src.responsibleParty)) {
+            substitution.responsibleParty = src.responsibleParty;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-dispense"
+        ]
+    };
+
+    return resource;
+}
+
+export function medicationRequest(type, props) {
+    const mappings = {
+        "arv-medication-request": medicationRequest_arv_medication_request,
+        "cotrimoxazole-preventive-therapy-medication-request": medicationRequest_cotrimoxazole_preventive_therapy_medication_request,
+        "generic-medication-request": medicationRequest_generic_medication_request,
+        "tpt-medication-request": medicationRequest_tpt_medication_request
+    };
+
+    return mappings[type](props)
+}
+
+function medicationRequest_arv_medication_request(props) {
+    const resource = {
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        let src = props.identifier;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.identifier = [];
+
+        for (let item of src) {
+            let identifier = {};
+
+            if (!_.isNil(item.id)) {
+                identifier.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                identifier.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                identifier.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.system)) {
+                identifier.system = item.system;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                identifier.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                identifier.period = item.period;
+            } else
+                {}
+
+            if (!_.isNil(item.assigner)) {
+                identifier.assigner = item.assigner;
+            } else
+                {}
+
+            identifier = util.mapSystems(identifier);
+            resource.identifier.push(identifier);
+        }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = props.priority;
+    }
+
+    if (!_.isNil(props.doNotPerform)) {
+        resource.doNotPerform = props.doNotPerform;
+    }
+
+    if (!_.isNil(props.reported)) {
+        util.composite(resource, "reported", props.reported);
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.authoredOn)) {
+        resource.authoredOn = props.authoredOn;
+    }
+
+    if (!_.isNil(props.requester)) {
+        resource.requester = util.reference(props.requester);
+    }
+
+    if (!_.isNil(props.performer)) {
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = props.performerType;
+    }
+
+    if (!_.isNil(props.recorder)) {
+        resource.recorder = util.reference(props.recorder);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        let src = props.reasonCode;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.reasonCode = [];
+
+        for (let item of src) {
+            let reasonCode = {};
+
+            if (!_.isNil(item.id)) {
+                reasonCode.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                reasonCode.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                reasonCode.text = item.text;
+            } else
+                {}
+
+            resource.reasonCode.push(reasonCode);
+        }
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.groupIdentifier)) {
+        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+    }
+
+    if (!_.isNil(props.courseOfTherapyType)) {
+        resource.courseOfTherapyType = props.courseOfTherapyType;
+    }
+
+    if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
+        resource.insurance = util.reference(props.insurance);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.dispenseRequest)) {
+        let src = props.dispenseRequest;
+        let dispenseRequest = {};
+
+        if (!_.isNil(src.id)) {
+            dispenseRequest.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dispenseRequest.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.initialFill)) {
+            dispenseRequest.initialFill = src.initialFill;
+        } else
+            {}
+
+        if (!_.isNil(src.dispenseInterval)) {
+            dispenseRequest.dispenseInterval = src.dispenseInterval;
+        } else
+            {}
+
+        if (!_.isNil(src.validityPeriod)) {
+            dispenseRequest.validityPeriod = src.validityPeriod;
+        } else
+            {}
+
+        if (!_.isNil(src.numberOfRepeatsAllowed)) {
+            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
+        } else
+            {}
+
+        if (!_.isNil(src.quantity)) {
+            dispenseRequest.quantity = src.quantity;
+        } else
+            {}
+
+        if (!_.isNil(src.expectedSupplyDuration)) {
+            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
+        } else
+            {}
+
+        if (!_.isNil(src.performer)) {
+            dispenseRequest.performer = src.performer;
+        } else
+            {}
+
+        resource.dispenseRequest = dispenseRequest;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.allowed)) {
+            substitution.allowed = src.allowed;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.priorPrescription)) {
+        resource.priorPrescription = util.reference(props.priorPrescription);
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-request"]
+    };
+
+    return resource;
+}
+
+function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(props) {
+    const resource = {
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        let src = props.identifier;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.identifier = [];
+
+        for (let item of src) {
+            let identifier = {};
+
+            if (!_.isNil(item.id)) {
+                identifier.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                identifier.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                identifier.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.system)) {
+                identifier.system = item.system;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                identifier.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                identifier.period = item.period;
+            } else
+                {}
+
+            if (!_.isNil(item.assigner)) {
+                identifier.assigner = item.assigner;
+            } else
+                {}
+
+            identifier = util.mapSystems(identifier);
+            resource.identifier.push(identifier);
+        }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = props.priority;
+    }
+
+    if (!_.isNil(props.doNotPerform)) {
+        resource.doNotPerform = props.doNotPerform;
+    }
+
+    if (!_.isNil(props.reported)) {
+        util.composite(resource, "reported", props.reported);
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.authoredOn)) {
+        resource.authoredOn = props.authoredOn;
+    }
+
+    if (!_.isNil(props.requester)) {
+        resource.requester = util.reference(props.requester);
+    }
+
+    if (!_.isNil(props.performer)) {
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = props.performerType;
+    }
+
+    if (!_.isNil(props.recorder)) {
+        resource.recorder = util.reference(props.recorder);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        let src = props.reasonCode;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.reasonCode = [];
+
+        for (let item of src) {
+            let reasonCode = {};
+
+            if (!_.isNil(item.id)) {
+                reasonCode.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                reasonCode.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                reasonCode.text = item.text;
+            } else
+                {}
+
+            resource.reasonCode.push(reasonCode);
+        }
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.groupIdentifier)) {
+        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+    }
+
+    if (!_.isNil(props.courseOfTherapyType)) {
+        resource.courseOfTherapyType = props.courseOfTherapyType;
+    }
+
+    if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
+        resource.insurance = util.reference(props.insurance);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.dispenseRequest)) {
+        let src = props.dispenseRequest;
+        let dispenseRequest = {};
+
+        if (!_.isNil(src.id)) {
+            dispenseRequest.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dispenseRequest.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.initialFill)) {
+            dispenseRequest.initialFill = src.initialFill;
+        } else
+            {}
+
+        if (!_.isNil(src.dispenseInterval)) {
+            dispenseRequest.dispenseInterval = src.dispenseInterval;
+        } else
+            {}
+
+        if (!_.isNil(src.validityPeriod)) {
+            dispenseRequest.validityPeriod = src.validityPeriod;
+        } else
+            {}
+
+        if (!_.isNil(src.numberOfRepeatsAllowed)) {
+            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
+        } else
+            {}
+
+        if (!_.isNil(src.quantity)) {
+            dispenseRequest.quantity = src.quantity;
+        } else
+            {}
+
+        if (!_.isNil(src.expectedSupplyDuration)) {
+            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
+        } else
+            {}
+
+        if (!_.isNil(src.performer)) {
+            dispenseRequest.performer = src.performer;
+        } else
+            {}
+
+        resource.dispenseRequest = dispenseRequest;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.allowed)) {
+            substitution.allowed = src.allowed;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.priorPrescription)) {
+        resource.priorPrescription = util.reference(props.priorPrescription);
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-request"
+        ]
+    };
+
+    return resource;
+}
+
+function medicationRequest_generic_medication_request(props) {
+    const resource = {
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        let src = props.identifier;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.identifier = [];
+
+        for (let item of src) {
+            let identifier = {};
+
+            if (!_.isNil(item.id)) {
+                identifier.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                identifier.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                identifier.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.system)) {
+                identifier.system = item.system;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                identifier.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                identifier.period = item.period;
+            } else
+                {}
+
+            if (!_.isNil(item.assigner)) {
+                identifier.assigner = item.assigner;
+            } else
+                {}
+
+            identifier = util.mapSystems(identifier);
+            resource.identifier.push(identifier);
+        }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = props.priority;
+    }
+
+    if (!_.isNil(props.doNotPerform)) {
+        resource.doNotPerform = props.doNotPerform;
+    }
+
+    if (!_.isNil(props.reported)) {
+        util.composite(resource, "reported", props.reported);
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.authoredOn)) {
+        resource.authoredOn = props.authoredOn;
+    }
+
+    if (!_.isNil(props.requester)) {
+        resource.requester = util.reference(props.requester);
+    }
+
+    if (!_.isNil(props.performer)) {
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = props.performerType;
+    }
+
+    if (!_.isNil(props.recorder)) {
+        resource.recorder = util.reference(props.recorder);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        let src = props.reasonCode;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.reasonCode = [];
+
+        for (let item of src) {
+            let reasonCode = {};
+
+            if (!_.isNil(item.id)) {
+                reasonCode.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                reasonCode.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                reasonCode.text = item.text;
+            } else
+                {}
+
+            resource.reasonCode.push(reasonCode);
+        }
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.groupIdentifier)) {
+        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+    }
+
+    if (!_.isNil(props.courseOfTherapyType)) {
+        resource.courseOfTherapyType = props.courseOfTherapyType;
+    }
+
+    if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
+        resource.insurance = util.reference(props.insurance);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.dispenseRequest)) {
+        let src = props.dispenseRequest;
+        let dispenseRequest = {};
+
+        if (!_.isNil(src.id)) {
+            dispenseRequest.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dispenseRequest.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.initialFill)) {
+            dispenseRequest.initialFill = src.initialFill;
+        } else
+            {}
+
+        if (!_.isNil(src.dispenseInterval)) {
+            dispenseRequest.dispenseInterval = src.dispenseInterval;
+        } else
+            {}
+
+        if (!_.isNil(src.validityPeriod)) {
+            dispenseRequest.validityPeriod = src.validityPeriod;
+        } else
+            {}
+
+        if (!_.isNil(src.numberOfRepeatsAllowed)) {
+            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
+        } else
+            {}
+
+        if (!_.isNil(src.quantity)) {
+            dispenseRequest.quantity = src.quantity;
+        } else
+            {}
+
+        if (!_.isNil(src.expectedSupplyDuration)) {
+            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
+        } else
+            {}
+
+        if (!_.isNil(src.performer)) {
+            dispenseRequest.performer = src.performer;
+        } else
+            {}
+
+        resource.dispenseRequest = dispenseRequest;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.allowed)) {
+            substitution.allowed = src.allowed;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.priorPrescription)) {
+        resource.priorPrescription = util.reference(props.priorPrescription);
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-request"
+        ]
+    };
+
+    return resource;
+}
+
+function medicationRequest_tpt_medication_request(props) {
+    const resource = {
+        resourceType: "MedicationRequest",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        let src = props.identifier;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.identifier = [];
+
+        for (let item of src) {
+            let identifier = {};
+
+            if (!_.isNil(item.id)) {
+                identifier.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                identifier.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                identifier.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.system)) {
+                identifier.system = item.system;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                identifier.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                identifier.period = item.period;
+            } else
+                {}
+
+            if (!_.isNil(item.assigner)) {
+                identifier.assigner = item.assigner;
+            } else
+                {}
+
+            identifier = util.mapSystems(identifier);
+            resource.identifier.push(identifier);
+        }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = props.statusReason;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = props.priority;
+    }
+
+    if (!_.isNil(props.doNotPerform)) {
+        resource.doNotPerform = props.doNotPerform;
+    }
+
+    if (!_.isNil(props.reported)) {
+        util.composite(resource, "reported", props.reported);
+    }
+
+    if (!_.isNil(props.medication)) {
+        util.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = util.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.authoredOn)) {
+        resource.authoredOn = props.authoredOn;
+    }
+
+    if (!_.isNil(props.requester)) {
+        resource.requester = util.reference(props.requester);
+    }
+
+    if (!_.isNil(props.performer)) {
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = props.performerType;
+    }
+
+    if (!_.isNil(props.recorder)) {
+        resource.recorder = util.reference(props.recorder);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        let src = props.reasonCode;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.reasonCode = [];
+
+        for (let item of src) {
+            let reasonCode = {};
+
+            if (!_.isNil(item.id)) {
+                reasonCode.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                reasonCode.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                reasonCode.text = item.text;
+            } else
+                {}
+
+            resource.reasonCode.push(reasonCode);
+        }
+    }
+
+    if (!_.isNil(props.reasonReference)) {
+        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
+        resource.reasonReference = util.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.groupIdentifier)) {
+        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+    }
+
+    if (!_.isNil(props.courseOfTherapyType)) {
+        resource.courseOfTherapyType = props.courseOfTherapyType;
+    }
+
+    if (!_.isNil(props.insurance)) {
+        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
+        resource.insurance = util.reference(props.insurance);
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.dosageInstruction)) {
+        resource.dosageInstruction = props.dosageInstruction;
+    }
+
+    if (!_.isNil(props.dispenseRequest)) {
+        let src = props.dispenseRequest;
+        let dispenseRequest = {};
+
+        if (!_.isNil(src.id)) {
+            dispenseRequest.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            dispenseRequest.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.initialFill)) {
+            dispenseRequest.initialFill = src.initialFill;
+        } else
+            {}
+
+        if (!_.isNil(src.dispenseInterval)) {
+            dispenseRequest.dispenseInterval = src.dispenseInterval;
+        } else
+            {}
+
+        if (!_.isNil(src.validityPeriod)) {
+            dispenseRequest.validityPeriod = src.validityPeriod;
+        } else
+            {}
+
+        if (!_.isNil(src.numberOfRepeatsAllowed)) {
+            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
+        } else
+            {}
+
+        if (!_.isNil(src.quantity)) {
+            dispenseRequest.quantity = src.quantity;
+        } else
+            {}
+
+        if (!_.isNil(src.expectedSupplyDuration)) {
+            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
+        } else
+            {}
+
+        if (!_.isNil(src.performer)) {
+            dispenseRequest.performer = src.performer;
+        } else
+            {}
+
+        resource.dispenseRequest = dispenseRequest;
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+        let substitution = {};
+
+        if (!_.isNil(src.id)) {
+            substitution.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            substitution.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.allowed)) {
+            substitution.allowed = src.allowed;
+        } else
+            {}
+
+        if (!_.isNil(src.reason)) {
+            substitution.reason = src.reason;
+        } else
+            {}
+
+        resource.substitution = substitution;
+    }
+
+    if (!_.isNil(props.priorPrescription)) {
+        resource.priorPrescription = util.reference(props.priorPrescription);
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = util.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = util.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication-request"]
+    };
+
+    return resource;
+}
+
+export function medication(type, props) {
+    const mappings = {
+        "arv-regimen-medication": medication_arv_regimen_medication,
+        "oi-medication": medication_oi_medication,
+        "tpt-medication": medication_tpt_medication
+    };
+
+    return mappings[type](props)
+}
+
+function medication_arv_regimen_medication(props) {
+    const resource = {
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.ingredient = [];
+
+        for (let item of src) {
+            let ingredient = {};
+
+            if (!_.isNil(item.id)) {
+                ingredient.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                ingredient.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
+            } else
+                {}
+
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
+            } else
+                {}
+
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
+            } else
+                {}
+
+            resource.ingredient.push(ingredient);
+        }
+    }
+
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
+
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
+
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
+
+        resource.batch = batch;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication"]
+    };
+
+    return resource;
+}
+
+function medication_oi_medication(props) {
+    const resource = {
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.ingredient = [];
+
+        for (let item of src) {
+            let ingredient = {};
+
+            if (!_.isNil(item.id)) {
+                ingredient.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                ingredient.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
+            } else
+                {}
+
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
+            } else
+                {}
+
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
+            } else
+                {}
+
+            resource.ingredient.push(ingredient);
+        }
+    }
+
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
+
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
+
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
+
+        resource.batch = batch;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/oi-medication"]
+    };
+
+    return resource;
+}
+
+function medication_tpt_medication(props) {
+    const resource = {
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.ingredient = [];
+
+        for (let item of src) {
+            let ingredient = {};
+
+            if (!_.isNil(item.id)) {
+                ingredient.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                ingredient.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
+            } else
+                {}
+
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
+            } else
+                {}
+
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
+            } else
+                {}
+
+            resource.ingredient.push(ingredient);
+        }
+    }
+
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
+
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
+
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
+
+        resource.batch = batch;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication"]
+    };
+
+    return resource;
+}
+
+export function carePlan(type, props) {
+    const mappings = {
+        "art-follow-up-careplan": carePlan_art_follow_up_careplan,
+        "cervical-cancer-care-plan": carePlan_cervical_cancer_care_plan,
+        "cotrimoxazole-preventive-therapy-careplan": carePlan_cotrimoxazole_preventive_therapy_careplan,
+        "tb-treatment-careplan": carePlan_tb_treatment_careplan,
+        "tpt-careplan": carePlan_tpt_careplan
+    };
+
+    return mappings[type](props)
+}
+
+function carePlan_art_follow_up_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"art-follow-up-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.nextVisitDate)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
+                    item.nextVisitDate
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.adherence)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence",
+                    item.adherence
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan"]
+    };
+
+    return resource;
+}
+
+function carePlan_cervical_cancer_care_plan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cervical-cancer-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.nextVisitDate)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
+                    item.nextVisitDate
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/cervical-cancer-care-plan"]
+    };
+
+    return resource;
+}
+
+function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cotrimoxazole-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.adherence)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-adherence",
+                    item.adherence
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-careplan"
+        ]
+    };
+
+    return resource;
+}
+
+function carePlan_tb_treatment_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-treatment-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tb-treatment-careplan"]
+    };
+
+    return resource;
+}
+
+function carePlan_tpt_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-preventive-therapy-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-careplan"]
+    };
+
+    return resource;
+}
+
+export function relatedPerson(type, props) {
+    const mappings = {
+        "related-person": relatedPerson_related_person
+    };
+
+    return mappings[type](props)
+}
+
+function relatedPerson_related_person(props) {
+    const resource = {
+        resourceType: "RelatedPerson",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.active)) {
+        resource.active = props.active;
+    }
+
+    if (!_.isNil(props.patient)) {
+        resource.patient = util.reference(props.patient);
+    }
+
+    if (!_.isNil(props.relationship)) {
+        let src = props.relationship;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.relationship = [];
+
+        for (let item of src) {
+            let relationship = {};
+
+            if (!_.isNil(item.id)) {
+                relationship.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                relationship.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                relationship.text = item.text;
+            } else
+                {}
+
+            resource.relationship.push(relationship);
+        }
+    }
+
+    if (!_.isNil(props.name)) {
+        let src = props.name;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.name = [];
+
+        for (let item of src) {
+            let name = {};
+
+            if (!_.isNil(item.id)) {
+                name.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                name.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                name.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.family)) {
+                name.family = item.family;
+            } else
+                {}
+
+            if (!_.isNil(item.given)) {
+                name.given = item.given;
+            } else
+                {}
+
+            if (!_.isNil(item.prefix)) {
+                name.prefix = item.prefix;
+            } else
+                {}
+
+            if (!_.isNil(item.suffix)) {
+                name.suffix = item.suffix;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                name.period = item.period;
+            } else
+                {}
+
+            resource.name.push(name);
+        }
+    }
+
+    if (!_.isNil(props.telecom)) {
+        resource.telecom = props.telecom;
+    }
+
+    if (!_.isNil(props.gender)) {
+        resource.gender = props.gender;
+    }
+
+    if (!_.isNil(props.birthDate)) {
+        resource.birthDate = props.birthDate;
+    }
+
+    if (!_.isNil(props.address)) {
+        let src = props.address;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.address = [];
+
+        for (let item of src) {
+            let address = {};
+
+            if (!_.isNil(item.id)) {
+                address.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                address.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                address.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                address.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.line)) {
+                address.line = item.line;
+            } else
+                {}
+
+            if (!_.isNil(item.city)) {
+                address.city = item.city;
+            } else
+                {}
+
+            if (!_.isNil(item.district)) {
+                address.district = item.district;
+            } else
+                {}
+
+            if (!_.isNil(item.state)) {
+                address.state = item.state;
+            } else
+                {}
+
+            if (!_.isNil(item.postalCode)) {
+                address.postalCode = item.postalCode;
+            } else
+                {}
+
+            if (!_.isNil(item.country)) {
+                address.country = item.country;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                address.period = item.period;
+            } else
+                {}
+
+            resource.address.push(address);
+        }
+    }
+
+    if (!_.isNil(props.photo)) {
+        resource.photo = props.photo;
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.communication)) {
+        let src = props.communication;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.communication = [];
+
+        for (let item of src) {
+            let communication = {};
+
+            if (!_.isNil(item.id)) {
+                communication.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                communication.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.language)) {
+                communication.language = item.language;
+            } else
+                {}
+
+            if (!_.isNil(item.preferred)) {
+                communication.preferred = item.preferred;
+            } else
+                {}
+
+            resource.communication.push(communication);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/related-person"]
+    };
+
+    return resource;
+}
+
 export function observation(type, props) {
     const mappings = {
         "active-tb-observation": observation_active_tb_observation,
@@ -3771,7 +8344,7 @@ function observation_arv_change_category_type_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}],"text":"ARV regimen change"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4287,7 +8860,7 @@ function observation_arv_regimen_change_reason_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL354-2"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL354-2"}],"text":"ARV regimen change reason"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -4545,7 +9118,7 @@ function observation_arv_regimen_changed_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}],"text":"ARV regimen change"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -14835,7 +19408,7 @@ function observation_highest_education_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"82589-3"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"82589-3"}],"text":"Highest level of education"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -19731,7 +24304,7 @@ function observation_patient_occupation_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"85658-3"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"85658-3"}],"text":"Occupation"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -22309,7 +26882,7 @@ function observation_target_population_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"385436007"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"385436007"}],"text":"Target population"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -26596,4308 +31169,6 @@ function observation_weight_observation(props) {
 
     resource.meta = {
         profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/weight-observation"]
-    };
-
-    return resource;
-}
-
-export function medicationAdministration(type, props) {
-    const mappings = {
-        "arv-medication-administration": medicationAdministration_arv_medication_administration,
-        "cotrimoxazole-preventive-therapy-medication-administration": medicationAdministration_cotrimoxazole_preventive_therapy_medication_administration,
-        "fluconazole-preventive-therapy-medication-administration": medicationAdministration_fluconazole_preventive_therapy_medication_administration
-    };
-
-    return mappings[type](props)
-}
-
-function medicationAdministration_arv_medication_administration(props) {
-    const resource = {
-        resourceType: "MedicationAdministration",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiates)) {
-        resource.instantiates = props.instantiates;
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
-    }
-
-    if (!_.isNil(props.device)) {
-        if (!Array.isArray(props.device)) { props.device = [props.device]; }
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosage)) {
-        let src = props.dosage;
-        let dosage = {};
-
-        if (!_.isNil(src.id)) {
-            dosage.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dosage.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            dosage.text = src.text;
-        } else
-            {}
-
-        if (!_.isNil(src.site)) {
-            dosage.site = src.site;
-        } else
-            {}
-
-        if (!_.isNil(src.route)) {
-            dosage.route = src.route;
-        } else
-            {}
-
-        if (!_.isNil(src.method)) {
-            dosage.method = src.method;
-        } else
-            {}
-
-        if (!_.isNil(src.dose)) {
-            dosage.dose = src.dose;
-        } else
-            {}
-
-        if (!_.isNil(src.rate)) {
-            dosage.rate = src.rate;
-        } else
-            {}
-
-        resource.dosage = dosage;
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-administration"
-        ]
-    };
-
-    return resource;
-}
-
-function medicationAdministration_cotrimoxazole_preventive_therapy_medication_administration(props) {
-    const resource = {
-        resourceType: "MedicationAdministration",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiates)) {
-        resource.instantiates = props.instantiates;
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
-    }
-
-    if (!_.isNil(props.device)) {
-        if (!Array.isArray(props.device)) { props.device = [props.device]; }
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosage)) {
-        let src = props.dosage;
-        let dosage = {};
-
-        if (!_.isNil(src.id)) {
-            dosage.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dosage.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            dosage.text = src.text;
-        } else
-            {}
-
-        if (!_.isNil(src.site)) {
-            dosage.site = src.site;
-        } else
-            {}
-
-        if (!_.isNil(src.route)) {
-            dosage.route = src.route;
-        } else
-            {}
-
-        if (!_.isNil(src.method)) {
-            dosage.method = src.method;
-        } else
-            {}
-
-        if (!_.isNil(src.dose)) {
-            dosage.dose = src.dose;
-        } else
-            {}
-
-        if (!_.isNil(src.rate)) {
-            dosage.rate = src.rate;
-        } else
-            {}
-
-        resource.dosage = dosage;
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-administration"
-        ]
-    };
-
-    return resource;
-}
-
-function medicationAdministration_fluconazole_preventive_therapy_medication_administration(props) {
-    const resource = {
-        resourceType: "MedicationAdministration",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiates)) {
-        resource.instantiates = props.instantiates;
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
-    }
-
-    if (!_.isNil(props.device)) {
-        if (!Array.isArray(props.device)) { props.device = [props.device]; }
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosage)) {
-        let src = props.dosage;
-        let dosage = {};
-
-        if (!_.isNil(src.id)) {
-            dosage.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dosage.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            dosage.text = src.text;
-        } else
-            {}
-
-        if (!_.isNil(src.site)) {
-            dosage.site = src.site;
-        } else
-            {}
-
-        if (!_.isNil(src.route)) {
-            dosage.route = src.route;
-        } else
-            {}
-
-        if (!_.isNil(src.method)) {
-            dosage.method = src.method;
-        } else
-            {}
-
-        if (!_.isNil(src.dose)) {
-            dosage.dose = src.dose;
-        } else
-            {}
-
-        if (!_.isNil(src.rate)) {
-            dosage.rate = src.rate;
-        } else
-            {}
-
-        resource.dosage = dosage;
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/fluconazole-preventive-therapy-medication-administration"
-        ]
-    };
-
-    return resource;
-}
-
-export function medicationDispense(type, props) {
-    const mappings = {
-        "arv-medication-dispense": medicationDispense_arv_medication_dispense,
-        "cotrimoxazole-preventive-therapy-medication-dispense": medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense,
-        "generic-medication-dispense": medicationDispense_generic_medication_dispense
-    };
-
-    return mappings[type](props)
-}
-
-function medicationDispense_arv_medication_dispense(props) {
-    const resource = {
-        resourceType: "MedicationDispense",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        util.composite(resource, "statusReason", props.statusReason);
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
-    }
-
-    if (!_.isNil(props.authorizingPrescription)) {
-        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
-        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
-    }
-
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.quantity)) {
-        let src = props.quantity;
-        let quantity = {};
-
-        if (!_.isNil(src.id)) {
-            quantity.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            quantity.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            quantity.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            quantity.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            quantity.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            quantity.code = src.code;
-        } else
-            {}
-
-        quantity = util.mapSystems(quantity);
-        resource.quantity = quantity;
-    }
-
-    if (!_.isNil(props.daysSupply)) {
-        let src = props.daysSupply;
-        let daysSupply = {};
-
-        if (!_.isNil(src.id)) {
-            daysSupply.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            daysSupply.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            daysSupply.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            daysSupply.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            daysSupply.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            daysSupply.code = src.code;
-        } else
-            {}
-
-        daysSupply = util.mapSystems(daysSupply);
-        resource.daysSupply = daysSupply;
-    }
-
-    if (!_.isNil(props.whenPrepared)) {
-        resource.whenPrepared = props.whenPrepared;
-    }
-
-    if (!_.isNil(props.whenHandedOver)) {
-        resource.whenHandedOver = props.whenHandedOver;
-    }
-
-    if (!_.isNil(props.destination)) {
-        resource.destination = util.reference(props.destination);
-    }
-
-    if (!_.isNil(props.receiver)) {
-        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
-        resource.receiver = util.reference(props.receiver);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.wasSubstituted)) {
-            substitution.wasSubstituted = src.wasSubstituted;
-        } else
-            {}
-
-        if (!_.isNil(src.type)) {
-            substitution.type = src.type;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        if (!_.isNil(src.responsibleParty)) {
-            substitution.responsibleParty = src.responsibleParty;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-dispense"]
-    };
-
-    return resource;
-}
-
-function medicationDispense_cotrimoxazole_preventive_therapy_medication_dispense(props) {
-    const resource = {
-        resourceType: "MedicationDispense",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        util.composite(resource, "statusReason", props.statusReason);
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
-    }
-
-    if (!_.isNil(props.authorizingPrescription)) {
-        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
-        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
-    }
-
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.quantity)) {
-        let src = props.quantity;
-        let quantity = {};
-
-        if (!_.isNil(src.id)) {
-            quantity.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            quantity.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            quantity.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            quantity.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            quantity.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            quantity.code = src.code;
-        } else
-            {}
-
-        quantity = util.mapSystems(quantity);
-        resource.quantity = quantity;
-    }
-
-    if (!_.isNil(props.daysSupply)) {
-        let src = props.daysSupply;
-        let daysSupply = {};
-
-        if (!_.isNil(src.id)) {
-            daysSupply.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            daysSupply.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            daysSupply.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            daysSupply.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            daysSupply.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            daysSupply.code = src.code;
-        } else
-            {}
-
-        daysSupply = util.mapSystems(daysSupply);
-        resource.daysSupply = daysSupply;
-    }
-
-    if (!_.isNil(props.whenPrepared)) {
-        resource.whenPrepared = props.whenPrepared;
-    }
-
-    if (!_.isNil(props.whenHandedOver)) {
-        resource.whenHandedOver = props.whenHandedOver;
-    }
-
-    if (!_.isNil(props.destination)) {
-        resource.destination = util.reference(props.destination);
-    }
-
-    if (!_.isNil(props.receiver)) {
-        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
-        resource.receiver = util.reference(props.receiver);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.wasSubstituted)) {
-            substitution.wasSubstituted = src.wasSubstituted;
-        } else
-            {}
-
-        if (!_.isNil(src.type)) {
-            substitution.type = src.type;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        if (!_.isNil(src.responsibleParty)) {
-            substitution.responsibleParty = src.responsibleParty;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-dispense"
-        ]
-    };
-
-    return resource;
-}
-
-function medicationDispense_generic_medication_dispense(props) {
-    const resource = {
-        resourceType: "MedicationDispense",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        util.composite(resource, "statusReason", props.statusReason);
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.performer)) {
-        let src = props.performer;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.performer = [];
-
-        for (let item of src) {
-            let performer = {};
-
-            if (!_.isNil(item.id)) {
-                performer.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                performer.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.function)) {
-                performer.function = item.function;
-            } else
-                {}
-
-            if (!_.isNil(item.actor)) {
-                performer.actor = item.actor;
-            } else
-                {}
-
-            resource.performer.push(performer);
-        }
-    }
-
-    if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
-    }
-
-    if (!_.isNil(props.authorizingPrescription)) {
-        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
-        resource.authorizingPrescription = util.reference(props.authorizingPrescription);
-    }
-
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.quantity)) {
-        let src = props.quantity;
-        let quantity = {};
-
-        if (!_.isNil(src.id)) {
-            quantity.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            quantity.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            quantity.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            quantity.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            quantity.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            quantity.code = src.code;
-        } else
-            {}
-
-        quantity = util.mapSystems(quantity);
-        resource.quantity = quantity;
-    }
-
-    if (!_.isNil(props.daysSupply)) {
-        let src = props.daysSupply;
-        let daysSupply = {};
-
-        if (!_.isNil(src.id)) {
-            daysSupply.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.value)) {
-            daysSupply.value = src.value;
-        } else
-            {}
-
-        if (!_.isNil(src.comparator)) {
-            daysSupply.comparator = src.comparator;
-        } else
-            {}
-
-        if (!_.isNil(src.unit)) {
-            daysSupply.unit = src.unit;
-        } else
-            {}
-
-        if (!_.isNil(src.system)) {
-            daysSupply.system = src.system;
-        } else
-            {}
-
-        if (!_.isNil(src.code)) {
-            daysSupply.code = src.code;
-        } else
-            {}
-
-        daysSupply = util.mapSystems(daysSupply);
-        resource.daysSupply = daysSupply;
-    }
-
-    if (!_.isNil(props.whenPrepared)) {
-        resource.whenPrepared = props.whenPrepared;
-    }
-
-    if (!_.isNil(props.whenHandedOver)) {
-        resource.whenHandedOver = props.whenHandedOver;
-    }
-
-    if (!_.isNil(props.destination)) {
-        resource.destination = util.reference(props.destination);
-    }
-
-    if (!_.isNil(props.receiver)) {
-        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
-        resource.receiver = util.reference(props.receiver);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.wasSubstituted)) {
-            substitution.wasSubstituted = src.wasSubstituted;
-        } else
-            {}
-
-        if (!_.isNil(src.type)) {
-            substitution.type = src.type;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        if (!_.isNil(src.responsibleParty)) {
-            substitution.responsibleParty = src.responsibleParty;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-dispense"
-        ]
-    };
-
-    return resource;
-}
-
-export function medicationRequest(type, props) {
-    const mappings = {
-        "arv-medication-request": medicationRequest_arv_medication_request,
-        "cotrimoxazole-preventive-therapy-medication-request": medicationRequest_cotrimoxazole_preventive_therapy_medication_request,
-        "generic-medication-request": medicationRequest_generic_medication_request,
-        "tpt-medication-request": medicationRequest_tpt_medication_request
-    };
-
-    return mappings[type](props)
-}
-
-function medicationRequest_arv_medication_request(props) {
-    const resource = {
-        resourceType: "MedicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        let src = props.identifier;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.identifier = [];
-
-        for (let item of src) {
-            let identifier = {};
-
-            if (!_.isNil(item.id)) {
-                identifier.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                identifier.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                identifier.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.system)) {
-                identifier.system = item.system;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                identifier.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                identifier.period = item.period;
-            } else
-                {}
-
-            if (!_.isNil(item.assigner)) {
-                identifier.assigner = item.assigner;
-            } else
-                {}
-
-            identifier = util.mapSystems(identifier);
-            resource.identifier.push(identifier);
-        }
-    } else {
-        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
-    }
-
-    if (!_.isNil(props.reported)) {
-        util.composite(resource, "reported", props.reported);
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
-    if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
-    }
-
-    if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
-    if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        let src = props.reasonCode;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.reasonCode = [];
-
-        for (let item of src) {
-            let reasonCode = {};
-
-            if (!_.isNil(item.id)) {
-                reasonCode.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                reasonCode.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                reasonCode.text = item.text;
-            } else
-                {}
-
-            resource.reasonCode.push(reasonCode);
-        }
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
-    }
-
-    if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = props.courseOfTherapyType;
-    }
-
-    if (!_.isNil(props.insurance)) {
-        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
-        resource.insurance = util.reference(props.insurance);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.dispenseRequest)) {
-        let src = props.dispenseRequest;
-        let dispenseRequest = {};
-
-        if (!_.isNil(src.id)) {
-            dispenseRequest.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dispenseRequest.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.initialFill)) {
-            dispenseRequest.initialFill = src.initialFill;
-        } else
-            {}
-
-        if (!_.isNil(src.dispenseInterval)) {
-            dispenseRequest.dispenseInterval = src.dispenseInterval;
-        } else
-            {}
-
-        if (!_.isNil(src.validityPeriod)) {
-            dispenseRequest.validityPeriod = src.validityPeriod;
-        } else
-            {}
-
-        if (!_.isNil(src.numberOfRepeatsAllowed)) {
-            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
-        } else
-            {}
-
-        if (!_.isNil(src.quantity)) {
-            dispenseRequest.quantity = src.quantity;
-        } else
-            {}
-
-        if (!_.isNil(src.expectedSupplyDuration)) {
-            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
-        } else
-            {}
-
-        if (!_.isNil(src.performer)) {
-            dispenseRequest.performer = src.performer;
-        } else
-            {}
-
-        resource.dispenseRequest = dispenseRequest;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.allowed)) {
-            substitution.allowed = src.allowed;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.priorPrescription)) {
-        resource.priorPrescription = util.reference(props.priorPrescription);
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-request"]
-    };
-
-    return resource;
-}
-
-function medicationRequest_cotrimoxazole_preventive_therapy_medication_request(props) {
-    const resource = {
-        resourceType: "MedicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        let src = props.identifier;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.identifier = [];
-
-        for (let item of src) {
-            let identifier = {};
-
-            if (!_.isNil(item.id)) {
-                identifier.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                identifier.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                identifier.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.system)) {
-                identifier.system = item.system;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                identifier.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                identifier.period = item.period;
-            } else
-                {}
-
-            if (!_.isNil(item.assigner)) {
-                identifier.assigner = item.assigner;
-            } else
-                {}
-
-            identifier = util.mapSystems(identifier);
-            resource.identifier.push(identifier);
-        }
-    } else {
-        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
-    }
-
-    if (!_.isNil(props.reported)) {
-        util.composite(resource, "reported", props.reported);
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
-    if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
-    }
-
-    if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
-    if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        let src = props.reasonCode;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.reasonCode = [];
-
-        for (let item of src) {
-            let reasonCode = {};
-
-            if (!_.isNil(item.id)) {
-                reasonCode.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                reasonCode.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                reasonCode.text = item.text;
-            } else
-                {}
-
-            resource.reasonCode.push(reasonCode);
-        }
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
-    }
-
-    if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = props.courseOfTherapyType;
-    }
-
-    if (!_.isNil(props.insurance)) {
-        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
-        resource.insurance = util.reference(props.insurance);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.dispenseRequest)) {
-        let src = props.dispenseRequest;
-        let dispenseRequest = {};
-
-        if (!_.isNil(src.id)) {
-            dispenseRequest.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dispenseRequest.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.initialFill)) {
-            dispenseRequest.initialFill = src.initialFill;
-        } else
-            {}
-
-        if (!_.isNil(src.dispenseInterval)) {
-            dispenseRequest.dispenseInterval = src.dispenseInterval;
-        } else
-            {}
-
-        if (!_.isNil(src.validityPeriod)) {
-            dispenseRequest.validityPeriod = src.validityPeriod;
-        } else
-            {}
-
-        if (!_.isNil(src.numberOfRepeatsAllowed)) {
-            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
-        } else
-            {}
-
-        if (!_.isNil(src.quantity)) {
-            dispenseRequest.quantity = src.quantity;
-        } else
-            {}
-
-        if (!_.isNil(src.expectedSupplyDuration)) {
-            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
-        } else
-            {}
-
-        if (!_.isNil(src.performer)) {
-            dispenseRequest.performer = src.performer;
-        } else
-            {}
-
-        resource.dispenseRequest = dispenseRequest;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.allowed)) {
-            substitution.allowed = src.allowed;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.priorPrescription)) {
-        resource.priorPrescription = util.reference(props.priorPrescription);
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-request"
-        ]
-    };
-
-    return resource;
-}
-
-function medicationRequest_generic_medication_request(props) {
-    const resource = {
-        resourceType: "MedicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        let src = props.identifier;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.identifier = [];
-
-        for (let item of src) {
-            let identifier = {};
-
-            if (!_.isNil(item.id)) {
-                identifier.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                identifier.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                identifier.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.system)) {
-                identifier.system = item.system;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                identifier.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                identifier.period = item.period;
-            } else
-                {}
-
-            if (!_.isNil(item.assigner)) {
-                identifier.assigner = item.assigner;
-            } else
-                {}
-
-            identifier = util.mapSystems(identifier);
-            resource.identifier.push(identifier);
-        }
-    } else {
-        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
-    }
-
-    if (!_.isNil(props.reported)) {
-        util.composite(resource, "reported", props.reported);
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
-    if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
-    }
-
-    if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
-    if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        let src = props.reasonCode;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.reasonCode = [];
-
-        for (let item of src) {
-            let reasonCode = {};
-
-            if (!_.isNil(item.id)) {
-                reasonCode.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                reasonCode.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                reasonCode.text = item.text;
-            } else
-                {}
-
-            resource.reasonCode.push(reasonCode);
-        }
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
-    }
-
-    if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = props.courseOfTherapyType;
-    }
-
-    if (!_.isNil(props.insurance)) {
-        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
-        resource.insurance = util.reference(props.insurance);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.dispenseRequest)) {
-        let src = props.dispenseRequest;
-        let dispenseRequest = {};
-
-        if (!_.isNil(src.id)) {
-            dispenseRequest.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dispenseRequest.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.initialFill)) {
-            dispenseRequest.initialFill = src.initialFill;
-        } else
-            {}
-
-        if (!_.isNil(src.dispenseInterval)) {
-            dispenseRequest.dispenseInterval = src.dispenseInterval;
-        } else
-            {}
-
-        if (!_.isNil(src.validityPeriod)) {
-            dispenseRequest.validityPeriod = src.validityPeriod;
-        } else
-            {}
-
-        if (!_.isNil(src.numberOfRepeatsAllowed)) {
-            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
-        } else
-            {}
-
-        if (!_.isNil(src.quantity)) {
-            dispenseRequest.quantity = src.quantity;
-        } else
-            {}
-
-        if (!_.isNil(src.expectedSupplyDuration)) {
-            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
-        } else
-            {}
-
-        if (!_.isNil(src.performer)) {
-            dispenseRequest.performer = src.performer;
-        } else
-            {}
-
-        resource.dispenseRequest = dispenseRequest;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.allowed)) {
-            substitution.allowed = src.allowed;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.priorPrescription)) {
-        resource.priorPrescription = util.reference(props.priorPrescription);
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-request"
-        ]
-    };
-
-    return resource;
-}
-
-function medicationRequest_tpt_medication_request(props) {
-    const resource = {
-        resourceType: "MedicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        let src = props.identifier;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.identifier = [];
-
-        for (let item of src) {
-            let identifier = {};
-
-            if (!_.isNil(item.id)) {
-                identifier.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                identifier.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                identifier.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.system)) {
-                identifier.system = item.system;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                identifier.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                identifier.period = item.period;
-            } else
-                {}
-
-            if (!_.isNil(item.assigner)) {
-                identifier.assigner = item.assigner;
-            } else
-                {}
-
-            identifier = util.mapSystems(identifier);
-            resource.identifier.push(identifier);
-        }
-    } else {
-        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/medication"};
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
-    }
-
-    if (!_.isNil(props.reported)) {
-        util.composite(resource, "reported", props.reported);
-    }
-
-    if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.supportingInformation)) {
-        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
-    }
-
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
-    if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
-    }
-
-    if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
-    if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        let src = props.reasonCode;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.reasonCode = [];
-
-        for (let item of src) {
-            let reasonCode = {};
-
-            if (!_.isNil(item.id)) {
-                reasonCode.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                reasonCode.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                reasonCode.text = item.text;
-            } else
-                {}
-
-            resource.reasonCode.push(reasonCode);
-        }
-    }
-
-    if (!_.isNil(props.reasonReference)) {
-        if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
-    }
-
-    if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = props.courseOfTherapyType;
-    }
-
-    if (!_.isNil(props.insurance)) {
-        if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
-        resource.insurance = util.reference(props.insurance);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
-    if (!_.isNil(props.dispenseRequest)) {
-        let src = props.dispenseRequest;
-        let dispenseRequest = {};
-
-        if (!_.isNil(src.id)) {
-            dispenseRequest.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            dispenseRequest.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.initialFill)) {
-            dispenseRequest.initialFill = src.initialFill;
-        } else
-            {}
-
-        if (!_.isNil(src.dispenseInterval)) {
-            dispenseRequest.dispenseInterval = src.dispenseInterval;
-        } else
-            {}
-
-        if (!_.isNil(src.validityPeriod)) {
-            dispenseRequest.validityPeriod = src.validityPeriod;
-        } else
-            {}
-
-        if (!_.isNil(src.numberOfRepeatsAllowed)) {
-            dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
-        } else
-            {}
-
-        if (!_.isNil(src.quantity)) {
-            dispenseRequest.quantity = src.quantity;
-        } else
-            {}
-
-        if (!_.isNil(src.expectedSupplyDuration)) {
-            dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
-        } else
-            {}
-
-        if (!_.isNil(src.performer)) {
-            dispenseRequest.performer = src.performer;
-        } else
-            {}
-
-        resource.dispenseRequest = dispenseRequest;
-    }
-
-    if (!_.isNil(props.substitution)) {
-        let src = props.substitution;
-        let substitution = {};
-
-        if (!_.isNil(src.id)) {
-            substitution.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            substitution.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.allowed)) {
-            substitution.allowed = src.allowed;
-        } else
-            {}
-
-        if (!_.isNil(src.reason)) {
-            substitution.reason = src.reason;
-        } else
-            {}
-
-        resource.substitution = substitution;
-    }
-
-    if (!_.isNil(props.priorPrescription)) {
-        resource.priorPrescription = util.reference(props.priorPrescription);
-    }
-
-    if (!_.isNil(props.detectedIssue)) {
-        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
-    }
-
-    if (!_.isNil(props.eventHistory)) {
-        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication-request"]
-    };
-
-    return resource;
-}
-
-export function medication(type, props) {
-    const mappings = {
-        "arv-regimen-medication": medication_arv_regimen_medication,
-        "oi-medication": medication_oi_medication,
-        "tpt-medication": medication_tpt_medication
-    };
-
-    return mappings[type](props)
-}
-
-function medication_arv_regimen_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication"]
-    };
-
-    return resource;
-}
-
-function medication_oi_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/oi-medication"]
-    };
-
-    return resource;
-}
-
-function medication_tpt_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication"]
-    };
-
-    return resource;
-}
-
-export function carePlan(type, props) {
-    const mappings = {
-        "art-follow-up-careplan": carePlan_art_follow_up_careplan,
-        "cervical-cancer-care-plan": carePlan_cervical_cancer_care_plan,
-        "cotrimoxazole-preventive-therapy-careplan": carePlan_cotrimoxazole_preventive_therapy_careplan,
-        "tb-treatment-careplan": carePlan_tb_treatment_careplan,
-        "tpt-careplan": carePlan_tpt_careplan
-    };
-
-    return mappings[type](props)
-}
-
-function carePlan_art_follow_up_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"art-follow-up-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan"]
-    };
-
-    return resource;
-}
-
-function carePlan_cervical_cancer_care_plan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cervical-cancer-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/cervical-cancer-care-plan"]
-    };
-
-    return resource;
-}
-
-function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cotrimoxazole-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-careplan"
-        ]
-    };
-
-    return resource;
-}
-
-function carePlan_tb_treatment_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-treatment-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tb-treatment-careplan"]
-    };
-
-    return resource;
-}
-
-function carePlan_tpt_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-preventive-therapy-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-careplan"]
-    };
-
-    return resource;
-}
-
-export function relatedPerson(type, props) {
-    const mappings = {
-        "related-person": relatedPerson_related_person
-    };
-
-    return mappings[type](props)
-}
-
-function relatedPerson_related_person(props) {
-    const resource = {
-        resourceType: "RelatedPerson",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.active)) {
-        resource.active = props.active;
-    }
-
-    if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
-    }
-
-    if (!_.isNil(props.relationship)) {
-        let src = props.relationship;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.relationship = [];
-
-        for (let item of src) {
-            let relationship = {};
-
-            if (!_.isNil(item.id)) {
-                relationship.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                relationship.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                relationship.text = item.text;
-            } else
-                {}
-
-            resource.relationship.push(relationship);
-        }
-    }
-
-    if (!_.isNil(props.name)) {
-        let src = props.name;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.name = [];
-
-        for (let item of src) {
-            let name = {};
-
-            if (!_.isNil(item.id)) {
-                name.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                name.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                name.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.family)) {
-                name.family = item.family;
-            } else
-                {}
-
-            if (!_.isNil(item.given)) {
-                name.given = item.given;
-            } else
-                {}
-
-            if (!_.isNil(item.prefix)) {
-                name.prefix = item.prefix;
-            } else
-                {}
-
-            if (!_.isNil(item.suffix)) {
-                name.suffix = item.suffix;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                name.period = item.period;
-            } else
-                {}
-
-            resource.name.push(name);
-        }
-    }
-
-    if (!_.isNil(props.telecom)) {
-        resource.telecom = props.telecom;
-    }
-
-    if (!_.isNil(props.gender)) {
-        resource.gender = props.gender;
-    }
-
-    if (!_.isNil(props.birthDate)) {
-        resource.birthDate = props.birthDate;
-    }
-
-    if (!_.isNil(props.address)) {
-        let src = props.address;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.address = [];
-
-        for (let item of src) {
-            let address = {};
-
-            if (!_.isNil(item.id)) {
-                address.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                address.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                address.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                address.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.line)) {
-                address.line = item.line;
-            } else
-                {}
-
-            if (!_.isNil(item.city)) {
-                address.city = item.city;
-            } else
-                {}
-
-            if (!_.isNil(item.district)) {
-                address.district = item.district;
-            } else
-                {}
-
-            if (!_.isNil(item.state)) {
-                address.state = item.state;
-            } else
-                {}
-
-            if (!_.isNil(item.postalCode)) {
-                address.postalCode = item.postalCode;
-            } else
-                {}
-
-            if (!_.isNil(item.country)) {
-                address.country = item.country;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                address.period = item.period;
-            } else
-                {}
-
-            resource.address.push(address);
-        }
-    }
-
-    if (!_.isNil(props.photo)) {
-        resource.photo = props.photo;
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.communication)) {
-        let src = props.communication;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.communication = [];
-
-        for (let item of src) {
-            let communication = {};
-
-            if (!_.isNil(item.id)) {
-                communication.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                communication.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.language)) {
-                communication.language = item.language;
-            } else
-                {}
-
-            if (!_.isNil(item.preferred)) {
-                communication.preferred = item.preferred;
-            } else
-                {}
-
-            resource.communication.push(communication);
-        }
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/related-person"]
     };
 
     return resource;

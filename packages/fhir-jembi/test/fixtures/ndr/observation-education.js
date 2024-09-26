@@ -14,8 +14,9 @@ export default {
       {
         "system": "http://loinc.org",
         "code": "82589-3"
-      }
-    ]
+      },
+    ],
+    "text": "Highest level of education"
   },
   "subject": {
     "reference": "b335d5b78135460d92b34a856d998493"

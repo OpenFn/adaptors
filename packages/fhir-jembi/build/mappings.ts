@@ -21,42 +21,106 @@
 // this is pretty high level
 export default {
   Encounter: {
-    identifier: {
-      // Force identifier to accept a string
-      // (the system will be defaulted)
-      type: 'string',
-    },
-    // Specify individual mapping rules for fields here
-    // or pass field: false to ignore it
-    // (meta is always ignored)
-
-    // serviceProvider will be defaulted
-    // (I don't really know if we want this but lets see!)
-    serviceProvider: {
-      defaults: {
-        reference: 'Organization/Patient.managingOrganization',
-      },
-    },
+    any: {},
   },
   Patient: {
-    // This should automap now, probably as patientReligion
-    // But it doesn't??
+    any: {
+      // This should automap now, probably as patientReligion
+      // But it doesn't??
 
-    // manually map the `religion` key to the patient.religion extension
-    religion: {
-      type: 'CodeableConcept',
-      extension: 'http://hl7.org/fhir/StructureDefinition/patient-religion',
+      // manually map the `religion` key to the patient.religion extension
+      religion: {
+        type: 'CodeableConcept',
+        extension: 'http://hl7.org/fhir/StructureDefinition/patient-religion',
+      },
     },
-  },
-  Observation: {
-    // id: true,
   },
   MedicationAdministration: {},
   MedicationDispense: {},
   MedicationRequest: {},
   Medication: {},
-  CarePlan: {
-    activity: false // TODO I need to look closely at this
+  CarePlan: {},
+  RelatedPerson: {},
+  Observation: {
+    // The schema doesn't include text in the codes
+    // so we have to manually set each one here
+    'arv-change-category-type-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://snomed.info/sct',
+              code: '182838006',
+            },
+          ],
+          text: 'ARV regimen change',
+        },
+      },
+    },
+    'highest-education-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://loinc.org',
+              code: '82589-3',
+            },
+          ],
+          text: 'Highest level of education',
+        },
+      },
+    },
+    'patient-occupation-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://loinc.org',
+              code: '85658-3',
+            },
+          ],
+          text: 'Occupation',
+        },
+      },
+    },
+    'target-population-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://snomed.info/sct',
+              code: '385436007',
+            },
+          ],
+          text: 'Target population',
+        },
+      },
+    },
+    'arv-regimen-changed-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://snomed.info/sct',
+              code: '182838006',
+            },
+          ],
+          text: 'ARV regimen change',
+        },
+      },
+    },
+    'arv-regimen-change-reason-observation': {
+      code: {
+        defaults: {
+          coding: [
+            {
+              system: 'http://loinc.org',
+              code: 'LL354-2',
+            },
+          ],
+          text: 'ARV regimen change reason',
+        },
+      },
+    },
   },
-  RelatedPerson: {}
 };

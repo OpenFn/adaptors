@@ -16,7 +16,8 @@ export default {
         "system": "http://loinc.org",
         "code": "LL354-2"
       }
-    ]
+    ],
+    "text" : "ARV regimen change reason"
   },
   "subject": {
     "reference": "Patient/30119"
