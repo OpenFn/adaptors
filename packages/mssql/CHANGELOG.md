@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 5.0.3
+
+### Patch Changes
+
+- 6d38a48: Removed process.exit(1) to prevent workflow crashes on errors
+
 ## 5.0.2
 
 ### Patch Changes
