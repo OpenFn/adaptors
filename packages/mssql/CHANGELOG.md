@@ -1,5 +1,24 @@
 # @openfn/language-mssql
 
+## 5.0.4
+
+### Patch Changes
+
+- d3ac969: use reject instead of throwwq
+
+## 5.0.3
+
+### Patch Changes
+
+- 6d38a48: Removed process.exit(1) to prevent workflow crashes on errors
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
 ## 5.0.1
 
 ### Patch Changes

@@ -9,6 +9,7 @@ import {
   setMockClient,
   hGetAll,
   jGet,
+  mGet,
   jSet,
 } from '../src';
 
@@ -494,6 +495,66 @@ describe('jGet', () => {
       species: 'cat',
       age: '3',
     });
+  });
+});
+
+describe('mGet', function () {
+  const mgetClient = {
+    json: {
+      mGet: async keys => {
+        expect(keys).to.eql(['a', 'b', 'c']);
+        return ['1', '2', '3'];
+      },
+    },
+  };
+  it('should expand references', async () => {
+    setMockClient(mgetClient);
+    const state = { keys: ['a', 'b', 'c'] };
+    await mGet(s => s.keys)(state);
+  });
+  it('should throw if keys are not specified', async () => {
+    setMockClient({
+      json: {
+        mGet: async () => {
+          throw new Error();
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await mGet()(state);
+    } catch (error) {
+      expect(error.message).to.eql(
+        `Cannot read properties of undefined (reading 'length')`
+      );
+    }
+  });
+  it('should throw if keys is empty array', async () => {
+    setMockClient({
+      json: {
+        mGet: async () => {
+          throw new Error(
+            `ERR wrong number of arguments for 'json.mget' command`
+          );
+        },
+      },
+    });
+
+    const state = {};
+    try {
+      await mGet([])(state);
+    } catch (error) {
+      expect(error.message).to.eql(
+        `ERR wrong number of arguments for 'json.mget' command`
+      );
+    }
+  });
+  it('should fetch values for multiple keys', async () => {
+    setMockClient(mgetClient);
+    const state = {};
+    const result = await mGet(['a', 'b', 'c'])(state);
+    expect(result.data).to.eql(['1', '2', '3']);
   });
 });
 

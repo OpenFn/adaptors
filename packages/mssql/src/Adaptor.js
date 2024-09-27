@@ -84,11 +84,7 @@ export function execute(...operations) {
       createConnection,
       ...operations,
       cleanupState
-    )({ ...initialState, ...state }).catch(e => {
-      console.error(e);
-      console.error('Unhandled error in the operations. Exiting process.');
-      process.exit(1);
-    });
+    )({ ...initialState, ...state });
   };
 }
 
@@ -170,7 +166,7 @@ function queryHandler(state, query, callback, options) {
     const request = new Request(query, (err, rowCount, rows) => {
       if (err) {
         console.error(err.message);
-        throw err;
+        reject(err);
       } else {
         console.log(`Finished: ${rowCount} row(s).`);
         resolve(callback(state, rows));
