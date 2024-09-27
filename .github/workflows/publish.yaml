@@ -24,8 +24,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
-          pnpm publish -r --report-summary --publish-branch jembi-fhir
-          --access=public --tag next
+          pnpm publish -r --report-summary --publish-branch main --access=public
 
       - name: Setup GH user
         run: git config user.name ${{ secrets.GH_USER }}
