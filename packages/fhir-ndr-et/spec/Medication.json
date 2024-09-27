@@ -1,0 +1,473 @@
+[
+  {
+    "id": "arv-regimen-medication",
+    "type": "Medication",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business identifier for this medication",
+        "isComposite": false
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Codes that identify this medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | inactive | entered-in-error",
+        "isComposite": false
+      },
+      "manufacturer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Manufacturer of the item",
+        "isComposite": false
+      },
+      "form": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "powder | tablets | capsule +",
+        "isComposite": false
+      },
+      "amount": {
+        "type": "Ratio",
+        "isArray": false,
+        "desc": "Amount of drug in package",
+        "isComposite": false
+      },
+      "ingredient": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Active or inactive ingredient",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "item": {
+            "type": "CodeableConcept",
+            "desc": "The actual ingredient or content"
+          },
+          "isActive": {
+            "type": "boolean",
+            "desc": "Active ingredient indicator"
+          },
+          "strength": {
+            "type": "Ratio",
+            "desc": "Quantity of ingredient present"
+          }
+        }
+      },
+      "batch": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Details about packaged medications",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "lotNumber": {
+            "type": "string",
+            "desc": "Identifier assigned to batch"
+          },
+          "expirationDate": {
+            "type": "dateTime",
+            "desc": "When batch will expire"
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "oi-medication",
+    "type": "Medication",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/oi-medication",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business identifier for this medication",
+        "isComposite": false
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Codes that identify this medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | inactive | entered-in-error",
+        "isComposite": false
+      },
+      "manufacturer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Manufacturer of the item",
+        "isComposite": false
+      },
+      "form": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "powder | tablets | capsule +",
+        "isComposite": false
+      },
+      "amount": {
+        "type": "Ratio",
+        "isArray": false,
+        "desc": "Amount of drug in package",
+        "isComposite": false
+      },
+      "ingredient": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Active or inactive ingredient",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "item": {
+            "type": "CodeableConcept",
+            "desc": "The actual ingredient or content"
+          },
+          "isActive": {
+            "type": "boolean",
+            "desc": "Active ingredient indicator"
+          },
+          "strength": {
+            "type": "Ratio",
+            "desc": "Quantity of ingredient present"
+          }
+        }
+      },
+      "batch": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Details about packaged medications",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "lotNumber": {
+            "type": "string",
+            "desc": "Identifier assigned to batch"
+          },
+          "expirationDate": {
+            "type": "dateTime",
+            "desc": "When batch will expire"
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "tpt-medication",
+    "type": "Medication",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business identifier for this medication",
+        "isComposite": false
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Codes that identify this medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | inactive | entered-in-error",
+        "isComposite": false
+      },
+      "manufacturer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Manufacturer of the item",
+        "isComposite": false
+      },
+      "form": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "powder | tablets | capsule +",
+        "isComposite": false
+      },
+      "amount": {
+        "type": "Ratio",
+        "isArray": false,
+        "desc": "Amount of drug in package",
+        "isComposite": false
+      },
+      "ingredient": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Active or inactive ingredient",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "item": {
+            "type": "CodeableConcept",
+            "desc": "The actual ingredient or content"
+          },
+          "isActive": {
+            "type": "boolean",
+            "desc": "Active ingredient indicator"
+          },
+          "strength": {
+            "type": "Ratio",
+            "desc": "Quantity of ingredient present"
+          }
+        }
+      },
+      "batch": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Details about packaged medications",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "lotNumber": {
+            "type": "string",
+            "desc": "Identifier assigned to batch"
+          },
+          "expirationDate": {
+            "type": "dateTime",
+            "desc": "When batch will expire"
+          }
+        }
+      }
+    }
+  }
+]

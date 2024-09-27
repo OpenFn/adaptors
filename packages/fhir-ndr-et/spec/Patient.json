@@ -1,0 +1,347 @@
+[
+  {
+    "id": "patient",
+    "type": "Patient",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/patient",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "The patient's professed religious affiliations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "An identifier for this patient",
+        "isComposite": false,
+        "defaults": {
+          "system": "http://moh.gov.et/fhir/hiv/identifier/MRN"
+        },
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether this patient's record is in active use",
+        "isComposite": false
+      },
+      "name": {
+        "type": "HumanName",
+        "isArray": true,
+        "desc": "A name associated with the patient",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | nickname | anonymous | old | maiden"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text representation of the full name"
+          },
+          "family": {
+            "type": "string",
+            "desc": "Family name (often called 'Surname')"
+          },
+          "given": {
+            "type": "string",
+            "desc": "Given names (not always 'first'). Includes middle names"
+          },
+          "prefix": {
+            "type": "string",
+            "desc": "Parts that come before the name"
+          },
+          "suffix": {
+            "type": "string",
+            "desc": "Parts that come after the name"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when name was/is in use"
+          }
+        }
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "A contact detail for the individual",
+        "isComposite": false
+      },
+      "gender": {
+        "type": "string",
+        "isArray": false,
+        "desc": "male | female | other | unknown",
+        "isComposite": false
+      },
+      "birthDate": {
+        "type": "date",
+        "isArray": false,
+        "desc": "The date of birth for the individual",
+        "isComposite": false
+      },
+      "deceased": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Indicates if the individual is deceased or not",
+        "isComposite": true
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address for the individual",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "residentialType": {
+            "extension": {
+              "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type"
+            },
+            "desc": "Residential Type"
+          },
+          "use": {
+            "type": "string",
+            "desc": "home | work | temp | old | billing - purpose of this address"
+          },
+          "type": {
+            "type": "string",
+            "desc": "postal | physical | both"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text representation of the address"
+          },
+          "line": {
+            "type": "string",
+            "desc": "Street name, number, direction & P.O. Box etc."
+          },
+          "city": {
+            "type": "string",
+            "desc": "Name of city, town etc."
+          },
+          "district": {
+            "type": "string",
+            "desc": "District name (aka county)"
+          },
+          "state": {
+            "type": "string",
+            "desc": "Sub-unit of country (abbreviations ok)"
+          },
+          "postalCode": {
+            "type": "string",
+            "desc": "Postal code for area"
+          },
+          "country": {
+            "type": "string",
+            "desc": "Country (e.g. can be ISO 3166 2 or 3 letter code)"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when address was/is in use"
+          }
+        }
+      },
+      "maritalStatus": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Marital (civil) status of a patient",
+        "isComposite": false
+      },
+      "multipleBirth": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether patient is part of a multiple birth",
+        "isComposite": true
+      },
+      "photo": {
+        "type": "Attachment",
+        "isArray": true,
+        "desc": "Image of the patient",
+        "isComposite": false
+      },
+      "contact": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "A contact party (e.g. guardian, partner, friend) for the patient",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "relationship": {
+            "type": "CodeableConcept",
+            "desc": "The kind of relationship"
+          },
+          "name": {
+            "type": "HumanName",
+            "desc": "A name associated with the contact person"
+          },
+          "telecom": {
+            "type": "ContactPoint",
+            "desc": "A contact detail for the person"
+          },
+          "address": {
+            "type": "Address",
+            "desc": "Address for the contact person"
+          },
+          "gender": {
+            "type": "string",
+            "desc": "male | female | other | unknown"
+          },
+          "organization": {
+            "type": "Reference",
+            "desc": "Organization that is associated with the contact"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "The period during which this contact person or organization is valid to be contacted relating to this patient"
+          }
+        }
+      },
+      "communication": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "A language which may be used to communicate with the patient about his or her health",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "language": {
+            "type": "CodeableConcept",
+            "desc": "The language which can be used to communicate with the patient about his or her health"
+          },
+          "preferred": {
+            "type": "boolean",
+            "desc": "Language preference indicator"
+          }
+        }
+      },
+      "generalPractitioner": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Patient's nominated primary care provider",
+        "isComposite": false
+      },
+      "managingOrganization": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Organization that is the custodian of the patient record",
+        "isComposite": false
+      },
+      "link": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Link to another patient resource that concerns the same actual person",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "other": {
+            "type": "Reference",
+            "desc": "The other patient or related person resource that the link refers to"
+          },
+          "type": {
+            "type": "string",
+            "desc": "replaced-by | replaces | refer | seealso"
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,1462 @@
+[
+  {
+    "id": "arv-medication-request",
+    "type": "MedicationRequest",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-request",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External ids for this request",
+        "isComposite": false,
+        "defaults": {
+          "system": "http://moh.gov.et/fhir/hiv/identifier/medication"
+        },
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Reason for current status",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of medication usage",
+        "isComposite": false
+      },
+      "priority": {
+        "type": "string",
+        "isArray": false,
+        "desc": "routine | urgent | asap | stat",
+        "isComposite": false
+      },
+      "doNotPerform": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "True if request is prohibiting action",
+        "isComposite": false
+      },
+      "reported": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Reported rather than primary record",
+        "isComposite": true
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Medication to be taken",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who or group medication request is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of encounter/admission/stay",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information to support ordering of the medication",
+        "isComposite": false
+      },
+      "authoredOn": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When request was initially authored",
+        "isComposite": false
+      },
+      "requester": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who/What requested the Request",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Intended performer of administration",
+        "isComposite": false
+      },
+      "performerType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Desired kind of performer of the medication administration",
+        "isComposite": false
+      },
+      "recorder": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Person who entered the request",
+        "isComposite": false
+      },
+      "reasonCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason or indication for ordering or not ordering the medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "reasonReference": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Condition or observation that supports why the prescription is being written",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What request fulfills",
+        "isComposite": false
+      },
+      "groupIdentifier": {
+        "type": "Identifier",
+        "isArray": false,
+        "desc": "Composite request this is part of",
+        "isComposite": false
+      },
+      "courseOfTherapyType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Overall pattern of medication administration",
+        "isComposite": false
+      },
+      "insurance": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Associated insurance coverage",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the prescription",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication should be taken",
+        "isComposite": false
+      },
+      "dispenseRequest": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Medication supply authorization",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "initialFill": {
+            "type": "Duration",
+            "desc": "First fill duration"
+          },
+          "dispenseInterval": {
+            "type": "Duration",
+            "desc": "Minimum period of time between dispenses"
+          },
+          "validityPeriod": {
+            "type": "Period",
+            "desc": "Time period supply is authorized for"
+          },
+          "numberOfRepeatsAllowed": {
+            "type": "unsignedInt",
+            "desc": "Number of refills authorized"
+          },
+          "quantity": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          },
+          "expectedSupplyDuration": {
+            "type": "Duration",
+            "desc": "Number of days supply per dispense"
+          },
+          "performer": {
+            "type": "Reference",
+            "desc": "Intended dispenser"
+          }
+        }
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Any restrictions on medication substitution",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "allowed": {
+            "type": "boolean",
+            "desc": "Whether substitution is allowed or not"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why should (not) substitution be made"
+          }
+        }
+      },
+      "priorPrescription": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "An order/prescription that is being replaced",
+        "isComposite": false
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical Issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of events of interest in the lifecycle",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "cotrimoxazole-preventive-therapy-medication-request",
+    "type": "MedicationRequest",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-request",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External ids for this request",
+        "isComposite": false,
+        "defaults": {
+          "system": "http://moh.gov.et/fhir/hiv/identifier/medication"
+        },
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Reason for current status",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of medication usage",
+        "isComposite": false
+      },
+      "priority": {
+        "type": "string",
+        "isArray": false,
+        "desc": "routine | urgent | asap | stat",
+        "isComposite": false
+      },
+      "doNotPerform": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "True if request is prohibiting action",
+        "isComposite": false
+      },
+      "reported": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Reported rather than primary record",
+        "isComposite": true
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Medication to be taken",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who or group medication request is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of encounter/admission/stay",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information to support ordering of the medication",
+        "isComposite": false
+      },
+      "authoredOn": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When request was initially authored",
+        "isComposite": false
+      },
+      "requester": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who/What requested the Request",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Intended performer of administration",
+        "isComposite": false
+      },
+      "performerType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Desired kind of performer of the medication administration",
+        "isComposite": false
+      },
+      "recorder": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Person who entered the request",
+        "isComposite": false
+      },
+      "reasonCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason or indication for ordering or not ordering the medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "reasonReference": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Condition or observation that supports why the prescription is being written",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What request fulfills",
+        "isComposite": false
+      },
+      "groupIdentifier": {
+        "type": "Identifier",
+        "isArray": false,
+        "desc": "Composite request this is part of",
+        "isComposite": false
+      },
+      "courseOfTherapyType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Overall pattern of medication administration",
+        "isComposite": false
+      },
+      "insurance": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Associated insurance coverage",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the prescription",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication should be taken",
+        "isComposite": false
+      },
+      "dispenseRequest": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Medication supply authorization",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "initialFill": {
+            "type": "Duration",
+            "desc": "First fill duration"
+          },
+          "dispenseInterval": {
+            "type": "Duration",
+            "desc": "Minimum period of time between dispenses"
+          },
+          "validityPeriod": {
+            "type": "Period",
+            "desc": "Time period supply is authorized for"
+          },
+          "numberOfRepeatsAllowed": {
+            "type": "unsignedInt",
+            "desc": "Number of refills authorized"
+          },
+          "quantity": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          },
+          "expectedSupplyDuration": {
+            "type": "Duration",
+            "desc": "Number of days supply per dispense"
+          },
+          "performer": {
+            "type": "Reference",
+            "desc": "Intended dispenser"
+          }
+        }
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Any restrictions on medication substitution",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "allowed": {
+            "type": "boolean",
+            "desc": "Whether substitution is allowed or not"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why should (not) substitution be made"
+          }
+        }
+      },
+      "priorPrescription": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "An order/prescription that is being replaced",
+        "isComposite": false
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical Issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of events of interest in the lifecycle",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "generic-medication-request",
+    "type": "MedicationRequest",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-request",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External ids for this request",
+        "isComposite": false,
+        "defaults": {
+          "system": "http://moh.gov.et/fhir/hiv/identifier/medication"
+        },
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Reason for current status",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of medication usage",
+        "isComposite": false
+      },
+      "priority": {
+        "type": "string",
+        "isArray": false,
+        "desc": "routine | urgent | asap | stat",
+        "isComposite": false
+      },
+      "doNotPerform": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "True if request is prohibiting action",
+        "isComposite": false
+      },
+      "reported": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Reported rather than primary record",
+        "isComposite": true
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Medication to be taken",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who or group medication request is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of encounter/admission/stay",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information to support ordering of the medication",
+        "isComposite": false
+      },
+      "authoredOn": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When request was initially authored",
+        "isComposite": false
+      },
+      "requester": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who/What requested the Request",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Intended performer of administration",
+        "isComposite": false
+      },
+      "performerType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Desired kind of performer of the medication administration",
+        "isComposite": false
+      },
+      "recorder": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Person who entered the request",
+        "isComposite": false
+      },
+      "reasonCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason or indication for ordering or not ordering the medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "reasonReference": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Condition or observation that supports why the prescription is being written",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What request fulfills",
+        "isComposite": false
+      },
+      "groupIdentifier": {
+        "type": "Identifier",
+        "isArray": false,
+        "desc": "Composite request this is part of",
+        "isComposite": false
+      },
+      "courseOfTherapyType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Overall pattern of medication administration",
+        "isComposite": false
+      },
+      "insurance": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Associated insurance coverage",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the prescription",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication should be taken",
+        "isComposite": false
+      },
+      "dispenseRequest": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Medication supply authorization",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "initialFill": {
+            "type": "Duration",
+            "desc": "First fill duration"
+          },
+          "dispenseInterval": {
+            "type": "Duration",
+            "desc": "Minimum period of time between dispenses"
+          },
+          "validityPeriod": {
+            "type": "Period",
+            "desc": "Time period supply is authorized for"
+          },
+          "numberOfRepeatsAllowed": {
+            "type": "unsignedInt",
+            "desc": "Number of refills authorized"
+          },
+          "quantity": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          },
+          "expectedSupplyDuration": {
+            "type": "Duration",
+            "desc": "Number of days supply per dispense"
+          },
+          "performer": {
+            "type": "Reference",
+            "desc": "Intended dispenser"
+          }
+        }
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Any restrictions on medication substitution",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "allowed": {
+            "type": "boolean",
+            "desc": "Whether substitution is allowed or not"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why should (not) substitution be made"
+          }
+        }
+      },
+      "priorPrescription": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "An order/prescription that is being replaced",
+        "isComposite": false
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical Issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of events of interest in the lifecycle",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "tpt-medication-request",
+    "type": "MedicationRequest",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication-request",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External ids for this request",
+        "isComposite": false,
+        "defaults": {
+          "system": "http://moh.gov.et/fhir/hiv/identifier/medication"
+        },
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Reason for current status",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of medication usage",
+        "isComposite": false
+      },
+      "priority": {
+        "type": "string",
+        "isArray": false,
+        "desc": "routine | urgent | asap | stat",
+        "isComposite": false
+      },
+      "doNotPerform": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "True if request is prohibiting action",
+        "isComposite": false
+      },
+      "reported": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Reported rather than primary record",
+        "isComposite": true
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Medication to be taken",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who or group medication request is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of encounter/admission/stay",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information to support ordering of the medication",
+        "isComposite": false
+      },
+      "authoredOn": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When request was initially authored",
+        "isComposite": false
+      },
+      "requester": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who/What requested the Request",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Intended performer of administration",
+        "isComposite": false
+      },
+      "performerType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Desired kind of performer of the medication administration",
+        "isComposite": false
+      },
+      "recorder": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Person who entered the request",
+        "isComposite": false
+      },
+      "reasonCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason or indication for ordering or not ordering the medication",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "reasonReference": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Condition or observation that supports why the prescription is being written",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What request fulfills",
+        "isComposite": false
+      },
+      "groupIdentifier": {
+        "type": "Identifier",
+        "isArray": false,
+        "desc": "Composite request this is part of",
+        "isComposite": false
+      },
+      "courseOfTherapyType": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Overall pattern of medication administration",
+        "isComposite": false
+      },
+      "insurance": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Associated insurance coverage",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the prescription",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication should be taken",
+        "isComposite": false
+      },
+      "dispenseRequest": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Medication supply authorization",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "initialFill": {
+            "type": "Duration",
+            "desc": "First fill duration"
+          },
+          "dispenseInterval": {
+            "type": "Duration",
+            "desc": "Minimum period of time between dispenses"
+          },
+          "validityPeriod": {
+            "type": "Period",
+            "desc": "Time period supply is authorized for"
+          },
+          "numberOfRepeatsAllowed": {
+            "type": "unsignedInt",
+            "desc": "Number of refills authorized"
+          },
+          "quantity": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          },
+          "expectedSupplyDuration": {
+            "type": "Duration",
+            "desc": "Number of days supply per dispense"
+          },
+          "performer": {
+            "type": "Reference",
+            "desc": "Intended dispenser"
+          }
+        }
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Any restrictions on medication substitution",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "allowed": {
+            "type": "boolean",
+            "desc": "Whether substitution is allowed or not"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why should (not) substitution be made"
+          }
+        }
+      },
+      "priorPrescription": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "An order/prescription that is being replaced",
+        "isComposite": false
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical Issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of events of interest in the lifecycle",
+        "isComposite": false
+      }
+    }
+  }
+]

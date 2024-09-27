@@ -1,0 +1,935 @@
+[
+  {
+    "id": "arv-medication-dispense",
+    "type": "MedicationDispense",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-medication-dispense",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External identifier",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Event that dispense is part of",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why a dispense was not performed",
+        "isComposite": true
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Type of medication dispense",
+        "isComposite": false
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "What medication was supplied",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the dispense is for",
+        "isComposite": false
+      },
+      "context": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter / Episode associated with event",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information that supports the dispensing of the medication",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Who performed event",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "function": {
+            "type": "CodeableConcept",
+            "desc": "Who performed the dispense and what they did"
+          },
+          "actor": {
+            "type": "Reference",
+            "desc": "Individual who was performing"
+          }
+        }
+      },
+      "location": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the dispense occurred",
+        "isComposite": false
+      },
+      "authorizingPrescription": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Medication order that authorizes the dispense",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Trial fill, partial fill, emergency fill, etc.",
+        "isComposite": false
+      },
+      "quantity": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount dispensed",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "daysSupply": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount of medication expressed as a timing amount",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "whenPrepared": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was packaged and reviewed",
+        "isComposite": false
+      },
+      "whenHandedOver": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was given out",
+        "isComposite": false
+      },
+      "destination": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the medication was sent",
+        "isComposite": false
+      },
+      "receiver": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who collected the medication",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the dispense",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication is to be used by the patient or administered by the caregiver",
+        "isComposite": false
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Whether a substitution was performed on the dispense",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "wasSubstituted": {
+            "type": "boolean",
+            "desc": "Whether a substitution was or was not performed on the dispense"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Code signifying whether a different drug was dispensed from what was prescribed"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why was substitution made"
+          },
+          "responsibleParty": {
+            "type": "Reference",
+            "desc": "Who is responsible for the substitution"
+          }
+        }
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of relevant lifecycle events",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "cotrimoxazole-preventive-therapy-medication-dispense",
+    "type": "MedicationDispense",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-medication-dispense",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External identifier",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Event that dispense is part of",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why a dispense was not performed",
+        "isComposite": true
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Type of medication dispense",
+        "isComposite": false
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "What medication was supplied",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the dispense is for",
+        "isComposite": false
+      },
+      "context": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter / Episode associated with event",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information that supports the dispensing of the medication",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Who performed event",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "function": {
+            "type": "CodeableConcept",
+            "desc": "Who performed the dispense and what they did"
+          },
+          "actor": {
+            "type": "Reference",
+            "desc": "Individual who was performing"
+          }
+        }
+      },
+      "location": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the dispense occurred",
+        "isComposite": false
+      },
+      "authorizingPrescription": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Medication order that authorizes the dispense",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Trial fill, partial fill, emergency fill, etc.",
+        "isComposite": false
+      },
+      "quantity": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount dispensed",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "daysSupply": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount of medication expressed as a timing amount",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "whenPrepared": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was packaged and reviewed",
+        "isComposite": false
+      },
+      "whenHandedOver": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was given out",
+        "isComposite": false
+      },
+      "destination": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the medication was sent",
+        "isComposite": false
+      },
+      "receiver": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who collected the medication",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the dispense",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication is to be used by the patient or administered by the caregiver",
+        "isComposite": false
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Whether a substitution was performed on the dispense",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "wasSubstituted": {
+            "type": "boolean",
+            "desc": "Whether a substitution was or was not performed on the dispense"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Code signifying whether a different drug was dispensed from what was prescribed"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why was substitution made"
+          },
+          "responsibleParty": {
+            "type": "Reference",
+            "desc": "Who is responsible for the substitution"
+          }
+        }
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of relevant lifecycle events",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "generic-medication-dispense",
+    "type": "MedicationDispense",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/generic-medication-dispense",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External identifier",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Event that dispense is part of",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown",
+        "isComposite": false
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why a dispense was not performed",
+        "isComposite": true
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Type of medication dispense",
+        "isComposite": false
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "What medication was supplied",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "A reference to a code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the dispense is for",
+        "isComposite": false
+      },
+      "context": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter / Episode associated with event",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information that supports the dispensing of the medication",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Who performed event",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "function": {
+            "type": "CodeableConcept",
+            "desc": "Who performed the dispense and what they did"
+          },
+          "actor": {
+            "type": "Reference",
+            "desc": "Individual who was performing"
+          }
+        }
+      },
+      "location": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the dispense occurred",
+        "isComposite": false
+      },
+      "authorizingPrescription": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Medication order that authorizes the dispense",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Trial fill, partial fill, emergency fill, etc.",
+        "isComposite": false
+      },
+      "quantity": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount dispensed",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "daysSupply": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Amount of medication expressed as a timing amount",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value"
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded form of the unit"
+          }
+        },
+        "hasSystem": true
+      },
+      "whenPrepared": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was packaged and reviewed",
+        "isComposite": false
+      },
+      "whenHandedOver": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "When product was given out",
+        "isComposite": false
+      },
+      "destination": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Where the medication was sent",
+        "isComposite": false
+      },
+      "receiver": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who collected the medication",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the dispense",
+        "isComposite": false
+      },
+      "dosageInstruction": {
+        "type": "Dosage",
+        "isArray": true,
+        "desc": "How the medication is to be used by the patient or administered by the caregiver",
+        "isComposite": false
+      },
+      "substitution": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Whether a substitution was performed on the dispense",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "wasSubstituted": {
+            "type": "boolean",
+            "desc": "Whether a substitution was or was not performed on the dispense"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Code signifying whether a different drug was dispensed from what was prescribed"
+          },
+          "reason": {
+            "type": "CodeableConcept",
+            "desc": "Why was substitution made"
+          },
+          "responsibleParty": {
+            "type": "Reference",
+            "desc": "Who is responsible for the substitution"
+          }
+        }
+      },
+      "detectedIssue": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Clinical issue with action",
+        "isComposite": false
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of relevant lifecycle events",
+        "isComposite": false
+      }
+    }
+  }
+]

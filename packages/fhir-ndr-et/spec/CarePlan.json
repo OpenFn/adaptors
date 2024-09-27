@@ -1,0 +1,1247 @@
+[
+  {
+    "id": "art-follow-up-careplan",
+    "type": "CarePlan",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this plan",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills CarePlan",
+        "isComposite": false
+      },
+      "replaces": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "CarePlan replaced by this CarePlan",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced CarePlan",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of plan",
+        "isComposite": false,
+        "defaults": [
+          {
+            "coding": [
+              {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "art-follow-up-care-plan"
+              }
+            ]
+          }
+        ],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "title": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Human-friendly name for the care plan",
+        "isComposite": false
+      },
+      "description": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Summary of nature of plan",
+        "isComposite": false
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the care plan is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period plan covers",
+        "isComposite": false
+      },
+      "created": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Date record was first recorded",
+        "isComposite": false
+      },
+      "author": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who is the designated responsible party",
+        "isComposite": false
+      },
+      "contributor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who provided the content of the care plan",
+        "isComposite": false
+      },
+      "careTeam": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who's involved in plan?",
+        "isComposite": false
+      },
+      "addresses": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Health issues this plan addresses",
+        "isComposite": false
+      },
+      "supportingInfo": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information considered as part of plan",
+        "isComposite": false
+      },
+      "goal": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Desired outcome of plan",
+        "isComposite": false
+      },
+      "activity": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Action to occur as part of plan",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "nextVisitDate": {
+            "extension": {
+              "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit"
+            },
+            "desc": "Care Plan - Next Visit Date"
+          },
+          "adherence": {
+            "extension": {
+              "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence"
+            },
+            "desc": "ARV Adherence"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "outcomeCodeableConcept": {
+            "type": "CodeableConcept",
+            "desc": "Results of the activity"
+          },
+          "outcomeReference": {
+            "type": "Reference",
+            "desc": "Appointment, Encounter, Procedure, etc."
+          },
+          "progress": {
+            "type": "Annotation",
+            "desc": "Comments about the activity status/progress"
+          },
+          "reference": {
+            "type": "Reference",
+            "desc": "Activity details defined in specific resource"
+          },
+          "detail": {
+            "type": "string",
+            "desc": "Extra info describing activity to perform"
+          }
+        }
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the plan",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "cervical-cancer-care-plan",
+    "type": "CarePlan",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/cervical-cancer-care-plan",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this plan",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills CarePlan",
+        "isComposite": false
+      },
+      "replaces": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "CarePlan replaced by this CarePlan",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced CarePlan",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of plan",
+        "isComposite": false,
+        "defaults": [
+          {
+            "coding": [
+              {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "cervical-cancer-care-plan"
+              }
+            ]
+          }
+        ]
+      },
+      "title": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Human-friendly name for the care plan",
+        "isComposite": false
+      },
+      "description": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Summary of nature of plan",
+        "isComposite": false
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the care plan is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period plan covers",
+        "isComposite": false
+      },
+      "created": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Date record was first recorded",
+        "isComposite": false
+      },
+      "author": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who is the designated responsible party",
+        "isComposite": false
+      },
+      "contributor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who provided the content of the care plan",
+        "isComposite": false
+      },
+      "careTeam": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who's involved in plan?",
+        "isComposite": false
+      },
+      "addresses": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Health issues this plan addresses",
+        "isComposite": false
+      },
+      "supportingInfo": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information considered as part of plan",
+        "isComposite": false
+      },
+      "goal": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Desired outcome of plan",
+        "isComposite": false
+      },
+      "activity": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Action to occur as part of plan",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "nextVisitDate": {
+            "extension": {
+              "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit"
+            },
+            "desc": "Care Plan - Next Visit Date"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "outcomeCodeableConcept": {
+            "type": "CodeableConcept",
+            "desc": "Results of the activity"
+          },
+          "outcomeReference": {
+            "type": "Reference",
+            "desc": "Appointment, Encounter, Procedure, etc."
+          },
+          "progress": {
+            "type": "Annotation",
+            "desc": "Comments about the activity status/progress"
+          },
+          "reference": {
+            "type": "Reference",
+            "desc": "Activity details defined in specific resource"
+          },
+          "detail": {
+            "type": "string",
+            "desc": "Extra info describing activity to perform"
+          }
+        }
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the plan",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "cotrimoxazole-preventive-therapy-careplan",
+    "type": "CarePlan",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-careplan",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this plan",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills CarePlan",
+        "isComposite": false
+      },
+      "replaces": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "CarePlan replaced by this CarePlan",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced CarePlan",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of plan",
+        "isComposite": false,
+        "defaults": [
+          {
+            "coding": [
+              {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "cotrimoxazole-care-plan"
+              }
+            ]
+          }
+        ],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "title": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Human-friendly name for the care plan",
+        "isComposite": false
+      },
+      "description": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Summary of nature of plan",
+        "isComposite": false
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the care plan is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period plan covers",
+        "isComposite": false
+      },
+      "created": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Date record was first recorded",
+        "isComposite": false
+      },
+      "author": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who is the designated responsible party",
+        "isComposite": false
+      },
+      "contributor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who provided the content of the care plan",
+        "isComposite": false
+      },
+      "careTeam": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who's involved in plan?",
+        "isComposite": false
+      },
+      "addresses": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Health issues this plan addresses",
+        "isComposite": false
+      },
+      "supportingInfo": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information considered as part of plan",
+        "isComposite": false
+      },
+      "goal": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Desired outcome of plan",
+        "isComposite": false
+      },
+      "activity": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Action to occur as part of plan",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "adherence": {
+            "extension": {
+              "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-adherence"
+            },
+            "desc": "Cotrimoxazole Adherence"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "outcomeCodeableConcept": {
+            "type": "CodeableConcept",
+            "desc": "Results of the activity"
+          },
+          "outcomeReference": {
+            "type": "Reference",
+            "desc": "Appointment, Encounter, Procedure, etc."
+          },
+          "progress": {
+            "type": "Annotation",
+            "desc": "Comments about the activity status/progress"
+          },
+          "reference": {
+            "type": "Reference",
+            "desc": "Activity details defined in specific resource"
+          },
+          "detail": {
+            "type": "string",
+            "desc": "Extra info describing activity to perform"
+          }
+        }
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the plan",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "tb-treatment-careplan",
+    "type": "CarePlan",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/tb-treatment-careplan",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this plan",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills CarePlan",
+        "isComposite": false
+      },
+      "replaces": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "CarePlan replaced by this CarePlan",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced CarePlan",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of plan",
+        "isComposite": false,
+        "defaults": [
+          {
+            "coding": [
+              {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "tb-treatment-care-plan"
+              }
+            ]
+          }
+        ],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "title": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Human-friendly name for the care plan",
+        "isComposite": false
+      },
+      "description": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Summary of nature of plan",
+        "isComposite": false
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the care plan is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period plan covers",
+        "isComposite": false
+      },
+      "created": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Date record was first recorded",
+        "isComposite": false
+      },
+      "author": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who is the designated responsible party",
+        "isComposite": false
+      },
+      "contributor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who provided the content of the care plan",
+        "isComposite": false
+      },
+      "careTeam": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who's involved in plan?",
+        "isComposite": false
+      },
+      "addresses": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Health issues this plan addresses",
+        "isComposite": false
+      },
+      "supportingInfo": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information considered as part of plan",
+        "isComposite": false
+      },
+      "goal": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Desired outcome of plan",
+        "isComposite": false
+      },
+      "activity": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Action to occur as part of plan",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "outcomeCodeableConcept": {
+            "type": "CodeableConcept",
+            "desc": "Results of the activity"
+          },
+          "outcomeReference": {
+            "type": "Reference",
+            "desc": "Appointment, Encounter, Procedure, etc."
+          },
+          "progress": {
+            "type": "Annotation",
+            "desc": "Comments about the activity status/progress"
+          },
+          "reference": {
+            "type": "Reference",
+            "desc": "Activity details defined in specific resource"
+          },
+          "detail": {
+            "type": "string",
+            "desc": "Extra info describing activity to perform"
+          }
+        }
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the plan",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "tpt-careplan",
+    "type": "CarePlan",
+    "url": "http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-careplan",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this plan",
+        "isComposite": false
+      },
+      "instantiatesCanonical": {
+        "type": "canonical",
+        "isArray": true,
+        "desc": "Instantiates FHIR protocol or definition",
+        "isComposite": false
+      },
+      "instantiatesUri": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates external protocol or definition",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills CarePlan",
+        "isComposite": false
+      },
+      "replaces": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "CarePlan replaced by this CarePlan",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced CarePlan",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
+        "isComposite": false
+      },
+      "intent": {
+        "type": "string",
+        "isArray": false,
+        "desc": "proposal | plan | order | option",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of plan",
+        "isComposite": false,
+        "defaults": [
+          {
+            "coding": [
+              {
+                "system": "http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system",
+                "code": "tb-preventive-therapy-care-plan"
+              }
+            ]
+          }
+        ],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "title": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Human-friendly name for the care plan",
+        "isComposite": false
+      },
+      "description": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Summary of nature of plan",
+        "isComposite": false
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who the care plan is for",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter created as part of",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period plan covers",
+        "isComposite": false
+      },
+      "created": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Date record was first recorded",
+        "isComposite": false
+      },
+      "author": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who is the designated responsible party",
+        "isComposite": false
+      },
+      "contributor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who provided the content of the care plan",
+        "isComposite": false
+      },
+      "careTeam": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who's involved in plan?",
+        "isComposite": false
+      },
+      "addresses": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Health issues this plan addresses",
+        "isComposite": false
+      },
+      "supportingInfo": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Information considered as part of plan",
+        "isComposite": false
+      },
+      "goal": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Desired outcome of plan",
+        "isComposite": false
+      },
+      "activity": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Action to occur as part of plan",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "outcomeCodeableConcept": {
+            "type": "CodeableConcept",
+            "desc": "Results of the activity"
+          },
+          "outcomeReference": {
+            "type": "Reference",
+            "desc": "Appointment, Encounter, Procedure, etc."
+          },
+          "progress": {
+            "type": "Annotation",
+            "desc": "Comments about the activity status/progress"
+          },
+          "reference": {
+            "type": "Reference",
+            "desc": "Activity details defined in specific resource"
+          },
+          "detail": {
+            "type": "string",
+            "desc": "Extra info describing activity to perform"
+          }
+        }
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the plan",
+        "isComposite": false
+      }
+    }
+  }
+]
