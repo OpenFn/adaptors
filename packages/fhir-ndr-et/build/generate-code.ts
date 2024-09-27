@@ -46,8 +46,6 @@ const generateCode = (schema, mappings) => {
 
 export default generateCode;
 
-// TODO this isn't pretty but it works
-// Note that I really need to standardize name builders for these things
 const generateEntry = (resourceType: string, variants: Schema[]) => {
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.

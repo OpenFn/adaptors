@@ -36,8 +36,7 @@ export const mapSystems = obj => {
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
  * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
-};
-
+ * };
  */
 export const setSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
@@ -130,7 +129,7 @@ export const findExtension = (obj, targetUrl, path) => {
  * @public
  * @function
  * @param {string} code - the code value
- * @param {stting} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Well be mapped using the system map.
  */
 export const coding = (code, system) => ({ code, system: mapSystems(system) });
 
