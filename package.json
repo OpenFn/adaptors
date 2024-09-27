@@ -28,10 +28,6 @@
   "devDependencies": {
     "@changesets/cli": "2.27.5",
     "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/language-common": "workspace:^",
-    "@openfn/language-dhis2": "workspace:^",
-    "@openfn/language-fhir": "workspace:^",
-    "@openfn/language-fhir-jembi": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",
