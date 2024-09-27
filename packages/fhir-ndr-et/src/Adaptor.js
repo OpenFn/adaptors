@@ -1,4 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
+import * as util from './utils';
 
 // This is only available at after build
 // @ts-ignore
