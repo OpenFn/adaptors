@@ -356,8 +356,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"/user\", { \"username\":\"test\", \"password\":\"somepassword\" });",
-            "caption": "Make a POST request to create a new user"
+            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
+            "caption": "Make a GET request to get cases"
           },
           {
             "title": "function",
@@ -416,6 +416,79 @@
           {
             "title": "state",
             "description": "{CommcareHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "bulk",
+      "params": [
+        "type",
+        "data",
+        "params"
+      ],
+      "docs": {
+        "description": "Bulk upload data to CommCare. Accepts an array of objects, converts them into\nan XLS representation, and uploads.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "bulk(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)",
+            "caption": "Upload a single row of data for case-data"
+          },
+          {
+            "title": "example",
+            "description": "bulk(\n    'lookup-table'\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'obat',\n  'is_global?':'yes',\n  'field 1': 'Nama',\n  'field 2': 'Satuan',\n  'field 3': 'Harga',\n  'field 4': 'kfa_codes',\n  'field 5': 'satusehat_id',\n  'field 6': 'strength',\n  'field 7': 'strength_unit',\n     }],\n     obat: [{\n      UID: 'bb73d4706adf47308c0cb16b9df74d03',\n       'DELETE(Y/N)':'N',\n      'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',\n       'field:Satuan': 'TABLET',\n       'field:Harga':'1375',\n       'field:kfa_codes': '92000372',\n       'field:satusehat_id': 'TAB',\n       'field:strength': '100',\n       'field:strength_unit': 'mg',\n    }],\n  }\n)",
+            "caption": "Upload a single row of data for a look-up table"
+          },
+          {
+            "title": "param",
+            "description": "case-data or lookup-tables",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "type"
+          },
+          {
+            "title": "param",
+            "description": "Array of objects to upload",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-tables.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "state",
+            "description": "data - the response from the CommCare Server"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },

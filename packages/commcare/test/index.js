@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post, request } from '../src';
+import { execute, submitXls, get, post, request, bulk } from '../src';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -654,7 +654,6 @@ describe('createUser', () => {
   });
 });
 
-
 describe('HTTP wrappers', () => {
   it('makes a GET request', async () => {
     testServer
@@ -665,7 +664,7 @@ describe('HTTP wrappers', () => {
       .reply(200, () => {
         // simulate a return from commcare
         return {
-          "case_id": "1",
+          case_id: '1',
         };
       });
 
@@ -679,11 +678,131 @@ describe('HTTP wrappers', () => {
       },
     };
 
-    const { data, response } = await 
-      request('GET', '/a/asri/api/v0.5/case')
-    (state);
+    const { data, response } = await request(
+      'GET',
+      '/a/asri/api/v0.5/case'
+    )(state);
 
     expect(data).to.haveOwnProperty('case_id');
     expect(response.statusCode).to.equal(200);
+  });
+});
+
+describe('Bulk', () => {
+  it('should submit JSON as an xls file', async () => {
+    let formdata;
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/importer/excel/bulk_upload_api/`,
+        method: 'POST',
+      })
+      .reply(200, req => {
+        // save out the form data that was upladed
+        formdata = req.body;
+
+        // simulate a return from commcare
+        return { code: 200, message: 'success' };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(
+      bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {
+        case_type: 'student',
+        search_field: 'external_id',
+        create_new_cases: 'on',
+      })
+    )(state);
+
+    // The response  should be on state.data
+    expect(data.code).to.equal(200);
+    expect(data.message).to.equal('success');
+
+    // And the adaptor should have uploaded a reasonable looking formdata object
+    expect(formdata.get('case_type')).to.not.be.undefined;
+    expect(formdata.get('case_type')).to.equal('student');
+    expect(formdata.get('search_field')).to.equal('external_id');
+    expect(formdata.get('create_new_cases')).to.equal('on');
+  });
+  it('should successfully submit a lookup-table file', async () => {
+    let formdata;
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/fixtures/fixapi/`,
+        method: 'POST',
+      })
+      .reply(200, req => {
+        // save out the form data that was upladed
+        formdata = req.body;
+
+        // simulate a return from commcare
+        return { code: 200, message: 'success' };
+      });
+
+    const state = {
+      configuration: {
+        hostUrl,
+        domain,
+        appId: app,
+        username: 'user',
+        password: 'password',
+      },
+    };
+
+    const { data } = await execute(
+      bulk(
+        'lookup-table',
+        {
+          types: [
+            {
+              'DELETE(Y/N)': 'N',
+              table_id: 'obat',
+              'is_global?': 'yes',
+              'field 1': 'Nama',
+              'field 2': 'Satuan',
+              'field 3': 'Harga',
+              'field 4': 'kfa_codes',
+              'field 5': 'satusehat_id',
+              'field 6': 'strength',
+              'field 7': 'strength_unit',
+            },
+          ],
+          obat: [
+            {
+              UID: 'bb73d4706adf47308c0cb16b9df74d03',
+              'DELETE(Y/N)': 'N',
+              'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',
+              'field:Satuan': 'TABLET',
+              'field:Harga': '1375',
+              'field:kfa_codes': '92000372',
+              'field:satusehat_id': 'TAB',
+              'field:strength': '100',
+              'field:strength_unit': 'mg',
+            },
+          ],
+        },
+        {
+          replace: false,
+        }
+      )
+    )(state);
+
+    // The response  should be on state.data
+    expect(data.code).to.equal(200);
+    expect(data.message).to.equal('success');
+
+    // And the adaptor should have uploaded a reasonable looking formdata object
+    expect(formdata.get('replace')).to.not.be.undefined;
+    expect(formdata.get('replace')).to.equal('false');
   });
 });

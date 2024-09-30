@@ -3,6 +3,9 @@ import { expandReferences } from '@openfn/language-common/util';
 import { Blob } from 'node:buffer';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
 import * as util from './Utils';
 /**
@@ -344,6 +347,119 @@ export function request(method, path, body, options = {}) {
       return util.prepareNextState(state, response);
     } catch (e) {
       throw e;
+    }
+  };
+}
+
+/**
+ * Bulk upload data to CommCare. Accepts an array of objects, converts them into
+ * an XLS representation, and uploads.
+ * @public
+ * @function
+ * @example <caption>Upload a single row of data for case-data</caption>
+ * bulk(
+ *    [
+ *      {name: 'Mamadou', phone: '000000'},
+ *    ],
+ *    {
+ *      case_type: 'student',
+ *      search_field: 'external_id',
+ *      create_new_cases: 'on',
+ *    }
+ * )
+ * @example <caption>Upload a single row of data for a look-up table</caption>
+ * bulk(
+ *     'lookup-table'
+ *  {
+ *    types: [{
+ *
+ *   'DELETE(Y/N)':'N',
+ *   table_id: 'obat',
+ *   'is_global?':'yes',
+ *   'field 1': 'Nama',
+ *   'field 2': 'Satuan',
+ *   'field 3': 'Harga',
+ *   'field 4': 'kfa_codes',
+ *   'field 5': 'satusehat_id',
+ *   'field 6': 'strength',
+ *   'field 7': 'strength_unit',
+ *      }],
+ *      obat: [{
+ *       UID: 'bb73d4706adf47308c0cb16b9df74d03',
+ *        'DELETE(Y/N)':'N',
+ *       'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',
+ *        'field:Satuan': 'TABLET',
+ *        'field:Harga':'1375',
+ *        'field:kfa_codes': '92000372',
+ *        'field:satusehat_id': 'TAB',
+ *        'field:strength': '100',
+ *        'field:strength_unit': 'mg',
+ *     }],
+ *   }
+ * )
+ * @param {string} type - case-data or lookup-tables
+ * @param {array} data - Array of objects to upload
+ * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-tables.
+ * @state data - the response from the CommCare Server
+ * @returns {Operation}
+ */
+export function bulk(type, data, params) {
+  return async state => {
+    const { domain } = state.configuration;
+
+    const [json] = expandReferences(state, data);
+    let apipath, file;
+
+    const workbook = xlsx.utils.book_new();
+
+    if (type.toLowerCase() === 'lookup-table') {
+      apipath = `/a/${domain}/fixtures/fixapi/`;
+      file = 'file-to-upload';
+      // append types and lookup-table name xlsx
+      Object.keys(json).forEach(sectionName => {
+        const sectionData = data[sectionName];
+
+        const newSheet = xlsx.utils.json_to_sheet(sectionData);
+        xlsx.utils.book_append_sheet(workbook, newSheet, sectionName);
+      });
+    } else if (type.toLowerCase() === 'case-data') {
+      apipath = `/a/${domain}/importer/excel/bulk_upload_api/`;
+      file = 'file';
+      const worksheet = xlsx.utils.json_to_sheet(json);
+      const ws_name = 'SheetJS';
+      xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
+    } else {
+      const e = new Error('Unrecognized type');
+      e.description = `The type key was not recognized: ${type}`;
+      e.fix = 'Set type to case-data or lookup-table';
+      throw e;
+    }
+
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    const form = new FormData();
+
+    form.append(file, new Blob([buffer]), 'data.xlsx');
+
+    for (const key in params) {
+      form.append(key, params[key]);
+    }
+
+    try {
+      const response = await util.request(state.configuration, apipath, {
+        method: 'POST',
+        data: form,
+      });
+
+      return util.prepareNextState(state, {
+        ...response,
+        body: {
+          message: response.body.message.replace(/\n/g, ''),
+          code: response.body.code,
+        },
+      });
+    } catch (e) {
+      throw e.body ?? e;
     }
   };
 }
