@@ -372,26 +372,16 @@ export function request(method, path, body, options = {}) {
  *    types: [{
  *
  *   'DELETE(Y/N)':'N',
- *   table_id: 'obat',
+ *   table_id: 'fruit',
  *   'is_global?':'yes',
- *   'field 1': 'Nama',
- *   'field 2': 'Satuan',
- *   'field 3': 'Harga',
- *   'field 4': 'kfa_codes',
- *   'field 5': 'satusehat_id',
- *   'field 6': 'strength',
- *   'field 7': 'strength_unit',
+ *   'field 1': 'type',
+ *   'field 2': 'name',
  *      }],
  *      obat: [{
- *       UID: 'bb73d4706adf47308c0cb16b9df74d03',
+ *       UID: '',
  *        'DELETE(Y/N)':'N',
- *       'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',
- *        'field:Satuan': 'TABLET',
- *        'field:Harga':'1375',
- *        'field:kfa_codes': '92000372',
- *        'field:satusehat_id': 'TAB',
- *        'field:strength': '100',
- *        'field:strength_unit': 'mg',
+ *       'field:type': 'citrus',
+ *        'field:name': 'Orange',
  *     }],
  *   }
  * )
@@ -457,7 +447,7 @@ export function bulk(type, data, params) {
         },
       });
     } catch (e) {
-      throw e.body ?? e;
+      throw  e;
     }
   };
 }

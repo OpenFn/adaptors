@@ -733,7 +733,7 @@ describe('Bulk', () => {
     expect(formdata.get('search_field')).to.equal('external_id');
     expect(formdata.get('create_new_cases')).to.equal('on');
   });
-  it('should successfully submit a lookup-table file', async () => {
+  it('should successfully bulk upload lookup-table data', async () => {
     let formdata;
 
     testServer
