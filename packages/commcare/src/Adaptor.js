@@ -377,7 +377,7 @@ export function request(method, path, body, options = {}) {
  *   'field 1': 'type',
  *   'field 2': 'name',
  *      }],
- *      obat: [{
+ *      fruit: [{
  *       UID: '',
  *        'DELETE(Y/N)':'N',
  *       'field:type': 'citrus',
@@ -396,12 +396,12 @@ export function bulk(type, data, params) {
     const { domain } = state.configuration;
 
     const [json] = expandReferences(state, data);
-    let apipath, file;
+    let path, file;
 
     const workbook = xlsx.utils.book_new();
 
     if (type.toLowerCase() === 'lookup-table') {
-      apipath = `/a/${domain}/fixtures/fixapi/`;
+      path = `/a/${domain}/fixtures/fixapi/`;
       file = 'file-to-upload';
       // append types and lookup-table name xlsx
       Object.keys(json).forEach(sectionName => {
@@ -411,7 +411,7 @@ export function bulk(type, data, params) {
         xlsx.utils.book_append_sheet(workbook, newSheet, sectionName);
       });
     } else if (type.toLowerCase() === 'case-data') {
-      apipath = `/a/${domain}/importer/excel/bulk_upload_api/`;
+      path = `/a/${domain}/importer/excel/bulk_upload_api/`;
       file = 'file';
       const worksheet = xlsx.utils.json_to_sheet(json);
       const ws_name = 'SheetJS';
@@ -434,7 +434,7 @@ export function bulk(type, data, params) {
     }
 
     try {
-      const response = await util.request(state.configuration, apipath, {
+      const response = await util.request(state.configuration, path, {
         method: 'POST',
         data: form,
       });
