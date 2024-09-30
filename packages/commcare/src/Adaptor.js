@@ -395,9 +395,9 @@ export function request(method, path, body, options = {}) {
  *     }],
  *   }
  * )
- * @param {string} type - case-data or lookup-tables
+ * @param {string} type - case-data or lookup-table
  * @param {array} data - Array of objects to upload
- * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-tables.
+ * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-table.
  * @state data - the response from the CommCare Server
  * @returns {Operation}
  */
