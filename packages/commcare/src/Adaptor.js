@@ -3,9 +3,7 @@ import { expandReferences } from '@openfn/language-common/util';
 import { Blob } from 'node:buffer';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
+
 
 import * as util from './Utils';
 /**

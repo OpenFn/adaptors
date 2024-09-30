@@ -266,9 +266,6 @@ importers:
       JSONPath:
         specifier: ^0.10.0
         version: 0.10.0
-      file-saver:
-        specifier: ^2.0.5
-        version: 2.0.5
       js2xmlparser:
         specifier: ^1.0.0
         version: 1.0.0
@@ -7844,10 +7841,6 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
-
-  /file-saver@2.0.5:
-    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
-    dev: false
 
   /file-set@4.0.2:
     resolution: {integrity: sha512-fuxEgzk4L8waGXaAkd8cMr73Pm0FxOVkn8hztzUW7BAHhOGH90viQNXbiOsnecCWmfInqU6YmAMwxRMdKETceQ==}
