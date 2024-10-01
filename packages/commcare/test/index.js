@@ -15,6 +15,14 @@ const defaultObjects = [
   { case_id: '5' },
   { case_id: '6' },
 ];
+
+const configuration = {
+  hostUrl,
+  domain,
+  appId: app,
+  username: 'user',
+  password: 'password',
+};
 const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
   const next =
     offset + limit < objects.length ? `offset=${offset + limit}&limit=1` : null;
@@ -147,15 +155,7 @@ describe('SubmitXls', () => {
         return { code: 200, message: 'success' };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(
       submitXls([{ name: 'Mamadou', phone: '000000' }], {
@@ -227,15 +227,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(get('case'))(state);
 
@@ -281,15 +273,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(get('case/12345'))(state);
     expect(data.case_id).to.equal('12345');
@@ -345,15 +329,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
     let callbackArg;
     const callback = state => {
       callbackArg = state;
@@ -416,15 +392,7 @@ describe('get', () => {
       })
       .times(3);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(get('case'))(state);
     expect(callCount).to.equal(3);
@@ -450,15 +418,7 @@ describe('get', () => {
       })
       .times(3);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     let callbackArgCount = 0;
     const callback = state => {
@@ -495,15 +455,7 @@ describe('get', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { response } = await execute(get('case'))(state);
     expect(response.statusCode).to.equal(200);
@@ -526,15 +478,7 @@ describe('get', () => {
         return paginatedResponse(req.query.offset, 1);
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(get('case', { offset: 1 }))(state);
     expect(data.length).to.equal(1);
@@ -555,15 +499,7 @@ describe('get', () => {
       })
       .times(5);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const callback = state => {
       expect(state.data.length).to.equal(2);
@@ -593,15 +529,7 @@ describe('get', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     let callbackArgCount = 0;
     const callback = state => {
@@ -628,15 +556,7 @@ describe('createUser', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(
       post('user', {
@@ -668,15 +588,7 @@ describe('HTTP wrappers', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await request(
       'GET',
@@ -689,14 +601,24 @@ describe('HTTP wrappers', () => {
 });
 
 describe('Bulk', () => {
+  it('should throw an error if type is not case-data or lookup-table', async () => {
+    const state = { configuration };
 
-  const configuration = {
-    hostUrl,
-    domain,
-    appId: app,
-    username: 'user',
-    password: 'password',
-  }
+    await execute(
+      bulk('case-lookup-table', [{ name: 'Mamadou', phone: '000000' }], {
+        case_type: 'student',
+        search_field: 'external_id',
+        create_new_cases: 'on',
+      })
+    )(state).catch(e => {
+      expect(e.message).to.equal('Unrecognized type');
+      expect(e.description).to.equal(
+        'The type key was not recognized: case-lookup-table'
+      );
+      expect(e.fix).to.equal('Set type to case-data or lookup-table');
+    });
+  });
+
   it('should bulk upload case-data', async () => {
     let formdata;
 
@@ -752,7 +674,7 @@ describe('Bulk', () => {
       });
 
     const state = {
-      configuration
+      configuration,
     };
 
     const { data } = await execute(

@@ -429,7 +429,7 @@
         "params"
       ],
       "docs": {
-        "description": "Bulk upload data to CommCare. Accepts an array of objects, converts them into\nan XLS representation, and uploads.",
+        "description": "Bulk upload data to CommCare for case-data or lookup-table. Accepts an array of objects, converts them into\nan XLS representation, and uploads.",
         "tags": [
           {
             "title": "public",
@@ -449,7 +449,7 @@
           {
             "title": "example",
             "description": "bulk(\n    'lookup-table'\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'fruit',\n  'is_global?':'yes',\n  'field 1': 'type',\n  'field 2': 'name',\n     }],\n     fruit: [{\n      UID: '',\n       'DELETE(Y/N)':'N',\n      'field:type': 'citrus',\n       'field:name': 'Orange',\n    }],\n  }\n)",
-            "caption": "Upload a single row of data for a look-up table"
+            "caption": "Upload a single row of data for a lookup-table"
           },
           {
             "title": "param",
