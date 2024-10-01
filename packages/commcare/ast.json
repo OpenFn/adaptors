@@ -356,8 +356,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"/user\", { \"username\":\"test\", \"password\":\"somepassword\" });",
-            "caption": "Make a POST request to create a new user"
+            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
+            "caption": "Make a GET request to get cases"
           },
           {
             "title": "function",

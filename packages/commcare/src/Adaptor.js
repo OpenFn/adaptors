@@ -333,7 +333,6 @@ export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
       expandReferences(state, method, path, body, options);
-    try {
       const response = await util.request(state.configuration, resolvedPath, {
         method: resolvedMethod,
         data: resolvedBody,
@@ -342,9 +341,7 @@ export function request(method, path, body, options = {}) {
       });
 
       return util.prepareNextState(state, response);
-    } catch (e) {
-      throw e;
-    }
+
   };
 }
 export {
