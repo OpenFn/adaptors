@@ -349,7 +349,7 @@ export function request(method, path, body, options = {}) {
 }
 
 /**
- * Bulk upload data to CommCare. Accepts an array of objects, converts them into
+ * Bulk upload data to CommCare for case-data or lookup-table. Accepts an array of objects, converts them into
  * an XLS representation, and uploads.
  * @public
  * @function
@@ -364,7 +364,7 @@ export function request(method, path, body, options = {}) {
  *      create_new_cases: 'on',
  *    }
  * )
- * @example <caption>Upload a single row of data for a look-up table</caption>
+ * @example <caption>Upload a single row of data for a lookup-table</caption>
  * bulk(
  *     'lookup-table'
  *  {
