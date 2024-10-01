@@ -574,12 +574,16 @@ describe('createUser', () => {
   });
 });
 
-describe('HTTP wrappers', () => {
+
+describe('request', () => {
   it('makes a GET request', async () => {
     testServer
       .intercept({
         path: `/a/asri/api/v0.5/case`,
         method: 'GET',
+        query: {
+          offset: 1,
+        },
       })
       .reply(200, () => {
         // simulate a return from commcare
@@ -590,10 +594,9 @@ describe('HTTP wrappers', () => {
 
     const state = { configuration };
 
-    const { data, response } = await request(
-      'GET',
-      '/a/asri/api/v0.5/case'
-    )(state);
+    const { data, response } = await 
+      request('GET', '/a/asri/api/v0.5/case', {}, {offset: 1 })
+    (state);
 
     expect(data).to.haveOwnProperty('case_id');
     expect(response.statusCode).to.equal(200);
