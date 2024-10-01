@@ -4,7 +4,6 @@ import { Blob } from 'node:buffer';
 import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 
-
 import * as util from './Utils';
 /**
  * State object
@@ -433,22 +432,18 @@ export function bulk(type, data, params) {
       form.append(key, params[key]);
     }
 
-    try {
-      const response = await util.request(state.configuration, path, {
-        method: 'POST',
-        data: form,
-      });
+    const response = await util.request(state.configuration, path, {
+      method: 'POST',
+      data: form,
+    });
 
-      return util.prepareNextState(state, {
-        ...response,
-        body: {
-          message: response.body.message.replace(/\n/g, ''),
-          code: response.body.code,
-        },
-      });
-    } catch (e) {
-      throw  e;
-    }
+    return util.prepareNextState(state, {
+      ...response,
+      body: {
+        message: response.body.message.replace(/\n/g, ''),
+        code: response.body.code,
+      },
+    });
   };
 }
 export {

@@ -448,12 +448,12 @@
           },
           {
             "title": "example",
-            "description": "bulk(\n    'lookup-table'\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'obat',\n  'is_global?':'yes',\n  'field 1': 'Nama',\n  'field 2': 'Satuan',\n  'field 3': 'Harga',\n  'field 4': 'kfa_codes',\n  'field 5': 'satusehat_id',\n  'field 6': 'strength',\n  'field 7': 'strength_unit',\n     }],\n     obat: [{\n      UID: 'bb73d4706adf47308c0cb16b9df74d03',\n       'DELETE(Y/N)':'N',\n      'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',\n       'field:Satuan': 'TABLET',\n       'field:Harga':'1375',\n       'field:kfa_codes': '92000372',\n       'field:satusehat_id': 'TAB',\n       'field:strength': '100',\n       'field:strength_unit': 'mg',\n    }],\n  }\n)",
+            "description": "bulk(\n    'lookup-table'\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'fruit',\n  'is_global?':'yes',\n  'field 1': 'type',\n  'field 2': 'name',\n     }],\n     fruit: [{\n      UID: '',\n       'DELETE(Y/N)':'N',\n      'field:type': 'citrus',\n       'field:name': 'Orange',\n    }],\n  }\n)",
             "caption": "Upload a single row of data for a look-up table"
           },
           {
             "title": "param",
-            "description": "case-data or lookup-tables",
+            "description": "case-data or lookup-table",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -471,7 +471,7 @@
           },
           {
             "title": "param",
-            "description": "Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-tables.",
+            "description": "Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-table.",
             "type": {
               "type": "NameExpression",
               "name": "Object"

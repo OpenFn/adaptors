@@ -689,7 +689,15 @@ describe('HTTP wrappers', () => {
 });
 
 describe('Bulk', () => {
-  it('should submit JSON as an xls file', async () => {
+
+  const configuration = {
+    hostUrl,
+    domain,
+    appId: app,
+    username: 'user',
+    password: 'password',
+  }
+  it('should bulk upload case-data', async () => {
     let formdata;
 
     testServer
@@ -706,13 +714,7 @@ describe('Bulk', () => {
       });
 
     const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
+      configuration,
     };
 
     const { data } = await execute(
@@ -750,13 +752,7 @@ describe('Bulk', () => {
       });
 
     const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
+      configuration
     };
 
     const { data } = await execute(
