@@ -344,6 +344,105 @@ export function request(method, path, body, options = {}) {
 
   };
 }
+
+/**
+ * Bulk upload data to CommCare for case-data or lookup-table. Accepts an array of objects, converts them into
+ * an XLS representation, and uploads.
+ * @public
+ * @function
+ * @example <caption>Upload a single row of data for case-data</caption>
+ * bulk(
+ *    [
+ *      {name: 'Mamadou', phone: '000000'},
+ *    ],
+ *    {
+ *      case_type: 'student',
+ *      search_field: 'external_id',
+ *      create_new_cases: 'on',
+ *    }
+ * )
+ * @example <caption>Upload a single row of data for a lookup-table</caption>
+ * bulk(
+ *     'lookup-table'
+ *  {
+ *    types: [{
+ *
+ *   'DELETE(Y/N)':'N',
+ *   table_id: 'fruit',
+ *   'is_global?':'yes',
+ *   'field 1': 'type',
+ *   'field 2': 'name',
+ *      }],
+ *      fruit: [{
+ *       UID: '',
+ *        'DELETE(Y/N)':'N',
+ *       'field:type': 'citrus',
+ *        'field:name': 'Orange',
+ *     }],
+ *   }
+ * )
+ * @param {string} type - case-data or lookup-table
+ * @param {array} data - Array of objects to upload
+ * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-table.
+ * @state data - the response from the CommCare Server
+ * @returns {Operation}
+ */
+export function bulk(type, data, params) {
+  return async state => {
+    const { domain } = state.configuration;
+
+    const [json] = expandReferences(state, data);
+    let path, file;
+
+    const workbook = xlsx.utils.book_new();
+
+    if (type.toLowerCase() === 'lookup-table') {
+      path = `/a/${domain}/fixtures/fixapi/`;
+      file = 'file-to-upload';
+      // append types and lookup-table name xlsx
+      Object.keys(json).forEach(sectionName => {
+        const sectionData = data[sectionName];
+
+        const newSheet = xlsx.utils.json_to_sheet(sectionData);
+        xlsx.utils.book_append_sheet(workbook, newSheet, sectionName);
+      });
+    } else if (type.toLowerCase() === 'case-data') {
+      path = `/a/${domain}/importer/excel/bulk_upload_api/`;
+      file = 'file';
+      const worksheet = xlsx.utils.json_to_sheet(json);
+      const ws_name = 'SheetJS';
+      xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
+    } else {
+      const e = new Error('Unrecognized type');
+      e.description = `The type key was not recognized: ${type}`;
+      e.fix = 'Set type to case-data or lookup-table';
+      throw e;
+    }
+
+    const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    const form = new FormData();
+
+    form.append(file, new Blob([buffer]), 'data.xlsx');
+
+    for (const key in params) {
+      form.append(key, params[key]);
+    }
+
+    const response = await util.request(state.configuration, path, {
+      method: 'POST',
+      data: form,
+    });
+
+    return util.prepareNextState(state, {
+      ...response,
+      body: {
+        message: response.body.message.replace(/\n/g, ''),
+        code: response.body.code,
+      },
+    });
+  };
+}
 export {
   fn,
   fnIf,
