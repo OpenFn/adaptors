@@ -468,9 +468,7 @@ describe('get', () => {
       .intercept({
         path: '/a/my-domain/api/v0.5/case',
         method: 'GET',
-        query: {
-          offset: 1,
-        },
+        query: { offset: 1 },
       })
       .reply(200, req => {
         callCount++;
@@ -574,7 +572,6 @@ describe('createUser', () => {
   });
 });
 
-
 describe('request', () => {
   it('makes a GET request', async () => {
     testServer
@@ -594,9 +591,12 @@ describe('request', () => {
 
     const state = { configuration };
 
-    const { data, response } = await 
-      request('GET', '/a/asri/api/v0.5/case', {}, {offset: 1 })
-    (state);
+    const { data, response } = await request(
+      'GET',
+      '/a/asri/api/v0.5/case',
+      {},
+      { offset: 1 }
+    )(state);
 
     expect(data).to.haveOwnProperty('case_id');
     expect(response.statusCode).to.equal(200);
