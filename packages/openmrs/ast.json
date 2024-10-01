@@ -124,6 +124,72 @@
       "valid": true
     },
     {
+      "name": "fhirGet",
+      "params": [
+        "path",
+        "query",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a get request to any FHIR endpoint in OpenMRS",
+        "tags": [
+          {
+            "title": "example",
+            "description": "fhirGet(\"/ws/fhir2/R4/Encounter\", {\n  q: \"Patient\",\n  limit: 1,\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "parameters for the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "post",
       "params": [
         "path",
