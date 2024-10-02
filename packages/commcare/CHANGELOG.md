@@ -1,5 +1,12 @@
 # @openfn/language-commcare
 
+## 3.2.0
+
+### Minor Changes
+
+- c800948: Implement a generic request funciton for generic HTTP calls
+- cff886e: Implement bulk function for lookup-table and case-data bulk uploads
+
 ## 3.1.2
 
 ### Patch Changes

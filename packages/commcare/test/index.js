@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post } from '../src';
+import { execute, submitXls, get, post, request, bulk } from '../src';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl);
@@ -15,6 +15,14 @@ const defaultObjects = [
   { case_id: '5' },
   { case_id: '6' },
 ];
+
+const configuration = {
+  hostUrl,
+  domain,
+  appId: app,
+  username: 'user',
+  password: 'password',
+};
 const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
   const next =
     offset + limit < objects.length ? `offset=${offset + limit}&limit=1` : null;
@@ -147,15 +155,7 @@ describe('SubmitXls', () => {
         return { code: 200, message: 'success' };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(
       submitXls([{ name: 'Mamadou', phone: '000000' }], {
@@ -227,15 +227,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(get('case'))(state);
 
@@ -281,15 +273,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(get('case/12345'))(state);
     expect(data.case_id).to.equal('12345');
@@ -345,15 +329,7 @@ describe('getCases', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
     let callbackArg;
     const callback = state => {
       callbackArg = state;
@@ -416,15 +392,7 @@ describe('get', () => {
       })
       .times(3);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(get('case'))(state);
     expect(callCount).to.equal(3);
@@ -450,15 +418,7 @@ describe('get', () => {
       })
       .times(3);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     let callbackArgCount = 0;
     const callback = state => {
@@ -495,15 +455,7 @@ describe('get', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { response } = await execute(get('case'))(state);
     expect(response.statusCode).to.equal(200);
@@ -516,9 +468,7 @@ describe('get', () => {
       .intercept({
         path: '/a/my-domain/api/v0.5/case',
         method: 'GET',
-        query: {
-          offset: 1,
-        },
+        query: { offset: 1 },
       })
       .reply(200, req => {
         callCount++;
@@ -526,15 +476,7 @@ describe('get', () => {
         return paginatedResponse(req.query.offset, 1);
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data } = await execute(get('case', { offset: 1 }))(state);
     expect(data.length).to.equal(1);
@@ -555,15 +497,7 @@ describe('get', () => {
       })
       .times(5);
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const callback = state => {
       expect(state.data.length).to.equal(2);
@@ -593,15 +527,7 @@ describe('get', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     let callbackArgCount = 0;
     const callback = state => {
@@ -628,15 +554,7 @@ describe('createUser', () => {
         };
       });
 
-    const state = {
-      configuration: {
-        hostUrl,
-        domain,
-        appId: app,
-        username: 'user',
-        password: 'password',
-      },
-    };
+    const state = { configuration };
 
     const { data, response } = await execute(
       post('user', {
@@ -651,5 +569,161 @@ describe('createUser', () => {
 
     expect(data).to.haveOwnProperty('id');
     expect(response.statusCode).to.equal(201);
+  });
+});
+
+describe('request', () => {
+  it('makes a GET request', async () => {
+    testServer
+      .intercept({
+        path: `/a/asri/api/v0.5/case`,
+        method: 'GET',
+        query: {
+          offset: 1,
+        },
+      })
+      .reply(200, () => {
+        // simulate a return from commcare
+        return {
+          case_id: '1',
+        };
+      });
+
+    const state = { configuration };
+
+    const { data, response } = await request(
+      'GET',
+      '/a/asri/api/v0.5/case',
+      {},
+      { offset: 1 }
+    )(state);
+
+    expect(data).to.haveOwnProperty('case_id');
+    expect(response.statusCode).to.equal(200);
+  });
+});
+
+describe('Bulk', () => {
+  it('should throw an error if type is not case-data or lookup-table', async () => {
+    const state = { configuration };
+
+    await execute(
+      bulk('case-lookup-table', [{ name: 'Mamadou', phone: '000000' }], {
+        case_type: 'student',
+        search_field: 'external_id',
+        create_new_cases: 'on',
+      })
+    )(state).catch(e => {
+      expect(e.message).to.equal('Unrecognized type');
+      expect(e.description).to.equal(
+        'The type key was not recognized: case-lookup-table'
+      );
+      expect(e.fix).to.equal('Set type to case-data or lookup-table');
+    });
+  });
+
+  it('should bulk upload case-data', async () => {
+    let formdata;
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/importer/excel/bulk_upload_api/`,
+        method: 'POST',
+      })
+      .reply(200, req => {
+        // save out the form data that was upladed
+        formdata = req.body;
+
+        // simulate a return from commcare
+        return { code: 200, message: 'success' };
+      });
+
+    const state = {
+      configuration,
+    };
+
+    const { data } = await execute(
+      bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {
+        case_type: 'student',
+        search_field: 'external_id',
+        create_new_cases: 'on',
+      })
+    )(state);
+
+    // The response  should be on state.data
+    expect(data.code).to.equal(200);
+    expect(data.message).to.equal('success');
+
+    // And the adaptor should have uploaded a reasonable looking formdata object
+    expect(formdata.get('case_type')).to.not.be.undefined;
+    expect(formdata.get('case_type')).to.equal('student');
+    expect(formdata.get('search_field')).to.equal('external_id');
+    expect(formdata.get('create_new_cases')).to.equal('on');
+  });
+  it('should successfully bulk upload lookup-table data', async () => {
+    let formdata;
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/fixtures/fixapi/`,
+        method: 'POST',
+      })
+      .reply(200, req => {
+        // save out the form data that was upladed
+        formdata = req.body;
+
+        // simulate a return from commcare
+        return { code: 200, message: 'success' };
+      });
+
+    const state = {
+      configuration,
+    };
+
+    const { data } = await execute(
+      bulk(
+        'lookup-table',
+        {
+          types: [
+            {
+              'DELETE(Y/N)': 'N',
+              table_id: 'obat',
+              'is_global?': 'yes',
+              'field 1': 'Nama',
+              'field 2': 'Satuan',
+              'field 3': 'Harga',
+              'field 4': 'kfa_codes',
+              'field 5': 'satusehat_id',
+              'field 6': 'strength',
+              'field 7': 'strength_unit',
+            },
+          ],
+          obat: [
+            {
+              UID: 'bb73d4706adf47308c0cb16b9df74d03',
+              'DELETE(Y/N)': 'N',
+              'field:Nama': 'ACARBOSE PRB BPJS 100 mg*',
+              'field:Satuan': 'TABLET',
+              'field:Harga': '1375',
+              'field:kfa_codes': '92000372',
+              'field:satusehat_id': 'TAB',
+              'field:strength': '100',
+              'field:strength_unit': 'mg',
+            },
+          ],
+        },
+        {
+          replace: false,
+        }
+      )
+    )(state);
+
+    // The response  should be on state.data
+    expect(data.code).to.equal(200);
+    expect(data.message).to.equal('success');
+
+    // And the adaptor should have uploaded a reasonable looking formdata object
+    expect(formdata.get('replace')).to.not.be.undefined;
+    expect(formdata.get('replace')).to.equal('false');
   });
 });
