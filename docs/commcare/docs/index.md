@@ -1,10 +1,14 @@
 <dl>
 <dt>
+    <a href="#bulk">bulk(type, data, params)</a></dt>
+<dt>
     <a href="#fetchreportdata">fetchReportData(reportId, params, postUrl)</a></dt>
 <dt>
     <a href="#get">get(path, [params], [callback])</a></dt>
 <dt>
     <a href="#post">post(path, data, [params], [callback])</a></dt>
+<dt>
+    <a href="#request">request(method, path, body, options)</a></dt>
 <dt>
     <a href="#submit">submit(data)</a></dt>
 <dt>
@@ -64,6 +68,63 @@ This adaptor exports the following from common:
 </dt></dl>
 
 ## Functions
+### bulk
+
+<p><code>bulk(type, data, params) ⇒ Operation</code></p>
+
+Bulk upload data to CommCare for case-data or lookup-table. Accepts an array of objects, converts them into
+an XLS representation, and uploads.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | case-data or lookup-table |
+| data | <code>array</code> | Array of objects to upload |
+| params | <code>Object</code> | Input parameters, see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data) for case-data and [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables) for lookup-table. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the response from the CommCare Server |
+**Example:** Upload a single row of data for case-data
+```js
+bulk(
+   [
+     {name: 'Mamadou', phone: '000000'},
+   ],
+   {
+     case_type: 'student',
+     search_field: 'external_id',
+     create_new_cases: 'on',
+   }
+)
+```
+**Example:** Upload a single row of data for a lookup-table
+```js
+bulk(
+    'lookup-table'
+ {
+   types: [{
+
+  'DELETE(Y/N)':'N',
+  table_id: 'fruit',
+  'is_global?':'yes',
+  'field 1': 'type',
+  'field 2': 'name',
+     }],
+     fruit: [{
+      UID: '',
+       'DELETE(Y/N)':'N',
+      'field:type': 'citrus',
+       'field:name': 'Orange',
+    }],
+  }
+)
+```
+
+* * *
+
 ### fetchReportData
 
 <p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>
@@ -156,6 +217,34 @@ This operation writes the following keys to state:
 **Example:** Post a user object to to the /user endpoint
 ```js
 post("/user", { "username":"test", "password":"somepassword" })
+```
+
+* * *
+
+### request
+
+<p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
+Make a general HTTP request against the Commcare server.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | HTTP method to use |
+| path | <code>string</code> | Path to resource |
+| body | <code>object</code> | Object which will be attached to the body |
+| options | <code>RequestOptions</code> | Optional request params |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Make a GET request to get cases
+```js
+request("GET", "/a/asri/api/v0.5/case");
 ```
 
 * * *
