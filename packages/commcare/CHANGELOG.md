@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 3.2.1
+
+### Patch Changes
+
+- 8d85bb4: Implement resolved body and resolved params in bulk
+
 ## 3.2.0
 
 ### Minor Changes
