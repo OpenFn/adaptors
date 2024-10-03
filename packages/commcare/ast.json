@@ -443,29 +443,56 @@
           },
           {
             "title": "example",
-            "description": "bulk(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)",
+            "description": "bulk(\n'case-data',\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)",
             "caption": "Upload a single row of data for case-data"
           },
           {
             "title": "example",
-            "description": "bulk(\n    'lookup-table'\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'fruit',\n  'is_global?':'yes',\n  'field 1': 'type',\n  'field 2': 'name',\n     }],\n     fruit: [{\n      UID: '',\n       'DELETE(Y/N)':'N',\n      'field:type': 'citrus',\n       'field:name': 'Orange',\n    }],\n  }\n)",
+            "description": "bulk(\n    'lookup-table',\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'fruit',\n  'is_global?':'yes',\n  'field 1': 'type',\n  'field 2': 'name',\n     }],\n     fruit: [{\n      UID: '',\n       'DELETE(Y/N)':'N',\n      'field:type': 'citrus',\n       'field:name': 'Orange',\n    }],\n  },\n{replace: false}\n)",
             "caption": "Upload a single row of data for a lookup-table"
           },
           {
             "title": "param",
-            "description": "case-data or lookup-table",
+            "description": " The type of data being processed.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "StringLiteralType",
+                  "value": "case-data"
+                },
+                {
+                  "type": "StringLiteralType",
+                  "value": "lookup-table"
+                }
+              ]
             },
             "name": "type"
           },
           {
             "title": "param",
-            "description": "Array of objects to upload",
+            "description": "An object or an array of objects to upload.\n- If type is `'case-data'`, this should be an object array of objects.\n- If type is `'lookup-table'`, this should be an object.",
             "type": {
-              "type": "NameExpression",
-              "name": "array"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "data"
           },
