@@ -78,8 +78,8 @@ an XLS representation, and uploads.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | case-data or lookup-table |
-| data | <code>array</code> | Array of objects to upload |
+| type | <code>&#x27;case-data&#x27;</code> \| <code>&#x27;lookup-table&#x27;</code> | The type of data being processed. |
+| data | <code>Object</code> \| <code>Array.&lt;Object&gt;</code> | An object or an array of objects to upload. - If type is `'case-data'`, this should be an object array of objects. - If type is `'lookup-table'`, this should be an object. |
 | params | <code>Object</code> | Input parameters, see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data) for case-data and [Commcare Docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables) for lookup-table. |
 
 This operation writes the following keys to state:
@@ -90,6 +90,7 @@ This operation writes the following keys to state:
 **Example:** Upload a single row of data for case-data
 ```js
 bulk(
+'case-data',
    [
      {name: 'Mamadou', phone: '000000'},
    ],
@@ -103,7 +104,7 @@ bulk(
 **Example:** Upload a single row of data for a lookup-table
 ```js
 bulk(
-    'lookup-table'
+    'lookup-table',
  {
    types: [{
 
@@ -119,7 +120,8 @@ bulk(
       'field:type': 'citrus',
        'field:name': 'Orange',
     }],
-  }
+  },
+{replace: false}
 )
 ```
 
