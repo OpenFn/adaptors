@@ -7,6 +7,7 @@ import {
   get,
   post,
   create,
+  upsert,
   execute,
   getPatient,
   searchPerson,
@@ -332,5 +333,74 @@ describe('searchPatient', () => {
     )(state);
 
     expect(data.results[0].display).to.eql('Sarah');
+  });
+});
+
+describe('upsert', () => {
+  it('should update a patient', async () => {
+    testServer
+      .intercept({
+        path: `/ws/rest/v1/patient`,
+        query: { q: testData.patient.person.display },
+        method: 'GET',
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+
+    testServer
+      .intercept({
+        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body, {
+        ...jsonHeaders,
+      });
+
+    const state = {
+      configuration,
+      patient: testData.patient,
+    };
+
+    const result = await upsert(
+      'patient',
+      state => ({
+        q: state.patient.person.display,
+      }),
+      state => state.patient
+    )(state);
+
+    expect(result.data.person.display).to.eql('Sarah Lewis');
+  });
+  it('should create a patient', async () => {
+    testServer
+      .intercept({
+        path: `/ws/rest/v1/patient`,
+        query: { q: testData.patient.person.display },
+        method: 'GET',
+      })
+      .reply(200, { results: [] }, { ...jsonHeaders });
+
+    testServer
+      .intercept({
+        path: `/ws/rest/v1/patient`,
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body, {
+        ...jsonHeaders,
+      });
+
+    const state = {
+      configuration,
+      patient: testData.patient,
+    };
+
+    const result = await upsert(
+      'patient',
+      state => ({
+        q: state.patient.person.display,
+      }),
+      state => state.patient
+    )(state);
+
+    expect(result.data.person.display).to.eql('Sarah Lewis');
   });
 });

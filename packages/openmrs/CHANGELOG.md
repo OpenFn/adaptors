@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 4.0.2
+
+### Patch Changes
+
+- b1c48c7: improve upsert operation
+
 ## 4.0.1
 
 ### Patch Changes

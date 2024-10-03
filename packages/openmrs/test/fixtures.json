@@ -1,25 +1,162 @@
 {
     "patient": {
+        "uuid": "b52ec6f9-0e26-424c-a4a1-c64f9d571eb3",
+        "display": "1003EY - Sarah Lewis",
         "identifiers": [
             {
-                "identifier": "4023287",
+                "uuid": "5c09b5b6-de14-4a28-bb0c-761a82cbdc1b",
+                "identifier": "1003EY",
                 "identifierType": "05a29f94-c0ed-11e2-94be-8c13b969e334",
                 "preferred": true
             }
         ],
         "person": {
-            "gender": "M",
-            "age": 42,
-            "birthdate": "1970-01-01T00:00:00.000+0100",
+            "uuid": "b52ec6f9-0e26-424c-a4a1-c64f9d571eb3",
+            "display": "Sarah Lewis",
+            "gender": "F",
+            "age": 83,
+            "birthdate": "1936-12-04T00:00:00.000+0000",
             "birthdateEstimated": false,
+            "dead": false,
+            "deathDate": null,
+            "causeOfDeath": null,
             "names": [
                 {
-                    "givenName": "Doe",
-                    "familyName": "John"
+                    "uuid": "b3918971-c099-4cbe-a323-4b31e4edd493",
+                    "display": "Sarah Lewis",
+                    "givenName": "Sarah",
+                    "familyName": "Lewis",
+                    "preferred": true
                 }
-            ]
+            ],
+            "addresses": [
+                {
+                    "uuid": "1955ab01-20ac-4dc4-8c11-74578b05e004",
+                    "display": "Address14081",
+                    "preferred": true
+                }
+            ],
+            "attributes": [],
+            "voided": false,
+            "birthtime": null,
+            "deathdateEstimated": false
+        },
+        "voided": false
+    },
+    "newPatient": {
+        "identifiers": [
+            {
+                "identifier": "OMR-1234",
+                "identifierType": "05a29f94-c0ed-11e2-94be-8c13b969e334",
+                "preferred": true
+            }
+        ],
+        "person": {
+            "display": "John Doe",
+            "gender": "M",
+            "age": 35,
+            "birthdate": "1988-01-15T00:00:00.000+0000",
+            "birthdateEstimated": false,
+            "dead": false,
+            "deathDate": null,
+            "causeOfDeath": null,
+            "names": [
+                {
+                    "givenName": "John",
+                    "middleName": "",
+                    "familyName": "Doe",
+                    "preferred": true
+                }
+            ],
+            "addresses": [
+                {
+                    "address1": "123 Main St",
+                    "cityVillage": "Anytown",
+                    "stateProvince": "State",
+                    "country": "Country",
+                    "postalCode": "12345",
+                    "preferred": true
+                }
+            ],
+            "attributes": []
         }
     },
+    "patientResults": [
+        {
+            "uuid": "b52ec6f9-0e26-424c-a4a1-c64f9d571eb3",
+            "display": "1003EY - Sarah Lewis",
+            "identifiers": [
+                {
+                    "uuid": "5c09b5b6-de14-4a28-bb0c-761a82cbdc1b",
+                    "display": "OpenMRS ID = 1003EY",
+                    "links": [
+                        {
+                            "rel": "self",
+                            "uri": "https://fn.openmrs.org/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier/5c09b5b6-de14-4a28-bb0c-761a82cbdc1b"
+                        }
+                    ]
+                }
+            ],
+            "person": {
+                "uuid": "b52ec6f9-0e26-424c-a4a1-c64f9d571eb3",
+                "display": "Sarah Lewis",
+                "gender": "F",
+                "age": 83,
+                "birthdate": "1936-12-04T00:00:00.000+0000",
+                "birthdateEstimated": false,
+                "dead": false,
+                "deathDate": null,
+                "causeOfDeath": null,
+                "preferredName": {
+                    "uuid": "b3918971-c099-4cbe-a323-4b31e4edd493",
+                    "display": "Sarah Lewis",
+                    "links": [
+                        {
+                            "rel": "self",
+                            "uri": "https://fn.openmrs.org/ws/rest/v1/person/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/name/b3918971-c099-4cbe-a323-4b31e4edd493"
+                        }
+                    ]
+                },
+                "preferredAddress": {
+                    "uuid": "1955ab01-20ac-4dc4-8c11-74578b05e004",
+                    "display": "Address14081",
+                    "links": [
+                        {
+                            "rel": "self",
+                            "uri": "https://fn.openmrs.org/ws/rest/v1/person/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/address/1955ab01-20ac-4dc4-8c11-74578b05e004"
+                        }
+                    ]
+                },
+                "attributes": [],
+                "voided": false,
+                "birthtime": null,
+                "deathdateEstimated": false,
+                "links": [
+                    {
+                        "rel": "self",
+                        "uri": "https://fn.openmrs.org/ws/rest/v1/person/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3"
+                    },
+                    {
+                        "rel": "full",
+                        "uri": "https://fn.openmrs.org/ws/rest/v1/person/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3?v=full"
+                    }
+                ],
+                "resourceVersion": "1.11"
+            },
+            "voided": false,
+            "links": [
+                {
+                    "rel": "self",
+                    "uri": "https://fn.openmrs.org/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3"
+                },
+                {
+                    "rel": "full",
+                    "uri": "https://fn.openmrs.org/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3?v=full"
+                }
+            ],
+            "resourceVersion": "1.8"
+        }
+    ],
     "encounter": {
         "patient": "1fdaa696-e759-4a7d-a066-f1ae557c151b",
         "encounterDatetime": "2023-05-25T06:08:25.000+0000",
