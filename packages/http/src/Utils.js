@@ -31,6 +31,8 @@ function encodeFormBody(data) {
   return form;
 }
 
+const isAbsoluteUrl = url => /^https?:\/\//.test(url);
+
 export function request(method, path, params, callback = s => s) {
   return state => {
     const [resolvedPath, resolvedParams = {}] = expandReferences(
@@ -53,6 +55,15 @@ export function request(method, path, params, callback = s => s) {
     }
 
     const baseUrl = state.configuration?.baseUrl;
+
+    if (!baseUrl && !isAbsoluteUrl(resolvedPath)) {
+      const e = new Error('UNEXPECTED_RELATIVE_URL');
+      e.code = 'UNEXPECTED_RELATIVE_URL';
+      e.description = `You passed a relative URL but didn't set baseUrl`;
+      e.url = resolvedPath;
+      e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/${resolvedPath}`;
+      throw e;
+    }
 
     if (baseUrl) {
       addAuth(state.configuration, headers);
