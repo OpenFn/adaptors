@@ -655,8 +655,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       hive-driver:
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 1.0.0
+        version: 1.0.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -8617,11 +8617,11 @@ packages:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
     engines: {node: '>=8'}
 
-  /hive-driver@0.2.0:
-    resolution: {integrity: sha512-DyQYYEJj3p2R3VMmEuuFMMRRyHBjBBmab3fvzuLU3YvmxADAh++lW9IfXGdvMEn3s0cU6G+8opMLo3PKZFq1jw==}
+  /hive-driver@1.0.0:
+    resolution: {integrity: sha512-shUlHN7PAiVp+7UMT3aryUa5nrtMtb3ht+mF5irHvn2qoRwrN4hwhE8c4Gn62qzdfyXBkGYcyov9rRPw9aoC4Q==}
     dependencies:
       node-int64: 0.4.0
-      thrift: 0.16.0
+      thrift: 0.20.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -9339,12 +9339,12 @@ packages:
     dev: true
     optional: true
 
-  /isomorphic-ws@4.0.1(ws@5.2.3):
+  /isomorphic-ws@4.0.1(ws@5.2.4):
     resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 5.2.3
+      ws: 5.2.4
     dev: false
 
   /isstream@0.1.2:
@@ -11624,6 +11624,10 @@ packages:
   /q@1.5.1:
     resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
     dev: false
 
   /q@2.0.3:
@@ -13265,15 +13269,15 @@ packages:
       any-promise: 1.3.0
     dev: false
 
-  /thrift@0.16.0:
-    resolution: {integrity: sha512-W8DpGyTPlIaK3f+e1XOCLxefaUWXtrOXAaVIDbfYhmVyriYeAKgsBVFNJUV1F9SQ2SPt2sG44AZQxSGwGj/3VA==}
+  /thrift@0.20.0:
+    resolution: {integrity: sha512-oSmJTaoIAGolpupVHFfsWcmdEKX81fcDI6ty0hhezzdgZvp0XyXgMe9+1YusI8Ahy0HK4n8jlNrkPjOPeHZjdQ==}
     engines: {node: '>= 10.18.0'}
     dependencies:
       browser-or-node: 1.3.0
-      isomorphic-ws: 4.0.1(ws@5.2.3)
+      isomorphic-ws: 4.0.1(ws@5.2.4)
       node-int64: 0.4.0
       q: 1.5.1
-      ws: 5.2.3
+      ws: 5.2.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -14111,8 +14115,8 @@ packages:
       signal-exit: 3.0.7
     dev: false
 
-  /ws@5.2.3:
-    resolution: {integrity: sha512-jZArVERrMsKUatIdnLzqvcfydI85dvd/Fp1u/VOpfdDWQ4c9qWXe+VIeAbQ5FrDwciAkr+lzofXLz3Kuf26AOA==}
+  /ws@5.2.4:
+    resolution: {integrity: sha512-fFCejsuC8f9kOSu9FYaOw8CdO68O3h5v0lg4p74o8JqWpwTf9tniOD+nOB78aWoVSS6WptVUmDrp/KPsMVBWFQ==}
     peerDependencies:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2

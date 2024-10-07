@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "hive-driver": "0.2.0"
+    "hive-driver": "1.0.0"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",
