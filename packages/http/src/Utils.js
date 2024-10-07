@@ -31,7 +31,23 @@ function encodeFormBody(data) {
   return form;
 }
 
-const isAbsoluteUrl = url => /^https?:\/\//.test(url);
+const assertUrl = (pathOrUrl, baseUrl) => {
+  if (!baseUrl && pathOrUrl && !/^https?:\/\//.test(pathOrUrl)) {
+    const e = new Error('UNEXPECTED_RELATIVE_URL');
+    e.code = 'UNEXPECTED_RELATIVE_URL';
+    e.description = `You passed a relative URL but didn't set baseUrl`;
+    e.url = pathOrUrl;
+    e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/${pathOrUrl}`;
+    throw e;
+  }
+  if (!baseUrl && !pathOrUrl) {
+    const e = new Error('ERROR_NO_URL');
+    e.code = 'ERROR_NO_URL';
+    e.description = `No URL was provided`;
+    e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/users`;
+    throw e;
+  }
+};
 
 export function request(method, path, params, callback = s => s) {
   return state => {
@@ -56,14 +72,7 @@ export function request(method, path, params, callback = s => s) {
 
     const baseUrl = state.configuration?.baseUrl;
 
-    if (!baseUrl && !isAbsoluteUrl(resolvedPath)) {
-      const e = new Error('UNEXPECTED_RELATIVE_URL');
-      e.code = 'UNEXPECTED_RELATIVE_URL';
-      e.description = `You passed a relative URL but didn't set baseUrl`;
-      e.url = resolvedPath;
-      e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/${resolvedPath}`;
-      throw e;
-    }
+    assertUrl(resolvedPath, baseUrl);
 
     if (baseUrl) {
       addAuth(state.configuration, headers);
