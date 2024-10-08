@@ -47,9 +47,8 @@ export async function request(state, method, path, data, params) {
       console.log(`Fetching next page from ${nextUrl}`);
       const urlObj = new URL(nextUrl);
       const params = new URLSearchParams(urlObj.search);
-      const _getpagesoffset = params.get('_getpagesoffset');
-
-      query = { ...query, _getpagesoffset };
+      const paramsObject = Object.fromEntries(params.entries());
+      query = { ...query, ...paramsObject };
     } else {
       delete allResponses.body.link;
       break;
