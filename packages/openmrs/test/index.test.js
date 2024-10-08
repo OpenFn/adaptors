@@ -12,6 +12,7 @@ import {
   getPatient,
   searchPerson,
   searchPatient,
+  fhir,
 } from '../src';
 
 const testServer = enableMockClient('https://fn.openmrs.org');
@@ -62,7 +63,20 @@ describe('execute', () => {
     });
   });
 });
-
+describe('fhir', () => {
+  it('should GET with a query', async () => {
+    testServer
+      .intercept({
+        path: '/ws/fhir2/R4/Patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(200, { entry: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
+    const state = { configuration };
+    const { data } = await fhir.get('Patient', { q: 'Sarah 1' })(state);
+    expect(data.entry[0].display).to.eql('Sarah 1');
+  });
+});
 describe('request', () => {
   it('should GET with a query', async () => {
     testServer
