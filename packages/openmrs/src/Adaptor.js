@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, fhirRequest, prepareNextState } from './Utils';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -88,39 +88,6 @@ export function get(path, query, callback = s => s) {
     //   throw `Get operation returned no results for ${resolvedResource}.`;
     // }
 
-    return prepareNextState(state, response, callback);
-  };
-}
-
-/**
- * Make a get request to any FHIR endpoint in OpenMRS
- * @example
- * fhirGet("/ws/fhir2/R4/Encounter", {
- *   q: "Patient",
- *   limit: 1,
- * });
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {object} query - parameters for the request
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function fhirGet(path, query, callback = s => s) {
-  return async state => {
-    const [resolvedPath, resolvedQuery = {}] = expandReferences(
-      state,
-      path,
-      query
-    );
-
-    const response = await fhirRequest(
-      state,
-      'GET',
-      resolvedPath,
-      {},
-      resolvedQuery
-    );
     return prepareNextState(state, response, callback);
   };
 }
