@@ -9,12 +9,12 @@ import {
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-export function addAuth(configuration = {}, headers) {
+export function addAuth(configuration, headers) {
   if (headers.Authorization) {
     return;
   }
 
-  const { username, password, access_token } = configuration;
+  const { username, password, access_token } = configuration ?? {};
 
   if (access_token) {
     Object.assign(headers, { Authorization: `Bearer ${access_token}` });
