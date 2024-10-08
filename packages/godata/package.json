@@ -20,19 +20,18 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "axios": "^0.21.2",
-    "@openfn/language-common": "^2.0.1"
+    "@openfn/language-common": "^2.0.1",
+    "axios": "^0.21.2"
   },
   "devDependencies": {
+    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
-    "mocha": "^10.7.3",
-    "nock": "^12.0.3",
-    "sinon": "^1.17.2",
     "esno": "^0.16.3",
-    "@openfn/simple-ast": "0.4.1",
-    "rimraf": "^3.0.2"
+    "nock": "^12.0.3",
+    "rimraf": "^3.0.2",
+    "sinon": "^1.17.2"
   },
   "repository": {
     "type": "git",
