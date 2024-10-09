@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 5.0.3
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 5.0.2
 
 ### Patch Changes

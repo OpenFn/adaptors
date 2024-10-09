@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.8.5
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 4.8.4
 
 ### Patch Changes

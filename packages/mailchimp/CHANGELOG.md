@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 1.0.5
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 1.0.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-rapidpro
 
+## 1.1.4
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 1.1.3
 
 ### Patch Changes

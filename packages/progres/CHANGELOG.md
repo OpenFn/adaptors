@@ -1,5 +1,11 @@
 # @openfn/language-progres
 
+## 1.4.5
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 1.4.4
 
 ### Patch Changes
