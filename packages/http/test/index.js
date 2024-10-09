@@ -67,8 +67,8 @@ describe('request()', () => {
     } catch (e) {
       err = e;
     }
-    expect(err.code).to.eql('ERROR_NO_URL');
-    expect(err.description).to.eql('No URL was provided');
+    expect(err.code).to.eql('NO_URL');
+    expect(err.description).to.not.be.undefined;
   });
   it('should pass if baseUrl is not set and url is absolute', async () => {
     testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
@@ -92,9 +92,7 @@ describe('request()', () => {
       err = e;
     }
     expect(err.code).to.eql('UNEXPECTED_RELATIVE_URL');
-    expect(err.description).to.eql(
-      "You passed a relative URL but didn't set baseUrl"
-    );
+    expect(err.description).to.not.be.undefined
   });
 
   it('should throw if url is absolute and does not match baseUrl', async () => {

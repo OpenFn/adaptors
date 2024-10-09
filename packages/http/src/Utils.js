@@ -41,8 +41,8 @@ const assertUrl = (pathOrUrl, baseUrl) => {
     throw e;
   }
   if (!baseUrl && !pathOrUrl) {
-    const e = new Error('ERROR_NO_URL');
-    e.code = 'ERROR_NO_URL';
+    const e = new Error('NO_URL');
+    e.code = 'NO_URL';
     e.description = `No URL provided`;
     e.fix = `Make sure to pass a URL string into the request. You may need to set a baseURL on state.configuration.`;
     throw e;
