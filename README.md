@@ -245,14 +245,14 @@ to the release branch BEFORE merging.
 1. Run `pnpm changeset version` from root to bump versions
 1. Run `pnpm install`
 1. Commit the new version numbers
-1. Run `pnpm changeset tag` to generate tags
-1. Push tags `git push --tags`
+1. Push the branch
 
-Remember tags may need updating if commits come in after the tags are first
-generated.
-
-When ready, merge the branch to main and a Github Action will trigger the
-release.
+When the branch is merged to main, Github Actions will:
+* Build and test (just in case)
+* Publish any new version numbers to npm
+* Generate and push tags for all new versions
+* Send a notification to slack
+* Update `docs/docs.json` with new markdown and update docs.openfn.org
 
 ## Pre-releases
 
