@@ -3,6 +3,8 @@
 An OpenFn **_adaptor_** for building integration jobs for use with the FHIR API
 for NDR Ethopia.
 
+**Builds are DISABLED in CI and local development at the moment - see https://github.com/OpenFn/adaptors/issues/776**
+
 ## Documentation
 
 This adaptor is largely auto-generated from the spec at
