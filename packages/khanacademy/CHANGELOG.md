@@ -1,5 +1,11 @@
 # @openfn/language-khanacademy
 
+## 0.5.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 0.5.3
 
 ### Patch Changes

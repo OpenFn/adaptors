@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.8.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 4.8.3
 
 ### Patch Changes

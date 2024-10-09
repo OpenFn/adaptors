@@ -1,5 +1,11 @@
 # @openfn/language-smpp
 
+## 1.4.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 1.4.3
 
 ### Patch Changes
