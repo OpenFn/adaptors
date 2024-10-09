@@ -1,5 +1,11 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.1
+
+### Patch Changes
+
+- Update spec version
+
 ## 0.1.0
 
 Initial release
@@ -10,12 +16,12 @@ Initial release
 
 ## 0.0.18
 
-- Make composite types smarter when passed a Resource (convert it to a reference)
+- Make composite types smarter when passed a Resource (convert it to a
+  reference)
 
 ## 0.0.17
 
 - support more types in addExtension
-
 
 ## 0.0.16
 
@@ -31,7 +37,8 @@ Initial release
 
 ## 0.0.13
 
-- reference will generate a reference to a resource if you pass it in (in form type/id)
+- reference will generate a reference to a resource if you pass it in (in form
+  type/id)
 - add aliases for util.ref, util.id, util.cc
 - properly track arrays of references
 
@@ -46,7 +53,8 @@ Initial release
 
 ## 0.0.10
 
-- Improvements to observation (map references, default static values, and handle value)
+- Improvements to observation (map references, default static values, and handle
+  value)
 
 ## 0.0.9
 
