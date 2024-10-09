@@ -1,5 +1,14 @@
 # @openfn/language-http
 
+## 6.4.5
+
+### Patch Changes
+
+- e01d7b3: - Fix an issue where an error is thrown if `state.configuration` is
+  `null`
+  - better error when `baseUrl` is not set and the passed url is a relative url.
+  - better error when `baseUrl` is not set and no url is provided.
+
 ## 6.4.4
 
 ### Patch Changes

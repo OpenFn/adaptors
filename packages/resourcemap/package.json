@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-resourcemap",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Resourcemap Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -29,7 +29,6 @@
     "chai": "^4.3.7",
     "deep-eql": "^4.1.2",
     "esno": "^0.16.3",
-    "mocha": "^10.1.0",
     "rimraf": "^3.0.2",
     "superagent-mock": "^1.12.0"
   },

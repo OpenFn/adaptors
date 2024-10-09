@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-nexmo",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "An Language Package for Nexmo",
   "main": "dist/index.cjs",
   "scripts": {
@@ -30,7 +30,6 @@
     "deep-eql": "^4.1.2",
     "esdoc-es7-plugin": "0.0.3",
     "esno": "^0.16.3",
-    "mocha": "^10.1.0",
     "rimraf": "^3.0.2"
   },
   "repository": {

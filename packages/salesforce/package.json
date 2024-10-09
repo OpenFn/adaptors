@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "4.8.3",
+  "version": "4.8.4",
   "description": "Salesforce Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -44,7 +44,6 @@
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "jsonpath": "^1.1.1",
-    "mocha": "7.2.0",
     "nock": "13.2.9",
     "rimraf": "3.0.2",
     "sinon": "^14.0.2",

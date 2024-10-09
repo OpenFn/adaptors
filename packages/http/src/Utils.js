@@ -9,12 +9,12 @@ import {
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-export function addAuth(configuration = {}, headers) {
+export function addAuth(configuration, headers) {
   if (headers.Authorization) {
     return;
   }
 
-  const { username, password, access_token } = configuration;
+  const { username, password, access_token } = configuration ?? {};
 
   if (access_token) {
     Object.assign(headers, { Authorization: `Bearer ${access_token}` });
@@ -30,6 +30,24 @@ function encodeFormBody(data) {
   }
   return form;
 }
+
+const assertUrl = (pathOrUrl, baseUrl) => {
+  if (!baseUrl && pathOrUrl && !/^https?:\/\//.test(pathOrUrl)) {
+    const e = new Error('UNEXPECTED_RELATIVE_URL');
+    e.code = 'UNEXPECTED_RELATIVE_URL';
+    e.description = `You passed a relative URL but didn't set baseUrl`;
+    e.url = pathOrUrl;
+    e.fix = `Set the baseUrl on state.configuration or use an absolute URL, like https://example.com/api/${pathOrUrl}`;
+    throw e;
+  }
+  if (!baseUrl && !pathOrUrl) {
+    const e = new Error('NO_URL');
+    e.code = 'NO_URL';
+    e.description = `No URL provided`;
+    e.fix = `Make sure to pass a URL string into the request. You may need to set a baseURL on state.configuration.`;
+    throw e;
+  }
+};
 
 export function request(method, path, params, callback = s => s) {
   return state => {
@@ -53,6 +71,8 @@ export function request(method, path, params, callback = s => s) {
     }
 
     const baseUrl = state.configuration?.baseUrl;
+
+    assertUrl(resolvedPath, baseUrl);
 
     if (baseUrl) {
       addAuth(state.configuration, headers);

@@ -57,7 +57,45 @@ describe('request()', () => {
     expect(result.data).to.eql('hello');
   });
 
-  it('should throw if url is absolute and does not match baseURL', async () => {
+  it('should throw if no baseUrl is set and no url is provided', async () => {
+    const state = {
+      configuration: null,
+    };
+    let err;
+    try {
+      await execute(request('GET'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('NO_URL');
+    expect(err.description).to.not.be.undefined;
+  });
+  it('should pass if baseUrl is not set and url is absolute', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
+
+    const state = {
+      configuration: null,
+    };
+    const result = await execute(
+      request('GET', 'https://www.example.com/greeting')
+    )(state);
+    expect(result.data).to.eql('hello');
+  });
+  it('should throw if baseUrl is not set and url is relative', async () => {
+    const state = {
+      configuration: null,
+    };
+    let err;
+    try {
+      await execute(request('GET', 'greeting'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('UNEXPECTED_RELATIVE_URL');
+    expect(err.description).to.not.be.undefined
+  });
+
+  it('should throw if url is absolute and does not match baseUrl', async () => {
     const state = {
       configuration: {
         baseUrl: 'https://www.example.com',

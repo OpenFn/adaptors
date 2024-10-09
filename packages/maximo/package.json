@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-maximo",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "An IBM Maximo EAM Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -35,7 +35,6 @@
     "chai": "^4.3.7",
     "deep-eql": "^4.1.2",
     "esno": "^0.16.3",
-    "mocha": "^10.1.0",
     "nock": "^13.2.9",
     "rimraf": "^3.0.2"
   },
