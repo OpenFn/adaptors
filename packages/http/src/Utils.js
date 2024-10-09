@@ -37,14 +37,14 @@ const assertUrl = (pathOrUrl, baseUrl) => {
     e.code = 'UNEXPECTED_RELATIVE_URL';
     e.description = `You passed a relative URL but didn't set baseUrl`;
     e.url = pathOrUrl;
-    e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/${pathOrUrl}`;
+    e.fix = `Set the baseUrl on state.configuration or use an absolute URL, like https://example.com/api/${pathOrUrl}`;
     throw e;
   }
   if (!baseUrl && !pathOrUrl) {
     const e = new Error('ERROR_NO_URL');
     e.code = 'ERROR_NO_URL';
-    e.description = `No URL was provided`;
-    e.fix = `Set the baseUrl or pass an absolute URL. Ie it may be https://example.com/api/users`;
+    e.description = `No URL provided`;
+    e.fix = `Make sure to pass a URL string into the request. You may need to set a baseURL on state.configuration.`;
     throw e;
   }
 };
