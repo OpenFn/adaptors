@@ -1,5 +1,11 @@
 # @openfn/language-godata
 
+## 3.5.3
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
 ## 3.5.2
 
 ### Patch Changes

@@ -16390,7 +16390,7 @@ function observation_enhanced_adherence_counselling_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/enhanced-adherence-counselling-status-code-system","code":"eac"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"410265008"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -22824,7 +22824,7 @@ function observation_muac_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"56072-2"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"284473002"}]};
     }
 
     if (!_.isNil(props.subject)) {
@@ -23338,7 +23338,7 @@ function observation_nutritional_status_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"87276001"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"101819-1"}]};
     }
 
     if (!_.isNil(props.subject)) {
