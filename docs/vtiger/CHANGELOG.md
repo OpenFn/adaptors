@@ -1,5 +1,11 @@
 # @openfn/language-vtiger
 
+## 1.3.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 1.3.3
 
 ### Patch Changes

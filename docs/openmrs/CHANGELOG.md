@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 4.1.0
+
+### Minor Changes
+
+- 1227829: Add `fhir.get()` function
+
 ## 4.0.2
 
 ### Patch Changes

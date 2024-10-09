@@ -21,6 +21,14 @@
     <a href="#upsert">upsert(resourceType, query, data, [callback])</a></dt>
 </dl>
 
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#fhir_get">fhir.get(path, query, [callback])</a>
+</dt>
+</dl>
+
 
 This adaptor exports the following from common:
 <dl>
@@ -354,4 +362,63 @@ upsert(
 
 * * *
 
+
+## fhir
+
+These functions belong to the fhir namespace.
+### fhir.get {#fhir_get}
+
+<p><code>get(path, query, [callback]) ⇒ Operation</code></p>
+
+Make a get request to any FHIR endpoint in OpenMRS
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| query | [<code>FhirParameters</code>](#fhirparameters) | Request parameters |
+| [callback] | <code>function</code> | Optional callback to handle the response |
+
+**Example:** Get encounters based on lastUpdated field
+```js
+fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
+```
+
+* * *
+
+
+##  Interfaces
+
+### FhirParameters
+
+OpenMRS FHIR requests parameters options.
+This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html), [resource-specific parameters](https://www.hl7.org/fhir/R4/search.html), and pagination options.
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| count | <code>string</code> | Number of results to return (_count in FHIR) |
+| include | <code>string</code> | Resources to include in the response (_include in FHIR) |
+| revinclude | <code>string</code> | Reverse includes to include in the response (_revinclude in FHIR) |
+| summary | <code>string</code> | Summary mode for the response (_summary in FHIR) |
+| total | <code>string</code> | Whether to include a total count of matching resources (_total in FHIR) |
+| elements | <code>string</code> | List of elements to include in the response (_elements in FHIR) |
+| contained | <code>string</code> | Whether to include contained resources (_contained in FHIR) |
+| containedType | <code>string</code> | Type of contained resources (_containedType in FHIR) |
+| id | <code>string</code> | Logical ID of the resource to filter on (_id in FHIR) |
+| lastUpdated | <code>string</code> | Timestamp to filter resources last updated after this date (_lastUpdated in FHIR) |
+| tag | <code>string</code> | Tag to filter resources by (_tag in FHIR) |
+| profile | <code>string</code> | Profile URL to filter resources by (_profile in FHIR) |
+| security | <code>string</code> | Security labels to filter resources by (_security in FHIR) |
+| text | <code>string</code> | Text search on narrative content (_text in FHIR) |
+| content | <code>string</code> | Full-text search on resource content (_content in FHIR) |
+| list | <code>string</code> | Search resources included in a particular list (_list in FHIR) |
+| has | <code>string</code> | Perform search based on reference chains (_has in FHIR) |
+| getPagesOffset | <code>string</code> | Offset for pagination, used to skip a number of results (_getpagesoffset in OpenMRS) |
+| getPages | <code>string</code> | Get specific pages of resources (_getpages in OpenMRS) |
+| bundleType | <code>string</code> | Type of bundle to return (e.g., searchset, batch, history) (_bundleType in FHIR) |
+
+
+* * *
 

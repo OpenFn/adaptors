@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 3.0.3
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 3.0.2
 
 ### Patch Changes

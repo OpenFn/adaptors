@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.2.3
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
 ## 1.2.2
 
 ### Patch Changes
