@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-progres",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "An OpenFn adaptor to work with UNHCR's ProGres case management system",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -25,7 +25,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.15.1",
+    "@openfn/language-common": "1.15.2",
     "axios": "^1.7.7"
   },
   "devDependencies": {

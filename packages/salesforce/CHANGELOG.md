@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 4.8.6
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
 ## 4.8.5
 
 ### Patch Changes

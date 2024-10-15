@@ -1,5 +1,11 @@
 # @openfn/language-kobotoolbox
 
+## 2.4.3
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
 ## 2.4.2
 
 ### Patch Changes
