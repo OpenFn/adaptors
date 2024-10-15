@@ -1,5 +1,11 @@
 # @openfn/language-rapidpro
 
+## 1.1.5
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
 ## 1.1.4
 
 ### Patch Changes
