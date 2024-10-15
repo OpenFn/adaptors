@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.15.1"
+    "@openfn/language-common": "1.15.2"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",

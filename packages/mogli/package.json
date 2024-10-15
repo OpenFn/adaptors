@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.15.1",
+    "@openfn/language-common": "^1.15.2",
     "JSONPath": "^0.10.0",
     "jsforce": "1.5.1",
     "lodash-fp": "^0.10.4",

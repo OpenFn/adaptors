@@ -31,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.15.1",
+    "@openfn/language-common": "^1.15.2",
     "JSONPath": "^0.10.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^8.0.0"

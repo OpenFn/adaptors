@@ -31,7 +31,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:1.15.1",
+    "@openfn/language-common": "workspace:1.15.2",
     "tedious": "15.1.0"
   },
   "devDependencies": {

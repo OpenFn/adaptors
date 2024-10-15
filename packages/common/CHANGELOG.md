@@ -1,3 +1,9 @@
+## 1.15.2
+
+### Patch Changes
+
+- Update jsonpath-plus to v10.x
+
 ## 1.15.1
 
 ### Patch Changes
