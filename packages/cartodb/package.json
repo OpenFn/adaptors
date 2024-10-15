@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-cartodb",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "cartodb Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

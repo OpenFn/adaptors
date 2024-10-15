@@ -1,5 +1,12 @@
 # @openfn/language-commcare
 
+## 3.2.2
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 3.2.1
 
 ### Patch Changes

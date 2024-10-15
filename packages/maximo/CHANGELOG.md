@@ -1,5 +1,12 @@
 # @openfn/language-maximo
 
+## 0.5.6
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 0.5.5
 
 ### Patch Changes

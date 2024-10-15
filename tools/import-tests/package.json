@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openfn/language-common": "workspace:^2.0.2"
+    "@openfn/language-common": "workspace:^2.0.3"
   }
 }

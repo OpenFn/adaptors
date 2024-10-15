@@ -1,5 +1,11 @@
 ## 2.0.0
 
+## 2.0.3
+
+### Patch Changes
+
+- 33973a2: Fix a critical security issue in jsonpath-plus
+
 ## 2.0.2
 
 ### Patch Changes

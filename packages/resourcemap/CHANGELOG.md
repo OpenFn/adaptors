@@ -1,5 +1,12 @@
 # @openfn/language-resourcemap
 
+## 0.4.5
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 0.4.4
 
 ### Patch Changes

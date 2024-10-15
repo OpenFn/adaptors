@@ -1,5 +1,12 @@
 # @openfn/language-http
 
+## 6.4.6
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 6.4.5
 
 ### Patch Changes

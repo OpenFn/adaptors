@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openlmis",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "OpenFn openlmis adaptor",
   "type": "module",
   "exports": {

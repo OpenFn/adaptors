@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-smpp",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "An SMPP client API Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
