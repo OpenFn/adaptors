@@ -1,9 +1,6 @@
 name: Publish
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   publish:
@@ -22,8 +19,8 @@ jobs:
       - run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run:
-          pnpm publish -r --report-summary --publish-branch main --access=public
+      - run: pnpm publish -r --report-summary --publish-branch release/common-1-15-2
+          --access=public --tag legacy --no-git-checks
 
       - run: pnpm slack:notify
         env:
