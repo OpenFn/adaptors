@@ -1,5 +1,12 @@
 # @openfn/language-facebook
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 0.4.4
 
 ### Patch Changes

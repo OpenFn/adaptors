@@ -1,5 +1,12 @@
 # @openfn/language-smpp
 
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 1.4.4
 
 ### Patch Changes

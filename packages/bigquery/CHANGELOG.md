@@ -1,5 +1,12 @@
 # @openfn/language-bigquery
 
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 3.0.3
 
 ### Patch Changes
