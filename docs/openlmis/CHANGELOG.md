@@ -1,5 +1,12 @@
 # @openfn/language-openlmis
 
+## 1.0.5
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 1.0.4
 
 ### Patch Changes

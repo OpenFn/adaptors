@@ -1,5 +1,12 @@
 # @openfn/language-mongodb
 
+## 2.1.5
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 2.1.4
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 4.1.1
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 4.1.0
 
 ### Minor Changes

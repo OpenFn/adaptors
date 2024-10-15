@@ -1,5 +1,12 @@
 # @openfn/language-postgresql
 
+## 6.0.3
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 6.0.2
 
 ### Patch Changes

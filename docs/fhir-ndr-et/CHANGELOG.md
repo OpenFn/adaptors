@@ -1,5 +1,12 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.2
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
 ## 0.1.1
 
 ### Patch Changes
