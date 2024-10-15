@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-postgresql",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A PostgreSQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {

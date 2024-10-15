@@ -1,5 +1,11 @@
 ## 1.15.1
 
+## 1.15.2
+
+### Patch Changes
+
+- 7d9472d: Fix a critical security issue in jsonpath
+
 ### Patch Changes
 
 - 4c08444: document exported date-fns functions

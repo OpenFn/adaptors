@@ -1,5 +1,13 @@
 # @openfn/language-primero
 
+## 2.12.4
+
+### Patch Changes
+
+- 7d9472d: Fix a critical security issue in jsonpath
+- Updated dependencies [7d9472d]
+  - @openfn/language-common@1.15.2
+
 ## 2.12.3
 
 ### Patch Changes

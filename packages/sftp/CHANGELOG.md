@@ -1,5 +1,13 @@
 # @openfn/language-sftp
 
+## 1.1.3
+
+### Patch Changes
+
+- 7d9472d: Fix a critical security issue in jsonpath
+- Updated dependencies [7d9472d]
+  - @openfn/language-common@1.15.2
+
 ## 1.1.2
 
 ### Patch Changes

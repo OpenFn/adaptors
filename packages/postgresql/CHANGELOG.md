@@ -1,5 +1,13 @@
 # @openfn/language-postgresql
 
+## 5.0.2
+
+### Patch Changes
+
+- 7d9472d: Fix a critical security issue in jsonpath
+- Updated dependencies [7d9472d]
+  - @openfn/language-common@1.15.2
+
 ## 5.0.1
 
 ### Patch Changes
