@@ -4,7 +4,7 @@ v0.1.6
 
 ### Patch Changes
 
-- Updated dependencies [33973a2]
+- Fixed security vulnerability in jsonpath-plus [33973a2]
   - @openfn/language-common@2.0.3
 
 ## 0.5.5
