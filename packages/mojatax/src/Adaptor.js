@@ -54,7 +54,7 @@ export function execute(...operations) {
 
 /**
  * Make a POST request to any Mojatax endpoint.
- * @example <caption>Make a POST request create an invoice</caption>
+ * @example <caption>Make a POST request to create an invoice</caption>
  * post("CreateInvoice", {
  * invoice_id: 'PID092',
  * customerId: '102',
@@ -94,7 +94,7 @@ export function post(path, data, options, callback) {
 
 /**
  * Make a general HTTP request against the Mojatax server.
- * @example <caption>Make a POST request create an invoice</caption>
+ * @example <caption>Make a POST request to create an invoice</caption>
  * request("POST", "/client/CreateInvoice", {
  * invoice_id: 'PID092',
  * customerId: '102',
