@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 0.5.2
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
 ## 0.5.1
 
 ### Patch Changes
