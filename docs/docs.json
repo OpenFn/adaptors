@@ -10272,6 +10272,364 @@
     "kind": "external-function"
   }
 ],
+{"name":"mojatax","adaptor":"@openfn/language-mojatax","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, data, options, [callback])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### post\\n\\n<p><code>post(path, data, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a POST request to any Mojatax endpoint.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the request body |\\n| options | [<code>MojataxRequestOptions</code>](#mojataxrequestoptions) | Optional request options |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Mojatax server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Make a POST request to create an invoice\\n```js\\npost(\\\"CreateInvoice\\\", {\\ninvoice_id: 'PID092',\\ncustomerId: '102',\\nitems: [],\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, data, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a general HTTP request against the Mojatax server.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>MojataxRequestOptions</code>](#mojataxrequestoptions) | Optional request options |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Mojatax server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Make a POST request to create an invoice\\n```js\\nrequest(\\\"POST\\\", \\\"/client/CreateInvoice\\\", {\\ninvoice_id: 'PID092',\\ncustomerId: '102',\\nitems: [],\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### MojataxRequestOptions\\n\\nOptions provided to Mojatax HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-mojatax <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the mojatax\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/mojatax-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mojatax-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `post` function\\n\\n```js\\npost('CreateInvoice', {\\n  customerId: '102',\\n  invoice_id: 'PID092',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-mojatax\\n\\n## 1.0.0\\n\\nImplement a post and a generic request function for mojatax adaptor\\n\"","functions":["post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"Mojatax base URL","format":"uri","minLength":1,"examples":["https://vfd-staging.mojatax.com"]},"clientId":{"title":"Client Id","type":"string","description":"Your Mojatax client id","examples":["the-long-uuid-provided-by-mojatax"]},"password":{"title":"Password","type":"string","description":"Your Mojatax password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["baseUrl","password","clientId"]}},
+[
+  {
+    "id": "MojataxHttpState",
+    "longname": "MojataxHttpState",
+    "name": "MojataxHttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the Mojatax server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 5,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mojatax/src"
+    },
+    "order": 0,
+    "newscope": true
+  },
+  {
+    "id": "MojataxRequestOptions",
+    "longname": "MojataxRequestOptions",
+    "name": "MojataxRequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to Mojatax HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+        "name": "tls"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 13,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mojatax/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request to any Mojatax endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "MojataxRequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "optional": true,
+        "description": "Optional callback to handle the response",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption>Make a POST request to create an invoice</caption>\npost(\"CreateInvoice\", {\ninvoice_id: 'PID092',\ncustomerId: '102',\nitems: [],\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 72,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mojatax/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "MojataxHttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request against the Mojatax server.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "MojataxRequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "optional": true,
+        "description": "Optional callback to handle the response",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption>Make a POST request to create an invoice</caption>\nrequest(\"POST\", \"/client/CreateInvoice\", {\ninvoice_id: 'PID092',\ncustomerId: '102',\nitems: [],\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 94,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mojatax/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "MojataxHttpState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"mongodb","adaptor":"@openfn/language-mongodb","version":"2.1.5","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#finddocuments\\\">findDocuments(params)</a></dt>\\n<dt>\\n    <a href=\\\"#insertdocuments\\\">insertDocuments(params)</a></dt>\\n<dt>\\n    <a href=\\\"#updatedocument\\\">updateDocument(params)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### findDocuments\\n\\n<p><code>findDocuments(params) ⇒ State</code></p>\\n\\nFind documents in a mongoDb collection\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | Configuration for mongo |\\n\\n**Example**\\n```js\\nfindDocuments({\\n   database: 'str',\\n   collection: 'cases',\\n   query: {a:3}\\n  });\\n```\\n\\n* * *\\n\\n### insertDocuments\\n\\n<p><code>insertDocuments(params) ⇒ State</code></p>\\n\\nInserts documents into a mongoDb collection\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | Configuration for mongo |\\n\\n**Example**\\n```js\\ninsertDocuments({\\n   database: 'str',\\n   collection: 'kids',\\n   documents: [1,2,3]\\n  });\\n```\\n\\n* * *\\n\\n### updateDocument\\n\\n<p><code>updateDocument(params) ⇒ State</code></p>\\n\\nUpdates document (optionally upserting) into a mongoDb collection\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | Configuration for mongo |\\n\\n**Example**\\n```js\\nupdateDocuments({\\n   database: 'str',\\n   collection: 'animals',\\n   filter: { type: 'fuzzy' },\\n   changes: { kind: 'soft' },\\n   options: { upsert: true }\\n  });\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language MongoDB\\n\\nLanguage Pack for building expressions and operations for use with MongoDB.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mongodb-configuration-schema/)\\ndefinition.\\n\\n### insertDocuments\\n\\n```js\\ninsertDocuments({\\n  database: 'yourDb',\\n  collection: 'yourCollection',\\n  documents: state => {\\n    return state.data.map(item => {\\n      return { name: item.name, age: item.age };\\n    });\\n  },\\n  // callback: (state) => state, // optional\\n});\\n```\\n\\n### findDocuments\\n\\n```js\\nfindDocuments({\\n  database: 'yourDb',\\n  collection: 'yourCollection',\\n  query: state => {\\n    return { name: 'stu' };\\n  },\\n  // callback: (state) => state, // optional\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-mongodb\\n\\n## 2.1.5\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.1.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.1.3\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.1.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.1.1\\n\\n### Patch Changes\\n\\n- 73d0a02: Make documentation public\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.1.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.0.2\\n\\n### Patch Changes\\n\\n- 38b3e8e0: Change `clusterHostname` format from `hostname` to `string` in\\n  `configuration-schema.json`\\n\\n## 2.0.1\\n\\n### Patch Changes\\n\\n- 6afba70: Fix findDocuments\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- Update configuration schema for MongoDB adaptor:\\n  - Rename `clusterUrl` to `clusterHostname`\\n  - Change `clusterHostname` format from `uri` to `hostname`\\n  - Update `Adaptor.js` and tests to use new name\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.0.6\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.0.5\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\"","functions":["findDocuments","insertDocuments","updateDocument"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"clusterHostname":{"title":"Cluster Hostname","type":"string","description":"Your MongoDB cluster hostname","format":"string","minLength":1,"examples":["yourCluster-xxxyzzz.mongodb.net"]},"username":{"title":"Username","type":"string","description":"Your MongoDB instance username","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Your MongoDB instance password","writeOnly":true,"minLength":1,"examples":["@secret(!)Pass"]}},"type":"object","additionalProperties":true,"required":["clusterHostname","username","password"]}},
 [
   {
