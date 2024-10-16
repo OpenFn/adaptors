@@ -25,8 +25,8 @@ export const setMockClient = mockClient => {
  * If no wild card or query included, the value will be written to state.data (or throw if not found)
  * If a wild card or query is included, an array of values will be written to state.data
  */
-
-export function get(name, query = {}) {
+// TOOD: logging
+export function get(name, query = {}, options = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
@@ -60,13 +60,53 @@ export function get(name, query = {}) {
  * Upserts one or more values, as a { key, value } pair, to the named collection
  * If any errors are returned by the server, this will be thrown
  */
-// collections.set(name, data, options); // throws if errors
+// TOOD: logging
+export function set(name, data) {
+  return async state => {
+    const [resolvedName, resolvedData] = expandReferences(state, name, data);
+
+    const dataArray = Array.isArray(resolvedData)
+      ? resolvedData
+      : [resolvedData];
+
+    const response = await util.request(state, getClient(), resolvedName, {
+      method: 'POST',
+      body: JSON.stringify(dataArray),
+      heeaders: {
+        'content-type': 'application/json',
+      },
+    });
+
+    // TODO - check if the response contains errors
+
+    return state;
+  };
+}
 
 /**
  * Remove one or more values from the collection
  * Options can be a string key or a query object
  */
-// collections.remove(name, query, options);
+export function remove(name, query = {}, options = {}) {
+  return async state => {
+    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
+
+    const { key } = util.expandQuery(resolvedQuery);
+
+    // TODO maybe add query options here
+    // I haven't really given myself much space for this in the api
+    const response = await util.request(
+      state,
+      getClient(),
+      `${resolvedName}/${key}`,
+      {
+        method: 'DELETE',
+      }
+    );
+
+    return state;
+  };
+}
 
 /**
  * Iterate over values in a collection which match the query

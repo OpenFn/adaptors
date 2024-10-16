@@ -130,3 +130,71 @@ describe('get', () => {
 
   // TODO support query operators (and throw for invalid values)
 });
+
+describe('set', () => {
+  it('should throw if no access token', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION, { key: 'x', value: {} })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should set a single item', async () => {
+    const { state } = init();
+
+    const items = { key: 'x', value: { id: 'x' } };
+
+    await collections.set(COLLECTION, items)(state);
+
+    const result = api.byKey(COLLECTION, items.key);
+    expect(result).to.eql(items.value);
+  });
+
+  it('should set multiple items', async () => {
+    const { state } = init();
+
+    const items = [
+      { key: 'x', value: { id: 'x' } },
+      { key: 'z', value: { id: 'z' } },
+    ];
+
+    await collections.set(COLLECTION, items)(state);
+
+    const x = api.byKey(COLLECTION, items[0].key);
+    expect(x).to.eql(items[0].value);
+
+    const y = api.byKey(COLLECTION, items[1].key);
+    expect(y).to.eql(items[1].value);
+  });
+});
+
+describe('remove', () => {
+  it('should throw if no access token', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.remove(COLLECTION, 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should remove an item', async () => {
+    const { state } = init();
+    api.upsert(COLLECTION, 'x', { id: 'x' });
+
+    await collections.remove(COLLECTION, 'x')(state);
+
+    const result = api.byKey(COLLECTION, 'x');
+    expect(result).to.eql(undefined);
+  });
+});

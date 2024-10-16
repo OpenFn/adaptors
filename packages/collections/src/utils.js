@@ -31,7 +31,7 @@ export const expandQuery = query => {
   return query;
 };
 
-export const request = (state, client, path, options) => {
+export const request = (state, client, path, options = {}) => {
   if (!state.configuration.collections_token) {
     throwError('INVALID_AUTH', {
       description: 'No access key provided for collection request',
@@ -45,10 +45,11 @@ export const request = (state, client, path, options) => {
   };
   Object.assign(headers, options?.headers);
 
+  const { headers: _, ...optionsWithoutHeaders } = options;
   return client.request({
     path: nodepath.join('collections', path),
     headers,
     method: 'GET',
-    ...options,
+    ...optionsWithoutHeaders,
   });
 };
