@@ -11,7 +11,7 @@
 
 ### Patch Changes
 
-- d3ac969: use reject instead of throwwq
+- d3ac969: use reject instead of throw
 
 ## 5.0.3
 
