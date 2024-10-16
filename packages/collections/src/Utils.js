@@ -5,6 +5,23 @@ import {
   assertRelativeUrl,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
+import chain from 'stream-chain';
+import parser from 'stream-json';
+import Pick from 'stream-json/filters/Pick';
+import streamArray from 'stream-json/streamers/StreamArray';
+
+export const streamResponse = async (response, onValue) => {
+  const pipeline = chain([
+    response.body,
+    parser(),
+    new Pick({ filter: 'results' }),
+    new streamArray(),
+  ]);
+
+  for await (const { key, value } of pipeline) {
+    onValue(value);
+  }
+};
 
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;

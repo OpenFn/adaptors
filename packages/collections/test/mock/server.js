@@ -34,7 +34,10 @@ export function API() {
     const regex = new RegExp(key.replace('*', '(.*)'));
     for (const key in col) {
       if (regex.test(key)) {
-        results.push(col[key]);
+        results.push({
+          key,
+          value: col[key],
+        });
       }
     }
 
@@ -72,6 +75,7 @@ export function createServer(url = 'https://app.openfn.org') {
 
   const api = new API();
 
+  // Get request handler
   const get = req => {
     try {
       let [_blank, _collections, name, key] = req.path.split('/');
@@ -118,11 +122,11 @@ export function createServer(url = 'https://app.openfn.org') {
         origin: url,
         path,
       }),
-    stream: (method, path) =>
-      mockPool.stream({
-        method,
-        origin: url,
-        path,
-      }),
+    // stream: (method, path) =>
+    //   mockPool.stream({
+    //     method,
+    //     origin: url,
+    //     path,
+    //   }),
   };
 }
