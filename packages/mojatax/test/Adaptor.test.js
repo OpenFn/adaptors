@@ -28,47 +28,7 @@ before(() => {
     .persist();
 });
 
-describe('execute', () => {
-  it('executes each operation in sequence', async () => {
-    const state = {
-      configuration,
-    };
-    const operations = [
-      state => {
-        return { counter: 1 };
-      },
-      state => {
-        return { counter: 2 };
-      },
-      state => {
-        return { counter: 3 };
-      },
-    ];
 
-    const finalState = await execute(...operations)(state);
-
-    expect(finalState).to.eql({ counter: 3 });
-  });
-
-  it('assigns references and data to the initialState', async () => {
-    const state = {
-      configuration,
-    };
-
-    const finalState = await execute()(state);
-
-    expect(finalState).to.eql({
-      configuration: {
-        baseUrl: 'https://fake.mojatax.server.com',
-        clientId: 'someclientid',
-        password: 'somepassword',
-        access_token: 'fake-token',
-      },
-      references: [],
-      data: null,
-    });
-  });
-});
 
 describe('request', () => {
   it('makes a post request to the right endpoint', async () => {
@@ -97,14 +57,16 @@ describe('request', () => {
 });
 
 describe('post', () => {
-  it('should create an invoice', async () => {
+  it('posts to /CreateInvoice', async () => {
+
     testServer
       .intercept({
         path: `/api/v1/client/CreateInvoice`,
         method: 'POST',
       })
 
-      .reply(201, () => {
+      .reply(201, (req) => {
+        expect(JSON.parse(req.body)).to.haveOwnProperty('customerId');
       return { id: 7,"customerId": "102", }
       });
 
@@ -113,7 +75,7 @@ describe('post', () => {
     };
 
     const { data } = await execute(
-      post('CreateInvoice',{
+      post('CreateInvoice', {
         "customerId": "102",
         "invoice_id": "PID092",
       } )

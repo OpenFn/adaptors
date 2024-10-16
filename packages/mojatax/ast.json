@@ -13,8 +13,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "post(\"patient\", { \"name\":\"Bukayo\" });",
-            "caption": "Make a POST request create an invoice"
+            "description": "post(\"CreateInvoice\", {\ninvoice_id: 'PID092',\ncustomerId: '102',\nitems: [],\n});",
+            "caption": "Make a POST request to create an invoice"
           },
           {
             "title": "function",
@@ -75,7 +75,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{MojataxHttpState}"
           }
         ]
       },
@@ -95,8 +95,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\":\"Bukayo\" });",
-            "caption": "Make a POST request create an invoice"
+            "description": "request(\"POST\", \"/client/CreateInvoice\", {\ninvoice_id: 'PID092',\ncustomerId: '102',\nitems: [],\n});",
+            "caption": "Make a POST request to create an invoice"
           },
           {
             "title": "function",
@@ -166,7 +166,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{MojataxHttpState}"
           }
         ]
       },

@@ -58,26 +58,7 @@ export function execute(...operations) {
  * post("CreateInvoice", {
  * invoice_id: 'PID092',
  * customerId: '102',
- * customerIdType: '6',
- *  customerName: 'MojaONe LTD',
- *  mobileNumber: '0787640622',
- * items: [
- *   {
- *    id: 1,
- *   desc: 'Solar Panel',
- *     qty: 3,
- *     taxcode: 1,
- *     amt: '5000.00',
- *   },
- * ],
- * totals: {
- *   totaltaxincl: '15000.00',
- *  discount: '0',
- * },
- * payments: {
- *   pmttype: 'INVOICE',
- *   pmtamount: '15000.00',
- * },
+ * items: [],
  * });
  * @function
  * @public
@@ -98,26 +79,7 @@ export function post(path, data, options, callback) {
  * request("POST", "/client/CreateInvoice", {
  * invoice_id: 'PID092',
  * customerId: '102',
- * customerIdType: '6',
- *  customerName: 'MojaONe LTD',
- *  mobileNumber: '0787640622',
- * items: [
- *   {
- *    id: 1,
- *   desc: 'Solar Panel',
- *     qty: 3,
- *     taxcode: 1,
- *     amt: '5000.00',
- *   },
- * ],
- * totals: {
- *   totaltaxincl: '15000.00',
- *  discount: '0',
- * },
- * payments: {
- *   pmttype: 'INVOICE',
- *   pmtamount: '15000.00',
- * },
+ * items: [],
  * });
  * @function
  * @public

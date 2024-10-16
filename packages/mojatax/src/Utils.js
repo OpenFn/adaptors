@@ -7,25 +7,26 @@ import {
 import nodepath from 'node:path';
 
 export const authorize = state => {
-  const auth = state.configuration;
+  const auth = state.configuration ?? {};
   if (auth.access_token) {
     return state;
   }
-  const clientId = auth.clientId;
-  const password = auth.password;
+
+  const { clientId: client_id, password } = auth;
+
   const headers = {};
 
-  if (clientId && password) {
+  if (client_id && password) {
     Object.assign(headers, {
       'Content-Type': 'application/json',
     });
 
     const body = {
-      client_id: clientId,
-      password: password,
+      client_id,
+      password,
     };
     const options = {
-      body: JSON.stringify(body),
+      body,
       headers,
       method: 'POST',
       parseAs: 'json',
@@ -62,7 +63,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
 };
 
 export const request = (configuration, method, path, options) => {
-  const { baseUrl, access_token } = configuration;
+  const { baseUrl, access_token } = configuration ?? {};
 
   const { data, params = {} } = options;
 
