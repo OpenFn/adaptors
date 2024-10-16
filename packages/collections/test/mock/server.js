@@ -73,8 +73,16 @@ export function API() {
   return api;
 }
 
+// naive little path parser
+const parsePath = path => {
+  let [_collections, name, key] = path.split('/');
+  return { name, key };
+};
+
 // This creates a mock lightning server
 // It should present the same rest API as lightning, but can be implemented however we like
+// TODO add mock auth here
+// basically it needs to see if there is a jwt in the header for each request
 export function createServer(url = 'https://app.openfn.org') {
   const agent = new MockAgent();
   agent.disableNetConnect();
@@ -83,11 +91,9 @@ export function createServer(url = 'https://app.openfn.org') {
 
   const api = new API();
 
-  // Get request handler
   const get = req => {
     try {
-      let [_blank, _collections, name, key] = req.path.split('/');
-
+      let { name, key } = parsePath(req.path);
       if (!key) {
         key = '*';
       }
@@ -109,7 +115,7 @@ export function createServer(url = 'https://app.openfn.org') {
 
   const post = req => {
     try {
-      let [_blank, _collections, name, key] = req.path.split('/');
+      const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
 
       for (const { key, value } of body) {
@@ -117,7 +123,7 @@ export function createServer(url = 'https://app.openfn.org') {
         api.upsert(name, key, value);
       }
 
-      // TODO return upserted summary and errorsbrave
+      // TODO return upserted summary and errors
       return { statusCode: 200 };
     } catch (e) {
       if (e.message === COLLECTION_NOT_FOUND) {
@@ -128,7 +134,7 @@ export function createServer(url = 'https://app.openfn.org') {
 
   const remove = req => {
     try {
-      let [_blank, _collections, name, key] = req.path.split('/');
+      const { name, key } = parsePath(req.path);
 
       api.remove(name, key);
 
@@ -155,8 +161,8 @@ export function createServer(url = 'https://app.openfn.org') {
 
   return {
     api,
-    // Util API for tests
-    request: (method, path, data) => {
+    // Util API for tests (roughly matches the unidici api)
+    request: ({ method, path, data }) => {
       const opts = {
         method,
         path,

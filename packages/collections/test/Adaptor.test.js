@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-
-import { request, dataValue } from '../src/Adaptor.js';
+import { createServer } from './mock/server.js';
+import { setMockClient } from '../src/collections.js';
+import * as collections from '../src/collections.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -9,67 +10,38 @@ import { request, dataValue } from '../src/Adaptor.js';
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const testServer = enableMockClient('https://fake.server.com');
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
-    testServer
-      .intercept({
-        path: '/api/patients',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+const client = createServer();
+const { api } = client;
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
+setMockClient(client);
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
+const COLLECTION = 'my-collection';
 
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
+afterEach(() => {
+  api.reset();
+});
+
+// Set up a simple collection with some defaults
+const init = () => {
+  api.createCollection(COLLECTION);
+
+  api.upsert(COLLECTION, 'x', { id: 'x' });
+
+  const state = {
+    configuration: {},
+  };
+  return { state };
+};
+
+describe('get', () => {
+  it('should get a single item', async () => {
+    const { state } = init();
+
+    const result = await collections.get(COLLECTION, 'x')(state);
+
+    expect(result.data).to.eql({
+      key: 'x',
+      value: { id: 'x' },
     });
-  });
-
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
-    });
-
-    expect(error.statusMessage).to.eql('Forbidden');
   });
 });
