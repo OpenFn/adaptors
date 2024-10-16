@@ -115,14 +115,34 @@ export function remove(name, query = {}, options = {}) {
  * Or what if we do `(state, key, value)` ? because the first thing you need to do
  * is deconstruct anyway
  */
-// collections.each(name, query, state => {});
+export function each(name, query = {}, callback = {}) {
+  return async state => {
+    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
+
+    const { key } = util.expandQuery(resolvedQuery);
+
+    // TODO maybe add query options here
+    // I haven't really given myself much space for this in the api
+    const response = await util.request(
+      state,
+      getClient(),
+      `${resolvedName}/${key}`
+    );
+
+    await util.streamResponse(response, ({ key, value }) => {
+      callback(state, key, value);
+    });
+
+    return state;
+  };
+}
 
 export {
   dataPath,
   dataValue,
   dateFns,
+  group,
   cursor,
-  each,
   field,
   fields,
   fn,

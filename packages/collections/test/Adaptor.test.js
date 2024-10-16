@@ -34,6 +34,60 @@ const init = items => {
   return { state };
 };
 
+describe.only('each', () => {
+  it('should throw if no access token', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.each(COLLECTION, 'x', state => state)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should iterate over all items', async () => {
+    const { state } = init([
+      ['a', { id: 'a' }],
+      ['b', { id: 'b' }],
+      ['c', { id: 'c' }],
+    ]);
+
+    let count = 0;
+
+    await collections.each(COLLECTION, '*', (_state, key, value) => {
+      count++;
+      expect(_state).to.eql(state);
+
+      const item = api.byKey(COLLECTION, key);
+      expect(item).not.to.be.undefined;
+      expect(item).to.eql(value);
+    })(state);
+
+    expect(count).to.eql(3);
+  });
+
+  it('should iterate over some items', async () => {
+    const { state } = init([
+      ['az', { id: 'a' }],
+      ['bz', { id: 'b' }],
+      ['cz', { id: 'c' }],
+    ]);
+
+    let count = 0;
+
+    await collections.each(COLLECTION, 'b*', (_state, key, value) => {
+      count++;
+      expect(key).to.eql('bz');
+      expect(value).to.eql({ id: 'b' });
+    })(state);
+
+    expect(count).to.eql(1);
+  });
+});
+
 describe('get', () => {
   it('should throw if no access token', async () => {
     const { state } = init();
