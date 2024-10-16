@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createServer } from './mock/server.js';
+import { createServer } from '../src/mock.js';
 import { setMockClient } from '../src/collections.js';
 import * as collections from '../src/collections.js';
 
@@ -34,7 +34,7 @@ const init = items => {
   return { state };
 };
 
-describe.only('each', () => {
+describe('each', () => {
   it('should throw if no access token', async () => {
     const { state } = init();
     state.configuration = {};
@@ -85,6 +85,19 @@ describe.only('each', () => {
     })(state);
 
     expect(count).to.eql(1);
+  });
+
+  it('should support an async callback', async () => {
+    const { state } = init([
+      ['az', { id: 'a' }],
+      ['cz', { id: 'c' }],
+    ]);
+
+    const wait = () => new Promise(resolve => setTimeout(resolve, 100));
+    let start = Date.now();
+    await collections.each(COLLECTION, '*', () => wait())(state);
+
+    expect(Date.now() - start).to.be.greaterThan(100);
   });
 });
 

@@ -12,9 +12,10 @@
     "./package.json": "./package.json"
   },
   "scripts": {
+    "tmp": "node test.js",
     "build": "pnpm clean && build-adaptor collections",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings **/*.test.js",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings *.test.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
@@ -30,7 +31,8 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "stream-chain": "^3.3.2",
-    "stream-json": "^1.8.0"
+    "stream-json": "^1.8.0",
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
@@ -38,8 +40,7 @@
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "mocha": "^10.7.3",
-    "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "rimraf": "3.0.2"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createServer } from '../mock/server';
+import { createServer } from '../../src/mock';
 import { streamResponse } from '../../src/utils';
 
 let request;

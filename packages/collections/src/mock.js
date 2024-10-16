@@ -1,4 +1,4 @@
-import { Client, MockAgent } from 'undici';
+import { MockAgent } from 'undici';
 
 const COLLECTION_NOT_FOUND = 'COLLECTION_NOT_FOUND';
 const INVALID_AUTH = 'INVALID_AUTH';
@@ -45,7 +45,7 @@ export function API() {
     return { results };
   };
 
-  // internal dve only api
+  // internal dev only api
   const byKey = (name, key) => {
     return collections[name][key];
   };

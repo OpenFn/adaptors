@@ -14,7 +14,7 @@ export const streamResponse = async (response, onValue) => {
   ]);
 
   for await (const { key, value } of pipeline) {
-    onValue(value);
+    await onValue(value);
   }
 };
 

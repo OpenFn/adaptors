@@ -36,7 +36,7 @@ export function get(name, query = {}, options = {}) {
     // I haven't really given myself much space for this in the api
     const response = await util.request(
       state,
-      getClient(),
+      getClient(state),
       `${resolvedName}/${key}`
     );
     // if this is one item, just return it, nice and easy
@@ -69,7 +69,7 @@ export function set(name, data) {
       ? resolvedData
       : [resolvedData];
 
-    const response = await util.request(state, getClient(), resolvedName, {
+    const response = await util.request(state, getClient(state), resolvedName, {
       method: 'POST',
       body: JSON.stringify(dataArray),
       heeaders: {
@@ -97,7 +97,7 @@ export function remove(name, query = {}, options = {}) {
     // I haven't really given myself much space for this in the api
     const response = await util.request(
       state,
-      getClient(),
+      getClient(state),
       `${resolvedName}/${key}`,
       {
         method: 'DELETE',
@@ -125,28 +125,13 @@ export function each(name, query = {}, callback = {}) {
     // I haven't really given myself much space for this in the api
     const response = await util.request(
       state,
-      getClient(),
+      getClient(state),
       `${resolvedName}/${key}`
     );
-
-    await util.streamResponse(response, ({ key, value }) => {
-      callback(state, key, value);
+    await util.streamResponse(response, async ({ key, value }) => {
+      await callback(state, key, value);
     });
 
     return state;
   };
 }
-
-export {
-  dataPath,
-  dataValue,
-  dateFns,
-  group,
-  cursor,
-  field,
-  fields,
-  fn,
-  lastReferenceValue,
-  merge,
-  sourceValue,
-} from '@openfn/language-common';
