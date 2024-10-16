@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Implement a post and a generic request function for mojatax adaptor
