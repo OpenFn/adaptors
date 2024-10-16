@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
+    "collections_endpoint": {
+      "title": "Collections api endpoint",
       "anyOf": [
         {
           "type": "string"
@@ -11,26 +11,20 @@
           "type": "null"
         }
       ],
-      "description": "The base URL (http://www.example.com)",
+      "description": "The base URL (http://app.openfn.org)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": ["https://app.openfn.org"],
+      "default": "https://app.openfn.org"
     },
-    "username": {
-      "title": "Username",
+    "collections_token": {
+      "title": "Access Token",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "description": "Access token for the collection",
+      "examples": ["x.y.z"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["collections_endpoint", "collections_token"]
 }

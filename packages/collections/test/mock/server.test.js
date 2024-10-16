@@ -29,6 +29,17 @@ describe('GET', () => {
     expect(response.statusCode).to.equal(404);
   });
 
+  it('should return 403 if no credential', async () => {
+    api.createCollection('my-collection');
+
+    const response = await request({
+      method: 'GET',
+      path: 'collections/my-collection',
+      headers: {},
+    });
+    expect(response.statusCode).to.equal(403);
+  });
+
   it('should consume all results as a stream', async () => {
     api.createCollection('my-collection');
 
@@ -110,6 +121,17 @@ describe('POST', () => {
     expect(response.statusCode).to.equal(404);
   });
 
+  it('should return 403 if no credential', async () => {
+    api.createCollection('my-collection');
+
+    const response = await request({
+      method: 'POST',
+      path: 'collections/my-collection',
+      headers: {},
+    });
+    expect(response.statusCode).to.equal(403);
+  });
+
   it('should upsert a new item', async () => {
     api.createCollection('my-collection');
 
@@ -146,6 +168,17 @@ describe('DELETE', () => {
       path: 'collections/my-collection',
     });
     expect(response.statusCode).to.equal(404);
+  });
+
+  it('should return 403 if no credential', async () => {
+    api.createCollection('my-collection');
+
+    const response = await request({
+      method: 'DELETE',
+      path: 'collections/my-collection',
+      headers: {},
+    });
+    expect(response.statusCode).to.equal(403);
   });
 
   it('should remove an item', async () => {

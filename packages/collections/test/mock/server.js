@@ -1,6 +1,7 @@
 import { Client, MockAgent } from 'undici';
 
 const COLLECTION_NOT_FOUND = 'COLLECTION_NOT_FOUND';
+const INVALID_AUTH = 'INVALID_AUTH';
 
 // This is a simple collections API backend to handle the actual logic of a collection
 // It is not designed to match lightning in any way
@@ -79,6 +80,13 @@ const parsePath = path => {
   return { name, key };
 };
 
+const assertAuth = req => {
+  const auth = req.headers.Authorization;
+  if (!auth) {
+    throw new Error(INVALID_AUTH);
+  }
+};
+
 // This creates a mock lightning server
 // It should present the same rest API as lightning, but can be implemented however we like
 // TODO add mock auth here
@@ -92,6 +100,12 @@ export function createServer(url = 'https://app.openfn.org') {
   const api = new API();
 
   const get = req => {
+    try {
+      assertAuth(req);
+    } catch (e) {
+      return { statusCode: 403 };
+    }
+
     try {
       let { name, key } = parsePath(req.path);
       if (!key) {
@@ -115,6 +129,12 @@ export function createServer(url = 'https://app.openfn.org') {
 
   const post = req => {
     try {
+      assertAuth(req);
+    } catch (e) {
+      return { statusCode: 403 };
+    }
+
+    try {
       const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
 
@@ -133,6 +153,12 @@ export function createServer(url = 'https://app.openfn.org') {
   };
 
   const remove = req => {
+    try {
+      assertAuth(req);
+    } catch (e) {
+      return { statusCode: 403 };
+    }
+
     try {
       const { name, key } = parsePath(req.path);
 
@@ -162,16 +188,21 @@ export function createServer(url = 'https://app.openfn.org') {
   return {
     api,
     // Util API for tests (roughly matches the unidici api)
-    request: ({ method, path, data }) => {
+    request: ({ method, path, data, ...rest }) => {
       const opts = {
         method,
         path,
         origin: url,
+        headers: {
+          // TODO this maybe needs to be base 64 encoded
+          Authorization: `Bearer abc`,
+        },
+        ...rest,
       };
       if (data) {
-        opts.headers = {
+        Object.assign(opts.headers, {
           'content-type': 'application/json',
-        };
+        });
         opts.body = JSON.stringify(data);
       }
       return mockPool.request(opts);

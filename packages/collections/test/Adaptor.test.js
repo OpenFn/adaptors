@@ -1,14 +1,7 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 import { createServer } from './mock/server.js';
 import { setMockClient } from '../src/collections.js';
 import * as collections from '../src/collections.js';
-
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
 
 const client = createServer();
 const { api } = client;
@@ -34,12 +27,27 @@ const init = items => {
   }
 
   const state = {
-    configuration: {},
+    configuration: {
+      collections_token: 'x.y.z',
+    },
   };
   return { state };
 };
 
 describe('get', () => {
+  it('should throw if no access token', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.get(COLLECTION, 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('INVALID_AUTH');
+  });
+
   it('should get a single item', async () => {
     const { state } = init();
 

@@ -1,3 +1,4 @@
+import { throwError } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 import chain from 'stream-chain';
 import parser from 'stream-json';
@@ -31,8 +32,16 @@ export const expandQuery = query => {
 };
 
 export const request = (state, client, path, options) => {
+  if (!state.configuration.collections_token) {
+    throwError('INVALID_AUTH', {
+      description: 'No access key provided for collection request',
+      fix: 'Ensure the "collections_token" value is set on state.configuration',
+      path,
+    });
+  }
+
   const headers = {
-    Authorization: `Bearer ${state.configuration.access_token}`,
+    Authorization: `Bearer ${state.configuration.collections_token}`,
   };
   Object.assign(headers, options?.headers);
 

@@ -6,7 +6,8 @@ let client;
 
 const getClient = state => {
   if (!client) {
-    const baseUrl = state.configuration?.baseUrl ?? 'https://app.openfn.org';
+    const baseUrl =
+      state.configuration?.collections_endpoint ?? 'https://app.openfn.org';
     client = new undici.client(baseUrl);
   }
   return client;
@@ -32,11 +33,10 @@ export function get(name, query = {}) {
     const { key } = util.expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
-    // TODO add auth
     // I haven't really given myself much space for this in the api
     const response = await util.request(
       state,
-      client,
+      getClient(),
       `${resolvedName}/${key}`
     );
     // if this is one item, just return it, nice and easy
