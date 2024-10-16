@@ -25,22 +25,31 @@ export const setMockClient = mockClient => {
  * If a wild card or query is included, an array of values will be written to state.data
  */
 
-export function get(name, query) {
+export function get(name, query = {}) {
   return async state => {
-    // TODO expand refs
+    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = util.expandQuery(query);
+    const { key } = util.expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // TODO add auth
     // I haven't really given myself much space for this in the api
-    const response = await util.request(state, client, `${name}/${key}`);
+    const response = await util.request(
+      state,
+      client,
+      `${resolvedName}/${key}`
+    );
     // if this is one item, just return it, nice and easy
     let data;
-    if (!key.match(/\*/)) {
+    if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       [data] = (await response.body.json()).results;
+    } else {
+      data = [];
+      // otherwise build a response array
+      await util.streamResponse(response, item => {
+        data.push(item);
+      });
     }
-    // otherwise build a response array
 
     state.data = data;
     return state;
