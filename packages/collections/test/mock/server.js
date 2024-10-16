@@ -44,6 +44,13 @@ export function API() {
     return { results };
   };
 
+  // internal dve only api
+  const byKey = (name, key) => {
+    return collections[name][key];
+  };
+
+  // TODO strictly speaking this should support patterns
+  // but keeping it super simple in the mock for now
   const remove = (name, key) => {
     if (!(name in collections)) {
       throw new Error(COLLECTION_NOT_FOUND);
@@ -60,6 +67,7 @@ export function API() {
     upsert,
     fetch,
     remove,
+    byKey,
   };
 
   return api;
@@ -100,8 +108,36 @@ export function createServer(url = 'https://app.openfn.org') {
   };
 
   const post = req => {
-    const body = JSON.parse(req.body);
-    return { statusCode: 200 };
+    try {
+      let [_blank, _collections, name, key] = req.path.split('/');
+      const body = JSON.parse(req.body);
+
+      for (const { key, value } of body) {
+        // TODO error if key or value not set
+        api.upsert(name, key, value);
+      }
+
+      // TODO return upserted summary and errorsbrave
+      return { statusCode: 200 };
+    } catch (e) {
+      if (e.message === COLLECTION_NOT_FOUND) {
+        return { statusCode: 404 };
+      }
+    }
+  };
+
+  const remove = req => {
+    try {
+      let [_blank, _collections, name, key] = req.path.split('/');
+
+      api.remove(name, key);
+
+      return { statusCode: 200 };
+    } catch (e) {
+      if (e.message === COLLECTION_NOT_FOUND) {
+        return { statusCode: 404 };
+      }
+    }
   };
 
   mockPool
@@ -112,16 +148,28 @@ export function createServer(url = 'https://app.openfn.org') {
     .intercept({ method: 'post', path: /collections\/./ })
     .reply(post)
     .persist();
+  mockPool
+    .intercept({ method: 'delete', path: /collections\/./ })
+    .reply(remove)
+    .persist();
 
   return {
     api,
     // Util API for tests
-    request: path =>
-      mockPool.request({
-        method: 'GET',
-        origin: url,
+    request: (method, path, data) => {
+      const opts = {
+        method,
         path,
-      }),
+        origin: url,
+      };
+      if (data) {
+        opts.headers = {
+          'content-type': 'application/json',
+        };
+        opts.body = JSON.stringify(data);
+      }
+      return mockPool.request(opts);
+    },
     // stream: (method, path) =>
     //   mockPool.stream({
     //     method,

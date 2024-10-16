@@ -2,25 +2,24 @@ import { expect } from 'chai';
 import { createServer } from '../mock/server';
 import { streamResponse } from '../../src/Utils';
 
+let request;
+let api;
+beforeEach(() => {
+  ({ api, request } = createServer());
+});
+
 // TODO: support query options
 // TODO support timestamps
 describe('GET', () => {
-  let request;
-  let api;
-
-  beforeEach(() => {
-    ({ api, request } = createServer());
-  });
-
   it('should return 200 for a valid collection', async () => {
     api.createCollection('my-collection');
 
-    const response = await request('/collections/my-collection');
+    const response = await request('GET', '/collections/my-collection');
     expect(response.statusCode).to.equal(200);
   });
 
   it("should return 404 for a collection that doesn't exist", async () => {
-    const response = await request('/collections/my-collection');
+    const response = await request('GET', '/collections/my-collection');
     expect(response.statusCode).to.equal(404);
   });
 
@@ -31,7 +30,7 @@ describe('GET', () => {
     api.upsert('my-collection', 'y', { id: 'y' });
     api.upsert('my-collection', 'z', { id: 'z' });
 
-    const response = await request('/collections/my-collection');
+    const response = await request('GET', '/collections/my-collection');
     const results = [];
 
     await streamResponse(response, item => results.push(item));
@@ -50,7 +49,7 @@ describe('GET', () => {
     api.upsert('my-collection', 'y', { id: 'y' });
     api.upsert('my-collection', 'z', { id: 'z' });
 
-    const response = await request('/collections/my-collection/y');
+    const response = await request('GET', '/collections/my-collection/y');
     const results = [];
 
     await streamResponse(response, item => results.push(item));
@@ -65,7 +64,7 @@ describe('GET', () => {
     api.upsert('my-collection', 'ay', { id: 'y' });
     api.upsert('my-collection', 'az', { id: 'z' });
 
-    const response = await request('/collections/my-collection/*z');
+    const response = await request('GET', '/collections/my-collection/*z');
     const results = [];
 
     await streamResponse(response, item => results.push(item));
@@ -74,19 +73,61 @@ describe('GET', () => {
   });
 });
 
-// describe.only('POST', () => {
-//   it('should return 200 for a valid collection', async () => {
-//     api.createCollection('my-collection');
+describe('POST', () => {
+  it('should return 200 for a valid collection', async () => {
+    api.createCollection('my-collection');
 
-//     const response = await request('/collections/my-collection');
-//     expect(response.statusCode).to.equal(200);
-//   });
+    const response = await request('POST', '/collections/my-collection', []);
+    expect(response.statusCode).to.equal(200);
+  });
 
-//   it("should return 404 for a collection that doesn't exist", async () => {
-//     const response = await request('/collections/my-collection');
-//     expect(response.statusCode).to.equal(404);
-//   });
+  it("should return 404 for a collection that doesn't exist", async () => {
+    // Note that we need to include an item here to trigger the error in the mock
+    const response = await request('POST', '/collections/my-collection', [{}]);
+    expect(response.statusCode).to.equal(404);
+  });
 
-// });
+  it('should upsert a new item', async () => {
+    api.createCollection('my-collection');
 
-describe('DELETE', () => {});
+    const item = { key: 'x', value: { id: 'x' } };
+
+    const response = await request('POST', '/collections/my-collection', [
+      item,
+    ]);
+
+    expect(response.statusCode).to.equal(200);
+
+    const result = api.byKey('my-collection', item.key);
+    expect(result).to.eql(item.value);
+  });
+});
+
+describe('DELETE', () => {
+  it('should return 200 for a valid collection', async () => {
+    api.createCollection('my-collection');
+
+    const response = await request('DELETE', '/collections/my-collection', []);
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it("should return 404 for a collection that doesn't exist", async () => {
+    // Note that we need to include an item here to trigger the error in the mock
+    const response = await request('DELETE', '/collections/my-collection', [
+      {},
+    ]);
+    expect(response.statusCode).to.equal(404);
+  });
+
+  it('should remove an item', async () => {
+    api.createCollection('my-collection');
+    api.upsert('my-collection', 'x', { id: 'x' });
+
+    const response = await request('DELETE', '/collections/my-collection/x');
+
+    expect(response.statusCode).to.equal(200);
+
+    const result = api.byKey('my-collection', 'x');
+    expect(result).to.be.undefined;
+  });
+});
