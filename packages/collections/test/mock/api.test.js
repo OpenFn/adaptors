@@ -1,0 +1,104 @@
+import { expect } from 'chai';
+import { API } from '../../src/mock';
+
+describe('API', () => {
+  let api;
+
+  before(() => {
+    api = new API();
+  });
+
+  afterEach(() => {
+    api.reset();
+  });
+
+  it('should create an API', () => {
+    expect(api).to.not.be.undefined;
+
+    expect(api.collections).to.eql({});
+  });
+
+  it('should create a collection', () => {
+    api.createCollection('a');
+
+    expect(api.collections).to.eql({ a: {} });
+  });
+
+  it('should reset', () => {
+    api.createCollection('x');
+
+    expect(api.collections).to.eql({ x: {} });
+
+    api.reset();
+
+    expect(api.collections).to.eql({});
+  });
+
+  it('should create two APIs with two different collections', () => {
+    const a = new API();
+    a.createCollection('a');
+
+    const b = new API();
+    b.createCollection('b');
+
+    expect(a.collections.b).to.be.undefined;
+    expect(b.collections.a).to.be.undefined;
+  });
+
+  it('should add to a collection', () => {
+    api.createCollection('a');
+
+    api.upsert('a', 'x', {});
+
+    expect(api.collections.a).to.eql({ x: {} });
+  });
+
+  it("should throw if adding to add to a collection that doesn't exist", () => {
+    try {
+      api.upsert('c', 'x', {});
+    } catch (e) {
+      expect(e.message).to.eql('COLLECTION_NOT_FOUND');
+    }
+  });
+
+  it('should replace into a collection', () => {
+    api.createCollection('a');
+
+    api.upsert('a', 'x', []);
+
+    expect(api.collections.a).to.eql({ x: [] });
+  });
+
+  it('should fetch from a collection', () => {
+    api.createCollection('a');
+
+    api.upsert('a', 'x', { id: 1 });
+
+    const result = api.fetch('a', 'x', {});
+
+    expect(result).to.eql([{ id: 1 }]);
+  });
+
+  it('should fetch from a collection with wildcard', () => {
+    api.createCollection('a');
+
+    api.upsert('a', 'x', { id: 1 });
+    api.upsert('a', 'xx', { id: 2 });
+    api.upsert('a', 'axb', { id: 3 });
+    api.upsert('a', 'yy', { id: 4 });
+
+    const { results } = api.fetch('a', 'x*', {});
+
+    expect(results).to.eql([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  });
+
+  it('should remove from a collection', () => {
+    api.createCollection('a');
+
+    api.upsert('a', 'x', { id: 1 });
+
+    api.remove('a', 'x');
+
+    expect(api.collections.a).to.eql({});
+  });
+});
