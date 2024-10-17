@@ -57,9 +57,9 @@ describe('each', () => {
 
     let count = 0;
 
-    await collections.each(COLLECTION, '*', (_state, key, value) => {
+    await collections.each(COLLECTION, '*', (state, value, key) => {
       count++;
-      expect(_state).to.eql(state);
+      expect(state).to.eql(state);
 
       const item = api.byKey(COLLECTION, key);
       expect(item).not.to.be.undefined;

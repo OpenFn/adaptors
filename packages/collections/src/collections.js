@@ -18,15 +18,32 @@ export const setMockClient = mockClient => {
 };
 
 /**
- * Get one more values from a collection. For large collections, use each.
- * options can be a string key name (including wildcards), or an object
- * { key, created_after, created_before, inserted_before, inserted_after }
- * Throws if created AND inserted are specified
- * If no wild card or query included, the value will be written to state.data (or throw if not found)
- * If a wild card or query is included, an array of values will be written to state.data
+ * Query options. All dates should be parseable as ISO 8601 strings, see https://simple.wikipedia.org/wiki/ISO_8601
+ * @typedef {Object} QueryOptions
+ * @public
+ * @property {string} key - key or key pattern to match against. Patterns support wildcards,  eg `2024-01*`
+ * @property {string} createdBefore - matches values that were created before the start of the provided date
+ * @property {string} createdAfter - matches values that were created after the end of the provided date
+ * @property {string} updatedBefore - matches values that were updated before the start of the provided date
+ * @property {string} updatedAfter - matches values that were updated after the end of the provided date*
  */
-// TOOD: logging
-export function get(name, query = {}, options = {}) {
+
+/**
+ * Fetch one or more values from a collection.
+ * For large datasets, we recommend using each(), which streams data.
+ * You can pass a specific key as a string to only fetch one item, or pass a query
+ * with a key-pattern or a date filter.
+ * @param {string} name - The name of the collection to fetch from
+ * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to fetch, or a query object
+ * @state data - the downloaded values as an array unless a specific string was specified
+ * @example <caption>Get a specific value from a collection</caption>
+ * collections.get('my-collection', '556e0a62')
+ * @example <caption>Get a range of values from a collection with a key pattern</caption>
+ * collections.get('my-collection', '2024*')
+ * @example <caption>Get all values created since the end of January 2024</caption>
+ * collections.get('my-collection', { createdAfter: '202401')
+ */
+export function get(name, query = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
@@ -39,16 +56,20 @@ export function get(name, query = {}, options = {}) {
       getClient(state),
       `${resolvedName}/${key}`
     );
-    // if this is one item, just return it, nice and easy
+
     let data;
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
+      // If one specific item was requested, write it straight to state.data
       [data] = (await response.body.json()).results;
+      console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
+      // build a response array
       data = [];
-      // otherwise build a response array
+      console.log(`Downloading data from collection "${name}"...`);
       await util.streamResponse(response, item => {
         data.push(item);
       });
+      console.log(`Fetched "${data.length}" values from collection "${name}"`);
     }
 
     state.data = data;
@@ -57,16 +78,21 @@ export function get(name, query = {}, options = {}) {
 }
 
 /**
- * Upserts one or more values, as a { key, value } pair, to the named collection
- * If any errors are returned by the server, this will be thrown
+ * Adds one or more values to a collection. If a key already exists, its value will
+ * be replaced by the new value.
+ * You can pass a string key and a single value, or a key generator function and an array of values.
+ * The function will be called for each value, passing each value as the first argument, and should return
+ * a string key.
+ * @public
+ * @function
  * @param keygen - a function which generates a key for each value. Pass a string to set a static key for a single item.
  * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
- * set('my-collection', (item) => item.id, $.data)
+ * collections.set('my-collection', (item) => item.id, $.data)
  * @example <caption>Set a number of values, generating an id from a string template</caption>
- * set('my-collection', (item) => `${item.category}-${Date.now()}`, $.data)
+ * collections.set('my-collection', (item) => `${item.category}-${Date.now()}`, $.data)
  * @example <caption>Set a single value with a static key</caption>
- * set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
+ * collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
  */
 export function set(name, keyGen, values) {
   return async state => {
@@ -102,8 +128,17 @@ export function set(name, keyGen, values) {
 }
 
 /**
- * Remove one or more values from the collection
- * Options can be a string key or a query object
+ * Remove one or more values from a collection.
+ * You can pass a specific key as a string to only fetch one item, or pass a query
+ * with a key-pattern or a date filter.
+ * @param {string} name - The name of the collection to remove from
+ * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to remove, or a query object
+ * @example <caption>Remove a specific value from a collection</caption>
+ * collections.remove('my-collection', '556e0a62')
+ * @example <caption>Remove a range of values from a collection with a key pattern</caption>
+ * collections.remove('my-collection', '2024*')
+ * @example <caption>Remove all values created since the end of January 2024</caption>
+ * collections.remove('my-collection', { createdAfter: '202401')
  */
 export function remove(name, query = {}, options = {}) {
   return async state => {
@@ -127,11 +162,19 @@ export function remove(name, query = {}, options = {}) {
 }
 
 /**
- * Iterate over values in a collection which match the query
- * Query can be a wildcard string or object
- * The callback will be invoked with { key, value } on state.data
- * Or what if we do `(state, key, value)` ? because the first thing you need to do
- * is deconstruct anyway
+ * Iterate over all values in a collection which match the provided query.
+ * each() maintains a low memory footprint by streaming items individually.
+ * You can pass a string key-pattern as a query, or pass a query object.
+ * The callback function will be invoked for each value with three parameters:
+ * `state`, `value` and `key`.
+ * @example <caption>Iterate over a range of values with wildcards</caption>
+ * collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
+ *   state.cumulativeCost += value.cost;
+ * })
+ * @example <caption>Iterate over a range of values with date filters</caption>
+ * collections.each('my-collection', { updatedBefore: new Date().toString() }, (state, value, key) => {
+ *   state.cumulativeCost += value.cost;
+ * })
  */
 export function each(name, query = {}, callback = {}) {
   return async state => {
@@ -146,8 +189,9 @@ export function each(name, query = {}, callback = {}) {
       getClient(state),
       `${resolvedName}/${key}`
     );
+
     await util.streamResponse(response, async ({ key, value }) => {
-      await callback(state, key, value);
+      await callback(state, value, key);
     });
 
     return state;
