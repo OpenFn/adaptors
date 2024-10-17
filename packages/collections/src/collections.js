@@ -33,6 +33,8 @@ export const setMockClient = mockClient => {
  * For large datasets, we recommend using each(), which streams data.
  * You can pass a specific key as a string to only fetch one item, or pass a query
  * with a key-pattern or a date filter.
+ * @public
+ * @function
  * @param {string} name - The name of the collection to fetch from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to fetch, or a query object
  * @state data - the downloaded values as an array unless a specific string was specified
@@ -131,6 +133,8 @@ export function set(name, keyGen, values) {
  * Remove one or more values from a collection.
  * You can pass a specific key as a string to only fetch one item, or pass a query
  * with a key-pattern or a date filter.
+ * @public
+ * @function
  * @param {string} name - The name of the collection to remove from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to remove, or a query object
  * @example <caption>Remove a specific value from a collection</caption>
@@ -167,6 +171,11 @@ export function remove(name, query = {}, options = {}) {
  * You can pass a string key-pattern as a query, or pass a query object.
  * The callback function will be invoked for each value with three parameters:
  * `state`, `value` and `key`.
+ * @public
+ * @function
+ * @param {string} name - The name of the collection to remove from
+ * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to remove, or a query object
+ * @param {function} callback - A callback invoked for each item `(state,  value, key) => void`
  * @example <caption>Iterate over a range of values with wildcards</caption>
  * collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
  *   state.cumulativeCost += value.cost;
