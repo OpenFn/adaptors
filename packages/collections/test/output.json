@@ -1,22 +1,13 @@
 {
   "data": [
     {
-      "key": "a",
-      "value": {
-        "id": "a"
-      }
+      "id": "a"
     },
     {
-      "key": "b",
-      "value": {
-        "id": "b"
-      }
+      "id": "b"
     },
     {
-      "key": "c",
-      "value": {
-        "id": "c"
-      }
+      "id": "c"
     }
   ]
 }

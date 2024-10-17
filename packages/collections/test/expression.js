@@ -10,16 +10,12 @@ fn((state = {}) => {
     collections_token: 'abc',
   };
 
-  state.data = [
-    { key: 'a', value: { id: 'a' } },
-    { key: 'b', value: { id: 'b' } },
-    { key: 'c', value: { id: 'c' } },
-  ];
+  state.data = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
 
   return state;
 });
 
-collections.set('collection', $.data);
+collections.set('collection', v => v.id, $.data);
 
 collections.each('collection', '*', (state, key, value) => {
   console.log(key, value);

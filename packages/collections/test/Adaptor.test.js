@@ -198,14 +198,14 @@ describe('get', () => {
   // TODO support query operators (and throw for invalid values)
 });
 
-describe('set', () => {
+describe.only('set', () => {
   it('should throw if no access token', async () => {
     const { state } = init();
     state.configuration = {};
 
     let err;
     try {
-      await collections.set(COLLECTION, { key: 'x', value: {} })(state);
+      await collections.set(COLLECTION, 'x', {})(state);
     } catch (e) {
       err = e;
     }
@@ -215,23 +215,22 @@ describe('set', () => {
   it('should set a single item', async () => {
     const { state } = init();
 
-    const items = { key: 'x', value: { id: 'x' } };
+    const key = 'x';
+    const item = { id: 'x' };
 
-    await collections.set(COLLECTION, items)(state);
+    await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.byKey(COLLECTION, items.key);
-    expect(result).to.eql(items.value);
+    const result = api.byKey(COLLECTION, key);
+    expect(result).to.eql(item);
   });
 
-  it('should set multiple items', async () => {
+  it('should set multiple items with a key generator', async () => {
     const { state } = init();
 
-    const items = [
-      { key: 'x', value: { id: 'x' } },
-      { key: 'z', value: { id: 'z' } },
-    ];
+    const items = [{ id: 'x' }, { id: 'z' }];
+    const keygen = item => item.id;
 
-    await collections.set(COLLECTION, items)(state);
+    await collections.set(COLLECTION, keygen, items)(state);
 
     const x = api.byKey(COLLECTION, items[0].key);
     expect(x).to.eql(items[0].value);

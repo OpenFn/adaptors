@@ -59,25 +59,43 @@ export function get(name, query = {}, options = {}) {
 /**
  * Upserts one or more values, as a { key, value } pair, to the named collection
  * If any errors are returned by the server, this will be thrown
+ * @param keygen - a function which generates a key for each value. Pass a string to set a static key for a single item.
+ * @param values - an array of values to set, or a single value.
+ * @example <caption>Set a number of values using each value's id property as a key</caption>
+ * set('my-collection', (item) => item.id, $.data)
+ * @example <caption>Set a number of values, generating an id from a string template</caption>
+ * set('my-collection', (item) => `${item.category}-${Date.now()}`, $.data)
+ * @example <caption>Set a single value with a static key</caption>
+ * set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
  */
-// TOOD: logging
-export function set(name, data) {
+export function set(name, keyGen, values) {
   return async state => {
-    const [resolvedName, resolvedData] = expandReferences(state, name, data);
+    const [resolvedName, resolvedValues] = expandReferences(
+      state,
+      name,
+      values
+    );
 
-    const dataArray = Array.isArray(resolvedData)
-      ? resolvedData
-      : [resolvedData];
+    const dataArray = Array.isArray(resolvedValues)
+      ? resolvedValues
+      : [resolvedValues];
+
+    const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
+
+    const pairs = dataArray.map(value => ({ key: keyGenFn(value), value }));
+
+    console.log(`Setting ${pairs.length} values in collection "${name}"`);
 
     const response = await util.request(state, getClient(state), resolvedName, {
       method: 'POST',
-      body: JSON.stringify(dataArray),
+      body: JSON.stringify(pairs),
       heeaders: {
         'content-type': 'application/json',
       },
     });
 
     // TODO - check if the response contains errors
+    // console.log(`Succesfully set ${res.count} values`);
 
     return state;
   };
