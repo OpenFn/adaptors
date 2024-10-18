@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 5.0.6
+
+### Patch Changes
+
+- d8d84d3: improve logging error message
+
 ## 5.0.5
 
 ### Patch Changes
@@ -11,7 +17,7 @@
 
 ### Patch Changes
 
-- d3ac969: use reject instead of throwwq
+- d3ac969: use reject instead of throw
 
 ## 5.0.3
 
