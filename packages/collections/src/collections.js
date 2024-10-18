@@ -6,6 +6,10 @@ import parser from 'stream-json';
 import Pick from 'stream-json/filters/Pick';
 import streamArray from 'stream-json/streamers/StreamArray';
 
+import { createServer } from './mock';
+
+export { createServer as createMockServer };
+
 let client;
 
 const getClient = state => {

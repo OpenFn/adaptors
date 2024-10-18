@@ -257,6 +257,9 @@ importers:
       stream-json:
         specifier: ^1.8.0
         version: 1.8.0
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.4
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -270,15 +273,9 @@ importers:
       esno:
         specifier: ^0.16.3
         version: 0.16.3
-      mocha:
-        specifier: ^10.7.3
-        version: 10.7.3
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.28.4
 
   packages/commcare:
     dependencies:

@@ -1,7 +1,7 @@
 // Set up the test
 fn((state = {}) => {
   // set up a mock
-  const server = mock.createServer();
+  const server = collections.createMockServer();
   collections.setMockClient(server);
 
   server.api.createCollection('collection');

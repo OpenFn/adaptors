@@ -78,7 +78,7 @@ describe('each', () => {
 
     let count = 0;
 
-    await collections.each(COLLECTION, 'b*', (_state, key, value) => {
+    await collections.each(COLLECTION, 'b*', (_state, value, key) => {
       count++;
       expect(key).to.eql('bz');
       expect(value).to.eql({ id: 'b' });
@@ -198,7 +198,7 @@ describe('get', () => {
   // TODO support query operators (and throw for invalid values)
 });
 
-describe.only('set', () => {
+describe('set', () => {
   it('should throw if no access token', async () => {
     const { state } = init();
     state.configuration = {};
