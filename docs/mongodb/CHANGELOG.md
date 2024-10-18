@@ -1,5 +1,12 @@
 # @openfn/language-mongodb
 
+## 2.1.6
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
 ## 2.1.5
 
 ### Patch Changes

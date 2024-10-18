@@ -63,6 +63,18 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
+    <a href="#helpers_decode">helpers.decode(base64Data)</a>
+</dt>
+
+<dt>
+    <a href="#helpers_encode">helpers.encode(data)</a>
+</dt>
+
+<dt>
+    <a href="#helpers_uuid">helpers.uuid()</a>
+</dt>
+
+<dt>
     <a href="#beta_each">beta.each(dataSource, operation)</a>
 </dt>
 
@@ -699,6 +711,67 @@ Does not affect array objects.
 each(function(state) {
   return toArray( dataValue("path_of_array")(state) )
 }, ...)
+```
+
+* * *
+
+
+## helpers
+
+These functions belong to the helpers namespace.
+### helpers.decode {#helpers_decode}
+
+<p><code>decode(base64Data) ⇒ string</code></p>
+
+Decodes a Base64 encoded string back to its original format.
+
+**Returns**: <code>string</code> - - The decoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| base64Data | <code>string</code> | The Base64 encoded string. |
+
+**Example:** Decode a Base64 string
+```js
+const decoded = decode('SGVsbG8gV29ybGQ=');
+console.log(decoded); // Output: Hello World
+```
+
+* * *
+
+
+### helpers.encode {#helpers_encode}
+
+<p><code>encode(data) ⇒ string</code></p>
+
+Encodes a given string into Base64 format.
+
+**Returns**: <code>string</code> - - The Base64 encoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>string</code> | The string to be encoded. |
+
+**Example:** Encode a string
+```js
+const encoded = encode('Hello World');
+console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+```
+
+* * *
+
+
+### helpers.uuid {#helpers_uuid}
+
+<p><code>uuid() ⇒ string</code></p>
+
+Generates a UUID (Universally Unique Identifier).
+
+**Returns**: <code>string</code> - - A newly generated UUID.  
+**Example:** Generate a UUID
+```js
+const id = uuid();
+console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 ```
 
 * * *

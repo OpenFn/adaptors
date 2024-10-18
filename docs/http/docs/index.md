@@ -15,6 +15,22 @@
     <a href="#request">request(method, path, params, callback)</a></dt>
 </dl>
 
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#util_decode">util.decode(base64Data)</a>
+</dt>
+
+<dt>
+    <a href="#util_encode">util.encode(data)</a>
+</dt>
+
+<dt>
+    <a href="#util_uuid">util.uuid()</a>
+</dt>
+</dl>
+
 
 This adaptor exports the following from common:
 <dl>
@@ -307,6 +323,67 @@ request(
      headers: {'content-type': 'application/json'},
    }
 )
+```
+
+* * *
+
+
+## util
+
+These functions belong to the util namespace.
+### util.decode {#util_decode}
+
+<p><code>decode(base64Data) ⇒ string</code></p>
+
+Decodes a Base64 encoded string back to its original format.
+
+**Returns**: <code>string</code> - - The decoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| base64Data | <code>string</code> | The Base64 encoded string. |
+
+**Example:** Decode a Base64 string
+```js
+const decoded = Util.decode('SGVsbG8gV29ybGQ=');
+console.log(decoded); // Output: Hello World
+```
+
+* * *
+
+
+### util.encode {#util_encode}
+
+<p><code>encode(data) ⇒ string</code></p>
+
+Encodes a given string into Base64 format.
+
+**Returns**: <code>string</code> - - The Base64 encoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>string</code> | The string to be encoded. |
+
+**Example:** Encode a string
+```js
+const encoded = Util.encode('Hello World');
+console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+```
+
+* * *
+
+
+### util.uuid {#util_uuid}
+
+<p><code>uuid() ⇒ string</code></p>
+
+Generates a UUID (Universally Unique Identifier).
+
+**Returns**: <code>string</code> - - A newly generated UUID.  
+**Example:** Generate a UUID
+```js
+const id = Util.uuid();
+console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 ```
 
 * * *
