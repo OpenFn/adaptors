@@ -19,7 +19,7 @@ export const encode = data => Buffer.from(data, 'utf-8').toString('base64');
  * @param {string} base64Data - The Base64 encoded string.
  * @returns {string} - The decoded string.
  * @example <caption>Decode a Base64 string</caption>
- * const decoded = base64Decode('SGVsbG8gV29ybGQ=');
+ * const decoded = decode('SGVsbG8gV29ybGQ=');
  * console.log(decoded); // Output: Hello World
  */
 export const decode = base64Data =>
