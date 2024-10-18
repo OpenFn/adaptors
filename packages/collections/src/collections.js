@@ -1,6 +1,10 @@
+import nodepath from 'node:path';
 import undici from 'undici';
-import { expandReferences } from '@openfn/language-common/util';
-import * as util from './utils';
+import { throwError, expandReferences } from '@openfn/language-common/util';
+import chain from 'stream-chain';
+import parser from 'stream-json';
+import Pick from 'stream-json/filters/Pick';
+import streamArray from 'stream-json/streamers/StreamArray';
 
 let client;
 
@@ -49,11 +53,11 @@ export function get(name, query = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = util.expandQuery(resolvedQuery);
+    const { key } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
-    const response = await util.request(
+    const response = await request(
       state,
       getClient(state),
       `${resolvedName}/${key}`
@@ -68,7 +72,7 @@ export function get(name, query = {}) {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
-      await util.streamResponse(response, item => {
+      await streamResponse(response, item => {
         data.push(item);
       });
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
@@ -114,7 +118,7 @@ export function set(name, keyGen, values) {
 
     console.log(`Setting ${pairs.length} values in collection "${name}"`);
 
-    const response = await util.request(state, getClient(state), resolvedName, {
+    const response = await request(state, getClient(state), resolvedName, {
       method: 'POST',
       body: JSON.stringify(pairs),
       heeaders: {
@@ -148,11 +152,11 @@ export function remove(name, query = {}, options = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = util.expandQuery(resolvedQuery);
+    const { key } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
-    const response = await util.request(
+    const response = await request(
       state,
       getClient(state),
       `${resolvedName}/${key}`,
@@ -189,20 +193,69 @@ export function each(name, query = {}, callback = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = util.expandQuery(resolvedQuery);
+    const { key } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
-    const response = await util.request(
+    const response = await request(
       state,
       getClient(state),
       `${resolvedName}/${key}`
     );
 
-    await util.streamResponse(response, async ({ key, value }) => {
+    await streamResponse(response, async ({ key, value }) => {
       await callback(state, value, key);
     });
 
     return state;
   };
 }
+
+export const streamResponse = async (response, onValue) => {
+  const pipeline = chain([
+    response.body,
+    parser(),
+    new Pick({ filter: 'results' }),
+    new streamArray(),
+  ]);
+
+  for await (const { key, value } of pipeline) {
+    await onValue(value);
+  }
+};
+
+export const expandQuery = query => {
+  let key;
+
+  if (typeof query === 'string') {
+    key = query;
+    return {
+      key,
+    };
+  }
+
+  return query;
+};
+
+export const request = (state, client, path, options = {}) => {
+  if (!state.configuration.collections_token) {
+    throwError('INVALID_AUTH', {
+      description: 'No access key provided for collection request',
+      fix: 'Ensure the "collections_token" value is set on state.configuration',
+      path,
+    });
+  }
+
+  const headers = {
+    Authorization: `Bearer ${state.configuration.collections_token}`,
+  };
+  Object.assign(headers, options?.headers);
+
+  const { headers: _, ...optionsWithoutHeaders } = options;
+  return client.request({
+    path: nodepath.join('collections', path),
+    headers,
+    method: 'GET',
+    ...optionsWithoutHeaders,
+  });
+};
