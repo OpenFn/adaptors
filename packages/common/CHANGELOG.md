@@ -1,5 +1,11 @@
 ## 2.0.0
 
+## 2.1.0
+
+### Minor Changes
+
+- 03a1a74: Add `encode`, `decode` and `uuid` helpers
+
 ## 2.0.3
 
 ### Patch Changes

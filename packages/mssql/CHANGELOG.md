@@ -1,5 +1,12 @@
 # @openfn/language-mssql
 
+## 5.0.7
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
 ## 5.0.6
 
 ### Patch Changes
