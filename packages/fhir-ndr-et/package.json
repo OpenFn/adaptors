@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-ndr-et",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",
   "exports": {
