@@ -54,7 +54,13 @@ async function prerelease() {
   // deprecate the current @next tagged stuff
   // (We have to do this before publish or we'll
   // deprecate the wrong thing)
-  await deprecate(report);
+  try {
+    await deprecate(report);
+    console.log('Deprecated old versions');
+  } catch (e) {
+    console.error('Error deprecating old adaptor versions!');
+    console.error(e);
+  }
 
   await exec('pnpm install');
   await exec('pnpm build');
