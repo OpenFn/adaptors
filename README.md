@@ -110,8 +110,6 @@ export function yourFunctionName(arguments) {
 * You should set your credentials in the “configuration”  property inside `state.json`
 * Write some unit tests to ensure your code works
 
-
-
 #### 2. Test it manually
 
 To run a test job and exercise your
@@ -144,34 +142,8 @@ openfn tmp/expression.js -ma <adaptor name> -o tmp/output.json -s tmp/state.json
 
 The different output from you running the jobs will be temporarily stored in `output.json`
 
-#### 3. Write your unit tests
 
-Import your newly defined function
-
-```js
-import { functionName } from '../src/Adaptor.js';
-```
-
-Describe your test, define state, call your operation (follow the example below
-to see how state should be passed to it).
-
-Make an assertion to check the result.
-
-```js
-it('should xyz', async () => {
-const state = {
-  configuration: {},
-  data: {},
-}});
-
-const result = await getTodaysWeather()(state);
-```
-
-Run `pnpm test` to check your test is passing.
-
-Make sure to test your function with different arguments and values.
-
-#### 4. Add docs and write the tests
+#### 3. Add docs and write the tests
 
 - Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
   comprehensive explanation of the adaptor function's purpose, parameters,
