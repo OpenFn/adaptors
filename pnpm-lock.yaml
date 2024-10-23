@@ -246,6 +246,37 @@ importers:
         specifier: ^5.22.1
         version: 5.28.4
 
+  packages/collections:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      stream-chain:
+        specifier: ^3.3.2
+        version: 3.3.2
+      stream-json:
+        specifier: ^1.8.0
+        version: 1.8.0
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.4
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+
   packages/commcare:
     dependencies:
       '@openfn/language-common':
@@ -12285,6 +12316,14 @@ packages:
     engines: {node: '>=4', npm: '>=6'}
     dev: false
 
+  /stream-chain@2.2.5:
+    resolution: {integrity: sha512-1TJmBx6aSWqZ4tx7aTpBDXK0/e2hhcNSTV8+CbFJtDjbb+I1mZ8lHit0Grw9GRT+6JbIrrDd8esncgBi8aBXGA==}
+    dev: false
+
+  /stream-chain@3.3.2:
+    resolution: {integrity: sha512-YvRznt2X9tLSQlQXkYxp9FGcp6uUwBG9VAyjgo53Ov+Ctk36R49xB6NUia37T7owHyi3UtvI6achAj4ufBSaNg==}
+    dev: false
+
   /stream-connect@1.0.2:
     resolution: {integrity: sha512-68Kl+79cE0RGKemKkhxTSg8+6AGrqBt+cbZAXevg2iJ6Y3zX4JhA/sZeGzLpxW9cXhmqAcE7KnJCisUmIUfnFQ==}
     engines: {node: '>=0.10.0'}
@@ -12296,6 +12335,12 @@ packages:
     resolution: {integrity: sha512-E1GUzBSgvct8Jsb3v2X15pjzN1tYebtbLaMg+eBOUOAxgbLoSbT2NS91ckc5lJD1KfLjId+jXJRgo0qnV5Nerg==}
     dependencies:
       stubs: 3.0.0
+    dev: false
+
+  /stream-json@1.8.0:
+    resolution: {integrity: sha512-HZfXngYHUAr1exT4fxlbc1IOce1RYxp2ldeaf97LYCOPSoOqY/1Psp7iGvpb+6JIOgkra9zDYnPX01hGAHzEPw==}
+    dependencies:
+      stream-chain: 2.2.5
     dev: false
 
   /stream-shift@1.0.1:
