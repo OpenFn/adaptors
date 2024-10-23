@@ -20,7 +20,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean build-adaptor fhir-ndr-et",
+    "build": "pnpm clean && pnpm build-adaptor fhir-ndr-et",
     "build:src": "esno build/build.ts",
     "build:adaptor": "pnpm build-adaptor fhir-ndr-et",
     "build:schema": "esno build/generate-schema.ts",
