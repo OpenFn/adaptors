@@ -264,3 +264,39 @@ describe('remove', () => {
     expect(result).to.eql(undefined);
   });
 });
+
+describe('utils', () => {
+  it('should map known query values', () => {
+    const input = {
+      createdBefore: '1',
+      createdAfter: '1',
+      updatedBefore: '1',
+      updatedAfter: '1',
+    };
+    const mapped = collections.parseQuery({ query: input });
+    expect(mapped).to.eql({
+      created_before: '1',
+      created_after: '1',
+      updated_before: '1',
+      updated_after: '1',
+    });
+  });
+
+  it('should preserver other query values', () => {
+    const input = {
+      created_before: '1',
+      created_after: '1',
+      updated_before: '1',
+      updated_after: '1',
+      foo: 'x',
+    };
+    const mapped = collections.parseQuery({ query: input });
+    expect(mapped).to.eql({
+      created_before: '1',
+      created_after: '1',
+      updated_before: '1',
+      updated_after: '1',
+      foo: 'x',
+    });
+  });
+});

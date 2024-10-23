@@ -57,14 +57,15 @@ export function get(name, query = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = expandQuery(resolvedQuery);
+    const { key, ...rest } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
-      `${resolvedName}/${key}`
+      `${resolvedName}/${key}`,
+      { query: rest }
     );
 
     let data;
@@ -156,7 +157,7 @@ export function remove(name, query = {}, options = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = expandQuery(resolvedQuery);
+    const { key, ...rest } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
@@ -166,6 +167,7 @@ export function remove(name, query = {}, options = {}) {
       `${resolvedName}/${key}`,
       {
         method: 'DELETE',
+        query: rest,
       }
     );
 
@@ -197,14 +199,15 @@ export function each(name, query = {}, callback = {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
-    const { key } = expandQuery(resolvedQuery);
+    const { key, ...rest } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
-      `${resolvedName}/${key}`
+      `${resolvedName}/${key}`,
+      { query: rest }
     );
 
     await streamResponse(response, async ({ key, value }) => {
@@ -241,6 +244,21 @@ export const expandQuery = query => {
   return query;
 };
 
+const queryMaps = {
+  createdBefore: 'created_before',
+  createdAfter: 'created_after',
+  updatedBefore: 'updated_before',
+  updatedAfter: 'updated_after',
+};
+
+export const parseQuery = (options = {}) => {
+  return Object.keys(options.query ?? {}).reduce((result, next) => {
+    const key = queryMaps[next] ?? next;
+    result[key] = options.query[next];
+    return result;
+  }, {});
+};
+
 export const request = (state, client, path, options = {}) => {
   if (!state.configuration.collections_token) {
     throwError('INVALID_AUTH', {
@@ -255,11 +273,14 @@ export const request = (state, client, path, options = {}) => {
   };
   Object.assign(headers, options?.headers);
 
-  const { headers: _, ...optionsWithoutHeaders } = options;
+  const { headers: _h, query: _q, ...otherOptions } = options;
+  const query = parseQuery(options.query);
+
   return client.request({
     path: nodepath.join('collections', path),
     headers,
     method: 'GET',
-    ...optionsWithoutHeaders,
+    query,
+    ...otherOptions,
   });
 };
