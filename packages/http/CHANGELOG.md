@@ -1,5 +1,16 @@
 # @openfn/language-http
 
+## 6.5.0
+
+### Minor Changes
+
+- b433d7f: Add `util.encode`, `util.decode` and `util.uuid` helpers
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
 ## 6.4.6
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-vtiger
 
+## 1.3.6
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
 ## 1.3.5
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-hive",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "An Apache HIVE adaptor for OpenFn",
   "type": "module",
   "exports": {

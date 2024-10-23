@@ -1,5 +1,12 @@
 # @openfn/language-zoho
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
 ## 0.4.4
 
 ### Patch Changes
