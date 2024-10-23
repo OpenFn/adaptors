@@ -1,4 +1,5 @@
-// Set up the test
+// Sample expression which uses the built-in mock
+
 fn((state = {}) => {
   // set up a mock
   const server = collections.createMockServer();
@@ -17,6 +18,6 @@ fn((state = {}) => {
 
 collections.set('collection', v => v.id, $.data);
 
-collections.each('collection', '*', (state, key, value) => {
-  console.log(key, value);
+collections.each('collection', '*', (state, value, key) => {
+  console.log(value, key);
 });

@@ -1,5 +1,6 @@
 # @openfn/language-collections
 
-## 1.0.0
+## 0.1.0
 
-Initial release.
+Initial experiemntal release, with `collections.get`, `collections.each`,
+`collections.remove` and `collections.set`
