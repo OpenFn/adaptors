@@ -3,8 +3,6 @@
 An OpenFn **_adaptor_** for building integration jobs for use with the FHIR API
 for NDR Ethopia.
 
-**Builds are DISABLED in CI and local development at the moment - see https://github.com/OpenFn/adaptors/issues/776**
-
 ## Documentation
 
 This adaptor is largely auto-generated from the spec at
@@ -30,7 +28,14 @@ To generate the adaptor source, run `pnpm build:src`. This will generate the
 builder functions and typings, but not generate all the other adaptor stuff,
 like docs and dist.
 
-Run `pnpm build` to generate source AND build the actual adaptor.
+The source is NOT rebuilt in CI or during a general repo build (because a change
+to the remote spec can result in a diff in the source, and a diff in the source
+creates problems all over)
+
+The standard `pnpm build` will generate docs and typedefs and stuff, but NOT the
+source.
+
+So locally, run `pnpm build:src` to rebuild the adaptor code.
 
 The first time the source build runs, a new "spec" file will be downloaded. To
 force a new download (ie to update the spec) delete `./spec/spec.json`
