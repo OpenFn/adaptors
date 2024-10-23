@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-ndr-et",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",
   "exports": {
@@ -20,7 +20,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "_build": "pnpm clean && esno build/build.ts && build-adaptor fhir-ndr-et",
+    "build": "pnpm clean build-adaptor fhir-ndr-et",
     "build:src": "esno build/build.ts",
     "build:adaptor": "pnpm build-adaptor fhir-ndr-et",
     "build:schema": "esno build/generate-schema.ts",

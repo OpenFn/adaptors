@@ -1,5 +1,11 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.4
+
+### Patch Changes
+
+- 47bf58f: Adjust build process to fix docs
+
 ## 0.1.3
 
 ### Patch Changes
