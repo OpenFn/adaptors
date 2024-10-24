@@ -48,7 +48,7 @@ export default async function (baseDir: string, specPath: string) {
 function parseIGZip(inputDir: string) {
   return new Promise<void>(resolve => {
     yauzl.open(inputDir, { lazyEntries: true }, function (err, zipfile) {
-      const result = {};
+      const result: SpecJSON = {};
       const meta: Meta = {};
 
       const outputDir = path.resolve(dirname(inputDir));
@@ -74,13 +74,13 @@ function parseIGZip(inputDir: string) {
             readStream.on('end', async () => {
               const json = JSON.parse(text);
 
-              // TODO maybe only do this is a flag is passed
-              await writeFile(
-                path.resolve(outputDir, entry.fileName),
-                JSON.stringify(json, null, 2)
-              );
-
               if (json.resourceType === 'StructureDefinition') {
+                // TODO maybe only do this if a flag is passed
+                await writeFile(
+                  path.resolve(outputDir, entry.fileName),
+                  JSON.stringify(json, null, 2)
+                );
+
                 delete json.text;
                 result[json.id] = json;
               }

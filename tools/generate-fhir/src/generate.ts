@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import generatePackage from './generate-package';
 import fetchSpec, { Meta } from './fetch-spec';
+import generateSchema from './generate-schema';
 
 export type Options = {
   /** The base fhir package to import datatypes and functions from, ie, @openfn/language-fhir-4 */
@@ -35,6 +36,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log('Update package metadata');
   };
 
+  // Determine whether to setup the intial template and/orre-download the spec
   try {
     const pkg = await readPkg();
 
@@ -55,6 +57,21 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   // Now generate
+
+  const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
+  try {
+    await fs.access(specPath);
+  } catch (e) {
+    console.log('Error loading spec.json!');
+    console.log(
+      `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`
+    );
+  }
+
+  // TODO import mappings
+  const mappings = {};
+
+  const schema = await generateSchema(specPath, mappings);
 };
 
 export default generateAdaptor;
