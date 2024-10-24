@@ -10,7 +10,7 @@ const fileMap = { package_json: 'package.json' };
 const generatePackage = async (
   adaptorPath: string,
   adaptorName: string,
-  specPath: string
+  specPath?: string
 ) => {
   const templatePath = path.resolve(`template`);
 
@@ -18,7 +18,18 @@ const generatePackage = async (
 
   await fs.mkdir(adaptorPath, { recursive: true });
 
+  if (!specPath) {
+    throw new Error(
+      `No spec path provided! Pass a path to the source spec, eg
+
+  generate-fhir ${adaptorName} --spec path/to/spec.json
+
+`
+    );
+  }
+
   await copyAndRename(templatePath, adaptorPath, adaptorName, specPath);
+
   console.log(`Package "${adaptorName}" created successfully`);
   console.log(`Reminder: Run "pnpm install" to install your packages`);
 };
@@ -36,6 +47,7 @@ const copyAndRename = async (
   const templated = {
     '{{NAME}}': adaptorName,
     '{{SPEC_PATH}}': specPath,
+    '{{SPEC_DATE}}': new Date().toISOString(),
   };
 
   for (const item of items) {

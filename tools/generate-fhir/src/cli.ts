@@ -9,12 +9,12 @@ const run = async (args: any) => {
   const name = args.name.startsWith('fhir-') ? args.name : `fhir-${args.name}`;
 
   await promptForBranchChange(name);
-  await generate(name, args.spec);
+  await generate(name, args);
 };
 
 yargs(hideBin(process.argv))
   .command({
-    command: 'generate <name> <spec> [base]',
+    command: 'generate <name> [--spec spec] [--base base] [--respec]',
     describe: 'Generate a new FHIR adaptor',
     handler: args => {
       run(args);
