@@ -267,12 +267,32 @@ export function asData(data, state) {
  * the state's references.
  * @public
  * @function
- * @example
- * each("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
+ * @example <caption>Inserting patitent data using lazy state. (Only in v2)</caption>
+ * each($.data,
+ *   insert("patient",
+ *     {
+ *       patient_name: $.data.properties.case_name,
+ *       patient_id: $.data.case_id
+ *     }
  *   )
  * )
+ * @example <caption>Inserting patitent data with custom transformations. (Only in v1)</caption>
+ * each(
+ *   $.data,
+ *   insert("patient", (state) => ({
+ *     patient_id: state.data.case_id,
+ *     patient_name: state.data.properties.case_name.toUpperCase(),
+ *     patient_age: calculateAge(state.data.properties.birthdate),
+ *   }))
+ * );
+ * @example <caption>Inserting patitent data with custom transformations. (v1 and v2)</caption>
+ * each(
+ *   "$.data[*]",
+ *   insert("patient", (state) => ({
+ *     patient_name: state.data.properties.case_name,
+ *     patient_id: state.data.case_id,
+ *   }))
+ * );
  * @param {DataSource} dataSource - JSONPath referencing a point in `state`.
  * @param {Operation} operation - The operation needed to be repeated.
  * @returns {Operation}
