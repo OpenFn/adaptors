@@ -1,5 +1,13 @@
 # @openfn/language-openlmis
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 1.0.6
 
 ### Patch Changes

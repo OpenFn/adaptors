@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-cht",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "OpenFn CHT adaptor",
   "type": "module",
   "exports": {
