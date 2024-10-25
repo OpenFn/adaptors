@@ -35,13 +35,28 @@ const loadAnyAscii = state =>
   });
 
 /**
+ * Options provided to the Salesforce HTTP request
+ * @typedef {Object} RequestOptions
+ * @public
+ * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
+ * @param {object} [options.headers] - Object of request headers
+ * @param {object} [options.json] - A JSON Object request body
+ * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ */
+
+/**
+ * State object
+ * @typedef {Object} SalesforceState
+ * @property references - an array of result and all previous data objects used in the Job
+ **/
+
+/**
  * Adds a lookup relation or 'dome insert' to a record.
  * @public
- * @example
- * Data Sourced Value:
- *  relationship("relationship_name__r", "externalID on related object", dataSource("path"))
- * Fixed Value:
- *  relationship("relationship_name__r", "externalID on related object", "hello world")
+ * @example <caption>Data Sourced Value</caption>
+ * relationship("relationship_name__r", "externalID on related object", dataSource("path"))
+ * @example <caption>Fixed Value</caption>
+ * relationship("relationship_name__r", "externalID on related object", "hello world")
  * @function
  * @param {string} relationshipName - `__r` relationship field on the record.
  * @param {string} externalId - Salesforce ExternalID field.
@@ -63,6 +78,7 @@ export function relationship(relationshipName, externalId, dataSource) {
  * @example
  * describeAll()
  * @function
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function describeAll() {
@@ -84,10 +100,11 @@ export function describeAll() {
 /**
  * Prints an sObject metadata and pushes the result to state.references
  * @public
- * @example
- * describe('obj_name')
+ * @example <caption>Describe the Account object</caption>
+ * describe('Account')
  * @function
  * @param {string} sObject - API name of the sObject.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function describe(sObject) {
@@ -114,12 +131,16 @@ export function describe(sObject) {
 /**
  * Retrieves a Salesforce sObject(s).
  * @public
- * @example
- * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
+ * @example <caption>Retrieve a specific ContentVersion record</caption>
+ * retrieve('ContentVersion', '0684K0000020Au7QAE', state => {
+ *   console.log(state.references[0]); // Log the retrieved record
+ *   return state;
+ * });
  * @function
  * @param {string} sObject - The sObject to retrieve
  * @param {string} id - The id of the record
  * @param {function} callback - A callback to execute once the record is retrieved
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function retrieve(sObject, id, callback) {
@@ -153,15 +174,16 @@ export function retrieve(sObject, id, callback) {
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
  * @public
- * @example
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example <caption>Query more records if next records are available</caption>
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
+ * @example <caption>Query patients by Health ID</caption>
+ * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
+ * @example <caption>Query all records (automatically fetching next batches)</caption>
+ * query('SELECT Id FROM Account', { autoFetch: true });
  * @function
  * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {function} callback - A callback to execute once the record is retrieved
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function query(qs, options = {}, callback = s => s) {
@@ -298,21 +320,19 @@ const defaultOptions = {
  * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
  * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
- * @example
- * <caption>The results will be available on `state.data`</caption>
- * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example
- * bulkQuery(
- *   (state) =>
- *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
- *   { pollTimeout: 10000, pollInterval: 6000 }
- * );
+ * @example <caption>Perform a bulk query on Patient records</caption>
+ * bulkQuery('SELECT Id, Name FROM Patient__c');
+ * @example <caption>Bulk query with custom polling options</caption>
+ * bulkQuery('SELECT Id, Name FROM Account', { pollTimeout: 120000, pollInterval: 5000 });
  * @function
  * @param {string} qs - A query string.
  * @param {object} options - Options passed to the bulk api.
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
  * @param {function} callback - A callback to execute once the record is retrieved
+ * @state data - the parsed results
+ * @state result - the raw result from the bulk api
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function bulkQuery(qs, options, callback) {
@@ -366,27 +386,30 @@ export function bulkQuery(qs, options, callback) {
 /**
  * Create and execute a bulk job.
  * @public
- * @example <caption>Bulk insert</caption>
+ * @example <caption>Bulk insert new Patient records</caption>
  * bulk(
  *   "Patient__c",
  *   "insert",
  *   { failOnError: true },
- *   (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+ *   state => state.patients.map(p => ({ Age__c: p.age, Name: p.name }))
  * );
- * @example <caption>Bulk upsert</caption>
+ * @example <caption>Bulk upsert Beneficiary records</caption>
  * bulk(
- *   "vera__Beneficiary__c",
+ *   "Beneficiary__c",
  *   "upsert",
- *   { extIdField: "vera__Result_UID__c" },
+ *   { extIdField: "External_ID__c" },
  *   [
  *     {
- *       vera__Reporting_Period__c: 2023,
- *       vera__Geographic_Area__c: "Uganda",
- *       "vera__Indicator__r.vera__ExtId__c": 1001,
- *       vera__Result_UID__c: "1001_2023_Uganda",
+ *       Name: "John Doe",
+ *       External_ID__c: "JD001",
  *     },
  *   ]
  * );
+ * @example <caption>Bulk update Account records</caption>
+ * bulk("Account", "update", { failOnError: true }, [
+ *   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+ *   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+ * ]);
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
@@ -396,6 +419,7 @@ export function bulkQuery(qs, options, callback) {
  * @param {string} [options.extIdField] - External id field.
  * @param {boolean} [options.failOnError=false] - Fail the operation on error.
  * @param {array} records - an array of records, or a function which returns an array.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function bulk(sObject, operation, options, records) {
@@ -500,15 +524,15 @@ export function bulk(sObject, operation, options, records) {
 /**
  * Delete records of an object.
  * @public
- * @example
- * destroy('obj_name', [
- *  '0060n00000JQWHYAA5',
- *  '0090n00000JQEWHYAA5
- * ], { failOnError: true })
+ * @example <caption>Delete multiple Account records</caption>
+ * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
+ *   failOnError: true,
+ * });
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function destroy(sObject, attrs, options) {
@@ -552,6 +576,7 @@ export function destroy(sObject, attrs, options) {
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {object} attrs - Field attributes for the new record.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function create(sObject, attrs) {
@@ -591,15 +616,16 @@ export function insert(sObject, attrs) {
  *
  * **The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**
  * @public
- * @example
- * createIf(true, 'obj_name', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption>Create a new record if `state.isNew` is true</caption>
+ * createIf(state=> state.isNew, "Account", {
+ *   Name: "Foo",
+ *   Address: "Ping Pong Street",
+ * });
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function createIf(logical, sObject, attrs) {
@@ -636,9 +662,9 @@ export function createIf(logical, sObject, attrs) {
  * Create a new sObject record, or updates it if it already exists
  * External ID field name must be specified in second argument.
  * @public
- * @example <caption> Single record upsert </caption>
+ * @example <caption>Single record upsert</caption>
  * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
- * @example <caption> Multiple record upsert </caption>
+ * @example <caption>Multiple record upsert</caption>
  * upsert("UpsertTable__c", "ExtId__c", [
  *   { Name: "Record #1", ExtId__c : 'ID-0000001' },
  *   { Name: "Record #2", ExtId__c : 'ID-0000002' },
@@ -650,6 +676,7 @@ export function createIf(logical, sObject, attrs) {
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {(object|object[])} attrs - Field attributes for the new object.
  * @magic attrs - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function upsert(sObject, externalId, attrs) {
@@ -680,16 +707,17 @@ export function upsert(sObject, externalId, attrs) {
  *
  * **The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**
  * @public
- * @example
- * upsertIf(true, 'obj_name', 'ext_id', {
- *   attr1: "foo",
- *   attr2: "bar"
- * })
+ * @example <caption>Upsert a new record if `state.isUpdated` is true</caption>
+ * upsertIf((state) => state.isUpdated, "Account", "Id", {
+ *   Id: "0010500000fxbcuAAA",
+ *   Name: "Foo Bar",
+ * });
  * @function
  * @param {boolean} logical - a logical statement that will be evaluated.
  * @param {string} sObject - API name of the sObject.
  * @param {string} externalId - ID.
  * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function upsertIf(logical, sObject, externalId, attrs) {
@@ -744,6 +772,7 @@ export function upsertIf(logical, sObject, externalId, attrs) {
  * @function
  * @param {string} sObject - API name of the sObject.
  * @param {(object|object[])} attrs - Field attributes for the new object.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function update(sObject, attrs) {
@@ -765,7 +794,7 @@ export function update(sObject, attrs) {
 /**
  * Get a reference ID by an index.
  * @public
- * @example
+ * @example <caption>Get the ID of the first item in the references array</caption>
  * reference(0)
  * @function
  * @param {number} position - Position for references array.
@@ -918,19 +947,17 @@ export function toUTF8(input) {
 
 /**
  * Send a HTTP request using connected session information.
- *
- * @example
- * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
+ * @public
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
+ * request('/services/data/v53.0/actions/custom/flow/My_Custom_Flow', {
  *   method: 'POST',
- *   json: { inputs: [{}] },
+ *   json: { inputs: [{ recordId: '001XXXXXXXXXXXXXXX' }] },
  * });
  * @param {string} url - Relative or absolute URL to request from
- * @param {object} options - Request options
- * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
- * @param {object} [options.headers] - Object of request headers
- * @param {object} [options.json] - A JSON Object request body
- * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @param {RequestOptions} options - Request method, body and headers parameters
  * @param {function} callback - A callback to execute once the request is complete
+ * @state data - the returned result
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 

@@ -8,60 +8,74 @@
         "dataSource"
       ],
       "docs": {
-        "description": "Adds a lookup relation or 'dome insert' to a record.",
+        "description": "Options provided to the Salesforce HTTP request",
         "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "RequestOptions"
+          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "example",
-            "description": "Data Sourced Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", dataSource(\"path\"))\nFixed Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", \"hello world\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
+            "title": "param",
+            "description": "HTTP method to use. Defaults to GET",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.method",
+            "default": "GET"
           },
           {
             "title": "param",
-            "description": "`__r` relationship field on the record.",
+            "description": "Object of request headers",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "relationshipName"
+            "name": "options.headers"
           },
           {
             "title": "param",
-            "description": "Salesforce ExternalID field.",
+            "description": "A JSON Object request body",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "externalId"
+            "name": "options.json"
           },
           {
             "title": "param",
-            "description": "resolvable source.",
+            "description": "HTTP body (in POST/PUT/PATCH methods)",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
-            "name": "dataSource"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
+            "name": "options.body"
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "describeAll",
@@ -82,6 +96,10 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -110,7 +128,8 @@
           },
           {
             "title": "example",
-            "description": "describe('obj_name')"
+            "description": "describe('Account')",
+            "caption": "Describe the Account object"
           },
           {
             "title": "function",
@@ -125,6 +144,10 @@
               "name": "string"
             },
             "name": "sObject"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -155,7 +178,8 @@
           },
           {
             "title": "example",
-            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
+            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE', state => {\n  console.log(state.references[0]); // Log the retrieved record\n  return state;\n});",
+            "caption": "Retrieve a specific ContentVersion record"
           },
           {
             "title": "function",
@@ -190,6 +214,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -218,12 +246,13 @@
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "caption": "Query patients by Health ID"
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
-            "caption": "Query more records if next records are available"
+            "description": "query('SELECT Id FROM Account', { autoFetch: true });",
+            "caption": "Query all records (automatically fetching next batches)"
           },
           {
             "title": "function",
@@ -271,6 +300,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -299,12 +332,13 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-            "caption": "The results will be available on `state.data`"
+            "description": "bulkQuery('SELECT Id, Name FROM Patient__c');",
+            "caption": "Perform a bulk query on Patient records"
           },
           {
             "title": "example",
-            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
+            "description": "bulkQuery('SELECT Id, Name FROM Account', { pollTimeout: 120000, pollInterval: 5000 });",
+            "caption": "Bulk query with custom polling options"
           },
           {
             "title": "function",
@@ -365,6 +399,18 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "data - the parsed results"
+          },
+          {
+            "title": "state",
+            "description": "result - the raw result from the bulk api"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -394,13 +440,18 @@
           },
           {
             "title": "example",
-            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
-            "caption": "Bulk insert"
+            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  state => state.patients.map(p => ({ Age__c: p.age, Name: p.name }))\n);",
+            "caption": "Bulk insert new Patient records"
           },
           {
             "title": "example",
-            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);",
-            "caption": "Bulk upsert"
+            "description": "bulk(\n  \"Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"External_ID__c\" },\n  [\n    {\n      Name: \"John Doe\",\n      External_ID__c: \"JD001\",\n    },\n  ]\n);",
+            "caption": "Bulk upsert Beneficiary records"
+          },
+          {
+            "title": "example",
+            "description": "bulk(\"Account\", \"update\", { failOnError: true }, [\n  { Id: \"0010500000fxbcuAAA\", Name: \"Updated Account #1\" },\n  { Id: \"0010500000fxbcvAAA\", Name: \"Updated Account #2\" },\n]);",
+            "caption": "Bulk update Account records"
           },
           {
             "title": "function",
@@ -495,6 +546,10 @@
             "name": "records"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -523,7 +578,8 @@
           },
           {
             "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
+            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+            "caption": "Delete multiple Account records"
           },
           {
             "title": "function",
@@ -556,6 +612,10 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -615,6 +675,10 @@
               "name": "object"
             },
             "name": "attrs"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -704,7 +768,8 @@
           },
           {
             "title": "example",
-            "description": "createIf(true, 'obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "createIf(state=> state.isNew, \"Account\", {\n  Name: \"Foo\",\n  Address: \"Ping Pong Street\",\n});",
+            "caption": "Create a new record if `state.isNew` is true"
           },
           {
             "title": "function",
@@ -755,6 +820,10 @@
               ]
             },
             "name": "attrs"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -856,6 +925,10 @@
             "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -885,7 +958,8 @@
           },
           {
             "title": "example",
-            "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "upsertIf((state) => state.isUpdated, \"Account\", \"Id\", {\n  Id: \"0010500000fxbcuAAA\",\n  Name: \"Foo Bar\",\n});",
+            "caption": "Upsert a new record if `state.isUpdated` is true"
           },
           {
             "title": "function",
@@ -945,6 +1019,10 @@
               ]
             },
             "name": "attrs"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -1024,6 +1102,10 @@
             "name": "attrs"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -1050,7 +1132,8 @@
           },
           {
             "title": "example",
-            "description": "reference(0)"
+            "description": "reference(0)",
+            "caption": "Get the ID of the first item in the references array"
           },
           {
             "title": "function",
@@ -1115,6 +1198,73 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "path",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Send a HTTP request using connected session information.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request('/services/data/v53.0/actions/custom/flow/My_Custom_Flow', {\n  method: 'POST',\n  json: { inputs: [{ recordId: '001XXXXXXXXXXXXXXX' }] },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "param",
+            "description": "Relative or absolute URL to request from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "url"
+          },
+          {
+            "title": "param",
+            "description": "Request method, body and headers parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "A callback to execute once the request is complete",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "data - the returned result"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],
