@@ -1,15 +1,15 @@
-/**
- * @typedef {object} State
- * @property {object} data JSON Data.
- * @property {Array<Reference>} references History of all previous operations.
- * @ignore
- */
+// /**
+//  * @typedef {object} State
+//  * @property {object} data JSON Data.
+//  * @property {Array<Reference>} references History of all previous operations.
+//  * @ignore
+//  */
 
-/**
- * @typedef {function} Operation
- * @param {State} state
- * @ignore
- */
+// /**
+//  * @typedef {function} Operation
+//  * @param {State} state
+//  * @ignore
+//  */
 
 import {
   execute as commonExecute,
