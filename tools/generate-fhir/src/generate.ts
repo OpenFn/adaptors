@@ -3,6 +3,8 @@ import path from 'node:path';
 import generatePackage from './generate-package';
 import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
+import generateCode from './generate-code';
+import withDisclaimer from './util/disclaimer';
 
 export type Options = {
   /** The base fhir package to import datatypes and functions from, ie, @openfn/language-fhir-4 */
@@ -69,9 +71,27 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   // TODO import mappings
-  const mappings = {};
+  let mappings;
+  try {
+    const m = await import(path.resolve(adaptorPath, 'build/mappings.js'));
+    mappings = m.default;
+  } catch (e) {
+    console.log('ERROR IMPORTING MAPPINGS');
+    console.log(e);
+
+    // TODO abort or continue?
+    console.log('\n resuming generation with no mappings');
+    mappings = {};
+  }
 
   const schema = await generateSchema(specPath, mappings);
+  const src = generateCode(schema, mappings);
+
+  await fs.writeFile(
+    // TODO move to gen/builder
+    path.resolve(adaptorPath, 'src/builders.js'),
+    withDisclaimer(src)
+  );
 };
 
 export default generateAdaptor;

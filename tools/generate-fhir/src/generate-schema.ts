@@ -1,6 +1,11 @@
 import path from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
+import { MappingSpec } from './types';
+
+/**
+ * This file will generate a simple schema representation of a FHIR spec
+ */
 
 export type PropDef = {
   /** Typescript name of the type */
@@ -26,10 +31,6 @@ export type PropDef = {
   isComposite: boolean;
 };
 
-/**
- * This file will generate a simple schema representation of a FHIR spec
- */
-
 // here's a lookup of common type defs we can reuse
 const typeDefs = {
   'http://hl7.org/fhirpath/System.String': 'string',
@@ -54,12 +55,7 @@ const typeMappings = {
   positiveInt: 'number',
 };
 
-export type MappingOptions = {
-  include?: string[]; // include reource types. Should this take a profile?
-  exclude?: string[]; // exclude resource Types. Should this take a profile?
-};
-
-const generate = async (specPath: string, mappings: MappingOptions = {}) => {
+const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   console.log('Generating schemas from ', specPath);
 
   const outputDir = path.resolve(path.dirname(specPath), '../schema');
@@ -77,16 +73,18 @@ const generate = async (specPath: string, mappings: MappingOptions = {}) => {
   const codes = {};
 
   for (const profileId in fullSpec) {
-    if (mappings.exclude?.includes(profileId)) {
-      console.log('IGNORING ', profileId);
+    const profile = fullSpec[profileId];
+
+    // TODO is it useful to output this or not?
+    if (mappings.exclude?.includes(profile.type)) {
+      console.log('ignoring excluded ', profileId);
       continue;
     }
-    if (mappings.include?.length && !mappings.include.includes(profileId)) {
-      console.log('IGNORING ', profileId);
+    if (mappings.include?.length && !mappings.include.includes(profile.type)) {
+      console.log('ignoring not included ', profileId);
       continue;
     }
 
-    const profile = fullSpec[profileId];
     if (profile.resourceType !== 'StructureDefinition') {
       continue;
     }
@@ -220,9 +218,10 @@ function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
     }
 
     // Now work out the type of the prop
-    if (data?.type?.length > 1) {
-      console.log('WARNING: MULTIPLE TYPES DETECTED FOR', path);
-    }
+    // if (data?.type?.length > 1) {
+    // TODO maybe restore this
+    //   console.log('WARNING: MULTIPLE TYPES DETECTED FOR', path);
+    // }
     let [type] = data.type;
 
     let simpleType;
@@ -283,9 +282,10 @@ function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
  * will return a simple string type or an object type def
  */
 function getSimpleType(prop: any) {
-  if (prop.type.length > 1) {
-    console.log('WARNING: multiple types found on ', prop.path);
-  }
+  // TODO maybe restore this
+  // if (prop.type.length > 1) {
+  //   console.log('WARNING: multiple types found on ', prop.path);
+  // }
   for (const type of prop.type) {
     if (type.code in typeMappings) {
       return typeMappings[type.code];

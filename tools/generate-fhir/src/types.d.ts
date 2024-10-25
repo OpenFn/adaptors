@@ -1,3 +1,17 @@
+type MappingSpec = {
+  include?: string[]; // include reource types. Should this take a profile?
+  exclude?: string[]; // exclude resource Types. Should this take a profile?
+  // kinda thinkg that if you include Patients, you have to include all patient profiles
+
+  // specifiy mapping rules for a profile or resource
+  /// resource mappings are applied to each profile, but can be overridden by the profile
+  // profiles?: Record<string, Mapping>;
+  // resources?: Record<string, Mapping>;
+
+  // Use this for now
+  overrides?: Record<string, Mapping>;
+};
+
 type Mapping = {
   // mapping rules for a particular key
   // defaults, fn, etc

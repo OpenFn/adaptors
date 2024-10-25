@@ -15,8 +15,10 @@
     "dependencies": {
         "@openfn/simple-ast": "0.4.1",
         "@types/node": "18.17.5",
+        "ast-types": "^0.14.2",
         "esno": "0.16.3",
         "inquirer": "^9.2.15",
+        "recast": "^0.23.9",
         "rimraf": "^6.0.1",
         "ts-node": "10.9.1",
         "tsup": "6.3.0",
