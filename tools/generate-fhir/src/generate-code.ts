@@ -11,8 +11,6 @@ const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {}
 ) => {
-  console.log(' >> generating code');
-  console.log(schema);
   const statements: n.Statement[] = [];
 
   statements.push(

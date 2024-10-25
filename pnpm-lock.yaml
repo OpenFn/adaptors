@@ -2103,12 +2103,18 @@ importers:
       '@types/node':
         specifier: 18.17.5
         version: 18.17.5
+      ast-types:
+        specifier: ^0.14.2
+        version: 0.14.2
       esno:
         specifier: 0.16.3
         version: 0.16.3
       inquirer:
         specifier: ^9.2.15
         version: 9.2.16
+      recast:
+        specifier: ^0.23.9
+        version: 0.23.9
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1

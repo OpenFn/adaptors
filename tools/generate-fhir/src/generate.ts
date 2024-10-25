@@ -5,6 +5,7 @@ import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
 import generateCode from './generate-code';
 import withDisclaimer from './util/disclaimer';
+import generateDTS from './generate-dts';
 
 export type Options = {
   /** The base fhir package to import datatypes and functions from, ie, @openfn/language-fhir-4 */
@@ -86,11 +87,18 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   const schema = await generateSchema(specPath, mappings);
   const src = generateCode(schema, mappings);
+  const dts = generateDTS(schema, mappings);
 
   await fs.writeFile(
-    // TODO move to gen/builder
+    // TODO move to ./gen
     path.resolve(adaptorPath, 'src/builders.js'),
     withDisclaimer(src)
+  );
+
+  await fs.writeFile(
+    // TODO move to ./gen
+    path.resolve(adaptorPath, 'src/builders.d.ts'),
+    withDisclaimer(dts)
   );
 };
 
