@@ -5809,6 +5809,2100 @@ function observation_alt_ast_observation(props) {
     return resource;
 }
 
+function observation_alternate_tb_prophylaxis_type_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP149760-3"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        let src = props.hasMember;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.hasMember = [];
+
+        for (let item of src) {
+            let hasMember = {};
+
+            if (!_.isNil(item.id)) {
+                hasMember.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                hasMember.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                hasMember.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.identifier)) {
+                hasMember.identifier = item.identifier;
+            } else
+                {}
+
+            if (!_.isNil(item.display)) {
+                hasMember.display = item.display;
+            } else
+                {}
+
+            resource.hasMember.push(hasMember);
+        }
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/alternate-tb-prophylaxis-type-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_alternate_tpt_at_follow_up_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA21590-7"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/alternate-tpt-at-follow-up-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_art_eligibility_status_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171121004"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-eligibility-status-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_art_followup_status_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"47248-0"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-followup-status-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_art_followup_stopped_reasons_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"91382-2"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-followup-stopped-reasons-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_art_not_started_plan_next_step_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP127912-6"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-not-started-plan-next-step-observation"
+        ]
+    };
+
+    return resource;
+}
+
+function observation_arv_adherence_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"418633004"}]};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence-observation"]
+    };
+
+    return resource;
+}
+
+function observation_arv_change_category_type_observation(props) {
+    const resource = {
+        resourceType: "Observation",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    } else {
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}],"text":"ARV regimen change"};
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = util.reference(props.focus);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.effective)) {
+        util.composite(resource, "effective", props.effective);
+    }
+
+    if (!_.isNil(props.issued)) {
+        resource.issued = props.issued;
+    }
+
+    if (!_.isNil(props.performer)) {
+        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
+        resource.performer = util.reference(props.performer);
+    }
+
+    if (!_.isNil(props.value)) {
+        util.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = props.dataAbsentReason;
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        resource.interpretation = props.interpretation;
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = props.bodySite;
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = props.method;
+    }
+
+    if (!_.isNil(props.specimen)) {
+        resource.specimen = util.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.device)) {
+        resource.device = util.reference(props.device);
+    }
+
+    if (!_.isNil(props.referenceRange)) {
+        let src = props.referenceRange;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.referenceRange = [];
+
+        for (let item of src) {
+            let referenceRange = {};
+
+            if (!_.isNil(item.id)) {
+                referenceRange.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                referenceRange.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.low)) {
+                referenceRange.low = item.low;
+            } else
+                {}
+
+            if (!_.isNil(item.high)) {
+                referenceRange.high = item.high;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                referenceRange.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.appliesTo)) {
+                referenceRange.appliesTo = item.appliesTo;
+            } else
+                {}
+
+            if (!_.isNil(item.age)) {
+                referenceRange.age = item.age;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                referenceRange.text = item.text;
+            } else
+                {}
+
+            resource.referenceRange.push(referenceRange);
+        }
+    }
+
+    if (!_.isNil(props.hasMember)) {
+        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
+        resource.hasMember = util.reference(props.hasMember);
+    }
+
+    if (!_.isNil(props.derivedFrom)) {
+        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
+        resource.derivedFrom = util.reference(props.derivedFrom);
+    }
+
+    if (!_.isNil(props.component)) {
+        let src = props.component;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.component = [];
+
+        for (let item of src) {
+            let component = {};
+
+            if (!_.isNil(item.id)) {
+                component.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                component.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.code)) {
+                component.code = item.code;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                component.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.dataAbsentReason)) {
+                component.dataAbsentReason = item.dataAbsentReason;
+            } else
+                {}
+
+            if (!_.isNil(item.interpretation)) {
+                component.interpretation = item.interpretation;
+            } else
+                {}
+
+            resource.component.push(component);
+        }
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-change-category-type-observation"
+        ]
+    };
+
+    return resource;
+}
+
 function observation_arv_poor_adherence_reasons_observation(props) {
     const resource = {
         resourceType: "Observation",
@@ -6151,7 +8245,7 @@ function observation_arv_regimen_change_reason_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL354-2"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"LL354-2"}],"text":"ARV regimen change reason"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -6409,7 +8503,7 @@ function observation_arv_regimen_changed_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}],"text":"ARV regimen change"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -8377,296 +10471,6 @@ function observation_cd4_percentage_observation(props) {
     resource.meta = {
         profile: [
             "http://moh.gov.et/fhir/hiv/StructureDefinition/cd4-percentage-observation"
-        ]
-    };
-
-    return resource;
-}
-
-function observation_alternate_tb_prophylaxis_type_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP149760-3"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        let src = props.hasMember;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.hasMember = [];
-
-        for (let item of src) {
-            let hasMember = {};
-
-            if (!_.isNil(item.id)) {
-                hasMember.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                hasMember.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                hasMember.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.identifier)) {
-                hasMember.identifier = item.identifier;
-            } else
-                {}
-
-            if (!_.isNil(item.display)) {
-                hasMember.display = item.display;
-            } else
-                {}
-
-            resource.hasMember.push(hasMember);
-        }
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/alternate-tb-prophylaxis-type-observation"
         ]
     };
 
@@ -11249,264 +13053,6 @@ function observation_cotrimoxazole_preventive_therapy_adherence_observation(prop
     return resource;
 }
 
-function observation_alternate_tpt_at_follow_up_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"LA21590-7"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/alternate-tpt-at-follow-up-observation"
-        ]
-    };
-
-    return resource;
-}
-
 function observation_cotrimoxazole_preventive_therapy_observation(props) {
     const resource = {
         resourceType: "Observation",
@@ -14075,264 +15621,6 @@ function observation_elicited_index_case_contacts_observation(props) {
     resource.meta = {
         profile: [
             "http://moh.gov.et/fhir/hiv/StructureDefinition/elicited-index-case-contacts-observation"
-        ]
-    };
-
-    return resource;
-}
-
-function observation_art_eligibility_status_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"exam"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"171121004"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-eligibility-status-observation"
         ]
     };
 
@@ -16909,264 +18197,6 @@ function observation_heart_rate_observation(props) {
     return resource;
 }
 
-function observation_art_followup_status_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"47248-0"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-followup-status-observation"
-        ]
-    };
-
-    return resource;
-}
-
 function observation_height_observation(props) {
     const resource = {
         resourceType: "Observation",
@@ -17763,7 +18793,7 @@ function observation_highest_education_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"82589-3"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"82589-3"}],"text":"Highest level of education"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -19737,264 +20767,6 @@ function observation_hiv_test_results_observation(props) {
     resource.meta = {
         profile: [
             "http://moh.gov.et/fhir/hiv/StructureDefinition/hiv-test-results-observation"
-        ]
-    };
-
-    return resource;
-}
-
-function observation_art_followup_stopped_reasons_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"91382-2"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-followup-stopped-reasons-observation"
         ]
     };
 
@@ -22575,264 +23347,6 @@ function observation_otz_observation(props) {
     return resource;
 }
 
-function observation_art_not_started_plan_next_step_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"LP127912-6"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/art-not-started-plan-next-step-observation"
-        ]
-    };
-
-    return resource;
-}
-
 function observation_patient_functional_status_observation(props) {
     const resource = {
         resourceType: "Observation",
@@ -23175,7 +23689,7 @@ function observation_patient_occupation_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://loinc.org","code":"85658-3"}]};
+        resource.code = {"coding":[{"system":"http://loinc.org","code":"85658-3"}],"text":"Occupation"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -25413,262 +25927,6 @@ function observation_respiratory_rate_observation(props) {
     return resource;
 }
 
-function observation_arv_adherence_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"418633004"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence-observation"]
-    };
-
-    return resource;
-}
-
 function observation_screened_for_tb_observation(props) {
     const resource = {
         resourceType: "Observation",
@@ -26009,7 +26267,7 @@ function observation_target_population_observation(props) {
 
         resource.code = code;
     } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"385436007"}]};
+        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"385436007"}],"text":"Target population"};
     }
 
     if (!_.isNil(props.subject)) {
@@ -28237,264 +28495,6 @@ function observation_therapeutic_supplementary_food_observation(props) {
     resource.meta = {
         profile: [
             "http://moh.gov.et/fhir/hiv/StructureDefinition/therapeutic-supplementary-food-observation"
-        ]
-    };
-
-    return resource;
-}
-
-function observation_arv_change_category_type_observation(props) {
-    const resource = {
-        resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://terminology.hl7.org/CodeSystem/observation-category","code":"therapy"}]}];
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    } else {
-        resource.code = {"coding":[{"system":"http://snomed.info/sct","code":"182838006"}]};
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.focus)) {
-        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.performer)) {
-        if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
-    }
-
-    if (!_.isNil(props.value)) {
-        util.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
-    }
-
-    if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
-    }
-
-    if (!_.isNil(props.referenceRange)) {
-        let src = props.referenceRange;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.referenceRange = [];
-
-        for (let item of src) {
-            let referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                referenceRange.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                referenceRange.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.low)) {
-                referenceRange.low = item.low;
-            } else
-                {}
-
-            if (!_.isNil(item.high)) {
-                referenceRange.high = item.high;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                referenceRange.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.appliesTo)) {
-                referenceRange.appliesTo = item.appliesTo;
-            } else
-                {}
-
-            if (!_.isNil(item.age)) {
-                referenceRange.age = item.age;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                referenceRange.text = item.text;
-            } else
-                {}
-
-            resource.referenceRange.push(referenceRange);
-        }
-    }
-
-    if (!_.isNil(props.hasMember)) {
-        if (!Array.isArray(props.hasMember)) { props.hasMember = [props.hasMember]; }
-        resource.hasMember = util.reference(props.hasMember);
-    }
-
-    if (!_.isNil(props.derivedFrom)) {
-        if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
-    }
-
-    if (!_.isNil(props.component)) {
-        let src = props.component;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.component = [];
-
-        for (let item of src) {
-            let component = {};
-
-            if (!_.isNil(item.id)) {
-                component.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                component.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.code)) {
-                component.code = item.code;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                component.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                component.dataAbsentReason = item.dataAbsentReason;
-            } else
-                {}
-
-            if (!_.isNil(item.interpretation)) {
-                component.interpretation = item.interpretation;
-            } else
-                {}
-
-            resource.component.push(component);
-        }
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-change-category-type-observation"
         ]
     };
 

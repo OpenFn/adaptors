@@ -4626,6 +4626,1755 @@ type Observation_alt_ast_observation_Props = {
     };
 };
 
+type Observation_alternate_tb_prophylaxis_type_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: {
+        /**
+         * Text alternative for the resource
+         *  */
+        display: string;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Logical reference, when literal reference is not known
+         *  */
+        identifier: Identifier;
+        /**
+         * Literal reference, Relative, internal or absolute URL
+         *  */
+        reference: string;
+        /**
+         * Type the reference refers to (e.g. "Patient")
+         *  */
+        type: uri;
+    };
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_alternate_tpt_at_follow_up_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_art_eligibility_status_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_art_followup_status_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Date and Time Associated with the Assertion
+         *  */
+        observedDate: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_art_followup_stopped_reasons_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reasons ART Stopped
+         *  */
+        stopReason: any;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_art_not_started_plan_next_step_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_arv_adherence_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
+type Observation_arv_change_category_type_observation_Props = {
+    /**
+     * Fulfills plan, proposal or order
+     *  */
+    basedOn: Reference;
+    /**
+     * Observed body part
+     *  */
+    bodySite: CodeableConcept;
+    /**
+     * Classification of  type of observation
+     *  */
+    category: CodeableConcept;
+    /**
+     * Type of observation (code / type)
+     *  */
+    code: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+    /**
+     * Component results
+     *  */
+    component: {
+        /**
+         * Type of component observation (code / type)
+         *  */
+        code: CodeableConcept;
+        /**
+         * Why the component result is missing
+         *  */
+        dataAbsentReason: CodeableConcept;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * High, low, normal, etc.
+         *  */
+        interpretation: CodeableConcept;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Actual component result
+         *  */
+        value: Quantity;
+    };
+    /**
+     * Contained, inline Resources
+     *  */
+    contained: Resource;
+    /**
+     * Why the result is missing
+     *  */
+    dataAbsentReason: CodeableConcept;
+    /**
+     * Related measurements the observation is made from
+     *  */
+    derivedFrom: Reference;
+    /**
+     * (Measurement) Device
+     *  */
+    device: Reference;
+    /**
+     * Clinically relevant time/time-period for observation
+     *  */
+    effective: dateTime;
+    /**
+     * Healthcare event during which this observation is made
+     *  */
+    encounter: Reference;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension: Extension;
+    /**
+     * What the observation is about, when it is not about the subject of record
+     *  */
+    focus: Reference;
+    /**
+     * Related resource that belongs to the Observation group
+     *  */
+    hasMember: Reference;
+    /**
+     * Logical id of this artifact
+     *  */
+    id: string;
+    /**
+     * Business Identifier for observation
+     *  */
+    identifier: Identifier;
+    /**
+     * A set of rules under which this content was created
+     *  */
+    implicitRules: string;
+    /**
+     * High, low, normal, etc.
+     *  */
+    interpretation: CodeableConcept;
+    /**
+     * Date/Time this version was made available
+     *  */
+    issued: string;
+    /**
+     * Language of the resource content
+     *  */
+    language: string;
+    /**
+     * Metadata about the resource
+     *  */
+    meta: Meta;
+    /**
+     * How it was done
+     *  */
+    method: CodeableConcept;
+    /**
+     * Extensions that cannot be ignored
+     *  */
+    modifierExtension: Extension;
+    /**
+     * Comments about the observation
+     *  */
+    note: Annotation;
+    /**
+     * Part of referenced event
+     *  */
+    partOf: Reference;
+    /**
+     * Who is responsible for the observation
+     *  */
+    performer: Reference;
+    /**
+     * Provides guide for interpretation
+     *  */
+    referenceRange: {
+        /**
+         * Applicable age range, if relevant
+         *  */
+        age: Range;
+        /**
+         * Reference range population
+         *  */
+        appliesTo: CodeableConcept;
+        /**
+         * High Range, if relevant
+         *  */
+        high: Quantity;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Low Range, if relevant
+         *  */
+        low: Quantity;
+        /**
+         * Extensions that cannot be ignored even if unrecognized
+         *  */
+        modifierExtension: Extension;
+        /**
+         * Text based reference range in an observation
+         *  */
+        text: string;
+        /**
+         * Reference range qualifier
+         *  */
+        type: CodeableConcept;
+    };
+    /**
+     * Specimen used for this observation
+     *  */
+    specimen: Reference;
+    /**
+     * registered | preliminary | final | amended +
+     *  */
+    status: string;
+    /**
+     * Who and/or what the observation is about
+     *  */
+    subject: Reference;
+    /**
+     * Text summary of the resource, for human interpretation
+     *  */
+    text: Narrative;
+    /**
+     * Actual result
+     *  */
+    value: {
+        /**
+         * A reference to a code defined by a terminology system
+         *  */
+        coding: Coding;
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Plain text representation of the concept
+         *  */
+        text: string;
+    };
+};
+
 type Observation_arv_poor_adherence_reasons_observation_Props = {
     /**
      * Fulfills plan, proposal or order
@@ -6788,242 +8537,6 @@ type Observation_cd4_percentage_observation_Props = {
     };
 };
 
-type Observation_alternate_tb_prophylaxis_type_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: {
-        /**
-         * Text alternative for the resource
-         *  */
-        display: string;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Logical reference, when literal reference is not known
-         *  */
-        identifier: Identifier;
-        /**
-         * Literal reference, Relative, internal or absolute URL
-         *  */
-        reference: string;
-        /**
-         * Type the reference refers to (e.g. "Patient")
-         *  */
-        type: uri;
-    };
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
 type Observation_cervical_cancer_screening_accepted_observation_Props = {
     /**
      * Fulfills plan, proposal or order
@@ -8960,221 +10473,6 @@ type Observation_confirmed_hiv_positive_observation_Props = {
 };
 
 type Observation_cotrimoxazole_preventive_therapy_adherence_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
-type Observation_alternate_tpt_at_follow_up_observation_Props = {
     /**
      * Fulfills plan, proposal or order
      *  */
@@ -11543,221 +12841,6 @@ type Observation_elicited_index_case_contacts_observation_Props = {
     };
 };
 
-type Observation_art_eligibility_status_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
 type Observation_enhanced_adherence_counselling_observation_Props = {
     /**
      * Fulfills plan, proposal or order
@@ -13905,225 +14988,6 @@ type Observation_heart_rate_observation_Props = {
          * Unique id for inter-element referencing
          *  */
         id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
-type Observation_art_followup_status_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Date and Time Associated with the Assertion
-         *  */
-        observedDate: any;
         /**
          * Plain text representation of the concept
          *  */
@@ -16293,225 +17157,6 @@ type Observation_hiv_test_results_observation_Props = {
     };
 };
 
-type Observation_art_followup_stopped_reasons_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Reasons ART Stopped
-         *  */
-        stopReason: any;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
 type Observation_hiv_treatment_prior_enrollment_observation_Props = {
     /**
      * Fulfills plan, proposal or order
@@ -18666,221 +19311,6 @@ type Observation_otz_observation_Props = {
     };
 };
 
-type Observation_art_not_started_plan_next_step_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
 type Observation_patient_functional_status_observation_Props = {
     /**
      * Fulfills plan, proposal or order
@@ -20821,221 +21251,6 @@ type Observation_resides_in_catchment_area_observation_Props = {
 };
 
 type Observation_respiratory_rate_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
-type Observation_arv_adherence_observation_Props = {
     /**
      * Fulfills plan, proposal or order
      *  */
@@ -23198,221 +23413,6 @@ type Observation_tested_for_hiv_observation_Props = {
 };
 
 type Observation_therapeutic_supplementary_food_observation_Props = {
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-    };
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: dateTime;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Business Identifier for observation
-     *  */
-    identifier: Identifier;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Actual result
-     *  */
-    value: {
-        /**
-         * A reference to a code defined by a terminology system
-         *  */
-        coding: Coding;
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Plain text representation of the concept
-         *  */
-        text: string;
-    };
-};
-
-type Observation_arv_change_category_type_observation_Props = {
     /**
      * Fulfills plan, proposal or order
      *  */
