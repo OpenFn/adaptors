@@ -267,16 +267,16 @@ export function asData(data, state) {
  * the state's references.
  * @public
  * @function
- * @example <caption>Inserting patitent data using lazy state. (Only in v2)</caption>
- * each($.data,
- *   insert("patient",
- *     {
- *       patient_name: $.data.properties.case_name,
- *       patient_id: $.data.case_id
- *     }
- *   )
- * )
- * @example <caption>Inserting patitent data with custom transformations. (Only in v1)</caption>
+ * @example <caption>Using lazy state to iterate over items in state.data and pass each one into an "insert" operation</caption>
+ * each(
+ *   $.data,
+ *   // Inside the callback operation, `$.data` is scoped to the item under iteration
+ *   insert("patient", {
+ *     patient_name: $.data.properties.case_name,
+ *     patient_id: $.data.case_id,
+ *   })
+ * );
+ * @example <caption>Iterate over items in state.data and pass each one into an "insert" operation</caption>
  * each(
  *   $.data,
  *   insert("patient", (state) => ({
@@ -285,7 +285,7 @@ export function asData(data, state) {
  *     patient_age: calculateAge(state.data.properties.birthdate),
  *   }))
  * );
- * @example <caption>Inserting patitent data with custom transformations. (v1 and v2)</caption>
+ * @example <caption>Using JSON path to iterate over items in state.data and pass each one into an "insert" operation</caption>
  * each(
  *   "$.data[*]",
  *   insert("patient", (state) => ({

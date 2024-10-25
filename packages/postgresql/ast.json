@@ -1426,18 +1426,18 @@
           },
           {
             "title": "example",
-            "description": "each($.data,\n  insert(\"patient\",\n    {\n      patient_name: $.data.properties.case_name,\n      patient_id: $.data.case_id\n    }\n  )\n)",
-            "caption": "Inserting patitent data using lazy state. (Only in v2)"
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "example",
             "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    patient_name: state.data.properties.case_name.toUpperCase(),\n    patient_age: calculateAge(state.data.properties.birthdate),\n  }))\n);",
-            "caption": "Inserting patitent data with custom transformations. (Only in v1)"
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "example",
             "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
-            "caption": "Inserting patitent data with custom transformations. (v1 and v2)"
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "param",
