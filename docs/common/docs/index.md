@@ -282,14 +282,11 @@ dataValue('key')
 
 <p><code>each(dataSource, operation) ⇒ Operation</code></p>
 
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
-
-It also ensures the results of an operation make their way back into
-the state's references.
+Iterates over an array of items and invokes an operation upon each one, where the state
+object is _scoped_ so that state.data is the item under iteration.
+The rest of the state object is untouched and can be referenced as usual.
+You can pass an array directly, or use lazy state or a JSONPath string to
+reference a slice of state.
 
 
 | Param | Type | Description |
@@ -297,13 +294,36 @@ the state's references.
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
-**Example**
+**Example:** Using lazy state ($) to iterate over items in state.data and pass each into an &quot;insert&quot; operation
 ```js
-each("$.[*]",
-  create("SObject",
-    field("FirstName", sourceValue("$.firstName"))
-  )
-)
+each(
+  $.data,
+  // Inside the callback operation, `$.data` is scoped to the item under iteration
+  insert("patient", {
+    patient_name: $.data.properties.case_name,
+    patient_id: $.data.case_id,
+  })
+);
+```
+**Example:** Iterate over items in state.data and pass each one into an &quot;insert&quot; operation
+```js
+each(
+  $.data,
+  insert("patient", (state) => ({
+    patient_id: state.data.case_id,
+    ...state.data
+  }))
+);
+```
+**Example:** Using JSON path to iterate over items in state.data and pass each one into an &quot;insert&quot; operation
+```js
+each(
+  "$.data[*]",
+  insert("patient", (state) => ({
+    patient_name: state.data.properties.case_name,
+    patient_id: state.data.case_id,
+  }))
+);
 ```
 
 * * *

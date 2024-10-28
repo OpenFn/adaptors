@@ -1,5 +1,13 @@
 # @openfn/language-commcare
 
+## 3.2.4
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 3.2.3
 
 ### Patch Changes
