@@ -7,6 +7,1110 @@ import * as util from "./utils.js";
 import _ from "lodash";
 
 /**
+  * Create a FHIR CarePlan resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
+ */
+export function carePlan(type, props) {
+    const mappings = {
+        "art-follow-up-careplan": carePlan_art_follow_up_careplan,
+        "cervical-cancer-care-plan": carePlan_cervical_cancer_care_plan,
+        "cotrimoxazole-preventive-therapy-careplan": carePlan_cotrimoxazole_preventive_therapy_careplan,
+        "tb-treatment-careplan": carePlan_tb_treatment_careplan,
+        "tpt-careplan": carePlan_tpt_careplan
+    };
+
+    return mappings[type](props)
+}
+
+function carePlan_art_follow_up_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"art-follow-up-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.nextVisitDate)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
+                    item.nextVisitDate
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.adherence)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence",
+                    item.adherence
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan"]
+    };
+
+    return resource;
+}
+
+function carePlan_cervical_cancer_care_plan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = props.category;
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cervical-cancer-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.nextVisitDate)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
+                    item.nextVisitDate
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/cervical-cancer-care-plan"]
+    };
+
+    return resource;
+}
+
+function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cotrimoxazole-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.adherence)) {
+                util.addExtension(
+                    activity,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-adherence",
+                    item.adherence
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: [
+            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-careplan"
+        ]
+    };
+
+    return resource;
+}
+
+function carePlan_tb_treatment_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-treatment-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tb-treatment-careplan"]
+    };
+
+    return resource;
+}
+
+function carePlan_tpt_careplan(props) {
+    const resource = {
+        resourceType: "CarePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.instantiatesCanonical)) {
+        resource.instantiatesCanonical = props.instantiatesCanonical;
+    }
+
+    if (!_.isNil(props.instantiatesUri)) {
+        resource.instantiatesUri = props.instantiatesUri;
+    }
+
+    if (!_.isNil(props.basedOn)) {
+        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
+        resource.basedOn = util.reference(props.basedOn);
+    }
+
+    if (!_.isNil(props.replaces)) {
+        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
+        resource.replaces = util.reference(props.replaces);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = util.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.intent)) {
+        resource.intent = props.intent;
+    }
+
+    if (!_.isNil(props.category)) {
+        let src = props.category;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.category = [];
+
+        for (let item of src) {
+            let category = {};
+
+            if (!_.isNil(item.id)) {
+                category.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                category.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                category.text = item.text;
+            } else
+                {}
+
+            resource.category.push(category);
+        }
+    } else {
+        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-preventive-therapy-care-plan"}]}];
+    }
+
+    if (!_.isNil(props.title)) {
+        resource.title = props.title;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = util.reference(props.subject);
+    }
+
+    if (!_.isNil(props.encounter)) {
+        resource.encounter = util.reference(props.encounter);
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.author)) {
+        resource.author = util.reference(props.author);
+    }
+
+    if (!_.isNil(props.contributor)) {
+        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
+        resource.contributor = util.reference(props.contributor);
+    }
+
+    if (!_.isNil(props.careTeam)) {
+        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
+        resource.careTeam = util.reference(props.careTeam);
+    }
+
+    if (!_.isNil(props.addresses)) {
+        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
+        resource.addresses = util.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
+        resource.supportingInfo = util.reference(props.supportingInfo);
+    }
+
+    if (!_.isNil(props.goal)) {
+        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
+        resource.goal = util.reference(props.goal);
+    }
+
+    if (!_.isNil(props.activity)) {
+        let src = props.activity;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.activity = [];
+
+        for (let item of src) {
+            let activity = {};
+
+            if (!_.isNil(item.id)) {
+                activity.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                activity.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeCodeableConcept)) {
+                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
+            } else
+                {}
+
+            if (!_.isNil(item.outcomeReference)) {
+                activity.outcomeReference = item.outcomeReference;
+            } else
+                {}
+
+            if (!_.isNil(item.progress)) {
+                activity.progress = item.progress;
+            } else
+                {}
+
+            if (!_.isNil(item.reference)) {
+                activity.reference = item.reference;
+            } else
+                {}
+
+            if (!_.isNil(item.detail)) {
+                activity.detail = item.detail;
+            } else
+                {}
+
+            resource.activity.push(activity);
+        }
+    }
+
+    if (!_.isNil(props.note)) {
+        resource.note = props.note;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-careplan"]
+    };
+
+    return resource;
+}
+
+/**
   * Create a FHIR Encounter resource.
   * @public
   * @function
@@ -842,27 +1946,29 @@ function encounter_target_facility_encounter(props) {
 }
 
 /**
-  * Create a FHIR Patient resource.
+  * Create a FHIR Medication resource.
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant
   * @param props - Properties to apply to the resource
  */
-export function patient(type, props) {
+export function medication(type, props) {
     const mappings = {
-        "patient": patient_patient
+        "arv-regimen-medication": medication_arv_regimen_medication,
+        "oi-medication": medication_oi_medication,
+        "tpt-medication": medication_tpt_medication
     };
 
     return mappings[type](props)
 }
 
-function patient_patient(props) {
+function medication_arv_regimen_medication(props) {
     const resource = {
-        resourceType: "Patient",
+        resourceType: "Medication",
 
         text: {
             status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Patient</b></p></div>"
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
         }
     };
 
@@ -895,355 +2001,418 @@ function patient_patient(props) {
     }
 
     if (!_.isNil(props.identifier)) {
-        let src = props.identifier;
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
         if (!Array.isArray(src)) { src = [src]; }
-        resource.identifier = [];
+        resource.ingredient = [];
 
         for (let item of src) {
-            let identifier = {};
+            let ingredient = {};
 
             if (!_.isNil(item.id)) {
-                identifier.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                identifier.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                identifier.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.system)) {
-                identifier.system = item.system;
-            } else
-                {}
-
-            if (!_.isNil(item.value)) {
-                identifier.value = item.value;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                identifier.period = item.period;
-            } else
-                {}
-
-            if (!_.isNil(item.assigner)) {
-                identifier.assigner = item.assigner;
-            } else
-                {}
-
-            identifier = util.mapSystems(identifier);
-            resource.identifier.push(identifier);
-        }
-    } else {
-        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/MRN"};
-    }
-
-    if (!_.isNil(props.active)) {
-        resource.active = props.active;
-    }
-
-    if (!_.isNil(props.name)) {
-        let src = props.name;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.name = [];
-
-        for (let item of src) {
-            let name = {};
-
-            if (!_.isNil(item.id)) {
-                name.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                name.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                name.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.family)) {
-                name.family = item.family;
-            } else
-                {}
-
-            if (!_.isNil(item.given)) {
-                name.given = item.given;
-            } else
-                {}
-
-            if (!_.isNil(item.prefix)) {
-                name.prefix = item.prefix;
-            } else
-                {}
-
-            if (!_.isNil(item.suffix)) {
-                name.suffix = item.suffix;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                name.period = item.period;
-            } else
-                {}
-
-            resource.name.push(name);
-        }
-    }
-
-    if (!_.isNil(props.telecom)) {
-        resource.telecom = props.telecom;
-    }
-
-    if (!_.isNil(props.gender)) {
-        resource.gender = props.gender;
-    }
-
-    if (!_.isNil(props.birthDate)) {
-        resource.birthDate = props.birthDate;
-    }
-
-    if (!_.isNil(props.deceased)) {
-        util.composite(resource, "deceased", props.deceased);
-    }
-
-    if (!_.isNil(props.address)) {
-        let src = props.address;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.address = [];
-
-        for (let item of src) {
-            let address = {};
-
-            if (!_.isNil(item.id)) {
-                address.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.residentialType)) {
-                util.addExtension(
-                    address,
-                    "http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type",
-                    item.residentialType
-                );
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                address.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                address.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                address.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.line)) {
-                address.line = item.line;
-            } else
-                {}
-
-            if (!_.isNil(item.city)) {
-                address.city = item.city;
-            } else
-                {}
-
-            if (!_.isNil(item.district)) {
-                address.district = item.district;
-            } else
-                {}
-
-            if (!_.isNil(item.state)) {
-                address.state = item.state;
-            } else
-                {}
-
-            if (!_.isNil(item.postalCode)) {
-                address.postalCode = item.postalCode;
-            } else
-                {}
-
-            if (!_.isNil(item.country)) {
-                address.country = item.country;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                address.period = item.period;
-            } else
-                {}
-
-            resource.address.push(address);
-        }
-    }
-
-    if (!_.isNil(props.maritalStatus)) {
-        resource.maritalStatus = props.maritalStatus;
-    }
-
-    if (!_.isNil(props.multipleBirth)) {
-        util.composite(resource, "multipleBirth", props.multipleBirth);
-    }
-
-    if (!_.isNil(props.photo)) {
-        resource.photo = props.photo;
-    }
-
-    if (!_.isNil(props.contact)) {
-        let src = props.contact;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.contact = [];
-
-        for (let item of src) {
-            let contact = {};
-
-            if (!_.isNil(item.id)) {
-                contact.id = item.id;
+                ingredient.id = item.id;
             } else
                 {}
 
             if (!_.isNil(item.modifierExtension)) {
-                contact.modifierExtension = item.modifierExtension;
+                ingredient.modifierExtension = item.modifierExtension;
             } else
                 {}
 
-            if (!_.isNil(item.relationship)) {
-                contact.relationship = item.relationship;
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
             } else
                 {}
 
-            if (!_.isNil(item.name)) {
-                contact.name = item.name;
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
             } else
                 {}
 
-            if (!_.isNil(item.telecom)) {
-                contact.telecom = item.telecom;
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
             } else
                 {}
 
-            if (!_.isNil(item.address)) {
-                contact.address = item.address;
-            } else
-                {}
-
-            if (!_.isNil(item.gender)) {
-                contact.gender = item.gender;
-            } else
-                {}
-
-            if (!_.isNil(item.organization)) {
-                contact.organization = item.organization;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                contact.period = item.period;
-            } else
-                {}
-
-            resource.contact.push(contact);
+            resource.ingredient.push(ingredient);
         }
     }
 
-    if (!_.isNil(props.communication)) {
-        let src = props.communication;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.communication = [];
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
 
-        for (let item of src) {
-            let communication = {};
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
 
-            if (!_.isNil(item.id)) {
-                communication.id = item.id;
-            } else
-                {}
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
 
-            if (!_.isNil(item.modifierExtension)) {
-                communication.modifierExtension = item.modifierExtension;
-            } else
-                {}
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
 
-            if (!_.isNil(item.language)) {
-                communication.language = item.language;
-            } else
-                {}
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
 
-            if (!_.isNil(item.preferred)) {
-                communication.preferred = item.preferred;
-            } else
-                {}
-
-            resource.communication.push(communication);
-        }
-    }
-
-    if (!_.isNil(props.generalPractitioner)) {
-        if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
-        resource.generalPractitioner = util.reference(props.generalPractitioner);
-    }
-
-    if (!_.isNil(props.managingOrganization)) {
-        resource.managingOrganization = util.reference(props.managingOrganization);
-    }
-
-    if (!_.isNil(props.link)) {
-        let src = props.link;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.link = [];
-
-        for (let item of src) {
-            let link = {};
-
-            if (!_.isNil(item.id)) {
-                link.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                link.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.other)) {
-                link.other = item.other;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                link.type = item.type;
-            } else
-                {}
-
-            resource.link.push(link);
-        }
-    }
-
-    if (!_.isNil(props.religion)) {
-        util.addExtension(
-            resource,
-            "http://hl7.org/fhir/StructureDefinition/patient-religion",
-            props.religion
-        );
+        resource.batch = batch;
     }
 
     resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/patient"]
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication"]
+    };
+
+    return resource;
+}
+
+function medication_oi_medication(props) {
+    const resource = {
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.ingredient = [];
+
+        for (let item of src) {
+            let ingredient = {};
+
+            if (!_.isNil(item.id)) {
+                ingredient.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                ingredient.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
+            } else
+                {}
+
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
+            } else
+                {}
+
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
+            } else
+                {}
+
+            resource.ingredient.push(ingredient);
+        }
+    }
+
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
+
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
+
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
+
+        resource.batch = batch;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/oi-medication"]
+    };
+
+    return resource;
+}
+
+function medication_tpt_medication(props) {
+    const resource = {
+        resourceType: "Medication",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        let code = {};
+
+        if (!_.isNil(src.id)) {
+            code.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.coding)) {
+            code.coding = src.coding;
+        } else
+            {}
+
+        if (!_.isNil(src.text)) {
+            code.text = src.text;
+        } else
+            {}
+
+        resource.code = code;
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = props.status;
+    }
+
+    if (!_.isNil(props.manufacturer)) {
+        resource.manufacturer = util.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = props.form;
+    }
+
+    if (!_.isNil(props.amount)) {
+        resource.amount = props.amount;
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        let src = props.ingredient;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.ingredient = [];
+
+        for (let item of src) {
+            let ingredient = {};
+
+            if (!_.isNil(item.id)) {
+                ingredient.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                ingredient.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.item)) {
+                ingredient.item = item.item;
+            } else
+                {}
+
+            if (!_.isNil(item.isActive)) {
+                ingredient.isActive = item.isActive;
+            } else
+                {}
+
+            if (!_.isNil(item.strength)) {
+                ingredient.strength = item.strength;
+            } else
+                {}
+
+            resource.ingredient.push(ingredient);
+        }
+    }
+
+    if (!_.isNil(props.batch)) {
+        let src = props.batch;
+        let batch = {};
+
+        if (!_.isNil(src.id)) {
+            batch.id = src.id;
+        } else
+            {}
+
+        if (!_.isNil(src.modifierExtension)) {
+            batch.modifierExtension = src.modifierExtension;
+        } else
+            {}
+
+        if (!_.isNil(src.lotNumber)) {
+            batch.lotNumber = src.lotNumber;
+        } else
+            {}
+
+        if (!_.isNil(src.expirationDate)) {
+            batch.expirationDate = src.expirationDate;
+        } else
+            {}
+
+        resource.batch = batch;
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication"]
     };
 
     return resource;
@@ -4011,1854 +5180,6 @@ function medicationRequest_tpt_medication_request(props) {
 
     resource.meta = {
         profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication-request"]
-    };
-
-    return resource;
-}
-
-/**
-  * Create a FHIR Medication resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant
-  * @param props - Properties to apply to the resource
- */
-export function medication(type, props) {
-    const mappings = {
-        "arv-regimen-medication": medication_arv_regimen_medication,
-        "oi-medication": medication_oi_medication,
-        "tpt-medication": medication_tpt_medication
-    };
-
-    return mappings[type](props)
-}
-
-function medication_arv_regimen_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication"]
-    };
-
-    return resource;
-}
-
-function medication_oi_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/oi-medication"]
-    };
-
-    return resource;
-}
-
-function medication_tpt_medication(props) {
-    const resource = {
-        resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        let code = {};
-
-        if (!_.isNil(src.id)) {
-            code.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.coding)) {
-            code.coding = src.coding;
-        } else
-            {}
-
-        if (!_.isNil(src.text)) {
-            code.text = src.text;
-        } else
-            {}
-
-        resource.code = code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.form)) {
-        resource.form = props.form;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.ingredient)) {
-        let src = props.ingredient;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.ingredient = [];
-
-        for (let item of src) {
-            let ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                ingredient.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                ingredient.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.item)) {
-                ingredient.item = item.item;
-            } else
-                {}
-
-            if (!_.isNil(item.isActive)) {
-                ingredient.isActive = item.isActive;
-            } else
-                {}
-
-            if (!_.isNil(item.strength)) {
-                ingredient.strength = item.strength;
-            } else
-                {}
-
-            resource.ingredient.push(ingredient);
-        }
-    }
-
-    if (!_.isNil(props.batch)) {
-        let src = props.batch;
-        let batch = {};
-
-        if (!_.isNil(src.id)) {
-            batch.id = src.id;
-        } else
-            {}
-
-        if (!_.isNil(src.modifierExtension)) {
-            batch.modifierExtension = src.modifierExtension;
-        } else
-            {}
-
-        if (!_.isNil(src.lotNumber)) {
-            batch.lotNumber = src.lotNumber;
-        } else
-            {}
-
-        if (!_.isNil(src.expirationDate)) {
-            batch.expirationDate = src.expirationDate;
-        } else
-            {}
-
-        resource.batch = batch;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-medication"]
-    };
-
-    return resource;
-}
-
-/**
-  * Create a FHIR CarePlan resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant
-  * @param props - Properties to apply to the resource
- */
-export function carePlan(type, props) {
-    const mappings = {
-        "art-follow-up-careplan": carePlan_art_follow_up_careplan,
-        "cervical-cancer-care-plan": carePlan_cervical_cancer_care_plan,
-        "cotrimoxazole-preventive-therapy-careplan": carePlan_cotrimoxazole_preventive_therapy_careplan,
-        "tb-treatment-careplan": carePlan_tb_treatment_careplan,
-        "tpt-careplan": carePlan_tpt_careplan
-    };
-
-    return mappings[type](props)
-}
-
-function carePlan_art_follow_up_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"art-follow-up-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.activity)) {
-        let src = props.activity;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.activity = [];
-
-        for (let item of src) {
-            let activity = {};
-
-            if (!_.isNil(item.id)) {
-                activity.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.nextVisitDate)) {
-                util.addExtension(
-                    activity,
-                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
-                    item.nextVisitDate
-                );
-            } else
-                {}
-
-            if (!_.isNil(item.adherence)) {
-                util.addExtension(
-                    activity,
-                    "http://moh.gov.et/fhir/hiv/StructureDefinition/arv-adherence",
-                    item.adherence
-                );
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                activity.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeCodeableConcept)) {
-                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeReference)) {
-                activity.outcomeReference = item.outcomeReference;
-            } else
-                {}
-
-            if (!_.isNil(item.progress)) {
-                activity.progress = item.progress;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                activity.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.detail)) {
-                activity.detail = item.detail;
-            } else
-                {}
-
-            resource.activity.push(activity);
-        }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/art-follow-up-careplan"]
-    };
-
-    return resource;
-}
-
-function carePlan_cervical_cancer_care_plan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cervical-cancer-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.activity)) {
-        let src = props.activity;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.activity = [];
-
-        for (let item of src) {
-            let activity = {};
-
-            if (!_.isNil(item.id)) {
-                activity.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.nextVisitDate)) {
-                util.addExtension(
-                    activity,
-                    "http://moh.gov.et/fhir/hiv/StructureDefinition/care-plan-next-visit",
-                    item.nextVisitDate
-                );
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                activity.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeCodeableConcept)) {
-                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeReference)) {
-                activity.outcomeReference = item.outcomeReference;
-            } else
-                {}
-
-            if (!_.isNil(item.progress)) {
-                activity.progress = item.progress;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                activity.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.detail)) {
-                activity.detail = item.detail;
-            } else
-                {}
-
-            resource.activity.push(activity);
-        }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/cervical-cancer-care-plan"]
-    };
-
-    return resource;
-}
-
-function carePlan_cotrimoxazole_preventive_therapy_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"cotrimoxazole-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.activity)) {
-        let src = props.activity;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.activity = [];
-
-        for (let item of src) {
-            let activity = {};
-
-            if (!_.isNil(item.id)) {
-                activity.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.adherence)) {
-                util.addExtension(
-                    activity,
-                    "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-adherence",
-                    item.adherence
-                );
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                activity.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeCodeableConcept)) {
-                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeReference)) {
-                activity.outcomeReference = item.outcomeReference;
-            } else
-                {}
-
-            if (!_.isNil(item.progress)) {
-                activity.progress = item.progress;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                activity.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.detail)) {
-                activity.detail = item.detail;
-            } else
-                {}
-
-            resource.activity.push(activity);
-        }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: [
-            "http://moh.gov.et/fhir/hiv/StructureDefinition/cotrimoxazole-preventive-therapy-careplan"
-        ]
-    };
-
-    return resource;
-}
-
-function carePlan_tb_treatment_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-treatment-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.activity)) {
-        let src = props.activity;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.activity = [];
-
-        for (let item of src) {
-            let activity = {};
-
-            if (!_.isNil(item.id)) {
-                activity.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                activity.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeCodeableConcept)) {
-                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeReference)) {
-                activity.outcomeReference = item.outcomeReference;
-            } else
-                {}
-
-            if (!_.isNil(item.progress)) {
-                activity.progress = item.progress;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                activity.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.detail)) {
-                activity.detail = item.detail;
-            } else
-                {}
-
-            resource.activity.push(activity);
-        }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tb-treatment-careplan"]
-    };
-
-    return resource;
-}
-
-function carePlan_tpt_careplan(props) {
-    const resource = {
-        resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.basedOn)) {
-        if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.replaces)) {
-        if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
-    }
-
-    if (!_.isNil(props.partOf)) {
-        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        let src = props.category;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.category = [];
-
-        for (let item of src) {
-            let category = {};
-
-            if (!_.isNil(item.id)) {
-                category.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                category.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                category.text = item.text;
-            } else
-                {}
-
-            resource.category.push(category);
-        }
-    } else {
-        resource.category = [{"coding":[{"system":"http://moh.gov.et/fhir/hiv/CodeSystem/care-plan-category-code-system","code":"tb-preventive-therapy-care-plan"}]}];
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
-    if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
-    }
-
-    if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
-    }
-
-    if (!_.isNil(props.contributor)) {
-        if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
-    }
-
-    if (!_.isNil(props.careTeam)) {
-        if (!Array.isArray(props.careTeam)) { props.careTeam = [props.careTeam]; }
-        resource.careTeam = util.reference(props.careTeam);
-    }
-
-    if (!_.isNil(props.addresses)) {
-        if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
-    }
-
-    if (!_.isNil(props.supportingInfo)) {
-        if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.goal)) {
-        if (!Array.isArray(props.goal)) { props.goal = [props.goal]; }
-        resource.goal = util.reference(props.goal);
-    }
-
-    if (!_.isNil(props.activity)) {
-        let src = props.activity;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.activity = [];
-
-        for (let item of src) {
-            let activity = {};
-
-            if (!_.isNil(item.id)) {
-                activity.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                activity.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeCodeableConcept)) {
-                activity.outcomeCodeableConcept = item.outcomeCodeableConcept;
-            } else
-                {}
-
-            if (!_.isNil(item.outcomeReference)) {
-                activity.outcomeReference = item.outcomeReference;
-            } else
-                {}
-
-            if (!_.isNil(item.progress)) {
-                activity.progress = item.progress;
-            } else
-                {}
-
-            if (!_.isNil(item.reference)) {
-                activity.reference = item.reference;
-            } else
-                {}
-
-            if (!_.isNil(item.detail)) {
-                activity.detail = item.detail;
-            } else
-                {}
-
-            resource.activity.push(activity);
-        }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/tpt-careplan"]
-    };
-
-    return resource;
-}
-
-/**
-  * Create a FHIR RelatedPerson resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant
-  * @param props - Properties to apply to the resource
- */
-export function relatedPerson(type, props) {
-    const mappings = {
-        "related-person": relatedPerson_related_person
-    };
-
-    return mappings[type](props)
-}
-
-function relatedPerson_related_person(props) {
-    const resource = {
-        resourceType: "RelatedPerson",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
-        }
-    };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
-    }
-
-    if (!_.isNil(props.active)) {
-        resource.active = props.active;
-    }
-
-    if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
-    }
-
-    if (!_.isNil(props.relationship)) {
-        let src = props.relationship;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.relationship = [];
-
-        for (let item of src) {
-            let relationship = {};
-
-            if (!_.isNil(item.id)) {
-                relationship.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.coding)) {
-                relationship.coding = item.coding;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                relationship.text = item.text;
-            } else
-                {}
-
-            resource.relationship.push(relationship);
-        }
-    }
-
-    if (!_.isNil(props.name)) {
-        let src = props.name;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.name = [];
-
-        for (let item of src) {
-            let name = {};
-
-            if (!_.isNil(item.id)) {
-                name.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                name.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                name.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.family)) {
-                name.family = item.family;
-            } else
-                {}
-
-            if (!_.isNil(item.given)) {
-                name.given = item.given;
-            } else
-                {}
-
-            if (!_.isNil(item.prefix)) {
-                name.prefix = item.prefix;
-            } else
-                {}
-
-            if (!_.isNil(item.suffix)) {
-                name.suffix = item.suffix;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                name.period = item.period;
-            } else
-                {}
-
-            resource.name.push(name);
-        }
-    }
-
-    if (!_.isNil(props.telecom)) {
-        resource.telecom = props.telecom;
-    }
-
-    if (!_.isNil(props.gender)) {
-        resource.gender = props.gender;
-    }
-
-    if (!_.isNil(props.birthDate)) {
-        resource.birthDate = props.birthDate;
-    }
-
-    if (!_.isNil(props.address)) {
-        let src = props.address;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.address = [];
-
-        for (let item of src) {
-            let address = {};
-
-            if (!_.isNil(item.id)) {
-                address.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.use)) {
-                address.use = item.use;
-            } else
-                {}
-
-            if (!_.isNil(item.type)) {
-                address.type = item.type;
-            } else
-                {}
-
-            if (!_.isNil(item.text)) {
-                address.text = item.text;
-            } else
-                {}
-
-            if (!_.isNil(item.line)) {
-                address.line = item.line;
-            } else
-                {}
-
-            if (!_.isNil(item.city)) {
-                address.city = item.city;
-            } else
-                {}
-
-            if (!_.isNil(item.district)) {
-                address.district = item.district;
-            } else
-                {}
-
-            if (!_.isNil(item.state)) {
-                address.state = item.state;
-            } else
-                {}
-
-            if (!_.isNil(item.postalCode)) {
-                address.postalCode = item.postalCode;
-            } else
-                {}
-
-            if (!_.isNil(item.country)) {
-                address.country = item.country;
-            } else
-                {}
-
-            if (!_.isNil(item.period)) {
-                address.period = item.period;
-            } else
-                {}
-
-            resource.address.push(address);
-        }
-    }
-
-    if (!_.isNil(props.photo)) {
-        resource.photo = props.photo;
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
-    }
-
-    if (!_.isNil(props.communication)) {
-        let src = props.communication;
-        if (!Array.isArray(src)) { src = [src]; }
-        resource.communication = [];
-
-        for (let item of src) {
-            let communication = {};
-
-            if (!_.isNil(item.id)) {
-                communication.id = item.id;
-            } else
-                {}
-
-            if (!_.isNil(item.modifierExtension)) {
-                communication.modifierExtension = item.modifierExtension;
-            } else
-                {}
-
-            if (!_.isNil(item.language)) {
-                communication.language = item.language;
-            } else
-                {}
-
-            if (!_.isNil(item.preferred)) {
-                communication.preferred = item.preferred;
-            } else
-                {}
-
-            resource.communication.push(communication);
-        }
-    }
-
-    resource.meta = {
-        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/related-person"]
     };
 
     return resource;
@@ -31233,6 +30554,685 @@ function observation_weight_observation(props) {
 
     resource.meta = {
         profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/weight-observation"]
+    };
+
+    return resource;
+}
+
+/**
+  * Create a FHIR Patient resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
+ */
+export function patient(type, props) {
+    const mappings = {
+        "patient": patient_patient
+    };
+
+    return mappings[type](props)
+}
+
+function patient_patient(props) {
+    const resource = {
+        resourceType: "Patient",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Patient</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        let src = props.identifier;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.identifier = [];
+
+        for (let item of src) {
+            let identifier = {};
+
+            if (!_.isNil(item.id)) {
+                identifier.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                identifier.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                identifier.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.system)) {
+                identifier.system = item.system;
+            } else
+                {}
+
+            if (!_.isNil(item.value)) {
+                identifier.value = item.value;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                identifier.period = item.period;
+            } else
+                {}
+
+            if (!_.isNil(item.assigner)) {
+                identifier.assigner = item.assigner;
+            } else
+                {}
+
+            identifier = util.mapSystems(identifier);
+            resource.identifier.push(identifier);
+        }
+    } else {
+        resource.identifier = {"system":"http://moh.gov.et/fhir/hiv/identifier/MRN"};
+    }
+
+    if (!_.isNil(props.active)) {
+        resource.active = props.active;
+    }
+
+    if (!_.isNil(props.name)) {
+        let src = props.name;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.name = [];
+
+        for (let item of src) {
+            let name = {};
+
+            if (!_.isNil(item.id)) {
+                name.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                name.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                name.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.family)) {
+                name.family = item.family;
+            } else
+                {}
+
+            if (!_.isNil(item.given)) {
+                name.given = item.given;
+            } else
+                {}
+
+            if (!_.isNil(item.prefix)) {
+                name.prefix = item.prefix;
+            } else
+                {}
+
+            if (!_.isNil(item.suffix)) {
+                name.suffix = item.suffix;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                name.period = item.period;
+            } else
+                {}
+
+            resource.name.push(name);
+        }
+    }
+
+    if (!_.isNil(props.telecom)) {
+        resource.telecom = props.telecom;
+    }
+
+    if (!_.isNil(props.gender)) {
+        resource.gender = props.gender;
+    }
+
+    if (!_.isNil(props.birthDate)) {
+        resource.birthDate = props.birthDate;
+    }
+
+    if (!_.isNil(props.deceased)) {
+        util.composite(resource, "deceased", props.deceased);
+    }
+
+    if (!_.isNil(props.address)) {
+        let src = props.address;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.address = [];
+
+        for (let item of src) {
+            let address = {};
+
+            if (!_.isNil(item.id)) {
+                address.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.residentialType)) {
+                util.addExtension(
+                    address,
+                    "http://moh.gov.et/fhir/hiv/StructureDefinition/residential-type",
+                    item.residentialType
+                );
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                address.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                address.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                address.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.line)) {
+                address.line = item.line;
+            } else
+                {}
+
+            if (!_.isNil(item.city)) {
+                address.city = item.city;
+            } else
+                {}
+
+            if (!_.isNil(item.district)) {
+                address.district = item.district;
+            } else
+                {}
+
+            if (!_.isNil(item.state)) {
+                address.state = item.state;
+            } else
+                {}
+
+            if (!_.isNil(item.postalCode)) {
+                address.postalCode = item.postalCode;
+            } else
+                {}
+
+            if (!_.isNil(item.country)) {
+                address.country = item.country;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                address.period = item.period;
+            } else
+                {}
+
+            resource.address.push(address);
+        }
+    }
+
+    if (!_.isNil(props.maritalStatus)) {
+        resource.maritalStatus = props.maritalStatus;
+    }
+
+    if (!_.isNil(props.multipleBirth)) {
+        util.composite(resource, "multipleBirth", props.multipleBirth);
+    }
+
+    if (!_.isNil(props.photo)) {
+        resource.photo = props.photo;
+    }
+
+    if (!_.isNil(props.contact)) {
+        let src = props.contact;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.contact = [];
+
+        for (let item of src) {
+            let contact = {};
+
+            if (!_.isNil(item.id)) {
+                contact.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                contact.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.relationship)) {
+                contact.relationship = item.relationship;
+            } else
+                {}
+
+            if (!_.isNil(item.name)) {
+                contact.name = item.name;
+            } else
+                {}
+
+            if (!_.isNil(item.telecom)) {
+                contact.telecom = item.telecom;
+            } else
+                {}
+
+            if (!_.isNil(item.address)) {
+                contact.address = item.address;
+            } else
+                {}
+
+            if (!_.isNil(item.gender)) {
+                contact.gender = item.gender;
+            } else
+                {}
+
+            if (!_.isNil(item.organization)) {
+                contact.organization = item.organization;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                contact.period = item.period;
+            } else
+                {}
+
+            resource.contact.push(contact);
+        }
+    }
+
+    if (!_.isNil(props.communication)) {
+        let src = props.communication;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.communication = [];
+
+        for (let item of src) {
+            let communication = {};
+
+            if (!_.isNil(item.id)) {
+                communication.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                communication.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.language)) {
+                communication.language = item.language;
+            } else
+                {}
+
+            if (!_.isNil(item.preferred)) {
+                communication.preferred = item.preferred;
+            } else
+                {}
+
+            resource.communication.push(communication);
+        }
+    }
+
+    if (!_.isNil(props.generalPractitioner)) {
+        if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
+        resource.generalPractitioner = util.reference(props.generalPractitioner);
+    }
+
+    if (!_.isNil(props.managingOrganization)) {
+        resource.managingOrganization = util.reference(props.managingOrganization);
+    }
+
+    if (!_.isNil(props.link)) {
+        let src = props.link;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.link = [];
+
+        for (let item of src) {
+            let link = {};
+
+            if (!_.isNil(item.id)) {
+                link.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                link.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.other)) {
+                link.other = item.other;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                link.type = item.type;
+            } else
+                {}
+
+            resource.link.push(link);
+        }
+    }
+
+    if (!_.isNil(props.religion)) {
+        util.addExtension(
+            resource,
+            "http://hl7.org/fhir/StructureDefinition/patient-religion",
+            props.religion
+        );
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/patient"]
+    };
+
+    return resource;
+}
+
+/**
+  * Create a FHIR RelatedPerson resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant
+  * @param props - Properties to apply to the resource
+ */
+export function relatedPerson(type, props) {
+    const mappings = {
+        "related-person": relatedPerson_related_person
+    };
+
+    return mappings[type](props)
+}
+
+function relatedPerson_related_person(props) {
+    const resource = {
+        resourceType: "RelatedPerson",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
+        }
+    };
+
+    if (!_.isNil(props.id)) {
+        resource.id = props.id;
+    }
+
+    if (!_.isNil(props.implicitRules)) {
+        resource.implicitRules = props.implicitRules;
+    }
+
+    if (!_.isNil(props.language)) {
+        resource.language = props.language;
+    }
+
+    if (!_.isNil(props.text)) {
+        resource.text = props.text;
+    }
+
+    if (!_.isNil(props.contained)) {
+        resource.contained = props.contained;
+    }
+
+    if (!_.isNil(props.extension)) {
+        resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.modifierExtension)) {
+        resource.modifierExtension = props.modifierExtension;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = util.identifier(props.identifier, undefined);
+    }
+
+    if (!_.isNil(props.active)) {
+        resource.active = props.active;
+    }
+
+    if (!_.isNil(props.patient)) {
+        resource.patient = util.reference(props.patient);
+    }
+
+    if (!_.isNil(props.relationship)) {
+        let src = props.relationship;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.relationship = [];
+
+        for (let item of src) {
+            let relationship = {};
+
+            if (!_.isNil(item.id)) {
+                relationship.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.coding)) {
+                relationship.coding = item.coding;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                relationship.text = item.text;
+            } else
+                {}
+
+            resource.relationship.push(relationship);
+        }
+    }
+
+    if (!_.isNil(props.name)) {
+        let src = props.name;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.name = [];
+
+        for (let item of src) {
+            let name = {};
+
+            if (!_.isNil(item.id)) {
+                name.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                name.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                name.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.family)) {
+                name.family = item.family;
+            } else
+                {}
+
+            if (!_.isNil(item.given)) {
+                name.given = item.given;
+            } else
+                {}
+
+            if (!_.isNil(item.prefix)) {
+                name.prefix = item.prefix;
+            } else
+                {}
+
+            if (!_.isNil(item.suffix)) {
+                name.suffix = item.suffix;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                name.period = item.period;
+            } else
+                {}
+
+            resource.name.push(name);
+        }
+    }
+
+    if (!_.isNil(props.telecom)) {
+        resource.telecom = props.telecom;
+    }
+
+    if (!_.isNil(props.gender)) {
+        resource.gender = props.gender;
+    }
+
+    if (!_.isNil(props.birthDate)) {
+        resource.birthDate = props.birthDate;
+    }
+
+    if (!_.isNil(props.address)) {
+        let src = props.address;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.address = [];
+
+        for (let item of src) {
+            let address = {};
+
+            if (!_.isNil(item.id)) {
+                address.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.use)) {
+                address.use = item.use;
+            } else
+                {}
+
+            if (!_.isNil(item.type)) {
+                address.type = item.type;
+            } else
+                {}
+
+            if (!_.isNil(item.text)) {
+                address.text = item.text;
+            } else
+                {}
+
+            if (!_.isNil(item.line)) {
+                address.line = item.line;
+            } else
+                {}
+
+            if (!_.isNil(item.city)) {
+                address.city = item.city;
+            } else
+                {}
+
+            if (!_.isNil(item.district)) {
+                address.district = item.district;
+            } else
+                {}
+
+            if (!_.isNil(item.state)) {
+                address.state = item.state;
+            } else
+                {}
+
+            if (!_.isNil(item.postalCode)) {
+                address.postalCode = item.postalCode;
+            } else
+                {}
+
+            if (!_.isNil(item.country)) {
+                address.country = item.country;
+            } else
+                {}
+
+            if (!_.isNil(item.period)) {
+                address.period = item.period;
+            } else
+                {}
+
+            resource.address.push(address);
+        }
+    }
+
+    if (!_.isNil(props.photo)) {
+        resource.photo = props.photo;
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
+    if (!_.isNil(props.communication)) {
+        let src = props.communication;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.communication = [];
+
+        for (let item of src) {
+            let communication = {};
+
+            if (!_.isNil(item.id)) {
+                communication.id = item.id;
+            } else
+                {}
+
+            if (!_.isNil(item.modifierExtension)) {
+                communication.modifierExtension = item.modifierExtension;
+            } else
+                {}
+
+            if (!_.isNil(item.language)) {
+                communication.language = item.language;
+            } else
+                {}
+
+            if (!_.isNil(item.preferred)) {
+                communication.preferred = item.preferred;
+            } else
+                {}
+
+            resource.communication.push(communication);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://moh.gov.et/fhir/hiv/StructureDefinition/related-person"]
     };
 
     return resource;

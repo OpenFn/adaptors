@@ -2,7 +2,7 @@
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
-import { getBuilderName, getTypeName } from './util';
+import { getBuilderName, getTypeName, orderedEntries } from './util';
 import { PropDef } from './generate-schema';
 
 const b = ts.factory;
@@ -29,18 +29,22 @@ const generateDTS = (schema, mappings) => {
     b.createImportDeclaration([], undefined, b.createStringLiteral('./globals'))
   );
 
-  for (const type in mappings) {
+  orderedEntries(mappings, type => {
     if (schema[type]) {
-      for (const profile of schema[type]) {
+      orderedEntries(schema[type], (_profileId, profile) => {
         const name = getTypeName(profile);
-        const overrides = Object.assign({}, mappings[type].any, mappings[type][profile])
+        const overrides = Object.assign(
+          {},
+          mappings[type].any,
+          mappings[type][profile]
+        );
         const typedef = generateType(name, profile, overrides);
         contents.push(typedef);
-      }
+      });
 
       contents.push(...generateEntryFuction(type, schema[type]));
     }
-  }
+  });
 
   return contents
     .map(n => printer.printNode(ts.EmitHint.Unspecified, n, resultFile))
@@ -134,7 +138,7 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys
-  const allKeys = Object.keys(Object.assign({}, schema.props, mappings));
+  const allKeys = Object.keys(Object.assign({}, schema.props, mappings)).sort();
 
   // Now for each key, build a type
   // Note that mappings should overwrite schema if conflict
@@ -184,7 +188,7 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
 
 const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
-  for (const key in typeDef) {
+  orderedEntries(typeDef, key => {
     const { type, desc } = typeDef[key];
     let typeNode;
     if (type === 'string') {
@@ -200,7 +204,7 @@ const generateInlineType = (typeDef: PropDef) => {
       props.push(b.createJSDocComment(desc + '\n'));
     }
     props.push(b.createPropertySignature([], key, undefined, typeNode));
-  }
+  });
   return b.createTypeLiteralNode(props);
 };
 

@@ -2,7 +2,7 @@ import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName, getTypeName } from './util';
+import { getBuilderName, getTypeName, orderedEntries } from './util';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -23,21 +23,25 @@ const generateCode = (schema, mappings) => {
     )
   );
 
-  for (const type in mappings) {
+  orderedEntries(mappings, type => {
     // generate a builder for each variant
     // statements.push(generateBuilder(type, schema[type], mappings[type]));
     // now generate an entry
 
     if (schema[type]) {
       statements.push(generateEntry(type, schema[type]));
-      for (const profile of schema[type]) {
-        const overrides = Object.assign({}, mappings[type].any, mappings[type][profile.id])
+      orderedEntries(schema[type], (profileId, profile) => {
+        const overrides = Object.assign(
+          {},
+          mappings[type].any,
+          mappings[type][profileId]
+        );
         const name = getTypeName(profile);
 
         statements.push(generateBuilder(name, profile, overrides));
-      }
+      });
     }
-  }
+  });
 
   const program = b.program(statements);
 
@@ -54,7 +58,7 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
   * @param {string} type - The profile id for the resource variant
   * @param props - Properties to apply to the resource
  */
-`)
+`);
 
   const map = b.variableDeclaration('const', [
     b.variableDeclarator(
@@ -75,19 +79,19 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
   const mapper = parse(`
     return mappings[type](props)
 `);
-    
+
   const ex = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
       [b.identifier('type'), b.identifier(INPUT_NAME)],
       b.blockStatement([map, ...mapper.program.body])
-    ),
+    )
   );
-  
+
   ex.comments = comment.program.comments;
   ex.comments[0].leading = true;
-    
+
   return ex;
 };
 
@@ -219,7 +223,6 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
 // Mapping rules could add extra complications here, like aliasing and converting
 const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
   if (propName === 'code') {
-    
   }
   // This is the actual assignment
   const assignProp = assignToInput(
@@ -426,13 +429,12 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
     statements.push(ast.program.body[0]);
   }
 
-
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('util'), b.identifier('reference')),
     [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
-  statements.push(assignToInput(propName, callBuilder))
+  statements.push(assignToInput(propName, callBuilder));
 
   return ifPropInInput(propName, statements);
 };
@@ -504,27 +506,17 @@ const initResource = (resourceType: string) => {
   const text = b.objectProperty(
     b.identifier('text'),
     b.objectExpression([
-      b.objectProperty(
-        b.identifier('status'),
-        b.stringLiteral('generated')
-      ),
-      b.objectProperty(
-        b.identifier('div'),
-        b.stringLiteral(t)
-      )
+      b.objectProperty(b.identifier('status'), b.stringLiteral('generated')),
+      b.objectProperty(b.identifier('div'), b.stringLiteral(t)),
     ])
   );
-
 
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([
-        rt,
-        text    
-      ])
+      b.objectExpression([rt, text])
     ),
   ]);
-}
+};
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
