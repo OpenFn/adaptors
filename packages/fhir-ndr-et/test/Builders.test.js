@@ -93,7 +93,7 @@ describe('Encounter', () => {
         'http://moh.gov.et/fhir/hiv/CodeSystem/encounter-visit-type-code-system',
       ])
     ),
-    console.log(result);
+      console.log(result);
 
     expect(result).to.eql(fixtures.ndr.encounter);
   });
@@ -167,7 +167,7 @@ describe('Patient', () => {
       }
       return a;
     };
-    
+
     const religion = util.findExtension(
       input,
       'http://hl7.org/fhir/StructureDefinition/patient-religion'
@@ -313,64 +313,64 @@ describe('Patient', () => {
   });
 });
 
-
 describe('Observation', () => {
   it('should default code', () => {
-    const o = builders.observation('patient-occupation-observation', {})
+    const o = builders.observation('patient-occupation-observation', {});
 
-    expect(o.code).to.eql({ "coding": [{ "system": "http://loinc.org", "code": "85658-3" }], "text": "Occupation" })
-  })
+    expect(o.code).to.eql({
+      coding: [{ system: 'http://loinc.org', code: '85658-3' }],
+      text: 'Occupation',
+    });
+  });
 
   it('should default category', () => {
-    const o = builders.observation('patient-occupation-observation', {})
+    const o = builders.observation('patient-occupation-observation', {});
     expect(o.category[0]).to.eql({
-      "coding": [
+      coding: [
         {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "social-history"
-        }
-      ]
-    })
+          system: 'http://terminology.hl7.org/CodeSystem/observation-category',
+          code: 'social-history',
+        },
+      ],
+    });
   });
 
   it('should assign value', () => {
     const o = builders.observation('patient-occupation-observation', {
-      value: util.concept(['value', 'system'])
-    })
+      value: util.concept(['value', 'system']),
+    });
     expect(o.valueCodeableConcept).to.eql({
-      "coding": [
+      coding: [
         {
-          "system": "system",
-          "code": "value"
-        }
-      ]
-    })
+          system: 'system',
+          code: 'value',
+        },
+      ],
+    });
   });
-})
+});
 
 describe('MedicationDispense', () => {
-
   // TODO ensure medication maps to medicationReference
-   it('should map medication -> medicationReference if medication is a resource', () => {
-      const result = builders.medicationDispense('arv-medication-dispense', {
-        medication: {
-          id: 'abc',
-          // need to bluff the builder
-          resourceType: 'medication',
-          meta: {}
-        }
-      });
-
-      expect(result.medicationReference).to.eql({ reference: 'medication/abc' })
-
-   });
-
-   it('should map medication -> medicationReference if medication is a reference', () => {
+  it('should map medication -> medicationReference if medication is a resource', () => {
     const result = builders.medicationDispense('arv-medication-dispense', {
-      medication: util.reference('medication/abc')
+      medication: {
+        id: 'abc',
+        // need to bluff the builder
+        resourceType: 'medication',
+        meta: {},
+      },
     });
 
-    expect(result.medicationReference).to.eql({ reference: 'medication/abc' })
+    expect(result.medicationReference).to.eql({ reference: 'medication/abc' });
+  });
+
+  it('should map medication -> medicationReference if medication is a reference', () => {
+    const result = builders.medicationDispense('arv-medication-dispense', {
+      medication: util.reference('medication/abc'),
+    });
+
+    expect(result.medicationReference).to.eql({ reference: 'medication/abc' });
   });
 
   // it('should map from a cdr MedicationDispense', () => {
@@ -400,7 +400,6 @@ describe('MedicationDispense', () => {
   //     // also I don't see reference on the incoming data example? is it context.reference?
   //     medication: ref,
 
-
   //     // TODO this should refer to the MedicationRequest created
   //     // Do we know what that is?
   //     //authorizingPrescription: {}
@@ -408,43 +407,35 @@ describe('MedicationDispense', () => {
 
   //   expect(result).to.eql(fixtures.ndr.medicationDispense)
 
-
   // })
-})
+});
 
 // medication request
-describe("Medication", () => {
+describe('Medication', () => {
   it('should map from a cdr Medication', () => {
     const input = fixtures.cdr.medication;
-
 
     const [coding] = input.form.coding;
 
     const result = builders.medication('arv-regimen-medication', {
-
       id: input.id,
 
       // Not sure how strict to be on mapping here?
       // First we need to map the system and coding: looks like
       // NDR uses a fixed system ofhttp://cdr.aacahb.gov.et/hiv-regimen-codes I think?
       // (seems cosmetic)
-      code: util.concept(coding.display, [coding.code, coding.system])
+      code: util.concept(coding.display, [coding.code, coding.system]),
+    });
 
-    })
+    expect(result).to.eql(fixtures.ndr.medication);
+  });
+});
 
-    expect(result).to.eql(fixtures.ndr.medication)
-
-
-  })
-})
-
-describe.skip("Care Plan", () => {
+describe.skip('Care Plan', () => {
   it('should map from a cdr CarePlan', () => {
     const input = fixtures.cdr.careplan;
 
-
     const result = builders.carePlan('art-follow-up-careplan', {
-
       id: input.id,
       status: input.status,
       intent: input.intent,
@@ -456,15 +447,11 @@ describe.skip("Care Plan", () => {
 
       // TODO how do we map activity?
       // need to handle backbone elements properly
-      
-
-    })
+    });
 
     // console.log(JSON.stringify(result, null, 2))
-    
+
     // TODO category needs to be an array
-    expect(result).to.eql(fixtures.ndr.careplan)
-
-
-  })
+    expect(result).to.eql(fixtures.ndr.careplan);
+  });
 });
