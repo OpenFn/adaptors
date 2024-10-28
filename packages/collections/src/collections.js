@@ -16,7 +16,7 @@ const getClient = state => {
   if (!client) {
     const baseUrl =
       state.configuration?.collections_endpoint ?? 'https://app.openfn.org';
-    client = new undici.client(baseUrl);
+    client = new undici.Client(baseUrl);
   }
   return client;
 };
@@ -130,6 +130,7 @@ export function set(name, keyGen, values) {
         'content-type': 'application/json',
       },
     });
+    console.log(`  Collections returned ${response.statusCode}`);
 
     // TODO - check if the response contains errors
     // console.log(`Succesfully set ${res.count} values`);
@@ -195,7 +196,7 @@ export function remove(name, query = {}, options = {}) {
  *   state.cumulativeCost += value.cost;
  * })
  */
-export function each(name, query = {}, callback = {}) {
+export function each(name, query = {}, callback = () => {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
@@ -206,9 +207,13 @@ export function each(name, query = {}, callback = {}) {
     const response = await request(
       state,
       getClient(state),
-      `${resolvedName}/${key}`,
+      //`${resolvedName}/${key}`, // TODO key doesn't seem to be implemented yet
+      `${resolvedName}`,
       { query: rest }
     );
+
+    // const json = await response.body.json();
+    // console.log({ json });
 
     await streamResponse(response, async ({ key, value }) => {
       await callback(state, value, key);
@@ -275,12 +280,12 @@ export const request = (state, client, path, options = {}) => {
 
   const { headers: _h, query: _q, ...otherOptions } = options;
   const query = parseQuery(options.query);
-
-  return client.request({
-    path: nodepath.join('collections', path),
+  const args = {
+    path: nodepath.join('/collections', path),
     headers,
     method: 'GET',
     query,
     ...otherOptions,
-  });
+  };
+  return client.request(args);
 };
