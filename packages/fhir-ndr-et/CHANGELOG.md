@@ -1,5 +1,12 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.6
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+  - @openfn/language-fhir@5.0.3
+
 ## 0.1.5
 
 ### Patch Changes

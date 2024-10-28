@@ -1,5 +1,13 @@
 # @openfn/language-http
 
+## 6.5.1
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 6.5.0
 
 ### Minor Changes
