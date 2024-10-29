@@ -14,9 +14,12 @@ let client;
 
 const getClient = state => {
   if (!client) {
-    const baseUrl =
-      state.configuration?.collections_endpoint ?? 'https://app.openfn.org';
-    client = new undici.Client(baseUrl);
+    if (!state.configuration?.collections_endpoint) {
+      throw new Error('ERROR: collections_endpoint not set');
+    }
+
+    const url = new URL(state.configuration.collections_endpoint);
+    client = new undici.Client(url.origin);
   }
   return client;
 };
@@ -71,7 +74,7 @@ export function get(name, query = {}) {
     let data;
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       // If one specific item was requested, write it straight to state.data
-      [data] = (await response.body.json()).results;
+      [data] = (await response.body.json()).items;
       console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
       // build a response array
@@ -201,21 +204,22 @@ export function each(name, query = {}, callback = () => {}) {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
     const { key, ...rest } = expandQuery(resolvedQuery);
-
     // TODO maybe add query options here
     // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
-      //`${resolvedName}/${key}`, // TODO key doesn't seem to be implemented yet
-      `${resolvedName}`,
+      `${resolvedName}/${key}`, // TODO key doesn't seem to be implemented yet
+      // `${resolvedName}`,
       { query: rest }
     );
 
     // const json = await response.body.json();
     // console.log({ json });
 
-    await streamResponse(response, async ({ key, value }) => {
+    await streamResponse(response, async o => {
+      console.log(o);
+      const { value, key } = o;
       await callback(state, value, key);
     });
 
@@ -227,7 +231,7 @@ export const streamResponse = async (response, onValue) => {
   const pipeline = chain([
     response.body,
     parser(),
-    new Pick({ filter: 'results' }),
+    new Pick({ filter: 'items' }),
     new streamArray(),
   ]);
 
@@ -273,6 +277,8 @@ export const request = (state, client, path, options = {}) => {
     });
   }
 
+  const basePath = new URL(state.configuration.collections_endpoint).pathname;
+
   const headers = {
     Authorization: `Bearer ${state.configuration.collections_token}`,
   };
@@ -281,11 +287,12 @@ export const request = (state, client, path, options = {}) => {
   const { headers: _h, query: _q, ...otherOptions } = options;
   const query = parseQuery(options.query);
   const args = {
-    path: nodepath.join('/collections', path),
+    path: nodepath.join(basePath, path),
     headers,
     method: 'GET',
     query,
     ...otherOptions,
   };
+  console.log(args);
   return client.request(args);
 };

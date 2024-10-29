@@ -30,19 +30,19 @@ export function API() {
     }
 
     const col = collections[name];
-    const results = [];
+    const items = [];
 
     const regex = new RegExp(key.replace('*', '(.*)'));
     for (const key in col) {
       if (regex.test(key)) {
-        results.push({
+        items.push({
           key,
           value: col[key],
         });
       }
     }
 
-    return { results };
+    return { items };
   };
 
   // internal dev only api
@@ -76,7 +76,7 @@ export function API() {
 
 // naive little path parser
 const parsePath = path => {
-  let [_collections, name, key] = path.split('/');
+  let [_, _collections, name, key] = path.split('/');
   return { name, key };
 };
 

@@ -29,6 +29,7 @@ const init = items => {
   const state = {
     configuration: {
       collections_token: 'x.y.z',
+      collections_endpoint: 'https://app.openfn.org/collections',
     },
   };
   return { state };
