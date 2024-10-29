@@ -126,14 +126,23 @@ export function set(name, keyGen, values) {
 
     console.log(`Setting ${pairs.length} values in collection "${name}"`);
 
+    const body = JSON.stringify({ items: pairs });
     const response = await request(state, getClient(state), resolvedName, {
       method: 'POST',
-      body: JSON.stringify(pairs),
+      body,
       heeaders: {
         'content-type': 'application/json',
       },
     });
     console.log(`  Collections returned ${response.statusCode}`);
+
+    // TODO throw if a bad code
+    if (response.statusCode >= 400) {
+      const text = await response.body.text();
+      const e = new Error('ERROR SETTING:' + 400);
+      e.body = text;
+      throw e;
+    }
 
     // TODO - check if the response contains errors
     // console.log(`Succesfully set ${res.count} values`);
@@ -293,6 +302,5 @@ export const request = (state, client, path, options = {}) => {
     query,
     ...otherOptions,
   };
-  console.log(args);
   return client.request(args);
 };

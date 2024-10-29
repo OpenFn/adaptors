@@ -138,7 +138,7 @@ export function createServer(url = 'https://app.openfn.org') {
       const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
 
-      for (const { key, value } of body) {
+      for (const { key, value } of body.items) {
         // TODO error if key or value not set
         api.upsert(name, key, value);
       }
