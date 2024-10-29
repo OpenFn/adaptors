@@ -1,5 +1,13 @@
 # @openfn/language-dhis2
 
+## 5.0.6
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 5.0.5
 
 ### Patch Changes

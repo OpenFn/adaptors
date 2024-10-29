@@ -403,7 +403,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.1.0
+        specifier: 2.1.1
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -471,7 +471,7 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.1
+        specifier: workspace:^2.1.1
         version: link:../common
       undici:
         specifier: ^5.28.4
@@ -502,7 +502,7 @@ importers:
         specifier: workspace:*
         version: link:../common
       '@openfn/language-fhir':
-        specifier: ^5.0.2
+        specifier: ^5.0.3
         version: link:../fhir
       '@types/fhir':
         specifier: ^0.0.41
@@ -545,7 +545,7 @@ importers:
   packages/godata:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.1
+        specifier: ^2.1.1
         version: link:../common
       axios:
         specifier: ^1.7.7
@@ -579,7 +579,7 @@ importers:
   packages/googlehealthcare:
     dependencies:
       '@openfn/language-common':
-        specifier: ^2.0.1
+        specifier: ^2.1.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -759,7 +759,7 @@ importers:
   packages/magpi:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.1
+        specifier: workspace:^2.1.1
         version: link:../common
       JSONPath:
         specifier: ^0.10.0
@@ -1209,7 +1209,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.1.0
+        specifier: 2.1.1
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -2070,7 +2070,7 @@ importers:
   tools/import-tests:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.1.0
+        specifier: workspace:^2.1.1
         version: link:../../packages/common
 
   tools/metadata:

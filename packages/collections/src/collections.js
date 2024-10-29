@@ -218,8 +218,7 @@ export function each(name, query = {}, callback = () => {}) {
     const response = await request(
       state,
       getClient(state),
-      `${resolvedName}/${key}`, // TODO key doesn't seem to be implemented yet
-      // `${resolvedName}`,
+      `${resolvedName}/${key}`,
       { query: rest }
     );
 
