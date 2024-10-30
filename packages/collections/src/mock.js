@@ -85,6 +85,7 @@ export function API() {
 // naive little path parser
 const parsePath = path => {
   if (!path.startsWith('/')) {
+    // eslint-disable-next-line no-param-reassign
     path = `/${path}`;
   }
   let [_, _collections, name, key] = path.split('/');
