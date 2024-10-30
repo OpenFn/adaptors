@@ -16,6 +16,8 @@ export function API() {
     collections = api.collections = {};
   };
 
+  // Note that the mock allows data in any format,
+  // but the real API only takes strings
   const upsert = (name, key, value) => {
     if (!(name in collections)) {
       throw new Error(COLLECTION_NOT_FOUND);
@@ -49,6 +51,9 @@ export function API() {
   const byKey = (name, key) => {
     return collections[name][key];
   };
+  const asJSON = (name, key) => {
+    return JSON.parse(collections[name][key]);
+  };
 
   // TODO strictly speaking this should support patterns
   // but keeping it super simple in the mock for now
@@ -59,6 +64,8 @@ export function API() {
     const col = collections[name];
 
     delete col[key];
+
+    return [key];
   };
 
   const api = {
@@ -69,6 +76,7 @@ export function API() {
     fetch,
     remove,
     byKey,
+    asJSON,
   };
 
   return api;
@@ -76,6 +84,9 @@ export function API() {
 
 // naive little path parser
 const parsePath = path => {
+  if (!path.startsWith('/')) {
+    path = `/${path}`;
+  }
   let [_, _collections, name, key] = path.split('/');
   return { name, key };
 };
@@ -89,8 +100,6 @@ const assertAuth = req => {
 
 // This creates a mock lightning server
 // It should present the same rest API as lightning, but can be implemented however we like
-// TODO add mock auth here
-// basically it needs to see if there is a jwt in the header for each request
 export function createServer(url = 'https://app.openfn.org') {
   const agent = new MockAgent();
   agent.disableNetConnect();
@@ -134,6 +143,9 @@ export function createServer(url = 'https://app.openfn.org') {
       return { statusCode: 403 };
     }
 
+    let upserted = 0;
+    const errors = [];
+
     try {
       const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
@@ -141,10 +153,16 @@ export function createServer(url = 'https://app.openfn.org') {
       for (const { key, value } of body.items) {
         // TODO error if key or value not set
         api.upsert(name, key, value);
+        upserted++;
       }
 
-      // TODO return upserted summary and errors
-      return { statusCode: 200 };
+      return {
+        statusCode: 200,
+        responseOptions: {
+          headers: { 'Content-Type': 'application/json' },
+        },
+        data: JSON.stringify({ upserted, errors }),
+      };
     } catch (e) {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
@@ -162,9 +180,15 @@ export function createServer(url = 'https://app.openfn.org') {
     try {
       const { name, key } = parsePath(req.path);
 
-      api.remove(name, key);
+      const keys = api.remove(name, key);
 
-      return { statusCode: 200 };
+      return {
+        statusCode: 200,
+        responseOptions: {
+          headers: { 'Content-Type': 'application/json' },
+        },
+        data: JSON.stringify({ deleted: keys.length, keys }),
+      };
     } catch (e) {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };

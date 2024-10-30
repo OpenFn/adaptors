@@ -58,8 +58,11 @@ export const setMockClient = mockClient => {
  */
 export function get(name, query = {}) {
   return async state => {
-    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
-
+    let [resolvedName, resolvedQuery] = expandReferences(state, name, query);
+    // TODO need a test on this
+    if (typeof resolvedQuery === 'string') {
+      resolvedQuery = { key: resolvedQuery };
+    }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
     // TODO maybe add query options here
@@ -72,17 +75,23 @@ export function get(name, query = {}) {
     );
 
     let data;
+    // TODO unit tests on json encoding please
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       // If one specific item was requested, write it straight to state.data
-      [data] = (await response.body.json()).items;
-      data = JSON.parse(data);
+      const body = await response.body.json();
+      const item = body.items[0];
+      if (item) {
+        item.value = JSON.parse(item.value);
+      }
+      data = item;
       console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
       await streamResponse(response, item => {
-        data.push(JSON.parse(item));
+        item.value = JSON.parse(item.value);
+        data.push(item);
       });
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
     }
@@ -149,7 +158,7 @@ export function set(name, keyGen, values) {
     }
 
     const result = await response.body.json();
-    console.log(`Set ${result.upserts} values in collection "${name}"`);
+    console.log(`Set ${result.upserted} values in collection "${name}"`);
     if (result.error) {
       console.log(`Errors reported on set:`, result.error);
     }
@@ -190,9 +199,7 @@ export function remove(name, query = {}, options = {}) {
         query: rest,
       }
     );
-    console.log(response.statusCode);
     const result = await response.body.json();
-    console.log(result);
     console.log(`Set ${result.upserts} values in collection "${name}"`);
 
     return state;
@@ -229,8 +236,7 @@ export function each(name, query = {}, callback = () => {}) {
     const response = await request(
       state,
       getClient(state),
-      //`${resolvedName}/${key}`,
-      resolvedName,
+      `${resolvedName}/${key}`,
       { query: rest }
     );
 
