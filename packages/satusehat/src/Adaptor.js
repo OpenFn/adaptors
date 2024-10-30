@@ -34,8 +34,12 @@ export function execute(...operations) {
 /**
  * Make a GET request to Satusehat
  * @public
- * @example
+ * @example  <caption>Make a GET request to get an Organization</caption>
  * get("Organization", {"name": "somename"})
+ * @example <caption>Search for a Patient using their NIK number</caption>
+ * get('/Patient', {
+ *   identifier:'https://fhir.kemkes.go.id/id/nik|9271060312000001'
+ * });
  * @function
  * @param {string} path - Path to resource
  * @param {object} params - Optional request params such as name.
@@ -64,10 +68,18 @@ export function get(path, params = {}, callback = s => s) {
 
 /**
  * Make a POST request to Satusehat
- * @example
+ * @example <caption>Make a POST request to create an Organization</caption>
  * post(
  *   "Organization",
- *  { "resourceType": "Organization", "active": true,
+ *  { "resourceType": "Organization",
+ *   ...state.data
+ *  }
+ * );
+ * @example <caption>Make a POST request to create an Encounter</caption>
+ * post(
+ *   "Encounter",
+ *  { "resourceType": "Encounter",
+ *   ...state.data,
  *  }
  * );
  * @function
@@ -103,7 +115,7 @@ export function post(path, data, params = {}, callback = s => s) {
 
 /**
  * Make a PUT request to Satusehat
- * @example
+ * @example <caption>Make a PUT request to update an Organization</caption>
  * put(
  *   "Organization/123",
  *  { "resourceType": "Organization", "active": false,
@@ -142,7 +154,7 @@ export function put(path, data, params = {}, callback = s => s) {
 
 /**
  * Make a PATCH request to Satusehat
- * @example
+ * @example <caption>Make a PATCH request on an Organization</caption>
  * patch(
  *   "Organization/123",
  *    [{
