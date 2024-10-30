@@ -75,13 +75,14 @@ export function get(name, query = {}) {
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       // If one specific item was requested, write it straight to state.data
       [data] = (await response.body.json()).items;
+      data = JSON.parse(data);
       console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
       await streamResponse(response, item => {
-        data.push(item);
+        data.push(JSON.parse(item));
       });
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
     }
@@ -99,7 +100,7 @@ export function get(name, query = {}) {
  * a string key.
  * @public
  * @function
- * @param keygen - a function which generates a key for each value. Pass a string to set a static key for a single item.
+ * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
  * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
  * collections.set('my-collection', (item) => item.id, $.data)
@@ -122,30 +123,36 @@ export function set(name, keyGen, values) {
 
     const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
 
-    const pairs = dataArray.map(value => ({ key: keyGenFn(value), value }));
+    // Note that we may need to serialize json to string
+    // the hardest bit is knowing when to deserialize
+    const pairs = dataArray.map((value, index) => ({
+      key: keyGenFn(value, index),
+      value: JSON.stringify(value),
+    }));
 
-    console.log(`Setting ${pairs.length} values in collection "${name}"`);
-
-    const body = JSON.stringify({ items: pairs });
     const response = await request(state, getClient(state), resolvedName, {
       method: 'POST',
-      body,
-      heeaders: {
+      body: JSON.stringify({ items: pairs }),
+      headers: {
         'content-type': 'application/json',
       },
     });
-    console.log(`  Collections returned ${response.statusCode}`);
 
-    // TODO throw if a bad code
     if (response.statusCode >= 400) {
+      console.log(
+        `Error setting ${pairs.length} values in collection "${name}"`
+      );
       const text = await response.body.text();
-      const e = new Error('ERROR SETTING:' + 400);
+      const e = new Error('ERROR from collections server:' + 400);
       e.body = text;
       throw e;
     }
 
-    // TODO - check if the response contains errors
-    // console.log(`Succesfully set ${res.count} values`);
+    const result = await response.body.json();
+    console.log(`Set ${result.upserts} values in collection "${name}"`);
+    if (result.error) {
+      console.log(`Errors reported on set:`, result.error);
+    }
 
     return state;
   };
@@ -183,6 +190,10 @@ export function remove(name, query = {}, options = {}) {
         query: rest,
       }
     );
+    console.log(response.statusCode);
+    const result = await response.body.json();
+    console.log(result);
+    console.log(`Set ${result.upserts} values in collection "${name}"`);
 
     return state;
   };
@@ -218,17 +229,13 @@ export function each(name, query = {}, callback = () => {}) {
     const response = await request(
       state,
       getClient(state),
-      `${resolvedName}/${key}`,
+      //`${resolvedName}/${key}`,
+      resolvedName,
       { query: rest }
     );
 
-    // const json = await response.body.json();
-    // console.log({ json });
-
-    await streamResponse(response, async o => {
-      console.log(o);
-      const { value, key } = o;
-      await callback(state, value, key);
+    await streamResponse(response, async ({ value, key }) => {
+      await callback(state, JSON.parse(value), key);
     });
 
     return state;
