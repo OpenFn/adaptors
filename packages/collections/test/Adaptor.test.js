@@ -20,15 +20,16 @@ const init = items => {
 
   if (items) {
     for (const [key, value] of items) {
-      api.upsert(COLLECTION, key, value);
+      api.upsert(COLLECTION, key, JSON.stringify(value));
     }
   } else {
-    api.upsert(COLLECTION, 'x', { id: 'x' });
+    api.upsert(COLLECTION, 'x', JSON.stringify({ id: 'x' }));
   }
 
   const state = {
     configuration: {
       collections_token: 'x.y.z',
+      collections_endpoint: 'https://app.openfn.org/collections',
     },
   };
   return { state };
@@ -61,7 +62,7 @@ describe('each', () => {
       count++;
       expect(state).to.eql(state);
 
-      const item = api.byKey(COLLECTION, key);
+      const item = JSON.parse(api.byKey(COLLECTION, key));
       expect(item).not.to.be.undefined;
       expect(item).to.eql(value);
     })(state);
@@ -115,10 +116,21 @@ describe('get', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
-  it('should get a single item', async () => {
+  it('should get a single item with string query', async () => {
     const { state } = init();
 
     const result = await collections.get(COLLECTION, 'x')(state);
+
+    expect(result.data).to.eql({
+      key: 'x',
+      value: { id: 'x' },
+    });
+  });
+
+  it('should get a single item with object query', async () => {
+    const { state } = init();
+
+    const result = await collections.get(COLLECTION, { key: 'x' })(state);
 
     expect(result.data).to.eql({
       key: 'x',
@@ -220,7 +232,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.byKey(COLLECTION, key);
+    const result = api.asJSON(COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -232,11 +244,11 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    const x = api.byKey(COLLECTION, items[0].key);
-    expect(x).to.eql(items[0].value);
+    const x = api.asJSON(COLLECTION, items[0].id);
+    expect(x).to.eql(items[0]);
 
-    const y = api.byKey(COLLECTION, items[1].key);
-    expect(y).to.eql(items[1].value);
+    const y = api.asJSON(COLLECTION, items[1].id);
+    expect(y).to.eql(items[1]);
   });
 });
 
@@ -261,7 +273,7 @@ describe('remove', () => {
     await collections.remove(COLLECTION, 'x')(state);
 
     const result = api.byKey(COLLECTION, 'x');
-    expect(result).to.eql(undefined);
+    expect(result).to.be.undefined;
   });
 });
 

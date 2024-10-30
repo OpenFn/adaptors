@@ -14,9 +14,12 @@ let client;
 
 const getClient = state => {
   if (!client) {
-    const baseUrl =
-      state.configuration?.collections_endpoint ?? 'https://app.openfn.org';
-    client = new undici.client(baseUrl);
+    if (!state.configuration?.collections_endpoint) {
+      throw new Error('ERROR: collections_endpoint not set');
+    }
+
+    const url = new URL(state.configuration.collections_endpoint);
+    client = new undici.Client(url.origin);
   }
   return client;
 };
@@ -55,12 +58,12 @@ export const setMockClient = mockClient => {
  */
 export function get(name, query = {}) {
   return async state => {
-    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
-
+    let [resolvedName, resolvedQuery] = expandReferences(state, name, query);
+    if (typeof resolvedQuery === 'string') {
+      resolvedQuery = { key: resolvedQuery };
+    }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
@@ -71,13 +74,19 @@ export function get(name, query = {}) {
     let data;
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       // If one specific item was requested, write it straight to state.data
-      [data] = (await response.body.json()).results;
+      const body = await response.body.json();
+      const item = body.items[0];
+      if (item) {
+        item.value = JSON.parse(item.value);
+      }
+      data = item;
       console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
       await streamResponse(response, item => {
+        item.value = JSON.parse(item.value);
         data.push(item);
       });
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
@@ -96,7 +105,7 @@ export function get(name, query = {}) {
  * a string key.
  * @public
  * @function
- * @param keygen - a function which generates a key for each value. Pass a string to set a static key for a single item.
+ * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
  * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
  * collections.set('my-collection', (item) => item.id, $.data)
@@ -119,20 +128,36 @@ export function set(name, keyGen, values) {
 
     const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
 
-    const pairs = dataArray.map(value => ({ key: keyGenFn(value), value }));
-
-    console.log(`Setting ${pairs.length} values in collection "${name}"`);
+    // Note that we may need to serialize json to string
+    // the hardest bit is knowing when to deserialize
+    const pairs = dataArray.map((value, index) => ({
+      key: keyGenFn(value, index),
+      value: JSON.stringify(value),
+    }));
 
     const response = await request(state, getClient(state), resolvedName, {
       method: 'POST',
-      body: JSON.stringify(pairs),
-      heeaders: {
+      body: JSON.stringify({ items: pairs }),
+      headers: {
         'content-type': 'application/json',
       },
     });
 
-    // TODO - check if the response contains errors
-    // console.log(`Succesfully set ${res.count} values`);
+    if (response.statusCode >= 400) {
+      console.log(
+        `Error setting ${pairs.length} values in collection "${name}"`
+      );
+      const text = await response.body.text();
+      const e = new Error('ERROR from collections server:' + 400);
+      e.body = text;
+      throw e;
+    }
+
+    const result = await response.body.json();
+    console.log(`Set ${result.upserted} values in collection "${name}"`);
+    if (result.error) {
+      console.log(`Errors reported on set:`, result.error);
+    }
 
     return state;
   };
@@ -159,8 +184,6 @@ export function remove(name, query = {}, options = {}) {
 
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
@@ -170,6 +193,8 @@ export function remove(name, query = {}, options = {}) {
         query: rest,
       }
     );
+    const result = await response.body.json();
+    console.log(`Set ${result.upserts} values in collection "${name}"`);
 
     return state;
   };
@@ -195,14 +220,12 @@ export function remove(name, query = {}, options = {}) {
  *   state.cumulativeCost += value.cost;
  * })
  */
-export function each(name, query = {}, callback = {}) {
+export function each(name, query = {}, callback = () => {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
@@ -210,8 +233,8 @@ export function each(name, query = {}, callback = {}) {
       { query: rest }
     );
 
-    await streamResponse(response, async ({ key, value }) => {
-      await callback(state, value, key);
+    await streamResponse(response, async ({ value, key }) => {
+      await callback(state, JSON.parse(value), key);
     });
 
     return state;
@@ -222,7 +245,7 @@ export const streamResponse = async (response, onValue) => {
   const pipeline = chain([
     response.body,
     parser(),
-    new Pick({ filter: 'results' }),
+    new Pick({ filter: 'items' }),
     new streamArray(),
   ]);
 
@@ -268,6 +291,8 @@ export const request = (state, client, path, options = {}) => {
     });
   }
 
+  const basePath = new URL(state.configuration.collections_endpoint).pathname;
+
   const headers = {
     Authorization: `Bearer ${state.configuration.collections_token}`,
   };
@@ -275,12 +300,12 @@ export const request = (state, client, path, options = {}) => {
 
   const { headers: _h, query: _q, ...otherOptions } = options;
   const query = parseQuery(options.query);
-
-  return client.request({
-    path: nodepath.join('collections', path),
+  const args = {
+    path: nodepath.join(basePath, path),
     headers,
     method: 'GET',
     query,
     ...otherOptions,
-  });
+  };
+  return client.request(args);
 };
