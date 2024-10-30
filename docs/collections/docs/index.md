@@ -136,7 +136,7 @@ a string key.
 
 | Param | Description |
 | --- | --- |
-| keygen | a function which generates a key for each value. Pass a string to set a static key for a single item. |
+| keygen | a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item. |
 | values | an array of values to set, or a single value. |
 
 **Example:** Set a number of values using each value&#x27;s id property as a key
