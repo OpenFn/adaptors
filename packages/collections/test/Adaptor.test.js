@@ -116,10 +116,21 @@ describe('get', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
-  it('should get a single item', async () => {
+  it('should get a single item with string query', async () => {
     const { state } = init();
 
     const result = await collections.get(COLLECTION, 'x')(state);
+
+    expect(result.data).to.eql({
+      key: 'x',
+      value: { id: 'x' },
+    });
+  });
+
+  it('should get a single item with object query', async () => {
+    const { state } = init();
+
+    const result = await collections.get(COLLECTION, { key: 'x' })(state);
 
     expect(result.data).to.eql({
       key: 'x',

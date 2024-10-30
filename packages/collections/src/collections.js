@@ -59,14 +59,11 @@ export const setMockClient = mockClient => {
 export function get(name, query = {}) {
   return async state => {
     let [resolvedName, resolvedQuery] = expandReferences(state, name, query);
-    // TODO need a test on this
     if (typeof resolvedQuery === 'string') {
       resolvedQuery = { key: resolvedQuery };
     }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
@@ -75,7 +72,6 @@ export function get(name, query = {}) {
     );
 
     let data;
-    // TODO unit tests on json encoding please
     if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
       // If one specific item was requested, write it straight to state.data
       const body = await response.body.json();
@@ -188,8 +184,6 @@ export function remove(name, query = {}, options = {}) {
 
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
     const response = await request(
       state,
       getClient(state),
@@ -231,8 +225,7 @@ export function each(name, query = {}, callback = () => {}) {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
     const { key, ...rest } = expandQuery(resolvedQuery);
-    // TODO maybe add query options here
-    // I haven't really given myself much space for this in the api
+
     const response = await request(
       state,
       getClient(state),
