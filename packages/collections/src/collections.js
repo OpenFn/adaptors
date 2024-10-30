@@ -37,6 +37,8 @@ export const setMockClient = mockClient => {
  * @property {string} createdAfter - matches values that were created after the end of the provided date
  * @property {string} updatedBefore - matches values that were updated before the start of the provided date
  * @property {string} updatedAfter - matches values that were updated after the end of the provided date*
+ * @property {number} limit - limit the maximum amount of results. Defaults to 1000.
+ * @property {string} cursor - set the cursor position to start searching from a specific index.
  */
 
 /**
@@ -82,6 +84,8 @@ export function get(name, query = {}) {
       data = item;
       console.log(`Fetched "${key}" from collection "${name}"`);
     } else {
+      // TODO how do we use the cursor here?
+
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
@@ -225,7 +229,6 @@ export function each(name, query = {}, callback = () => {}) {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
     const { key, ...rest } = expandQuery(resolvedQuery);
-
     const response = await request(
       state,
       getClient(state),
@@ -299,7 +302,7 @@ export const request = (state, client, path, options = {}) => {
   Object.assign(headers, options?.headers);
 
   const { headers: _h, query: _q, ...otherOptions } = options;
-  const query = parseQuery(options.query);
+  const query = parseQuery(options);
   const args = {
     path: nodepath.join(basePath, path),
     headers,
