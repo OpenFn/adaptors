@@ -3,6 +3,14 @@ import { expandReferences } from '@openfn/language-common/util';
 import { request, prepareNextState, authorize } from './Utils';
 
 /**
+ * State object
+ * @typedef {Object} SatusehatHttpState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the Satusehat server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
  * @example
@@ -34,17 +42,22 @@ export function execute(...operations) {
 /**
  * Make a GET request to Satusehat
  * @public
- * @example  <caption>Make a GET request to get an Organization</caption>
- * get("Organization", {"name": "somename"})
+ * @example  <caption>Make a GET request to get an Organization by Id</caption>
+ * get("Organization/:id")
  * @example <caption>Search for a Patient using their NIK number</caption>
  * get('/Patient', {
  *   identifier:'https://fhir.kemkes.go.id/id/nik|9271060312000001'
  * });
+ * @example <caption>Get a specific Encounter by subject</caption>
+ * get('/Encounter', {
+ * subject:100000030009  // This gets an encounter that maps to a specific patient whose id is:100000030009
+ * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Optional request params such as name.
+ * @param {object} params - Optional request params such as identifier.
  * @param {function} callback - An optional callback to handle the response
  * @returns {Operation}
+ * @state {SatusehatHttpState}
  */
 export function get(path, params = {}, callback = s => s) {
   return async state => {
@@ -85,10 +98,11 @@ export function get(path, params = {}, callback = s => s) {
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object or JSON which defines data that will be used to create a given instance of resource
+ * @param {object} data - JSON FHIR data to create a resource
  * @param {Object} params - Optional request params.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {SatusehatHttpState}
  */
 export function post(path, data, params = {}, callback = s => s) {
   return async state => {
@@ -124,10 +138,11 @@ export function post(path, data, params = {}, callback = s => s) {
  * @function
  * @public
  * @param {string} path - Path to resource and exact item to be updated
- * @param {object} data - Object or JSON which defines data that will be used to update a given instance of resource
+ * @param {object} data - JSON FHIR data update the resource
  * @param {Object} params - Optional request params.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {SatusehatHttpState}
  */
 export function put(path, data, params = {}, callback = s => s) {
   return async state => {
@@ -154,7 +169,7 @@ export function put(path, data, params = {}, callback = s => s) {
 
 /**
  * Make a PATCH request to Satusehat
- * @example <caption>Make a PATCH request on an Organization</caption>
+ * @example <caption>Make a PATCH request to update an Organization</caption>
  * patch(
  *   "Organization/123",
  *    [{
@@ -171,6 +186,7 @@ export function put(path, data, params = {}, callback = s => s) {
  * @param {Object} params - Optional request params.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
+ * @state {SatusehatHttpState}
  */
 export function patch(path, data, params = {}, callback = s => s) {
   return async state => {
