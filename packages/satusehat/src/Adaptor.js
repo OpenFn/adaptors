@@ -81,13 +81,6 @@ export function get(path, params = {}, callback = s => s) {
 
 /**
  * Make a POST request to Satusehat
- * @example <caption>Make a POST request to create an Organization</caption>
- * post(
- *   "Organization",
- *  { "resourceType": "Organization",
- *   ...state.data
- *  }
- * );
  * @example <caption>Make a POST request to create an Encounter</caption>
  * post(
  *   "Encounter",
