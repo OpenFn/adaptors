@@ -76,7 +76,7 @@ describe('API', () => {
 
     const result = api.fetch('a', 'x', {});
 
-    expect(result).to.eql([{ id: 1 }]);
+    expect(result.items).to.eql([{ key: 'x', value: { id: 1 } }]);
   });
 
   it('should fetch from a collection with wildcard', () => {
@@ -87,9 +87,13 @@ describe('API', () => {
     api.upsert('a', 'axb', { id: 3 });
     api.upsert('a', 'yy', { id: 4 });
 
-    const { results } = api.fetch('a', 'x*', {});
+    const { items } = api.fetch('a', 'x*', {});
 
-    expect(results).to.eql([{ id: 1 }, { id: 2 }, { id: 3 }]);
+    expect(items).to.eql([
+      { key: 'x', value: { id: 1 } },
+      { key: 'xx', value: { id: 2 } },
+      { key: 'axb', value: { id: 3 } },
+    ]);
   });
 
   it('should remove from a collection', () => {

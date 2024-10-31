@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import { createServer } from '../../src/mock';
-import { streamResponse } from '../../src/utils';
+import { streamResponse } from '../../src/collections';
 
 let request;
 let api;
+
 beforeEach(() => {
   ({ api, request } = createServer());
 });
@@ -106,7 +107,7 @@ describe('POST', () => {
     const response = await request({
       method: 'POST',
       path: 'collections/my-collection',
-      data: [],
+      data: { items: [] },
     });
     expect(response.statusCode).to.equal(200);
   });
@@ -116,7 +117,7 @@ describe('POST', () => {
     const response = await request({
       method: 'POST',
       path: 'collections/my-collection',
-      data: [{}],
+      data: { items: [{}] },
     });
     expect(response.statusCode).to.equal(404);
   });
@@ -140,13 +141,30 @@ describe('POST', () => {
     const response = await request({
       method: 'POST',
       path: 'collections/my-collection',
-      data: [item],
+      data: { items: [item] },
     });
 
     expect(response.statusCode).to.equal(200);
 
     const result = api.byKey('my-collection', item.key);
     expect(result).to.eql(item.value);
+  });
+
+  it('should return a JSON summary', async () => {
+    api.createCollection('my-collection');
+
+    const item = { key: 'x', value: { id: 'x' } };
+
+    const response = await request({
+      method: 'POST',
+      path: 'collections/my-collection',
+      data: { items: [item] },
+    });
+
+    const { upserted, errors } = await response.body.json();
+
+    expect(upserted).to.equal(1);
+    expect(errors).to.eql([]);
   });
 });
 
@@ -194,5 +212,20 @@ describe('DELETE', () => {
 
     const result = api.byKey('my-collection', 'x');
     expect(result).to.be.undefined;
+  });
+
+  it('should return a JSON summary', async () => {
+    api.createCollection('my-collection');
+    api.upsert('my-collection', 'x', { id: 'x' });
+
+    const response = await request({
+      method: 'DELETE',
+      path: 'collections/my-collection/x',
+    });
+
+    const { deleted, keys } = await response.body.json();
+
+    expect(deleted).to.equal(1);
+    expect(keys).to.eql(['x']);
   });
 });
