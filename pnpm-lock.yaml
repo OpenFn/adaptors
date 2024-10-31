@@ -1669,9 +1669,6 @@ importers:
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
-      axios:
-        specifier: ^1.7.7
-        version: 1.7.7
       jsforce:
         specifier: ^1.11.1
         version: 1.11.1
