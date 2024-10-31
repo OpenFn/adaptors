@@ -16,8 +16,7 @@ export function API() {
     collections = api.collections = {};
   };
 
-  // Note that the mock allows data in any format,
-  // but the real API only takes strings
+  // This is a string store: values are expected to be strings
   const upsert = (name, key, value) => {
     if (!(name in collections)) {
       throw new Error(COLLECTION_NOT_FOUND);
@@ -144,7 +143,7 @@ export function createServer(url = 'https://app.openfn.org') {
 
         const { items } = api.fetch(name, key);
         body = {
-          cursor: null, // TODO what will we do about cursor?
+          cursor: ['xxx'], // TODO what will we do about cursor?
           items,
         };
       }

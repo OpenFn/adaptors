@@ -5,6 +5,7 @@ import chain from 'stream-chain';
 import parser from 'stream-json';
 import Pick from 'stream-json/filters/Pick';
 import streamArray from 'stream-json/streamers/StreamArray';
+import streamValues from 'stream-json/streamers/StreamValues';
 
 import { createServer } from './mock';
 
@@ -254,15 +255,55 @@ export function each(name, query = {}, callback = () => {}) {
 }
 
 export const streamResponse = async (response, onValue) => {
-  const pipeline = chain([
-    response.body,
-    parser(),
-    new Pick({ filter: 'items' }),
-    new streamArray(),
-  ]);
+  const pipeline = chain([response.body, parser()]);
 
-  for await (const { key, value } of pipeline) {
-    await onValue(value);
+  let isInsideItems = false;
+  let cursor;
+  const it = pipeline.iterator();
+
+  const waitFor = async name => {
+    while (true) {
+      const next = await it.next();
+      if (next.done) {
+        return;
+      }
+      if (next.value.name === name) {
+        return next;
+      }
+    }
+  };
+
+  for await (const token of it) {
+    // This block finds the cursor key and extracts it
+    if (!isInsideItems && token.name === 'startKey') {
+      const next = await waitFor('keyValue');
+
+      if (next.value.value === 'cursor') {
+        const strValue = await waitFor('stringValue');
+        cursor = strValue.value.value;
+      }
+
+      if (next.value.value === 'items') {
+        isInsideItems = true;
+        await waitFor('startArray');
+      }
+    }
+
+    if (isInsideItems && token.name === 'startObject') {
+      const key = await waitFor('stringValue');
+      const value = await waitFor('stringValue');
+
+      await onValue({
+        key: key.value.value,
+        value: value.value.value,
+      });
+
+      waitFor('endObject');
+    }
+    if (isInsideItems && token.name === 'endArray') {
+      // This doesn't really matter but, just for the record, let's close out the array
+      isInsideItems = false;
+    }
   }
 };
 

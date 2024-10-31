@@ -60,9 +60,9 @@ describe('GET', () => {
   it('/collection/name should stream all results', async () => {
     api.createCollection('my-collection');
 
-    api.upsert('my-collection', 'x', { id: 'x' });
-    api.upsert('my-collection', 'y', { id: 'y' });
-    api.upsert('my-collection', 'z', { id: 'z' });
+    api.upsert('my-collection', 'x', 'xx');
+    api.upsert('my-collection', 'y', 'yy');
+    api.upsert('my-collection', 'z', 'zz');
 
     const response = await request({
       method: 'GET',
@@ -73,18 +73,18 @@ describe('GET', () => {
     await streamResponse(response, item => results.push(item));
 
     expect(results).to.eql([
-      { key: 'x', value: { id: 'x' } },
-      { key: 'y', value: { id: 'y' } },
-      { key: 'z', value: { id: 'z' } },
+      { key: 'x', value: 'xx' },
+      { key: 'y', value: 'yy' },
+      { key: 'z', value: 'zz' },
     ]);
   });
 
   it('/collection/name?key=* should stream some results', async () => {
     api.createCollection('my-collection');
 
-    api.upsert('my-collection', 'ax', { id: 'x' });
-    api.upsert('my-collection', 'ay', { id: 'y' });
-    api.upsert('my-collection', 'az', { id: 'z' });
+    api.upsert('my-collection', 'ax', 'x');
+    api.upsert('my-collection', 'ay', 'y');
+    api.upsert('my-collection', 'az', 'z');
 
     const response = await request({
       method: 'GET',
@@ -94,7 +94,7 @@ describe('GET', () => {
 
     await streamResponse(response, item => results.push(item));
 
-    expect(results).to.eql([{ key: 'az', value: { id: 'z' } }]);
+    expect(results).to.eql([{ key: 'az', value: 'z' }]);
   });
 });
 
