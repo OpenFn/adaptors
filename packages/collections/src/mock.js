@@ -87,6 +87,7 @@ const parsePath = path => {
     // eslint-disable-next-line no-param-reassign
     path = `/${path}`;
   }
+  // eslint-disable-next-line no-param-reassign
   path = path.split('?')[0];
   let [_, _collections, name, key] = path.split('/');
   return { name, key };
