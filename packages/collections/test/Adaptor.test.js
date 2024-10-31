@@ -70,7 +70,7 @@ describe('each', () => {
     expect(count).to.eql(3);
   });
 
-  it('should iterate over some items', async () => {
+  it('should iterate over some items with a key pattern', async () => {
     const { state } = init([
       ['az', { id: 'a' }],
       ['bz', { id: 'b' }],
@@ -80,6 +80,24 @@ describe('each', () => {
     let count = 0;
 
     await collections.each(COLLECTION, 'b*', (_state, value, key) => {
+      count++;
+      expect(key).to.eql('bz');
+      expect(value).to.eql({ id: 'b' });
+    })(state);
+
+    expect(count).to.eql(1);
+  });
+
+  it('should iterate over some with an object query', async () => {
+    const { state } = init([
+      ['az', { id: 'a' }],
+      ['bz', { id: 'b' }],
+      ['cz', { id: 'c' }],
+    ]);
+
+    let count = 0;
+
+    await collections.each(COLLECTION, { key: 'b*' }, (_state, value, key) => {
       count++;
       expect(key).to.eql('bz');
       expect(value).to.eql({ id: 'b' });
@@ -122,8 +140,7 @@ describe('get', () => {
     const result = await collections.get(COLLECTION, 'x')(state);
 
     expect(result.data).to.eql({
-      key: 'x',
-      value: { id: 'x' },
+      id: 'x',
     });
   });
 
@@ -133,8 +150,7 @@ describe('get', () => {
     const result = await collections.get(COLLECTION, { key: 'x' })(state);
 
     expect(result.data).to.eql({
-      key: 'x',
-      value: { id: 'x' },
+      id: 'x',
     });
   });
 

@@ -41,7 +41,23 @@ describe('GET', () => {
     expect(response.statusCode).to.equal(403);
   });
 
-  it('should consume all results as a stream', async () => {
+  it('/collection/name/key should return a single item', async () => {
+    api.createCollection('my-collection');
+
+    api.upsert('my-collection', 'x', { id: 'x' });
+
+    const response = await request({
+      method: 'GET',
+      path: 'collections/my-collection/x',
+    });
+
+    const item = await response.body.json();
+
+    expect(response.statusCode).to.eql(200);
+    expect(item).to.eql({ key: 'x', value: { id: 'x' } });
+  });
+
+  it('/collection/name should stream all results', async () => {
     api.createCollection('my-collection');
 
     api.upsert('my-collection', 'x', { id: 'x' });
@@ -63,25 +79,7 @@ describe('GET', () => {
     ]);
   });
 
-  it('should consume a single result as a stream', async () => {
-    api.createCollection('my-collection');
-
-    api.upsert('my-collection', 'x', { id: 'x' });
-    api.upsert('my-collection', 'y', { id: 'y' });
-    api.upsert('my-collection', 'z', { id: 'z' });
-
-    const response = await request({
-      method: 'GET',
-      path: 'collections/my-collection/y',
-    });
-    const results = [];
-
-    await streamResponse(response, item => results.push(item));
-
-    expect(results).to.eql([{ key: 'y', value: { id: 'y' } }]);
-  });
-
-  it('should consume results as a stream with a wildcard', async () => {
+  it('/collection/name?key=* should stream some results', async () => {
     api.createCollection('my-collection');
 
     api.upsert('my-collection', 'ax', { id: 'x' });
@@ -90,7 +88,7 @@ describe('GET', () => {
 
     const response = await request({
       method: 'GET',
-      path: 'collections/my-collection/*z',
+      path: 'collections/my-collection?key=*z',
     });
     const results = [];
 

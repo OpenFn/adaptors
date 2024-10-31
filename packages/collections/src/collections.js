@@ -50,7 +50,7 @@ export const setMockClient = mockClient => {
  * @function
  * @param {string} name - The name of the collection to fetch from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to fetch, or a query object
- * @state data - the downloaded values as an array unless a specific string was specified
+ * @state data - the downloaded values as an array unless a specific key was specified, in which case state.data is the value
  * @example <caption>Get a specific value from a collection</caption>
  * collections.get('my-collection', '556e0a62')
  * @example <caption>Get a range of values from a collection with a key pattern</caption>
@@ -66,24 +66,20 @@ export function get(name, query = {}) {
     }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    const response = await request(
-      state,
-      getClient(state),
-      `${resolvedName}/${key}`,
-      { query: rest }
-    );
+    let q;
+    let path = resolvedName;
+    if (key.match(/\*/) || Object.keys(rest).length) {
+      // request many
+      q = resolvedQuery;
+    } else {
+      // request one
+      path = `${resolvedName}/${key}`;
+    }
+
+    const response = await request(state, getClient(state), path, { query: q });
 
     let data;
-    if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
-      // If one specific item was requested, write it straight to state.data
-      const body = await response.body.json();
-      const item = body.items[0];
-      if (item) {
-        item.value = JSON.parse(item.value);
-      }
-      data = item;
-      console.log(`Fetched "${key}" from collection "${name}"`);
-    } else {
+    if (q) {
       // TODO how do we use the cursor here?
 
       // build a response array
@@ -94,8 +90,17 @@ export function get(name, query = {}) {
         data.push(item);
       });
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
+    } else {
+      // If one specific item was requested, write it straight to state.data
+      const body = await response.body.json();
+      if (body.value) {
+        data = JSON.parse(body.value);
+        console.log(`Fetched "${key}" from collection "${name}"`);
+      } else {
+        data = {};
+        console.warn(`Key "${key}" not found in collection "${name}"`);
+      }
     }
-
     state.data = data;
     return state;
   };
@@ -228,13 +233,17 @@ export function each(name, query = {}, callback = () => {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
+    let q;
+    if (typeof resolvedQuery === 'string') {
+      q = { key: resolvedQuery };
+    } else {
+      q = resolvedQuery;
+    }
+
     const { key, ...rest } = expandQuery(resolvedQuery);
-    const response = await request(
-      state,
-      getClient(state),
-      `${resolvedName}/${key}`,
-      { query: rest }
-    );
+    const response = await request(state, getClient(state), resolvedName, {
+      query: q,
+    });
 
     await streamResponse(response, async ({ value, key }) => {
       await callback(state, JSON.parse(value), key);

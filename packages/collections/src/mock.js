@@ -88,6 +88,7 @@ const parsePath = path => {
     // eslint-disable-next-line no-param-reassign
     path = `/${path}`;
   }
+  path = path.split('?')[0];
   let [_, _collections, name, key] = path.split('/');
   return { name, key };
 };
@@ -118,12 +119,38 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
-      if (!key) {
-        key = '*';
+
+      let body;
+      let statusCode = 200;
+
+      if (key) {
+        // get one
+        const result = api.byKey(name, key);
+        if (!result) {
+          body = {};
+          statusCode = 204;
+        } else {
+          body = {
+            key,
+            value: result,
+          };
+        }
+      } else {
+        // get many
+
+        // TODO a little confused about undici's handling of query
+        const params = new URLSearchParams(req.query || req.path.split('?')[1]);
+        key = params.get('key') ?? '*';
+
+        const { items } = api.fetch(name, key);
+        body = {
+          cursor: null, // TODO what will we do about cursor?
+          items,
+        };
       }
-      const body = api.fetch(name, key);
+
       return {
-        statusCode: 200,
+        statusCode,
         data: JSON.stringify(body),
         responseOptions: {
           headers: { 'Content-Type': 'application/json' },
