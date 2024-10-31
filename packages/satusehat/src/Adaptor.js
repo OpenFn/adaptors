@@ -54,7 +54,7 @@ export function execute(...operations) {
  * });
  * @function
  * @param {string} path - Path to resource
- * @param {object} params - Optional request params such as identifier.
+ * @param {object} params - Optional object of query parameters to include in the request
  * @param {function} callback - An optional callback to handle the response
  * @returns {Operation}
  * @state {SatusehatHttpState}
@@ -91,8 +91,8 @@ export function get(path, params = {}, callback = s => s) {
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - JSON FHIR data to create a resource
- * @param {Object} params - Optional request params.
+ * @param {object} data - JSON FHIR object to create a resource
+ * @param {Object} params - Optional object of query parameters to include in the request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {SatusehatHttpState}
@@ -131,8 +131,8 @@ export function post(path, data, params = {}, callback = s => s) {
  * @function
  * @public
  * @param {string} path - Path to resource and exact item to be updated
- * @param {object} data - JSON FHIR data update the resource
- * @param {Object} params - Optional request params.
+ * @param {object} data - JSON FHIR object to update the resource
+ * @param {Object} params - Optional object of query parameters to include in the request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {SatusehatHttpState}
@@ -176,7 +176,7 @@ export function put(path, data, params = {}, callback = s => s) {
  * @public
  * @param {string} path - Path to resource and exact item to be partially updated
  * @param {Array} data - An array of objects which defines data that will be used to partially update a given instance of resource
- * @param {Object} params - Optional request params.
+ * @param {Object} params - Optional object of query parameters to include in the request.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {SatusehatHttpState}
