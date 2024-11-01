@@ -41,6 +41,11 @@ The callback function will be invoked for each value with three parameters:
 | query | <code>string</code> \| [<code>QueryOptions</code>](#queryoptions) | A string key or key pattern (with wildcards '*') to remove, or a query object |
 | callback | <code>function</code> | A callback invoked for each item `(state,  value, key) => void` |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data.cursor | if values are still left on the server, a cursor string will be written to state.data |
 **Example:** Iterate over a range of values with wildcards
 ```js
 collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
@@ -65,6 +70,7 @@ Fetch one or more values from a collection.
 For large datasets, we recommend using each(), which streams data.
 You can pass a specific key as a string to only fetch one item, or pass a query
 with a key-pattern or a date filter.
+If not all matching values are returned, the cursor position is written to state.data
 
 
 | Param | Type | Description |
@@ -76,7 +82,7 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | the downloaded values as an array unless a specific string was specified |
+| data | the downloaded values as an array unless a specific key was specified, in which case state.data is the value |
 **Example:** Get a specific value from a collection
 ```js
 collections.get('my-collection', '556e0a62')
@@ -170,6 +176,8 @@ Query options. All dates should be parseable as ISO 8601 strings, see https://si
 | createdAfter | <code>string</code> | matches values that were created after the end of the provided date |
 | updatedBefore | <code>string</code> | matches values that were updated before the start of the provided date |
 | updatedAfter | <code>string</code> | matches values that were updated after the end of the provided date* |
+| limit | <code>number</code> | limit the maximum amount of results. Defaults to 1000. |
+| cursor | <code>string</code> | set the cursor position to start searching from a specific index. |
 
 
 * * *
