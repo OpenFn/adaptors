@@ -16,8 +16,7 @@ export function API() {
     collections = api.collections = {};
   };
 
-  // Note that the mock allows data in any format,
-  // but the real API only takes strings
+  // This is a string store: values are expected to be strings
   const upsert = (name, key, value) => {
     if (!(name in collections)) {
       throw new Error(COLLECTION_NOT_FOUND);
@@ -88,6 +87,8 @@ const parsePath = path => {
     // eslint-disable-next-line no-param-reassign
     path = `/${path}`;
   }
+  // eslint-disable-next-line no-param-reassign
+  path = path.split('?')[0];
   let [_, _collections, name, key] = path.split('/');
   return { name, key };
 };
@@ -118,12 +119,38 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
-      if (!key) {
-        key = '*';
+
+      let body;
+      let statusCode = 200;
+
+      if (key) {
+        // get one
+        const result = api.byKey(name, key);
+        if (!result) {
+          body = {};
+          statusCode = 204;
+        } else {
+          body = {
+            key,
+            value: result,
+          };
+        }
+      } else {
+        // get many
+
+        // TODO a little confused about undici's handling of query
+        const params = new URLSearchParams(req.query || req.path.split('?')[1]);
+        key = params.get('key') ?? '*';
+
+        const { items } = api.fetch(name, key);
+        body = {
+          cursor: ['xxx'], // TODO what will we do about cursor?
+          items,
+        };
       }
-      const body = api.fetch(name, key);
+
       return {
-        statusCode: 200,
+        statusCode,
         data: JSON.stringify(body),
         responseOptions: {
           headers: { 'Content-Type': 'application/json' },

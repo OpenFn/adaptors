@@ -5,6 +5,7 @@ import chain from 'stream-chain';
 import parser from 'stream-json';
 import Pick from 'stream-json/filters/Pick';
 import streamArray from 'stream-json/streamers/StreamArray';
+import streamValues from 'stream-json/streamers/StreamValues';
 
 import { createServer } from './mock';
 
@@ -37,6 +38,8 @@ export const setMockClient = mockClient => {
  * @property {string} createdAfter - matches values that were created after the end of the provided date
  * @property {string} updatedBefore - matches values that were updated before the start of the provided date
  * @property {string} updatedAfter - matches values that were updated after the end of the provided date*
+ * @property {number} limit - limit the maximum amount of results. Defaults to 1000.
+ * @property {string} cursor - set the cursor position to start searching from a specific index.
  */
 
 /**
@@ -44,11 +47,12 @@ export const setMockClient = mockClient => {
  * For large datasets, we recommend using each(), which streams data.
  * You can pass a specific key as a string to only fetch one item, or pass a query
  * with a key-pattern or a date filter.
+ * If not all matching values are returned, the cursor position is written to state.data
  * @public
  * @function
  * @param {string} name - The name of the collection to fetch from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to fetch, or a query object
- * @state data - the downloaded values as an array unless a specific string was specified
+ * @state data - the downloaded values as an array unless a specific key was specified, in which case state.data is the value
  * @example <caption>Get a specific value from a collection</caption>
  * collections.get('my-collection', '556e0a62')
  * @example <caption>Get a range of values from a collection with a key pattern</caption>
@@ -64,34 +68,40 @@ export function get(name, query = {}) {
     }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    const response = await request(
-      state,
-      getClient(state),
-      `${resolvedName}/${key}`,
-      { query: rest }
-    );
+    let q;
+    let path = resolvedName;
+    if (key.match(/\*/) || Object.keys(rest).length) {
+      // request many
+      q = resolvedQuery;
+    } else {
+      // request one
+      path = `${resolvedName}/${key}`;
+    }
+
+    const response = await request(state, getClient(state), path, { query: q });
 
     let data;
-    if (!key.match(/\*/) || Object.keys(resolvedQuery).length === 0) {
-      // If one specific item was requested, write it straight to state.data
-      const body = await response.body.json();
-      const item = body.items[0];
-      if (item) {
-        item.value = JSON.parse(item.value);
-      }
-      data = item;
-      console.log(`Fetched "${key}" from collection "${name}"`);
-    } else {
+    if (q) {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
-      await streamResponse(response, item => {
+      const cursor = await streamResponse(response, item => {
         item.value = JSON.parse(item.value);
         data.push(item);
       });
+      data.cursor = cursor;
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
+    } else {
+      // If one specific item was requested, write it straight to state.data
+      const body = await response.body.json();
+      if (body.value) {
+        data = JSON.parse(body.value);
+        console.log(`Fetched "${key}" from collection "${name}"`);
+      } else {
+        data = {};
+        console.warn(`Key "${key}" not found in collection "${name}"`);
+      }
     }
-
     state.data = data;
     return state;
   };
@@ -211,6 +221,7 @@ export function remove(name, query = {}, options = {}) {
  * @param {string} name - The name of the collection to remove from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to remove, or a query object
  * @param {function} callback - A callback invoked for each item `(state,  value, key) => void`
+ * @state data.cursor - if values are still left on the server, a cursor string will be written to state.data
  * @example <caption>Iterate over a range of values with wildcards</caption>
  * collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
  *   state.cumulativeCost += value.cost;
@@ -224,34 +235,100 @@ export function each(name, query = {}, callback = () => {}) {
   return async state => {
     const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
 
+    let q;
+    if (typeof resolvedQuery === 'string') {
+      q = { key: resolvedQuery };
+    } else {
+      q = resolvedQuery;
+    }
+
     const { key, ...rest } = expandQuery(resolvedQuery);
+    const response = await request(state, getClient(state), resolvedName, {
+      query: q,
+    });
+    console.log(`each response`, response.statusCode)
 
-    const response = await request(
-      state,
-      getClient(state),
-      `${resolvedName}/${key}`,
-      { query: rest }
-    );
-
-    await streamResponse(response, async ({ value, key }) => {
+    const cursor = await streamResponse(response, async ({ value, key }) => {
       await callback(state, JSON.parse(value), key);
     });
+
+    state.data = {
+      cursor
+    };
 
     return state;
   };
 }
 
 export const streamResponse = async (response, onValue) => {
-  const pipeline = chain([
-    response.body,
-    parser(),
-    new Pick({ filter: 'items' }),
-    new streamArray(),
-  ]);
+  const pipeline = chain([response.body, parser()]);
 
-  for await (const { key, value } of pipeline) {
-    await onValue(value);
+  let isInsideItems = false;
+  let cursor;
+  const it = pipeline.iterator();
+
+  const waitFor = async (...names) => {
+    while (true) {
+      const next = await it.next();
+      if (next.done) {
+        return;
+      }
+      if (names.includes(next.value.name)) {
+        return next;
+      }
+    }
+  };
+
+  for await (const token of it) {
+    // This block finds the cursor key and extracts it
+    if (!isInsideItems && token.name === 'startKey') {
+      const next = await waitFor('keyValue');
+
+      if (next.value.value === 'cursor') {
+        const strValue = await waitFor('stringChunk', 'nullValue');
+        if (strValue.name === 'nullValue') {
+          continue
+        }
+        cursor = strValue.value.value;
+      }
+
+      if (next.value.value === 'items') {
+        isInsideItems = true;
+        await waitFor('startArray');
+      }
+    }
+
+    // This lock will parse a key/value pair
+    // the streamer make a lot of assumptuions about this data structure
+    // So if it ever changes, we'll need to come back and modify it
+    // TODO can we leverage json-stream to just generically parse an object at this point?
+    if (isInsideItems && token.name === 'startObject') {
+      let key;
+      let value;
+
+      while (!key || !value) {
+        const nextKey = await waitFor('keyValue');
+        if (nextKey.value.value === 'key') {
+          key = await waitFor('stringValue');
+        }
+        if (nextKey.value.value === 'value') {
+          value = await waitFor('stringValue');
+        }
+      }
+
+      await onValue({
+        key: key.value.value,
+        value: value.value.value,
+      });
+
+      waitFor('endObject');
+    }
+    if (isInsideItems && token.name === 'endArray') {
+      // This doesn't really matter but, just for the record, let's close out the array
+      isInsideItems = false;
+    }
   }
+  return cursor
 };
 
 export const expandQuery = query => {
@@ -299,7 +376,7 @@ export const request = (state, client, path, options = {}) => {
   Object.assign(headers, options?.headers);
 
   const { headers: _h, query: _q, ...otherOptions } = options;
-  const query = parseQuery(options.query);
+  const query = parseQuery(options);
   const args = {
     path: nodepath.join(basePath, path),
     headers,

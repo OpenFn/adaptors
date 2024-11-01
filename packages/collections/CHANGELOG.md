@@ -1,5 +1,15 @@
 # @openfn/language-collections
 
+## 0.3.0
+
+### Minor Changes
+
+- 1e472ed: Update new GET request structure Fix streaming API
+
+### Patch Changes
+
+- 32e5a03: Fix an issue where the query object isn't getting sent to the server
+
 ## 0.2.0
 
 ### Minor Changes
