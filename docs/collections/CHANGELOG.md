@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.4.0
+
+### Minor Changes
+
+- Fixed support for delete
+
 ## 0.3.0
 
 ### Minor Changes
