@@ -245,10 +245,16 @@ export function each(name, query = {}, callback = () => {}) {
     const response = await request(state, getClient(state), resolvedName, {
       query: q,
     });
+    console.log(`each response`, response.statusCode)
+
+    // const json = await response.body.json();
+    // console.log(json)
 
     await streamResponse(response, async ({ value, key }) => {
+      console.log(' >> ', value)
       await callback(state, JSON.parse(value), key);
     });
+
 
     return state;
   };
@@ -261,13 +267,13 @@ export const streamResponse = async (response, onValue) => {
   let cursor;
   const it = pipeline.iterator();
 
-  const waitFor = async name => {
+  const waitFor = async (...names) => {
     while (true) {
       const next = await it.next();
       if (next.done) {
         return;
       }
-      if (next.value.name === name) {
+      if (names.includes(next.value.name)) {
         return next;
       }
     }
@@ -279,7 +285,10 @@ export const streamResponse = async (response, onValue) => {
       const next = await waitFor('keyValue');
 
       if (next.value.value === 'cursor') {
-        const strValue = await waitFor('stringValue');
+        const strValue = await waitFor('stringChunk', 'nullValue');
+        if (strValue.name === 'nullValue') {
+          continue
+        }
         cursor = strValue.value.value;
       }
 
@@ -289,9 +298,23 @@ export const streamResponse = async (response, onValue) => {
       }
     }
 
+    // This lock will parse a key/value pair
+    // the streamer make a lot of assumptuions about this data structure
+    // So if it ever changes, we'll need to come back and modify it
+    // TODO can we leverage json-stream to just generically parse an object at this point?
     if (isInsideItems && token.name === 'startObject') {
-      const key = await waitFor('stringValue');
-      const value = await waitFor('stringValue');
+      let key;
+      let value;
+
+      while (!key || !value) {
+        const nextKey = await waitFor('keyValue');
+        if (nextKey.value.value === 'key') {
+          key = await waitFor('stringValue');
+        }
+        if (nextKey.value.value === 'value') {
+          value = await waitFor('stringValue');
+        }
+      }
 
       await onValue({
         key: key.value.value,
@@ -305,6 +328,7 @@ export const streamResponse = async (response, onValue) => {
       isInsideItems = false;
     }
   }
+  return cursor
 };
 
 export const expandQuery = query => {

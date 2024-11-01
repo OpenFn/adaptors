@@ -1,6 +1,7 @@
 import { expect } from 'chai';
+import { MockAgent} from 'undici';
 import { createServer } from '../src/mock.js';
-import { setMockClient } from '../src/collections.js';
+import { setMockClient, streamResponse } from '../src/collections.js';
 import * as collections from '../src/collections.js';
 
 const client = createServer();
@@ -328,3 +329,109 @@ describe('utils', () => {
     });
   });
 });
+
+describe('streamResponse', () => {
+  let client;
+
+  before(() => {
+    const mockAgent = new MockAgent({ connections: 1 });
+    mockAgent.disableNetConnect();
+    client = mockAgent.get('https://app.openfn.org');
+  });
+
+  it('should stream a response with an item and cursor', async () => {
+    client.intercept({ path: '/collections/my-collection' }).reply(200, {
+      cursor: 'b',
+      items: [{
+        key: 'a',
+        value: "str"
+      }],
+    });
+
+
+    const response = await client.request({
+      method: 'GET',
+      path: '/collections/my-collection'
+    });
+
+    let callbackValue;
+    const cursor = await streamResponse(response, ({ key, value }) => {
+      callbackValue = value;
+    })
+
+    expect(callbackValue).to.eql('str')
+    expect(cursor).to.equal('b')
+  })
+
+  it('should stream a response with an item and null cursor', async () => {
+    client.intercept({ path: '/collections/my-collection' }).reply(200, {
+      cursor: null,
+      items: [{
+        key: 'a',
+        value: "str"
+      }],
+    });
+
+
+    const response = await client.request({
+      method: 'GET',
+      path: '/collections/my-collection'
+    });
+
+    let callbackValue;
+    const cursor = await streamResponse(response, ({ key, value }) => {
+      callbackValue = value;
+    })
+
+    expect(callbackValue).to.eql('str')
+    expect(cursor).to.equal(null)
+  })
+
+  it('should handle the cursor key coming last', async () => {
+    client.intercept({ path: '/collections/my-collection' }).reply(200, {
+      items: [{
+        key: 'a',
+        value: "str"
+      }],
+      cursor: 'b',
+    });
+
+
+    const response = await client.request({
+      method: 'GET',
+      path: '/collections/my-collection'
+    });
+
+    let callbackValue;
+    const cursor = await streamResponse(response, ({ key, value }) => {
+      callbackValue = value;
+    })
+
+    expect(callbackValue).to.eql('str')
+    expect(cursor).to.equal('b')
+  })
+
+  it('should handle key value pairs in a different order', async () => {
+    client.intercept({ path: '/collections/my-collection' }).reply(200, {
+      items: [{
+        value: "str",
+        key: 'a',
+      }],
+      cursor: 'b',
+    });
+
+
+    const response = await client.request({
+      method: 'GET',
+      path: '/collections/my-collection'
+    });
+
+    let callbackValue;
+    const cursor = await streamResponse(response, ({ key, value }) => {
+      callbackValue = value;
+    })
+
+    expect(callbackValue).to.eql('str')
+    expect(cursor).to.equal('b')
+  })
+})
