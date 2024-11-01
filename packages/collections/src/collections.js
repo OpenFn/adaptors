@@ -205,14 +205,11 @@ export function remove(name, query = {}, options = {}) {
       // request one
       path = `${resolvedName}/${key}`;
     }
-    console.log(path, q);
     const response = await request(state, getClient(state), path, {
       method: 'DELETE',
       query: q,
     });
-    console.log(response.statusCode);
     const result = await response.body.json();
-    console.log(result);
     console.log(`Removed ${result.deleted} values in collection "${name}"`);
 
     return state;
