@@ -82,8 +82,6 @@ export function get(name, query = {}) {
 
     let data;
     if (q) {
-      // TODO how do we use the cursor here?
-
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
