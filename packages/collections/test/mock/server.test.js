@@ -212,6 +212,27 @@ describe('DELETE', () => {
     expect(result).to.be.undefined;
   });
 
+  it('should remove items by pattern', async () => {
+    api.createCollection('my-collection');
+    api.upsert('my-collection', 'x', { id: 'x' });
+    api.upsert('my-collection', 'y', { id: 'y' });
+
+    const response = await request({
+      method: 'DELETE',
+      path: 'collections/my-collection',
+      query: {
+        key: '*',
+      },
+    });
+
+    expect(response.statusCode).to.equal(200);
+
+    const x = api.byKey('my-collection', 'x');
+    expect(x).to.be.undefined;
+    const y = api.byKey('my-collection', 'y');
+    expect(y).to.be.undefined;
+  });
+
   it('should return a JSON summary', async () => {
     api.createCollection('my-collection');
     api.upsert('my-collection', 'x', { id: 'x' });

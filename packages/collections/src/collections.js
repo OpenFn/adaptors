@@ -190,21 +190,27 @@ export function set(name, keyGen, values) {
  */
 export function remove(name, query = {}, options = {}) {
   return async state => {
-    const [resolvedName, resolvedQuery] = expandReferences(state, name, query);
-
+    let [resolvedName, resolvedQuery] = expandReferences(state, name, query);
+    if (typeof resolvedQuery === 'string') {
+      resolvedQuery = { key: resolvedQuery };
+    }
     const { key, ...rest } = expandQuery(resolvedQuery);
 
-    const response = await request(
-      state,
-      getClient(state),
-      `${resolvedName}/${key}`,
-      {
-        method: 'DELETE',
-        query: rest,
-      }
-    );
+    let q;
+    let path = resolvedName;
+    if (key.match(/\*/) || Object.keys(rest).length) {
+      // request many
+      q = resolvedQuery;
+    } else {
+      // request one
+      path = `${resolvedName}/${key}`;
+    }
+    const response = await request(state, getClient(state), path, {
+      method: 'DELETE',
+      query: q,
+    });
     const result = await response.body.json();
-    console.log(`Set ${result.upserts} values in collection "${name}"`);
+    console.log(`Removed ${result.deleted} values in collection "${name}"`);
 
     return state;
   };
@@ -246,14 +252,13 @@ export function each(name, query = {}, callback = () => {}) {
     const response = await request(state, getClient(state), resolvedName, {
       query: q,
     });
-    console.log(`each response`, response.statusCode)
 
     const cursor = await streamResponse(response, async ({ value, key }) => {
       await callback(state, JSON.parse(value), key);
     });
 
     state.data = {
-      cursor
+      cursor,
     };
 
     return state;
@@ -287,7 +292,7 @@ export const streamResponse = async (response, onValue) => {
       if (next.value.value === 'cursor') {
         const strValue = await waitFor('stringChunk', 'nullValue');
         if (strValue.name === 'nullValue') {
-          continue
+          continue;
         }
         cursor = strValue.value.value;
       }
@@ -328,7 +333,7 @@ export const streamResponse = async (response, onValue) => {
       isInsideItems = false;
     }
   }
-  return cursor
+  return cursor;
 };
 
 export const expandQuery = query => {
