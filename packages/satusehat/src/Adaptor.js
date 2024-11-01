@@ -44,9 +44,9 @@ export function execute(...operations) {
  * You can pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
  * @public
- * @example  <caption>Get a resource by Id. Equivalent to GET <baseUrl>/Organization/abcde</caption>
+ * @example  <caption>Get a resource by Id. Equivalent to GET `<baseUrl>/Organization/abcde`</caption>
  * get("Organization/abcde")
- * @example <caption>Get resources with a query. Equivalent to GET <baseUrl>/Patient?identifier=https://fhir.kemkes.go.id/id/nik|9271060312000001</caption>
+ * @example <caption>Get resources with a query. Equivalent to GET `<baseUrl>/Patient?identifier=https://fhir.kemkes.go.id/id/nik|9271060312000001`</caption>
  * get('/Patient', {
  *   identifier:'https://fhir.kemkes.go.id/id/nik|9271060312000001'
  * });
@@ -123,7 +123,7 @@ export function post(path, data, params = {}, callback = s => s) {
  * Make a PUT request to Satusehat. Use this to directly update resources on Satusehat REST API.
  * You can pass Satusehat body data as a JSON FHIR object. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
- * @example <caption>Update a resource. Equivalent to PUT <baseurl>/Organization/abcde</caption>
+ * @example <caption>Update a resource. Equivalent to PUT `<baseurl>/Organization/abcde`</caption>
  * put(
  *   "Organization/abcde",
  *  { "resourceType": "Organization", "active": false,
@@ -165,7 +165,7 @@ export function put(path, data, params = {}, callback = s => s) {
  * Make a PATCH request to Satusehat. Use this to directly update resources on Satusehat REST API.
  * You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
- * @example <caption>Update a resource. Equivalent to PATCH <baseurl>/Organization/abcde</caption>
+ * @example <caption>Update a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`</caption>
  * patch(
  *   "Organization/abcde",
  *    [{
