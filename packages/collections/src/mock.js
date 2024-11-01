@@ -62,9 +62,16 @@ export function API() {
     }
     const col = collections[name];
 
-    delete col[key];
+    const regex = new RegExp(key.replace('*', '(.*)'));
+    const removed = [];
+    for (const key in col) {
+      if (regex.test(key)) {
+        delete col[key];
+        removed.push(key);
+      }
+    }
 
-    return [key];
+    return removed;
   };
 
   const api = {
@@ -206,7 +213,11 @@ export function createServer(url = 'https://app.openfn.org') {
     }
 
     try {
-      const { name, key } = parsePath(req.path);
+      let { name, key } = parsePath(req.path);
+      if (!key) {
+        const params = new URLSearchParams(req.query || req.path.split('?')[1]);
+        key = params.get('key') ?? '*';
+      }
 
       const keys = api.remove(name, key);
 

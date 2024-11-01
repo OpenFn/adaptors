@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MockAgent} from 'undici';
+import { MockAgent } from 'undici';
 import { createServer } from '../src/mock.js';
 import { setMockClient, streamResponse } from '../src/collections.js';
 import * as collections from '../src/collections.js';
@@ -128,7 +128,7 @@ describe('each', () => {
 
     await collections.each(COLLECTION, '*')(state);
 
-    expect(state.data.cursor).to.equal('xxx')
+    expect(state.data.cursor).to.equal('xxx');
   });
 });
 
@@ -204,9 +204,9 @@ describe('get', () => {
       ['b-2', { id: 'b' }],
       ['c-3', { id: 'c' }],
     ]);
-    
+
     const result = await collections.get(COLLECTION, 'b*')(state);
-    
+
     // TODO this is a dummy mock cursor
     expect(result.data.cursor).to.eql('xxx');
   });
@@ -316,6 +316,19 @@ describe('remove', () => {
     const result = api.byKey(COLLECTION, 'x');
     expect(result).to.be.undefined;
   });
+
+  it('should remove several items', async () => {
+    const { state } = init();
+    api.upsert(COLLECTION, 'x', { id: 'x' });
+    api.upsert(COLLECTION, 'y', { id: 'y' });
+
+    await collections.remove(COLLECTION, '*')(state);
+
+    const x = api.byKey(COLLECTION, 'x');
+    expect(x).to.be.undefined;
+    const y = api.byKey(COLLECTION, 'y');
+    expect(y).to.be.undefined;
+  });
 });
 
 describe('utils', () => {
@@ -366,96 +379,100 @@ describe('streamResponse', () => {
   it('should stream a response with an item and cursor', async () => {
     client.intercept({ path: '/collections/my-collection' }).reply(200, {
       cursor: 'b',
-      items: [{
-        key: 'a',
-        value: "str"
-      }],
+      items: [
+        {
+          key: 'a',
+          value: 'str',
+        },
+      ],
     });
-
 
     const response = await client.request({
       method: 'GET',
-      path: '/collections/my-collection'
+      path: '/collections/my-collection',
     });
 
     let callbackValue;
     const cursor = await streamResponse(response, ({ key, value }) => {
       callbackValue = value;
-    })
+    });
 
-    expect(callbackValue).to.eql('str')
-    expect(cursor).to.equal('b')
-  })
+    expect(callbackValue).to.eql('str');
+    expect(cursor).to.equal('b');
+  });
 
   it('should stream a response with an item and null cursor', async () => {
     client.intercept({ path: '/collections/my-collection' }).reply(200, {
       cursor: null,
-      items: [{
-        key: 'a',
-        value: "str"
-      }],
+      items: [
+        {
+          key: 'a',
+          value: 'str',
+        },
+      ],
     });
-
 
     const response = await client.request({
       method: 'GET',
-      path: '/collections/my-collection'
+      path: '/collections/my-collection',
     });
 
     let callbackValue;
     const cursor = await streamResponse(response, ({ key, value }) => {
       callbackValue = value;
-    })
+    });
 
-    expect(callbackValue).to.eql('str')
-    expect(cursor).to.equal(null)
-  })
+    expect(callbackValue).to.eql('str');
+    expect(cursor).to.equal(null);
+  });
 
   it('should handle the cursor key coming last', async () => {
     client.intercept({ path: '/collections/my-collection' }).reply(200, {
-      items: [{
-        key: 'a',
-        value: "str"
-      }],
+      items: [
+        {
+          key: 'a',
+          value: 'str',
+        },
+      ],
       cursor: 'b',
     });
 
-
     const response = await client.request({
       method: 'GET',
-      path: '/collections/my-collection'
+      path: '/collections/my-collection',
     });
 
     let callbackValue;
     const cursor = await streamResponse(response, ({ key, value }) => {
       callbackValue = value;
-    })
+    });
 
-    expect(callbackValue).to.eql('str')
-    expect(cursor).to.equal('b')
-  })
+    expect(callbackValue).to.eql('str');
+    expect(cursor).to.equal('b');
+  });
 
   it('should handle key value pairs in a different order', async () => {
     client.intercept({ path: '/collections/my-collection' }).reply(200, {
-      items: [{
-        value: "str",
-        key: 'a',
-      }],
+      items: [
+        {
+          value: 'str',
+          key: 'a',
+        },
+      ],
       cursor: 'b',
     });
 
-
     const response = await client.request({
       method: 'GET',
-      path: '/collections/my-collection'
+      path: '/collections/my-collection',
     });
 
     let callbackValue;
     const cursor = await streamResponse(response, ({ key, value }) => {
       callbackValue = value;
-    })
+    });
 
-    expect(callbackValue).to.eql('str')
-    expect(cursor).to.equal('b')
-  })
-})
+    expect(callbackValue).to.eql('str');
+    expect(cursor).to.equal('b');
+  });
+});
