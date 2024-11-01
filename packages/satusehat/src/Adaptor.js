@@ -40,17 +40,15 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to Satusehat
+ * Make a GET request to Satusehat. Use this to fetch resources directly from the Satusehat REST API.
+ * You can pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+ * in the URL.
  * @public
- * @example  <caption>Make a GET request to get an Organization by Id</caption>
- * get("Organization/:id")
- * @example <caption>Search for a Patient using their NIK number</caption>
+ * @example  <caption>Get a resource by Id. Equivalent to GET <baseUrl>/Organization/abcde</caption>
+ * get("Organization/abcde")
+ * @example <caption>Get resources with a query. Equivalent to GET <baseUrl>/Patient?identifier=https://fhir.kemkes.go.id/id/nik|9271060312000001</caption>
  * get('/Patient', {
  *   identifier:'https://fhir.kemkes.go.id/id/nik|9271060312000001'
- * });
- * @example <caption>Get a specific Encounter by subject</caption>
- * get('/Encounter', {
- * subject:100000030009  // This gets an encounter that maps to a specific patient whose id is:100000030009
  * });
  * @function
  * @param {string} path - Path to resource
@@ -80,8 +78,9 @@ export function get(path, params = {}, callback = s => s) {
 }
 
 /**
- * Make a POST request to Satusehat
- * @example <caption>Make a POST request to create an Encounter</caption>
+ * Make a POST request to Satusehat. Use this to send resources directly to Satusehat REST API.
+ * You can pass Satusehat body data as a JSON FHIR object.
+ * @example <caption>Create a resource encounter</caption>
  * post(
  *   "Encounter",
  *  { "resourceType": "Encounter",
@@ -121,10 +120,12 @@ export function post(path, data, params = {}, callback = s => s) {
 }
 
 /**
- * Make a PUT request to Satusehat
- * @example <caption>Make a PUT request to update an Organization</caption>
+ * Make a PUT request to Satusehat. Use this to directly update resources on Satusehat REST API.
+ * You can pass Satusehat body data as a JSON FHIR object. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+ * in the URL.
+ * @example <caption>Update a resource. Equivalent to PUT <baseurl>/Organization/abcde</caption>
  * put(
- *   "Organization/123",
+ *   "Organization/abcde",
  *  { "resourceType": "Organization", "active": false,
  *  }
  * );
@@ -161,10 +162,12 @@ export function put(path, data, params = {}, callback = s => s) {
 }
 
 /**
- * Make a PATCH request to Satusehat
- * @example <caption>Make a PATCH request to update an Organization</caption>
+ * Make a PATCH request to Satusehat. Use this to directly update resources on Satusehat REST API.
+ * You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+ * in the URL.
+ * @example <caption>Update a resource. Equivalent to PATCH <baseurl>/Organization/abcde</caption>
  * patch(
- *   "Organization/123",
+ *   "Organization/abcde",
  *    [{
  * "op": "replace", // Operation - `replace` is the only one used to change a specific property or element
  *  "path": "/language", // Path - The name of property/element of resource to be replaced
