@@ -47,6 +47,7 @@ export const setMockClient = mockClient => {
  * For large datasets, we recommend using each(), which streams data.
  * You can pass a specific key as a string to only fetch one item, or pass a query
  * with a key-pattern or a date filter.
+ * If not all matching values are returned, the cursor position is written to state.data
  * @public
  * @function
  * @param {string} name - The name of the collection to fetch from
@@ -86,10 +87,11 @@ export function get(name, query = {}) {
       // build a response array
       data = [];
       console.log(`Downloading data from collection "${name}"...`);
-      await streamResponse(response, item => {
+      const cursor = await streamResponse(response, item => {
         item.value = JSON.parse(item.value);
         data.push(item);
       });
+      data.cursor = cursor;
       console.log(`Fetched "${data.length}" values from collection "${name}"`);
     } else {
       // If one specific item was requested, write it straight to state.data
@@ -221,6 +223,7 @@ export function remove(name, query = {}, options = {}) {
  * @param {string} name - The name of the collection to remove from
  * @param {string|QueryOptions} query - A string key or key pattern (with wildcards '*') to remove, or a query object
  * @param {function} callback - A callback invoked for each item `(state,  value, key) => void`
+ * @state data.cursor - if values are still left on the server, a cursor string will be written to state.data
  * @example <caption>Iterate over a range of values with wildcards</caption>
  * collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
  *   state.cumulativeCost += value.cost;
@@ -247,14 +250,13 @@ export function each(name, query = {}, callback = () => {}) {
     });
     console.log(`each response`, response.statusCode)
 
-    // const json = await response.body.json();
-    // console.log(json)
-
-    await streamResponse(response, async ({ value, key }) => {
-      console.log(' >> ', value)
+    const cursor = await streamResponse(response, async ({ value, key }) => {
       await callback(state, JSON.parse(value), key);
     });
 
+    state.data = {
+      cursor
+    };
 
     return state;
   };

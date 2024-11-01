@@ -119,6 +119,17 @@ describe('each', () => {
 
     expect(Date.now() - start).to.be.greaterThan(100);
   });
+
+  it('should write the cursor back to state', async () => {
+    const { state } = init([
+      ['az', { id: 'a' }],
+      ['cz', { id: 'c' }],
+    ]);
+
+    await collections.each(COLLECTION, '*')(state);
+
+    expect(state.data.cursor).to.equal('xxx')
+  });
 });
 
 describe('get', () => {
@@ -185,6 +196,19 @@ describe('get', () => {
         value: { id: 'b' },
       },
     ]);
+  });
+
+  it('should write the cursor to state', async () => {
+    const { state } = init([
+      ['a-1', { id: 'a' }],
+      ['b-2', { id: 'b' }],
+      ['c-3', { id: 'c' }],
+    ]);
+    
+    const result = await collections.get(COLLECTION, 'b*')(state);
+    
+    // TODO this is a dummy mock cursor
+    expect(result.data.cursor).to.eql('xxx');
   });
 
   it('should expand references', async () => {
