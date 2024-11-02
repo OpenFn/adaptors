@@ -3,6 +3,5 @@ export default path => ({
   entry: {
     index: `${path}/src/index.js`,
     utils: `${path}/src/utils.js`,
-    builders: `${path}/src/builders.js`,
   },
 });
