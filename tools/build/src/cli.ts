@@ -27,6 +27,5 @@ export const cmd = yargs(hideBin(process.argv))
 if (!cmd.tasks) {
   cmd.tasks = ['src', 'dts', 'docs', 'ast'];
 }
-console.log(cmd.tasks);
 
 run(cmd.lang, cmd.tasks, { watch: cmd.watch });
