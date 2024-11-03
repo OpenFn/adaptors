@@ -16,6 +16,7 @@ export const cmd = yargs(hideBin(process.argv))
   .positional('tasks', {
     array: true,
     description: 'src, ast, docs, dts',
+    default: [],
   })
   .option('watch', {
     boolean: true,
@@ -24,7 +25,7 @@ export const cmd = yargs(hideBin(process.argv))
   })
   .parse();
 
-if (!cmd.tasks) {
+if (!cmd.tasks.length) {
   cmd.tasks = ['src', 'dts', 'docs', 'ast'];
 }
 
