@@ -80,13 +80,8 @@ export function get(path, params = {}, callback = s => s) {
 /**
  * Make a POST request to Satusehat. Use this to send resources directly to Satusehat REST API.
  * You can pass Satusehat body data as a JSON FHIR object.
- * @example <caption>Create a resource encounter</caption>
- * post(
- *   "Encounter",
- *  { "resourceType": "Encounter",
- *   ...state.data,
- *  }
- * );
+ * @example <caption>Create a resource encounter. Equivalent to POST `<baseUrl>/Encounter</caption>
+ * post('Encounter', { resourceType: 'Encounter', ...state.data });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -96,6 +91,7 @@ export function get(path, params = {}, callback = s => s) {
  * @returns {Operation}
  * @state {SatusehatHttpState}
  */
+
 export function post(path, data, params = {}, callback = s => s) {
   return async state => {
     const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
@@ -124,11 +120,7 @@ export function post(path, data, params = {}, callback = s => s) {
  * You can pass Satusehat body data as a JSON FHIR object. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
  * @example <caption>Update a resource. Equivalent to PUT `<baseurl>/Organization/abcde`</caption>
- * put(
- *   "Organization/abcde",
- *  { "resourceType": "Organization", "active": false,
- *  }
- * );
+ * put('Organization/abcde', { resourceType: 'Organization', active: false });
  * @function
  * @public
  * @param {string} path - Path to resource and exact item to be updated
@@ -166,15 +158,13 @@ export function put(path, data, params = {}, callback = s => s) {
  * You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
  * @example <caption>Update a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`</caption>
- * patch(
- *   "Organization/abcde",
- *    [{
- * "op": "replace", // Operation - `replace` is the only one used to change a specific property or element
- *  "path": "/language", // Path - The name of property/element of resource to be replaced
- *  "value": "id" // Value- The value to be replaced
- *}]
- *
- * );
+ * patch('Organization/abcde', [
+ * {
+ *  op: 'replace', // Operation - `replace` is the only one used to change a specific property or element
+ *  path: '/language', // Path - The name of property/element of resource to be replaced
+ *  value: 'id', // Value- The value to be replaced
+ * },
+ * ]);
  * @function
  * @public
  * @param {string} path - Path to resource and exact item to be partially updated
