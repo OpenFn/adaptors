@@ -1,5 +1,11 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.7
+
+### Patch Changes
+
+- Fix typescript definitions
+
 ## 0.1.6
 
 - Updated docs for each()
