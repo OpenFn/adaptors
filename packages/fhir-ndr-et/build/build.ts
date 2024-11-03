@@ -30,18 +30,9 @@ const generate = async () => {
   await mkdir('dist', { recursive: true });
   await mkdir('types', { recursive: true });
 
-  await writeFile('src/builders.d.ts', withDisclaimer(dts));
   await writeFile('types/builders.d.ts', withDisclaimer(dts));
 
   await writeFile('src/builders.js', withDisclaimer(src));
-
-  // Copy a bunch of typescript files over to ./types
-  // (some are built, some are hand written)
-  const globals = await readFile('src/globals.d.ts', 'utf8');
-  await writeFile('types/globals.d.ts', withDisclaimer(globals));
-
-  const builders = await readFile('src/builders.d.ts', 'utf8');
-  await writeFile('types/builders.d.ts', withDisclaimer(builders));
 
   const args = [
     '--allowJs',
