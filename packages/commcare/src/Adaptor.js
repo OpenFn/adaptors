@@ -176,12 +176,6 @@ export function post(path, data, params = {}, callback = s => s) {
   };
 }
 
-submitXls([{ name: 'Mamadou', phone: '000000' }], {
-  case_type: 'student',
-  search_field: 'external_id',
-  create_new_cases: 'on',
-});
-
 /**
  * Bulk upload data to CommCare. Use this to send multiple items for a single resource at once to Commcare. It accepts an array of objects, converts them into
  * an XLS representation, and uploads.
