@@ -62,6 +62,9 @@
     "additionalProperties": true,
     "required": [
         "hostUrl",
-        "domain"
+        "domain",
+        "appId",
+        "username",
+        "password"
     ]
 }
