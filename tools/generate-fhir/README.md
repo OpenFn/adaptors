@@ -12,9 +12,8 @@ Run `pnpm generate-fhir --help` from root for help in your terminal.
 
 # Example
 
-```
-pnpm generate-fhir fhir-jembi --spec
-https://build.fhir.org/ig/jembi/ethiopia-hiv/branches/master/definitions.json.zip
+```bash
+pnpm generate-fhir fhir-jembi --spec https://build.fhir.org/ig/jembi/ethiopia-hiv/branches/master/definitions.json.zip
 ```
 
 # Usage

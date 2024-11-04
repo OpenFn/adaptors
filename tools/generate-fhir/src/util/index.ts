@@ -1,5 +1,7 @@
 import addDisclaimer from './disclaimer';
-export { addDisclaimer };
+import sortKeys from './sort-keys';
+
+export { addDisclaimer, sortKeys };
 
 export const getBuilderName = resourceName =>
   resourceName[0].toLowerCase() + resourceName.slice(1);

@@ -2,7 +2,7 @@ import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName, getTypeName } from './util';
+import { getBuilderName, getTypeName, sortKeys } from './util';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -27,14 +27,16 @@ const generateCode = (
   );
 
   // generate a builder for each variant
-  for (const resourceType in schema) {
+  const orderedResources = Object.keys(schema).sort();
+  for (const resourceType of orderedResources) {
     // Note that the schema has already applied include/exclude filters
 
     // Generate an entrypoint function
     statements.push(generateEntry(resourceType, schema[resourceType]));
 
     // Now generate an actual builder for each profile
-    for (const profile of schema[resourceType]) {
+    const sortedProfiles = sortKeys(schema[resourceType]);
+    for (const profile of sortedProfiles) {
       const m = mappings.overrides?.[resourceType] ?? {};
       const overrides = Object.assign({}, m.any, m[profile.id]);
       const name = getTypeName(profile);
