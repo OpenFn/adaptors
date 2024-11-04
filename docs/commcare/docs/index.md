@@ -86,43 +86,42 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | the response from the CommCare Server |
-**Example:** Upload a single row of data for case-data
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Upload a single row of a case-data resource
 ```js
-bulk(
-'case-data',
-   [
-     {name: 'Mamadou', phone: '000000'},
-   ],
-   {
-     case_type: 'student',
-     search_field: 'external_id',
-     create_new_cases: 'on',
-   }
-)
+bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {
+  case_type: 'student',
+  search_field: 'external_id',
+  create_new_cases: 'on',
+});
 ```
-**Example:** Upload a single row of data for a lookup-table
+**Example:** Upload a single row of a lookup-table resource
 ```js
 bulk(
-    'lookup-table',
- {
-   types: [{
-
-  'DELETE(Y/N)':'N',
-  table_id: 'fruit',
-  'is_global?':'yes',
-  'field 1': 'type',
-  'field 2': 'name',
-     }],
-     fruit: [{
-      UID: '',
-       'DELETE(Y/N)':'N',
-      'field:type': 'citrus',
-       'field:name': 'Orange',
-    }],
+  'lookup-table',
+  {
+    types: [
+      {
+        'DELETE(Y/N)': 'N',
+        table_id: 'fruit',
+        'is_global?': 'yes',
+        'field 1': 'type',
+        'field 2': 'name',
+      },
+    ],
+    fruit: [
+      {
+        UID: '',
+        'DELETE(Y/N)': 'N',
+        'field:type': 'citrus',
+        'field:name': 'Orange',
+      },
+    ],
   },
-{replace: false}
-)
+  { replace: false }
+);
 ```
 
 * * *
@@ -141,10 +140,17 @@ and POST the response somewhere else.
 | params | <code>Object</code> | Input parameters for the request, see [Commcare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data). |
 | postUrl | <code>String</code> | URL to which the response object will be posted. |
 
-**Example:** Fetch 10 records from a report and post them to example.com
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`
 ```js
 fetchReportData(
-  "9aab0eeb88555a7b4568676883e7379a",
+  "abcde",
   { limit: 10 },
   "https://www.example.com/api/"
 )
@@ -156,7 +162,10 @@ fetchReportData(
 
 <p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
 
-Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.
+Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.
+You can pass Commcare query parameters as an object of key value pairs, which will map to parameters
+in the URL.
+The response body will be returned to `state.data` as JSON.
 Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
 
 
@@ -173,23 +182,19 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
-**Example:** Get a specific case by id
+**Example:** Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`
 ```js
 get("/case/12345")
 ```
-**Example:** Get exactly 20 cases
+**Example:** Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`
 ```js
 get("/case", { offset:0, limit: 20 })
 ```
-**Example:** Get forms by app id
-```js
-get("/form", { app_id: "02bf50ab803a89ea4963799362874f0c" })
-```
-**Example:** Get all cases, 50 at a time, and add them to state
+**Example:** Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`
 ```js
 get("/case", {}, (state) => {
-   state.cases.push(...state.data) // adds 50 cases to the cases array
-   return state;
+  state.cases.push(...state.data) // adds all cases to the cases array
+  return state;
 })
 ```
 
@@ -199,13 +204,14 @@ get("/case", {}, (state) => {
 
 <p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
 
-Make a POST request to any CommCare endpoint.
+Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+You can pass Commcare body data as a JSON object.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object or JSON to use as the request body |
+| data | <code>object</code> | Object or JSON to create a resource |
 | [params] | <code>Object</code> | Optional request params |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
@@ -216,7 +222,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
-**Example:** Post a user object to to the /user endpoint
+**Example:** Create a user resource.Equivalent to `<baseUrl>/user`
 ```js
 post("/user", { "username":"test", "password":"somepassword" })
 ```
@@ -227,7 +233,7 @@ post("/user", { "username":"test", "password":"somepassword" })
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
-Make a general HTTP request against the Commcare server.
+Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
 
 
 | Param | Type | Description |
@@ -244,7 +250,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
-**Example:** Make a GET request to get cases
+**Example:** Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`
 ```js
 request("GET", "/a/asri/api/v0.5/case");
 ```
@@ -255,7 +261,7 @@ request("GET", "/a/asri/api/v0.5/case");
 
 <p><code>submit(data) ⇒ Operation</code></p>
 
-Submit forms to CommCare. Accepts an array of JSON
+Submit forms to CommCare. Use this to send forms directly to Commcare REST API. Accepts an array of JSON
 objects, converts them into XML, and submits to CommCare as an x-form.
 
 
@@ -267,18 +273,20 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | the response from the CommCare Server |
-**Example:** Submit a form to CommCare
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Submit a form resource.
 ```js
- submit(
-   fields(
-     field("@", (state) => ({
-         "xmlns": `http://openrosa.org/formdesigner/${state.formId}`
-     }),
-     field("question1", (state) => state.data.answer1),
-     field("question2", (state) => state.data.answer2),
-   )
+submit(
+ fields(
+   field('@', state => ({
+     xmlns: `http://openrosa.org/formdesigner/${state.formId}`,
+   })),
+   field('question1', state => state.data.answer1),
+   field('question2', state => state.data.answer2)
  )
+);
 ```
 
 * * *
@@ -287,7 +295,7 @@ This operation writes the following keys to state:
 
 <p><code>submitXls(data, params) ⇒ Operation</code></p>
 
-Bulk upload data to CommCare. Accepts an array of objects, converts them into
+Bulk upload data to CommCare. Use this to send multiple items for a single resource at once to Commcare. It accepts an array of objects, converts them into
 an XLS representation, and uploads.
 
 
@@ -300,19 +308,16 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | the response from the CommCare Server |
-**Example:** Upload a single row of data
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Upload a single row of data for a resource.
 ```js
-submitXls(
-   [
-     {name: 'Mamadou', phone: '000000'},
-   ],
-   {
-     case_type: 'student',
-     search_field: 'external_id',
-     create_new_cases: 'on',
-   }
-)
+submitXls([{ name: 'Mamadou', phone: '000000' }], {
+  case_type: 'student',
+  search_field: 'external_id',
+  create_new_cases: 'on',
+});
 ```
 
 * * *
