@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 3.2.5
+
+### Patch Changes
+
+- 2fc7d82: Update example docs and configuration
+
 ## 3.2.4
 
 ### Patch Changes
