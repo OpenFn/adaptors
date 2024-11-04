@@ -80,7 +80,7 @@ export function get(path, params = {}, callback = s => s) {
 /**
  * Make a POST request to Satusehat. Use this to send resources directly to Satusehat REST API.
  * You can pass Satusehat body data as a JSON FHIR object.
- * @example <caption>Create a resource encounter. Equivalent to POST `<baseUrl>/Encounter</caption>
+ * @example <caption>Create an encounter resource. Equivalent to POST `<baseUrl>/Encounter`</caption>
  * post('Encounter', { resourceType: 'Encounter', ...state.data });
  * @function
  * @public
@@ -157,12 +157,12 @@ export function put(path, data, params = {}, callback = s => s) {
  * Make a PATCH request to Satusehat. Use this to directly update resources on Satusehat REST API.
  * You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
- * @example <caption>Update a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`</caption>
+ * @example <caption>Update a property of a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`</caption>
  * patch('Organization/abcde', [
  * {
- *  op: 'replace', // Operation - `replace` is the only one used to change a specific property or element
- *  path: '/language', // Path - The name of property/element of resource to be replaced
- *  value: 'id', // Value- The value to be replaced
+ *  op: 'replace',
+ *  path: '/language', // Name of property/element of resource to be replaced
+ *  value: 'id', // Value to be replaced
  * },
  * ]);
  * @function
