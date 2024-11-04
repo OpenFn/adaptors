@@ -294,7 +294,7 @@ reference a slice of state.
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
-**Example:** Using lazy state ($) to iterate over items in state.data and pass each into an &quot;insert&quot; operation
+**Example:** Using lazy state ($) to iterate over items in state.data and pass each into an "insert" operation
 ```js
 each(
   $.data,
@@ -305,7 +305,7 @@ each(
   })
 );
 ```
-**Example:** Iterate over items in state.data and pass each one into an &quot;insert&quot; operation
+**Example:** Iterate over items in state.data and pass each one into an "insert" operation
 ```js
 each(
   $.data,
@@ -315,7 +315,7 @@ each(
   }))
 );
 ```
-**Example:** Using JSON path to iterate over items in state.data and pass each one into an &quot;insert&quot; operation
+**Example:** Using JSON path to iterate over items in state.data and pass each one into an "insert" operation
 ```js
 each(
   "$.data[*]",

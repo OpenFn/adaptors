@@ -186,7 +186,7 @@ This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 | [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
 | callback | <code>function</code> |  | A callback to execute once the record is retrieved |
 
-**Example:** The results will be available on &#x60;state.data&#x60;
+**Example:** The results will be available on `state.data`
 ```js
 bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
 ```

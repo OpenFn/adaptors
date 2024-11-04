@@ -154,11 +154,11 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
-**Example:** Set a field and value for the &#x60;patient&#x60; key
+**Example:** Set a field and value for the `patient` key
 ```js
 hset('patient', { name: 'mtuchi' });
 ```
-**Example:** Set multiple field values for the &#x60;patient&#x60; key
+**Example:** Set multiple field values for the `patient` key
 ```js
 hset('patient', { name: 'victor', ihs_number: 12345  });
 ```
@@ -207,7 +207,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
-**Example:** Set a JSON object for the key &#x60;patient&#x60;
+**Example:** Set a JSON object for the key `patient`
 ```js
 jSet('patient', { name: 'victor', ihs_number: 12345  });
 ```
@@ -291,7 +291,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
-**Example:** Set the &quot;patient&quot; key to value &quot;mtuchi&quot;
+**Example:** Set the "patient" key to value "mtuchi"
 ```js
 set("patient", "mtuchi");
 ```

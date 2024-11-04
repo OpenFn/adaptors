@@ -60,18 +60,33 @@ This adaptor exports the following from common:
 
 <p><code>get(path, params, callback) ⇒ Operation</code></p>
 
-Make a GET request to Satusehat
+Make a GET request to Satusehat. Use this to fetch resources directly from the Satusehat REST API.
+You can pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+in the URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Optional request params such as name. |
+| params | <code>object</code> | Optional object of query parameters to include in the request |
 | callback | <code>function</code> | An optional callback to handle the response |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Satusehat server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Get a resource by Id. Equivalent to GET `<baseUrl>/Organization/abcde`
 ```js
-get("Organization", {"name": "somename"})
+get("Organization/abcde")
+```
+**Example:** Get resources with a query. Equivalent to GET `<baseUrl>/Patient?identifier=https://fhir.kemkes.go.id/id/nik|9271060312000001`
+```js
+get('/Patient', {
+  identifier:'https://fhir.kemkes.go.id/id/nik|9271060312000001'
+});
 ```
 
 * * *
@@ -80,27 +95,34 @@ get("Organization", {"name": "somename"})
 
 <p><code>patch(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a PATCH request to Satusehat
+Make a PATCH request to Satusehat. Use this to directly update resources on Satusehat REST API.
+You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+in the URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource and exact item to be partially updated |
 | data | <code>Array</code> | An array of objects which defines data that will be used to partially update a given instance of resource |
-| params | <code>Object</code> | Optional request params. |
+| params | <code>Object</code> | Optional object of query parameters to include in the request. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**
-```js
-patch(
-  "Organization/123",
-   [{
-"op": "replace", // Operation - `replace` is the only one used to change a specific property or element
- "path": "/language", // Path - The name of property/element of resource to be replaced
- "value": "id" // Value- The value to be replaced
-}]
+This operation writes the following keys to state:
 
-);
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Satusehat server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Update a property of a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`
+```js
+patch('Organization/abcde', [
+{
+ op: 'replace',
+ path: '/language', // Name of property/element of resource to be replaced
+ value: 'id', // Value to be replaced
+},
+]);
 ```
 
 * * *
@@ -109,23 +131,27 @@ patch(
 
 <p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a POST request to Satusehat
+Make a POST request to Satusehat. Use this to send resources directly to Satusehat REST API.
+You can pass Satusehat body data as a JSON FHIR object.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object or JSON which defines data that will be used to create a given instance of resource |
-| params | <code>Object</code> | Optional request params. |
+| data | <code>object</code> | JSON FHIR object to create a resource |
+| params | <code>Object</code> | Optional object of query parameters to include in the request |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Satusehat server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Create an encounter resource. Equivalent to POST `<baseUrl>/Encounter`
 ```js
-post(
-  "Organization",
- { "resourceType": "Organization", "active": true,
- }
-);
+post('Encounter', { resourceType: 'Encounter', ...state.data });
 ```
 
 * * *
@@ -134,23 +160,28 @@ post(
 
 <p><code>put(path, data, params, [callback]) ⇒ Operation</code></p>
 
-Make a PUT request to Satusehat
+Make a PUT request to Satusehat. Use this to directly update resources on Satusehat REST API.
+You can pass Satusehat body data as a JSON FHIR object. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
+in the URL.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource and exact item to be updated |
-| data | <code>object</code> | Object or JSON which defines data that will be used to update a given instance of resource |
-| params | <code>Object</code> | Optional request params. |
+| data | <code>object</code> | JSON FHIR object to update the resource |
+| params | <code>Object</code> | Optional object of query parameters to include in the request |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Satusehat server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:** Update a resource. Equivalent to PUT `<baseurl>/Organization/abcde`
 ```js
-put(
-  "Organization/123",
- { "resourceType": "Organization", "active": false,
- }
-);
+put('Organization/abcde', { resourceType: 'Organization', active: false });
 ```
 
 * * *

@@ -129,7 +129,7 @@ This operation writes the following keys to state:
 | data | array of form submission objects |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
-**Example:** Get all submissions to a form called &#x27;patient-follow-up&#x27;
+**Example:** Get all submissions to a form called 'patient-follow-up'
 ```js
 getSubmissions(22, 'patient-follow-up');
 ```

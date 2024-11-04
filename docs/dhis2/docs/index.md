@@ -311,7 +311,7 @@ Get data. Generic helper method for getting data of any kind from DHIS2.
 | [options] | <code>Object</code> | Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** all data values for the &#x27;pBOMPrpg1QX&#x27; dataset
+**Example:** all data values for the 'pBOMPrpg1QX' dataset
 ```js
 get('dataValueSets', {
   dataSet: 'pBOMPrpg1QX',
@@ -539,7 +539,7 @@ Upsert a record. A generic helper function used to atomically either insert a ro
 | [options] | <code>Object</code> | Optional configuration that will be applied to both the `get` and the `create` or `update` operations. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** Example &#x60;expression.js&#x60; of upsert
+**Example:** Example `expression.js` of upsert
 ```js
 upsert('trackedEntityInstances', {
  ou: 'TSyzvBiovKh',

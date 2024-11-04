@@ -198,7 +198,7 @@ Upload a file to a drive
 | data | <code>Object</code> | A buffer containing the file. |
 | callback | <code>function</code> | Optional callback function |
 
-**Example:** Upload Excel file to a drive using &#x60;driveId&#x60; and &#x60;parantItemId&#x60;
+**Example:** Upload Excel file to a drive using `driveId` and `parantItemId`
 ```js
 uploadFile(
   state => ({
@@ -209,7 +209,7 @@ uploadFile(
   state => state.buffer
 );
 ```
-**Example:** Upload Excel file to a SharePoint drive using &#x60;siteId&#x60; and &#x60;parantItemId&#x60;
+**Example:** Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`
 ```js
 uploadFile(
   state => ({
@@ -244,7 +244,7 @@ buffer.
 | [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
 | [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
 
-**Example:** Create a buffer containing excel file with &#x60;xlsx&#x60; output format  
+**Example:** Create a buffer containing excel file with `xlsx` output format  
 ```js
 sheetToBuffer('$.data[*]', {
  wsName: 'Invalid Grant Codes',
