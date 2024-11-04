@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
-import { MappingSpec } from './types';
+import type { MappingSpec } from './types';
 
 /**
  * This file will generate a simple schema representation of a FHIR spec

@@ -1,5 +1,6 @@
 import addDisclaimer from './disclaimer';
 import sortKeys from './sort-keys';
+import type { MappingSpec, ProfileSpec } from '../types';
 
 export { addDisclaimer, sortKeys };
 
@@ -8,3 +9,17 @@ export const getBuilderName = resourceName =>
 
 export const getTypeName = schema =>
   `${schema.type}_${schema.id}`.replace(/-/g, '_');
+
+export const shouldIgnoreProfle = (
+  profile: ProfileSpec,
+  mappings: MappingSpec
+) => {
+  if (mappings.exclude?.includes(profile.type)) {
+    console.log('ignoring excluded ', profile.id);
+    return true;
+  }
+  if (mappings.include?.length && !mappings.include.includes(profile.type)) {
+    console.log('ignoring not included ', profile.id);
+    return true;
+  }
+};

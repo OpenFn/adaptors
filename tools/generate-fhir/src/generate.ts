@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import fs, { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import generatePackage from './generate-package';
 import fetchSpec, { Meta } from './fetch-spec';
@@ -6,6 +6,7 @@ import generateSchema from './generate-schema';
 import generateCode from './generate-code';
 import withDisclaimer from './util/disclaimer';
 import generateDTS from './generate-dts';
+import generateTests from './generate-tests';
 
 export type Options = {
   /** The base fhir package to import datatypes and functions from, ie, @openfn/language-fhir-4 */
@@ -100,6 +101,14 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     path.resolve(adaptorPath, 'src/builders.d.ts'),
     withDisclaimer(dts)
   );
+
+  await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
+  // TODO only do this if a flag is passed
+  // and actually, if the flag is passed, maybe clean /test/
+  const tests = generateTests(schema, mappings);
+  for (const p in tests) {
+    await fs.writeFile(path.resolve(adaptorPath, p), tests[p]);
+  }
 };
 
 export default generateAdaptor;

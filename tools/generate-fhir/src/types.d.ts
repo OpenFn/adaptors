@@ -1,4 +1,4 @@
-type MappingSpec = {
+export type MappingSpec = {
   include?: string[]; // include reource types. Should this take a profile?
   exclude?: string[]; // exclude resource Types. Should this take a profile?
   // kinda thinkg that if you include Patients, you have to include all patient profiles
@@ -12,7 +12,7 @@ type MappingSpec = {
   overrides?: Record<string, Mapping>;
 };
 
-type Mapping = {
+export type Mapping = {
   // mapping rules for a particular key
   // defaults, fn, etc
   defaults?: Record<string, any>;
@@ -22,7 +22,7 @@ type Mapping = {
 };
 
 // Proprietary schema to describe a particular prop
-type Schema = {
+export type Schema = {
   id: string;
   type: string;
   isArray: boolean;
@@ -31,12 +31,12 @@ type Schema = {
   hasSystem?: boolean;
 };
 
-type profileId = string;
+export type profileId = string;
 
-type SpecJSON = Record<profileId, ProfileSpec>;
+export type SpecJSON = Record<profileId, ProfileSpec>;
 
 // This (partially)) defines the JSON structure of a fhir spec for a profile
-type ProfileSpec = {
+export type ProfileSpec = {
   id: string; // profile id
   resourceType: string; // should be StructureDefinition
   type: string; // the resource this profile extemds
@@ -56,7 +56,7 @@ type ProfileSpec = {
   };
 };
 
-type ElementSpec = {
+export type ElementSpec = {
   path: string;
   id: string;
 
