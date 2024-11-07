@@ -36,8 +36,6 @@ export const setMockClient = mockClient => {
  * @property {string} key - key or key pattern to match against. Patterns support wildcards,  eg `2024-01*`
  * @property {string} createdBefore - matches values that were created before the start of the provided date
  * @property {string} createdAfter - matches values that were created after the end of the provided date
- * @property {string} updatedBefore - matches values that were updated before the start of the provided date
- * @property {string} updatedAfter - matches values that were updated after the end of the provided date*
  * @property {number} limit - limit the maximum amount of results. Defaults to 1000.
  * @property {string} cursor - set the cursor position to start searching from a specific index.
  */
@@ -233,7 +231,7 @@ export function remove(name, query = {}, options = {}) {
  *   state.cumulativeCost += value.cost;
  * })
  * @example <caption>Iterate over a range of values with date filters</caption>
- * collections.each('my-collection', { updatedBefore: new Date().toString() }, (state, value, key) => {
+ * collections.each('my-collection', { createdBefore: new Date().toString() }, (state, value, key) => {
  *   state.cumulativeCost += value.cost;
  * })
  */
@@ -352,8 +350,8 @@ export const expandQuery = query => {
 const queryMaps = {
   createdBefore: 'created_before',
   createdAfter: 'created_after',
-  updatedBefore: 'updated_before',
-  updatedAfter: 'updated_after',
+  // updatedBefore: 'updated_before',
+  // updatedAfter: 'updated_after',
 };
 
 export const parseQuery = (options = {}) => {

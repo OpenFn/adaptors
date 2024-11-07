@@ -353,15 +353,11 @@ describe('utils', () => {
     const input = {
       createdBefore: '1',
       createdAfter: '1',
-      updatedBefore: '1',
-      updatedAfter: '1',
     };
     const mapped = collections.parseQuery({ query: input });
     expect(mapped).to.eql({
       created_before: '1',
       created_after: '1',
-      updated_before: '1',
-      updated_after: '1',
     });
   });
 
