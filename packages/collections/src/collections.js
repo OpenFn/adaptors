@@ -41,9 +41,6 @@ export const setMockClient = mockClient => {
  * @property {string} cursor - set the cursor position to start searching from a specific index.
  */
 
-// Helper function to fetch data from the server in chunks
-const fetchChunks = () => {};
-
 /**
  * Fetch one or more values from a collection.
  * For large datasets, we recommend using each(), which streams data.
