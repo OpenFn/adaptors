@@ -126,9 +126,9 @@ describe('each', () => {
       ['cz', { id: 'c' }],
     ]);
 
-    await collections.each(COLLECTION, '*')(state);
+    await collections.each(COLLECTION, { key: '*', limit: 1 })(state);
 
-    expect(state.data.cursor).to.equal('xxx');
+    expect(state.data.cursor).to.equal('1');
   });
 });
 
@@ -181,6 +181,22 @@ describe('get', () => {
     expect(result.data[2].key).to.eql('c');
   });
 
+  it('should get with a limit', async () => {
+    const { state } = init([
+      ['a', { id: 'a' }],
+      ['b', { id: 'b' }],
+      ['c', { id: 'c' }],
+    ]);
+
+    const result = await collections.get(COLLECTION, { key: '*', limit: 2 })(
+      state
+    );
+
+    expect(result.data.length).to.equal(2);
+    expect(result.data[0].key).to.eql('a');
+    expect(result.data[1].key).to.eql('b');
+  });
+
   it('should get some items', async () => {
     const { state } = init([
       ['a-1', { id: 'a' }],
@@ -205,10 +221,11 @@ describe('get', () => {
       ['c-3', { id: 'c' }],
     ]);
 
-    const result = await collections.get(COLLECTION, 'b*')(state);
+    const result = await collections.get(COLLECTION, { key: 'b*', limit: 1 })(
+      state
+    );
 
-    // TODO this is a dummy mock cursor
-    expect(result.data.cursor).to.eql('xxx');
+    expect(result.data.cursor).to.eql('2');
   });
 
   it('should expand references', async () => {
