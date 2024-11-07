@@ -1,5 +1,4 @@
 ---
 '@openfn/language-dhis2': patch
 ---
-
-Add warning for breaking versions
+Removed support for DHIS2 v42
