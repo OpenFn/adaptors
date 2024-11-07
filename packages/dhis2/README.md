@@ -14,6 +14,10 @@ core execute \
  -o ./tmp/output.json
 ```
 
+> **Important Note:**  
+> This adaptor uses the old tracker version. For the new version, use tracker version 6.0.
+
+
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/dhis2-docs) for
