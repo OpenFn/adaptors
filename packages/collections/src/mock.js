@@ -176,7 +176,7 @@ export function createServer(url = 'https://app.openfn.org') {
           cursor,
         });
         body = {
-          cursor: `${finalCursor}`, // TODO maybe base64 encode?
+          cursor: (finalCursor && `${finalCursor}`) ?? null, // TODO maybe base64 encode?
           items,
         };
       }

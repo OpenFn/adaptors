@@ -181,6 +181,46 @@ describe('get', () => {
     expect(result.data[2].key).to.eql('c');
   });
 
+  it('should get all items across multiple pages', async () => {
+    const items = new Array(200)
+      .fill(0)
+      .map((_v, idx) => [`${idx}`, { v: idx }]);
+    const { state } = init(items);
+
+    const result = await collections.get(COLLECTION, {
+      query: '*',
+      pageSize: 30,
+    })(state);
+
+    expect(result.data.length).to.equal(200);
+    const allKeys = items.map(i => i[0]);
+    const returnedKeys = result.data.map(v => v.key);
+
+    expect(allKeys).to.eql(returnedKeys);
+  });
+
+  it('should get some items across multiple pages (but not a full final page)', async () => {
+    const items = new Array(200)
+      .fill(0)
+      .map((_v, idx) => [`${idx}`, { v: idx }]);
+    const { state } = init(items);
+
+    const result = await collections.get(COLLECTION, {
+      query: '*',
+      pageSize: 100,
+      limit: 150,
+    })(state);
+
+    expect(result.data.length).to.equal(150);
+
+    const allKeys = items.slice(0, 150).map(i => i[0]);
+    const returnedKeys = result.data.map(v => v.key);
+
+    expect(allKeys).to.eql(returnedKeys);
+  });
+
+  // TODO query must default to *
+
   it('should get with a limit', async () => {
     const { state } = init([
       ['a', { id: 'a' }],

@@ -36,9 +36,13 @@ export const setMockClient = mockClient => {
  * @property {string} key - key or key pattern to match against. Patterns support wildcards,  eg `2024-01*`
  * @property {string} createdBefore - matches values that were created before the start of the provided date
  * @property {string} createdAfter - matches values that were created after the end of the provided date
- * @property {number} limit - limit the maximum amount of results. Defaults to 1000.
+ * @property {number} limit - limit the maximum amount of results. If Infinity or unset, all items will be fetched. Default: Infnity.
+ * @property {number} pageSize - specify the number of values downloaded per page (or chunk). Default 1000.
  * @property {string} cursor - set the cursor position to start searching from a specific index.
  */
+
+// Helper function to fetch data from the server in chunks
+const fetchChunks = () => {};
 
 /**
  * Fetch one or more values from a collection.
@@ -64,40 +68,79 @@ export function get(name, query = {}) {
     if (typeof resolvedQuery === 'string') {
       resolvedQuery = { key: resolvedQuery };
     }
-    const { key, ...rest } = expandQuery(resolvedQuery);
+    const {
+      key = '*',
+      pageSize = 1000, // this is the backend default. Defaulting it means we can always respect the user limit
+      limit = Infinity,
+      ...finalQuery
+    } = expandQuery(resolvedQuery);
 
-    let q;
-    let path = resolvedName;
-    if (key.match(/\*/) || Object.keys(rest).length) {
-      // request many
-      q = resolvedQuery;
-    } else {
-      // request one
-      path = `${resolvedName}/${key}`;
-    }
-
-    const response = await request(state, getClient(state), path, { query: q });
-
+    console.log(`Collections: Downloading data from "${name}"...`);
     let data;
-    if (q) {
-      // build a response array
+
+    // request many
+    if (key.match(/\*/) || Object.keys(finalQuery).length) {
       data = [];
-      console.log(`Downloading data from collection "${name}"...`);
-      const cursor = await streamResponse(response, item => {
-        item.value = JSON.parse(item.value);
-        data.push(item);
-      });
+      let cursor = query.cursor;
+      let count = 0;
+
+      do {
+        let batchSize = 0;
+        const q = {
+          key,
+          ...finalQuery,
+
+          // Server-side limit is the number of items in a page
+          limit:
+            limit < Infinity
+              ? // if the user requested a limit, ensure we don't get more than this
+                Math.min(pageSize, limit - count)
+              : // Otherwise the limit is the user-specified page size
+                pageSize,
+        };
+
+        if (cursor) {
+          q.cursor = cursor;
+        }
+        const response = await request(state, getClient(state), resolvedName, {
+          query: q,
+        });
+
+        // build a response array
+        cursor = await streamResponse(response, item => {
+          batchSize++;
+          item.value = JSON.parse(item.value);
+          data.push(item);
+        });
+        count += batchSize;
+
+        // TODO maybe only do this while paging?
+        console.log(
+          `Collections: Fetched chunk of ${batchSize} values from "${name}"`
+        );
+      } while (cursor && count < limit);
+
+      console.log(
+        `Collections: Fetched total of ${data.length} values from "${name}"`
+      );
+
       data.cursor = cursor;
-      console.log(`Fetched "${data.length}" values from collection "${name}"`);
-    } else {
-      // If one specific item was requested, write it straight to state.data
+    }
+    // request one
+    else {
+      const response = await request(
+        state,
+        getClient(state),
+        `${resolvedName}/${key}`
+      );
+      // write it straight to state.data
       const body = await response.body.json();
       if (body.value) {
         data = JSON.parse(body.value);
-        console.log(`Fetched "${key}" from collection "${name}"`);
+        console.log(`Collections: Fetched "${key}" from "${name}"`);
       } else {
         data = {};
-        console.warn(`Key "${key}" not found in collection "${name}"`);
+        console.warn(`Collections: Key "${key}" not found in "${name}"`);
       }
     }
     state.data = data;
@@ -153,7 +196,7 @@ export function set(name, keyGen, values) {
 
     if (response.statusCode >= 400) {
       console.log(
-        `Error setting ${pairs.length} values in collection "${name}"`
+        `Collections: Error setting ${pairs.length} values in "${name}"`
       );
       const text = await response.body.text();
       const e = new Error('ERROR from collections server:' + 400);
@@ -162,9 +205,9 @@ export function set(name, keyGen, values) {
     }
 
     const result = await response.body.json();
-    console.log(`Set ${result.upserted} values in collection "${name}"`);
+    console.log(`Collections: set ${result.upserted} values in "${name}"`);
     if (result.error) {
-      console.log(`Errors reported on set:`, result.error);
+      console.log(`Collections: errors reported on set:`, result.error);
     }
 
     return state;
@@ -208,7 +251,7 @@ export function remove(name, query = {}, options = {}) {
       query: q,
     });
     const result = await response.body.json();
-    console.log(`Removed ${result.deleted} values in collection "${name}"`);
+    console.log(`Collections: Removed ${result.deleted} values in "${name}"`);
 
     return state;
   };
@@ -220,6 +263,8 @@ export function remove(name, query = {}, options = {}) {
  * You can pass a string key-pattern as a query, or pass a query object.
  * The callback function will be invoked for each value with three parameters:
  * `state`, `value` and `key`.
+ * Changing the page size does not affect the callback function (only one item is
+ * ever passed at a time).
  * @public
  * @function
  * @param {string} name - The name of the collection to remove from
@@ -290,6 +335,7 @@ export const streamResponse = async (response, onValue) => {
       if (next.value.value === 'cursor') {
         const strValue = await waitFor('stringChunk', 'nullValue');
         if (strValue.name === 'nullValue') {
+          cursor = null;
           continue;
         }
         cursor = strValue.value.value;
