@@ -33,6 +33,8 @@ each() maintains a low memory footprint by streaming items individually.
 You can pass a string key-pattern as a query, or pass a query object.
 The callback function will be invoked for each value with three parameters:
 `state`, `value` and `key`.
+Changing the page size does not affect the callback function (only one item is
+ever passed at a time).
 
 
 | Param | Type | Description |
@@ -54,7 +56,7 @@ collections.each('my-collection', 'record-2024*-appointment-*', (state, value, k
 ```
 **Example:** Iterate over a range of values with date filters
 ```js
-collections.each('my-collection', { updatedBefore: new Date().toString() }, (state, value, key) => {
+collections.each('my-collection', { createdBefore: new Date().toString() }, (state, value, key) => {
   state.cumulativeCost += value.cost;
 })
 ```
@@ -174,9 +176,8 @@ Query options. All dates should be parseable as ISO 8601 strings, see https://si
 | key | <code>string</code> | key or key pattern to match against. Patterns support wildcards,  eg `2024-01*` |
 | createdBefore | <code>string</code> | matches values that were created before the start of the provided date |
 | createdAfter | <code>string</code> | matches values that were created after the end of the provided date |
-| updatedBefore | <code>string</code> | matches values that were updated before the start of the provided date |
-| updatedAfter | <code>string</code> | matches values that were updated after the end of the provided date* |
-| limit | <code>number</code> | limit the maximum amount of results. Defaults to 1000. |
+| limit | <code>number</code> | limit the maximum amount of results. If Infinity or unset, all items will be fetched. Default: Infnity. |
+| pageSize | <code>number</code> | specify the number of values downloaded per page (or chunk). Default 1000. |
 | cursor | <code>string</code> | set the cursor position to start searching from a specific index. |
 
 
