@@ -15,7 +15,7 @@ core execute \
 ```
 
 > **Important Note:**  
-> This adaptor uses the old tracker version. For the new version, use tracker version 6.0.
+> This adaptor uses the old tracker version. For the new version, use 6.0.
 
 
 ## Documentation
