@@ -398,8 +398,6 @@ export const expandQuery = query => {
 const queryMaps = {
   createdBefore: 'created_before',
   createdAfter: 'created_after',
-  // updatedBefore: 'updated_before',
-  // updatedAfter: 'updated_after',
 };
 
 export const parseQuery = (options = {}) => {
