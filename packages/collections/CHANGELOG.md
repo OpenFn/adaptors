@@ -1,5 +1,12 @@
 # @openfn/language-collections
 
+## 0.5.0
+
+### Minor Changes
+
+- b73b063: - Added pagination support
+  - Removed `updated_*` time filters
+
 ## 0.4.0
 
 ### Minor Changes
