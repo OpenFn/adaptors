@@ -70,63 +70,35 @@ export function get(name, query = {}) {
     }
     const {
       key = '*',
-      pageSize = 1000, // this is the backend default. Defaulting it means we can always respect the user limit
-      limit = Infinity,
-      ...finalQuery
+      limit,
+      pageSize,
+      ...userQuery
     } = expandQuery(resolvedQuery);
 
     console.log(`Collections: Downloading data from "${name}"...`);
     let data;
 
-    // request many
-    if (key.match(/\*/) || Object.keys(finalQuery).length) {
+    // Request multiple mode if the query includes a wildcard or time filters
+    if (key.match(/\*/) || Object.keys(userQuery).length) {
       data = [];
-      let cursor = query.cursor;
-      let count = 0;
 
-      do {
-        let batchSize = 0;
-        const q = {
-          key,
-          ...finalQuery,
+      // scope the state to preserve data
+      const scopedState = {
+        ...state,
+        data: {},
+      };
 
-          // Server-side limit is the number of items in a page
-          limit:
-            limit < Infinity
-              ? // if the user requested a limit, ensure we don't get more than this
-                Math.min(pageSize, limit - count)
-              : // Otherwise the limit is the user-specified page size
-                pageSize,
-        };
-
-        if (cursor) {
-          q.cursor = cursor;
-        }
-        const response = await request(state, getClient(state), resolvedName, {
-          query: q,
-        });
-
-        // build a response array
-        cursor = await streamResponse(response, item => {
-          batchSize++;
-          item.value = JSON.parse(item.value);
-          data.push(item);
-        });
-        count += batchSize;
-
-        // TODO maybe only do this while paging?
-        console.log(
-          `Collections: Fetched chunk of ${batchSize} values from "${name}"`
-        );
-      } while (cursor && count < limit);
+      await each(name, resolvedQuery, (state, value, key) => {
+        data.push({ value, key });
+      })(scopedState);
 
       console.log(
         `Collections: Fetched total of ${data.length} values from "${name}"`
       );
 
-      data.cursor = cursor;
+      data.cursor = scopedState.data.cursor;
     }
-    // request one
+    // Otherwise request single mode
     else {
       const response = await request(
         state,
@@ -291,14 +263,47 @@ export function each(name, query = {}, callback = () => {}) {
       q = resolvedQuery;
     }
 
-    const { key, ...rest } = expandQuery(resolvedQuery);
-    const response = await request(state, getClient(state), resolvedName, {
-      query: q,
-    });
+    const {
+      key = '*',
+      pageSize = 1000, // this is the backend default. Defaulting it means we can always respect the user limit
+      limit = Infinity,
+      ...finalQuery
+    } = expandQuery(resolvedQuery);
+    let { cursor } = resolvedQuery;
 
-    const cursor = await streamResponse(response, async ({ value, key }) => {
-      await callback(state, JSON.parse(value), key);
-    });
+    let count = 0;
+    do {
+      let batchSize = 0;
+      const q = {
+        ...finalQuery,
+        key,
+        // Server-side limit is the number of items in a page
+        limit:
+          limit < Infinity
+            ? // if the user requested a limit, ensure we don't get more than this
+              Math.min(pageSize, limit - count)
+            : // Otherwise the limit is the user-specified page size
+              pageSize,
+      };
+
+      if (cursor) {
+        q.cursor = cursor;
+      }
+      const response = await request(state, getClient(state), resolvedName, {
+        query: q,
+      });
+
+      // build a response array
+      cursor = await streamResponse(response, async ({ key, value }) => {
+        batchSize++;
+        await callback(state, JSON.parse(value), key);
+      });
+      count += batchSize;
+
+      console.log(
+        `Collections: fetched chunk of ${batchSize} values from "${name}"`
+      );
+    } while (cursor && count < limit);
 
     state.data = {
       cursor,

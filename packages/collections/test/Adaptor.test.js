@@ -89,7 +89,7 @@ describe('each', () => {
     expect(count).to.eql(1);
   });
 
-  it('should iterate over some with an object query', async () => {
+  it('should iterate over some items with an object query', async () => {
     const { state } = init([
       ['az', { id: 'a' }],
       ['bz', { id: 'b' }],
@@ -105,6 +105,28 @@ describe('each', () => {
     })(state);
 
     expect(count).to.eql(1);
+  });
+
+  it('should respect the item limit', async () => {
+    const { state } = init([
+      ['bz1', { id: 'a' }],
+      ['bz2', { id: 'b' }],
+      ['bz3', { id: 'c' }],
+      ['bz4', { id: 'd' }],
+    ]);
+
+    let count = 0;
+
+    await collections.each(
+      COLLECTION,
+      { key: 'b*', limit: 2 },
+      (_state, value, key) => {
+        count++;
+        expect(key).to.match(/(bz1|bz2)/);
+      }
+    )(state);
+
+    expect(count).to.eql(2);
   });
 
   it('should support an async callback', async () => {
