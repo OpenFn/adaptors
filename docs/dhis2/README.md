@@ -14,6 +14,13 @@ core execute \
  -o ./tmp/output.json
 ```
 
+> **Important Note:**  
+> This adaptor uses the old tracker version and is only compatible with DHIS2
+> API versions before 42 (2.42). For later API versions and the new tracker, use
+> adaptor 6.0+. See
+> [DHIS2 documentation](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html)
+> for more information.
+
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/dhis2-docs) for

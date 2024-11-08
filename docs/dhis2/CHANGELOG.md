@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 5.0.7
+
+### Patch Changes
+
+- 6cb5377: Removed support for DHIS2 v42
+
 ## 5.0.6
 
 ### Patch Changes
