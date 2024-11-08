@@ -35,6 +35,12 @@ export function execute(...operations) {
   };
 
   return state => {
+    const version = state.configuration?.apiVersion;
+    if (+version >= 42)
+      console.warn(
+        `WARNING: This adaptor is incompatible with DHIS2 API version 42+. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html.`
+      );
+
     return commonExecute(
       configMigrationHelper,
       ...operations
@@ -504,7 +510,6 @@ export function upsert(
 
     // NOTE: that these parameters are all expanded by the `get`, `create`, and
     // `update` functions used inside this composed "upsert" function.
-
     return get(
       resourceType,
       query,
