@@ -146,7 +146,7 @@ axios.interceptors.response.use(
  *   orgUnit: 'DiszpKrYNg8',
  *   status: 'COMPLETED',
  * });
- * @example <caption>a trackedEntityInstance</caption>
+ * @example <caption>a trackedEntityInstance. Create a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
  * create('trackedEntityInstances', {
  *   orgUnit: 'TSyzvBiovKh',
  *   trackedEntityType: 'nEenWmSyUEp',
@@ -229,20 +229,45 @@ export function create(resourceType, data, options = {}, callback = false) {
   return state => {
     console.log(`Preparing create operation...`);
 
+    let mappedOptions;
+
+    if (shouldUseNewTracker(resourceType)) {
+      mappedOptions = {
+        ...options,
+        importStrategy: 'CREATE',
+      };
+    } else {
+      mappedOptions = options;
+    }
+
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const resolvedOptions = expandReferences(mappedOptions)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    return request(configuration, {
-      method: 'post',
-      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params,
-      data: nestArray(resolvedData, resolvedResourceType),
-      ...requestConfig,
-    }).then(result => {
+    let promise;
+    if (shouldUseNewTracker(resourceType)) {
+      promise = callNewTracker(
+        'create',
+        configuration,
+        resolvedOptions,
+        nestArray(resolvedData, resolvedResourceType),
+        params,
+        requestConfig
+      );
+    } else {
+      promise = request(configuration, {
+        method: 'post',
+        url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
+        params,
+        data: nestArray(resolvedData, resolvedResourceType),
+        ...requestConfig,
+      });
+    }
+
+    return promise.then(result => {
       const details = `with response ${JSON.stringify(result.data, null, 2)}`;
       console.log(`Created ${resolvedResourceType} ${details}`);
 
@@ -278,6 +303,46 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   status: 'COMPLETED',
  *   storedBy: 'admin',
  *   dataValues: [],
+ * });
+ * @example <caption>a trackedEntityInstance. Update a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
+ * update('trackedEntityInstances', '', {
+ *   created: '2015-08-06T21:12:37.256',
+ *   orgUnit: 'TSyzvBiovKh',
+ *   createdAtClient: '2015-08-06T21:12:37.256',
+ *   trackedEntityInstance: 'IeQfgUtGPq2',
+ *   lastUpdated: '2015-08-06T21:12:37.257',
+ *   trackedEntityType: 'nEenWmSyUEp',
+ *   inactive: false,
+ *   deleted: false,
+ *   featureType: 'NONE',
+ *   programOwners: [
+ *     {
+ *       ownerOrgUnit: 'TSyzvBiovKh',
+ *       program: 'IpHINAT79UW',
+ *       trackedEntityInstance: 'IeQfgUtGPq2',
+ *     },
+ *   ],
+ *   enrollments: [],
+ *   relationships: [],
+ *   attributes: [
+ *     {
+ *       lastUpdated: '2016-01-12T00:00:00.000',
+ *       displayName: 'Last name',
+ *       created: '2016-01-12T00:00:00.000',
+ *       valueType: 'TEXT',
+ *       attribute: 'zDhUuAYrxNC',
+ *       value: 'Russell',
+ *     },
+ *     {
+ *       lastUpdated: '2016-01-12T00:00:00.000',
+ *       code: 'MMD_PER_NAM',
+ *       displayName: 'First name',
+ *       created: '2016-01-12T00:00:00.000',
+ *       valueType: 'TEXT',
+ *       attribute: 'w75KJ2mc4zz',
+ *       value: 'Catherine',
+ *     },
+ *   ],
  * });
  * @example <caption>a dataSet</caption>
  * update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });
@@ -357,26 +422,51 @@ export function update(
   return state => {
     console.log(`Preparing update operation...`);
 
+    let mappedOptions;
+
+    if (shouldUseNewTracker(resourceType)) {
+      mappedOptions = {
+        ...options,
+        importStrategy: 'UPDATE',
+      };
+    } else {
+      mappedOptions = options;
+    }
+
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedPath = expandReferences(path)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const resolvedOptions = expandReferences(mappedOptions)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    return request(configuration, {
-      method: 'put',
-      url: generateUrl(
+    let promise;
+    if (shouldUseNewTracker(resourceType)) {
+      promise = callNewTracker(
+        'update',
         configuration,
         resolvedOptions,
-        resolvedResourceType,
-        path
-      ),
-      params,
-      data: resolvedData,
-      ...requestConfig,
-    }).then(result => {
+        resolvedData,
+        params,
+        requestConfig
+      );
+    } else {
+      promise = request(configuration, {
+        method: 'put',
+        url: generateUrl(
+          configuration,
+          resolvedOptions,
+          resolvedResourceType,
+          path
+        ),
+        options,
+        data: resolvedData,
+        ...requestConfig,
+      });
+    }
+
+    return promise.then(result => {
       console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
@@ -662,7 +752,7 @@ export function patch(
  * @param {{apiVersion: number,operationName: string,resourceType: string}} [options] - Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>a tracked entity instance</caption>
+ * @example <caption>a tracked entity instance. Delete a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}</caption>
  * destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
  */
 export function destroy(
@@ -674,27 +764,50 @@ export function destroy(
 ) {
   return state => {
     console.log('Preparing destroy operation...');
+    let mappedOptions;
+    if (shouldUseNewTracker(resourceType)) {
+      mappedOptions = {
+        ...options,
+        importStrategy: 'UPDATE',
+      };
+    } else {
+      mappedOptions = options;
+    }
 
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedPath = expandReferences(path)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const resolvedOptions = expandReferences(mappedOptions)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    return request({
-      method: 'delete',
-      url: generateUrl(
+    let promise;
+    if (shouldUseNewTracker(resourceType)) {
+      promise = callNewTracker(
+        'delete',
         configuration,
         resolvedOptions,
-        resolvedResourceType,
-        resolvedPath
-      ),
-      params,
-      resolvedData,
-      ...requestConfig,
-    }).then(result => {
+        null,
+        params,
+        requestConfig
+      );
+    } else {
+      promise = request({
+        method: 'delete',
+        url: generateUrl(
+          configuration,
+          resolvedOptions,
+          resolvedResourceType,
+          resolvedPath
+        ),
+        params,
+        resolvedData,
+        ...requestConfig,
+      });
+    }
+
+    return promise.then(result => {
       console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
       return handleResponse(result, state, callback);
     });
@@ -746,6 +859,27 @@ export function attr(attribute, value) {
  */
 export function dv(dataElement, value) {
   return { dataElement, value };
+}
+
+export function shouldUseNewTracker(resourceType) {
+  return resourceType === 'trackedEntityInstances';
+}
+
+export function callNewTracker(
+  type = 'update',
+  configuration,
+  resolvedOptions,
+  resolvedData = null,
+  params,
+  requestConfig
+) {
+  return request(configuration, {
+    method: 'post',
+    url: generateUrl(configuration, resolvedOptions, 'tracker'),
+    params,
+    data: type !== 'delete' ? resolvedData : {},
+    ...requestConfig,
+  });
 }
 
 export {

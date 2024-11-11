@@ -88,7 +88,7 @@
           {
             "title": "example",
             "description": "create('trackedEntityInstances', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "a trackedEntityInstance"
+            "caption": "a trackedEntityInstance. Create a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
           },
           {
             "title": "example",
@@ -227,8 +227,8 @@
           },
           {
             "title": "example",
-            "description": "update('trackedEntityInstances', 'IeQfgUtGPq2', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
-            "caption": "a trackedEntityInstance"
+            "description": "update('trackedEntityInstances', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
+            "caption": "a trackedEntityInstance. Update a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
             "title": "example",
@@ -283,7 +283,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`",
+        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`",
         "tags": [
           {
             "title": "public",
@@ -297,7 +297,7 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc.",
+            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -357,8 +357,23 @@
           },
           {
             "title": "example",
-            "description": "get('trackedEntityInstances', {\n  ou: 'DiszpKrYNg8',\n  filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],\n});",
-            "caption": "a single tracked entity instance by a unique external ID"
+            "description": "get('tracker/trackedEntities', {\n  trackedEntities:['F8yKM85NbxW'],\n});",
+            "caption": "a single tracked entity instance by a unique entity ID. Either `program`, `trackedEntityType` or `trackedEntities` should be specified in the params. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/enrollments/abcd');",
+            "caption": "a single enrollment tracker entity instance by a unique enrolment ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/events');",
+            "caption": "Get all events tracker entities instances. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/relationships', {\n  trackedEntity:['F8yKM85NbxW'],\n});",
+            "caption": "Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}"
           }
         ]
       },
