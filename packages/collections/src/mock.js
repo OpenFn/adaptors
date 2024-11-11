@@ -25,7 +25,9 @@ export function API() {
     collections[name][key] = value;
   };
 
-  const fetch = (name, key, query) => {
+  const fetch = (name, key, query = {}) => {
+    const { cursor = 0, limit = Infinity } = query;
+
     if (!(name in collections)) {
       throw new Error(COLLECTION_NOT_FOUND);
     }
@@ -33,17 +35,35 @@ export function API() {
     const col = collections[name];
     const items = [];
 
+    let idx = 0;
+    let count = 0;
+
     const regex = new RegExp(key.replace('*', '(.*)'));
     for (const key in col) {
-      if (regex.test(key)) {
-        items.push({
-          key,
-          value: col[key],
-        });
+      if (idx >= cursor) {
+        if (regex.test(key)) {
+          count++;
+          items.push({
+            key,
+            value: col[key],
+          });
+        }
+      }
+      idx++;
+
+      if (count >= limit) {
+        break;
       }
     }
 
-    return { items };
+    const result = { items, count };
+
+    // If there are more items, include a cursor
+    // (this isn't super accurate because it doesn't take filters into account)
+    if (idx < Object.keys(col).length) {
+      result.cursor = idx;
+    }
+    return result;
   };
 
   // internal dev only api
@@ -148,10 +168,15 @@ export function createServer(url = 'https://app.openfn.org') {
         // TODO a little confused about undici's handling of query
         const params = new URLSearchParams(req.query || req.path.split('?')[1]);
         key = params.get('key') ?? '*';
+        const limit = params.get('limit') ?? Infinity;
+        const cursor = params.get('cursor') ?? 0;
 
-        const { items } = api.fetch(name, key);
+        const { items, cursor: finalCursor } = api.fetch(name, key, {
+          limit,
+          cursor,
+        });
         body = {
-          cursor: ['xxx'], // TODO what will we do about cursor?
+          cursor: (finalCursor && `${finalCursor}`) ?? null, // TODO maybe base64 encode?
           items,
         };
       }

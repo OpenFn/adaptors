@@ -15,9 +15,10 @@ core execute \
 ```
 
 > **Important Note:**  
-> This adaptor uses the old tracker version. For the new version, use adaptor 6.0+. The
-> Any API version less than 42 WILL work. See
-> [dhis2 documentation](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html)
+> This adaptor uses the old tracker version and is only compatible with DHIS2
+> API versions before 42 (2.42). For later API versions and the new tracker, use
+> adaptor 6.0+. See
+> [DHIS2 documentation](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html)
 > for more information.
 
 ## Documentation

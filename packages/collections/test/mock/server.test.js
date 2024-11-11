@@ -96,6 +96,29 @@ describe('GET', () => {
 
     expect(results).to.eql([{ key: 'az', value: 'z' }]);
   });
+
+  it('should limit and offset results and return a cursor', async () => {
+    api.createCollection('my-collection');
+
+    api.upsert('my-collection', 'x', 'xx');
+    api.upsert('my-collection', 'y', 'yy');
+    api.upsert('my-collection', 'z', 'zz');
+
+    const response = await request({
+      method: 'GET',
+      path: 'collections/my-collection',
+      query: {
+        limit: 1,
+        cursor: 1,
+      },
+    });
+    const results = [];
+
+    const cursor = await streamResponse(response, item => results.push(item));
+
+    expect(results).to.eql([{ key: 'y', value: 'yy' }]);
+    expect(cursor).to.equal('2');
+  });
 });
 
 describe('POST', () => {

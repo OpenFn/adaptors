@@ -89,7 +89,7 @@ describe('each', () => {
     expect(count).to.eql(1);
   });
 
-  it('should iterate over some with an object query', async () => {
+  it('should iterate over some items with an object query', async () => {
     const { state } = init([
       ['az', { id: 'a' }],
       ['bz', { id: 'b' }],
@@ -105,6 +105,28 @@ describe('each', () => {
     })(state);
 
     expect(count).to.eql(1);
+  });
+
+  it('should respect the item limit', async () => {
+    const { state } = init([
+      ['bz1', { id: 'a' }],
+      ['bz2', { id: 'b' }],
+      ['bz3', { id: 'c' }],
+      ['bz4', { id: 'd' }],
+    ]);
+
+    let count = 0;
+
+    await collections.each(
+      COLLECTION,
+      { key: 'b*', limit: 2 },
+      (_state, value, key) => {
+        count++;
+        expect(key).to.match(/(bz1|bz2)/);
+      }
+    )(state);
+
+    expect(count).to.eql(2);
   });
 
   it('should support an async callback', async () => {
@@ -126,9 +148,9 @@ describe('each', () => {
       ['cz', { id: 'c' }],
     ]);
 
-    await collections.each(COLLECTION, '*')(state);
+    await collections.each(COLLECTION, { key: '*', limit: 1 })(state);
 
-    expect(state.data.cursor).to.equal('xxx');
+    expect(state.data.cursor).to.equal('1');
   });
 });
 
@@ -181,6 +203,62 @@ describe('get', () => {
     expect(result.data[2].key).to.eql('c');
   });
 
+  it('should get all items across multiple pages', async () => {
+    const items = new Array(200)
+      .fill(0)
+      .map((_v, idx) => [`${idx}`, { v: idx }]);
+    const { state } = init(items);
+
+    const result = await collections.get(COLLECTION, {
+      query: '*',
+      pageSize: 30,
+    })(state);
+
+    expect(result.data.length).to.equal(200);
+    const allKeys = items.map(i => i[0]);
+    const returnedKeys = result.data.map(v => v.key);
+
+    expect(allKeys).to.eql(returnedKeys);
+  });
+
+  it('should get some items across multiple pages (but not a full final page)', async () => {
+    const items = new Array(200)
+      .fill(0)
+      .map((_v, idx) => [`${idx}`, { v: idx }]);
+    const { state } = init(items);
+
+    const result = await collections.get(COLLECTION, {
+      query: '*',
+      pageSize: 100,
+      limit: 150,
+    })(state);
+
+    expect(result.data.length).to.equal(150);
+
+    const allKeys = items.slice(0, 150).map(i => i[0]);
+    const returnedKeys = result.data.map(v => v.key);
+
+    expect(allKeys).to.eql(returnedKeys);
+  });
+
+  // TODO query must default to *
+
+  it('should get with a limit', async () => {
+    const { state } = init([
+      ['a', { id: 'a' }],
+      ['b', { id: 'b' }],
+      ['c', { id: 'c' }],
+    ]);
+
+    const result = await collections.get(COLLECTION, { key: '*', limit: 2 })(
+      state
+    );
+
+    expect(result.data.length).to.equal(2);
+    expect(result.data[0].key).to.eql('a');
+    expect(result.data[1].key).to.eql('b');
+  });
+
   it('should get some items', async () => {
     const { state } = init([
       ['a-1', { id: 'a' }],
@@ -205,10 +283,11 @@ describe('get', () => {
       ['c-3', { id: 'c' }],
     ]);
 
-    const result = await collections.get(COLLECTION, 'b*')(state);
+    const result = await collections.get(COLLECTION, { key: 'b*', limit: 1 })(
+      state
+    );
 
-    // TODO this is a dummy mock cursor
-    expect(result.data.cursor).to.eql('xxx');
+    expect(result.data.cursor).to.eql('2');
   });
 
   it('should expand references', async () => {
@@ -336,15 +415,11 @@ describe('utils', () => {
     const input = {
       createdBefore: '1',
       createdAfter: '1',
-      updatedBefore: '1',
-      updatedAfter: '1',
     };
     const mapped = collections.parseQuery({ query: input });
     expect(mapped).to.eql({
       created_before: '1',
       created_after: '1',
-      updated_before: '1',
-      updated_after: '1',
     });
   });
 
