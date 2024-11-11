@@ -279,46 +279,6 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   storedBy: 'admin',
  *   dataValues: [],
  * });
- * @example <caption>a trackedEntityInstance</caption>
- * update('trackedEntityInstances', 'IeQfgUtGPq2', {
- *   created: '2015-08-06T21:12:37.256',
- *   orgUnit: 'TSyzvBiovKh',
- *   createdAtClient: '2015-08-06T21:12:37.256',
- *   trackedEntityInstance: 'IeQfgUtGPq2',
- *   lastUpdated: '2015-08-06T21:12:37.257',
- *   trackedEntityType: 'nEenWmSyUEp',
- *   inactive: false,
- *   deleted: false,
- *   featureType: 'NONE',
- *   programOwners: [
- *     {
- *       ownerOrgUnit: 'TSyzvBiovKh',
- *       program: 'IpHINAT79UW',
- *       trackedEntityInstance: 'IeQfgUtGPq2',
- *     },
- *   ],
- *   enrollments: [],
- *   relationships: [],
- *   attributes: [
- *     {
- *       lastUpdated: '2016-01-12T00:00:00.000',
- *       displayName: 'Last name',
- *       created: '2016-01-12T00:00:00.000',
- *       valueType: 'TEXT',
- *       attribute: 'zDhUuAYrxNC',
- *       value: 'Russell',
- *     },
- *     {
- *       lastUpdated: '2016-01-12T00:00:00.000',
- *       code: 'MMD_PER_NAM',
- *       displayName: 'First name',
- *       created: '2016-01-12T00:00:00.000',
- *       valueType: 'TEXT',
- *       attribute: 'w75KJ2mc4zz',
- *       value: 'Catherine',
- *     },
- *   ],
- * });
  * @example <caption>a dataSet</caption>
  * update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });
  * @example <caption>a dataSetNotification</caption>
@@ -425,10 +385,10 @@ export function update(
 
 /**
  * Get data. Generic helper method for getting data of any kind from DHIS2.
- * - This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
+ * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
  * @public
  * @function
- * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc.
+ * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
  * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
  * @param {function} [callback]  - Optional callback to handle the response
@@ -442,10 +402,17 @@ export function update(
  * });
  * @example <caption>all programs for an organization unit</caption>
  * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
- * @example <caption>a single tracked entity instance by a unique external ID</caption>
- * get('trackedEntityInstances', {
- *   ou: 'DiszpKrYNg8',
- *   filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],
+ * @example <caption>a single tracked entity instance by a unique entity ID. Either `program`, `trackedEntityType` or `trackedEntities` should be specified in the params. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}</caption>
+ * get('tracker/trackedEntities', {
+ *   trackedEntities:['F8yKM85NbxW'],
+ * });
+ * @example <caption>a single enrollment tracker entity instance by a unique enrolment ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}</caption>
+ * get('tracker/enrollments/abcd');
+ * @example <caption>Get all events tracker entities instances. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}</caption>
+ * get('tracker/events');
+ * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}</caption>
+ * get('tracker/relationships', {
+ *   trackedEntity:['F8yKM85NbxW'],
  * });
  */
 export function get(resourceType, query, options = {}, callback = false) {
