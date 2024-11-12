@@ -467,28 +467,26 @@ export function post(path, data, options = {}) {
 }
 
 /**
- * Execute an SOQL query.
- * Note that in an event of a query error,
- * error logs will be printed but the operation will not throw the error.
+ * Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
+ * This operation allows querying Salesforce objects using SOQL syntax and handles pagination.
+ * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
+ *
  * @public
  * @example <caption>Query more records if next records are available</caption>
  * query('SELECT Id FROM Patient__c', { autoFetch: true });
  * @example <caption>Query patients by Health ID</caption>
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
+ * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
- * @param {object} options - Options passed to the bulk api.
- * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
- * @param {function} callback - A callback to execute once the record is retrieved
-<<<<<<< HEAD
-=======
- * @state {SalesforceState}
->>>>>>> 1ece1ff1 (update examples)
- * @returns {Operation}
+ * @param {string|function} qs - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
+ * @param {object} [options] - Optional configuration for the query operation
+ * @param {boolean} [options.autoFetch=false] - When true, automatically fetches next batch of records if available
+ * @param {function} [callback] - Optional callback function to execute for each retrieved record
+ * @state {SalesforceState} - The Salesforce connection state
+ * @returns {Operation} Returns an Operation object containing the query results and metadata
  */
 export function query(qs, options = {}, callback = s => s) {
   return async state => {

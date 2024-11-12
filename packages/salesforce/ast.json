@@ -504,7 +504,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation allows querying Salesforce objects using SOQL syntax and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
         "tags": [
           {
             "title": "public",
@@ -518,7 +518,7 @@
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "description": "query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
             "caption": "Query patients by Health ID"
           },
           {
@@ -533,25 +533,37 @@
           },
           {
             "title": "param",
-            "description": "A query string. Must be less than `4000` characters in WHERE clause",
+            "description": "A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "function"
+                }
+              ]
             },
             "name": "qs"
           },
           {
             "title": "param",
-            "description": "Options passed to the bulk api.",
+            "description": "Optional configuration for the query operation",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
           {
             "title": "param",
-            "description": "Fetch next records if available.",
+            "description": "When true, automatically fetches next batch of records if available",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -564,20 +576,23 @@
           },
           {
             "title": "param",
-            "description": "A callback to execute once the record is retrieved\n<<<<<<< HEAD\n=======",
+            "description": "Optional callback function to execute for each retrieved record",
             "type": {
-              "type": "NameExpression",
-              "name": "function"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
             },
             "name": "callback"
           },
           {
             "title": "state",
-            "description": "{SalesforceState}\n>>>>>>> 1ece1ff1 (update examples)"
+            "description": "{SalesforceState} - The Salesforce connection state"
           },
           {
             "title": "returns",
-            "description": null,
+            "description": "Returns an Operation object containing the query results and metadata",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
