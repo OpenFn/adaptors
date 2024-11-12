@@ -231,7 +231,7 @@ export function create(resourceType, data, options = {}, callback = false) {
 
     let mappedOptions;
 
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       mappedOptions = {
         ...options,
         importStrategy: 'CREATE',
@@ -248,7 +248,7 @@ export function create(resourceType, data, options = {}, callback = false) {
     const { configuration } = state;
 
     let promise;
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       promise = callNewTracker(
         'create',
         configuration,
@@ -424,7 +424,7 @@ export function update(
 
     let mappedOptions;
 
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       mappedOptions = {
         ...options,
         importStrategy: 'UPDATE',
@@ -442,7 +442,7 @@ export function update(
     const { configuration } = state;
 
     let promise;
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       promise = callNewTracker(
         'update',
         configuration,
@@ -542,10 +542,10 @@ export function get(resourceType, query, options = {}, callback = false) {
  * @returns {Operation}
  * @example <caption>Example `expression.js` of upsert</caption>
  * upsert('trackedEntityInstances', {
- *  ou: 'TSyzvBiovKh',
+ *  orgUnits: 'TSyzvBiovKh',
  *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
  * }, {
- *  orgUnit: 'TSyzvBiovKh',
+ *  orgUnits: 'TSyzvBiovKh',
  *  trackedEntityType: 'nEenWmSyUEp',
  *  attributes: [
  *    {
@@ -565,33 +565,52 @@ export function upsert(
   return state => {
     console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
 
-    // NOTE: that these parameters are all expanded by the `get`, `create`, and
-    // `update` functions used inside this composed "upsert" function.
-    return get(
-      resourceType,
-      query,
-      options
-    )(state)
-      .then(resp => {
-        const resources = resp.data[resourceType];
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          return create(resourceType, data, options)(state);
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          // by the `selectId(...)` function.
-          const path = resources[0][selectId(resourceType)];
-          return update(resourceType, path, data, options)(state);
-        }
-      })
-      .then(result => {
-        console.log(`Performed a "composed upsert" on ${resourceType}`);
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedOptions = expandReferences(options)(state);
+    const resolvedData = expandReferences(data)(state);
+    if (shouldUseNewTracker(resolvedResourceType)) {
+      const { params, requestConfig } = resolvedOptions;
+      const { configuration } = state;
+      return callNewTracker(
+        'create',
+        configuration,
+        { importStrategy: 'CREATE_AND_UPDATE' },
+        nestArray(resolvedData, resolvedResourceType),
+        params,
+        requestConfig
+      ).then(result => {
+        console.log(`Performed a "composed upsert" on ${resolvedResourceType}`);
         return handleResponse(result, state, callback);
       });
+    } else {
+      // NOTE: that these parameters are all expanded by the `get`, `create`, and
+      // `update` functions used inside this composed "upsert" function.
+      return get(
+        resourceType,
+        query,
+        options
+      )(state)
+        .then(resp => {
+          const resources = resp.data[resourceType];
+          if (resources.length > 1) {
+            throw new RangeError(
+              `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+            );
+          } else if (resources.length <= 0) {
+            return create(resourceType, data, options)(state);
+          } else {
+            // Pick out the first (and only) resource in the array and grab its
+            // ID to be used in the subsequent `update` by the path determined
+            // by the `selectId(...)` function.
+            const path = resources[0][selectId(resourceType)];
+            return update(resourceType, path, data, options)(state);
+          }
+        })
+        .then(result => {
+          console.log(`Performed a "composed upsert" on ${resourceType}`);
+          return handleResponse(result, state, callback);
+        });
+    }
   };
 }
 
@@ -765,7 +784,7 @@ export function destroy(
   return state => {
     console.log('Preparing destroy operation...');
     let mappedOptions;
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       mappedOptions = {
         ...options,
         importStrategy: 'DELETE',
@@ -783,7 +802,7 @@ export function destroy(
     const { configuration } = state;
 
     let promise;
-    if (shouldUseNewTracker(resourceType)) {
+    if (shouldUseNewTracker(resolvedResourceType)) {
       promise = callNewTracker(
         'delete',
         configuration,
@@ -862,22 +881,29 @@ export function dv(dataElement, value) {
 }
 
 export function shouldUseNewTracker(resourceType) {
-  return resourceType === 'trackedEntityInstances';
+  return (
+    resourceType === 'trackedEntityInstances' ||
+    resourceType === 'tracker' ||
+    resourceType === 'tracker/trackedEntities' ||
+    resourceType === 'tracker/enrollments' ||
+    resourceType === 'tracker/relationships' ||
+    resourceType === 'tracker/events'
+  );
 }
 
 export function callNewTracker(
   type = 'update',
   configuration,
-  resolvedOptions,
-  resolvedData = null,
+  options,
+  data = null,
   params,
   requestConfig
 ) {
   return request(configuration, {
     method: 'post',
-    url: generateUrl(configuration, resolvedOptions, 'tracker'),
+    url: generateUrl(configuration, options, 'tracker'),
     params,
-    data: type !== 'delete' ? resolvedData : {},
+    data: type !== 'delete' ? data : {},
     ...requestConfig,
   });
 }
