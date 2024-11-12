@@ -68,73 +68,9 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BulkOptions"
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "External id field.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.extIdField"
-          },
-          {
-            "title": "param",
-            "description": "Skipping bulk operation if no records.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.allowNoOp",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "Fail the operation on error.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.failOnError",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "6000"
-          },
-          {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "240000"
           },
           {
             "title": "state",
@@ -150,7 +86,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "bulkQuery",
@@ -200,35 +136,9 @@
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BulkQueryOptions"
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "90000"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "3000"
           },
           {
             "title": "state",
@@ -244,7 +154,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "create",
@@ -434,6 +344,64 @@
       "valid": true
     },
     {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a GET HTTP request using connected session information.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow');",
+            "caption": "Make a GET request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint, Relative to request from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "insert",
       "params": [
         "sObjectName",
@@ -479,6 +447,74 @@
               "name": "object"
             },
             "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a POST HTTP request using connected session information.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint, Relative to request from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "A JSON Object request body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
           },
           {
             "title": "state",
@@ -556,23 +592,10 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "QueryOptions"
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "When true, automatically fetches next batch of records if available",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.autoFetch",
-            "default": "false"
           },
           {
             "title": "param",
@@ -588,11 +611,11 @@
           },
           {
             "title": "state",
-            "description": "{SalesforceState} - The Salesforce connection state"
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
-            "description": "Returns an Operation object containing the query results and metadata",
+            "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -600,7 +623,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsert",
@@ -819,6 +842,64 @@
             "type": {
               "type": "NameExpression",
               "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a HTTP request using connected session information.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  method: \"POST\",\n  json: { inputs: [{}] },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint, Relative to request from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "SalesforceRequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

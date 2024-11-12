@@ -18,6 +18,48 @@
  * @property references - History of all previous operations results
  **/
 
+/**
+ * Options provided to the Salesforce HTTP request
+ * @typedef {Object} SalesforceRequestOptions
+ * @public
+ * @property {string} [method=GET] - HTTP method to use. Defaults to GET
+ * @property {object} headers - Object of request headers
+ * @property {object} query - Object request query
+ * @property {object} json - Object request body
+ * @property {string} body - A string request body
+ */
+
+/**
+ * @typedef {Object} RequestOptions
+ * @public
+ * @property {object} headers - Object of request headers
+ * @property {object} query - Object of request query
+ * */
+
+/**
+ * Options provided to the Salesforce bulk API request
+ * @typedef {Object} BulkOptions
+ * @public
+ * @property {string} extIdField - External id field.
+ * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records. Default: false
+ * @property {boolean} [failOnError=false] - Fail the operation on error. Default: false
+ * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
+ * @property {integer} [pollInterval=6000] - Polling interval in milliseconds.
+ */
+
+/**
+ * Options provided to the Salesforce bulk query API request
+ * @typedef {Object} BulkQueryOptions
+ * @property {integer} [pollTimeout=90000] - Polling timeout in milliseconds.
+ * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
+ * */
+
+/**
+ * @typedef {Object} QueryOptions
+ * @public
+ * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available
+ * */
+
 import {
   execute as commonExecute,
   composeNextState,
@@ -97,12 +139,7 @@ export function execute(...operations) {
  * @param {string} sObjectName - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
  * @param {array} records - an array of records, or a function which returns an array.
- * @param {object} options - Options passed to the bulk api.
- * @param {string} [options.extIdField] - External id field.
- * @param {boolean} [options.allowNoOp=false] - Skipping bulk operation if no records.
- * @param {boolean} [options.failOnError=false] - Fail the operation on error.
- * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
- * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
+ * @param {BulkOptions} options - Options passed to the bulk api.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -218,9 +255,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
  * );
  * @function
  * @param {string} qs - A query string.
- * @param {object} options - Options passed to the bulk api.
- * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
- * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
+ * @param {BulkQueryOptions} options - Options passed to the bulk api.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -378,12 +413,12 @@ export function destroy(sObjectName, ids, options = {}) {
 
 /**
  * Send a GET HTTP request using connected session information.
+ * @public
  * @example <caption>Make a GET request to a custom Salesforce flow</caption>
  * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+ * @function
  * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {object} options - Request options
- * @param {object} [options.headers] - Object of request headers
- * @param {object} [options.query] - A JSON Object request body
+ * @param {RequestOptions} options - Request options
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -428,14 +463,13 @@ export function insert(sObjectName, records) {
 
 /**
  * Send a POST HTTP request using connected session information.
- *
+ * @public
  * @example <caption>Make a POST request to a custom Salesforce flow</caption>
  * post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });
+ * @function
  * @param {string} path - The Salesforce API endpoint, Relative to request from
  * @param {object} data - A JSON Object request body
- * @param {object} options - Request options
- * @param {object} [options.headers] - Object of request headers
- * @param {object} [options.query] - A JSON Object request body
+ * @param {RequestOptions} options - Request options
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -481,12 +515,11 @@ export function post(path, data, options = {}) {
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {string|function} qs - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
- * @param {object} [options] - Optional configuration for the query operation
- * @param {boolean} [options.autoFetch=false] - When true, automatically fetches next batch of records if available
+ * @param {(string|function)} qs - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
+ * @param {QueryOptions} [options] - Optional configuration for the query operation
  * @param {function} [callback] - Optional callback function to execute for each retrieved record
- * @state {SalesforceState} - The Salesforce connection state
- * @returns {Operation} Returns an Operation object containing the query results and metadata
+ * @state {SalesforceState}
+ * @returns {Operation}
  */
 export function query(qs, options = {}, callback = s => s) {
   return async state => {
@@ -656,18 +689,15 @@ export function toUTF8(input) {
 
 /**
  * Send a HTTP request using connected session information.
- *
- * @example
- * request('/actions/custom/flow/POC_OpenFN_Test_Flow', {
- *   method: 'POST',
+ * @public
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
+ * request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+ *   method: "POST",
  *   json: { inputs: [{}] },
  * });
- * @param {string} url - Relative to request from
- * @param {object} options - The options for the request.
- * @param {string} [options.method=GET] - HTTP method to use. Defaults to GET
- * @param {object} [options.headers] - Object of request headers
- * @param {object} [options.json] - A JSON object to send as the request body.
- * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @function
+ * @param {string} path - The Salesforce API endpoint, Relative to request from
+ * @param {SalesforceRequestOptions} options - Request options
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -679,11 +709,12 @@ export function request(path, options = {}) {
       path,
       options
     );
-    const { method = 'GET', json, body, headers } = resolvedOptions;
+    const { method = 'GET', json, body, headers, query } = resolvedOptions;
 
     const requestOptions = {
       url: resolvedPath,
       method,
+      query,
       headers: json
         ? { 'content-type': 'application/json', ...headers }
         : headers,
