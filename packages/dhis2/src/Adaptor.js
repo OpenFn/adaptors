@@ -768,7 +768,7 @@ export function destroy(
     if (shouldUseNewTracker(resourceType)) {
       mappedOptions = {
         ...options,
-        importStrategy: 'UPDATE',
+        importStrategy: 'DELETE',
       };
     } else {
       mappedOptions = options;
