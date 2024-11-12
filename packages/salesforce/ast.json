@@ -27,6 +27,11 @@
             "caption": "Bulk upsert"
           },
           {
+            "title": "example",
+            "description": "fn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", { failOnError: true }, $.accounts);",
+            "caption": "Bulk update Account records using a lazy state reference"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -132,6 +137,10 @@
             "default": "240000"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -159,12 +168,18 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-            "caption": "The results will be available on `state.data`"
+            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "caption": "Bulk query patient records where `Health_ID__c` is equal to the value in `state.data.healthId`"
           },
           {
             "title": "example",
-            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
+            "description": "bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Bulk query patient records using a lazy state reference"
+          },
+          {
+            "title": "example",
+            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);",
+            "caption": "Bulk query with custom polling options"
           },
           {
             "title": "function",
@@ -214,6 +229,10 @@
             },
             "name": "options.pollInterval",
             "default": "3000"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -275,6 +294,10 @@
             "name": "records"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -327,6 +350,10 @@
             "name": "sObjectName"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -355,7 +382,8 @@
           },
           {
             "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5'\n], { failOnError: true })"
+            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+            "caption": "Delete multiple Account records"
           },
           {
             "title": "function",
@@ -388,6 +416,10 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -449,6 +481,10 @@
             "name": "records"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -477,12 +513,18 @@
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "query('SELECT Id FROM Patient__c', { autoFetch: true });",
+            "caption": "Query more records if next records are available"
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
-            "caption": "Query more records if next records are available"
+            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "caption": "Query patients by Health ID"
+          },
+          {
+            "title": "example",
+            "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Query patients by Health ID using a lazy state reference"
           },
           {
             "title": "function",
@@ -522,12 +564,16 @@
           },
           {
             "title": "param",
-            "description": "A callback to execute once the record is retrieved",
+            "description": "A callback to execute once the record is retrieved\n<<<<<<< HEAD\n=======",
             "type": {
               "type": "NameExpression",
               "name": "function"
             },
             "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}\n>>>>>>> 1ece1ff1 (update examples)"
           },
           {
             "title": "returns",
@@ -629,6 +675,10 @@
             "description": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -706,6 +756,10 @@
             "name": "records"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -732,7 +786,8 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});",
+            "caption": "Transliterate `άνθρωποι` to `anthropoi`"
           },
           {
             "title": "param",
@@ -771,7 +826,8 @@
           },
           {
             "title": "example",
-            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
+            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');",
+            "caption": "Retrieve a specific ContentVersion record"
           },
           {
             "title": "function",
@@ -795,6 +851,10 @@
               "name": "string"
             },
             "name": "id"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",

@@ -11,6 +11,13 @@
  * @ignore
  */
 
+/**
+ * State object
+ * @typedef {Object} SalesforceState
+ * @property data - Operation results
+ * @property references - History of all previous operations results
+ **/
+
 import {
   execute as commonExecute,
   composeNextState,
@@ -80,6 +87,12 @@ export function execute(...operations) {
  *   ],
  *   { extIdField: "vera__Result_UID__c" }
  * );
+ * @example <caption>Bulk update Account records using a lazy state reference</caption>
+ * fn((state) => {
+ *   state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));
+ *   return state;
+ * });
+ * bulk("Account", "update", { failOnError: true }, $.accounts);
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
@@ -90,6 +103,7 @@ export function execute(...operations) {
  * @param {boolean} [options.failOnError=false] - Fail the operation on error.
  * @param {integer} [options.pollInterval=6000] - Polling interval in milliseconds.
  * @param {integer} [options.pollTimeout=240000] - Polling timeout in milliseconds.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function bulk(sObjectName, operation, records, options = {}) {
@@ -192,10 +206,11 @@ export function bulk(sObjectName, operation, records, options = {}) {
  * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
  * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
- * @example
- * <caption>The results will be available on `state.data`</caption>
- * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
- * @example
+ * @example <caption>Bulk query patient records where `Health_ID__c` is equal to the value in `state.data.healthId`</caption>
+ * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
+ * @example <caption>Bulk query patient records using a lazy state reference</caption>
+ * bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
+ * @example <caption>Bulk query with custom polling options</caption>
  * bulkQuery(
  *   (state) =>
  *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
@@ -206,6 +221,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
  * @param {object} options - Options passed to the bulk api.
  * @param {integer} [options.pollTimeout=90000] - Polling timeout in milliseconds.
  * @param {integer} [options.pollInterval=3000] - Polling interval in milliseconds.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function bulkQuery(qs, options = {}) {
@@ -253,6 +269,7 @@ export function bulkQuery(qs, options = {}) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {object} records - Field attributes for the new record.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function create(sObjectName, records) {
@@ -284,6 +301,7 @@ export function create(sObjectName, records) {
  * describe('Account')
  * @function
  * @param {string} [sObjectName] - The API name of the sObject. If omitted, fetches metadata for all sObjects.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function describe(sObjectName) {
@@ -313,15 +331,15 @@ export function describe(sObjectName) {
 /**
  * Delete records of an object.
  * @public
- * @example
- * destroy('obj_name', [
- *  '0060n00000JQWHYAA5',
- *  '0090n00000JQEWHYAA5'
- * ], { failOnError: true })
+ * @example <caption>Delete multiple Account records</caption>
+ * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
+ *   failOnError: true,
+ * });
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {object} ids - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function destroy(sObjectName, ids, options = {}) {
@@ -360,10 +378,13 @@ export function destroy(sObjectName, ids, options = {}) {
 
 /**
  * Send a GET HTTP request using connected session information.
- * @example
+ * @example <caption>Make a GET request to a custom Salesforce flow</caption>
  * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
  * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {object} options - Request query parameters and headers
+ * @param {object} options - Request options
+ * @param {object} [options.headers] - Object of request headers
+ * @param {object} [options.query] - A JSON Object request body
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function get(path, options = {}) {
@@ -398,6 +419,7 @@ export function get(path, options = {}) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {object} records - Field attributes for the new record.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function insert(sObjectName, records) {
@@ -407,13 +429,14 @@ export function insert(sObjectName, records) {
 /**
  * Send a POST HTTP request using connected session information.
  *
- * @example
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
  * post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });
  * @param {string} path - The Salesforce API endpoint, Relative to request from
  * @param {object} data - A JSON Object request body
  * @param {object} options - Request options
  * @param {object} [options.headers] - Object of request headers
  * @param {object} [options.query] - A JSON Object request body
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function post(path, data, options = {}) {
@@ -450,15 +473,21 @@ export function post(path, data, options = {}) {
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
  * @public
- * @example
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
  * @example <caption>Query more records if next records are available</caption>
- * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
+ * query('SELECT Id FROM Patient__c', { autoFetch: true });
+ * @example <caption>Query patients by Health ID</caption>
+ * query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
+ * @example <caption>Query patients by Health ID using a lazy state reference</caption>
+ * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
  * @param {string} qs - A query string. Must be less than `4000` characters in WHERE clause
  * @param {object} options - Options passed to the bulk api.
  * @param {boolean} [options.autoFetch=false] - Fetch next records if available.
  * @param {function} callback - A callback to execute once the record is retrieved
+<<<<<<< HEAD
+=======
+ * @state {SalesforceState}
+>>>>>>> 1ece1ff1 (update examples)
  * @returns {Operation}
  */
 export function query(qs, options = {}, callback = s => s) {
@@ -548,6 +577,7 @@ export function query(qs, options = {}, callback = s => s) {
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
  * @param {(object|object[])} records - Field attributes for the new object.
  * @magic records - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function upsert(sObjectName, externalId, records) {
@@ -588,6 +618,7 @@ export function upsert(sObjectName, externalId, records) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(object|object[])} records - Field attributes for the new object.
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function update(sObjectName, records) {
@@ -612,7 +643,7 @@ export function update(sObjectName, records) {
 /**
  * Transliterates unicode characters to their best ASCII representation
  * @public
- * @example
+ * @example <caption>Transliterate `άνθρωποι` to `anthropoi`</caption>
  * fn((state) => {
  *   const s = toUTF8("άνθρωποι");
  *   console.log(s); // anthropoi
@@ -639,6 +670,7 @@ export function toUTF8(input) {
  * @param {object} [options.headers] - Object of request headers
  * @param {object} [options.json] - A JSON object to send as the request body.
  * @param {string} [options.body] - HTTP body (in POST/PUT/PATCH methods)
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function request(path, options = {}) {
@@ -669,11 +701,12 @@ export function request(path, options = {}) {
 /**
  * Retrieves a Salesforce sObject(s).
  * @public
- * @example
+ * @example <caption>Retrieve a specific ContentVersion record</caption>
  * retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
  * @function
  * @param {string} sObjectName - The sObject to retrieve
  * @param {string} id - The id of the record
+ * @state {SalesforceState}
  * @returns {Operation}
  */
 export function retrieve(sObjectName, id) {
