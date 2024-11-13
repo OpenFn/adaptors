@@ -88,7 +88,7 @@
           {
             "title": "example",
             "description": "create('trackedEntityInstances', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "a trackedEntityInstance. Create a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
+            "caption": "a tracker entity. Create a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
           },
           {
             "title": "example",
@@ -228,7 +228,7 @@
           {
             "title": "example",
             "description": "update('trackedEntityInstances', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
-            "caption": "a trackedEntityInstance. Update a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
+            "caption": "a tracker entity. Update a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
             "title": "example",
@@ -495,7 +495,7 @@
           },
           {
             "title": "example",
-            "description": "upsert('trackedEntityInstances', {\n orgUnits: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnits: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
+            "description": "upsert('trackedEntityInstances', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
             "caption": "Example `expression.js` of upsert"
           }
         ]

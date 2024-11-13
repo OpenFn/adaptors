@@ -146,7 +146,7 @@ axios.interceptors.response.use(
  *   orgUnit: 'DiszpKrYNg8',
  *   status: 'COMPLETED',
  * });
- * @example <caption>a trackedEntityInstance. Create a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
+ * @example <caption>a tracker entity. Create a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
  * create('trackedEntityInstances', {
  *   orgUnit: 'TSyzvBiovKh',
  *   trackedEntityType: 'nEenWmSyUEp',
@@ -304,7 +304,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   storedBy: 'admin',
  *   dataValues: [],
  * });
- * @example <caption>a trackedEntityInstance. Update a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
+ * @example <caption>a tracker entity. Update a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
  * update('trackedEntityInstances', '', {
  *   created: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
@@ -542,10 +542,10 @@ export function get(resourceType, query, options = {}, callback = false) {
  * @returns {Operation}
  * @example <caption>Example `expression.js` of upsert</caption>
  * upsert('trackedEntityInstances', {
- *  orgUnits: 'TSyzvBiovKh',
+ *  orgUnit: 'TSyzvBiovKh',
  *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
  * }, {
- *  orgUnits: 'TSyzvBiovKh',
+ *  orgUnit: 'TSyzvBiovKh',
  *  trackedEntityType: 'nEenWmSyUEp',
  *  attributes: [
  *    {
@@ -563,54 +563,53 @@ export function upsert(
   callback = false // callback for the upsert itself.
 ) {
   return state => {
-    console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedOptions = expandReferences(options)(state);
     const resolvedData = expandReferences(data)(state);
+
+    let promise;
+
     if (shouldUseNewTracker(resolvedResourceType)) {
       const { params, requestConfig } = resolvedOptions;
       const { configuration } = state;
-      return callNewTracker(
+      promise = callNewTracker(
         'create',
         configuration,
         { importStrategy: 'CREATE_AND_UPDATE' },
         nestArray(resolvedData, resolvedResourceType),
         params,
         requestConfig
-      ).then(result => {
-        console.log(`Performed a "composed upsert" on ${resolvedResourceType}`);
-        return handleResponse(result, state, callback);
-      });
+      );
     } else {
       // NOTE: that these parameters are all expanded by the `get`, `create`, and
       // `update` functions used inside this composed "upsert" function.
-      return get(
+      console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+      promise = get(
         resourceType,
         query,
         options
-      )(state)
-        .then(resp => {
-          const resources = resp.data[resourceType];
-          if (resources.length > 1) {
-            throw new RangeError(
-              `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-            );
-          } else if (resources.length <= 0) {
-            return create(resourceType, data, options)(state);
-          } else {
-            // Pick out the first (and only) resource in the array and grab its
-            // ID to be used in the subsequent `update` by the path determined
-            // by the `selectId(...)` function.
-            const path = resources[0][selectId(resourceType)];
-            return update(resourceType, path, data, options)(state);
-          }
-        })
-        .then(result => {
-          console.log(`Performed a "composed upsert" on ${resourceType}`);
-          return handleResponse(result, state, callback);
-        });
+      )(state).then(resp => {
+        const resources = resp.data[resourceType];
+        if (resources.length > 1) {
+          throw new RangeError(
+            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+          );
+        } else if (resources.length <= 0) {
+          return create(resourceType, data, options)(state);
+        } else {
+          // Pick out the first (and only) resource in the array and grab its
+          // ID to be used in the subsequent `update` by the path determined
+          // by the `selectId(...)` function.
+          const path = resources[0][selectId(resourceType)];
+          return update(resourceType, path, data, options)(state);
+        }
+      });
     }
+
+    return promise.then(result => {
+      console.log(`Performed a "composed upsert" on ${resourceType}`);
+      return handleResponse(result, state, callback);
+    });
   };
 }
 
@@ -881,13 +880,8 @@ export function dv(dataElement, value) {
 }
 
 export function shouldUseNewTracker(resourceType) {
-  return (
-    resourceType === 'trackedEntityInstances' ||
-    resourceType === 'tracker' ||
-    resourceType === 'tracker/trackedEntities' ||
-    resourceType === 'tracker/enrollments' ||
-    resourceType === 'tracker/relationships' ||
-    resourceType === 'tracker/events'
+  return /^(trackedEntityInstances|tracker(\/(trackedEntities|enrollments|relationships|events))?)$/.test(
+    resourceType
   );
 }
 
