@@ -380,6 +380,91 @@
       "valid": true
     },
     {
+      "name": "post",
+      "params": [
+        "resourceType",
+        "data",
+        "query",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Post data. Generic helper method for posting data of any kind to DHIS2.\n- This can be used to create `DataValueSets`,`events`,`trackers`,`etc.`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "magic",
+            "description": "resourceType $.children.resourceTypes[*]"
+          },
+          {
+            "title": "param",
+            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Dhis2Data"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "state",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "post('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
+            "caption": "an event"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "upsert",
       "params": [
         "resourceType",

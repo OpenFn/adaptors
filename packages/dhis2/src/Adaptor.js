@@ -514,6 +514,56 @@ export function get(resourceType, query, options = {}, callback = false) {
 }
 
 /**
+ * Post data. Generic helper method for posting data of any kind to DHIS2.
+ * - This can be used to create `DataValueSets`,`events`,`trackers`,`etc.`
+ * @public
+ * @function
+ * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
+ * @magic resourceType $.children.resourceTypes[*]
+ * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation} state
+ * @example <caption>an event</caption>
+ * post('events', {
+ *   program: 'eBAyeGv0exc',
+ *   orgUnit: 'DiszpKrYNg8',
+ *   status: 'COMPLETED',
+ * });
+ */
+export function post(
+  resourceType,
+  data,
+  query,
+  options = {},
+  callback = false
+) {
+  return state => {
+    console.log('Preparing post operation...');
+
+    const resolvedResourceType = expandReferences(resourceType)(state);
+    const resolvedQuery = expandReferences(query)(state);
+    const resolvedOptions = expandReferences(options)(state);
+    const resolvedData = expandReferences(data)(state);
+
+    const { params, requestConfig } = resolvedOptions;
+    const { configuration } = state;
+
+    return request(configuration, {
+      method: 'post',
+      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
+      params: { ...resolvedQuery, ...params },
+      responseType: 'json',
+      data: nestArray(resolvedData, resolvedResourceType),
+      ...requestConfig,
+    }).then(result => {
+      console.log(`Created ${resolvedResourceType}`);
+      return handleResponse(result, state, callback);
+    });
+  };
+}
+
+/**
  * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
  * @public
  * @function
@@ -858,7 +908,7 @@ export function dv(dataElement, value) {
 }
 
 export function shouldUseNewTracker(resourceType) {
-  return /^(trackedEntityInstances|tracker(\/(trackedEntities|enrollments|relationships|events))?)$/.test(
+  return /^(trackedEntityInstances|tracker\/(enrollments|relationships|events)|enrollments|relationships|events)$/.test(
     resourceType
   );
 }
