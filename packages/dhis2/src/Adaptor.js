@@ -908,7 +908,7 @@ export function dv(dataElement, value) {
 }
 
 export function shouldUseNewTracker(resourceType) {
-  return /^(trackedEntityInstances|tracker\/(enrollments|relationships|events)|enrollments|relationships|events)$/.test(
+  return /^(trackedEntityInstances|tracker\/(enrollments|relationships|events|trackedEntities)|enrollments|relationships|events|trackedEntities)$/.test(
     resourceType
   );
 }
