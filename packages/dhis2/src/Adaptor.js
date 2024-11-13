@@ -229,20 +229,9 @@ export function create(resourceType, data, options = {}, callback = false) {
   return state => {
     console.log(`Preparing create operation...`);
 
-    let mappedOptions;
-
-    if (shouldUseNewTracker(resolvedResourceType)) {
-      mappedOptions = {
-        ...options,
-        importStrategy: 'CREATE',
-      };
-    } else {
-      mappedOptions = options;
-    }
-
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(mappedOptions)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -252,7 +241,10 @@ export function create(resourceType, data, options = {}, callback = false) {
       promise = callNewTracker(
         'create',
         configuration,
-        resolvedOptions,
+        {
+          ...resolvedOptions,
+          importStrategy: 'CREATE',
+        },
         nestArray(resolvedData, resolvedResourceType),
         params,
         requestConfig
@@ -422,21 +414,10 @@ export function update(
   return state => {
     console.log(`Preparing update operation...`);
 
-    let mappedOptions;
-
-    if (shouldUseNewTracker(resolvedResourceType)) {
-      mappedOptions = {
-        ...options,
-        importStrategy: 'UPDATE',
-      };
-    } else {
-      mappedOptions = options;
-    }
-
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedPath = expandReferences(path)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(mappedOptions)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -446,7 +427,10 @@ export function update(
       promise = callNewTracker(
         'update',
         configuration,
-        resolvedOptions,
+        {
+          ...resolvedOptions,
+          importStrategy: 'UPDATE',
+        },
         resolvedData,
         params,
         requestConfig
@@ -782,20 +766,11 @@ export function destroy(
 ) {
   return state => {
     console.log('Preparing destroy operation...');
-    let mappedOptions;
-    if (shouldUseNewTracker(resolvedResourceType)) {
-      mappedOptions = {
-        ...options,
-        importStrategy: 'DELETE',
-      };
-    } else {
-      mappedOptions = options;
-    }
 
     const resolvedResourceType = expandReferences(resourceType)(state);
     const resolvedPath = expandReferences(path)(state);
     const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(mappedOptions)(state);
+    const resolvedOptions = expandReferences(options)(state);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -805,7 +780,10 @@ export function destroy(
       promise = callNewTracker(
         'delete',
         configuration,
-        resolvedOptions,
+        {
+          ...resolvedOptions,
+          importStrategy: 'DELETE',
+        },
         null,
         params,
         requestConfig
