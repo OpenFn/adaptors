@@ -41,6 +41,11 @@ export function execute(...operations) {
         `WARNING: This adaptor is incompatible with DHIS2 API version 42+. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html.`
       );
 
+    if (+version < 42)
+      console.warn(
+        `WARNING: This adaptor is incompatible with DHIS2 tracker API version less than 42. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html.`
+      );
+
     return commonExecute(
       configMigrationHelper,
       ...operations
@@ -146,7 +151,7 @@ axios.interceptors.response.use(
  *   orgUnit: 'DiszpKrYNg8',
  *   status: 'COMPLETED',
  * });
- * @example <caption>a tracker entity. Create a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
+ * @example <caption>a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
  * create('trackedEntityInstances', {
  *   orgUnit: 'TSyzvBiovKh',
  *   trackedEntityType: 'nEenWmSyUEp',
@@ -241,10 +246,7 @@ export function create(resourceType, data, options = {}, callback = false) {
       promise = callNewTracker(
         'create',
         configuration,
-        {
-          ...resolvedOptions,
-          importStrategy: 'CREATE',
-        },
+        resolvedOptions,
         nestArray(resolvedData, resolvedResourceType),
         params,
         requestConfig
@@ -296,7 +298,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   storedBy: 'admin',
  *   dataValues: [],
  * });
- * @example <caption>a tracker entity. Update a tracker entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
+ * @example <caption>a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
  * update('trackedEntityInstances', '', {
  *   created: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
@@ -427,10 +429,7 @@ export function update(
       promise = callNewTracker(
         'update',
         configuration,
-        {
-          ...resolvedOptions,
-          importStrategy: 'UPDATE',
-        },
+        resolvedOptions,
         resolvedData,
         params,
         requestConfig
@@ -515,7 +514,7 @@ export function get(resourceType, query, options = {}, callback = false) {
 
 /**
  * Post data. Generic helper method for posting data of any kind to DHIS2.
- * - This can be used to create `DataValueSets`,`events`,`trackers`,`etc.`
+ * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
  * @public
  * @function
  * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
@@ -607,9 +606,9 @@ export function upsert(
       const { params, requestConfig } = resolvedOptions;
       const { configuration } = state;
       promise = callNewTracker(
-        'create',
+        'create_and_update',
         configuration,
-        { importStrategy: 'CREATE_AND_UPDATE' },
+        resolvedOptions,
         nestArray(resolvedData, resolvedResourceType),
         params,
         requestConfig
@@ -804,7 +803,7 @@ export function patch(
  * @param {{apiVersion: number,operationName: string,resourceType: string}} [options] - Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>a tracked entity instance. Delete a tracker instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}</caption>
+ * @example <caption>a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}</caption>
  * destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
  */
 export function destroy(
@@ -830,11 +829,8 @@ export function destroy(
       promise = callNewTracker(
         'delete',
         configuration,
-        {
-          ...resolvedOptions,
-          importStrategy: 'DELETE',
-        },
-        null,
+        resolvedOptions,
+        resolvedData,
         params,
         requestConfig
       );
@@ -908,7 +904,7 @@ export function dv(dataElement, value) {
 }
 
 export function shouldUseNewTracker(resourceType) {
-  return /^(trackedEntityInstances|tracker\/(enrollments|relationships|events|trackedEntities)|enrollments|relationships|events|trackedEntities)$/.test(
+  return /^(trackedEntityInstances|enrollments|relationships|events|trackedEntities|tracker\/(enrollments|relationships|events|trackedEntities))$/.test(
     resourceType
   );
 }
@@ -917,15 +913,37 @@ export function callNewTracker(
   type = 'update',
   configuration,
   options,
-  data = null,
+  data = {},
   params,
   requestConfig
 ) {
+  let method;
+  switch (type) {
+    case 'create':
+      method = 'CREATE';
+      break;
+    case 'update':
+      method = 'UPDATE';
+      break;
+    case 'delete':
+      method = 'DELETE';
+      break;
+    default:
+      method = 'CREATE_AND_UPDATE';
+  }
+
   return request(configuration, {
     method: 'post',
-    url: generateUrl(configuration, options, 'tracker'),
+    url: generateUrl(
+      configuration,
+      {
+        ...options,
+        importStrategy: method,
+      },
+      'tracker'
+    ),
     params,
-    data: type !== 'delete' ? data : {},
+    data: data,
     ...requestConfig,
   });
 }

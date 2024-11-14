@@ -154,6 +154,26 @@ describe('helperfunctions', () => {
     const result = shouldUseNewTracker('enrollments');
     expect(result).to.be.true;
   });
+
+  it('should use the new tracker for events', () => {
+    const result = shouldUseNewTracker('tracker/events');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for trackedEntities', () => {
+    const result = shouldUseNewTracker('trackedEntities');
+    expect(result).to.be.true;
+  });
+
+  it('should use the old API for dataValueSets', () => {
+    const result = shouldUseNewTracker('dataValueSets');
+    expect(result).to.be.false;
+  });
+
+  it('should use the old API for dataElements', () => {
+    const result = shouldUseNewTracker('dataElements');
+    expect(result).to.be.false;
+  });
 });
 
 describe('create', () => {
@@ -189,7 +209,6 @@ describe('create', () => {
       });
 
     const finalState = await execute(create('events', state.data))(state);
-    console.log({ finalState });
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -210,6 +229,71 @@ describe('create', () => {
 
     const finalState = await execute(
       create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+});
+
+describe('post', () => {
+  const state = {
+    configuration: {
+      username: 'admin',
+      password: 'district',
+      hostUrl: 'https://play.dhis2.org/2.36.4',
+    },
+    data: {
+      program: 'program1',
+      orgUnit: 'org50',
+      trackedEntityType: 'nEenWmSyUEp',
+      status: 'COMPLETED',
+      date: '02-02-20',
+    },
+  };
+
+  it('should make an authenticated POST to the right url', async () => {
+    testServer
+      .post('/api/tracker', {
+        program: 'program1',
+        orgUnit: 'org50',
+        trackedEntityType: 'nEenWmSyUEp',
+        status: 'COMPLETED',
+        date: '02-02-20',
+      })
+      .times(2)
+      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(create('tracker', state.data))(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+
+  it('should recursively expand references', async () => {
+    testServer
+      .post('/api/tracker', {
+        program: 'abc',
+        orgUnit: 'org50',
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      create('tracker', {
+        program: 'abc',
+        orgUnit: state => state.data.orgUnit,
+      })
     )(state);
 
     expect(finalState.data).to.eql({
@@ -408,10 +492,9 @@ describe('upsert', () => {
     );
   });
 
-  it('should make a post when new tracker is called', async () => {
-    testServer.post(
-      '/api/tracker',
-      {
+  it('should make a post only when new tracker is called', async () => {
+    testServer
+      .post('/api/tracker', {
         orgUnit: 'DiszpKrYNg8',
         trackedEntityType: 'nEenWmSyUEp',
         attributes: [
@@ -420,11 +503,11 @@ describe('upsert', () => {
             value: 'Qassim',
           },
         ],
-      }
-    ).reply(200, {
-      httpStatus: 'OK',
-      message: 'created tei',
-    })
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'created tei',
+      });
 
     const finalState = await execute(
       upsert(
