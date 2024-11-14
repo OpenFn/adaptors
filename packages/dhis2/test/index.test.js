@@ -149,19 +149,40 @@ describe('get', () => {
   });
 });
 
-describe('helperfunctions', () => {
+describe.only('helperfunctions', () => {
   it('should use the new tracker for enrollments', () => {
     const result = shouldUseNewTracker('enrollments');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for events', () => {
+    const result = shouldUseNewTracker('events');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for relationships', () => {
+    const result = shouldUseNewTracker('relationships');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for new tracker events', () => {
     const result = shouldUseNewTracker('tracker/events');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for trackedEntityInstance', () => {
+    const result = shouldUseNewTracker('trackedEntityInstance');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for trackedEntities', () => {
     const result = shouldUseNewTracker('trackedEntities');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for new tracker generally', () => {
+    // This resource type does not exist but this function doesn't know that!
+    const result = shouldUseNewTracker('tracker/something');
     expect(result).to.be.true;
   });
 
