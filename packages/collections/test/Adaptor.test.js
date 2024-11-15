@@ -71,6 +71,27 @@ describe('each', () => {
     expect(count).to.eql(3);
   });
 
+  it('should iterate over many many items', async () => {
+    const items = new Array(1e4)
+      .fill(0)
+      .map((v, idx) => [`${idx}`, { id: `item-${idx}` }]);
+
+    const { state } = init(items);
+
+    let count = 0;
+
+    await collections.each(COLLECTION, '*', (state, value, key) => {
+      count++;
+      expect(state).to.eql(state);
+
+      const item = JSON.parse(api.byKey(COLLECTION, key));
+      expect(item).not.to.be.undefined;
+      expect(item).to.eql(value);
+    })(state);
+
+    expect(count).to.eql(items.length);
+  });
+
   it('should iterate over some items with a key pattern', async () => {
     const { state } = init([
       ['az', { id: 'a' }],
