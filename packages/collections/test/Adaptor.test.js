@@ -372,7 +372,7 @@ describe('set', () => {
   });
 
   // TODO: there's no actual test of pagination here, save the logs
-  it.only('should set several batches of items', async () => {
+  it('should set several batches of items', async () => {
     const { state } = init();
 
     // the collection has one item by default
