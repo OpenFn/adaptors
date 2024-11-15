@@ -370,6 +370,23 @@ describe('set', () => {
     const y = api.asJSON(COLLECTION, items[1].id);
     expect(y).to.eql(items[1]);
   });
+
+  // TODO: there's no actual test of pagination here, save the logs
+  it('should set several batches of items', async () => {
+    const { state } = init();
+
+    // the collection has one item by default
+    expect(api.count(COLLECTION)).to.equal(1);
+
+    const items = new Array(2499).fill(1).map((_item, idx) => ({
+      id: `${idx}`,
+    }));
+    const keygen = item => item.id;
+
+    await collections.set(COLLECTION, keygen, items)(state);
+
+    expect(api.count(COLLECTION)).to.equal(2500);
+  });
 });
 
 describe('remove', () => {

@@ -136,6 +136,8 @@ export function get(name, query = {}) {
  */
 export function set(name, keyGen, values) {
   return async state => {
+    const batchSize = 1000;
+
     const [resolvedName, resolvedValues] = expandReferences(
       state,
       name,
@@ -155,28 +157,36 @@ export function set(name, keyGen, values) {
       value: JSON.stringify(value),
     }));
 
-    const response = await request(state, getClient(state), resolvedName, {
-      method: 'POST',
-      body: JSON.stringify({ items: pairs }),
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    while (pairs.length) {
+      const batch = pairs.splice(0, batchSize);
 
-    if (response.statusCode >= 400) {
       console.log(
-        `Collections: Error setting ${pairs.length} values in "${name}"`
+        `Collections: uploading batch of ${batch.length} values to "${name}"...`
       );
-      const text = await response.body.text();
-      const e = new Error('ERROR from collections server:' + 400);
-      e.body = text;
-      throw e;
-    }
+      const response = await request(state, getClient(state), resolvedName, {
+        method: 'POST',
+        body: JSON.stringify({ items: batch }),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
 
-    const result = await response.body.json();
-    console.log(`Collections: set ${result.upserted} values in "${name}"`);
-    if (result.error) {
-      console.log(`Collections: errors reported on set:`, result.error);
+      if (response.statusCode >= 400) {
+        console.log(
+          `Collections: Error setting ${batch.length} values in "${name}"`
+        );
+        const text = await response.body.text();
+        const e = new Error('ERROR from collections server:' + 400);
+        e.body = text;
+        throw e;
+      }
+
+      const result = await response.body.json();
+      console.log(`Collections: set ${result.upserted} values in "${name}"`);
+
+      if (result.error) {
+        console.log(`Collections: errors reported on set:`, result.error);
+      }
     }
 
     return state;
