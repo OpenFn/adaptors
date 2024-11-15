@@ -156,7 +156,7 @@ describe('helperfunctions', () => {
   });
 
   it('should use the new tracker for events', () => {
-    const result = shouldUseNewTracker('tracker/events');
+    const result = shouldUseNewTracker('events');
     expect(result).to.be.true;
   });
 
