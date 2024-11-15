@@ -17,6 +17,7 @@ import { createWriteStream } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import yauzl from 'yauzl';
+import gunzip from 'gunzip-maybe';
 
 export type Meta = {
   specVersion?: string;
@@ -25,29 +26,53 @@ export type Meta = {
 };
 
 export default async function (baseDir: string, specPath: string) {
-  return new Promise<Meta>(async resolve => {
+  return new Promise<Meta>(async (resolve, reject) => {
     await mkdir(path.resolve(baseDir, 'spec'), { recursive: true });
 
     console.log(`Downloading spec from ${specPath}...`);
 
-    const response = await fetch(specPath);
+    try {
+      const response = await fetch(specPath);
 
-    const outputDir = path.resolve(baseDir, 'spec', 'spec.zip');
+      const outputDir = path.resolve(baseDir, 'spec', 'spec.zip');
 
-    const filestream = createWriteStream(outputDir);
+      const filestream = createWriteStream(outputDir);
 
-    const readableStream = Readable.from(response.body);
-    readableStream?.pipe(filestream).on('close', async () => {
-      const meta = await parseIGZip(outputDir);
-      console.log('... downloaded!');
-      resolve(meta);
-    });
+      const readableStream = Readable.from(response.body);
+      console.log(response.headers);
+      readableStream
+        .pipe(gunzip())
+        .pipe(filestream)
+        .on('close', async () => {
+          try {
+            // const meta = await parseIGZip(outputDir);
+            console.log('... downloaded!');
+            resolve(meta);
+          } catch (e) {
+            console.log('Error processing zip stream');
+            console.log(e);
+            reject(e);
+          }
+        })
+        .on('error', e => {
+          console.log('Error processing zip stream');
+          console.log(e);
+          reject(e);
+        });
+    } catch (e) {
+      console.log('Error downloading spec:');
+      console.log(e);
+      reject(e);
+    }
   });
 }
 
 function parseIGZip(inputDir: string) {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve, reject) => {
     yauzl.open(inputDir, { lazyEntries: true }, function (err, zipfile) {
+      if (err) {
+        reject(err);
+      }
       const result: SpecJSON = {};
       const meta: Meta = {};
 

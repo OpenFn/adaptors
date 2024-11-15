@@ -40,7 +40,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log('Update package metadata');
   };
 
-  // Determine whether to setup the intial template and/orre-download the spec
+  // Determine whether to setup the intial template and/or re-download the spec
   try {
     const pkg = await readPkg();
 
@@ -70,6 +70,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(
       `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`
     );
+    console.log(e);
   }
 
   // TODO import mappings

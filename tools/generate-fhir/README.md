@@ -29,7 +29,7 @@ Where:
 - name is the name of your adaptor (`jembi`) EXCLUDING `fhir-`
 - www is a URL to the specification file (currently URL to a json zip)
 
-If the directory does not exist, the adaptor boiler plate will be generated for
+If the directory does not exist, the adaptor boiler-plate will be generated for
 you. `--spec` must be provided for first-time generation, with a url to the spec
 file.
 
