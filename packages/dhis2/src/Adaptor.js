@@ -38,12 +38,12 @@ export function execute(...operations) {
     const version = state.configuration?.apiVersion;
     if (+version >= 42)
       console.warn(
-        `WARNING: This adaptor is incompatible with DHIS2 API version 42+. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html.`
+        `WARNING: This adaptor is incompatible with DHIS2 API version 42+. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
       );
 
-    if (+version < 42)
+    if (+version < 36)
       console.warn(
-        `WARNING: This adaptor is incompatible with DHIS2 tracker API version less than 42. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html.`
+        `WARNING: This adaptor is incompatible with DHIS2 tracker API version less than 42. See here: https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
       );
 
     return commonExecute(
