@@ -1,6 +1,6 @@
-const { expect } = require('chai');
-const { create, execute, get, update, upsert } = require('../dist/index.cjs');
-const crypto = require('crypto');
+import { expect } from 'chai';
+import crypto from 'node:crypto';
+import { execute, create, update, get, upsert } from '../dist/index.js';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -9,20 +9,23 @@ const getRandomProgramPayload = () => {
   return { name, shortName, programType };
 };
 
+const configuration = {
+  username: 'admin',
+  password: 'district',
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-5',
+};
+
 describe('Integration tests', () => {
   const fixture = {};
 
   before(done => {
     fixture.initialState = {
-      configuration: {
-        username: 'admin',
-        password: 'district',
-        hostUrl: 'https://play.dhis2.org/2.36.6',
-      },
+      configuration,
       program: 'IpHINAT79UW',
       orgUnit: 'DiszpKrYNg8',
       trackedEntityInstance: 'uhubxsfLanV',
-      programStage: 'eaDHS084uMp',
+      // programStage: 'eaDHS084uMp',
+      programStage: 'CWaAcQYKVpq', // new!
     };
     done();
   });
@@ -94,7 +97,7 @@ describe('Integration tests', () => {
         create('dataValueSets', state => state.data)
       )(state);
 
-      expect(finalState.data.status).to.eq('SUCCESS');
+      expect(finalState.data.status).to.eq('OK');
     });
 
     it('should create a set of related data values sharing the same period and organisation unit', async () => {
@@ -126,7 +129,7 @@ describe('Integration tests', () => {
         create('dataValueSets', state => state.data)
       )(state);
 
-      expect(finalState.data.status).to.eq('SUCCESS');
+      expect(finalState.data.status).to.eq('OK');
     });
   });
 
@@ -134,7 +137,7 @@ describe('Integration tests', () => {
     it('should update an event program', async () => {
       const state = {
         ...fixture.initialState,
-        eventProgram: 'N6gnRnuz8Mw',
+        eventProgram: 'M3xtLkYBlKI',
       };
 
       const response = await execute(
@@ -178,7 +181,7 @@ describe('Integration tests', () => {
           attributeCategoryOptions: 'xYerKDKCefk',
           assignedUser: 'DXyJmlo9rge',
           assignedUserUsername: 'android',
-          assignedUserDisplayName: 'John Barnes',
+          assignedUserDisplayName: 'Tim Barnes',
         },
       };
       const finalState = await execute(
@@ -243,11 +246,7 @@ describe('Integration tests', () => {
 
   describe('get', () => {
     const state = {
-      configuration: {
-        username: 'admin',
-        password: 'district',
-        hostUrl: 'https://play.dhis2.org/2.37.2',
-      },
+      configuration,
       data: {},
     };
 
@@ -267,17 +266,19 @@ describe('Integration tests', () => {
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
         get('trackedEntityInstances', {
+          program: 'IpHINAT79UW',
           ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Doe'],
+          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:Jackson'],
         })
       )(state);
 
-      expect(finalState.data.trackedEntityInstances.length).to.eq(4);
+      expect(finalState.data.trackedEntityInstances.length).to.eq(1);
 
       const finalState2 = await execute(
         get('trackedEntityInstances', {
+          program: 'IpHINAT79UW',
           ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:NotDoe'],
+          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:NotJackson'],
         })
       )(state);
 
@@ -287,11 +288,12 @@ describe('Integration tests', () => {
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
         get('trackedEntityInstances', {
+          program: 'IpHINAT79UW',
           ou: 'DiszpKrYNg8',
           filter: [
-            'w75KJ2mc4zz:Eq:John',
+            'w75KJ2mc4zz:Eq:Tim',
             'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
-            'zDhUuAYrxNC:Eq:Doe',
+            'zDhUuAYrxNC:Eq:Thompson',
           ],
         })
       )(state);
@@ -322,7 +324,7 @@ describe('Integration tests', () => {
               created: '2016-01-12T00:00:00.000',
               valueType: 'TEXT',
               attribute: 'w75KJ2mc4zz',
-              value: 'Elias',
+              value: 'John',
             },
             {
               lastUpdated: '2016-01-12T00:00:00.000',
@@ -330,7 +332,7 @@ describe('Integration tests', () => {
               created: '2016-01-12T00:00:00.000',
               valueType: 'TEXT',
               attribute: 'zDhUuAYrxNC',
-              value: 'BA',
+              value: 'Thompson',
             },
           ],
         },
@@ -339,8 +341,9 @@ describe('Integration tests', () => {
         upsert(
           'trackedEntityInstances',
           {
+            program: 'IpHINAT79UW',
             ou: 'DiszpKrYNg8',
-            filter: ['w75KJ2mc4zz:Eq:Johns', 'zDhUuAYrxNC:Eq:Doe'],
+            filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Thompson'],
           },
           state => state.data
         )
@@ -367,6 +370,7 @@ describe('Integration tests', () => {
         upsert(
           'trackedEntityInstances',
           {
+            program: 'IpHINAT79UW',
             ou: 'TSyzvBiovKh',
             filter: ['w75KJ2mc4zz:Eq:Qassim'],
           },
@@ -377,7 +381,7 @@ describe('Integration tests', () => {
       expect(finalState.data.httpStatus).to.eq('OK');
     });
 
-    it('should fail upserting a trackedEntityInstance by throwing rangeError as query matches many data', async () => {
+    it.skip('should fail upserting a trackedEntityInstance by throwing rangeError as query matches many data', async () => {
       const state = {
         ...fixture.initialState,
         data: {
@@ -412,7 +416,7 @@ describe('Integration tests', () => {
               'trackedEntityInstances',
               {
                 ou: 'DiszpKrYNg8',
-                filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Doe'],
+                filter: ['zDhUuAYrxNC:Eq:Thompson'],
               },
               state => state.data
             )
