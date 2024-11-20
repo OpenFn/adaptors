@@ -909,7 +909,7 @@
         "value"
       ],
       "docs": {
-        "description": "Converts an attribute ID and value into a DSHI2 attribute object",
+        "description": "Converts an attribute ID and value into a DHIS2 attribute object",
         "tags": [
           {
             "title": "public",
@@ -962,7 +962,7 @@
         "value"
       ],
       "docs": {
-        "description": "Converts a dataElement and value into a DSHI2 dataValue object",
+        "description": "Converts a dataElement and value into a DHIS2 dataValue object",
         "tags": [
           {
             "title": "public",
