@@ -876,7 +876,7 @@ export function findAttributeValue(
 }
 
 /**
- * Converts an attribute ID and value into a DSHI2 attribute object
+ * Converts an attribute ID and value into a DHIS2 attribute object
  * @public
  * @example
  * attr('w75KJ2mc4zz', 'Elias')
@@ -890,7 +890,7 @@ export function attr(attribute, value) {
 }
 
 /**
- * Converts a dataElement and value into a DSHI2 dataValue object
+ * Converts a dataElement and value into a DHIS2 dataValue object
  * @public
  * @example
  * dv('f7n9E0hX8qk', 12)
