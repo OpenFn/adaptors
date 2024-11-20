@@ -430,7 +430,7 @@ export function get(path, options = {}) {
       path,
       options
     );
-    const { headers, ...query } = resolvedOptions;
+    const { headers, query } = resolvedOptions;
     console.log(`GET: ${resolvedPath}`);
     const requestOptions = {
       url: resolvedPath,
