@@ -252,6 +252,10 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
     ])
   );
 
+  // Map the property name into an underscore var so it's always save
+  // ie, what if hte prop is called `class` or `break` or `for`?
+  const safePropName = `_${propName}`;
+
   if (schema.isArray) {
     // if this is an array type, we should force the input to be an array
     const ast = parse('if (!Array.isArray(src)) { src = [src]; }');
@@ -272,7 +276,10 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   } else {
     statements.push(
       b.variableDeclaration('let', [
-        b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
+        b.variableDeclarator(
+          b.identifier(safePropName),
+          b.objectExpression([])
+        ),
       ])
     );
   }
@@ -282,7 +289,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
 
   for (const prop in schema.typeDef) {
     const body: any[] = [];
-    const alts: any[] = [];
+    const alts = null;
     const spec = schema.typeDef[prop];
 
     const sourceValue = b.memberExpression(
@@ -299,7 +306,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
               b.identifier('addExtension')
             ),
             [
-              b.identifier(propName),
+              b.identifier(safePropName),
               b.stringLiteral(spec.extension.url),
               sourceValue,
             ]
@@ -311,7 +318,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
         b.expressionStatement(
           b.assignmentExpression(
             '=',
-            b.memberExpression(b.identifier(propName), b.identifier(prop)),
+            b.memberExpression(b.identifier(safePropName), b.identifier(prop)),
             sourceValue
           )
         )
@@ -326,13 +333,13 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.expressionStatement(
         b.assignmentExpression(
           '=',
-          b.identifier(propName),
+          b.identifier(safePropName),
           b.callExpression(
             b.memberExpression(
               b.identifier('util'),
               b.identifier('mapSystems')
             ),
-            [b.identifier(propName)]
+            [b.identifier(safePropName)]
           )
         )
       )
@@ -344,7 +351,10 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       0,
       0,
       b.variableDeclaration('let', [
-        b.variableDeclarator(b.identifier(propName), b.objectExpression([])),
+        b.variableDeclarator(
+          b.identifier(safePropName),
+          b.objectExpression([])
+        ),
       ])
     );
     assignments.push(
@@ -357,7 +367,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
             ),
             b.identifier('push')
           ),
-          [b.identifier(propName)]
+          [b.identifier(safePropName)]
         )
       )
     );
@@ -378,7 +388,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
             b.identifier(RESOURCE_NAME),
             b.identifier(propName)
           ),
-          b.identifier(propName)
+          b.identifier(safePropName)
         )
       )
     );

@@ -45,7 +45,7 @@ export default async function (baseDir: string, specPath: string) {
         .pipe(filestream)
         .on('close', async () => {
           try {
-            // const meta = await parseIGZip(outputDir);
+            const meta = await parseIGZip(outputDir);
             console.log('... downloaded!');
             resolve(meta);
           } catch (e) {
