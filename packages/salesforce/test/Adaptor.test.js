@@ -1,10 +1,38 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import { create, upsert, toUTF8, execute, query } from '../src/Adaptor';
+import { create, upsert, toUTF8, execute, query, get } from '../src/Adaptor';
 
 const { expect } = chai;
 
 describe('Adaptor', () => {
+  describe('get', () => {
+    it('fetches an account record', done => {
+      const fakeConnection = {
+        request: function () {
+          return Promise.resolve({ Id: 10 });
+        },
+      };
+      let state = { connection: fakeConnection, references: [] };
+
+      let spy = sinon.spy(fakeConnection, 'request');
+
+      get('/services/data/v58.0/sobjects/Account/10')(state)
+        .then(state => {
+          expect(spy.args[0]).to.eql([
+            {
+              url: '/services/data/v58.0/sobjects/Account/10',
+              method: 'GET',
+              query: undefined,
+              headers: { 'content-type': 'application/json' },
+            },
+          ]);
+          expect(spy.called).to.eql(true);
+          expect(state.data).to.eql({ Id: 10 });
+        })
+        .then(done)
+        .catch(done);
+    });
+  });
   describe('create', () => {
     it('makes a new sObject', done => {
       const fakeConnection = {
