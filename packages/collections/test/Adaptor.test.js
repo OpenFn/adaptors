@@ -588,30 +588,3 @@ describe('streamResponse', () => {
     expect(callbackValue).to.eql('str');
     expect(cursor).to.equal('b');
   });
-
-  // maybe should handle very large arrays?
-  // it('should handle key value pairs in a different order', async () => {
-  //   client.intercept({ path: '/collections/my-collection' }).reply(200, {
-  //     items: [
-  //       {
-  //         value: 'str',
-  //         key: 'a',
-  //       },
-  //     ],
-  //     cursor: 'b',
-  //   });
-
-  //   const response = await client.request({
-  //     method: 'GET',
-  //     path: '/collections/my-collection',
-  //   });
-
-  //   let callbackValue;
-  //   const cursor = await streamResponse(response, ({ key, value }) => {
-  //     callbackValue = value;
-  //   });
-
-  //   expect(callbackValue).to.eql('str');
-  //   expect(cursor).to.equal('b');
-  // });
-});
