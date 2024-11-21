@@ -433,8 +433,7 @@ export function update(
         resolvedOptions,
         resolvedData,
         params,
-        requestConfig,
-        resolvedPath
+        requestConfig
       );
     } else {
       promise = request(configuration, {
@@ -918,7 +917,7 @@ export function callNewTracker(
   data = {},
   params,
   requestConfig,
-  path,
+  path
 ) {
   let method;
   switch (type) {
@@ -943,8 +942,7 @@ export function callNewTracker(
         ...options,
         importStrategy: method,
       },
-      'tracker',
-      path
+      'tracker'
     ),
     params,
     data: data,

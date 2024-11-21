@@ -149,46 +149,45 @@ describe('Integration tests', () => {
     it('should update a single event', async () => {
       const state = {
         ...fixture.initialState,
-        event: 'Z3ERUBDuI76',
         data: {
-          event: 'Z3ERUBDuI76',
-          status: 'SCHEDULE',
-          program: 'ur1Edk5Oe2n',
-          programStage: 'ZkbAXlQUYJG',
-          enrollment: 'mxHrgHTwFEI',
-          trackedEntity: 'oJ1NzY1AhxJ',
-          orgUnit: 'DiszpKrYNg8',
-          scheduledAt: '2024-11-21T00:00:00.000',
-          storedBy: 'admin',
-          followUp: false,
-          deleted: false,
-          createdAt: '2024-11-21T12:19:52.573',
-          updatedAt: '2024-11-21T12:19:52.573',
-          attributeOptionCombo: 'HllvX50cXC0',
-          attributeCategoryOptions: 'xYerKDKCefk',
-          createdBy: {
-            uid: 'xE7jOejl9FI',
-            username: 'admin',
-            firstName: 'John',
-            surname: 'Traore',
-          },
-          updatedBy: {
-            uid: 'xE7jOejl9FI',
-            username: 'admin',
-            firstName: 'John',
-            surname: 'Traore',
-          },
-          dataValues: [],
-          notes: [],
-          followup: false,
+          events: [
+            {
+              event: 'Z3ERUBDuI76',
+              status: 'SCHEDULE',
+              program: 'ur1Edk5Oe2n',
+              programStage: 'ZkbAXlQUYJG',
+              enrollment: 'mxHrgHTwFEI',
+              trackedEntity: 'oJ1NzY1AhxJ',
+              orgUnit: 'DiszpKrYNg8',
+              scheduledAt: '2024-11-21T00:00:00.000',
+              storedBy: 'admin',
+              followUp: false,
+              deleted: false,
+              createdAt: '2024-11-21T12:19:52.573',
+              updatedAt: '2024-11-21T12:19:52.573',
+              attributeOptionCombo: 'HllvX50cXC0',
+              attributeCategoryOptions: 'xYerKDKCefk',
+              createdBy: {
+                uid: 'xE7jOejl9FI',
+                username: 'admin',
+                firstName: 'John',
+                surname: 'Traore',
+              },
+              updatedBy: {
+                uid: 'xE7jOejl9FI',
+                username: 'admin',
+                firstName: 'John',
+                surname: 'Traore',
+              },
+              dataValues: [],
+              notes: [],
+              followup: false,
+            },
+          ],
         },
       };
       const finalState = await execute(
-        update(
-          'events',
-          state => state.event,
-          state => state.data
-        )
+        update('events', '', state => state.data)
       )(state);
       expect(finalState.data.status).to.eql('OK');
     });
@@ -197,19 +196,23 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'DiszpKrYNg8',
-          trackedEntityType: 'nEenWmSyUEp',
-          attributes: [
+          trackedEntities: [
             {
-              attribute: 'w75KJ2mc4zz',
-              value: 'Gigiwe',
+              orgUnit: 'DiszpKrYNg8',
+              trackedEntityType: 'nEenWmSyUEp',
+              attributes: [
+                {
+                  attribute: 'w75KJ2mc4zz',
+                  value: 'Gigiwe',
+                },
+              ],
             },
           ],
         },
       };
 
       const finalState = await execute(
-        update('trackedEntityInstances', 'bmshzEacgxa', state => state.data)
+        update('trackedEntityInstances', '', state => state.data)
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -264,20 +267,20 @@ describe('Integration tests', () => {
 
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
-        get('trackedEntityInstances', {
-          program: 'IpHINAT79UW',
-          ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:Jackson'],
+        get('tracker/trackedEntities', {
+          program: 'fDd25txQckK',
+          orgUnit: 'DiszpKrYNg8',
+          filter: ['w75KJ2mc4zz:Eq:Elanor'],
         })
       )(state);
 
-      expect(finalState.data.trackedEntityInstances.length).to.eq(1);
+      expect(finalState.data.instances.length).to.eq(1);
 
       const finalState2 = await execute(
         get('trackedEntityInstances', {
-          program: 'IpHINAT79UW',
+          program: 'fDd25txQckK',
           ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:NotJackson'],
+          filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
         })
       )(state);
 
