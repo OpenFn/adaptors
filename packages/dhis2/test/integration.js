@@ -137,15 +137,11 @@ describe('Integration tests', () => {
     it('should update an event program', async () => {
       const state = {
         ...fixture.initialState,
-        eventProgram: 'M3xtLkYBlKI',
+        id: 'IpHINAT79UW',
       };
 
       const response = await execute(
-        update(
-          'programs',
-          state => state.eventProgram,
-          getRandomProgramPayload()
-        )
+        update('programs', state => state.id, getRandomProgramPayload())
       )(state);
       expect(response.data.status).to.eq('OK');
     });
@@ -153,35 +149,38 @@ describe('Integration tests', () => {
     it('should update a single event', async () => {
       const state = {
         ...fixture.initialState,
-        event: 'rBjxtO8npTb',
+        event: 'Z3ERUBDuI76',
         data: {
-          href: 'https://play.dhis2.org/2.36.6/api/events/rBjxtO8npTb',
-          event: 'rBjxtO8npTb',
-          status: 'ACTIVE',
-          program: 'M3xtLkYBlKI',
-          programStage: 'CWaAcQYKVpq',
-          enrollment: 'V8uPJuhvlL7',
-          enrollmentStatus: 'ACTIVE',
+          event: 'Z3ERUBDuI76',
+          status: 'SCHEDULE',
+          program: 'ur1Edk5Oe2n',
+          programStage: 'ZkbAXlQUYJG',
+          enrollment: 'mxHrgHTwFEI',
+          trackedEntity: 'oJ1NzY1AhxJ',
           orgUnit: 'DiszpKrYNg8',
-          orgUnitName: 'Ngelehun CHC',
-          trackedEntityInstance: 'dNpxRu1mWG5',
-          relationships: [],
-          eventDate: '2021-09-26T00:00:00.000',
-          dueDate: '2021-09-27T00:00:00.000',
-          storedBy: 'system',
+          scheduledAt: '2024-11-21T00:00:00.000',
+          storedBy: 'admin',
+          followUp: false,
+          deleted: false,
+          createdAt: '2024-11-21T12:19:52.573',
+          updatedAt: '2024-11-21T12:19:52.573',
+          attributeOptionCombo: 'HllvX50cXC0',
+          attributeCategoryOptions: 'xYerKDKCefk',
+          createdBy: {
+            uid: 'xE7jOejl9FI',
+            username: 'admin',
+            firstName: 'John',
+            surname: 'Traore',
+          },
+          updatedBy: {
+            uid: 'xE7jOejl9FI',
+            username: 'admin',
+            firstName: 'John',
+            surname: 'Traore',
+          },
           dataValues: [],
           notes: [],
           followup: false,
-          deleted: false,
-          created: '2019-09-26T23:58:59.641',
-          lastUpdated: '2019-09-27T00:02:11.604',
-          createdAtClient: '2019-09-26T23:58:59.641',
-          lastUpdatedAtClient: '2019-09-27T00:02:11.604',
-          attributeOptionCombo: 'HllvX50cXC0',
-          attributeCategoryOptions: 'xYerKDKCefk',
-          assignedUser: 'DXyJmlo9rge',
-          assignedUserUsername: 'android',
-          assignedUserDisplayName: 'Tim Barnes',
         },
       };
       const finalState = await execute(
