@@ -582,11 +582,7 @@ export function query(qs, options = {}, callback = s => s) {
       'Results retrieved and pushed to position [0] of the references array.'
     );
 
-    const nextState = {
-      ...state,
-      references: [result, ...state.references],
-    };
-    return callback(nextState);
+    return composeNextState(state, result);
   };
 }
 

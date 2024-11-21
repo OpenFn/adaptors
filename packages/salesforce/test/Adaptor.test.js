@@ -180,7 +180,7 @@ describe('Adaptor', () => {
 
       query('select Name from Account')(state)
         .then(state => {
-          expect(state.references[0]).to.eql({
+          expect(state.data).to.eql({
             done: true,
             totalSize: 0,
             records: [],
@@ -205,7 +205,7 @@ describe('Adaptor', () => {
       query('select Name from Account')(state)
         .then(state => {
           expect(spy.called).to.eql(true);
-          expect(state.references[0]).to.eql({
+          expect(state.data).to.eql({
             done: true,
             totalSize: 1,
             records: [{ Name: 'OpenFn' }],
@@ -240,7 +240,7 @@ describe('Adaptor', () => {
         .then(state => {
           expect(spy.called).to.eql(true);
           expect(spyReq.called).to.eql(true);
-          expect(state.references[0]).to.eql({
+          expect(state.data).to.eql({
             done: true,
             totalSize: 5713,
             records: [{ Name: 'Open' }, { Name: 'Fn' }],
@@ -275,7 +275,7 @@ describe('Adaptor', () => {
         .then(state => {
           expect(spy.called).to.eql(true);
           expect(spyReq.called).to.eql(false);
-          expect(state.references[0]).to.eql({
+          expect(state.data).to.eql({
             done: false,
             totalSize: 5713,
             nextRecordsUrl:
