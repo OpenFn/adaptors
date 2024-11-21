@@ -10,7 +10,7 @@ export const getBuilderName = resourceName =>
 export const getTypeName = schema =>
   `${schema.type}_${schema.id}`.replace(/-/g, '_');
 
-export const shouldIgnoreProfle = (
+export const shouldIgnoreProfile = (
   profile: ProfileSpec,
   mappings: MappingSpec
 ) => {

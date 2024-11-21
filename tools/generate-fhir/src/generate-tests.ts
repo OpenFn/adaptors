@@ -3,7 +3,7 @@ import { print, parse } from 'recast';
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 
 import { MappingSpec, ProfileSpec, Schema } from './types';
-import { getBuilderName, shouldIgnoreProfle, sortKeys } from './util';
+import { getBuilderName, shouldIgnoreProfile, sortKeys } from './util';
 
 type FilePath = string;
 type Content = string;
@@ -44,9 +44,8 @@ const generate = (
       )
     );
 
-    // TODO set up test boiler plate
     for (const profile of sortedProfiles) {
-      if (shouldIgnoreProfle(profile, mappings)) {
+      if (shouldIgnoreProfile(profile, mappings)) {
         continue;
       }
       const tests: n.Statement[] = [];
