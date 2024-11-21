@@ -588,3 +588,4 @@ describe('streamResponse', () => {
     expect(callbackValue).to.eql('str');
     expect(cursor).to.equal('b');
   });
+});
