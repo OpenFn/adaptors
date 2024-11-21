@@ -73,6 +73,9 @@ export function API() {
   const asJSON = (name, key) => {
     return JSON.parse(collections[name][key]);
   };
+  const count = name => {
+    return Object.keys(collections[name]).length;
+  };
 
   // TODO strictly speaking this should support patterns
   // but keeping it super simple in the mock for now
@@ -103,6 +106,7 @@ export function API() {
     remove,
     byKey,
     asJSON,
+    count,
   };
 
   return api;

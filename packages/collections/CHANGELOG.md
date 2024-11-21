@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.5.1
+
+### Patch Changes
+
+- set() will now upsert items in batches of 1000
+
 ## 0.5.0
 
 ### Minor Changes
