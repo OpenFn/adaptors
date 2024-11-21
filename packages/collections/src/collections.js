@@ -376,7 +376,6 @@ export const streamResponse = async (response, onValue) => {
       });
 
       await waitFor('endObject');
-      debug = false;
     }
     if (isInsideItems && token.name === 'endArray') {
       // This doesn't really matter but, just for the record, let's close out the array
