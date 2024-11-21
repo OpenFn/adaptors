@@ -1,5 +1,12 @@
 # @openfn/language-collections
 
+## 0.5.2
+
+### Patch Changes
+
+- Fix an issue where sometimes the JSON stream would skip tokens and result in a
+  smaller payload being returned
+
 ## 0.5.1
 
 ### Patch Changes
