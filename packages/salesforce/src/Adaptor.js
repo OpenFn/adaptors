@@ -40,7 +40,7 @@
  * Options provided to the Salesforce bulk API request
  * @typedef {Object} BulkOptions
  * @public
- * @property {string} extIdField - External id field.
+ * @property {string} extIdField - External id field. Required for upsert.
  * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records. Default: false
  * @property {boolean} [failOnError=false] - Fail the operation on error. Default: false
  * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
@@ -107,7 +107,10 @@ export function execute(...operations) {
 
 /**
  * Create and execute a bulk job.
+ * This function uses {@link https://sforce.co/4fDLJnk Bulk API},
+ * which is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
+ *
  * @example <caption>Bulk insert</caption>
  * bulk(
  *   "Patient__c",
@@ -137,7 +140,7 @@ export function execute(...operations) {
  * bulk("Account", "update", { failOnError: true }, $.accounts);
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @param {string} operation - The bulk operation to be performed.Eg "insert" | "update" | "upsert"
+ * @param {string} operation - The bulk operation to be performed.Eg `insert`, `update` or `upsert`
  * @param {array} records - an array of records, or a function which returns an array.
  * @param {BulkOptions} options - Options passed to the bulk api.
  * @state {SalesforceState}
@@ -240,7 +243,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
 /**
  * Execute an SOQL Bulk Query.
  * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
- * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.
+ * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.
  * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
  * @example <caption>Bulk query patient records where `Health_ID__c` is equal to the value in `state.data.healthId`</caption>
