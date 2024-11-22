@@ -917,7 +917,6 @@ export function callNewTracker(
   data = {},
   params,
   requestConfig,
-  path
 ) {
   let method;
   switch (type) {
