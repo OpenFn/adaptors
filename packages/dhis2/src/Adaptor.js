@@ -140,19 +140,19 @@ axios.interceptors.response.use(
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>a program</caption>
+ * @example <caption>Createa program</caption>
  * create('programs', {
  *   name: 'name 20',
  *   shortName: 'n20',
  *   programType: 'WITHOUT_REGISTRATION',
  * });
- * @example <caption>an event</caption>
+ * @example <caption>Create an event</caption>
  * create('events', {
  *   program: 'eBAyeGv0exc',
  *   orgUnit: 'DiszpKrYNg8',
  *   status: 'COMPLETED',
  * });
- * @example <caption>a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
+ * @example <caption>Create a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
  * create('trackedEntityInstances', {
  *   orgUnit: 'TSyzvBiovKh',
  *   trackedEntityType: 'nEenWmSyUEp',
@@ -163,7 +163,7 @@ axios.interceptors.response.use(
  *     },
  *   ]
  * });
- * @example <caption>a dataSet</caption>
+ * @example <caption>Create a dataSet</caption>
  * create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });
  * @example <caption>a dataSetNotification</caption>
  * create('dataSetNotificationTemplates', {
@@ -174,7 +174,7 @@ axios.interceptors.response.use(
  *   deliveryChannels: ['SMS'],
  *   dataSets: [],
  * });
- * @example <caption>a dataElement</caption>
+ * @example <caption>Create a dataElement</caption>
  * create('dataElements', {
  *   aggregationType: 'SUM',
  *   domainType: 'AGGREGATE',
@@ -182,26 +182,26 @@ axios.interceptors.response.use(
  *   name: 'Paracetamol',
  *   shortName: 'Para',
  * });
- * @example <caption>a dataElementGroup</caption>
+ * @example <caption>Create a dataElementGroup</caption>
  * create('dataElementGroups', {
  *   name: 'Data Element Group 1',
  *   dataElements: [],
  * });
- * @example <caption>a dataElementGroupSet</caption>
+ * @example <caption>Create a dataElementGroupSet</caption>
  * create('dataElementGroupSets', {
  *   name: 'Data Element Group Set 4',
  *   dataDimension: true,
  *   shortName: 'DEGS4',
  *   dataElementGroups: [],
  * });
- * @example <caption>a dataValueSet</caption>
+ * @example <caption>Create a dataValueSet</caption>
  * create('dataValueSets', {
  *   dataElement: 'f7n9E0hX8qk',
  *   period: '201401',
  *   orgUnit: 'DiszpKrYNg8',
  *   value: '12',
  * });
- * @example <caption>a dataValueSet with related dataValues</caption>
+ * @example <caption>Create a dataValueSet with related dataValues</caption>
  * create('dataValueSets', {
  *   dataSet: 'pBOMPrpg1QX',
  *   completeDate: '2014-02-03',
@@ -222,7 +222,7 @@ axios.interceptors.response.use(
  *     },
  *   ],
  * });
- * @example <caption>an enrollment</caption>
+ * @example <caption>Create an enrollment</caption>
  * create('enrollments', {
  *   trackedEntityInstance: 'bmshzEacgxa',
  *   orgUnit: 'TSyzvBiovKh',
@@ -244,15 +244,17 @@ export function create(resourceType, data, options = {}, callback = false) {
 
     let promise;
     if (shouldUseNewTracker(resolvedResourceType)) {
+      console.log(nestArray(resolvedData, resolvedResourceType), 'If data');
       promise = callNewTracker(
         'create',
         configuration,
         resolvedOptions,
-        nestArray(resolvedData, resolvedResourceType),
+        { [resolvedResourceType]: resolvedData },
         params,
         requestConfig
       );
     } else {
+      console.log(nestArray(resolvedData, resolvedResourceType), 'else data');
       promise = request(configuration, {
         method: 'post',
         url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
@@ -299,7 +301,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   storedBy: 'admin',
  *   dataValues: [],
  * });
- * @example <caption>a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
+ * @example <caption>Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
  * update('trackedEntityInstances', '', {
  *   created: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
@@ -339,7 +341,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *     },
  *   ],
  * });
- * @example <caption>a dataSet</caption>
+ * @example <caption>Update a dataSet</caption>
  * update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });
  * @example <caption>a dataSetNotification</caption>
  * update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {
@@ -350,7 +352,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   deliveryChannels: ['SMS'],
  *   dataSets: [],
  * });
- * @example <caption>a dataElement</caption>
+ * @example <caption>Update a dataElement</caption>
  * update('dataElements', 'FTRrcoaog83', {
  *   aggregationType: 'SUM',
  *   domainType: 'AGGREGATE',
@@ -358,26 +360,26 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   name: 'Paracetamol',
  *   shortName: 'Para',
  * });
- * @example <caption>a dataElementGroup</caption>
+ * @example <caption>Update a dataElementGroup</caption>
  * update('dataElementGroups', 'QrprHT61XFk', {
  *   name: 'Data Element Group 1',
  *   dataElements: [],
  * });
- * @example <caption>a dataElementGroupSet</caption>
+ * @example <caption>Update a dataElementGroupSet</caption>
  * update('dataElementGroupSets', 'VxWloRvAze8', {
  *   name: 'Data Element Group Set 4',
  *   dataDimension: true,
  *   shortName: 'DEGS4',
  *   dataElementGroups: [],
  * });
- * @example <caption>a dataValueSet</caption>
+ * @example <caption>Update a dataValueSet</caption>
  * update('dataValueSets', 'AsQj6cDsUq4', {
  *   dataElement: 'f7n9E0hX8qk',
  *   period: '201401',
  *   orgUnit: 'DiszpKrYNg8',
  *   value: '12',
  * });
- * @example <caption>a dataValueSet with related dataValues</caption>
+ * @example <caption>Update a dataValueSet with related dataValues</caption>
  * update('dataValueSets', 'Ix2HsbDMLea', {
  *   dataSet: 'pBOMPrpg1QX',
  *   completeDate: '2014-02-03',
@@ -574,7 +576,7 @@ export function post(
  * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
- * @example <caption>Example `expression.js` of upsert</caption>
+ * @example <caption>Upsert a trackedEntityInstance</caption>
  * upsert('trackedEntityInstances', {
  *  orgUnit: 'TSyzvBiovKh',
  *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
@@ -610,7 +612,7 @@ export function upsert(
         'create_and_update',
         configuration,
         resolvedOptions,
-        nestArray(resolvedData, resolvedResourceType),
+        { [resolvedResourceType]: resolvedData },
         params,
         requestConfig
       );
@@ -904,19 +906,19 @@ export function dv(dataElement, value) {
   return { dataElement, value };
 }
 
-export function shouldUseNewTracker(resourceType) {
+function shouldUseNewTracker(resourceType) {
   return /^(trackedEntityInstances|enrollments|relationships|events|trackedEntities|tracker)$/.test(
     resourceType
   );
 }
 
-export function callNewTracker(
+function callNewTracker(
   type = 'update',
   configuration,
   options,
   data = {},
   params,
-  requestConfig,
+  requestConfig
 ) {
   let method;
   switch (type) {
@@ -943,7 +945,7 @@ export function callNewTracker(
       },
       'tracker'
     ),
-    params,
+    params: { async: false, ...params },
     data: data,
     ...requestConfig,
   });

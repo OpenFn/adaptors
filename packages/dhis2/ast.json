@@ -78,22 +78,22 @@
           {
             "title": "example",
             "description": "create('programs', {\n  name: 'name 20',\n  shortName: 'n20',\n  programType: 'WITHOUT_REGISTRATION',\n});",
-            "caption": "a program"
+            "caption": "Createa program"
           },
           {
             "title": "example",
             "description": "create('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
-            "caption": "an event"
+            "caption": "Create an event"
           },
           {
             "title": "example",
             "description": "create('trackedEntityInstances', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
+            "caption": "Create a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
           },
           {
             "title": "example",
             "description": "create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });",
-            "caption": "a dataSet"
+            "caption": "Create a dataSet"
           },
           {
             "title": "example",
@@ -103,32 +103,32 @@
           {
             "title": "example",
             "description": "create('dataElements', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "a dataElement"
+            "caption": "Create a dataElement"
           },
           {
             "title": "example",
             "description": "create('dataElementGroups', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "a dataElementGroup"
+            "caption": "Create a dataElementGroup"
           },
           {
             "title": "example",
             "description": "create('dataElementGroupSets', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "a dataElementGroupSet"
+            "caption": "Create a dataElementGroupSet"
           },
           {
             "title": "example",
             "description": "create('dataValueSets', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "a dataValueSet"
+            "caption": "Create a dataValueSet"
           },
           {
             "title": "example",
             "description": "create('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "a dataValueSet with related dataValues"
+            "caption": "Create a dataValueSet with related dataValues"
           },
           {
             "title": "example",
             "description": "create('enrollments', {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
-            "caption": "an enrollment"
+            "caption": "Create an enrollment"
           }
         ]
       },
@@ -228,12 +228,12 @@
           {
             "title": "example",
             "description": "update('trackedEntityInstances', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
-            "caption": "a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
+            "caption": "Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
             "title": "example",
             "description": "update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });",
-            "caption": "a dataSet"
+            "caption": "Update a dataSet"
           },
           {
             "title": "example",
@@ -243,27 +243,27 @@
           {
             "title": "example",
             "description": "update('dataElements', 'FTRrcoaog83', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "a dataElement"
+            "caption": "Update a dataElement"
           },
           {
             "title": "example",
             "description": "update('dataElementGroups', 'QrprHT61XFk', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "a dataElementGroup"
+            "caption": "Update a dataElementGroup"
           },
           {
             "title": "example",
             "description": "update('dataElementGroupSets', 'VxWloRvAze8', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "a dataElementGroupSet"
+            "caption": "Update a dataElementGroupSet"
           },
           {
             "title": "example",
             "description": "update('dataValueSets', 'AsQj6cDsUq4', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "a dataValueSet"
+            "caption": "Update a dataValueSet"
           },
           {
             "title": "example",
             "description": "update('dataValueSets', 'Ix2HsbDMLea', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "a dataValueSet with related dataValues"
+            "caption": "Update a dataValueSet with related dataValues"
           },
           {
             "title": "example",
@@ -581,7 +581,7 @@
           {
             "title": "example",
             "description": "upsert('trackedEntityInstances', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
-            "caption": "Example `expression.js` of upsert"
+            "caption": "Upsert a trackedEntityInstance"
           }
         ]
       },
