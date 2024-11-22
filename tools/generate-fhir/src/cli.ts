@@ -14,7 +14,8 @@ const run = async (args: any) => {
 
 yargs(hideBin(process.argv))
   .command({
-    command: 'generate <name> [--spec spec] [--base base] [--respec]',
+    command:
+      'generate <name> [--spec spec] [--base base] [--respec] [--mappings]',
     describe: 'Generate a new FHIR adaptor',
     handler: args => {
       run(args);

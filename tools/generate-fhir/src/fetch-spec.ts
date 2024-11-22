@@ -39,7 +39,6 @@ export default async function (baseDir: string, specPath: string) {
       const filestream = createWriteStream(outputDir);
 
       const readableStream = Readable.from(response.body);
-      console.log(response.headers);
       readableStream
         .pipe(gunzip())
         .pipe(filestream)

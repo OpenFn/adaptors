@@ -15,8 +15,11 @@ export type Options = {
   /** Redownload the spec file */
   respec?: string;
 
-  /**  Path to a spec file. Required if this is the first time */
+  /** Path to a spec file. Required if this is the first time */
   spec?: string;
+
+  /** Path to a mappings file (relative to monorepo root). This will be copied into build/mappings in the new generator */
+  mappings?: string;
 };
 
 const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
@@ -40,11 +43,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log('Update package metadata');
   };
 
-  // Determine whether to setup the intial template and/or re-download the spec
+  // Determine whether to setup the initial template and/or re-download the spec
   try {
     const pkg = await readPkg();
 
-    if (respec) {
+    if (respec || spec) {
       const meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.spec);
       updateMeta(pkg, meta);
     }
@@ -60,6 +63,14 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     updateMeta(pkg, meta);
   }
 
+  // If mappings is passed in, copy it into the build
+  if (options.mappings) {
+    const mappingsPath = path.resolve('../../', options.mappings);
+    console.log(`Importing mappings from `, mappingsPath);
+    const src = await fs.readFile(mappingsPath, 'utf8');
+    await fs.writeFile(path.resolve(adaptorPath, 'build/mappings.js'), src);
+  }
+
   // Now generate
 
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
@@ -73,7 +84,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(e);
   }
 
-  // TODO import mappings
   let mappings;
   try {
     const m = await import(path.resolve(adaptorPath, 'build/mappings.js'));
