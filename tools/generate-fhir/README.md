@@ -57,6 +57,23 @@ pnpm generate-fhir <name> --spec www
 
 (or modify package.json)
 
+## Test the adaptor
+
+Each adaptor generates a (very basic) set of unit tests which should pass out of
+the box.
+
+You can ensure your new adaptor works by running:
+
+```bash
+pnpm -C packages/fhir-<name> test
+```
+
+Make sure to install the adaptor first!
+
+```bash
+pnpm -C packages/fhir-<name> install
+```
+
 # How it works
 
 The `generate-fhir` command will first look to see if the package you've asked
