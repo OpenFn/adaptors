@@ -3,6 +3,9 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
 import type { MappingSpec } from './types';
 
+// TODO should this go on disk?
+const valueSetCache: Record<string, any> = {};
+
 /**
  * This file will generate a simple schema representation of a FHIR spec
  */
@@ -157,6 +160,8 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
         }
       }
 
+      const values = await extractValueSet(el);
+
       props[path] = {
         // TODO type may only be useful if it uses a vanilla fhir type
         type,
@@ -164,6 +169,10 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
         desc: el.short || el.definition,
         isComposite,
       };
+
+      if (values) {
+        props[path].values = values;
+      }
 
       if (Object.keys(defaults).length) {
         props[path].defaults = defaults;
@@ -189,6 +198,81 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   console.log({ codes });
   return result;
 };
+
+// This function will let us fetch a valueset by URL and return the result
+// Useful for setting enums in types
+async function fetchValueSet(url) {
+  if (/^https?:\/\//.test(url)) {
+    const [safeUrl, ...version] = url.split('|');
+    if (!valueSetCache[safeUrl]) {
+      // Try to download the json representation
+      let nextUrl = safeUrl;
+      let response;
+
+      // Follow redirects until we get the main page
+      // this might just be for fhir-fr?
+      while (nextUrl) {
+        console.log('fetching ', nextUrl);
+        response = await fetch(nextUrl, {
+          redirect: 'manual',
+        });
+        if (response.headers.has('Location')) {
+          nextUrl = response.headers.get('Location');
+        } else {
+          break;
+        }
+      }
+      // Ugly munging of the URL to try and find the json representation
+      let finalUrl = nextUrl
+        .replace(/\/$/, '')
+        .replace('.xml', '.json')
+        .replace('.html', '.json');
+      if (!finalUrl.endsWith('.json')) {
+        finalUrl += '.json';
+      }
+      console.log('fetching ', finalUrl);
+      response = await fetch(finalUrl);
+
+      try {
+        const json = await response.json();
+        valueSetCache[safeUrl] = json;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    return valueSetCache[safeUrl];
+  }
+}
+
+async function extractValueSet(element) {
+  if (element.binding?.valueSet) {
+    const results = new Set();
+
+    const process = async (url: string) => {
+      const data = await fetchValueSet(url);
+      if (data) {
+        // If this valueset extends another, loads its values
+        if (data.compose?.include) {
+          for (const { system } of data.compose.include) {
+            await process(system);
+          }
+        }
+
+        // Now save each value defined in the set
+        // For now we're not storing any metadata
+        if (data.concept) {
+          for (const v of data.concept) {
+            results.add(v.code);
+          }
+        }
+      }
+    };
+
+    await process(element.binding.valueSet);
+    return Array.from(results);
+  }
+}
 
 // Parse a property of a resource, like address or id
 function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
@@ -293,20 +377,5 @@ function getSimpleType(prop: any) {
     return type.code;
   }
 }
-
-const valueSetCache = {};
-
-// This function will let us fetch a valueset by URL and return the result
-// Useful for settig enums in types
-// async function fetchValueSet(url) {
-//   if (valueSetCache[url])
-
-//   let [url, version] = def.valueSet.spit('|')
-//   // we know that we want v4, so hard code the URL
-//   if (url.startsWith('http://hl7.org/fhir/')) {
-//     url = url.replace('http://hl7.org/fhir/', 'http://hl7.org/fhir/R4')
-//   }
-//   fetch
-// }
 
 export default generate;
