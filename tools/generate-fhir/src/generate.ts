@@ -13,13 +13,16 @@ export type Options = {
   base?: string;
 
   /** Redownload the spec file */
-  respec?: string;
+  respec?: boolean;
 
   /** Path to a spec file. Required if this is the first time */
   spec?: string;
 
   /** Path to a mappings file (relative to monorepo root). This will be copied into build/mappings in the new generator */
   mappings?: string;
+
+  /** Should we generate tests? */
+  tests?: boolean;
 };
 
 const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
@@ -52,6 +55,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       updateMeta(pkg, meta);
     }
   } catch (error: any) {
+    console.log(`Package ${adaptorName} does not exist: generating...`);
     // If the adaptor does not exist, generate the project boilerplate
     await generatePackage(adaptorPath, adaptorName, spec!);
     const meta = await fetchSpec(adaptorPath, spec);
@@ -61,6 +65,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     pkg.fhir.adaptorGeneratedDate = new Date().toISOString();
 
     updateMeta(pkg, meta);
+
+    // Unless the user said otherwise, generate test
+    if (!('tests' in options)) {
+      options.tests = true;
+    }
+    console.log(`Package ${adaptorName} generated!`);
   }
 
   // If mappings is passed in, copy it into the build
@@ -71,7 +81,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     await fs.writeFile(path.resolve(adaptorPath, 'build/mappings.js'), src);
   }
 
-  // Now generate
+  // Now generate from the spec
 
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {
@@ -113,12 +123,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     withDisclaimer(dts)
   );
 
-  await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
-  // TODO only do this if a flag is passed
-  // and actually, if the flag is passed, maybe clean /test/
-  const tests = generateTests(schema, mappings);
-  for (const p in tests) {
-    await fs.writeFile(path.resolve(adaptorPath, p), tests[p]);
+  if (options.tests || options.tests !== false) {
+    await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
+    const tests = generateTests(schema, mappings);
+    for (const p in tests) {
+      await fs.writeFile(path.resolve(adaptorPath, p), tests[p]);
+    }
   }
 };
 
