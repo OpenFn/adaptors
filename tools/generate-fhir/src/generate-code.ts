@@ -178,6 +178,15 @@ const mapProps = (schema, mappings) => {
   return props;
 };
 
+// This will generate a.b or a['z-y']
+// allowing easy handling of property names that are not safe identifiers
+const safelyRefProp = (objectName, propName) => {
+  if (/[\-\.\\\/\#\@\{\}\[\]]/.test(propName)) {
+    return b.memberExpression(b.identifier(objectName), b.literal(propName));
+  }
+  return b.memberExpression(b.identifier(objectName), b.identifier(propName));
+};
+
 // This runs a block of code only if the named property is in the input object
 // TODO: don't use key in, use number || boolean || truthy
 const ifPropInInput = (
@@ -191,7 +200,7 @@ const ifPropInInput = (
       '!',
       b.callExpression(
         b.memberExpression(b.identifier('_'), b.identifier('isNil')),
-        [b.memberExpression(b.identifier(inputName), b.identifier(prop))]
+        [safelyRefProp(inputName, prop)]
       )
     ),
     b.blockStatement(statements),
@@ -201,11 +210,7 @@ const ifPropInInput = (
 // assigns SOMETHING to a prop on the input
 const assignToInput = (prop: string, rhs) =>
   b.expressionStatement(
-    b.assignmentExpression(
-      '=',
-      b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(prop)),
-      rhs
-    )
+    b.assignmentExpression('=', safelyRefProp(RESOURCE_NAME, prop), rhs)
   );
 
 // this generates a statement to add the default
@@ -292,10 +297,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
     const alts = null;
     const spec = schema.typeDef[prop];
 
-    const sourceValue = b.memberExpression(
-      b.identifier(inputName),
-      b.identifier(prop)
-    );
+    const sourceValue = safelyRefProp(inputName, prop);
 
     if (spec.extension) {
       body.push(
