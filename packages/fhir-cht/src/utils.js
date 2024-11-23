@@ -134,7 +134,18 @@ export const findExtension = (obj, targetUrl, path) => {
  * @param {string} code - the code value
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
-export const coding = (code, system) => ({ code, system: mapSystems(system) });
+// TODO this is different to the base datatypes
+// (this is why I want them in a central place)
+export const coding = (code, system, display) => {
+  const c = {
+    code,
+    system: mapSystems(system),
+  };
+  if (display) {
+    c.display = display;
+  }
+  return c;
+};
 
 /**
  * Create a codeableConcept. Codings can be coding objects or
@@ -160,7 +171,7 @@ export const concept = (text, ...codings) => {
   const c = [];
   for (const item of incomingCodings) {
     if (Array.isArray(item)) {
-      c.push(coding(item[0], item[1]));
+      c.push(coding(...item));
     } else {
       c.push(item);
     }

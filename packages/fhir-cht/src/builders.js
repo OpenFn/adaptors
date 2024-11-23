@@ -6172,11 +6172,12 @@ function patient_fr_core_patient(props) {
                 _name.id = item.id;
             }
 
-            if (!_.isNil(item.birth-list-given-name)) {
+            // TODO TMP hand written fix
+            if (!_.isNil(item['birth-list-given-name'])) {
                 util.addExtension(
                     _name,
                     "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-birth-list-given-name",
-                    item.birth-list-given-name
+                    item['birth-list-given-name']
                 );
             }
 
@@ -6497,11 +6498,11 @@ function patient_fr_core_patient_ins(props) {
                 _name.id = item.id;
             }
 
-            if (!_.isNil(item.birth-list-given-name)) {
+            if (!_.isNil(item['birth-list-given-name'])) {
                 util.addExtension(
                     _name,
                     "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-birth-list-given-name",
-                    item.birth-list-given-name
+                    item['birth-list-given-name']
                 );
             }
 
