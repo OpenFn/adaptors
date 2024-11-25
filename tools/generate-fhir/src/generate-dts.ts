@@ -146,7 +146,13 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
   const type = typeMap[incomingType] ?? incomingType;
 
   if (values) {
-    return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
+    if (values.length > 1) {
+      return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
+    }
+    if (values.length === 1) {
+      // TODO an edge case, but for a single value
+      return b.createStringLiteral(values[0]);
+    }
   }
 
   if (type === 'string') {
