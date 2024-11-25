@@ -141,17 +141,23 @@ const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
   return result;
 };
 
-const createTypeNode = (incomingType: string) => {
+// TODO maybe the sig is schema & mappings?
+const createTypeNode = (incomingType: string, values?: string[]) => {
   const type = typeMap[incomingType] ?? incomingType;
+
+  if (values) {
+    return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
+  }
 
   if (type === 'string') {
     return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-  } else if (type) {
-    return b.createTypeReferenceNode(type);
-  } else {
-    // Default to any
-    return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
+
+  if (type) {
+    return b.createTypeReferenceNode(type);
+  }
+
+  return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
 };
 
 const generateType = (resourceName: string, schema: Schema, mappings) => {
@@ -181,7 +187,7 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
         continue;
       }
 
-      type = createTypeNode(m.type || s.type || 'any');
+      type = createTypeNode(m.type || s.type || 'any', m.values || s.values);
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
@@ -203,9 +209,9 @@ const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
   for (let key in typeDef) {
     const useStringLiteral = /[\-\.\\\/\#\@\{\}\[\]]/.test(key);
-    const { type, desc } = typeDef[key];
+    const { type, desc, values } = typeDef[key];
 
-    const typeNode = createTypeNode(type);
+    const typeNode = createTypeNode(type, values);
     if (desc) {
       props.push(b.createJSDocComment(desc + '\n'));
     }

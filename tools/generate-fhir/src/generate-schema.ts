@@ -131,7 +131,7 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
       const path = el.path.replace(`${resourceType}\.`, '');
 
       if (path.includes('.')) {
-        parseProp(fullSpec, schema, path, el);
+        await parseProp(fullSpec, schema, path, el);
         continue;
       }
 
@@ -248,7 +248,7 @@ async function fetchValueSet(url) {
 // TOOD this really needs to move into spec parsing
 async function extractValueSet(element) {
   if (element.binding?.valueSet) {
-    const results = new Set();
+    const results = new Set<string>();
 
     const process = async (url: string) => {
       const data = await fetchValueSet(url);
@@ -276,7 +276,7 @@ async function extractValueSet(element) {
 }
 
 // Parse a property of a resource, like address or id
-function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
+async function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
 
@@ -336,6 +336,11 @@ function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
 
     def.type = simpleType;
     def.desc = data.short || data.definition;
+
+    const values = await extractValueSet(data);
+    if (values) {
+      def.values = values;
+    }
 
     // TODO is there a better formalism for this?
     if (prop === 'system') {

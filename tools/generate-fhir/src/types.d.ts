@@ -29,6 +29,8 @@ export type Schema = {
   defaults: Record<string, any>;
   /** True if this prop includes a system */
   hasSystem?: boolean;
+
+  values?: string[];
 };
 
 export type profileId = string;
