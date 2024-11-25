@@ -73,6 +73,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(`Package ${adaptorName} generated!`);
   }
 
+  // ---------------------
+  // TMP
+  return;
+  // --------------------
+
   // If mappings is passed in, copy it into the build
   if (options.mappings) {
     const mappingsPath = path.resolve('../../', options.mappings);

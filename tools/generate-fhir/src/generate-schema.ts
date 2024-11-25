@@ -199,81 +199,84 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   return result;
 };
 
-// This function will let us fetch a valueset by URL and return the result
-// Useful for setting enums in types
-async function fetchValueSet(url) {
-  if (/^https?:\/\//.test(url)) {
-    const [safeUrl, ...version] = url.split('|');
-    if (!valueSetCache[safeUrl]) {
-      // Try to download the json representation
-      let nextUrl = safeUrl;
-      let response;
+// // This function will let us fetch a valueset by URL and return the result
+// // Useful for setting enums in types
+// async function fetchValueSet(url) {
+//   if (/^https?:\/\//.test(url)) {
+//     const [safeUrl, ...version] = url.split('|');
+//     if (!valueSetCache[safeUrl]) {
+//       // Try to download the json representation
+//       let nextUrl = safeUrl;
+//       let response;
 
-      // Follow redirects until we get the main page
-      // this might just be for fhir-fr?
-      while (nextUrl) {
-        console.log('fetching ', nextUrl);
-        response = await fetch(nextUrl, {
-          redirect: 'manual',
-        });
-        if (response.headers.has('Location')) {
-          nextUrl = response.headers.get('Location');
-        } else {
-          break;
-        }
-      }
-      // Ugly munging of the URL to try and find the json representation
-      let finalUrl = nextUrl
-        .replace(/\/$/, '')
-        .replace('.xml', '.json')
-        .replace('.html', '.json');
-      if (!finalUrl.endsWith('.json')) {
-        finalUrl += '.json';
-      }
-      console.log('fetching ', finalUrl);
-      response = await fetch(finalUrl);
+//       // Follow redirects until we get the main page
+//       // this might just be for fhir-fr?
+//       while (nextUrl) {
+//         console.log('fetching ', nextUrl);
+//         response = await fetch(nextUrl, {
+//           redirect: 'manual',
+//         });
+//         if (response.headers.has('Location')) {
+//           nextUrl = response.headers.get('Location');
+//         } else {
+//           break;
+//         }
+//       }
+//       // Ugly munging of the URL to try and find the json representation
+//       let finalUrl = nextUrl
+//         .replace(/\/$/, '')
+//         .replace('.xml', '.json')
+//         .replace('.html', '.json');
+//       if (!finalUrl.endsWith('.json')) {
+//         finalUrl += '.json';
+//       }
+//       console.log('fetching ', finalUrl);
+//       response = await fetch(finalUrl);
 
-      try {
-        const json = await response.json();
-        valueSetCache[safeUrl] = json;
-      } catch (e) {
-        console.log(e);
-      }
-    }
+//       try {
+//         const json = await response.json();
+//         valueSetCache[safeUrl] = json;
+//       } catch (e) {
+//         console.log(e);
+//       }
+//     }
 
-    return valueSetCache[safeUrl];
-  }
-}
+//     return valueSetCache[safeUrl];
+//   }
+// }
 
-// TOOD this really needs to move into spec parsing
-async function extractValueSet(element) {
-  if (element.binding?.valueSet) {
-    const results = new Set<string>();
+// // TOOD this really needs to move into spec parsing
+// async function extractValueSet(element) {
+//   if (element.binding?.valueSet) {
+//     const results = new Set<string>();
 
-    const process = async (url: string) => {
-      const data = await fetchValueSet(url);
-      if (data) {
-        // If this valueset extends another, loads its values
-        if (data.compose?.include) {
-          for (const { system } of data.compose.include) {
-            await process(system);
-          }
-        }
+//     const process = async (url: string) => {
+//       const data = await fetchValueSet(url);
+//       if (data) {
+//         // If this valueset extends another, loads its values
+//         if (data.compose?.include) {
+//           for (const { system } of data.compose.include) {
+//             await process(system);
+//           }
+//         }
 
-        // Now save each value defined in the set
-        // For now we're not storing any metadata
-        if (data.concept) {
-          for (const v of data.concept) {
-            results.add(v.code);
-          }
-        }
-      }
-    };
+//         // Now save each value defined in the set
+//         // For now we're not storing any metadata
+//         if (data.concept) {
+//           for (const v of data.concept) {
+//             results.add(v.code);
+//           }
+//         }
+//       }
+//     };
 
-    await process(element.binding.valueSet);
-    return Array.from(results);
-  }
-}
+//     await process(element.binding.valueSet);
+//     return Array.from(results);
+//   }
+// }
+
+//
+async function loadValueSet() {}
 
 // Parse a property of a resource, like address or id
 async function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
