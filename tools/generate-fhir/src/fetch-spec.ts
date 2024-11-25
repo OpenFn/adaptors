@@ -132,7 +132,7 @@ async function fetchValueSet(url) {
   }
 }
 
-type ValueSetDef = {
+export type ValueSetDef = {
   extends: string[]; // the VS, if any, that this extends
   values: string[]; // the VS's declared for this valueset (excluding inherited)
 };

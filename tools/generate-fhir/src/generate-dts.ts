@@ -60,9 +60,13 @@ const generateDTS = (
 // TODO we should be able to take these from mappings
 const typeMap = {
   date: 'string',
+  dateTime: 'string',
   instant: 'string',
   uri: 'string',
   id: 'string',
+  decimal: 'number',
+  integer: 'number',
+  unsignedInt: 'number',
 
   // TODO
   canonical: 'any',

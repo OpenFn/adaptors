@@ -2,6 +2,7 @@ import path from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
 import type { MappingSpec } from './types';
+import { ValueSetDef } from './fetch-spec';
 
 // TODO should this go on disk?
 const valueSetCache: Record<string, any> = {};
@@ -72,6 +73,13 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   })) as SpecJSON;
   const result: Record<string, Schema[]> = {};
 
+  const valuesets: any = await import(
+    path.resolve(path.dirname(specPath), 'valuesets.json'),
+    {
+      assert: { type: 'json' },
+    }
+  );
+
   const counts = {};
   const codes = {};
 
@@ -131,7 +139,7 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
       const path = el.path.replace(`${resourceType}\.`, '');
 
       if (path.includes('.')) {
-        await parseProp(fullSpec, schema, path, el);
+        await parseProp(fullSpec, valuesets, schema, path, el);
         continue;
       }
 
@@ -160,7 +168,7 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
         }
       }
 
-      const values = await extractValueSet(el);
+      const values = await extractValueSet(valuesets, el);
 
       props[path] = {
         // TODO type may only be useful if it uses a vanilla fhir type
@@ -199,87 +207,37 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   return result;
 };
 
-// // This function will let us fetch a valueset by URL and return the result
-// // Useful for setting enums in types
-// async function fetchValueSet(url) {
-//   if (/^https?:\/\//.test(url)) {
-//     const [safeUrl, ...version] = url.split('|');
-//     if (!valueSetCache[safeUrl]) {
-//       // Try to download the json representation
-//       let nextUrl = safeUrl;
-//       let response;
+async function extractValueSet(valuesets: any, element) {
+  if (element.binding?.valueSet) {
+    const results = new Set<string>();
 
-//       // Follow redirects until we get the main page
-//       // this might just be for fhir-fr?
-//       while (nextUrl) {
-//         console.log('fetching ', nextUrl);
-//         response = await fetch(nextUrl, {
-//           redirect: 'manual',
-//         });
-//         if (response.headers.has('Location')) {
-//           nextUrl = response.headers.get('Location');
-//         } else {
-//           break;
-//         }
-//       }
-//       // Ugly munging of the URL to try and find the json representation
-//       let finalUrl = nextUrl
-//         .replace(/\/$/, '')
-//         .replace('.xml', '.json')
-//         .replace('.html', '.json');
-//       if (!finalUrl.endsWith('.json')) {
-//         finalUrl += '.json';
-//       }
-//       console.log('fetching ', finalUrl);
-//       response = await fetch(finalUrl);
+    const urls = [element.binding?.valueSet];
+    while (urls.length) {
+      const url = urls.shift();
+      const vs = (valuesets[url] as ValueSetDef) ?? { values: [], extends: [] };
+      for (const v of vs.values) {
+        results.add(v);
+      }
+      for (const e of vs.extends) {
+        urls.push(e);
+      }
+    }
 
-//       try {
-//         const json = await response.json();
-//         valueSetCache[safeUrl] = json;
-//       } catch (e) {
-//         console.log(e);
-//       }
-//     }
-
-//     return valueSetCache[safeUrl];
-//   }
-// }
-
-// // TOOD this really needs to move into spec parsing
-// async function extractValueSet(element) {
-//   if (element.binding?.valueSet) {
-//     const results = new Set<string>();
-
-//     const process = async (url: string) => {
-//       const data = await fetchValueSet(url);
-//       if (data) {
-//         // If this valueset extends another, loads its values
-//         if (data.compose?.include) {
-//           for (const { system } of data.compose.include) {
-//             await process(system);
-//           }
-//         }
-
-//         // Now save each value defined in the set
-//         // For now we're not storing any metadata
-//         if (data.concept) {
-//           for (const v of data.concept) {
-//             results.add(v.code);
-//           }
-//         }
-//       }
-//     };
-
-//     await process(element.binding.valueSet);
-//     return Array.from(results);
-//   }
-// }
+    return Array.from(results);
+  }
+}
 
 //
 async function loadValueSet() {}
 
 // Parse a property of a resource, like address or id
-async function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
+async function parseProp(
+  fullSpec,
+  valuesets,
+  schema: ElementSpec,
+  path: string,
+  data
+) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
 
@@ -340,7 +298,7 @@ async function parseProp(fullSpec, schema: ElementSpec, path: string, data) {
     def.type = simpleType;
     def.desc = data.short || data.definition;
 
-    const values = await extractValueSet(data);
+    const values = await extractValueSet(valuesets, data);
     if (values) {
       def.values = values;
     }
