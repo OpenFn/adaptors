@@ -245,6 +245,7 @@ async function fetchValueSet(url) {
   }
 }
 
+// TOOD this really needs to move into spec parsing
 async function extractValueSet(element) {
   if (element.binding?.valueSet) {
     const results = new Set();

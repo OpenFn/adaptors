@@ -57,9 +57,15 @@ const generateDTS = (
 // TODO I really gonna need some utils here
 
 // Map some fhir types to js types
+// TODO we should be able to take these from mappings
 const typeMap = {
   date: 'string',
   instant: 'string',
+  uri: 'string',
+  id: 'string',
+
+  // TODO
+  canonical: 'any',
 };
 
 // Ths generates an entry function which maps the variants
@@ -135,6 +141,19 @@ const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
   return result;
 };
 
+const createTypeNode = (incomingType: string) => {
+  const type = typeMap[incomingType] ?? incomingType;
+
+  if (type === 'string') {
+    return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+  } else if (type) {
+    return b.createTypeReferenceNode(type);
+  } else {
+    // Default to any
+    return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+  }
+};
+
 const generateType = (resourceName: string, schema: Schema, mappings) => {
   const props = [];
 
@@ -162,14 +181,7 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
         continue;
       }
 
-      type = m.type || s.type || 'any';
-      type = typeMap[type] ?? type;
-
-      if (type === 'string') {
-        type = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-      } else {
-        type = b.createTypeReferenceNode(type);
-      }
+      type = createTypeNode(m.type || s.type || 'any');
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
@@ -189,22 +201,22 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
 
 const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
-  for (const key in typeDef) {
+  for (let key in typeDef) {
+    const useStringLiteral = /[\-\.\\\/\#\@\{\}\[\]]/.test(key);
     const { type, desc } = typeDef[key];
-    let typeNode;
-    if (type === 'string') {
-      typeNode = b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-    } else if (type) {
-      typeNode = b.createTypeReferenceNode(type);
-    } else {
-      // Default to any
-      typeNode = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
-    }
 
+    const typeNode = createTypeNode(type);
     if (desc) {
       props.push(b.createJSDocComment(desc + '\n'));
     }
-    props.push(b.createPropertySignature([], key, undefined, typeNode));
+    props.push(
+      b.createPropertySignature(
+        [],
+        useStringLiteral ? b.createStringLiteral(key) : key,
+        undefined,
+        typeNode
+      )
+    );
   }
   return b.createTypeLiteralNode(props);
 };
