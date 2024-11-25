@@ -1,6 +1,6 @@
 export default {
   include: ['Patient'],
-
-  // TODO because a spec has many many value sets, and the my be large
-  // we should probably list the valuesets to include here
+  // Only include valuesets that match this regex
+  // (but as strings because its annoying with slashies)
+  valueSets: ['http://hl7.org/fhir/ValueSet'],
 };
