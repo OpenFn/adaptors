@@ -283,7 +283,7 @@ describe('Integration tests', () => {
       )(state);
 
       expect(finalState2.data.trackedEntityInstances.length).to.eq(0);
-    });
+    }).timeout(3000);
 
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
@@ -303,8 +303,9 @@ describe('Integration tests', () => {
 
     it('should get all programs in the organisation unit TSyzvBiovKh', async () => {
       const response = await execute(
-        get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' })
+        get('programs', { orgUnit: 'TSyzvBiovKh' })
       )(state);
+
       expect(response.data.programs.length).to.gte(1);
     });
   });
