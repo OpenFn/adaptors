@@ -411,7 +411,7 @@ export function update(
         configuration,
         resolvedOptions,
         resolvedResourceType,
-        path
+        resolvedPath
       ),
       params,
       data: resolvedData,
