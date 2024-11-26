@@ -52,11 +52,7 @@ export function prettyJson(data) {
   return JSON.stringify(data, null, 2);
 }
 
-export function nestArray(data, key) {
-  return isArray(data) ? { [key]: data } : data;
-}
-
-export function trackerPayload(data, key) {
+export function ensureArray(data, key) {
   return isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 

@@ -129,6 +129,11 @@
             "title": "example",
             "description": "create('enrollments', {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
             "caption": "Create an enrollment"
+          },
+          {
+            "title": "example",
+            "description": "create(\"tracker\", {\n  enrollments: [\n    {\n      trackedEntityInstance: \"bmshzEacgxa\",\n      orgUnit: \"TSyzvBiovKh\",\n      program: \"gZBxv9Ujxg0\",\n      enrollmentDate: \"2013-09-17\",\n      incidentDate: \"2013-09-17\",\n    },\n  ],\n  trackedEntities: [\n    {\n      orgUnit: \"TSyzvBiovKh\",\n      trackedEntityType: \"nEenWmSyUEp\",\n      attributes: [\n        {\n          attribute: \"w75KJ2mc4zz\",\n          value: \"Gigiwe\",\n        },\n      ],\n    },\n  ],\n});",
+            "caption": "Create an multiple objects with the Tracker API"
           }
         ]
       },
@@ -237,7 +242,7 @@
           },
           {
             "title": "example",
-            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated,\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
+            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
             "caption": "a dataSetNotification"
           },
           {

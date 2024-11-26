@@ -6,11 +6,10 @@ import {
   CONTENT_TYPES,
   generateUrl,
   handleResponse,
-  nestArray,
   prettyJson,
   selectId,
   shouldUseNewTracker,
-  trackerPayload,
+  ensureArray,
   indexOf,
 } from './Utils';
 import { request } from './Client';
@@ -229,6 +228,30 @@ axios.interceptors.response.use(
  *   enrollmentDate: '2013-09-17',
  *   incidentDate: '2013-09-17',
  * });
+ * @example <caption>Create an multiple objects with the Tracker API</caption>
+ *  create("tracker", {
+ *   enrollments: [
+ *     {
+ *       trackedEntityInstance: "bmshzEacgxa",
+ *       orgUnit: "TSyzvBiovKh",
+ *       program: "gZBxv9Ujxg0",
+ *       enrollmentDate: "2013-09-17",
+ *       incidentDate: "2013-09-17",
+ *     },
+ *   ],
+ *   trackedEntities: [
+ *     {
+ *       orgUnit: "TSyzvBiovKh",
+ *       trackedEntityType: "nEenWmSyUEp",
+ *       attributes: [
+ *         {
+ *           attribute: "w75KJ2mc4zz",
+ *           value: "Gigiwe",
+ *         },
+ *       ],
+ *     },
+ *   ],
+ * });
  */
 export function create(resourceType, data, options = {}, callback = s => s) {
   return state => {
@@ -254,7 +277,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
         method: 'post',
         url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
         params,
-        data: nestArray(resolvedData, resolvedResourceType),
+        data: resolvedData,
         ...requestConfig,
       });
     }
@@ -343,7 +366,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *   dataSetNotificationTrigger: 'DATA_SET_COMPLETION',
  *   notificationRecipient: 'ORGANISATION_UNIT_CONTACT',
  *   name: 'Notification',
- *   messageTemplate: 'Hello Updated,
+ *   messageTemplate: 'Hello Updated',
  *   deliveryChannels: ['SMS'],
  *   dataSets: [],
  * });
@@ -552,7 +575,7 @@ export function post(
       url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
       params: { ...resolvedQuery, ...params },
       responseType: 'json',
-      data: nestArray(resolvedData, resolvedResourceType),
+      data: resolvedData,
       ...requestConfig,
     }).then(result => {
       console.log(`Created ${resolvedResourceType}`);
@@ -929,7 +952,7 @@ function callNewTracker(
       'tracker'
     ),
     params: { async: false, ...params },
-    data: trackerPayload(data, resourceType),
+    data: ensureArray(data, resourceType),
     ...requestConfig,
   });
 }

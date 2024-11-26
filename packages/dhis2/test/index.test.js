@@ -238,9 +238,7 @@ describe('create', () => {
       });
 
     const finalState = await execute(
-      create('events', [
-        { program: 'abc', orgUnit: state => state.data.orgUnit },
-      ])
+      create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
     )(state);
 
     expect(finalState.data).to.eql({
