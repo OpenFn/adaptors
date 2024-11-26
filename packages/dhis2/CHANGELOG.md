@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 5.0.8
+
+### Patch Changes
+
+- 94be282: Fix an issue where the path argument of update does not accept a
+  function value
+
 ## 5.0.7
 
 ### Patch Changes
