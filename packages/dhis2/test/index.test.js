@@ -4,7 +4,7 @@ import { dataValue } from '@openfn/language-common';
 import {
   buildUrl,
   generateUrl,
-  nestArray,
+  ensureArray,
   shouldUseNewTracker,
 } from '../src/Utils';
 import nock from 'nock';
@@ -661,7 +661,7 @@ describe('URL builders', () => {
   });
 });
 
-describe('nestArray', () => {
+describe('ensureArray', () => {
   it('when an array is passed it gets nested inside that "entity" key', async () => {
     const state = {
       configuration: {
@@ -673,7 +673,7 @@ describe('nestArray', () => {
       data: [{ a: 1 }],
     };
 
-    const body = nestArray(state.data, 'events');
+    const body = ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ a: 1 }] });
   });
@@ -688,8 +688,8 @@ describe('nestArray', () => {
       data: { b: 2 },
     };
 
-    const body = nestArray(state.data, 'events');
+    const body = ensureArray(state.data, 'events');
 
-    expect(body).to.eql({ b: 2 });
+    expect(body).to.eql({ events: [{ b: 2 }] });
   });
 });
