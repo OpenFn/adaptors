@@ -137,11 +137,15 @@ describe('Integration tests', () => {
     it('should update an event program', async () => {
       const state = {
         ...fixture.initialState,
-        id: 'IpHINAT79UW',
+        eventProgram: 'M3xtLkYBlKI',
       };
 
       const response = await execute(
-        update('programs', state => state.id, getRandomProgramPayload())
+        update(
+          'programs',
+          state => state.eventProgram,
+          getRandomProgramPayload()
+        )
       )(state);
       expect(response.data.status).to.eq('OK');
     });
@@ -149,45 +153,43 @@ describe('Integration tests', () => {
     it('should update a single event', async () => {
       const state = {
         ...fixture.initialState,
+        event: 'rBjxtO8npTb',
         data: {
-          events: [
-            {
-              event: 'Z3ERUBDuI76',
-              status: 'SCHEDULE',
-              program: 'ur1Edk5Oe2n',
-              programStage: 'ZkbAXlQUYJG',
-              enrollment: 'mxHrgHTwFEI',
-              trackedEntity: 'oJ1NzY1AhxJ',
-              orgUnit: 'DiszpKrYNg8',
-              scheduledAt: '2024-11-21T00:00:00.000',
-              storedBy: 'admin',
-              followUp: false,
-              deleted: false,
-              createdAt: '2024-11-21T12:19:52.573',
-              updatedAt: '2024-11-21T12:19:52.573',
-              attributeOptionCombo: 'HllvX50cXC0',
-              attributeCategoryOptions: 'xYerKDKCefk',
-              createdBy: {
-                uid: 'xE7jOejl9FI',
-                username: 'admin',
-                firstName: 'John',
-                surname: 'Traore',
-              },
-              updatedBy: {
-                uid: 'xE7jOejl9FI',
-                username: 'admin',
-                firstName: 'John',
-                surname: 'Traore',
-              },
-              dataValues: [],
-              notes: [],
-              followup: false,
-            },
-          ],
+          href: 'https://play.dhis2.org/2.36.6/api/events/rBjxtO8npTb',
+          event: 'rBjxtO8npTb',
+          status: 'ACTIVE',
+          program: 'M3xtLkYBlKI',
+          programStage: 'CWaAcQYKVpq',
+          enrollment: 'V8uPJuhvlL7',
+          enrollmentStatus: 'ACTIVE',
+          orgUnit: 'DiszpKrYNg8',
+          orgUnitName: 'Ngelehun CHC',
+          trackedEntityInstance: 'dNpxRu1mWG5',
+          relationships: [],
+          eventDate: '2021-09-26T00:00:00.000',
+          dueDate: '2021-09-27T00:00:00.000',
+          storedBy: 'system',
+          dataValues: [],
+          notes: [],
+          followup: false,
+          deleted: false,
+          created: '2019-09-26T23:58:59.641',
+          lastUpdated: '2019-09-27T00:02:11.604',
+          createdAtClient: '2019-09-26T23:58:59.641',
+          lastUpdatedAtClient: '2019-09-27T00:02:11.604',
+          attributeOptionCombo: 'HllvX50cXC0',
+          attributeCategoryOptions: 'xYerKDKCefk',
+          assignedUser: 'DXyJmlo9rge',
+          assignedUserUsername: 'android',
+          assignedUserDisplayName: 'Tim Barnes',
         },
       };
       const finalState = await execute(
-        update('events', '', state => state.data)
+        update(
+          'events',
+          state => state.event,
+          state => state.data
+        )
       )(state);
       expect(finalState.data.status).to.eql('OK');
     });
@@ -196,23 +198,19 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          trackedEntities: [
+          orgUnit: 'DiszpKrYNg8',
+          trackedEntityType: 'nEenWmSyUEp',
+          attributes: [
             {
-              orgUnit: 'DiszpKrYNg8',
-              trackedEntityType: 'nEenWmSyUEp',
-              attributes: [
-                {
-                  attribute: 'w75KJ2mc4zz',
-                  value: 'Gigiwe',
-                },
-              ],
+              attribute: 'w75KJ2mc4zz',
+              value: 'Gigiwe',
             },
           ],
         },
       };
 
       const finalState = await execute(
-        update('trackedEntityInstances', '', state => state.data)
+        update('trackedEntityInstances', 'bmshzEacgxa', state => state.data)
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -285,7 +283,7 @@ describe('Integration tests', () => {
       )(state);
 
       expect(finalState2.data.trackedEntityInstances.length).to.eq(0);
-    });
+    }).timeout(3000);
 
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
@@ -305,8 +303,9 @@ describe('Integration tests', () => {
 
     it('should get all programs in the organisation unit TSyzvBiovKh', async () => {
       const response = await execute(
-        get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' })
+        get('programs', { orgUnit: 'TSyzvBiovKh' })
       )(state);
+
       expect(response.data.programs.length).to.gte(1);
     });
   });

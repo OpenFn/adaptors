@@ -1,11 +1,7 @@
 import nodepath from 'node:path';
 import undici from 'undici';
 import { throwError, expandReferences } from '@openfn/language-common/util';
-import chain from 'stream-chain';
 import parser from 'stream-json';
-import Pick from 'stream-json/filters/Pick';
-import streamArray from 'stream-json/streamers/StreamArray';
-import streamValues from 'stream-json/streamers/StreamValues';
 
 import { createServer } from './mock';
 
@@ -300,7 +296,6 @@ export function each(name, query = {}, callback = () => {}) {
         query: q,
       });
 
-      // build a response array
       cursor = await streamResponse(response, async ({ key, value }) => {
         batchSize++;
         await callback(state, JSON.parse(value), key);
@@ -321,7 +316,7 @@ export function each(name, query = {}, callback = () => {}) {
 }
 
 export const streamResponse = async (response, onValue) => {
-  const pipeline = chain([response.body, parser()]);
+  const pipeline = response.body.pipe(parser());
 
   let isInsideItems = false;
   let cursor;
@@ -359,9 +354,7 @@ export const streamResponse = async (response, onValue) => {
       }
     }
 
-    // This lock will parse a key/value pair
-    // the streamer make a lot of assumptuions about this data structure
-    // So if it ever changes, we'll need to come back and modify it
+    // Parse an item object
     // TODO can we leverage json-stream to just generically parse an object at this point?
     if (isInsideItems && token.name === 'startObject') {
       let key;
@@ -382,13 +375,14 @@ export const streamResponse = async (response, onValue) => {
         value: value.value.value,
       });
 
-      waitFor('endObject');
+      await waitFor('endObject');
     }
     if (isInsideItems && token.name === 'endArray') {
       // This doesn't really matter but, just for the record, let's close out the array
       isInsideItems = false;
     }
   }
+
   return cursor;
 };
 
