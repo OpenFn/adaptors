@@ -1,14 +1,12 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  get,
-  upsert,
-  shouldUseNewTracker,
-} from '../src/Adaptor';
+import { execute, create, update, get, upsert } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
-import { buildUrl, generateUrl, nestArray } from '../src/Utils';
+import {
+  buildUrl,
+  generateUrl,
+  nestArray,
+  shouldUseNewTracker,
+} from '../src/Utils';
 import nock from 'nock';
 
 const { expect } = chai;
@@ -195,12 +193,17 @@ describe('create', () => {
   it('should make an authenticated POST to the right url', async () => {
     testServer
       .post('/api/tracker', {
-        program: 'program1',
-        orgUnit: 'org50',
-        trackedEntityType: 'nEenWmSyUEp',
-        status: 'COMPLETED',
-        date: '02-02-20',
+        events: [
+          {
+            program: 'program1',
+            orgUnit: 'org50',
+            trackedEntityType: 'nEenWmSyUEp',
+            status: 'COMPLETED',
+            date: '02-02-20',
+          },
+        ],
       })
+      .query({ async: false })
       .times(2)
       .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
       .reply(200, {
@@ -208,7 +211,9 @@ describe('create', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(create('events', state.data))(state);
+    const finalState = await execute(create('events', state => state.data))(
+      state
+    );
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -219,16 +224,23 @@ describe('create', () => {
   it('should recursively expand references', async () => {
     testServer
       .post('/api/tracker', {
-        program: 'abc',
-        orgUnit: 'org50',
+        events: [
+          {
+            program: 'abc',
+            orgUnit: 'org50',
+          },
+        ],
       })
+      .query({ async: false })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
       });
 
     const finalState = await execute(
-      create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
+      create('events', [
+        { program: 'abc', orgUnit: state => state.data.orgUnit },
+      ])
     )(state);
 
     expect(finalState.data).to.eql({
@@ -257,11 +269,15 @@ describe('post', () => {
   it('should make an authenticated POST to the right url', async () => {
     testServer
       .post('/api/tracker', {
-        program: 'program1',
-        orgUnit: 'org50',
-        trackedEntityType: 'nEenWmSyUEp',
-        status: 'COMPLETED',
-        date: '02-02-20',
+        events: [
+          {
+            program: 'program1',
+            orgUnit: 'org50',
+            trackedEntityType: 'nEenWmSyUEp',
+            status: 'COMPLETED',
+            date: '02-02-20',
+          },
+        ],
       })
       .times(2)
       .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
@@ -270,7 +286,9 @@ describe('post', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(create('tracker', state.data))(state);
+    const finalState = await execute(
+      create('tracker', { events: [state.data] })
+    )(state);
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -281,8 +299,12 @@ describe('post', () => {
   it('should recursively expand references', async () => {
     testServer
       .post('/api/tracker', {
-        program: 'abc',
-        orgUnit: 'org50',
+        relationships: [
+          {
+            program: 'abc',
+            orgUnit: 'org50',
+          },
+        ],
       })
       .reply(200, {
         httpStatus: 'OK',
@@ -291,8 +313,12 @@ describe('post', () => {
 
     const finalState = await execute(
       create('tracker', {
-        program: 'abc',
-        orgUnit: state => state.data.orgUnit,
+        relationships: [
+          {
+            program: 'abc',
+            orgUnit: state => state.data.orgUnit,
+          },
+        ],
       })
     )(state);
 
@@ -495,15 +521,20 @@ describe('upsert', () => {
   it('should make a post only when new tracker is called', async () => {
     testServer
       .post('/api/tracker', {
-        orgUnit: 'DiszpKrYNg8',
-        trackedEntityType: 'nEenWmSyUEp',
-        attributes: [
+        events: [
           {
-            attribute: 'w75KJ2mc4zz',
-            value: 'Qassim',
+            orgUnit: 'DiszpKrYNg8',
+            trackedEntityType: 'nEenWmSyUEp',
+            attributes: [
+              {
+                attribute: 'w75KJ2mc4zz',
+                value: 'Qassim',
+              },
+            ],
           },
         ],
       })
+      .query({ async: false })
       .reply(200, {
         httpStatus: 'OK',
         message: 'created tei',
@@ -516,16 +547,18 @@ describe('upsert', () => {
           orgUnit: 'DiszpKrYNg8',
           trackedEntities: ['F8yKM85NbxW'],
         },
-        {
-          orgUnit: 'DiszpKrYNg8',
-          trackedEntityType: 'nEenWmSyUEp',
-          attributes: [
-            {
-              attribute: 'w75KJ2mc4zz',
-              value: 'Qassim',
-            },
-          ],
-        }
+        [
+          {
+            orgUnit: 'DiszpKrYNg8',
+            trackedEntityType: 'nEenWmSyUEp',
+            attributes: [
+              {
+                attribute: 'w75KJ2mc4zz',
+                value: 'Qassim',
+              },
+            ],
+          },
+        ]
       )
     )(state);
 

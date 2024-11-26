@@ -1,4 +1,13 @@
 import { composeNextState } from '@openfn/language-common';
+import _ from 'lodash';
+
+export const { indexOf, isObject, isArray } = _;
+
+export function shouldUseNewTracker(resourceType) {
+  return /^(enrollments|relationships|events|trackedEntities)$/.test(
+    resourceType
+  );
+}
 
 export const CONTENT_TYPES = {
   xml: 'application/xml',
@@ -43,10 +52,12 @@ export function prettyJson(data) {
   return JSON.stringify(data, null, 2);
 }
 
-const isArray = variable => !!variable && variable.constructor === Array;
-
 export function nestArray(data, key) {
   return isArray(data) ? { [key]: data } : data;
+}
+
+export function trackerPayload(data, key) {
+  return isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 
 export function generateUrl(configuration, options, resourceType, path = null) {

@@ -23,7 +23,7 @@
           },
           {
             "title": "param",
-            "description": "Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...",
+            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -83,12 +83,12 @@
           {
             "title": "example",
             "description": "create('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
-            "caption": "Create an event"
+            "caption": "Create a single event"
           },
           {
             "title": "example",
-            "description": "create('trackedEntityInstances', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "Create a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
+            "description": "create('trackedEntities', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
+            "caption": "Create a single tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
           },
           {
             "title": "example",
@@ -227,7 +227,7 @@
           },
           {
             "title": "example",
-            "description": "update('trackedEntityInstances', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
+            "description": "update('trackedEntities', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
             "caption": "Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
@@ -403,7 +403,7 @@
           },
           {
             "title": "param",
-            "description": "Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...",
+            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -457,8 +457,8 @@
           },
           {
             "title": "example",
-            "description": "post('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
-            "caption": "an event"
+            "description": "post(\"tracker\", {\n  events: [\n    {\n      program: \"eBAyeGv0exc\",\n      orgUnit: \"DiszpKrYNg8\",\n      status: \"COMPLETED\",\n    },\n  ],\n});",
+            "caption": "Create an event"
           }
         ]
       },
@@ -488,7 +488,7 @@
           },
           {
             "title": "param",
-            "description": "The type of a resource to `upsert`. E.g. `trackedEntityInstances`",
+            "description": "The type of a resource to `upsert`. E.g. `trackedEntities`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -580,7 +580,7 @@
           },
           {
             "title": "example",
-            "description": "upsert('trackedEntityInstances', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
+            "description": "upsert('trackedEntities', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
             "caption": "Upsert a trackedEntityInstance"
           }
         ]
@@ -617,7 +617,7 @@
           },
           {
             "title": "param",
-            "description": "The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets`",
+            "description": "The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -634,7 +634,7 @@
           },
           {
             "title": "example",
-            "description": "discover('post', '/trackedEntityInstances')",
+            "description": "discover('post', '/trackedEntities')",
             "caption": "a list of parameters allowed on a given endpoint for specific http method"
           }
         ]
@@ -755,7 +755,7 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc.",
+            "description": "The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -842,7 +842,7 @@
           },
           {
             "title": "example",
-            "description": "destroy('trackedEntityInstances', 'LcRd6Nyaq7T');",
+            "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
             "caption": "a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}"
           }
         ]
@@ -865,7 +865,7 @@
           },
           {
             "title": "example",
-            "description": "findAttributeValue(state.data.trackedEntityInstances[0], 'first name')"
+            "description": "findAttributeValue(state.data.trackedEntities[0], 'first name')"
           },
           {
             "title": "function",
@@ -1573,6 +1573,92 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }

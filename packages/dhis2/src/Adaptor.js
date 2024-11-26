@@ -1,9 +1,7 @@
 import axios from 'axios';
-import _ from 'lodash';
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+
 import {
   CONTENT_TYPES,
   generateUrl,
@@ -11,10 +9,11 @@ import {
   nestArray,
   prettyJson,
   selectId,
+  shouldUseNewTracker,
+  trackerPayload,
+  indexOf,
 } from './Utils';
 import { request } from './Client';
-
-const { indexOf } = _;
 
 /**
  * Execute a sequence of operations.
@@ -134,7 +133,7 @@ axios.interceptors.response.use(
  * Create a record
  * @public
  * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
+ * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
  * @magic resourceType $.children.resourceTypes[*]
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
@@ -146,14 +145,14 @@ axios.interceptors.response.use(
  *   shortName: 'n20',
  *   programType: 'WITHOUT_REGISTRATION',
  * });
- * @example <caption>Create an event</caption>
+ * @example <caption>Create a single event</caption>
  * create('events', {
  *   program: 'eBAyeGv0exc',
  *   orgUnit: 'DiszpKrYNg8',
  *   status: 'COMPLETED',
  * });
- * @example <caption>Create a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
- * create('trackedEntityInstances', {
+ * @example <caption>Create a single tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}</caption>
+ * create('trackedEntities', {
  *   orgUnit: 'TSyzvBiovKh',
  *   trackedEntityType: 'nEenWmSyUEp',
  *   attributes: [
@@ -231,30 +230,26 @@ axios.interceptors.response.use(
  *   incidentDate: '2013-09-17',
  * });
  */
-export function create(resourceType, data, options = {}, callback = false) {
+export function create(resourceType, data, options = {}, callback = s => s) {
   return state => {
     console.log(`Preparing create operation...`);
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const [resolvedResourceType, resolvedData, resolvedOptions] =
+      expandReferences(state, resourceType, data, options);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     let promise;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      console.log(nestArray(resolvedData, resolvedResourceType), 'If data');
       promise = callNewTracker(
         'create',
         configuration,
         resolvedOptions,
-        { [resolvedResourceType]: resolvedData },
-        params,
-        requestConfig
+        resolvedResourceType,
+        resolvedData
       );
     } else {
-      console.log(nestArray(resolvedData, resolvedResourceType), 'else data');
       promise = request(configuration, {
         method: 'post',
         url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
@@ -302,7 +297,7 @@ export function create(resourceType, data, options = {}, callback = false) {
  *   dataValues: [],
  * });
  * @example <caption>Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
- * update('trackedEntityInstances', '', {
+ * update('trackedEntities', '', {
  *   created: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
  *   createdAtClient: '2015-08-06T21:12:37.256',
@@ -414,15 +409,13 @@ export function update(
   path,
   data,
   options = {},
-  callback = false
+  callback = s => s
 ) {
   return state => {
     console.log(`Preparing update operation...`);
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
+      expandReferences(state, resourceType, path, data, options);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -433,9 +426,8 @@ export function update(
         'update',
         configuration,
         resolvedOptions,
-        resolvedData,
-        params,
-        requestConfig
+        resolvedResourceType,
+        resolvedData
       );
     } else {
       promise = request(configuration, {
@@ -495,9 +487,11 @@ export function get(resourceType, query, options = {}, callback = false) {
   return state => {
     console.log('Preparing get operation...');
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedQuery = expandReferences(query)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    // const resolvedResourceType = expandReferences(resourceType)(state);
+    // const resolvedQuery = expandReferences(query)(state);
+    // const resolvedOptions = expandReferences(options)(state);
+    const [resolvedResourceType, resolvedQuery, resolvedOptions] =
+      expandReferences(state, resourceType, query, options);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -520,17 +514,21 @@ export function get(resourceType, query, options = {}, callback = false) {
  * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
  * @public
  * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...
+ * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
  * @magic resourceType $.children.resourceTypes[*]
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation} state
- * @example <caption>an event</caption>
- * post('events', {
- *   program: 'eBAyeGv0exc',
- *   orgUnit: 'DiszpKrYNg8',
- *   status: 'COMPLETED',
+ * @example <caption>Create an event</caption>
+ * post("tracker", {
+ *   events: [
+ *     {
+ *       program: "eBAyeGv0exc",
+ *       orgUnit: "DiszpKrYNg8",
+ *       status: "COMPLETED",
+ *     },
+ *   ],
  * });
  */
 export function post(
@@ -538,15 +536,13 @@ export function post(
   data,
   query,
   options = {},
-  callback = false
+  callback = s => s
 ) {
   return state => {
     console.log('Preparing post operation...');
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedQuery = expandReferences(query)(state);
-    const resolvedOptions = expandReferences(options)(state);
-    const resolvedData = expandReferences(data)(state);
+    const [resolvedResourceType, resolvedQuery, resolvedOptions, resolvedData] =
+      expandReferences(state, resourceType, query, options, data);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -569,7 +565,7 @@ export function post(
  * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
  * @public
  * @function
- * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntityInstances`
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`
  * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
  * @param {Object} data - The data to use for update or create depending on the result of the query.
  * @param {{ apiVersion: object, requestConfig: object, params: object }} [options] - Optional configuration that will be applied to both the `get` and the `create` or `update` operations.
@@ -577,7 +573,7 @@ export function post(
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
  * @example <caption>Upsert a trackedEntityInstance</caption>
- * upsert('trackedEntityInstances', {
+ * upsert('trackedEntities', {
  *  orgUnit: 'TSyzvBiovKh',
  *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
  * }, {
@@ -596,12 +592,11 @@ export function upsert(
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
   options = {}, // options supplied to both the `get` and the `create/update`
-  callback = false // callback for the upsert itself.
+  callback = s => s // callback for the upsert itself.
 ) {
   return state => {
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedOptions = expandReferences(options)(state);
-    const resolvedData = expandReferences(data)(state);
+    const [resolvedResourceType, resolvedOptions, resolvedData] =
+      expandReferences(state, resourceType, options, data);
 
     let promise;
 
@@ -612,9 +607,8 @@ export function upsert(
         'create_and_update',
         configuration,
         resolvedOptions,
-        { [resolvedResourceType]: resolvedData },
-        params,
-        requestConfig
+        resolvedResourceType,
+        resolvedData
       );
     } else {
       // NOTE: that these parameters are all expanded by the `get`, `create`, and
@@ -654,10 +648,10 @@ export function upsert(
  * @public
  * @function
  * @param {string} httpMethod - The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete`
- * @param {string} endpoint - The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets`
+ * @param {string} endpoint - The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets`
  * @returns {Operation}
  * @example <caption>a list of parameters allowed on a given endpoint for specific http method</caption>
- * discover('post', '/trackedEntityInstances')
+ * discover('post', '/trackedEntities')
  */
 export function discover(httpMethod, endpoint) {
   return state => {
@@ -765,15 +759,13 @@ export function patch(
   path,
   data,
   options = {},
-  callback = false
+  callback = s => s
 ) {
   return state => {
     console.log('Preparing patch operation...');
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
+      expandReferences(state, resourceType, path, data, options);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -800,14 +792,14 @@ export function patch(
  * Delete a record. A generic helper function to delete an object
  * @public
  * @function
- * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc.
+ * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.
  * @param {string} path - Can be an `id` of an `object` or `path` to the `nested object` to `delete`.
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
  * @param {{apiVersion: number,operationName: string,resourceType: string}} [options] - Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}</caption>
- * destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
+ * destroy('trackedEntities', 'LcRd6Nyaq7T');
  */
 export function destroy(
   resourceType,
@@ -819,10 +811,8 @@ export function destroy(
   return state => {
     console.log('Preparing destroy operation...');
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
+      expandReferences(state, resourceType, path, data, options);
 
     const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
@@ -833,9 +823,8 @@ export function destroy(
         'delete',
         configuration,
         resolvedOptions,
-        resolvedData,
-        params,
-        requestConfig
+        resolvedResourceType,
+        resolvedData
       );
     } else {
       promise = request({
@@ -863,7 +852,7 @@ export function destroy(
  * Gets an attribute value by its case-insensitive display name
  * @public
  * @example
- * findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
+ * findAttributeValue(state.data.trackedEntities[0], 'first name')
  * @function
  * @param {Object} trackedEntityInstance - A tracked entity instance (TEI) object
  * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
@@ -906,33 +895,27 @@ export function dv(dataElement, value) {
   return { dataElement, value };
 }
 
-function shouldUseNewTracker(resourceType) {
-  return /^(trackedEntityInstances|enrollments|relationships|events|trackedEntities|tracker)$/.test(
-    resourceType
-  );
-}
-
 function callNewTracker(
   type = 'update',
   configuration,
   options,
-  data = {},
-  params,
-  requestConfig
+  resourceType,
+  data = {}
 ) {
-  let method;
+  const { params, requestConfig, ...opts } = options;
+  let importStrategy;
   switch (type) {
     case 'create':
-      method = 'CREATE';
+      importStrategy = 'CREATE';
       break;
     case 'update':
-      method = 'UPDATE';
+      importStrategy = 'UPDATE';
       break;
     case 'delete':
-      method = 'DELETE';
+      importStrategy = 'DELETE';
       break;
     default:
-      method = 'CREATE_AND_UPDATE';
+      importStrategy = 'CREATE_AND_UPDATE';
   }
 
   return request(configuration, {
@@ -940,13 +923,13 @@ function callNewTracker(
     url: generateUrl(
       configuration,
       {
-        ...options,
-        importStrategy: method,
+        ...opts,
+        importStrategy,
       },
       'tracker'
     ),
     params: { async: false, ...params },
-    data: data,
+    data: trackerPayload(data, resourceType),
     ...requestConfig,
   });
 }
@@ -956,6 +939,7 @@ export {
   dataPath,
   dataValue,
   dateFns,
+  cursor,
   each,
   field,
   fields,
