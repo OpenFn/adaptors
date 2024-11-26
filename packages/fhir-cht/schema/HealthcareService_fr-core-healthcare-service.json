@@ -1,0 +1,351 @@
+[
+  {
+    "id": "fr-core-healthcare-service",
+    "type": "HealthcareService",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-healthcare-service",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "FR Core Service Type Duration Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External identifiers for this item",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether this HealthcareService record is in active use",
+        "isComposite": false
+      },
+      "providedBy": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Organization that provides this service",
+        "isComposite": false
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Broad category of service being performed or delivered",
+        "isComposite": false,
+        "values": []
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of service that may be delivered or performed",
+        "isComposite": false,
+        "values": []
+      },
+      "specialty": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Specialties handled by the HealthcareService",
+        "isComposite": false,
+        "values": []
+      },
+      "location": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Location(s) where service may be provided",
+        "isComposite": false
+      },
+      "name": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Description of service as presented to a consumer while searching",
+        "isComposite": false
+      },
+      "comment": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Additional description and/or any specific issues not covered elsewhere",
+        "isComposite": false
+      },
+      "extraDetails": {
+        "type": "markdown",
+        "isArray": false,
+        "desc": "Extra details about the service that can't be placed in the other fields",
+        "isComposite": false
+      },
+      "photo": {
+        "type": "Attachment",
+        "isArray": false,
+        "desc": "Facilitates quick identification of the service",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "Details of a Technology mediated contact point (phone, fax, email, etc.)",
+        "isComposite": false
+      },
+      "coverageArea": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Location(s) service is intended for/available to",
+        "isComposite": false
+      },
+      "serviceProvisionCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Conditions under which service is available/offered",
+        "isComposite": false,
+        "values": []
+      },
+      "eligibility": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Specific eligibility requirements required to use the service",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Coded value for the eligibility"
+          },
+          "comment": {
+            "type": "markdown",
+            "desc": "Describes the eligibility conditions for the service"
+          }
+        }
+      },
+      "program": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Programs that this service is applicable to",
+        "isComposite": false,
+        "values": []
+      },
+      "characteristic": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Collection of characteristics (attributes)",
+        "isComposite": false
+      },
+      "communication": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "The language that this service is offered in",
+        "isComposite": false,
+        "values": []
+      },
+      "referralMethod": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Ways that the service accepts referrals",
+        "isComposite": false,
+        "values": []
+      },
+      "appointmentRequired": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "If an appointment is required for access to this service",
+        "isComposite": false
+      },
+      "availableTime": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Times the Service Site is available",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "daysOfWeek": {
+            "type": "string",
+            "desc": "mon | tue | wed | thu | fri | sat | sun",
+            "values": [
+              "mon",
+              "tue",
+              "wed",
+              "thu",
+              "fri",
+              "sat",
+              "sun"
+            ]
+          },
+          "allDay": {
+            "type": "boolean",
+            "desc": "Always available? e.g. 24 hour service"
+          },
+          "availableStartTime": {
+            "type": "time",
+            "desc": "Opening time of day (ignored if allDay = true)"
+          },
+          "availableEndTime": {
+            "type": "time",
+            "desc": "Closing time of day (ignored if allDay = true)"
+          }
+        }
+      },
+      "notAvailable": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Not available during this time due to provided reason",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "description": {
+            "type": "string",
+            "desc": "Reason presented to the user explaining why time not available"
+          },
+          "during": {
+            "type": "Period",
+            "desc": "Service not available from this date"
+          }
+        }
+      },
+      "availabilityExceptions": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Description of availability exceptions",
+        "isComposite": false
+      },
+      "endpoint": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Technical endpoints providing access to electronic services operated for the healthcare service",
+        "isComposite": false
+      }
+    }
+  }
+]

@@ -1,0 +1,223 @@
+[
+  {
+    "id": "fr-core-practitioner",
+    "type": "Practitioner",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-practitioner",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "FR Core Practitioner Specialty Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Numéro ADELI (9 chiffres)",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether this practitioner's record is in active use",
+        "isComposite": false
+      },
+      "name": {
+        "type": "HumanName",
+        "isArray": true,
+        "desc": "Name of a human - parts and usage",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "Details of a Technology mediated contact point (phone, fax, email, etc.)",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address expressed using postal conventions (as opposed to GPS or other location definition formats)",
+        "isComposite": false
+      },
+      "gender": {
+        "type": "string",
+        "isArray": false,
+        "desc": "male | female | other | unknown",
+        "isComposite": false,
+        "values": [
+          "male",
+          "female",
+          "other",
+          "unknown"
+        ]
+      },
+      "birthDate": {
+        "type": "date",
+        "isArray": false,
+        "desc": "The date  on which the practitioner was born",
+        "isComposite": false
+      },
+      "photo": {
+        "type": "Attachment",
+        "isArray": true,
+        "desc": "Image of the person",
+        "isComposite": false
+      },
+      "qualification": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Qualifications obtained by training and certification | Diplômes. Les différents diplômes sont : les diplômes d'état français, les commissions de qualification, les diplômes d'études spécialisées, les DESC groupe 1 et 2, les capacités, les diplômes d'un pays de l'EEE, les diplômes d'université (DU) ou Inter-Universitaire, les certificats d'étude spéciale, les attestations, les diplômes européens d'études spécialisées, les diplômes de 2ème cycle non qualifiant et les autres types de diplômes. Pour plus d'informations, consulter le jeu de valeurs associé.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "identifier": {
+            "type": "Identifier",
+            "desc": "An identifier for this qualification for the practitioner"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Coded representation of the qualification",
+            "values": []
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Period during which the qualification is valid"
+          },
+          "issuer": {
+            "type": "Reference",
+            "desc": "Organization that regulates and issues the qualification"
+          }
+        }
+      },
+      "communication": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "A language the practitioner can use in patient communication",
+        "isComposite": false,
+        "values": []
+      }
+    }
+  }
+]

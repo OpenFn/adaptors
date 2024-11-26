@@ -1,0 +1,65 @@
+[
+  {
+    "id": "fr-core-address-insee-code",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-address-insee-code",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Coding",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "values": []
+      }
+    }
+  },
+  {
+    "id": "fr-core-appointment-operator",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-appointment-operator",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  }
+]

@@ -1,0 +1,945 @@
+[
+  {
+    "id": "fr-core-organization",
+    "type": "Organization",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-organization",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "RPPS rang (11 chiffres RPPS + 2 chiffres RANG)",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether the organization's record is still in active use",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Catégorie d'établissement du RASS",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "name": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Name used for the organization",
+        "isComposite": false
+      },
+      "alias": {
+        "type": "string",
+        "isArray": true,
+        "desc": "A list of alternate names that the organization is known as, or was known as in the past",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "Details of a Technology mediated contact point (phone, fax, email, etc.)",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address expressed using postal conventions (as opposed to GPS or other location definition formats)",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "The organization of which this organization forms a part",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "reference": {
+            "type": "string",
+            "desc": "Literal reference, Relative, internal or absolute URL"
+          },
+          "type": {
+            "type": "uri",
+            "desc": "Type the reference refers to (e.g. \"Patient\")",
+            "values": []
+          },
+          "identifier": {
+            "type": "Identifier",
+            "desc": "Logical reference, when literal reference is not known"
+          },
+          "display": {
+            "type": "string",
+            "desc": "Text alternative for the resource"
+          }
+        }
+      },
+      "contact": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Contact for the organization for a certain purpose",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "purpose": {
+            "type": "CodeableConcept",
+            "desc": "The type of contact",
+            "values": []
+          },
+          "name": {
+            "type": "HumanName",
+            "desc": "A name associated with the contact"
+          },
+          "telecom": {
+            "type": "ContactPoint",
+            "desc": "Details of a Technology mediated contact point (phone, fax, email, etc.)"
+          },
+          "address": {
+            "type": "Address",
+            "desc": "An address expressed using postal conventions (as opposed to GPS or other location definition formats)"
+          }
+        }
+      },
+      "endpoint": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Technical endpoints providing access to services operated for the organization",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "fr-core-organization-pole",
+    "type": "Organization",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-organization-pole",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Identifies this organization  across multiple systems",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether the organization's record is still in active use",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Kind of organization",
+        "isComposite": false,
+        "values": []
+      },
+      "name": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Name used for the organization",
+        "isComposite": false
+      },
+      "alias": {
+        "type": "string",
+        "isArray": true,
+        "desc": "A list of alternate names that the organization is known as, or was known as in the past",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "A contact detail for the organization",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address for the organization",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "The organization of which this organization forms a part",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "reference": {
+            "type": "string",
+            "desc": "Literal reference, Relative, internal or absolute URL"
+          },
+          "type": {
+            "type": "uri",
+            "desc": "Type the reference refers to (e.g. \"Patient\")",
+            "values": []
+          },
+          "identifier": {
+            "type": "Identifier",
+            "desc": "Logical reference, when literal reference is not known"
+          },
+          "display": {
+            "type": "string",
+            "desc": "Text alternative for the resource"
+          }
+        }
+      },
+      "contact": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Contact for the organization for a certain purpose",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "purpose": {
+            "type": "CodeableConcept",
+            "desc": "The type of contact",
+            "values": []
+          },
+          "name": {
+            "type": "HumanName",
+            "desc": "A name associated with the contact"
+          },
+          "telecom": {
+            "type": "ContactPoint",
+            "desc": "Contact details (telephone, email, etc.)  for a contact"
+          },
+          "address": {
+            "type": "Address",
+            "desc": "Visiting or postal addresses for the contact"
+          }
+        }
+      },
+      "endpoint": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Technical endpoints providing access to services operated for the organization",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "fr-core-organization-uac",
+    "type": "Organization",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-organization-uac",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Identifies this organization  across multiple systems",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether the organization's record is still in active use",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Kind of organization",
+        "isComposite": false,
+        "values": []
+      },
+      "name": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Name used for the organization",
+        "isComposite": false
+      },
+      "alias": {
+        "type": "string",
+        "isArray": true,
+        "desc": "A list of alternate names that the organization is known as, or was known as in the past",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "A contact detail for the organization",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address for the organization",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "The organization of which this organization forms a part",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "reference": {
+            "type": "string",
+            "desc": "Literal reference, Relative, internal or absolute URL"
+          },
+          "type": {
+            "type": "uri",
+            "desc": "Type the reference refers to (e.g. \"Patient\")",
+            "values": []
+          },
+          "identifier": {
+            "type": "Identifier",
+            "desc": "Logical reference, when literal reference is not known"
+          },
+          "display": {
+            "type": "string",
+            "desc": "Text alternative for the resource"
+          }
+        }
+      },
+      "contact": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Contact for the organization for a certain purpose",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "purpose": {
+            "type": "CodeableConcept",
+            "desc": "The type of contact",
+            "values": []
+          },
+          "name": {
+            "type": "HumanName",
+            "desc": "A name associated with the contact"
+          },
+          "telecom": {
+            "type": "ContactPoint",
+            "desc": "Contact details (telephone, email, etc.)  for a contact"
+          },
+          "address": {
+            "type": "Address",
+            "desc": "Visiting or postal addresses for the contact"
+          }
+        }
+      },
+      "endpoint": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Technical endpoints providing access to services operated for the organization",
+        "isComposite": false
+      }
+    }
+  },
+  {
+    "id": "fr-core-organization-uf",
+    "type": "Organization",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-organization-uf",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Identifies this organization  across multiple systems",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "use": {
+            "type": "string",
+            "desc": "usual | official | temp | secondary | old (If known)",
+            "values": [
+              "usual",
+              "official",
+              "temp",
+              "secondary",
+              "old"
+            ]
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Description of identifier",
+            "values": []
+          },
+          "system": {
+            "type": "uri",
+            "desc": "The namespace for the identifier value"
+          },
+          "value": {
+            "type": "string",
+            "desc": "The value that is unique"
+          },
+          "period": {
+            "type": "Period",
+            "desc": "Time period when id is/was valid for use"
+          },
+          "assigner": {
+            "type": "Reference",
+            "desc": "Organization that issued id (may be just text)"
+          }
+        },
+        "hasSystem": true
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether the organization's record is still in active use",
+        "isComposite": false
+      },
+      "type": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Kind of organization",
+        "isComposite": false,
+        "values": []
+      },
+      "name": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Name used for the organization",
+        "isComposite": false
+      },
+      "alias": {
+        "type": "string",
+        "isArray": true,
+        "desc": "A list of alternate names that the organization is known as, or was known as in the past",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "A contact detail for the organization",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address for the organization",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "The organization of which this organization forms a part",
+        "isComposite": false
+      },
+      "contact": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Contact for the organization for a certain purpose",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "purpose": {
+            "type": "CodeableConcept",
+            "desc": "The type of contact",
+            "values": []
+          },
+          "name": {
+            "type": "HumanName",
+            "desc": "A name associated with the contact"
+          },
+          "telecom": {
+            "type": "ContactPoint",
+            "desc": "Contact details (telephone, email, etc.)  for a contact"
+          },
+          "address": {
+            "type": "Address",
+            "desc": "Visiting or postal addresses for the contact"
+          }
+        }
+      },
+      "endpoint": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Technical endpoints providing access to services operated for the organization",
+        "isComposite": false
+      }
+    }
+  }
+]

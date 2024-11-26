@@ -1,0 +1,287 @@
+[
+  {
+    "id": "fr-core-medication-administration-inhaled-oxygen",
+    "type": "MedicationAdministration",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-medication-administration-inhaled-oxygen",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External identifier",
+        "isComposite": false
+      },
+      "instantiates": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Instantiates protocol or definition",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown",
+        "isComposite": false,
+        "values": [
+          "in-progress",
+          "not-done",
+          "on-hold",
+          "completed",
+          "entered-in-error",
+          "stopped",
+          "unknown"
+        ]
+      },
+      "statusReason": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason administration not performed",
+        "isComposite": false,
+        "values": []
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Type of medication usage",
+        "isComposite": false,
+        "values": []
+      },
+      "medication": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "What was administered",
+        "isComposite": true,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who received medication",
+        "isComposite": false
+      },
+      "context": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Encounter or Episode of Care administered as part of",
+        "isComposite": false
+      },
+      "supportingInformation": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Additional information to support administration",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Start and end time of administration",
+        "isComposite": true
+      },
+      "performer": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Who performed the medication administration and what they did",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "function": {
+            "type": "CodeableConcept",
+            "desc": "Type of performance",
+            "values": []
+          },
+          "actor": {
+            "type": "Reference",
+            "desc": "Who performed the medication administration"
+          }
+        }
+      },
+      "reasonCode": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Reason administration performed",
+        "isComposite": false,
+        "values": []
+      },
+      "reasonReference": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Condition or observation that supports why the medication was administered",
+        "isComposite": false
+      },
+      "request": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Request administration performed against",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Device used to administer",
+        "isComposite": false
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Information about the administration",
+        "isComposite": false
+      },
+      "dosage": {
+        "type": "BackboneElement",
+        "isArray": false,
+        "desc": "Details of how medication was taken",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Free text dosage instructions e.g. SIG"
+          },
+          "site": {
+            "type": "CodeableConcept",
+            "desc": "Body site administered to",
+            "values": []
+          },
+          "route": {
+            "type": "CodeableConcept",
+            "desc": "Path of substance into body",
+            "values": []
+          },
+          "method": {
+            "type": "CodeableConcept",
+            "desc": "How drug was administered",
+            "values": []
+          },
+          "dose": {
+            "type": "Quantity",
+            "desc": "Amount of medication per dose"
+          },
+          "rate": {
+            "type": "Ratio",
+            "desc": "Dose quantity per unit of time"
+          }
+        }
+      },
+      "eventHistory": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "A list of events of interest in the lifecycle",
+        "isComposite": false
+      }
+    }
+  }
+]

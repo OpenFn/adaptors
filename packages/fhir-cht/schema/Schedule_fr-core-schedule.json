@@ -1,0 +1,141 @@
+[
+  {
+    "id": "fr-core-schedule",
+    "type": "Schedule",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-schedule",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "FR Core Schedule availability time Extension",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "External Ids for this item",
+        "isComposite": false
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether this schedule is in active use",
+        "isComposite": false
+      },
+      "serviceCategory": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High-level category",
+        "isComposite": false,
+        "values": []
+      },
+      "serviceType": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Specific service",
+        "isComposite": false,
+        "values": []
+      },
+      "specialty": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Type of specialty needed",
+        "isComposite": false,
+        "values": []
+      },
+      "actor": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Resource(s) that availability information is being provided for",
+        "isComposite": false
+      },
+      "planningHorizon": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Period of time covered by schedule",
+        "isComposite": false
+      },
+      "comment": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Comments on availability",
+        "isComposite": false
+      }
+    }
+  }
+]

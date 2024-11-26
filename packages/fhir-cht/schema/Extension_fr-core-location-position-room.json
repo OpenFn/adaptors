@@ -1,0 +1,269 @@
+[
+  {
+    "id": "fr-core-address-insee-code",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-address-insee-code",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Coding",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "values": []
+      }
+    }
+  },
+  {
+    "id": "fr-core-appointment-operator",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-appointment-operator",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "fr-core-comment",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-comment",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "fr-core-contact-point-email-type",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-contact-point-email-type",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Coding",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "values": []
+      }
+    }
+  },
+  {
+    "id": "fr-core-estimated-discharge-date",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-estimated-discharge-date",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "date",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "fr-core-human-name-assembly-order",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-human-name-assembly-order",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "values": []
+      }
+    }
+  },
+  {
+    "id": "fr-core-identity-reliability",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-identity-reliability",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Spécifie le type de document qui a été contrôlé par l'agent d'admission pour justifier le statut de l'identité. Seuls certains types de pièces définis dans le RNIV permettent de valider une identité (CN | PA | CS | ... )",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "url": {
+            "type": "string",
+            "desc": "identifies the meaning of the extension"
+          },
+          "value": {
+            "type": "Coding",
+            "desc": "Value of extension",
+            "values": []
+          }
+        }
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "base64Binary",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "fr-core-location-position-room",
+    "type": "Extension",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-location-position-room",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": "string",
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Coding",
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "values": []
+      }
+    }
+  }
+]

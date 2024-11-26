@@ -1,0 +1,202 @@
+[
+  {
+    "id": "fr-core-related-person",
+    "type": "RelatedPerson",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-related-person",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Additional content defined by implementations",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "A human identifier for this person",
+        "isComposite": false
+      },
+      "active": {
+        "type": "boolean",
+        "isArray": false,
+        "desc": "Whether this related person's record is in active use",
+        "isComposite": false
+      },
+      "patient": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "The patient this person is related to",
+        "isComposite": false
+      },
+      "relationship": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "The nature of the relationship. Relation de la personne. Ex : Mère, époux, enfant ...",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "name": {
+        "type": "HumanName",
+        "isArray": true,
+        "desc": "Name of a human - parts and usage",
+        "isComposite": false
+      },
+      "telecom": {
+        "type": "ContactPoint",
+        "isArray": true,
+        "desc": "Details of a Technology mediated contact point (phone, fax, email, etc.)",
+        "isComposite": false
+      },
+      "gender": {
+        "type": "string",
+        "isArray": false,
+        "desc": "male | female | other | unknown",
+        "isComposite": false,
+        "values": [
+          "male",
+          "female",
+          "other",
+          "unknown"
+        ]
+      },
+      "birthDate": {
+        "type": "date",
+        "isArray": false,
+        "desc": "The date on which the related person was born",
+        "isComposite": false
+      },
+      "address": {
+        "type": "Address",
+        "isArray": true,
+        "desc": "An address expressed using postal conventions (as opposed to GPS or other location definition formats)",
+        "isComposite": false
+      },
+      "photo": {
+        "type": "Attachment",
+        "isArray": true,
+        "desc": "Image of the person",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Period of time that this relationship is considered valid",
+        "isComposite": false
+      },
+      "communication": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "A language which may be used to communicate with about the patient's health",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "language": {
+            "type": "CodeableConcept",
+            "desc": "The language which can be used to communicate with the patient about his or her health",
+            "values": []
+          },
+          "preferred": {
+            "type": "boolean",
+            "desc": "Language preference indicator"
+          }
+        }
+      }
+    }
+  }
+]

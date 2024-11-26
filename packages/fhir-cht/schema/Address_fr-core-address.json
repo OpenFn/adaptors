@@ -1,0 +1,93 @@
+[
+  {
+    "id": "fr-core-address",
+    "type": "Address",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-address",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Code COG de la ville",
+        "isComposite": false
+      },
+      "use": {
+        "type": "string",
+        "isArray": false,
+        "desc": "home | work | temp | old | billing - purpose of this address",
+        "isComposite": false,
+        "values": [
+          "home",
+          "work",
+          "temp",
+          "old",
+          "billing"
+        ]
+      },
+      "type": {
+        "type": "string",
+        "isArray": false,
+        "desc": "postal | physical | both",
+        "isComposite": false,
+        "values": [
+          "postal",
+          "physical",
+          "both"
+        ]
+      },
+      "text": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Text representation of the address",
+        "isComposite": false
+      },
+      "line": {
+        "type": "string",
+        "isArray": true,
+        "desc": "Street name, number, direction & P.O. Box etc.",
+        "isComposite": false
+      },
+      "city": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Les communes existantes sont définies ici : https://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/table.",
+        "isComposite": false
+      },
+      "district": {
+        "type": "string",
+        "isArray": false,
+        "desc": "District name (aka county)",
+        "isComposite": false
+      },
+      "state": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Sub-unit of country (abbreviations ok)",
+        "isComposite": false
+      },
+      "postalCode": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Postal code for area",
+        "isComposite": false
+      },
+      "country": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Country (will be ISO 3166 3 letter code; code=FRA for France)",
+        "isComposite": false
+      },
+      "period": {
+        "type": "Period",
+        "isArray": false,
+        "desc": "Time period when address was/is in use",
+        "isComposite": false
+      }
+    }
+  }
+]

@@ -1,0 +1,2626 @@
+[
+  {
+    "id": "fr-core-observation-bmi",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-bmi",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Body Mass Index (BMI)",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set."
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-body-height",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-body-height",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Body Height",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set.",
+            "values": []
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-body-temperature",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-body-temperature",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Body Temperature",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set.",
+            "values": []
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-body-weight",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-body-weight",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Body Weight",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set.",
+            "values": []
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-bp",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-bp",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Blood Pressure",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Mean blood pressure",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-head-circum",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-head-circum",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Head Circumference",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set.",
+            "values": []
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": []
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": []
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "fr-core-observation-heartrate",
+    "type": "Observation",
+    "url": "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-observation-heartrate",
+    "props": {
+      "id": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Logical id of this artifact",
+        "isComposite": false
+      },
+      "meta": {
+        "type": "Meta",
+        "isArray": false,
+        "desc": "Metadata about the resource",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "versionId": {
+            "type": "id",
+            "desc": "Version specific identifier"
+          },
+          "lastUpdated": {
+            "type": "instant",
+            "desc": "When the resource version last changed"
+          },
+          "source": {
+            "type": "uri",
+            "desc": "Identifies where the resource comes from"
+          },
+          "profile": {
+            "type": "canonical",
+            "desc": "Profiles this resource claims to conform to"
+          },
+          "security": {
+            "type": "Coding",
+            "desc": "Security Labels applied to this resource",
+            "values": []
+          },
+          "tag": {
+            "type": "Coding",
+            "desc": "Tags applied to this resource",
+            "values": []
+          }
+        }
+      },
+      "implicitRules": {
+        "type": "string",
+        "isArray": false,
+        "desc": "A set of rules under which this content was created",
+        "isComposite": false
+      },
+      "language": {
+        "type": "string",
+        "isArray": false,
+        "desc": "Language of the resource content",
+        "isComposite": false,
+        "values": []
+      },
+      "text": {
+        "type": "Narrative",
+        "isArray": false,
+        "desc": "Text summary of the resource, for human interpretation",
+        "isComposite": false
+      },
+      "contained": {
+        "type": "Resource",
+        "isArray": true,
+        "desc": "Contained, inline Resources",
+        "isComposite": false
+      },
+      "extension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Other information that may be relevant to this event.",
+        "isComposite": false
+      },
+      "modifierExtension": {
+        "type": "Extension",
+        "isArray": true,
+        "desc": "Extensions that cannot be ignored",
+        "isComposite": false
+      },
+      "identifier": {
+        "type": "Identifier",
+        "isArray": true,
+        "desc": "Business Identifier for observation",
+        "isComposite": false
+      },
+      "basedOn": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Fulfills plan, proposal or order",
+        "isComposite": false
+      },
+      "partOf": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Part of referenced event",
+        "isComposite": false
+      },
+      "status": {
+        "type": "string",
+        "isArray": false,
+        "desc": "registered | preliminary | final | amended +",
+        "isComposite": false,
+        "values": [
+          "registered",
+          "preliminary",
+          "final",
+          "amended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ]
+      },
+      "category": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "Classification of  type of observation",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "code": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Heart Rate",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "boolean",
+            "desc": "If this coding was chosen directly by the user"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "subject": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Who and/or what the observation is about",
+        "isComposite": false
+      },
+      "focus": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "What the observation is about, when it is not about the subject of record",
+        "isComposite": false
+      },
+      "encounter": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Healthcare event during which this observation is made",
+        "isComposite": false
+      },
+      "effective": {
+        "type": "dateTime",
+        "isArray": false,
+        "desc": "Often just a dateTime for Vital Signs",
+        "isComposite": true
+      },
+      "issued": {
+        "type": "instant",
+        "isArray": false,
+        "desc": "Date/Time this version was made available",
+        "isComposite": false
+      },
+      "performer": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Who is responsible for the observation",
+        "isComposite": false
+      },
+      "value": {
+        "type": "Quantity",
+        "isArray": false,
+        "desc": "Vital Signs value are recorded using the Quantity data type. For supporting observations such as Cuff size could use other datatypes such as CodeableConcept.",
+        "isComposite": true,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "value": {
+            "type": "decimal",
+            "desc": "Numerical value (with implicit precision)"
+          },
+          "comparator": {
+            "type": "string",
+            "desc": "< | <= | >= | > - how to understand the value",
+            "values": [
+              "<",
+              "<=",
+              ">=",
+              ">",
+              "ad"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "desc": "Unit representation"
+          },
+          "system": {
+            "type": "uri",
+            "desc": "System that defines coded unit form"
+          },
+          "code": {
+            "type": "string",
+            "desc": "Coded responses from the common UCUM units for vital signs value set."
+          }
+        },
+        "hasSystem": true
+      },
+      "dataAbsentReason": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Why the result is missing",
+        "isComposite": false,
+        "values": []
+      },
+      "interpretation": {
+        "type": "CodeableConcept",
+        "isArray": true,
+        "desc": "High, low, normal, etc.",
+        "isComposite": false,
+        "values": []
+      },
+      "note": {
+        "type": "Annotation",
+        "isArray": true,
+        "desc": "Comments about the observation",
+        "isComposite": false
+      },
+      "bodySite": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "Observed body part",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system",
+            "values": []
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "method": {
+        "type": "CodeableConcept",
+        "isArray": false,
+        "desc": "How it was done",
+        "isComposite": false,
+        "values": [],
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "coding": {
+            "type": "Coding",
+            "desc": "Code defined by a terminology system",
+            "values": []
+          },
+          "text": {
+            "type": "string",
+            "desc": "Plain text representation of the concept"
+          }
+        }
+      },
+      "specimen": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "Specimen used for this observation",
+        "isComposite": false
+      },
+      "device": {
+        "type": "Reference",
+        "isArray": false,
+        "desc": "(Measurement) Device",
+        "isComposite": false
+      },
+      "referenceRange": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Provides guide for interpretation",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "low": {
+            "type": "Quantity",
+            "desc": "Low Range, if relevant"
+          },
+          "high": {
+            "type": "Quantity",
+            "desc": "High Range, if relevant"
+          },
+          "type": {
+            "type": "CodeableConcept",
+            "desc": "Reference range qualifier",
+            "values": []
+          },
+          "appliesTo": {
+            "type": "CodeableConcept",
+            "desc": "Reference range population",
+            "values": []
+          },
+          "age": {
+            "type": "Range",
+            "desc": "Applicable age range, if relevant"
+          },
+          "text": {
+            "type": "string",
+            "desc": "Text based reference range in an observation"
+          }
+        }
+      },
+      "hasMember": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Used when reporting vital signs panel components",
+        "isComposite": false
+      },
+      "derivedFrom": {
+        "type": "Reference",
+        "isArray": true,
+        "desc": "Related measurements the observation is made from",
+        "isComposite": false
+      },
+      "component": {
+        "type": "BackboneElement",
+        "isArray": true,
+        "desc": "Used when reporting systolic and diastolic blood pressure.",
+        "isComposite": false,
+        "typeDef": {
+          "id": {
+            "type": "string",
+            "desc": "Unique id for inter-element referencing"
+          },
+          "modifierExtension": {
+            "type": "Extension",
+            "desc": "Extensions that cannot be ignored even if unrecognized"
+          },
+          "code": {
+            "type": "CodeableConcept",
+            "desc": "Type of component observation (code / type)",
+            "values": []
+          },
+          "value": {
+            "type": "Quantity",
+            "desc": "Vital Sign Value recorded with UCUM",
+            "values": []
+          },
+          "dataAbsentReason": {
+            "type": "CodeableConcept",
+            "desc": "Why the component result is missing",
+            "values": []
+          },
+          "interpretation": {
+            "type": "CodeableConcept",
+            "desc": "High, low, normal, etc.",
+            "values": []
+          }
+        }
+      }
+    }
+  }
+]

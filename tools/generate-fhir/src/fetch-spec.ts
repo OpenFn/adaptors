@@ -28,6 +28,7 @@ export type Meta = {
   name?: string;
 };
 
+// TODO pass mappings into this
 export default async function (baseDir: string, specPath: string) {
   return new Promise<Meta>(async (resolve, reject) => {
     await mkdir(path.resolve(baseDir, 'spec'), { recursive: true });
@@ -46,7 +47,6 @@ export default async function (baseDir: string, specPath: string) {
         .pipe(gunzip())
         .pipe(filestream)
         .on('close', async () => {
-          console.log(' ****************** CLOSE *************');
           let meta;
           let specs;
           try {
