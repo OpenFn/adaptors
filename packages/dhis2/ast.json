@@ -127,12 +127,12 @@
           },
           {
             "title": "example",
-            "description": "create('enrollments', {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
+            "description": "create('enrollments', {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
             "caption": "Create an enrollment"
           },
           {
             "title": "example",
-            "description": "create(\"tracker\", {\n  enrollments: [\n    {\n      trackedEntityInstance: \"bmshzEacgxa\",\n      orgUnit: \"TSyzvBiovKh\",\n      program: \"gZBxv9Ujxg0\",\n      enrollmentDate: \"2013-09-17\",\n      incidentDate: \"2013-09-17\",\n    },\n  ],\n  trackedEntities: [\n    {\n      orgUnit: \"TSyzvBiovKh\",\n      trackedEntityType: \"nEenWmSyUEp\",\n      attributes: [\n        {\n          attribute: \"w75KJ2mc4zz\",\n          value: \"Gigiwe\",\n        },\n      ],\n    },\n  ],\n});",
+            "description": "create(\"tracker\", {\n  enrollments: [\n    {\n      trackedEntity: \"bmshzEacgxa\",\n      orgUnit: \"TSyzvBiovKh\",\n      program: \"gZBxv9Ujxg0\",\n      enrollmentDate: \"2013-09-17\",\n      incidentDate: \"2013-09-17\",\n    },\n  ],\n  trackedEntities: [\n    {\n      orgUnit: \"TSyzvBiovKh\",\n      trackedEntityType: \"nEenWmSyUEp\",\n      attributes: [\n        {\n          attribute: \"w75KJ2mc4zz\",\n          value: \"Gigiwe\",\n        },\n      ],\n    },\n  ],\n});",
             "caption": "Create an multiple objects with the Tracker API"
           }
         ]
@@ -232,7 +232,7 @@
           },
           {
             "title": "example",
-            "description": "update('trackedEntities', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
+            "description": "update('trackedEntities', '', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntity: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntity: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
             "caption": "Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
@@ -272,8 +272,8 @@
           },
           {
             "title": "example",
-            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
-            "caption": "a single enrollment"
+            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
+            "caption": "Update an enrollment given the provided ID"
           }
         ]
       },
@@ -353,27 +353,27 @@
           {
             "title": "example",
             "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
-            "caption": "all data values for the 'pBOMPrpg1QX' dataset"
+            "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
           },
           {
             "title": "example",
             "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
-            "caption": "all programs for an organization unit"
+            "caption": "Get all programs for an organization unit"
           },
           {
             "title": "example",
-            "description": "get('tracker/trackedEntities', {\n  trackedEntities:['F8yKM85NbxW'],\n});",
-            "caption": "a single tracked entity instance by a unique entity ID. Either `program`, `trackedEntityType` or `trackedEntities` should be specified in the params. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}"
+            "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
+            "caption": "Get a single tracked entity given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}"
           },
           {
             "title": "example",
             "description": "get('tracker/enrollments/abcd');",
-            "caption": "a single enrollment tracker entity instance by a unique enrolment ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}"
+            "caption": "Get an enrollment given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}"
           },
           {
             "title": "example",
             "description": "get('tracker/events');",
-            "caption": "Get all events tracker entities instances. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}"
+            "caption": "Get all events matching given criteria. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}"
           },
           {
             "title": "example",
@@ -586,7 +586,7 @@
           {
             "title": "example",
             "description": "upsert('trackedEntities', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
-            "caption": "Upsert a trackedEntityInstance"
+            "caption": "Upsert a trackedEntity"
           }
         ]
       },
@@ -857,7 +857,7 @@
     {
       "name": "findAttributeValue",
       "params": [
-        "trackedEntityInstance",
+        "trackedEntity",
         "attributeDisplayName"
       ],
       "docs": {
@@ -884,7 +884,7 @@
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "trackedEntityInstance"
+            "name": "trackedEntity"
           },
           {
             "title": "param",

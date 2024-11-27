@@ -222,7 +222,7 @@ axios.interceptors.response.use(
  * });
  * @example <caption>Create an enrollment</caption>
  * create('enrollments', {
- *   trackedEntityInstance: 'bmshzEacgxa',
+ *   trackedEntity: 'bmshzEacgxa',
  *   orgUnit: 'TSyzvBiovKh',
  *   program: 'gZBxv9Ujxg0',
  *   enrollmentDate: '2013-09-17',
@@ -232,7 +232,7 @@ axios.interceptors.response.use(
  *  create("tracker", {
  *   enrollments: [
  *     {
- *       trackedEntityInstance: "bmshzEacgxa",
+ *       trackedEntity: "bmshzEacgxa",
  *       orgUnit: "TSyzvBiovKh",
  *       program: "gZBxv9Ujxg0",
  *       enrollmentDate: "2013-09-17",
@@ -324,7 +324,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *   created: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
  *   createdAtClient: '2015-08-06T21:12:37.256',
- *   trackedEntityInstance: 'IeQfgUtGPq2',
+ *   trackedEntity: 'IeQfgUtGPq2',
  *   lastUpdated: '2015-08-06T21:12:37.257',
  *   trackedEntityType: 'nEenWmSyUEp',
  *   inactive: false,
@@ -334,7 +334,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *     {
  *       ownerOrgUnit: 'TSyzvBiovKh',
  *       program: 'IpHINAT79UW',
- *       trackedEntityInstance: 'IeQfgUtGPq2',
+ *       trackedEntity: 'IeQfgUtGPq2',
  *     },
  *   ],
  *   enrollments: [],
@@ -418,9 +418,9 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *     },
  *   ],
  * });
- * @example <caption>a single enrollment</caption>
+ * @example <caption>Update an enrollment given the provided ID</caption>
  * update('enrollments', 'CmsHzercTBa' {
- *   trackedEntityInstance: 'bmshzEacgxa',
+ *   trackedEntity: 'bmshzEacgxa',
  *   orgUnit: 'TSyzvBiovKh',
  *   program: 'gZBxv9Ujxg0',
  *   enrollmentDate: '2013-10-17',
@@ -484,22 +484,20 @@ export function update(
  * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
  * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation} state
- * @example <caption>all data values for the 'pBOMPrpg1QX' dataset</caption>
+ * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
  * get('dataValueSets', {
  *   dataSet: 'pBOMPrpg1QX',
  *   orgUnit: 'DiszpKrYNg8',
  *   period: '201401',
  *   fields: '*',
  * });
- * @example <caption>all programs for an organization unit</caption>
+ * @example <caption>Get all programs for an organization unit</caption>
  * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
- * @example <caption>a single tracked entity instance by a unique entity ID. Either `program`, `trackedEntityType` or `trackedEntities` should be specified in the params. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}</caption>
- * get('tracker/trackedEntities', {
- *   trackedEntities:['F8yKM85NbxW'],
- * });
- * @example <caption>a single enrollment tracker entity instance by a unique enrolment ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}</caption>
+ * @example <caption>Get a single tracked entity given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}</caption>
+ * get('tracker/trackedEntities/F8yKM85NbxW');
+ * @example <caption>Get an enrollment given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}</caption>
  * get('tracker/enrollments/abcd');
- * @example <caption>Get all events tracker entities instances. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}</caption>
+ * @example <caption>Get all events matching given criteria. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}</caption>
  * get('tracker/events');
  * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}</caption>
  * get('tracker/relationships', {
@@ -510,9 +508,6 @@ export function get(resourceType, query, options = {}, callback = false) {
   return state => {
     console.log('Preparing get operation...');
 
-    // const resolvedResourceType = expandReferences(resourceType)(state);
-    // const resolvedQuery = expandReferences(query)(state);
-    // const resolvedOptions = expandReferences(options)(state);
     const [resolvedResourceType, resolvedQuery, resolvedOptions] =
       expandReferences(state, resourceType, query, options);
 
@@ -595,7 +590,7 @@ export function post(
  * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
- * @example <caption>Upsert a trackedEntityInstance</caption>
+ * @example <caption>Upsert a trackedEntity</caption>
  * upsert('trackedEntities', {
  *  orgUnit: 'TSyzvBiovKh',
  *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
@@ -877,15 +872,15 @@ export function destroy(
  * @example
  * findAttributeValue(state.data.trackedEntities[0], 'first name')
  * @function
- * @param {Object} trackedEntityInstance - A tracked entity instance (TEI) object
+ * @param {Object} trackedEntity - A tracked entity instance (TEI) object
  * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
  * @returns {string}
  */
 export function findAttributeValue(
-  trackedEntityInstance,
+  trackedEntity,
   attributeDisplayName
 ) {
-  return trackedEntityInstance?.attributes?.find(
+  return trackedEntity?.attributes?.find(
     a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
   )?.value;
 }
