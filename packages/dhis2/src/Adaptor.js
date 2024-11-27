@@ -616,7 +616,6 @@ export function upsert(
     let promise;
 
     if (shouldUseNewTracker(resolvedResourceType)) {
-      const { params, requestConfig } = resolvedOptions;
       const { configuration } = state;
       promise = callNewTracker(
         'create_and_update',
