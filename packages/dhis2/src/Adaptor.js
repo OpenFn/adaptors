@@ -321,11 +321,10 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  * });
  * @example <caption>Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}</caption>
  * update('trackedEntities', '', {
- *   created: '2015-08-06T21:12:37.256',
+ *   createdAt: '2015-08-06T21:12:37.256',
  *   orgUnit: 'TSyzvBiovKh',
  *   createdAtClient: '2015-08-06T21:12:37.256',
  *   trackedEntity: 'IeQfgUtGPq2',
- *   lastUpdated: '2015-08-06T21:12:37.257',
  *   trackedEntityType: 'nEenWmSyUEp',
  *   inactive: false,
  *   deleted: false,
@@ -337,8 +336,6 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *       trackedEntity: 'IeQfgUtGPq2',
  *     },
  *   ],
- *   enrollments: [],
- *   relationships: [],
  *   attributes: [
  *     {
  *       lastUpdated: '2016-01-12T00:00:00.000',
@@ -440,7 +437,7 @@ export function update(
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, path, data, options);
 
-    const { params, requestConfig } = resolvedOptions;
+    const { requestConfig } = resolvedOptions;
     const { configuration } = state;
 
     let promise;
