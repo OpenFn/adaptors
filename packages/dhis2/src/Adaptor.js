@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-
+import _ from 'lodash';
+const { indexOf } = _;
 import {
   CONTENT_TYPES,
   generateUrl,
@@ -10,7 +11,6 @@ import {
   selectId,
   shouldUseNewTracker,
   ensureArray,
-  indexOf,
 } from './Utils';
 import { request } from './Client';
 
@@ -876,10 +876,7 @@ export function destroy(
  * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
  * @returns {string}
  */
-export function findAttributeValue(
-  trackedEntity,
-  attributeDisplayName
-) {
+export function findAttributeValue(trackedEntity, attributeDisplayName) {
   return trackedEntity?.attributes?.find(
     a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
   )?.value;

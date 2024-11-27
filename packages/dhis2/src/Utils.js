@@ -1,7 +1,4 @@
 import { composeNextState } from '@openfn/language-common';
-import _ from 'lodash';
-
-export const { indexOf, isObject, isArray } = _;
 
 export function shouldUseNewTracker(resourceType) {
   return /^(enrollments|relationships|events|trackedEntities)$/.test(
@@ -53,7 +50,7 @@ export function prettyJson(data) {
 }
 
 export function ensureArray(data, key) {
-  return isArray(data) ? { [key]: data } : { [key]: [data] };
+  return Array.isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 
 export function generateUrl(configuration, options, resourceType, path = null) {
