@@ -9,8 +9,7 @@ This release is designed for compatibility with DHIS2 v42, which drops support
 for a number of endpoints.
 
 The `create`, `update`, `upsert` and `destroy` functions will automatically map
-affected resources to the new tracker API, so `create('trackedEntityInstances')`
-will still work like it used to.
+affected resources to the new tracker API endpoint.
 
 Workflows using these functions should be able to migrate to this new adaptor
 version, but note that the payloads and parameters on the new tracker endpoints
