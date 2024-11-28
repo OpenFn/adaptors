@@ -78,7 +78,7 @@
           {
             "title": "example",
             "description": "create('programs', {\n  name: 'name 20',\n  shortName: 'n20',\n  programType: 'WITHOUT_REGISTRATION',\n});",
-            "caption": "Createa program"
+            "caption": "Create a program"
           },
           {
             "title": "example",
