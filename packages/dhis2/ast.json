@@ -23,7 +23,7 @@
           },
           {
             "title": "param",
-            "description": "Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ...",
+            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -78,22 +78,22 @@
           {
             "title": "example",
             "description": "create('programs', {\n  name: 'name 20',\n  shortName: 'n20',\n  programType: 'WITHOUT_REGISTRATION',\n});",
-            "caption": "a program"
+            "caption": "Createa program"
           },
           {
             "title": "example",
             "description": "create('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
-            "caption": "an event"
+            "caption": "Create a single event"
           },
           {
             "title": "example",
-            "description": "create('trackedEntityInstances', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "a trackedEntityInstance"
+            "description": "create('trackedEntities', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
+            "caption": "Create a single tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}"
           },
           {
             "title": "example",
             "description": "create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });",
-            "caption": "a dataSet"
+            "caption": "Create a dataSet"
           },
           {
             "title": "example",
@@ -103,32 +103,37 @@
           {
             "title": "example",
             "description": "create('dataElements', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "a dataElement"
+            "caption": "Create a dataElement"
           },
           {
             "title": "example",
             "description": "create('dataElementGroups', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "a dataElementGroup"
+            "caption": "Create a dataElementGroup"
           },
           {
             "title": "example",
             "description": "create('dataElementGroupSets', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "a dataElementGroupSet"
+            "caption": "Create a dataElementGroupSet"
           },
           {
             "title": "example",
             "description": "create('dataValueSets', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "a dataValueSet"
+            "caption": "Create a dataValueSet"
           },
           {
             "title": "example",
             "description": "create('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "a dataValueSet with related dataValues"
+            "caption": "Create a dataValueSet with related dataValues"
           },
           {
             "title": "example",
-            "description": "create('enrollments', {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
-            "caption": "an enrollment"
+            "description": "create('enrollments', {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
+            "caption": "Create an enrollment"
+          },
+          {
+            "title": "example",
+            "description": "create(\"tracker\", {\n  enrollments: [\n    {\n      trackedEntity: \"bmshzEacgxa\",\n      orgUnit: \"TSyzvBiovKh\",\n      program: \"gZBxv9Ujxg0\",\n      enrollmentDate: \"2013-09-17\",\n      incidentDate: \"2013-09-17\",\n    },\n  ],\n  trackedEntities: [\n    {\n      orgUnit: \"TSyzvBiovKh\",\n      trackedEntityType: \"nEenWmSyUEp\",\n      attributes: [\n        {\n          attribute: \"w75KJ2mc4zz\",\n          value: \"Gigiwe\",\n        },\n      ],\n    },\n  ],\n});",
+            "caption": "Create an multiple objects with the Tracker API"
           }
         ]
       },
@@ -227,48 +232,48 @@
           },
           {
             "title": "example",
-            "description": "update('trackedEntityInstances', 'IeQfgUtGPq2', {\n  created: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntityInstance: 'IeQfgUtGPq2',\n  lastUpdated: '2015-08-06T21:12:37.257',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntityInstance: 'IeQfgUtGPq2',\n    },\n  ],\n  enrollments: [],\n  relationships: [],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
-            "caption": "a trackedEntityInstance"
+            "description": "update('trackedEntities', '', {\n  createdAt: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntity: 'IeQfgUtGPq2',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntity: 'IeQfgUtGPq2',\n    },\n  ],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
+            "caption": "Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}"
           },
           {
             "title": "example",
             "description": "update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });",
-            "caption": "a dataSet"
+            "caption": "Update a dataSet"
           },
           {
             "title": "example",
-            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated,\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
+            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
             "caption": "a dataSetNotification"
           },
           {
             "title": "example",
             "description": "update('dataElements', 'FTRrcoaog83', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "a dataElement"
+            "caption": "Update a dataElement"
           },
           {
             "title": "example",
             "description": "update('dataElementGroups', 'QrprHT61XFk', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "a dataElementGroup"
+            "caption": "Update a dataElementGroup"
           },
           {
             "title": "example",
             "description": "update('dataElementGroupSets', 'VxWloRvAze8', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "a dataElementGroupSet"
+            "caption": "Update a dataElementGroupSet"
           },
           {
             "title": "example",
             "description": "update('dataValueSets', 'AsQj6cDsUq4', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "a dataValueSet"
+            "caption": "Update a dataValueSet"
           },
           {
             "title": "example",
             "description": "update('dataValueSets', 'Ix2HsbDMLea', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "a dataValueSet with related dataValues"
+            "caption": "Update a dataValueSet with related dataValues"
           },
           {
             "title": "example",
-            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntityInstance: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
-            "caption": "a single enrollment"
+            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
+            "caption": "Update an enrollment given the provided ID"
           }
         ]
       },
@@ -283,7 +288,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`",
+        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`",
         "tags": [
           {
             "title": "public",
@@ -297,7 +302,7 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc.",
+            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -348,21 +353,121 @@
           {
             "title": "example",
             "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
-            "caption": "all data values for the 'pBOMPrpg1QX' dataset"
+            "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
           },
           {
             "title": "example",
             "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
-            "caption": "all programs for an organization unit"
+            "caption": "Get all programs for an organization unit"
           },
           {
             "title": "example",
-            "description": "get('trackedEntityInstances', {\n  ou: 'DiszpKrYNg8',\n  filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],\n});",
-            "caption": "a single tracked entity instance by a unique external ID"
+            "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
+            "caption": "Get a single tracked entity given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/enrollments/abcd');",
+            "caption": "Get an enrollment given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/events');",
+            "caption": "Get all events matching given criteria. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/relationships', {\n  trackedEntity:['F8yKM85NbxW'],\n});",
+            "caption": "Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}"
           }
         ]
       },
       "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "resourceType",
+        "data",
+        "query",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Post data. Generic helper method for posting data of any kind to DHIS2.\nThis can be used to create `DataValueSets`,`events`,`trackers`,etc.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "magic",
+            "description": "resourceType $.children.resourceTypes[*]"
+          },
+          {
+            "title": "param",
+            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Dhis2Data"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "state",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "post(\"tracker\", {\n  events: [\n    {\n      program: \"eBAyeGv0exc\",\n      orgUnit: \"DiszpKrYNg8\",\n      status: \"COMPLETED\",\n    },\n  ],\n});",
+            "caption": "Create an event"
+          }
+        ]
+      },
+      "valid": false
     },
     {
       "name": "upsert",
@@ -388,7 +493,7 @@
           },
           {
             "title": "param",
-            "description": "The type of a resource to `upsert`. E.g. `trackedEntityInstances`",
+            "description": "The type of a resource to `upsert`. E.g. `trackedEntities`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -480,8 +585,8 @@
           },
           {
             "title": "example",
-            "description": "upsert('trackedEntityInstances', {\n ou: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
-            "caption": "Example `expression.js` of upsert"
+            "description": "upsert('trackedEntities', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
+            "caption": "Upsert a trackedEntity"
           }
         ]
       },
@@ -517,7 +622,7 @@
           },
           {
             "title": "param",
-            "description": "The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets`",
+            "description": "The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -534,7 +639,7 @@
           },
           {
             "title": "example",
-            "description": "discover('post', '/trackedEntityInstances')",
+            "description": "discover('post', '/trackedEntities')",
             "caption": "a list of parameters allowed on a given endpoint for specific http method"
           }
         ]
@@ -655,7 +760,7 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc.",
+            "description": "The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -742,8 +847,8 @@
           },
           {
             "title": "example",
-            "description": "destroy('trackedEntityInstances', 'LcRd6Nyaq7T');",
-            "caption": "a tracked entity instance"
+            "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
+            "caption": "a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}"
           }
         ]
       },
@@ -752,7 +857,7 @@
     {
       "name": "findAttributeValue",
       "params": [
-        "trackedEntityInstance",
+        "trackedEntity",
         "attributeDisplayName"
       ],
       "docs": {
@@ -765,7 +870,7 @@
           },
           {
             "title": "example",
-            "description": "findAttributeValue(state.data.trackedEntityInstances[0], 'first name')"
+            "description": "findAttributeValue(state.data.trackedEntities[0], 'first name')"
           },
           {
             "title": "function",
@@ -779,7 +884,7 @@
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "trackedEntityInstance"
+            "name": "trackedEntity"
           },
           {
             "title": "param",
@@ -809,7 +914,7 @@
         "value"
       ],
       "docs": {
-        "description": "Converts an attribute ID and value into a DSHI2 attribute object",
+        "description": "Converts an attribute ID and value into a DHIS2 attribute object",
         "tags": [
           {
             "title": "public",
@@ -862,7 +967,7 @@
         "value"
       ],
       "docs": {
-        "description": "Converts a dataElement and value into a DSHI2 dataValue object",
+        "description": "Converts a dataElement and value into a DHIS2 dataValue object",
         "tags": [
           {
             "title": "public",
@@ -1473,6 +1578,92 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }

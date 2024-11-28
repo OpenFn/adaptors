@@ -265,20 +265,20 @@ describe('Integration tests', () => {
 
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
-        get('trackedEntityInstances', {
-          program: 'IpHINAT79UW',
-          ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:Jackson'],
+        get('tracker/trackedEntities', {
+          program: 'fDd25txQckK',
+          orgUnit: 'DiszpKrYNg8',
+          filter: ['w75KJ2mc4zz:Eq:Elanor'],
         })
       )(state);
 
-      expect(finalState.data.trackedEntityInstances.length).to.eq(1);
+      expect(finalState.data.instances.length).to.eq(1);
 
       const finalState2 = await execute(
         get('trackedEntityInstances', {
-          program: 'IpHINAT79UW',
+          program: 'fDd25txQckK',
           ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Sophia', 'zDhUuAYrxNC:Eq:NotJackson'],
+          filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
         })
       )(state);
 

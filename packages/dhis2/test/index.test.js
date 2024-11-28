@@ -1,7 +1,12 @@
 import chai from 'chai';
 import { execute, create, update, get, upsert } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
-import { buildUrl, generateUrl, nestArray } from '../src/Utils';
+import {
+  buildUrl,
+  generateUrl,
+  ensureArray,
+  shouldUseNewTracker,
+} from '../src/Utils';
 import nock from 'nock';
 
 const { expect } = chai;
@@ -142,6 +147,33 @@ describe('get', () => {
   });
 });
 
+describe('helperfunctions', () => {
+  it('should use the new tracker for enrollments', () => {
+    const result = shouldUseNewTracker('enrollments');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for events', () => {
+    const result = shouldUseNewTracker('events');
+    expect(result).to.be.true;
+  });
+
+  it('should use the new tracker for trackedEntities', () => {
+    const result = shouldUseNewTracker('trackedEntities');
+    expect(result).to.be.true;
+  });
+
+  it('should use the old API for dataValueSets', () => {
+    const result = shouldUseNewTracker('dataValueSets');
+    expect(result).to.be.false;
+  });
+
+  it('should use the old API for dataElements', () => {
+    const result = shouldUseNewTracker('dataElements');
+    expect(result).to.be.false;
+  });
+});
+
 describe('create', () => {
   const state = {
     configuration: {
@@ -152,6 +184,7 @@ describe('create', () => {
     data: {
       program: 'program1',
       orgUnit: 'org50',
+      trackedEntityType: 'nEenWmSyUEp',
       status: 'COMPLETED',
       date: '02-02-20',
     },
@@ -159,12 +192,18 @@ describe('create', () => {
 
   it('should make an authenticated POST to the right url', async () => {
     testServer
-      .post('/api/events', {
-        program: 'program1',
-        orgUnit: 'org50',
-        status: 'COMPLETED',
-        date: '02-02-20',
+      .post('/api/tracker', {
+        events: [
+          {
+            program: 'program1',
+            orgUnit: 'org50',
+            trackedEntityType: 'nEenWmSyUEp',
+            status: 'COMPLETED',
+            date: '02-02-20',
+          },
+        ],
       })
+      .query({ async: false })
       .times(2)
       .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
       .reply(200, {
@@ -172,7 +211,9 @@ describe('create', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(create('events', state.data))(state);
+    const finalState = await execute(create('events', state => state.data))(
+      state
+    );
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -182,10 +223,15 @@ describe('create', () => {
 
   it('should recursively expand references', async () => {
     testServer
-      .post('/api/events', {
-        program: 'abc',
-        orgUnit: 'org50',
+      .post('/api/tracker', {
+        events: [
+          {
+            program: 'abc',
+            orgUnit: 'org50',
+          },
+        ],
       })
+      .query({ async: false })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
@@ -193,6 +239,85 @@ describe('create', () => {
 
     const finalState = await execute(
       create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+});
+
+describe('post', () => {
+  const state = {
+    configuration: {
+      username: 'admin',
+      password: 'district',
+      hostUrl: 'https://play.dhis2.org/2.36.4',
+    },
+    data: {
+      program: 'program1',
+      orgUnit: 'org50',
+      trackedEntityType: 'nEenWmSyUEp',
+      status: 'COMPLETED',
+      date: '02-02-20',
+    },
+  };
+
+  it('should make an authenticated POST to the right url', async () => {
+    testServer
+      .post('/api/tracker', {
+        events: [
+          {
+            program: 'program1',
+            orgUnit: 'org50',
+            trackedEntityType: 'nEenWmSyUEp',
+            status: 'COMPLETED',
+            date: '02-02-20',
+          },
+        ],
+      })
+      .times(2)
+      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      create('tracker', { events: [state.data] })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+
+  it('should recursively expand references', async () => {
+    testServer
+      .post('/api/tracker', {
+        relationships: [
+          {
+            program: 'abc',
+            orgUnit: 'org50',
+          },
+        ],
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      create('tracker', {
+        relationships: [
+          {
+            program: 'abc',
+            orgUnit: state => state.data.orgUnit,
+          },
+        ],
+      })
     )(state);
 
     expect(finalState.data).to.eql({
@@ -219,7 +344,7 @@ describe('update', () => {
 
   it('should make an authenticated PUT to the right url', async () => {
     testServer
-      .put('/api/events/qAZJCrNJK8H')
+      .put('/api/dataValueSets/AsQj6cDsUq4')
       .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
       .reply(200, {
         httpStatus: 'OK',
@@ -227,7 +352,7 @@ describe('update', () => {
       });
 
     const finalState = await execute(
-      update('events', 'qAZJCrNJK8H', state => ({
+      update('dataValueSets', 'AsQj6cDsUq4', state => ({
         ...state.data,
         date: state.data.currentDate,
       }))
@@ -241,7 +366,7 @@ describe('update', () => {
 
   it('should recursively expand refs', async () => {
     testServer
-      .put('/api/events/qAZJCrNJK8H', {
+      .put('/api/dataValueSets/AsQj6cDsUq4', {
         program: 'program',
         orgUnit: 'hardcoded',
         date: '02-02-20',
@@ -252,7 +377,7 @@ describe('update', () => {
       });
 
     const finalState = await execute(
-      update('events', 'qAZJCrNJK8H', {
+      update('dataValueSets', 'AsQj6cDsUq4', {
         program: dataValue('program'),
         orgUnit: 'hardcoded',
         date: resp => resp.data.currentDate,
@@ -281,38 +406,24 @@ describe('upsert', () => {
 
   it('should make a get and then an update if one item is found', async () => {
     testServer
-      .get(
-        '/api/trackedEntityInstances?ou=DiszpKrYNg8&filter=w75KJ2mc4zz:Eq:Johns&filter=zDhUuAYrxNC:Eq:Doe'
-      )
+      .get('/api/dataValueSets?orgUnit=DiszpKrYNg8')
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
-        trackedEntityInstances: [{ trackedEntityInstance: 123 }],
+        dataValueSets: [{ id: 123 }],
       })
-      .put('/api/trackedEntityInstances/123')
+      .put('/api/dataValueSets/123')
       .reply(200, { httpStatus: 'OK', message: 'updated tei' });
 
     const finalState = await execute(
       upsert(
-        'trackedEntityInstances',
+        'dataValueSets',
         {
-          ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Johns', 'zDhUuAYrxNC:Eq:Doe'],
+          orgUnit: 'DiszpKrYNg8',
         },
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-          attributes: [
-            {
-              lastUpdated: '2016-01-12T00:00:00.000',
-              code: 'MMD_PER_NAM',
-              displayName: 'First name',
-              created: '2016-01-12T00:00:00.000',
-              valueType: 'TEXT',
-              attribute: 'w75KJ2mc4zz',
-              value: 'Elias',
-            },
-          ],
         }
       )
     )(state);
@@ -332,38 +443,24 @@ describe('upsert', () => {
 
   it('should make a get and then a create if nothing is found', async () => {
     testServer
-      .get(
-        '/api/trackedEntityInstances?ou=DiszpKrYNg8&filter=w75KJ2mc4zz:Eq:No&filter=zDhUuAYrxNC:Eq:One'
-      )
+      .get('/api/dataValueSets?orgUnit=DiszpKrYNg8')
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
-        trackedEntityInstances: [],
+        dataValueSets: [],
       })
-      .post('/api/trackedEntityInstances')
+      .post('/api/dataValueSets')
       .reply(201, { httpStatus: 'OK', message: 'created tei' });
 
     const finalState = await execute(
       upsert(
-        'trackedEntityInstances',
+        'dataValueSets',
         {
-          ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:No', 'zDhUuAYrxNC:Eq:One'],
+          orgUnit: 'DiszpKrYNg8',
         },
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-          attributes: [
-            {
-              lastUpdated: '2016-01-12T00:00:00.000',
-              code: 'MMD_PER_NAM',
-              displayName: 'First name',
-              created: '2016-01-12T00:00:00.000',
-              valueType: 'TEXT',
-              attribute: 'w75KJ2mc4zz',
-              value: 'Elias',
-            },
-          ],
         }
       )
     )(state);
@@ -382,19 +479,11 @@ describe('upsert', () => {
   });
 
   it('should make a get and FAIL if more than one thing is found', async () => {
-    testServer
-      .get(
-        '/api/trackedEntityInstances?ou=DiszpKrYNg8&filter=w75KJ2mc4zz:Eq:John&filter=zDhUuAYrxNC:Eq:Doe'
-      )
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-        trackedEntityInstances: [
-          { trackedEntityInstance: 1 },
-          { trackedEntityInstance: 2 },
-          { trackedEntityInstance: 3 },
-        ],
-      });
+    testServer.get('/api/dataValueSets?orgUnit=DiszpKrYNg8').reply(200, {
+      httpStatus: 'OK',
+      message: 'the response',
+      dataValueSets: [{ id: 1 }, { id: 2 }, { id: 3 }],
+    });
 
     const expectThrowsAsync = async (method, errorMessage) => {
       let error = null;
@@ -413,25 +502,68 @@ describe('upsert', () => {
       () =>
         execute(
           upsert(
-            'trackedEntityInstances',
+            'dataValueSets',
             {
-              ou: 'DiszpKrYNg8',
-              filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Doe'],
+              orgUnit: 'DiszpKrYNg8',
             },
             {
               orgUnit: 'TSyzvBiovKh',
               trackedEntityType: 'nEenWmSyUEp',
-              attributes: [
-                {
-                  attribute: 'w75KJ2mc4zz',
-                  value: 'Qassim',
-                },
-              ],
             }
           )
         )(state),
       'Cannot upsert on Non-unique attribute. The operation found more than one records for your request.'
     );
+  });
+
+  it('should make a post only when new tracker is called', async () => {
+    testServer
+      .post('/api/tracker', {
+        events: [
+          {
+            orgUnit: 'DiszpKrYNg8',
+            trackedEntityType: 'nEenWmSyUEp',
+            attributes: [
+              {
+                attribute: 'w75KJ2mc4zz',
+                value: 'Qassim',
+              },
+            ],
+          },
+        ],
+      })
+      .query({ async: false })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'created tei',
+      });
+
+    const finalState = await execute(
+      upsert(
+        'events',
+        {
+          orgUnit: 'DiszpKrYNg8',
+          trackedEntities: ['F8yKM85NbxW'],
+        },
+        [
+          {
+            orgUnit: 'DiszpKrYNg8',
+            trackedEntityType: 'nEenWmSyUEp',
+            attributes: [
+              {
+                attribute: 'w75KJ2mc4zz',
+                value: 'Qassim',
+              },
+            ],
+          },
+        ]
+      )
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'created tei',
+    });
   });
 });
 
@@ -529,7 +661,7 @@ describe('URL builders', () => {
   });
 });
 
-describe('nestArray', () => {
+describe('ensureArray', () => {
   it('when an array is passed it gets nested inside that "entity" key', async () => {
     const state = {
       configuration: {
@@ -541,7 +673,7 @@ describe('nestArray', () => {
       data: [{ a: 1 }],
     };
 
-    const body = nestArray(state.data, 'events');
+    const body = ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ a: 1 }] });
   });
@@ -556,8 +688,8 @@ describe('nestArray', () => {
       data: { b: 2 },
     };
 
-    const body = nestArray(state.data, 'events');
+    const body = ensureArray(state.data, 'events');
 
-    expect(body).to.eql({ b: 2 });
+    expect(body).to.eql({ events: [{ b: 2 }] });
   });
 });
