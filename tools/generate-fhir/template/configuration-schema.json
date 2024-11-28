@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "baseUrl": {
+          "title": "Base Url",
+          "type": "string",
+          "description": "The baseUrl",
+          "examples": [
+              "https://hapi.fhir.org"
+          ]
+      },
+      "apiPath": {
+          "title": "API Path",
+          "anyOf": [
+              {
+                  "type": "string"
+              },
+              {
+                  "type": "null"
+              }
+          ],
+          "placeholder": "R4",
+          "description": "FHIR api path",
+          "minLength": 1,
+          "examples": [
+              "baseR4",
+              "R3",
+              "R4"
+          ]
+      },
+      "username": {
+          "title": "Username",
+          "type": "string",
+          "description": "Username",
+          "examples": [
+              "openfn_test"
+          ]
+      },
+      "password": {
+          "title": "Password",
+          "type": "string",
+          "description": "Password",
+          "writeOnly": true,
+          "examples": [
+              "@some(!)Str0ngp4ss0w0rd"
+          ]
+      },
+      "access_token": {
+          "title": "Access Token",
+          "type": "string",
+          "description": "Your FHIR access token",
+          "writeOnly": true,
+          "minLength": 1,
+          "examples": [
+              "the-long-access-token-from-your-auth"
+          ]
+      }
+  },
+  "required": [
+      "baseUrl",
+      "apiPath"
+  ]
+}
