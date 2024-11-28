@@ -138,7 +138,7 @@ axios.interceptors.response.use(
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>Createa program</caption>
+ * @example <caption>Create a program</caption>
  * create('programs', {
  *   name: 'name 20',
  *   shortName: 'n20',
