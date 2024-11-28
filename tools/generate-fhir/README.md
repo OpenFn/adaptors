@@ -120,3 +120,12 @@ The generator will run through the following steps each time it's called:
 
 Note the adaptor template stuff is never re-generated. The only re-generated
 files on build are in [src/gen] (or something) and are clearly marked
+
+# TODO
+
+- [ ] Add an intialiser function in the mappings, which is useful for meta and
+      text stuff
+- [ ] Generate a FHIR v4 adaptor and hand-write datatype helpers into it
+- [ ] Handle FHIR extensions (complex types) better
+- [ ] Re-base fhir-ndr-et on the fhir 4 adaptor
+- [ ] Generate skipped tests for each example in the spec
