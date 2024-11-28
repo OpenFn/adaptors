@@ -35,13 +35,13 @@ export function execute(...operations) {
   return state => {
     const version = state.configuration?.apiVersion;
 
-    if (+version < 42) {
+    if (+version < 36) {
+      console.warn(
+        `WARNING: This adaptor is INCOMPATIBLE with DHIS2 tracker API versions before v36. Some functionality may break. See https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
+      );
+    } else if (+version < 42) {
       console.warn(
         `WARNING: This adaptor uses the new tracker APIs for create, update, upsert and destroy. Options and parameters may change, see https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
-      );
-    } else if (+version < 36) {
-      console.warn(
-        `WARNING: This adaptor is incompatible with DHIS2 tracker API versions before v36: see https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
       );
     }
 

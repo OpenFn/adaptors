@@ -18,6 +18,5 @@ may change. See the
 for details.
 
 The HTTP APIs `get()` and `patch()`, are _not_ affected by these changes: there
-is no automatic mapping in `get('trackedEntityInstances')` to
-`get('tracker/trackedEntities')`. Workflows which use the DHIS2 REST interface
-will need to be migrated.
+is no automatic mapping to the new tracker. Workflows which use the DHIS2 REST
+interface directly will need to be migrated.
