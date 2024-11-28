@@ -10,11 +10,13 @@
 <dt>
     <a href="#dv">dv(dataElement, value)</a></dt>
 <dt>
-    <a href="#findattributevalue">findAttributeValue(trackedEntityInstance, attributeDisplayName)</a></dt>
+    <a href="#findattributevalue">findAttributeValue(trackedEntity, attributeDisplayName)</a></dt>
 <dt>
     <a href="#get">get(resourceType, query, [options], [callback])</a></dt>
 <dt>
     <a href="#patch">patch(resourceType, path, data, [options], [callback])</a></dt>
+<dt>
+    <a href="#post">post(resourceType, data, [options], [callback])</a></dt>
 <dt>
     <a href="#update">update(resourceType, path, data, [options], [callback])</a></dt>
 <dt>
@@ -26,6 +28,9 @@ This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
@@ -72,7 +77,7 @@ This adaptor exports the following from common:
 
 <p><code>attr(attribute, value) ⇒ object</code></p>
 
-Converts an attribute ID and value into a DSHI2 attribute object
+Converts an attribute ID and value into a DHIS2 attribute object
 
 
 | Param | Type | Description |
@@ -96,12 +101,12 @@ Create a record
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | Type of resource to create. E.g. `trackedEntityInstances`, `programs`, `events`, ... |
+| resourceType | <code>string</code> | Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ... |
 | data | <code>Dhis2Data</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
 | [options] | <code>Object</code> | Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** a program
+**Example:** Create a program
 ```js
 create('programs', {
   name: 'name 20',
@@ -109,7 +114,7 @@ create('programs', {
   programType: 'WITHOUT_REGISTRATION',
 });
 ```
-**Example:** an event
+**Example:** Create a single event
 ```js
 create('events', {
   program: 'eBAyeGv0exc',
@@ -117,9 +122,9 @@ create('events', {
   status: 'COMPLETED',
 });
 ```
-**Example:** a trackedEntityInstance
+**Example:** Create a single tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}
 ```js
-create('trackedEntityInstances', {
+create('trackedEntities', {
   orgUnit: 'TSyzvBiovKh',
   trackedEntityType: 'nEenWmSyUEp',
   attributes: [
@@ -130,7 +135,7 @@ create('trackedEntityInstances', {
   ]
 });
 ```
-**Example:** a dataSet
+**Example:** Create a dataSet
 ```js
 create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });
 ```
@@ -145,7 +150,7 @@ create('dataSetNotificationTemplates', {
   dataSets: [],
 });
 ```
-**Example:** a dataElement
+**Example:** Create a dataElement
 ```js
 create('dataElements', {
   aggregationType: 'SUM',
@@ -155,14 +160,14 @@ create('dataElements', {
   shortName: 'Para',
 });
 ```
-**Example:** a dataElementGroup
+**Example:** Create a dataElementGroup
 ```js
 create('dataElementGroups', {
   name: 'Data Element Group 1',
   dataElements: [],
 });
 ```
-**Example:** a dataElementGroupSet
+**Example:** Create a dataElementGroupSet
 ```js
 create('dataElementGroupSets', {
   name: 'Data Element Group Set 4',
@@ -171,7 +176,7 @@ create('dataElementGroupSets', {
   dataElementGroups: [],
 });
 ```
-**Example:** a dataValueSet
+**Example:** Create a dataValueSet
 ```js
 create('dataValueSets', {
   dataElement: 'f7n9E0hX8qk',
@@ -180,7 +185,7 @@ create('dataValueSets', {
   value: '12',
 });
 ```
-**Example:** a dataValueSet with related dataValues
+**Example:** Create a dataValueSet with related dataValues
 ```js
 create('dataValueSets', {
   dataSet: 'pBOMPrpg1QX',
@@ -203,14 +208,40 @@ create('dataValueSets', {
   ],
 });
 ```
-**Example:** an enrollment
+**Example:** Create an enrollment
 ```js
 create('enrollments', {
-  trackedEntityInstance: 'bmshzEacgxa',
+  trackedEntity: 'bmshzEacgxa',
   orgUnit: 'TSyzvBiovKh',
   program: 'gZBxv9Ujxg0',
   enrollmentDate: '2013-09-17',
   incidentDate: '2013-09-17',
+});
+```
+**Example:** Create an multiple objects with the Tracker API
+```js
+ create("tracker", {
+  enrollments: [
+    {
+      trackedEntity: "bmshzEacgxa",
+      orgUnit: "TSyzvBiovKh",
+      program: "gZBxv9Ujxg0",
+      enrollmentDate: "2013-09-17",
+      incidentDate: "2013-09-17",
+    },
+  ],
+  trackedEntities: [
+    {
+      orgUnit: "TSyzvBiovKh",
+      trackedEntityType: "nEenWmSyUEp",
+      attributes: [
+        {
+          attribute: "w75KJ2mc4zz",
+          value: "Gigiwe",
+        },
+      ],
+    },
+  ],
 });
 ```
 
@@ -225,15 +256,15 @@ Delete a record. A generic helper function to delete an object
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to be deleted. E.g. `trackedEntityInstances`, `organisationUnits`, etc. |
+| resourceType | <code>string</code> | The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc. |
 | path | <code>string</code> | Can be an `id` of an `object` or `path` to the `nested object` to `delete`. |
 | [data] | <code>Object</code> | Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more [on DHIS2 API docs](https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects) |
 | [options] | <code>Object</code> | Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see [DHIS2 documentation](https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters). Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}` |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** a tracked entity instance
+**Example:** a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}
 ```js
-destroy('trackedEntityInstances', 'LcRd6Nyaq7T');
+destroy('trackedEntities', 'LcRd6Nyaq7T');
 ```
 
 * * *
@@ -248,11 +279,11 @@ Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for
 | Param | Type | Description |
 | --- | --- | --- |
 | httpMethod | <code>string</code> | The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete` |
-| endpoint | <code>string</code> | The path for a given endpoint. E.g. `/trackedEntityInstances` or `/dataValueSets` |
+| endpoint | <code>string</code> | The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets` |
 
 **Example:** a list of parameters allowed on a given endpoint for specific http method
 ```js
-discover('post', '/trackedEntityInstances')
+discover('post', '/trackedEntities')
 ```
 
 * * *
@@ -261,7 +292,7 @@ discover('post', '/trackedEntityInstances')
 
 <p><code>dv(dataElement, value) ⇒ object</code></p>
 
-Converts a dataElement and value into a DSHI2 dataValue object
+Converts a dataElement and value into a DHIS2 dataValue object
 
 
 | Param | Type | Description |
@@ -278,19 +309,19 @@ dv('f7n9E0hX8qk', 12)
 
 ### findAttributeValue
 
-<p><code>findAttributeValue(trackedEntityInstance, attributeDisplayName) ⇒ string</code></p>
+<p><code>findAttributeValue(trackedEntity, attributeDisplayName) ⇒ string</code></p>
 
 Gets an attribute value by its case-insensitive display name
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| trackedEntityInstance | <code>Object</code> | A tracked entity instance (TEI) object |
+| trackedEntity | <code>Object</code> | A tracked entity instance (TEI) object |
 | attributeDisplayName | <code>string</code> | The 'displayName' to search for in the TEI's attributes |
 
 **Example**
 ```js
-findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
+findAttributeValue(state.data.trackedEntities[0], 'first name')
 ```
 
 * * *
@@ -300,18 +331,18 @@ findAttributeValue(state.data.trackedEntityInstances[0], 'first name')
 <p><code>get(resourceType, query, [options], [callback]) ⇒ Operation</code></p>
 
 Get data. Generic helper method for getting data of any kind from DHIS2.
-- This can be used to get `DataValueSets`,`events`,`trackedEntityInstances`,`etc.`
+- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
 
 **Returns**: <code>Operation</code> - state  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to get(use its `plural` name). E.g. `dataElements`, `trackedEntityInstances`,`organisationUnits`, etc. |
+| resourceType | <code>string</code> | The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc. |
 | query | <code>Object</code> | A query object that will limit what resources are retrieved when converted into request params. |
 | [options] | <code>Object</code> | Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** all data values for the 'pBOMPrpg1QX' dataset
+**Example:** Get all data values for the 'pBOMPrpg1QX' dataset
 ```js
 get('dataValueSets', {
   dataSet: 'pBOMPrpg1QX',
@@ -320,15 +351,26 @@ get('dataValueSets', {
   fields: '*',
 });
 ```
-**Example:** all programs for an organization unit
+**Example:** Get all programs for an organization unit
 ```js
 get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
 ```
-**Example:** a single tracked entity instance by a unique external ID
+**Example:** Get a single tracked entity given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}
 ```js
-get('trackedEntityInstances', {
-  ou: 'DiszpKrYNg8',
-  filter: ['flGbXLXCrEo:Eq:124', 'w75KJ2mc4zz:Eq:John'],
+get('tracker/trackedEntities/F8yKM85NbxW');
+```
+**Example:** Get an enrollment given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}
+```js
+get('tracker/enrollments/abcd');
+```
+**Example:** Get all events matching given criteria. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}
+```js
+get('tracker/events');
+```
+**Example:** Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}
+```js
+get('tracker/relationships', {
+  trackedEntity:['F8yKM85NbxW'],
 });
 ```
 
@@ -354,6 +396,37 @@ Patch a record. A generic helper function to send partial updates on one or more
 **Example:** a dataElement
 ```js
 patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
+```
+
+* * *
+
+### post
+
+<p><code>post(resourceType, data, [options], [callback]) ⇒ Operation</code></p>
+
+Post data. Generic helper method for posting data of any kind to DHIS2.
+This can be used to create `DataValueSets`,`events`,`trackers`,etc.
+
+**Returns**: <code>Operation</code> - state  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resourceType | <code>string</code> | Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ... |
+| data | <code>Dhis2Data</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
+| [options] | <code>Object</code> | Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion. |
+| [callback] | <code>function</code> | Optional callback to handle the response |
+
+**Example:** Create an event
+```js
+post("tracker", {
+  events: [
+    {
+      program: "eBAyeGv0exc",
+      orgUnit: "DiszpKrYNg8",
+      status: "COMPLETED",
+    },
+  ],
+});
 ```
 
 * * *
@@ -392,14 +465,13 @@ update('events', 'PVqUD2hvU4E', {
   dataValues: [],
 });
 ```
-**Example:** a trackedEntityInstance
+**Example:** Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}
 ```js
-update('trackedEntityInstances', 'IeQfgUtGPq2', {
-  created: '2015-08-06T21:12:37.256',
+update('trackedEntities', '', {
+  createdAt: '2015-08-06T21:12:37.256',
   orgUnit: 'TSyzvBiovKh',
   createdAtClient: '2015-08-06T21:12:37.256',
-  trackedEntityInstance: 'IeQfgUtGPq2',
-  lastUpdated: '2015-08-06T21:12:37.257',
+  trackedEntity: 'IeQfgUtGPq2',
   trackedEntityType: 'nEenWmSyUEp',
   inactive: false,
   deleted: false,
@@ -408,11 +480,9 @@ update('trackedEntityInstances', 'IeQfgUtGPq2', {
     {
       ownerOrgUnit: 'TSyzvBiovKh',
       program: 'IpHINAT79UW',
-      trackedEntityInstance: 'IeQfgUtGPq2',
+      trackedEntity: 'IeQfgUtGPq2',
     },
   ],
-  enrollments: [],
-  relationships: [],
   attributes: [
     {
       lastUpdated: '2016-01-12T00:00:00.000',
@@ -434,7 +504,7 @@ update('trackedEntityInstances', 'IeQfgUtGPq2', {
   ],
 });
 ```
-**Example:** a dataSet
+**Example:** Update a dataSet
 ```js
 update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });
 ```
@@ -444,12 +514,12 @@ update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {
   dataSetNotificationTrigger: 'DATA_SET_COMPLETION',
   notificationRecipient: 'ORGANISATION_UNIT_CONTACT',
   name: 'Notification',
-  messageTemplate: 'Hello Updated,
+  messageTemplate: 'Hello Updated',
   deliveryChannels: ['SMS'],
   dataSets: [],
 });
 ```
-**Example:** a dataElement
+**Example:** Update a dataElement
 ```js
 update('dataElements', 'FTRrcoaog83', {
   aggregationType: 'SUM',
@@ -459,14 +529,14 @@ update('dataElements', 'FTRrcoaog83', {
   shortName: 'Para',
 });
 ```
-**Example:** a dataElementGroup
+**Example:** Update a dataElementGroup
 ```js
 update('dataElementGroups', 'QrprHT61XFk', {
   name: 'Data Element Group 1',
   dataElements: [],
 });
 ```
-**Example:** a dataElementGroupSet
+**Example:** Update a dataElementGroupSet
 ```js
 update('dataElementGroupSets', 'VxWloRvAze8', {
   name: 'Data Element Group Set 4',
@@ -475,7 +545,7 @@ update('dataElementGroupSets', 'VxWloRvAze8', {
   dataElementGroups: [],
 });
 ```
-**Example:** a dataValueSet
+**Example:** Update a dataValueSet
 ```js
 update('dataValueSets', 'AsQj6cDsUq4', {
   dataElement: 'f7n9E0hX8qk',
@@ -484,7 +554,7 @@ update('dataValueSets', 'AsQj6cDsUq4', {
   value: '12',
 });
 ```
-**Example:** a dataValueSet with related dataValues
+**Example:** Update a dataValueSet with related dataValues
 ```js
 update('dataValueSets', 'Ix2HsbDMLea', {
   dataSet: 'pBOMPrpg1QX',
@@ -507,10 +577,10 @@ update('dataValueSets', 'Ix2HsbDMLea', {
   ],
 });
 ```
-**Example:** a single enrollment
+**Example:** Update an enrollment given the provided ID
 ```js
 update('enrollments', 'CmsHzercTBa' {
-  trackedEntityInstance: 'bmshzEacgxa',
+  trackedEntity: 'bmshzEacgxa',
   orgUnit: 'TSyzvBiovKh',
   program: 'gZBxv9Ujxg0',
   enrollmentDate: '2013-10-17',
@@ -533,16 +603,16 @@ Upsert a record. A generic helper function used to atomically either insert a ro
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | The type of a resource to `upsert`. E.g. `trackedEntityInstances` |
+| resourceType | <code>string</code> | The type of a resource to `upsert`. E.g. `trackedEntities` |
 | query | <code>Object</code> | A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created. |
 | data | <code>Object</code> | The data to use for update or create depending on the result of the query. |
 | [options] | <code>Object</code> | Optional configuration that will be applied to both the `get` and the `create` or `update` operations. |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** Example `expression.js` of upsert
+**Example:** Upsert a trackedEntity
 ```js
-upsert('trackedEntityInstances', {
- ou: 'TSyzvBiovKh',
+upsert('trackedEntities', {
+ orgUnit: 'TSyzvBiovKh',
  filter: ['w75KJ2mc4zz:Eq:Qassim'],
 }, {
  orgUnit: 'TSyzvBiovKh',
