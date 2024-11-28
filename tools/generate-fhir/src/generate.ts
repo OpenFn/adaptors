@@ -123,7 +123,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     withDisclaimer(dts)
   );
 
-  if (options.tests || options.tests !== false) {
+  if (options.tests) {
     await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
     const tests = generateTests(schema, mappings);
     for (const p in tests) {
