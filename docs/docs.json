@@ -5769,6 +5769,903 @@
     "kind": "external-function"
   }
 ],
+{"name":"fhir-fr","adaptor":"@openfn/language-fhir-fr","version":"1.0.0","docs":"\"\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#utils_addExtension\\\">utils.addExtension(resource, url, value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_cc\\\">utils.cc()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_coding\\\">utils.coding(code, system)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_composite\\\">utils.composite(object, key, value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_concept\\\">utils.concept()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_findExtension\\\">utils.findExtension(obj, targetUrl, [path])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_id\\\">utils.id()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_identifier\\\">utils.identifier(input, [system])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_ref\\\">utils.ref()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_reference\\\">utils.reference(ref)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_setSystemMap\\\">utils.setSystemMap()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_address\\\">builders.address(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_appointment\\\">builders.appointment(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_contactPoint\\\">builders.contactPoint(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_encounter\\\">builders.encounter(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_extension\\\">builders.extension(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_healthcareService\\\">builders.healthcareService(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_humanName\\\">builders.humanName(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_location\\\">builders.location(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_medicationAdministration\\\">builders.medicationAdministration(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_observation\\\">builders.observation(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_organization\\\">builders.organization(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_patient\\\">builders.patient(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_practitioner\\\">builders.practitioner(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_practitionerRole\\\">builders.practitionerRole(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_relatedPerson\\\">builders.relatedPerson(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_schedule\\\">builders.schedule(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_slot\\\">builders.slot(type, props)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n## utils\\n\\nThese functions belong to the utils namespace.\\n### utils.addExtension {#utils_addExtension}\\n\\n<p><code>addExtension(resource, url, value)</code></p>\\n\\nAdd an extension to a resource (or object).\\nAn object will be created and added to an `extension` array on the provided resource.\\nThe extension array will be set if it does not exist on the resource.\\nThe value will be smartly written to the object, ie, valueDateTime or valueReference or valueString\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource |  | a FHIR resource object to add an extension too |\\n| url | <code>string</code> | the URL to set for the extension |\\n| value |  | the value that the extension should contain |\\n\\n\\n* * *\\n\\n\\n### utils.cc {#utils_cc}\\n\\n<p><code>cc()</code></p>\\n\\nAlias for util.concept()\\n\\n\\n* * *\\n\\n\\n### utils.coding {#utils_coding}\\n\\n<p><code>coding(code, system)</code></p>\\n\\nCreate a coding object { code, system }. Systems will be mapped using the system map.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| code | <code>string</code> | the code value |\\n| system | <code>string</code> | URL to the system. Well be mapped using the system map. |\\n\\n\\n* * *\\n\\n\\n### utils.composite {#utils_composite}\\n\\n<p><code>composite(object, key, value)</code></p>\\n\\nWrite a value to the target object using a typed key\\nIe, if key is `value` and the value is a date time string,\\nthis function will write `valueDateTime` to the object.\\n\\nThis function is poorly named.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| object |  | the object to write the composite key to |\\n| key | <code>string</code> | the base key to use to write the value |\\n| value |  | some value to write to the object |\\n\\n\\n* * *\\n\\n\\n### utils.concept {#utils_concept}\\n\\n<p><code>concept()</code></p>\\n\\nCreate a codeableConcept. Codings can be coding objects or\\n[code, system] tuples\\nif the first argument is a string, it will be set as the text.\\nSystems will be mapped with the system map\\n\\n**Example:** <Create a codeableConcept\\n```js\\nconst myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])\\n* @example <caption><Create a codeableConcept with text</caption>\\nconst myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])\\n```\\n\\n* * *\\n\\n\\n### utils.findExtension {#utils_findExtension}\\n\\n<p><code>findExtension(obj, targetUrl, [path])</code></p>\\n\\nFind an extension with a given url in some array\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| obj |  | a fhir resource |\\n| targetUrl | <code>string</code> | the extension URL you want to find |\\n| [path] | <code>string</code> | a path to extract from the resource. Optional. |\\n\\n\\n* * *\\n\\n\\n### utils.id {#utils_id}\\n\\n<p><code>id()</code></p>\\n\\nAlias for util.identifier()\\n\\n\\n* * *\\n\\n\\n### utils.identifier {#utils_identifier}\\n\\n<p><code>identifier(input, [system])</code></p>\\n\\nCreate an identifier resource. Systems will be mapped against the system map.\\nThe input can be a string value, or an identifier object.\\nIf input is an array of identifiers, an array of mapped/parsed values will be returned.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| input |  | an array of strings, or a identifier value as a string or object |\\n| [system] | <code>string</code> | the string system to use by default if |\\n\\n\\n* * *\\n\\n\\n### utils.ref {#utils_ref}\\n\\n<p><code>ref()</code></p>\\n\\nAlias for util.reference()\\n\\n\\n* * *\\n\\n\\n### utils.reference {#utils_reference}\\n\\n<p><code>reference(ref)</code></p>\\n\\nCreate a reference object of the form { reference }\\nIf ref is an array, each item will be mapped and an array returned.\\nIf ref is a FHIR resource, a reference to it will be generated\\nIf ref is a string, it'll be treated as a reference id and returned as an object\\nIf ref is a valid FHIR reference, it'll just be returned.\\n\\n\\n| Param | Description |\\n| --- | --- |\\n| ref | the thing to generate a reference from |\\n\\n\\n* * *\\n\\n\\n### utils.setSystemMap {#utils_setSystemMap}\\n\\n<p><code>setSystemMap()</code></p>\\n\\nDefine a set of mapped system values.\\n\\nBuilder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.\\n\\n**Example:** Set shortcut sustem mappings\\n```js\\nutil.setSystemMap({\\n  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'\\n});\\nbuilders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })\\n};\\n```\\n\\n* * *\\n\\n\\n## builders\\n\\nThese functions belong to the builders namespace.\\n### builders.address {#builders_address}\\n\\n<p><code>address(type, props)</code></p>\\n\\nCreate a FHIR Address resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.appointment {#builders_appointment}\\n\\n<p><code>appointment(type, props)</code></p>\\n\\nCreate a FHIR Appointment resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.contactPoint {#builders_contactPoint}\\n\\n<p><code>contactPoint(type, props)</code></p>\\n\\nCreate a FHIR ContactPoint resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.encounter {#builders_encounter}\\n\\n<p><code>encounter(type, props)</code></p>\\n\\nCreate a FHIR Encounter resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.extension {#builders_extension}\\n\\n<p><code>extension(type, props)</code></p>\\n\\nCreate a FHIR Extension resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.healthcareService {#builders_healthcareService}\\n\\n<p><code>healthcareService(type, props)</code></p>\\n\\nCreate a FHIR HealthcareService resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.humanName {#builders_humanName}\\n\\n<p><code>humanName(type, props)</code></p>\\n\\nCreate a FHIR HumanName resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.location {#builders_location}\\n\\n<p><code>location(type, props)</code></p>\\n\\nCreate a FHIR Location resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.medicationAdministration {#builders_medicationAdministration}\\n\\n<p><code>medicationAdministration(type, props)</code></p>\\n\\nCreate a FHIR MedicationAdministration resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.observation {#builders_observation}\\n\\n<p><code>observation(type, props)</code></p>\\n\\nCreate a FHIR Observation resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.organization {#builders_organization}\\n\\n<p><code>organization(type, props)</code></p>\\n\\nCreate a FHIR Organization resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.patient {#builders_patient}\\n\\n<p><code>patient(type, props)</code></p>\\n\\nCreate a FHIR Patient resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.practitioner {#builders_practitioner}\\n\\n<p><code>practitioner(type, props)</code></p>\\n\\nCreate a FHIR Practitioner resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.practitionerRole {#builders_practitionerRole}\\n\\n<p><code>practitionerRole(type, props)</code></p>\\n\\nCreate a FHIR PractitionerRole resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.relatedPerson {#builders_relatedPerson}\\n\\n<p><code>relatedPerson(type, props)</code></p>\\n\\nCreate a FHIR RelatedPerson resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.schedule {#builders_schedule}\\n\\n<p><code>schedule(type, props)</code></p>\\n\\nCreate a FHIR Schedule resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.slot {#builders_slot}\\n\\n<p><code>slot(type, props)</code></p>\\n\\nCreate a FHIR Slot resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-fhir-fr <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn adaptor for building integration jobs for use with the fhir-fr API.\\n\\nThis adaptor has been auto-generated from a FHIR spec. Do not modify generated\\ncode or changes will be lost.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/fhir-fr-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-fr-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test`\\n\\nBuild the adaptor using `pnpm build`.\\n\\nRe-generate the adaptor source with `pnpm generate-fhir fhir-fr`\\n\\nTo update the spec an re-generate, run `pnpm generate-fhir fhir-fr --respec`.\\nYou can update the spec url with `--spec <www>` or by modifying package.json\\n\"","changelog":"\"# @openfn/language-fhir-fr\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"baseUrl":{"title":"Base Url","type":"string","description":"The baseUrl","examples":["https://hapi.fhir.org"]},"apiPath":{"title":"API Path","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"R4","description":"FHIR api path","minLength":1,"examples":["baseR4","R3","R4"]},"username":{"title":"Username","type":"string","description":"Username","examples":["openfn_test"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"access_token":{"title":"Access Token","type":"string","description":"Your FHIR access token","writeOnly":true,"minLength":1,"examples":["the-long-access-token-from-your-auth"]}},"required":["baseUrl","apiPath"]}},
+[
+  {
+    "id": "addExtension",
+    "longname": "addExtension",
+    "name": "addExtension",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Add an extension to a resource (or object).\nAn object will be created and added to an `extension` array on the provided resource.\nThe extension array will be set if it does not exist on the resource.\nThe value will be smartly written to the object, ie, valueDateTime or valueReference or valueString",
+    "params": [
+      {
+        "description": "a FHIR resource object to add an extension too",
+        "name": "resource"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "the URL to set for the extension",
+        "name": "url"
+      },
+      {
+        "description": "the value that the extension should contain",
+        "name": "value"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 101,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 20,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "address",
+    "longname": "address",
+    "name": "address",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Address resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 16,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 0,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "appointment",
+    "longname": "appointment",
+    "name": "appointment",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Appointment resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 96,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "cc",
+    "longname": "cc",
+    "name": "cc",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Alias for util.concept()",
+    "access": "public",
+    "meta": {
+      "lineno": 178,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 24,
+    "level": 0
+  },
+  {
+    "id": "coding",
+    "longname": "coding",
+    "name": "coding",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Create a coding object { code, system }. Systems will be mapped using the system map.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "the code value",
+        "name": "code"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "URL to the system. Well be mapped using the system map.",
+        "name": "system"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 137,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 22,
+    "level": 0
+  },
+  {
+    "id": "composite",
+    "longname": "composite",
+    "name": "composite",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Write a value to the target object using a typed key\nIe, if key is `value` and the value is a date time string,\nthis function will write `valueDateTime` to the object.\n\nThis function is poorly named.",
+    "params": [
+      {
+        "description": "the object to write the composite key to",
+        "name": "object"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "the base key to use to write the value",
+        "name": "key"
+      },
+      {
+        "description": "some value to write to the object",
+        "name": "value"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 236,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 27,
+    "level": 0
+  },
+  {
+    "id": "concept",
+    "longname": "concept",
+    "name": "concept",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Create a codeableConcept. Codings can be coding objects or\n[code, system] tuples\nif the first argument is a string, it will be set as the text.\nSystems will be mapped with the system map",
+    "examples": [
+      "<caption><Create a codeableConcept</caption>\nconst myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])\n* @example <caption><Create a codeableConcept with text</caption>\nconst myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])"
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 151,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 23,
+    "level": 0
+  },
+  {
+    "id": "contactPoint",
+    "longname": "contactPoint",
+    "name": "contactPoint",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR ContactPoint resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 285,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "encounter",
+    "longname": "encounter",
+    "name": "encounter",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Encounter resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 345,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "extension",
+    "longname": "extension",
+    "name": "extension",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Extension resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 750,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "findExtension",
+    "longname": "findExtension",
+    "name": "findExtension",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Find an extension with a given url in some array",
+    "params": [
+      {
+        "description": "a fhir resource",
+        "name": "obj"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "the extension URL you want to find",
+        "name": "targetUrl"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "a path to extract from the resource. Optional.",
+        "name": "path"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 120,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 21,
+    "level": 0
+  },
+  {
+    "id": "healthcareService",
+    "longname": "healthcareService",
+    "name": "healthcareService",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR HealthcareService resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 2132,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "humanName",
+    "longname": "humanName",
+    "name": "humanName",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR HumanName resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 2410,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "id",
+    "longname": "id",
+    "name": "id",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Alias for util.identifier()",
+    "access": "public",
+    "meta": {
+      "lineno": 88,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 19,
+    "level": 0
+  },
+  {
+    "id": "identifier",
+    "longname": "identifier",
+    "name": "identifier",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Create an identifier resource. Systems will be mapped against the system map.\nThe input can be a string value, or an identifier object.\nIf input is an array of identifiers, an array of mapped/parsed values will be returned.",
+    "params": [
+      {
+        "description": "an array of strings, or a identifier value as a string or object",
+        "name": "input"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "the string system to use by default if",
+        "name": "system"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 57,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 18,
+    "level": 0
+  },
+  {
+    "id": "location",
+    "longname": "location",
+    "name": "location",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Location resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 2478,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "medicationAdministration",
+    "longname": "medicationAdministration",
+    "name": "medicationAdministration",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR MedicationAdministration resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 2730,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "observation",
+    "longname": "observation",
+    "name": "observation",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Observation resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 2933,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "organization",
+    "longname": "organization",
+    "name": "organization",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Organization resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 5322,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "patient",
+    "longname": "patient",
+    "name": "patient",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Patient resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 6051,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 11,
+    "level": 0
+  },
+  {
+    "id": "practitioner",
+    "longname": "practitioner",
+    "name": "practitioner",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Practitioner resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 6715,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 12,
+    "level": 0
+  },
+  {
+    "id": "practitionerRole",
+    "longname": "practitionerRole",
+    "name": "practitionerRole",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR PractitionerRole resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 6884,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 13,
+    "level": 0
+  },
+  {
+    "id": "ref",
+    "longname": "ref",
+    "name": "ref",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Alias for util.reference()",
+    "access": "public",
+    "meta": {
+      "lineno": 222,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 26,
+    "level": 0
+  },
+  {
+    "id": "reference",
+    "longname": "reference",
+    "name": "reference",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Create a reference object of the form { reference }\nIf ref is an array, each item will be mapped and an array returned.\nIf ref is a FHIR resource, a reference to it will be generated\nIf ref is a string, it'll be treated as a reference id and returned as an object\nIf ref is a valid FHIR reference, it'll just be returned.",
+    "params": [
+      {
+        "description": "the thing to generate a reference from",
+        "name": "ref"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 190,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 25,
+    "level": 0
+  },
+  {
+    "id": "relatedPerson",
+    "longname": "relatedPerson",
+    "name": "relatedPerson",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR RelatedPerson resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 7290,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 14,
+    "level": 0
+  },
+  {
+    "id": "schedule",
+    "longname": "schedule",
+    "name": "schedule",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Schedule resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 7443,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 15,
+    "level": 0
+  },
+  {
+    "id": "setSystemMap",
+    "longname": "setSystemMap",
+    "name": "setSystemMap",
+    "kind": "function",
+    "scope": "utils",
+    "description": "Define a set of mapped system values.\n\nBuilder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.",
+    "examples": [
+      "<caption>Set shortcut sustem mappings</caption>\nutil.setSystemMap({\n  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'\n});\nbuilders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })\n};"
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 44,
+      "filename": "utils.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 17,
+    "level": 0
+  },
+  {
+    "id": "slot",
+    "longname": "slot",
+    "name": "slot",
+    "kind": "function",
+    "scope": "builders",
+    "description": "Create a FHIR Slot resource.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The profile id for the resource variant",
+        "name": "type"
+      },
+      {
+        "description": "Properties to apply to the resource",
+        "name": "props"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 7537,
+      "filename": "builders.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-fr/src"
+    },
+    "order": 16,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function",
+    "newscope": true
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"fhir-ndr-et","adaptor":"@openfn/language-fhir-ndr-et","version":"0.1.7","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(resourceType, resource, params, callback)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#utils_addExtension\\\">utils.addExtension(resource, url, value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_cc\\\">utils.cc()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_coding\\\">utils.coding(code, system)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_composite\\\">utils.composite(object, key, value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_concept\\\">utils.concept()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_findExtension\\\">utils.findExtension(obj, targetUrl, [path])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_id\\\">utils.id()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_identifier\\\">utils.identifier(input, [system])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_ref\\\">utils.ref()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_reference\\\">utils.reference(ref)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#utils_setSystemMap\\\">utils.setSystemMap()</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_carePlan\\\">builders.carePlan(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_encounter\\\">builders.encounter(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_medication\\\">builders.medication(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_medicationAdministration\\\">builders.medicationAdministration(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_medicationDispense\\\">builders.medicationDispense(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_medicationRequest\\\">builders.medicationRequest(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_observation\\\">builders.observation(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_patient\\\">builders.patient(type, props)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#builders_relatedPerson\\\">builders.relatedPerson(type, props)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(resourceType, resource, params, callback) ⇒ Operation</code></p>\\n\\nCreates a new resource with a server assigned resourceType.\\nThe resource object doesn't need resourceType or id\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resourceType | <code>FhirResourceTypes</code> | The resource type to create |\\n| resource | <code>FhirResource</code> | The resource to create |\\n| params | <code>object</code> | (Optional) FHIR parameters to control and configure resource creation. You can specify a version ie r4 here. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n**Example:** Create a new patient\\n```js\\ncreate('Patient', {\\n  name: [\\n    {\\n      use: 'official',\\n      family: 'La Paradisio',\\n      given: ['Josephine', 'Nessa'],\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n\\n## utils\\n\\nThese functions belong to the utils namespace.\\n### utils.addExtension {#utils_addExtension}\\n\\n<p><code>addExtension(resource, url, value)</code></p>\\n\\nAdd an extension to a resource (or object).\\nAn object will be created and added to an `extension` array on the provided resource. \\nThe extension array will be set if it does not exist on the resource.\\nThe value will be smartly written to the object, ie, valueDateTime or valueReference or valueString\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource |  | a FHIR resource object to add an extension too |\\n| url | <code>string</code> | the URL to set for the extension |\\n| value |  | the value that the extension should contain |\\n\\n\\n* * *\\n\\n\\n### utils.cc {#utils_cc}\\n\\n<p><code>cc()</code></p>\\n\\nAlias for util.concept()\\n\\n\\n* * *\\n\\n\\n### utils.coding {#utils_coding}\\n\\n<p><code>coding(code, system)</code></p>\\n\\nCreate a coding object { code, system }. Systems will be mapped using the system map.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| code | <code>string</code> | the code value |\\n| system | <code>string</code> | URL to the system. Well be mapped using the system map. |\\n\\n\\n* * *\\n\\n\\n### utils.composite {#utils_composite}\\n\\n<p><code>composite(object, key, value)</code></p>\\n\\nWrite a value to the target object using a typed key\\nIe, if key is `value` and the value is a date time string,\\nthis function will write `valueDateTime` to the object.\\n\\nThis function is poorly named.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| object |  | the object to write the composite key to |\\n| key | <code>string</code> | the base key to use to write the value |\\n| value |  | some value to write to the object |\\n\\n\\n* * *\\n\\n\\n### utils.concept {#utils_concept}\\n\\n<p><code>concept()</code></p>\\n\\nCreate a codeableConcept. Codings can be coding objects or\\n[code, system] tuples\\nif the first argument is a string, it will be set as the text.\\nSystems will be mapped with the system map\\n\\n**Example:** <Create a codeableConcept\\n```js\\nconst myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  \\n* @example <caption><Create a codeableConcept with text</caption>\\nconst myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  \\n```\\n\\n* * *\\n\\n\\n### utils.findExtension {#utils_findExtension}\\n\\n<p><code>findExtension(obj, targetUrl, [path])</code></p>\\n\\nFind an extension with a given url in some array\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| obj |  | a fhir resource |\\n| targetUrl | <code>string</code> | the extension URL you want to find |\\n| [path] | <code>string</code> | a path to extract from the resource. Optional. |\\n\\n\\n* * *\\n\\n\\n### utils.id {#utils_id}\\n\\n<p><code>id()</code></p>\\n\\nAlias for util.identifier()\\n\\n\\n* * *\\n\\n\\n### utils.identifier {#utils_identifier}\\n\\n<p><code>identifier(input, [system])</code></p>\\n\\nCreate an identifier resource. Systems will be mapped against the system map.\\nThe input can be a string value, or an identifier object.\\nIf input is an array of identifiers, an array of mapped/parsed values will be returned.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| input |  | an array of strings, or a identifier value as a string or object |\\n| [system] | <code>string</code> | the string system to use by default if |\\n\\n\\n* * *\\n\\n\\n### utils.ref {#utils_ref}\\n\\n<p><code>ref()</code></p>\\n\\nAlias for util.reference()\\n\\n\\n* * *\\n\\n\\n### utils.reference {#utils_reference}\\n\\n<p><code>reference(ref)</code></p>\\n\\nCreate a reference object of the form { reference }\\nIf ref is an array, each item will be mapped and an array returned.\\nIf ref is a FHIR resource, a reference to it will be generated\\nIf ref is a string, it'll be treated as a reference id and returned as an object\\nIf ref is a valid FHIR reference, it'll just be returned.\\n\\n\\n| Param | Description |\\n| --- | --- |\\n| ref | the thing to generate a reference from |\\n\\n\\n* * *\\n\\n\\n### utils.setSystemMap {#utils_setSystemMap}\\n\\n<p><code>setSystemMap()</code></p>\\n\\nDefine a set of mapped system values.\\n\\nBuilder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.\\n\\n**Example:** Set shortcut sustem mappings\\n```js\\nutil.setSystemMap({\\n  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'\\n});\\nbuilders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })\\n};\\n```\\n\\n* * *\\n\\n\\n## builders\\n\\nThese functions belong to the builders namespace.\\n### builders.carePlan {#builders_carePlan}\\n\\n<p><code>carePlan(type, props)</code></p>\\n\\nCreate a FHIR CarePlan resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.encounter {#builders_encounter}\\n\\n<p><code>encounter(type, props)</code></p>\\n\\nCreate a FHIR Encounter resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.medication {#builders_medication}\\n\\n<p><code>medication(type, props)</code></p>\\n\\nCreate a FHIR Medication resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.medicationAdministration {#builders_medicationAdministration}\\n\\n<p><code>medicationAdministration(type, props)</code></p>\\n\\nCreate a FHIR MedicationAdministration resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.medicationDispense {#builders_medicationDispense}\\n\\n<p><code>medicationDispense(type, props)</code></p>\\n\\nCreate a FHIR MedicationDispense resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.medicationRequest {#builders_medicationRequest}\\n\\n<p><code>medicationRequest(type, props)</code></p>\\n\\nCreate a FHIR MedicationRequest resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.observation {#builders_observation}\\n\\n<p><code>observation(type, props)</code></p>\\n\\nCreate a FHIR Observation resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.patient {#builders_patient}\\n\\n<p><code>patient(type, props)</code></p>\\n\\nCreate a FHIR Patient resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n### builders.relatedPerson {#builders_relatedPerson}\\n\\n<p><code>relatedPerson(type, props)</code></p>\\n\\nCreate a FHIR RelatedPerson resource.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| type | <code>string</code> | The profile id for the resource variant |\\n| props |  | Properties to apply to the resource |\\n\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-fhir-ndr-et <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the FHIR API\\nfor NDR Ethopia.\\n\\n## Documentation\\n\\nThis adaptor is largely auto-generated from the spec at\\nhttps://build.fhir.org/ig/jembi/ethiopia-hiv/branches/master/definitions.json.zip.\\nSee below for more details about that.\\n\\nWe **strongly** recommend not editing generated source files by hand! Better to\\nupdate the spec, mappings, or code generation rules. Otherwise your changes will\\nbe lost.\\n\\nUnlike most adaptors, types are checked-in (because they are largely\\nautogenerated). A custom dts build is used.\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/fhir-ndr-et-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-ndr-et-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Building\\n\\nTo generate the adaptor source, run `pnpm build:src`. This will generate the\\nbuilder functions and typings, but not generate all the other adaptor stuff,\\nlike docs and dist.\\n\\nThe source is NOT rebuilt in CI or during a general repo build (because a change\\nto the remote spec can result in a diff in the source, and a diff in the source\\ncreates problems all over)\\n\\nThe standard `pnpm build` will generate docs and typedefs and stuff, but NOT the\\nsource.\\n\\nSo locally, run `pnpm build:src` to rebuild the adaptor code.\\n\\nThe first time the source build runs, a new \\\"spec\\\" file will be downloaded. To\\nforce a new download (ie to update the spec) delete `./spec/spec.json`\\n\\n## How to use\\n\\nThis adaptor provides a bunch of helper functions to create FHIR resources in\\nthe right structure.\\n\\nUse `builders.*` (or `b.*` for short) namespace to create resource types, like\\nthis:\\n\\n```\\nfn(() => {\\n  const encounter = builders.encounter('target-facility-encounter', {\\n    id,\\n    /* add props as needed */\\n  });\\n})\\n```\\n\\nAll supported resource types have a main function on the `builders` object. The\\nfirst argument is the profile id for that resource, the second is JSON data to\\ndefine the resource.\\n\\nCode assist is available in Lightning for profile ids - just hit ctrl + space to\\nbring up the list. It's also available in VSC (see the\\n[Wiki article](https://github.com/OpenFn/adaptors/wiki/How-to-get-code-assist-for-adaptors-in-VSC))\\n\\nThe json object is designed to be smart and do stuff like generate references\\nautomatically, or map typed keys like effective -> effectiveDateTime.\\n\\nTypescript and documentation should help here although work is needed on this\\nstuff. The design is to give it a sensible value and trust it to do the right\\nthing.\\n\\nSee Resources.tests.js for some examples of creating the supported resources\\nfrom inputs.\\n\\nAs well as the builders, the adaptor also exports util functions to make it a\\nbit easier to create references, codeableconcepts, codings and so on.\\n\\nSo you can do stuff like this:\\n\\n```js\\nfn(() => {\\n  const encounter = builders.encounter('target-facility-encounter', {\\n    id,\\n    subject: util.reference('some-resource-id'),\\n    class: util.coding([value, system]),\\n  });\\n});\\n```\\n\\n## Code Generation\\n\\nA number of files in `src` are auto-generated (you can tell because they have a\\nnice clear comment up at the top).\\n\\nThe build logic is all handled in the `build/` folder.\\n\\nHere is roughly how the code generation works.\\n\\nThe objective is to read in the snapshot definition of all the fhir resources in\\nthe destination system, and for each resource type that we're interested in,\\ngenerate a) an easy-to-use builder function and b) a list of typescript\\ndefinitions to match it.\\n\\nFirst, we check to see whether `./spec/spec.json` exists if it does not,\\ndownload it!\\n\\nThen we load this spec.json into memory. It's a large complex file so we break\\nit down into a simpler JSON representation which we call a schema.\\n\\nThe schema contains a simple expression of rules that our builder function will\\nneed to apply. It looks a bit like this:\\n\\n```json\\n{\\n  \\\"id\\\": \\\"arv-regimen-medication\\\",\\n  \\\"type\\\": \\\"Medication\\\",\\n  \\\"url\\\": \\\"http://moh.gov.et/fhir/hiv/StructureDefinition/arv-regimen-medication\\\",\\n  \\\"props\\\": {\\n    \\\"id\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"isArray\\\": false,\\n      \\\"desc\\\": \\\"Logical id of this artifact\\\",\\n      \\\"isComposite\\\": false,\\n      \\\"defaults\\\": {}\\n    }\\n    // ...\\n  }\\n}\\n```\\n\\nThis tells us for exaple that an arv-regimen-medication has a property called\\n`id`, which is a type string. So our builder function will need to handle that.\\n\\nWe only generate a simple schema for the resource types we're interested in.\\nThat's controlled by a file called `./build/mappings.ts`. The mappings has two\\njobs:\\n\\n1. Specific which resource types to generate builder functions for\\n2. Provide manual override rules for those builders. This lets us provide\\n   special mappings on keys for example, or provide defaults if the schema is\\n   missing some information.\\n\\nSo now we've generated simple schema objects for the resource types we're\\ninterested in.\\n\\nNext we generate the builder functions. We use a library call `ast-types` to\\nhelp us do this. Mostly we build an AST tree directly - that is, we\\nprogrammatically define the structure of the code using a neat API. And from\\nthis structure we generate code strings with nice formatting.\\n\\nThis keeps our code generation nice and robust. The API ensures that the\\ngenerated code is syntactically valid, and throws errors if we ask it do do\\nsomething illegal - like nest a statement inside the condition of an\\nif-statement. If we were generating strings directly, we'd have to be very\\ncareful about things like typos and couldn't apply smart transformations to the\\ncode.\\n\\nUsing the schema information and mapping overrides, we generate code statements\\nto take the input data passed as the second argument, and apply it smartly to a\\nnew FHIR resource, which we finally return. We lean heavily on the util\\nfunctions in `src/utils.js` to simplify this.\\n\\nOnce we've got our code, we have to generate matching TypeScript definitions for\\neach builder. This ensures that we get code assist and intellisense on our\\ngenerated functions, making the builders much safer and easier to use.\\n\\nWe use the TypeScript compiler to do this, just like how we use `ast-types` to\\ngenerate the code (although it has to be said that the TypeScript compiler has a\\nway less nice API).\\n\\nOnce finished, generated files are written into `src/`, where they can be\\ntested.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-fhir-ndr-et\\n\\n## 0.1.7\\n\\n### Patch Changes\\n\\n- Fix typescript definitions\\n\\n## 0.1.6\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n  - @openfn/language-fhir@5.0.3\\n\\n## 0.1.5\\n\\n### Patch Changes\\n\\n- Order the generated code alphabetically\\n\\n## 0.1.4\\n\\n### Patch Changes\\n\\n- 47bf58f: Adjust build process to fix docs\\n\\n## 0.1.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 0.1.2\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 0.1.1\\n\\n### Patch Changes\\n\\n- Update spec version\\n\\n## 0.1.0\\n\\nInitial release\\n\\n## 0..19\\n\\n- Map text values into \\\"code\\\"\\n\\n## 0.0.18\\n\\n- Make composite types smarter when passed a Resource (convert it to a\\n  reference)\\n\\n## 0.0.17\\n\\n- support more types in addExtension\\n\\n## 0.0.16\\n\\n- Add `text` to each resource type\\n\\n## 0.0.15\\n\\n- Update schema to lateest version\\n\\n## 0.0.14\\n\\n- add relatedPerson builder\\n\\n## 0.0.13\\n\\n- reference will generate a reference to a resource if you pass it in (in form\\n  type/id)\\n- add aliases for util.ref, util.id, util.cc\\n- properly track arrays of references\\n\\n## 0.0.12\\n\\n- Make util.findExtension safe for resources without an extension\\n\\n## 0.0.11\\n\\n- Add builders for MedicationDispense and Medication\\n- Tighten extension mapping\\n\\n## 0.0.10\\n\\n- Improvements to observation (map references, default static values, and handle\\n  value)\\n\\n## 0.0.9\\n\\n- Fix prop mapping which arent in an array util.\\n- concept accepts codings as anarray allow systems map to map system shorthands\\n  and longhands to new values\\n- Fix utils namespace\\n\\n## 0.0.8\\n\\nIgnore nullish keys in mapping (ie, passing undefined will not set a key on the\\nnew object)\\n\\n## 0.0.7\\n\\n- restore all builders\\n- more docs in type defs\\n\\n## 0.0.6\\n\\n- Support more types\\n- remove generic property mapping - most props should map now\\n\\n## 0.0.5\\n\\n- restore patient and observation types\\n- hide internal builder functions\\n\\n## 0.0.4\\n\\nadd type variants add flat assignment of props to resource\\n\\n## 0.0.3\\n\\nexpose more stuff from common\\n\\n## 0.0.2\\n\\nexpose fn\\n\\n## 0.0.1\\n\\nInitial alpha release.\\n\"","functions":["create"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"username":{"title":"Username","type":"string","description":"Username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["password","username"]}},
 [
   {
