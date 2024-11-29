@@ -4,6 +4,5 @@ export default {
   include: [],
   exclude: [],
   overrides: {},
-  // valueSets: ['http://hl7.org/fhir'],
-  valueSets: [],
+  valueSets: ['http://hl7.org/fhir'],
 };

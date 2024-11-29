@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "license": "ISC",
   "bin": {
-    "generate": "src/cli.ts"
+    "generate-fhir": "src/cli.ts"
   },
   "scripts": {
     "cli": "esno src/cli.ts"

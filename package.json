@@ -1,12 +1,11 @@
 {
   "name": "adaptors",
   "version": "1.0.0",
-  "description": "Monoerepo for openfn language adaptors",
+  "description": "Monorepo for OpenFn language adaptors",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@8.15.1",
   "scripts": {
-    "jembi": "node ./jembi.js",
     "migrate": "cd tools/migrate && pnpm migrate",
     "setup": "pnpm --filter \"./tools/**\" install",
     "docs:publish": "pnpm exec scripts/publish-docs.sh",
@@ -22,6 +21,7 @@
     "slack:notify": "cd tools/slack && pnpm notify",
     "generate": "pnpm -C tools/generate cli generate",
     "generate-fhir": "pnpm -C tools/generate-fhir cli generate",
+    "generate:fhir": "pnpm -C tools/generate-fhir cli generate",
     "prerelease": "node scripts/prerelease.mjs --no-warnings"
   },
   "author": "Open Function Group",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@changesets/cli": "2.27.5",
     "@openfn/buildtools": "workspace:^1.0.2",
+    "@openfn/generate-fhir": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@openfn/simple-ast": "0.4.1",

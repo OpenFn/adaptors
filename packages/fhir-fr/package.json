@@ -17,10 +17,10 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-11-29T15:29:24.329Z",
+    "adaptorGeneratedDate": "2024-11-29T16:29:56.904Z",
     "name": "hl7.fhir.fr.core",
     "specDate": "2024-03-25",
-    "generatorVersion": "0.1.0",
+    "generatorVersion": "0.2.0",
     "igVersion": "4.0.1",
     "webUrl": "https://hl7.fr/ig/fhir/core"
   },

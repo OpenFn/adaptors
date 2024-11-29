@@ -1,4 +1,4 @@
-import generateAdaptor from './generate';
+#!./node_modules/.bin/esno
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
@@ -15,7 +15,7 @@ const run = async (args: any) => {
 yargs(hideBin(process.argv))
   .command({
     command:
-      'generate <name> [--spec spec] [--base base] [--respec] [--mappings path] [--tests]',
+      '$0 <name> [--spec spec] [--base base] [--respec] [--mappings path] [--tests]',
     describe: 'Generate a new FHIR adaptor',
     handler: args => {
       run(args);

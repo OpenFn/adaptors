@@ -76,7 +76,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     const pkg = await readPkg();
 
     if (respec || spec) {
-      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.spec, mappings);
+      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
     }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
