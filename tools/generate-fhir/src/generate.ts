@@ -30,8 +30,9 @@ export type Options = {
 
 const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   const { base, respec, spec } = options;
-
-  const adaptorPath = path.resolve(`../../packages/${adaptorName}`);
+  const dir = path.dirname(import.meta.url.replace('file://', ''));
+  const monoRepoRoot = path.resolve(dir, `../../../`);
+  const adaptorPath = path.resolve(monoRepoRoot, 'packages', adaptorName);
   const pkgPath = path.resolve(adaptorPath, 'package.json');
 
   const readPkg = async () => {
@@ -43,6 +44,20 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     await writeFile(pkgPath, JSON.stringify(pkg, null, 2));
   };
 
+  const loadMappings = async () => {
+    try {
+      const m = await import(path.resolve(adaptorPath, 'build/mappings.js'));
+      return m.default;
+    } catch (e) {
+      console.log('ERROR IMPORTING MAPPINGS');
+      console.log(e);
+
+      // TODO abort or continue?
+      console.log('\n resuming generation with no mappings');
+      return {};
+    }
+  };
+
   const updateMeta = async (pkg: any, meta: Meta) => {
     Object.assign(pkg.fhir, meta);
     await writePkg(pkg);
@@ -51,37 +66,27 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   // If mappings is passed in, copy it into the build
   if (options.mappings) {
-    const mappingsPath = path.resolve('../../', options.mappings);
+    const mappingsPath = path.resolve(monoRepoRoot, options.mappings);
     console.log(`Importing mappings from `, mappingsPath);
     const src = await readFile(mappingsPath, 'utf8');
     await writeFile(path.resolve(adaptorPath, 'build/mappings.js'), src);
   }
 
   let mappings;
-  try {
-    const m = await import(path.resolve(adaptorPath, 'build/mappings.js'));
-    mappings = m.default;
-  } catch (e) {
-    console.log('ERROR IMPORTING MAPPINGS');
-    console.log(e);
-
-    // TODO abort or continue?
-    console.log('\n resuming generation with no mappings');
-    mappings = {};
-  }
-
   let meta;
+
   // Determine whether to setup the initial template and/or re-download the spec
   try {
     const pkg = await readPkg();
-
+    mappings = await loadMappings();
     if (respec || spec) {
       meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
     }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
     // If the adaptor does not exist, generate the project boilerplate
-    await generatePackage(adaptorPath, adaptorName, spec!);
+    await generatePackage(adaptorPath, monoRepoRoot, adaptorName, spec!);
+    mappings = await loadMappings();
     meta = await fetchSpec(adaptorPath, spec, mappings);
 
     // Unless the user said otherwise, generate test
@@ -104,16 +109,21 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   const schema = await generateSchema(specPath, mappings);
+  console.log('Generating code');
   const src = generateCode(schema, mappings);
+  console.log('Generating DTS');
   const dts = generateDTS(schema, mappings);
 
+  const srcPath = path.resolve(adaptorPath, 'src/builders.js');
+  console.log('Writing source to ', srcPath);
   await writeFile(
     // TODO move to ./gen
-    path.resolve(adaptorPath, 'src/builders.js'),
+    srcPath,
     withDisclaimer(src)
   );
 
   if (options.tests) {
+    console.log('Generating tests');
     await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
     const tests = generateTests(schema, mappings);
     for (const p in tests) {
@@ -121,6 +131,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     }
   }
 
+  console.log('Writing types to ./types');
+  await mkdir(path.resolve(adaptorPath, 'types'), { recursive: true });
+
+  console.log('Generating DTS with tsc');
   const tscArgs = [
     '--allowJs',
     '--declaration',
@@ -129,18 +143,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
   ];
 
-  const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
-  // Now build typings for index and utils
-  exec(`pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`, {}, () => {
-    setTimeout(async () => {
-      // Overwrite builders.d.ts because typescript makes a mess of it
-      await writeFile(
-        path.resolve(adaptorPath, 'types/builders.d.ts'),
-        withDisclaimer(dts)
-      );
-    }, 500);
-  });
-
   // Finally, update package json metadata
   const pkg = await readPkg();
   updateMeta(pkg, {
@@ -148,6 +150,29 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     adaptorGeneratedDate: new Date().toISOString(),
     generatorVersion: toolPkg.version,
   });
+
+  const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
+  // Now build typings for index and utils
+  exec(
+    `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
+    {},
+    (err, stderr) => {
+      // TODO ignore tsc output for now
+      // if (err) {
+      //   console.log('tsc build failed!');
+      //   console.log(stderr);
+      // } else {
+      setTimeout(async () => {
+        console.log('Writing builders.d.ts');
+        // Overwrite builders.d.ts because typescript makes a mess of it
+        await writeFile(
+          path.resolve(adaptorPath, 'types/builders.d.ts'),
+          withDisclaimer(dts)
+        );
+      }, 500);
+      // }
+    }
+  );
 };
 
 export default generateAdaptor;
