@@ -1,14 +1,14 @@
 {
   "name": "@openfn/language-fhir-fr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
-    "build": "pnpm clean && build-adaptor fhir-fr",
+    "build": "pnpm clean && build-adaptor fhir-fr src ast docs",
     "build:src": "pnpm generate-fhir fhir-fr",
     "build:spec": "pnpm generate-fhir fhir-fr --respec",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-    "clean": "rimraf dist types docs",
+    "clean": "rimraf dist docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
   },
@@ -16,11 +16,13 @@
   "license": "LGPLv3",
   "type": "module",
   "fhir": {
-    "spec": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-11-28T13:38:53.488Z",
     "name": "hl7.fhir.fr.core",
-    "specVersion": "4.0.1",
-    "specDate": "2024-03-25"
+    "igVersion": "4.0.1",
+    "webUrl": "https://hl7.fr/ig/fhir/core",
+    "specDate": "2024-03-25",
+    "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
+    "adaptorGeneratedDate": "2024-11-29T18:01:10.462Z",
+    "generatorVersion": "0.2.0"
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*"
@@ -32,6 +34,7 @@
     "esno": "^0.16.3",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
+    "typescript": "4.8.4",
     "undici": "^5.22.1"
   },
   "repository": {

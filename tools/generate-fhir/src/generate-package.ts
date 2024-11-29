@@ -9,10 +9,14 @@ const fileMap = { package_json: 'package.json' };
 
 const generatePackage = async (
   adaptorPath: string,
+  monorepoPath: string,
   adaptorName: string,
   specPath?: string
 ) => {
-  const templatePath = path.resolve(`template`);
+  const templatePath = path.resolve(
+    monorepoPath,
+    `tools/generate-fhir/template`
+  );
 
   console.log(`Creating new adaptor package: ${adaptorName}`);
 
@@ -46,8 +50,6 @@ const copyAndRename = async (
 
   const templated = {
     '{{NAME}}': adaptorName,
-    '{{SPEC_PATH}}': specPath,
-    '{{SPEC_DATE}}': new Date().toISOString(),
   };
 
   for (const item of items) {

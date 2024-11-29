@@ -18,18 +18,25 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import yauzl from 'yauzl';
 import gunzip from 'gunzip-maybe';
-import { SpecJSON } from './types';
+import { MappingSpec, SpecJSON } from './types';
 
 const valueSetCache: Record<string, any> = {};
 
 export type Meta = {
-  specVersion?: string;
+  igVersion?: string;
+  webUrl?: string;
   specDate?: string;
   name?: string;
+  adaptorGeneratedDate?: string;
+  generatorVersion?: string;
 };
 
 // TODO pass mappings into this
-export default async function (baseDir: string, specPath: string) {
+export default async function (
+  baseDir: string,
+  specPath: string,
+  mappings: MappingSpec
+) {
   return new Promise<Meta>(async (resolve, reject) => {
     await mkdir(path.resolve(baseDir, 'spec'), { recursive: true });
 
@@ -51,6 +58,7 @@ export default async function (baseDir: string, specPath: string) {
           let specs;
           try {
             ({ meta, specs } = await parseIGZip(specOutputPath));
+            meta.specUrl = specPath;
             console.log('... downloaded!');
           } catch (e) {
             console.log('Error processing zip stream');
@@ -58,10 +66,13 @@ export default async function (baseDir: string, specPath: string) {
             reject(e);
           }
           try {
-            const valueSets = await downloadValueSets(specs, {
-              // TMP: hard-code value sets
-              valueSets: ['http://hl7.org/fhir'],
-            });
+            let valueSets = {};
+            if (mappings.valueSets?.length) {
+              valueSets = await downloadValueSets(specs, mappings);
+            } else {
+              console.log('No valuesets mappings provided!');
+              console.log('Skipping all valueset downloads');
+            }
 
             await writeFile(
               `${outputDir}/valuesets.json`,
@@ -141,7 +152,7 @@ export type ValueSetDef = {
 async function downloadValueSets(spec, mappings) {
   const valueSets: Record<string, ValueSetDef> = {};
 
-  const regexes = mappings.valueSets.map(e => new RegExp(e));
+  const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
 
   const processCache = {};
 
@@ -241,7 +252,8 @@ function parseIGZip(inputDir: string) {
 
               if (entry.fileName === 'spec.internals') {
                 meta.name = json['npm-name'];
-                meta.specVersion = json['ig-version'];
+                meta.igVersion = json['ig-version'];
+                meta.webUrl = json['webUrl'];
                 meta.specDate = json.date;
               }
 
