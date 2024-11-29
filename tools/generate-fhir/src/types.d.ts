@@ -10,6 +10,9 @@ export type MappingSpec = {
 
   // Use this for now
   overrides?: Record<string, Mapping>;
+
+  /** Array of string regexes */
+  valueSets?: string[];
 };
 
 export type Mapping = {
@@ -41,7 +44,7 @@ export type SpecJSON = Record<profileId, ProfileSpec>;
 export type ProfileSpec = {
   id: string; // profile id
   resourceType: string; // should be StructureDefinition
-  type: string; // the resource this profile extemds
+  type: string; // the resource this profile extends
   kind: string; // ours should all be resource I think?
 
   name: string;

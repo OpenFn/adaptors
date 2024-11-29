@@ -73,12 +73,20 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   })) as SpecJSON;
   const result: Record<string, Schema[]> = {};
 
-  const valuesets: any = await import(
+  const rawValuesets: any = await import(
     path.resolve(path.dirname(specPath), 'valuesets.json'),
     {
       assert: { type: 'json' },
     }
   );
+  const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
+  // remove all valueSets that don't match the mapping criteria
+  const valuesets = Object.keys(rawValuesets)
+    .filter(url => regexes.find(re => re.test(url)))
+    .reduce((obj, url) => {
+      obj[url] = rawValuesets[url];
+      return obj;
+    }, {});
 
   const counts = {};
   const codes = {};
