@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
-    "build": "pnpm clean && build-adaptor fhir-fr",
+    "build": "pnpm clean && build-adaptor fhir-fr src ast docs",
     "build:src": "pnpm generate-fhir fhir-fr",
     "build:spec": "pnpm generate-fhir fhir-fr --respec",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
